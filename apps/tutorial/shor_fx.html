@@ -1,0 +1,192 @@
+---
+layout: page
+section: ショアの因数分解
+title: \(a^x\,mod(N)\) の計算
+description: べき乗余を計算する量子回路
+prev: 別問題に帰着する
+prev_url: ./shor_hsp.html
+next: 周期 \(r\) を求める
+next_url: ./shor_r.html
+---
+
+<p>
+  ショアの因数分解回路の具体的な実装に移る前に、仕組みの概要を押さえておきます。
+  前回に説明したように、ショアのアルゴリズムの量子部分は、大きく分けて次の 2 ステップからなります。
+</p>
+
+<ul class="list-decimal">
+  <li>\(f(x) = a^x\,mod(N)\) を計算する</li>
+  <li>\(f(x)\) の周期 \(r\) を求める</li>
+</ul>
+
+<p>今回はこのうち、最初の \(f(x) = a^x\,mod(N)\) を重ね合わせで計算する部分を見ていきます。</p>
+
+<h2>\(f(x) = a^x\,mod(N)\) を計算する</h2>
+
+<p>
+  \(f(x) = a^x\,mod(N)\) を計算するために、まずは変数 \(x\) を回路上に準備します。 たとえば \(x\) が
+  0 から 15 までの値を取るなら、\(x\) の値は 4 ビットで表せます。 {% ket 0 %} で初期化した 4
+  つの量子ビットに {% qpu_operation h %} を適用することで、0, 1, ..., 15 を重ね合わせた \(x\)
+  を作ることができます。
+</p>
+
+<div class="relative my-5 mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mt-12 mb-40"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{0..15の重ね合わせ"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["}"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      {% include run_circuit_button.html %}
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  次にこの重ね合わせた \(x\) の上で \(f(x) = a^x\, mod(N)\)
+  を計算し、結果を別の量子ビットに書き込んでいきます。 \(x\) を入れた 4
+  量子ビットの下に、計算結果を入れるための量子ビットを 4 つ確保しておくこととします。 \(x\) が 0
+  の時 \(f(0) = 1\) なので、この量子ビットは {% ket 1 %} で初期化しておきます。
+</p>
+
+<div class="relative my-5 mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mt-12 mb-40"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{x"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["}"],[1],["{a^x mod(N)"],[1,1,1,1,"|1>","|0>","|0>","|0>"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      {% include run_circuit_button.html %}
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  ここで、実装がブラックボックスなゲート U というものを考えます。 この U
+  を計算結果用の量子ビットに適用すると、現在の値を \(a\) 倍し、\(mod(N)\)
+  した値を書き込んでくれるものとします。 目的は \(a^x\, mod(N)\) を計算することですから、U を \(x\)
+  回置けば計算結果用の量子ビットに \(a \times a \times \dots \times a\,mod(N) = a^x\, mod(N)\)
+  の値が残ります。
+</p>
+
+<figure>
+  <img src="./images/shor_xtimes_u.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  U を何回置くかという \(x\) の値は上の 4
+  量子ビットにエンコードされているので、これを使うことにしましょう。 \(x\)
+  の値は二進数で量子ビットに格納されており、最下位ビットが \(2^0 = 1\)、次が \(2^1 = 2\)、...
+  となっています。 このことから、制御付きの U を次のように置けば U を \(x\)
+  回適用したことになります。
+</p>
+
+<figure>
+  <img src="./images/shor_us.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  \(x\) の値は 0 〜 15 の重ね合わせであったため、計算結果用の 4 量子ビットにも \(a^x\, mod(N)\)
+  の値の重ね合わせが書き込まれます。
+</p>
+
+<p>
+  この回路の形を見て、何か思い出した人はいるでしょうか？ そう、<a
+    href="./quantum_phase_estimation_circuit.html"
+    >量子位相推定回路</a
+  >の前半とそっくりです。 実際にショアの因数分解回路の後半では、\(f(x)\) の周期 \(r\) を求めるために
+  QFT を実行します。 こうなると量子位相推定回路と完全に見ためは一緒で、数学的にも同等です。
+</p>
+
+<figure>
+  <img src="./images/shor_us_and_inv_qft.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  なぜ周期 \(r\)
+  を求める問題が最終的に固有位相の推定問題になるかは、少し難しい数学が必要なので割愛します{%
+  nmargin_note qiskit_shor %}興味のある読者は、Qiskit チュートリアル
+  「ショアのアルゴリズム」を参照してください。<a
+    href="https://qiskit.org/textbook/ja/ch-algorithms/shor.html"
+    >https://qiskit.org/textbook/ja/ch-algorithms/shor.html</a
+  >{% endnmargin_note %}。 QFT のパートについては次回説明しますので、動作の理解には問題ありません。
+</p>
+
+<h2>まとめ</h2>
+
+<p>
+  \(a\,mod(N)\) を計算できるゲート U があったときに \(a^x\, mod(N)\) を計算する回路を見ました。
+  この回路を実行すると、量子ビット上に前回見たような周期関数の値が展開されます。
+</p>
+
+<figure>
+  <img src="./images/shor_mod15.png" class="h-auto w-full" />
+</figure>
+
+<p>ここから周期 \(r\) を取り出すには、パターンを取り出すツールである QFT を使います。</p>

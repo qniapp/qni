@@ -1,0 +1,270 @@
+---
+layout: page
+section: ショアの因数分解
+title: 周期パターンの読み出し
+description: 周期 r を決めるためのパターンを QFT で調べる
+prev: \(a^xmod(N)\) の実装
+prev_url: ./shor_u.html
+---
+
+<p>
+  あとは状態ベクトルに展開された \(2^x mod(15)\) の周期パターンを QFT で読み出すだけです。
+  測定した値は 0, 4, 8, 12 のいずれかになるはずで、連分数アルゴリズムにかければ、\(r = 4, 8\)
+  が得られます。 そして gcd を計算して実際に \(N = 15\) の約数として正しい 3, 5
+  が求まるという流れです。
+</p>
+
+<p>
+  ここで QFT をなんとなく回路全体に適用したくなりますが、それは間違いです。 QFT
+  で取り出したいパターンがどのように状態ベクトル中に埋め込まれているか、もう一度確認してみましょう。
+</p>
+
+<div class="flex w-min flex-col">
+  <div class="flex flex-row justify-center">
+    <span class="mb-4 text-xl font-bold">f(x) の値</span>
+  </div>
+  <div class="mb-2 flex flex-row justify-end">
+    <div class="w-8 text-center"><span class="text-xl">0</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">1</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">2</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">3</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">4</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">5</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">6</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">7</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">8</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">9</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">10</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">11</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">12</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">13</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">14</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">15</span></div>
+  </div>
+
+  <div class="flex flex-row">
+    <div class="flex flex-col justify-center">
+      <span class="mr-4 whitespace-nowrap text-xl font-bold">x の値</span>
+    </div>
+    <div class="mr-2 flex flex-col">
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>0</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>1</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>2</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>3</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>4</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>5</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>6</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>7</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>8</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>9</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>10</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>11</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>12</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>13</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>14</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>15</span></div>
+    </div>
+    <div class="flex flex-col justify-start">
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 0, 'base' }} {{ '0.25' | qubit_circle: 1, 'base' }} {{ '0' |
+        qubit_circle: 2, 'base' }} {{ '0' | qubit_circle: 3, 'base' }} {{ '0' | qubit_circle: 4,
+        'base' }} {{ '0' | qubit_circle: 5, 'base' }} {{ '0' | qubit_circle: 6, 'base' }} {{ '0' |
+        qubit_circle: 7, 'base' }} {{ '0' | qubit_circle: 8, 'base' }} {{ '0' | qubit_circle: 9,
+        'base' }} {{ '0' | qubit_circle: 10, 'base' }} {{ '0' | qubit_circle: 11, 'base' }} {{ '0' |
+        qubit_circle: 12, 'base' }} {{ '0' | qubit_circle: 13, 'base' }} {{ '0' | qubit_circle: 14,
+        'base' }} {{ '0' | qubit_circle: 15, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 16, 'base' }} {{ '0' | qubit_circle: 17, 'base' }} {{ '0.25' |
+        qubit_circle: 18, 'base' }} {{ '0' | qubit_circle: 19, 'base' }} {{ '0' | qubit_circle: 20,
+        'base' }} {{ '0' | qubit_circle: 21, 'base' }} {{ '0' | qubit_circle: 22, 'base' }} {{ '0' |
+        qubit_circle: 23, 'base' }} {{ '0' | qubit_circle: 24, 'base' }} {{ '0' | qubit_circle: 25,
+        'base' }} {{ '0' | qubit_circle: 26, 'base' }} {{ '0' | qubit_circle: 27, 'base' }} {{ '0' |
+        qubit_circle: 28, 'base' }} {{ '0' | qubit_circle: 29, 'base' }} {{ '0' | qubit_circle: 30,
+        'base' }} {{ '0' | qubit_circle: 31, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 32, 'base' }} {{ '0' | qubit_circle: 33, 'base' }} {{ '0' |
+        qubit_circle: 34, 'base' }} {{ '0' | qubit_circle: 35, 'base' }} {{ '0.25' | qubit_circle:
+        36, 'base' }} {{ '0' | qubit_circle: 37, 'base' }} {{ '0' | qubit_circle: 38, 'base' }} {{
+        '0' | qubit_circle: 39, 'base' }} {{ '0' | qubit_circle: 40, 'base' }} {{ '0' |
+        qubit_circle: 41, 'base' }} {{ '0' | qubit_circle: 42, 'base' }} {{ '0' | qubit_circle: 43,
+        'base' }} {{ '0' | qubit_circle: 44, 'base' }} {{ '0' | qubit_circle: 45, 'base' }} {{ '0' |
+        qubit_circle: 46, 'base' }} {{ '0' | qubit_circle: 47, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 48, 'base' }} {{ '0' | qubit_circle: 49, 'base' }} {{ '0' |
+        qubit_circle: 50, 'base' }} {{ '0' | qubit_circle: 51, 'base' }} {{ '0' | qubit_circle: 52,
+        'base' }} {{ '0' | qubit_circle: 53, 'base' }} {{ '0' | qubit_circle: 54, 'base' }} {{ '0' |
+        qubit_circle: 55, 'base' }} {{ '0.25' | qubit_circle: 56, 'base' }} {{ '0' | qubit_circle:
+        57, 'base' }} {{ '0' | qubit_circle: 58, 'base' }} {{ '0' | qubit_circle: 59, 'base' }} {{
+        '0' | qubit_circle: 60, 'base' }} {{ '0' | qubit_circle: 61, 'base' }} {{ '0' |
+        qubit_circle: 62, 'base' }} {{ '0' | qubit_circle: 63, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 64, 'base' }} {{ '0.25' | qubit_circle: 65, 'base' }} {{ '0' |
+        qubit_circle: 66, 'base' }} {{ '0' | qubit_circle: 67, 'base' }} {{ '0' | qubit_circle: 68,
+        'base' }} {{ '0' | qubit_circle: 69, 'base' }} {{ '0' | qubit_circle: 70, 'base' }} {{ '0' |
+        qubit_circle: 71, 'base' }} {{ '0' | qubit_circle: 72, 'base' }} {{ '0' | qubit_circle: 73,
+        'base' }} {{ '0' | qubit_circle: 74, 'base' }} {{ '0' | qubit_circle: 75, 'base' }} {{ '0' |
+        qubit_circle: 76, 'base' }} {{ '0' | qubit_circle: 77, 'base' }} {{ '0' | qubit_circle: 78,
+        'base' }} {{ '0' | qubit_circle: 79, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 80, 'base' }} {{ '0' | qubit_circle: 81, 'base' }} {{ '0.25' |
+        qubit_circle: 82, 'base' }} {{ '0' | qubit_circle: 83, 'base' }} {{ '0' | qubit_circle: 84,
+        'base' }} {{ '0' | qubit_circle: 85, 'base' }} {{ '0' | qubit_circle: 86, 'base' }} {{ '0' |
+        qubit_circle: 87, 'base' }} {{ '0' | qubit_circle: 88, 'base' }} {{ '0' | qubit_circle: 89,
+        'base' }} {{ '0' | qubit_circle: 90, 'base' }} {{ '0' | qubit_circle: 91, 'base' }} {{ '0' |
+        qubit_circle: 92, 'base' }} {{ '0' | qubit_circle: 93, 'base' }} {{ '0' | qubit_circle: 94,
+        'base' }} {{ '0' | qubit_circle: 95, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 96, 'base' }} {{ '0' | qubit_circle: 97, 'base' }} {{ '0' |
+        qubit_circle: 98, 'base' }} {{ '0' | qubit_circle: 99, 'base' }} {{ '0.25' | qubit_circle:
+        100, 'base' }} {{ '0' | qubit_circle: 101, 'base' }} {{ '0' | qubit_circle: 102, 'base' }}
+        {{ '0' | qubit_circle: 103, 'base' }} {{ '0' | qubit_circle: 104, 'base' }} {{ '0' |
+        qubit_circle: 105, 'base' }} {{ '0' | qubit_circle: 106, 'base' }} {{ '0' | qubit_circle:
+        107, 'base' }} {{ '0' | qubit_circle: 108, 'base' }} {{ '0' | qubit_circle: 109, 'base' }}
+        {{ '0' | qubit_circle: 110, 'base' }} {{ '0' | qubit_circle: 111, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 112, 'base' }} {{ '0' | qubit_circle: 113, 'base' }} {{ '0' |
+        qubit_circle: 114, 'base' }} {{ '0' | qubit_circle: 115, 'base' }} {{ '0' | qubit_circle:
+        116, 'base' }} {{ '0' | qubit_circle: 117, 'base' }} {{ '0' | qubit_circle: 118, 'base' }}
+        {{ '0' | qubit_circle: 119, 'base' }} {{ '0.25' | qubit_circle: 120, 'base' }} {{ '0' |
+        qubit_circle: 121, 'base' }} {{ '0' | qubit_circle: 122, 'base' }} {{ '0' | qubit_circle:
+        123, 'base' }} {{ '0' | qubit_circle: 124, 'base' }} {{ '0' | qubit_circle: 125, 'base' }}
+        {{ '0' | qubit_circle: 126, 'base' }} {{ '0' | qubit_circle: 127, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 128, 'base' }} {{ '0.25' | qubit_circle: 129, 'base' }} {{ '0' |
+        qubit_circle: 130, 'base' }} {{ '0' | qubit_circle: 131, 'base' }} {{ '0' | qubit_circle:
+        132, 'base' }} {{ '0' | qubit_circle: 133, 'base' }} {{ '0' | qubit_circle: 134, 'base' }}
+        {{ '0' | qubit_circle: 135, 'base' }} {{ '0' | qubit_circle: 136, 'base' }} {{ '0' |
+        qubit_circle: 137, 'base' }} {{ '0' | qubit_circle: 138, 'base' }} {{ '0' | qubit_circle:
+        139, 'base' }} {{ '0' | qubit_circle: 140, 'base' }} {{ '0' | qubit_circle: 141, 'base' }}
+        {{ '0' | qubit_circle: 142, 'base' }} {{ '0' | qubit_circle: 143, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 144, 'base' }} {{ '0' | qubit_circle: 145, 'base' }} {{ '0.25' |
+        qubit_circle: 146, 'base' }} {{ '0' | qubit_circle: 147, 'base' }} {{ '0' | qubit_circle:
+        148, 'base' }} {{ '0' | qubit_circle: 149, 'base' }} {{ '0' | qubit_circle: 150, 'base' }}
+        {{ '0' | qubit_circle: 151, 'base' }} {{ '0' | qubit_circle: 152, 'base' }} {{ '0' |
+        qubit_circle: 153, 'base' }} {{ '0' | qubit_circle: 154, 'base' }} {{ '0' | qubit_circle:
+        155, 'base' }} {{ '0' | qubit_circle: 156, 'base' }} {{ '0' | qubit_circle: 157, 'base' }}
+        {{ '0' | qubit_circle: 158, 'base' }} {{ '0' | qubit_circle: 159, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 160, 'base' }} {{ '0' | qubit_circle: 161, 'base' }} {{ '0' |
+        qubit_circle: 162, 'base' }} {{ '0' | qubit_circle: 163, 'base' }} {{ '0.25' | qubit_circle:
+        164, 'base' }} {{ '0' | qubit_circle: 165, 'base' }} {{ '0' | qubit_circle: 166, 'base' }}
+        {{ '0' | qubit_circle: 167, 'base' }} {{ '0' | qubit_circle: 168, 'base' }} {{ '0' |
+        qubit_circle: 169, 'base' }} {{ '0' | qubit_circle: 170, 'base' }} {{ '0' | qubit_circle:
+        171, 'base' }} {{ '0' | qubit_circle: 172, 'base' }} {{ '0' | qubit_circle: 173, 'base' }}
+        {{ '0' | qubit_circle: 174, 'base' }} {{ '0' | qubit_circle: 175, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 176, 'base' }} {{ '0' | qubit_circle: 177, 'base' }} {{ '0' |
+        qubit_circle: 178, 'base' }} {{ '0' | qubit_circle: 179, 'base' }} {{ '0' | qubit_circle:
+        180, 'base' }} {{ '0' | qubit_circle: 181, 'base' }} {{ '0' | qubit_circle: 182, 'base' }}
+        {{ '0' | qubit_circle: 183, 'base' }} {{ '0.25' | qubit_circle: 184, 'base' }} {{ '0' |
+        qubit_circle: 185, 'base' }} {{ '0' | qubit_circle: 186, 'base' }} {{ '0' | qubit_circle:
+        187, 'base' }} {{ '0' | qubit_circle: 188, 'base' }} {{ '0' | qubit_circle: 189, 'base' }}
+        {{ '0' | qubit_circle: 190, 'base' }} {{ '0' | qubit_circle: 191, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 192, 'base' }} {{ '0.25' | qubit_circle: 193, 'base' }} {{ '0' |
+        qubit_circle: 194, 'base' }} {{ '0' | qubit_circle: 195, 'base' }} {{ '0' | qubit_circle:
+        196, 'base' }} {{ '0' | qubit_circle: 197, 'base' }} {{ '0' | qubit_circle: 198, 'base' }}
+        {{ '0' | qubit_circle: 199, 'base' }} {{ '0' | qubit_circle: 200, 'base' }} {{ '0' |
+        qubit_circle: 201, 'base' }} {{ '0' | qubit_circle: 202, 'base' }} {{ '0' | qubit_circle:
+        203, 'base' }} {{ '0' | qubit_circle: 204, 'base' }} {{ '0' | qubit_circle: 205, 'base' }}
+        {{ '0' | qubit_circle: 206, 'base' }} {{ '0' | qubit_circle: 207, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 208, 'base' }} {{ '0' | qubit_circle: 209, 'base' }} {{ '0.25' |
+        qubit_circle: 210, 'base' }} {{ '0' | qubit_circle: 211, 'base' }} {{ '0' | qubit_circle:
+        212, 'base' }} {{ '0' | qubit_circle: 213, 'base' }} {{ '0' | qubit_circle: 214, 'base' }}
+        {{ '0' | qubit_circle: 215, 'base' }} {{ '0' | qubit_circle: 216, 'base' }} {{ '0' |
+        qubit_circle: 217, 'base' }} {{ '0' | qubit_circle: 218, 'base' }} {{ '0' | qubit_circle:
+        219, 'base' }} {{ '0' | qubit_circle: 220, 'base' }} {{ '0' | qubit_circle: 221, 'base' }}
+        {{ '0' | qubit_circle: 222, 'base' }} {{ '0' | qubit_circle: 223, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 224, 'base' }} {{ '0' | qubit_circle: 225, 'base' }} {{ '0' |
+        qubit_circle: 226, 'base' }} {{ '0' | qubit_circle: 227, 'base' }} {{ '0.25' | qubit_circle:
+        228, 'base' }} {{ '0' | qubit_circle: 229, 'base' }} {{ '0' | qubit_circle: 230, 'base' }}
+        {{ '0' | qubit_circle: 231, 'base' }} {{ '0' | qubit_circle: 232, 'base' }} {{ '0' |
+        qubit_circle: 233, 'base' }} {{ '0' | qubit_circle: 234, 'base' }} {{ '0' | qubit_circle:
+        235, 'base' }} {{ '0' | qubit_circle: 236, 'base' }} {{ '0' | qubit_circle: 237, 'base' }}
+        {{ '0' | qubit_circle: 238, 'base' }} {{ '0' | qubit_circle: 239, 'base' }}
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        {{ '0' | qubit_circle: 240, 'base' }} {{ '0' | qubit_circle: 241, 'base' }} {{ '0' |
+        qubit_circle: 241, 'base' }} {{ '0' | qubit_circle: 243, 'base' }} {{ '0' | qubit_circle:
+        244, 'base' }} {{ '0' | qubit_circle: 245, 'base' }} {{ '0' | qubit_circle: 246, 'base' }}
+        {{ '0' | qubit_circle: 247, 'base' }} {{ '0.25' | qubit_circle: 248, 'base' }} {{ '0' |
+        qubit_circle: 249, 'base' }} {{ '0' | qubit_circle: 250, 'base' }} {{ '0' | qubit_circle:
+        251, 'base' }} {{ '0' | qubit_circle: 252, 'base' }} {{ '0' | qubit_circle: 253, 'base' }}
+        {{ '0' | qubit_circle: 254, 'base' }} {{ '0' | qubit_circle: 255, 'base' }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>
+  ここで取り出したいのは、確率がゼロではない振幅が 3 つおきに登場しているというパターンです。
+  この「3 つおき」は \(x\) の値として現れる情報です。 なので QFT は次のように \(x\)
+  を表す量子ビットにだけにかける必要があります。
+</p>
+
+<div class="relative my-5 mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mt-12 mb-40"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[f(x)を入れる用"],["|1>","|0>","|0>","|0>"],["]"],[1],["[x=0〜15"],[1,1,1,1,"|0>","|0>","|0>","|0>"],[1,1,1,1,"H","H","H","H"],["]"],[1],["[左シフト mod(15)"],[1,1,"Swap","Swap","•"],[1,"Swap","Swap",1,"•"],["Swap","Swap",1,1,"•"],["]"],[1],["[左シフト2回 mod(15)"],[1,"Swap",1,"Swap",1,"•"],["Swap",1,"Swap",1,1,"•"],["]"],[1],["{QFT"],[1,1,1,1,1,1,1,"H"],[1,1,1,1,1,1,"P(-π_2)","•"],[1,1,1,1,1,"P(-π_4)",1,"•"],[1,1,1,1,"P(-π_8)",1,1,"•"],[1,1,1,1,1,1,"H"],[1,1,1,1,1,"P(-π_2)","•"],[1,1,1,1,"P(-π_4)",1,"•"],[1,1,1,1,1,"H"],[1,1,1,1,"P(-π_2)","•"],[1,1,1,1,"H"],[1,1,1,1,"Swap",1,1,"Swap"],[1,1,1,1,1,"Swap","Swap"],["}"],[1],[1,1,1,1,"Measure","Measure","Measure","Measure"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      {% include run_circuit_button.html %}
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  最後の測定で 0, 4, 8, 12 のいずれかが求まることを確認してください。 長い道程でしたが、\(15 = 3
+  \times 5\) の因数分解を実行するショアのアルゴリズムができました!
+</p>

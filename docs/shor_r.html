@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>別問題に帰着する</title>
+    <title>周期 \(r\) を求める</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -1341,133 +1341,52 @@
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-zinc-900">
-                  別問題に帰着する
+                  周期 \(r\) を求める
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-zinc-500">因数分解を反復周期 (位数) 発見問題として解く</p>
+              <p class="mt-1 mb-0 text-lg text-zinc-500">QFT でパターンを取り出す</p>
             </div>
             <div class="content-with-margin"><p>
-  ショアの因数分解アルゴリズムは、量子コンピュータが得意とする計算のうち最も有名なものの 1 つです。
-  <a href="./">はじめに</a
-  >で述べたように、因数分解が高速にできると、公開鍵暗号を現実的な時間のうちに解くことができます。
-  公開鍵暗号はインターネット通信やビットコイン技術等の拠り所であるため、これが解けてしまうというインパクトは相当なものです。
-</p>
-
-<p>
-  ショアの因数分解アルゴリズムはどれほど速いのでしょうか。
-  古典の因数分解アルゴリズムである「一般数体ふるい法」の実行時間は、因数分解したい数が大きくなるにつれて指数関数的に増えます。
-  一方でショアのアルゴリズムは、多項式時間に留まります。 分かりやすく具体的な値で言うと、1024
-  ビットの整数を因数分解するのに必要な計算量は、古典コンピュータ (一般数体ふるい法) で
-  \(O(10^{278})\) です。 これに対して、ショアのアルゴリズムは \(O(10^{61})\)
-  となり、計算量を大幅に減らせます。
-</p>
-
-<h2>因数分解を別問題として解く</h2>
-
-<p>
-  因数分解のような整数問題の多くは、より解きやすい別問題に帰着させて解くことができます。
-  ショアのアルゴリズムでは、因数分解を次の別問題に帰着させます。
-</p>
-
-<div class="border-l-4 border-blue-400 bg-blue-50 px-4 py-1 md:mr-auto md:w-7/12">
-  <p>
-    <strong>反復周期 (位数とも呼ぶ) の発見問題</strong>
-  </p>
-
-  <p>
-    \(N\) を因数分解したい整数とする。 このとき、ある整数 \(a\) (\(a \lt N\), かつ \(a\) と \(N\)
-    は共通の因数を持たない) について、整数 \(x\) を変数とする次の関数を考える。
-  </p>
-
-  <p class="flex justify-center">
-    \(f(x) = a^x mod(N) \hspace{16pt} (X mod(Y) は X を Y で割った余りを表す)\)
-  </p>
-
-  <p>これは周期関数となり、その反復周期 \(r\) から \(N\) の因数を求められる。</p>
-</div>
-
-<p>
-  分かりやすくするために、\(a\) や \(N\) に具体的な値を入れて関数 \(f(x)\)
-  がどう動くか見ていきましょう。 因数分解したい数 \(N\) を 15 とします。 \(a\) は \(N\) より小さく
-  \(N\) と共通の因数を持たなければ何でも良いので、ここでは 2 とします。すると、\(f(x)\)
-  は次のように書き直せます。
-</p>
-
-<p class="flex justify-center">\(f(x) = 2^x mod(15)\)</p>
-
-<figure>
-  <img src="./images/shore_mod15.png" class="h-auto w-full" />
-</figure>
-
-<p>
-  グラフから一目瞭然のとおり、この関数は周期関数になっており、反復周期 \(r\) は 4 です。x が 4
-  増えるごとに、まったく同じ形の波が現れるからです。
-</p>
-
-<p>反復周期 \(r = 4\) が求まれば、\(N\) の因数はそれぞれ次の単純な計算で求まります。</p>
-
-<ul>
-  <li>\(gcd(N, a^{r/2} + 1)\)</li>
-  <li>\(gcd(N, a^{r/2} - 1)\)</li>
-</ul>
-
-<p>
-  ここで出てくる \(gcd\) とは最大公約数 (greatest common divisor)
-  の略で、古典コンピュータでも高速に計算できる処理です。 たとえば \(N = 15\)
-  の場合で具体的に計算してみると、\(a = 2\), 周期 \(r = 4\) だったので、
-</p>
-
-<ul>
-  <li>\(gcd(N, a^{r/2} + 1) = gcd(15, 2^{4/2} + 1) = gcd(15, 5) = 5\)</li>
-  <li>\(gcd(N, a^{r/2} - 1) = gcd(15, a^{4/2} - 1) = gcd(15, 3) = 3\)</li>
-</ul>
-
-<p>となり、たしかに \(15 = 5 \times 3\) が求まりました!</p>
-
-<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
-  <strong>注意点:</strong> 周期 \(r\) が偶数の場合のみ gcd が計算できることに注意してください。 N=15
-  の場合、\(a\) を 2 とすると偶数の周期 \(r = 4\) が求まります。 選ぶ \(a\) の値によっては \(r\)
-  が偶数になりません。 また \(r\) が偶数であっても、gcd の結果が \(N\)
-  の因数にならない場合があります (因数かどうかは、積が \(N\)
-  になるかどうかを調べるだけで簡単にチェックできます)。
-  このため実際のショアのアルゴリズムでは、\(r\) が偶数になり、かつ正しい因数が求まるまで、\(a\)
-  をランダムに選び計算を繰り返します。
-</div>
-
-<h2>古典コンピュータでショアのアルゴリズムを実行すると?</h2>
-
-<p>
-  もしショアのアルゴリズムを古典コンピュータで実行すると、計算量はどうなるでしょうか。
-  ショアのアルゴリズムの核心は、f(x) の反復周期 r を求める部分でした。
-  古典コンピュータで周期を求めるには、f(x) の同じ値 (1, 2, 4, 8 など)
-  が出てくる間隔を求めることで周期が求まります。 これは、f(x) の 1 つの周期には同じ値が 1
-  度しか出てこないことが数学的に分かっているためです。 これを使えばたとえば、x を 1
-  つずつ増やしながら f(x) がふたたび 1 となる点の x を求めることで r も求まります。
+  周期 \(r\) を求めるには、パターンを取り出すツールである QFT を使います。 たとえば \(N = 15\), \(a
+  = 2\) の場合、後で実際に実行して確認しますが、 計算した \(2^x\,mod(15)\) に QFT
+  を適用し測定すると、確率のピークがいくつか得られます。
 </p>
 
 <figure>
-  <img src="./images/shore_mod15_r.png" class="h-auto w-full" />
+  <img src="./images/shor_qft_peaks.png" class="h-auto w-full" />
 </figure>
 
 <p>
-  問題は、N のビット数が増えるにつれて反復周期 r が指数関数的に増えることです。
-  このため、古典コンピュータではショアのアルゴリズムを使ってもやはり指数時間かかってしまいます。
+  確率のピークは、周期 \(r\) のヒントを与えるものです。 ピークの数はちょうど周期 \(r\)
+  と同じになり、0 から始まって等間隔に並びます。
 </p>
 
-<h2>まとめ</h2>
+<p>
+  測定すると 0, 4, 8, 12 のうち 1 つがランダムに手に入るので、測定結果からは直接周期 \(r\)
+  は得られません。 しかし、これらは等間隔でありまた x の範囲は 0 〜 15 と分かっていることから、周期
+  \(r\) の候補が推定できます。
+</p>
 
 <p>
-  ショアの因数分解アルゴリズムは、関数 \(f(x) = a^x mod(N)\)
-  の反復周期を求めるという別問題を解くことで因数を求めます。
-  この周期を求める計算は、古典コンピュータでは指数時間が必要なため、量子コンピュータを使います。
-  求めた周期を使って古典コンピュータで gcd を計算することで、\(N\) の因数が求まります。
+  この \(r\) の候補を出すアルゴリズムを連分数アルゴリズムと呼びます。 詳細は省きますが<label for="margin-note-cfa" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-cfa" class="margin-note__toggle hidden"><span class="margin-note">興味のある読者は、Qiskit
+  チュートリアル「ショアのアルゴリズム」を参照してください。<a
+    href="https://qiskit.org/textbook/ja/ch-algorithms/shor.html"
+    >https://qiskit.org/textbook/ja/ch-algorithms/shor.html</a
+  ></span> これは古典コンピュータで計算でき、\(N = 15\), \(a = 2\) の場合には \(r\)
+  の候補として 4 と 8 が得られます。
+</p>
+
+<p>
+  あとは \(r = 4, 8\) それぞれの候補について \(gcd(N, a^{r/2} + 1)\) と \(gcd(N, a^{r/2} - 1)\)
+  を計算して、それぞれが \(N = 15\) の因数になっているかチェックします。 \(r = 4\) の場合因数 3 と 5
+  がみつかるので、計算は終了です。
 </p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
     <a
       class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./qpe_output.html"
+      href="./shor_fx.html"
       ><svg
   class="mr-3 h-4 w-auto overflow-visible text-slate-400
       group-hover:text-slate-600 dark:group-hover:text-slate-300"
@@ -1484,9 +1403,17 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-量子位相推定の出力</a
+\(a^x\,mod(N)\) の計算</a
     >
      
+    <a
+      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      href="./shor_u.html"
+      >\(a^xmod(N)\) の実装<svg class="ml-3 h-4 w-auto overflow-visible
+      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+</a
+    >
+    
   </div>
 </footer>
 </div>

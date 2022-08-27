@@ -5,6 +5,8 @@ title: 別問題に帰着する
 description: 因数分解を反復周期 (位数) 発見問題として解く
 prev: 量子位相推定の出力
 prev_url: ./qpe_output.html
+next: \(a^xmod(N)\) の計算
+next_url: shor_fx.html
 ---
 
 <p>
@@ -19,8 +21,8 @@ prev_url: ./qpe_output.html
   古典の因数分解アルゴリズムである「一般数体ふるい法」の実行時間は、因数分解したい数が大きくなるにつれて指数関数的に増えます。
   一方でショアのアルゴリズムは、多項式時間に留まります。 分かりやすく具体的な値で言うと、1024
   ビットの整数を因数分解するのに必要な計算量は、古典コンピュータ (一般数体ふるい法) で
-  \(O(10^{278})\) です。 これに対して、ショアのアルゴリズムは \(O(10^{61})\)
-  となり、計算量を大幅に減らせます。
+  \(O(10^{278})\) です。 これに対して、ショアのアルゴリズムは \(O(10^{61})\) となり、\(10^{278}
+  \rightarrow 10^{61}\) と計算量を大幅に減らせます。
 </p>
 
 <h2>因数分解を別問題として解く</h2>
@@ -57,7 +59,7 @@ prev_url: ./qpe_output.html
 <p class="flex justify-center">\(f(x) = 2^x mod(15)\)</p>
 
 <figure>
-  <img src="./images/shore_mod15.png" class="h-auto w-full" />
+  <img src="./images/shor_mod15.png" class="h-auto w-full" />
 </figure>
 
 <p>
@@ -107,7 +109,7 @@ prev_url: ./qpe_output.html
 </p>
 
 <figure>
-  <img src="./images/shore_mod15_r.png" class="h-auto w-full" />
+  <img src="./images/shor_mod15_r.png" class="h-auto w-full" />
 </figure>
 
 <p>

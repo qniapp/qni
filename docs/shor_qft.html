@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>はじめに</title>
+    <title>周期パターンの読み出し</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -111,7 +111,7 @@
    
   <a
     href="./"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">はじめに</span>
     
@@ -713,7 +713,7 @@
    
   <a
     href="./"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">はじめに</span>
     
@@ -1337,141 +1337,2738 @@
           <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-zinc-200 pb-10">
               <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-sky-600">
-                イントロダクション
+                ショアの因数分解
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-zinc-900">
-                  はじめに
+                  周期パターンの読み出し
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-zinc-500">実践による量子コンピュータプログラミング</p>
+              <p class="mt-1 mb-0 text-lg text-zinc-500">周期 r を決めるためのパターンを QFT で調べる</p>
             </div>
             <div class="content-with-margin"><p>
-  1980 年代初頭に量子コンピュータのアイディアは生まれました<label for="margin-note-preskill" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-preskill" class="margin-note__toggle hidden"><span class="margin-note">John Preskill,
-  <a href="https://arxiv.org/abs/2106.10522" class="italic">Quantum computing 40 years later</a>
-  (2021) </span>。
-  そのきっかけの一つとなった、かの大物理学者ファインマンの「自然をシミュレーションしたければ、量子力学の原理でコンピュータを作らなくてはならない」という言葉はあまりにも有名です。
+  あとは状態ベクトルに展開された \(2^x mod(15)\) の周期パターンを QFT で読み出すだけです。
+  測定した値は 0, 4, 8, 12 のいずれかになるはずで、連分数アルゴリズムにかければ、\(r = 4, 8\)
+  が得られます。 そして gcd を計算して実際に \(N = 15\) の約数として正しい 3, 5
+  が求まるという流れです。
 </p>
 
 <p>
-  量子力学の原理でコンピュータを作るとはどういうことでしょうか?
-  量子コンピュータと従来のコンピュータの大きな違いは、情報の単位であるビットの実装方式にあります。
-  ノートパソコンやスマホから最新のゲーム機、世界最速のスパコンといった従来のコンピュータの内部構造は、古典物理学、より正確には電磁気学で説明できます。
-  これは、ビットが電磁気学に基いた基本素子である、コンデンサとして実装されているからです。
-  一方で量子コンピュータは原子や電子、光子といった量子をビットとして使います。
+  ここで QFT をなんとなく回路全体に適用したくなりますが、それは間違いです。 QFT
+  で取り出したいパターンがどのように状態ベクトル中に埋め込まれているか、もう一度確認してみましょう。
 </p>
 
-<p>
-  量子をビットとして使う目的は、計算の高速化です。 量子の不思議な振舞いを利用することで、ミクロな
-  "自然" のシミュレーション (原子や分子といった量子系のシミュレーション)
-  に必要な膨大な計算を高速化できるのでは? というのが、ファインマンのもともとのアイデアです。
-</p>
+<div class="flex w-min flex-col">
+  <div class="flex flex-row justify-center">
+    <span class="mb-4 text-xl font-bold">f(x) の値</span>
+  </div>
+  <div class="mb-2 flex flex-row justify-end">
+    <div class="w-8 text-center"><span class="text-xl">0</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">1</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">2</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">3</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">4</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">5</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">6</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">7</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">8</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">9</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">10</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">11</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">12</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">13</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">14</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">15</span></div>
+  </div>
 
-<p>
-  このアイデアをきっかけに、従来のさまざまな計算を高速化できる、量子コンピュータ向けのアルゴリズム探しが始まりました。
-  そして 1990 年代には、量子探索<label for="margin-note-grover" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-grover" class="margin-note__toggle hidden"><span class="margin-note">開発者であるコンピュータ科学者、ロブ・グローバーの名前にちなんで、グローバーのアルゴリズムとしても知られています。Lov
-  K. Grover,
-  <a href="https://arxiv.org/abs/quant-ph/9605043" class="italic"
-    >A fast quantum mechanical algorithm for database search</a
-  >
-  (1996)</span>と量子因数分解<label for="margin-note-shor" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-shor" class="margin-note__toggle hidden"><span class="margin-note">開発者である数学者、ピーター・ショアの名前にちなんで、ショアのアルゴリズムとしても知られています。Peter
-  W. Shor,
-  <a href="https://arxiv.org/abs/quant-ph/9508027" class="italic"
-    >Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum
-    Computer</a
-  >
-  (1995)</span>という最も有望で代表的な量子コンピュータアルゴリズムの 2
-  つが開発されました。
-</p>
+  <div class="flex flex-row">
+    <div class="flex flex-col justify-center">
+      <span class="mr-4 whitespace-nowrap text-xl font-bold">x の値</span>
+    </div>
+    <div class="mr-2 flex flex-col">
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>0</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>1</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>2</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>3</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>4</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>5</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>6</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>7</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>8</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>9</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>10</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>11</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>12</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>13</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>14</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>15</span></div>
+    </div>
+    <div class="flex flex-col justify-start">
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="2"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="3"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="4"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="5"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="6"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="7"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="8"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="9"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="10"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="11"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="12"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="13"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="14"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="15"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
-<p>
-  量子探索の威力を理解するために、昔ながらの電話帳で特定の電話番号に一致する名前を検索することを考えてみましょう。電話帳の登録件数が
-  1 万件だとすると、平均してその半分の 5,000 件には目を通さなければ目的の名前にはたどり着きません。
-  一方、量子探索アルゴリズムでは、たった 100 回の検索で十分です。 もし量子コンピュータが量子探索で
-  5,000 回の推測をしたならば、実に 2,500 万件の電話帳を検索できます。
-  このように、量子探索アルゴリズムは巨大なリストの中から特定のアイテムを効率的に検索できます。
-</p>
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="16"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="17"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="18"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="19"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="20"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="21"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="22"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="23"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="24"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="25"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="26"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="27"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="28"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="29"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="30"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="31"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
-<p>
-  量子因数分解アルゴリズムは、セキュリティに対して脅威 (株価の下落を含む)
-  をもたらすものです。というのも、インターネット・セキュリティの最も一般的な方式である公開鍵暗号は、特定の数学問題（長さ数百桁の数の因数分解など）を事実上解くことが不可能であることに依存しているためです。
-  量子アルゴリズムは、最もよく知られた古典的なアルゴリズムよりも指数関数的に速くこのタスクを実行できるため、現代の暗号のいくつかの形式は、暗号解読者を阻止できません。
-</p>
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="32"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="33"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="34"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="35"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="36"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="37"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="38"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="39"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="40"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="41"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="42"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="43"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="44"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="45"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="46"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="47"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
-<p>
-  このように 1990
-  年代から有望なアルゴリズムがあるにもかかわらず、量子コンピュータ自体については、まだまだ誤解されて伝わっているのが現状です。
-  これは、量子アルゴリズムの並外れた強力さと、「量子」という言葉が持つ神秘性によるものかもしれません。
-  現在の量子コンピュータはまだまだ未熟で不安定であるにもかかわらず、スパコンを凌駕する実用的な量子コンピュータがすでに稼動しているかのように誤解させるネットニュースも少なくありません。
-  極端な例としては、「量子重ね合わせ」「量子もつれ」といったキャッチーなキーワードを濫用した、量子とは無関係な怪しいビジネスすら存在します。
-</p>
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="48"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="49"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="50"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="51"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="52"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="53"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="54"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="55"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="56"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="57"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="58"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="59"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="60"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="61"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="62"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="63"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
-<p>
-  量子コンピュータの正しい知識が広まらない原因の 1 つは、その敷居が高すぎることです。
-  クラウド越しに本物の量子コンピュータを使える現在でさえ、量子コンピュータの初級コンテンツは不足しています。
-  好奇心旺盛なプログラマが量子コンピュータを勉強しようと、うっかり専門の教科書や大学の講義スライドに手を出してしまい、そこにぎっしり詰まった高度な物理学や数学を前に挫折してしまった例も多いはずです。
-</p>
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="64"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="65"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="66"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="67"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="68"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="69"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="70"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="71"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="72"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="73"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="74"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="75"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="76"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="77"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="78"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="79"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
-<p>
-  Python や JavaScript などのプログラミング解説書には、高度な数式はひとつも出てきません。
-  ならば、量子コンピュータプログラミングにも、もっとそんな従来的スタイルのガイドブックやチュートリアルがあってもいいのではないのでしょうか?
-</p>
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="80"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="81"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="82"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="83"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="84"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="85"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="86"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="87"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="88"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="89"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="90"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="91"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="92"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="93"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="94"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="95"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
-<p>
-  実際に、量子コンピュータプログラミングを学ぶのに複雑な数学を理解する必要はありません。
-  今までやってきたプログラミングと同様に、量子コンピュータの命令やアルゴリズムがどのように動作するかの感覚をつかむだけでよいのです。
-  基本的な命令とアルゴリズムを理解したら、必要に応じて、次のレベルに進むための数学を少しずつ学んでいきましょう。
-  このことを念頭に置いて、本チュートリアルでは、必要な場合以外は数学的な専門用語を避け、実用的な観点から量子コンピュータプログラミングを紹介します。
-</p>
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="96"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="97"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="98"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="99"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="100"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="101"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="102"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
-<p>
-  このチュートリアルは、量子コンピュータプログラミングの実践的入門です。特長として、我々が開発するオープンソースな量子コンピュータシミューレータ
-  Qni (キューニ)<label for="margin-note-qni" class="margin-note__toggle sm:after:hidden"></label><input type="checkbox" id="margin-note-qni" class="margin-note__toggle hidden"><span class="margin-note">
-  <img
-    src="./images/introduction/qni_screenshot_grover.png"
-    class="my-2 border border-neutral-300"
-  />
-  Qni は量子プログラミング環境を提供する Web サービスです。<a href="https://qniapp.net/"
-    >https://qniapp.net</a
-  >
-  で誰でも無料で利用できます。</span> をそこかしこで使っています。
-  以下のようにチュートリアル中に埋め込まれた Qni で、学んだことをすぐ実験できるようになっています。
-</p>
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="103"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="104"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="105"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="106"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="107"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="108"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="109"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
- <div class="flex flex-col">
-  <div class="mini-qni">
-    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-      <circuit-editor class="flex h-full w-full flex-col">
-        <div
-  id="palette"
-  class="mb-10 flex w-min space-x-2 rounded-xl bg-white px-4 py-5 drop-shadow-xl"
->
-  <palette-dropzone><h-gate data-hoverable></h-gate></palette-dropzone><palette-dropzone><control-gate data-hoverable></control-gate></palette-dropzone><palette-dropzone><x-gate data-hoverable></x-gate></palette-dropzone>
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="110"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="111"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="112"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="113"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="114"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="115"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="116"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="117"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="118"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="119"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="120"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="121"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="122"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="123"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="124"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="125"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="126"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="127"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="128"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="129"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="130"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="131"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="132"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="133"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="134"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="135"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="136"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="137"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="138"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="139"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="140"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="141"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="142"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="143"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="144"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="145"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="146"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="147"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="148"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="149"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="150"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="151"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="152"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="153"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="154"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="155"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="156"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="157"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="158"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="159"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="160"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="161"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="162"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="163"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="164"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="165"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="166"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="167"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="168"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="169"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="170"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="171"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="172"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="173"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="174"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="175"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="176"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="177"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="178"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="179"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="180"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="181"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="182"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="183"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="184"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="185"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="186"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="187"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="188"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="189"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="190"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="191"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="192"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="193"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="194"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="195"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="196"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="197"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="198"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="199"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="200"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="201"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="202"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="203"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="204"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="205"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="206"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="207"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="208"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="209"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="210"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="211"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="212"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="213"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="214"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="215"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="216"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="217"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="218"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="219"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="220"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="221"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="222"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="223"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="224"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="225"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="226"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="227"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="228"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="229"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="230"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="231"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="232"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="233"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="234"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="235"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="236"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="237"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="238"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="239"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
+      <div class="flex w-min flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="240"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="241"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="241"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="243"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="244"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="245"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="246"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="247"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="248"
+  data-amplitude="0.25"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="249"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="250"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="251"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="252"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="253"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="254"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="255"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
+    </div>
+  </div>
 </div>
 
+<p>
+  ここで取り出したいのは、確率がゼロではない振幅が 3 つおきに登場しているというパターンです。
+  この「3 つおき」は \(x\) の値として現れる情報です。 なので QFT は次のように \(x\)
+  を表す量子ビットにだけにかける必要があります。
+</p>
 
+<div class="relative my-5 mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-2xl"
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
             class="inline-block h-10 w-10 p-1"
           >
-            <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-zinc-200">
-              <svg class="text-zinc-700" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.0505 9H5.5C4.11929 9 3 7.88071 3 6.5C3 5.11929 4.11929 4 5.5 4H15.0505M8.94949 20H18.5C19.8807 20 21 18.8807 21 17.5C21 16.1193 19.8807 15 18.5 15H8.94949M3 17.5C3 19.433 4.567 21 6.5 21C8.433 21 10 19.433 10 17.5C10 15.567 8.433 14 6.5 14C4.567 14 3 15.567 3 17.5ZM21 6.5C21 8.433 19.433 10 17.5 10C15.567 10 14 8.433 14 6.5C14 4.567 15.567 3 17.5 3C19.433 3 21 4.567 21 6.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+            >
+              <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
             </div>
           </inspector-button>
         </div>
 
         <quantum-circuit
-          class="mb-10 self-center md:self-start"
+          class="mt-12 mb-40"
           data-target="quantum-simulator.circuit circuit-editor.circuit"
           data-min-wire-count="1"
-          data-max-wire-count="2"
-          data-min-step-count="5"
-          data-json='{"cols":[["|0>","|0>"],["{量子もつれ"],["H"],["•","X"],["}"],["Measure"],[1,"Measure"]]}'
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[f(x)を入れる用"],["|1>","|0>","|0>","|0>"],["]"],[1],["[x=0〜15"],[1,1,1,1,"|0>","|0>","|0>","|0>"],[1,1,1,1,"H","H","H","H"],["]"],[1],["[左シフト mod(15)"],[1,1,"Swap","Swap","•"],[1,"Swap","Swap",1,"•"],["Swap","Swap",1,1,"•"],["]"],[1],["[左シフト2回 mod(15)"],[1,"Swap",1,"Swap",1,"•"],["Swap",1,"Swap",1,1,"•"],["]"],[1],["{QFT"],[1,1,1,1,1,1,1,"H"],[1,1,1,1,1,1,"P(-π_2)","•"],[1,1,1,1,1,"P(-π_4)",1,"•"],[1,1,1,1,"P(-π_8)",1,1,"•"],[1,1,1,1,1,1,"H"],[1,1,1,1,1,"P(-π_2)","•"],[1,1,1,1,"P(-π_4)",1,"•"],[1,1,1,1,1,"H"],[1,1,1,1,"P(-π_2)","•"],[1,1,1,1,"H"],[1,1,1,1,"Swap",1,1,"Swap"],[1,1,1,1,1,"Swap","Swap"],["}"],[1],[1,1,1,1,"Measure","Measure","Measure","Measure"]]}'
         >
         </quantum-circuit>
 
@@ -1479,117 +4076,51 @@
           id="circle-notation"
           data-target="quantum-simulator.circleNotation"
           data-qubit-circle-popup-template-id="qubit-circle-popup"
-          class="z-40 flex w-auto flex-row justify-center self-center rounded-xl bg-white drop-shadow-xl md:self-start"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
           data-padding-X="16"
           data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
+
+      <run-circuit-button
+  class="absolute bottom-0 right-0 z-40 mr-6 mb-8 block h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md"
+  data-targets="quantum-simulator.runCircuitButtons"
+></run-circuit-button>
+
     </quantum-simulator>
-  </div>
-  <div class="md:mr-auto md:w-7/12 flex flex-row">
-    <div class="bg-sky-500 px-4 py-2 rounded-b-md shrink">
-      <a href="https://qniapp.net/%7B%22cols%22:[[%22%7C0%3E%22,%22%7C0%3E%22],[%22%7B%E9%87%8F%E5%AD%90%E3%82%82%E3%81%A4%E3%82%8C%22],[%22H%22],[%22%E2%80%A2%22,%22X%22],[%22%7D%22],[%22Measure%22],[1,%22Measure%22]]%7D" target="_blank" class="block flex flex-row text-white no-underline">
-        <span class="mr-2">Qniで開く</span>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M21 9L21 3M21 3H15M21 3L13 11M10 5H7.8C6.11984 5 5.27976 5 4.63803 5.32698C4.07354 5.6146 3.6146 6.07354 3.32698 6.63803C3 7.27976 3 8.11984 3 9.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H14.2C15.8802 21 16.7202 21 17.362 20.673C17.9265 20.3854 18.3854 19.9265 18.673 19.362C19 18.7202 19 17.8802 19 16.2V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </div>
   </div>
 </div>
 
-
 <p>
-  Qni
-  を使えば、シミュレータ上であれこれ実験を重ねることで、量子コンピュータプログラミングの直感的感覚を養うことができます。
-  操作結果はリアルタイムに表示されるので、実機を使った演習よりもずっと効率的であり、教育的でもあります。
-  より高度な量子アルゴリズムや量子情報といった専門分野を勉強する際にも、Qni
-  は電卓がわりとしてちょっとした計算にも役立ちます。
-</p>
-
-<p>
-  チュートリアルのもう一つの特長は、チュートリアル中に確認クイズ<label for="margin-note-" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-" class="margin-note__toggle hidden"><span class="margin-note">Andy Matuschak
-  氏によるオープンソースの無料学習ツール
-  <a href="https://withorbit.com/">Orbit</a> を利用しています。クイズ機能を利用する場合は
-  <a href="https://withorbit.com/terms">Orbit の利用規約及びプライバシー・ポリシー</a
-  >を確認してください。</span>が埋め込まれていることです。
-  クイズでは、それぞれの記事のポイントを 1 問 1 答形式で出題します。
-  一度解いたクイズは、忘却曲線に沿った適切なタイミング (数時間から数日、数ヶ月、時には数年後!)
-  で復習クイズとして再び出題されます。
-  これによって、読者は比較的少ない労力で学んだことを深く内面化できる仕組みになっています。
-  もちろん、クイズに答えずにこのチュートリアルを読み進めることもできますが、ぜひ試してみてください。
-</p>
-
-<orbit-reviewarea color="blue">
-  <orbit-prompt
-    question="**量子コンピュータ**の名前の由来は?"
-    answer="動作原理が量子力学に基づくことから名付けられた"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="現在のコンピュータを、量子コンピュータとの対比で何と呼ぶ?"
-    answer="古典コンピュータ"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="量子コンピュータでビットの格納に使われる量子を 1 つ挙げると?"
-    answer="原子 or 電子 or 光子"
-  ></orbit-prompt>
-  <orbit-prompt
-    cloze="90 年代に提案された、量子コンピュータ向けの代表的なアルゴリズムは{量子探索}と{量子因数分解}"
-  ></orbit-prompt>
-  <orbit-prompt question="量子探索の主な用途は?" answer="リスト検索"></orbit-prompt>
-  <orbit-prompt question="量子探索アルゴリズムの別名は?" answer="グローバーのアルゴリズム">
-  </orbit-prompt>
-  <orbit-prompt
-    question="量子因数分解アルゴリズムの別名は?"
-    answer="ショアのアルゴリズム"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="量子因数分解によって脅威を受ける分野は何か?"
-    answer="インターネット・セキュリティ"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="量子コンピュータシミュレータ *Qni* の読みは?"
-    answer="キューニ"
-  ></orbit-prompt>
-</orbit-reviewarea>
-
-<p>
-  このチュートリアルは Qni と同様に GitHub でオープンに開発<label for="margin-note-qni-github" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qni-github" class="margin-note__toggle hidden"><span class="margin-note">GitHub の
-  Qni プロジェクトページ: <a href="https://github.com/qniapp/">https://github.com/qniapp/</a></span>しており、読者からのフィードバックを歓迎しています。
-</p>
-
-<ul>
-  <li>
-    <a href="https://github.com/qniapp/qni/issues?q=is%3Aissue+is%3Aopen+label%3Atutorial"
-      >質問する</a
-    >
-    ─ 読んでも分からなかったことは、お気軽に GitHub まで
-  </li>
-  <li>
-    <a href="https://github.com/qniapp/qni/labels/tutorial%20typo">問題を報告する</a> ─ typo
-    やレイアウト崩れ等の問題はお知らせください
-  </li>
-  <li>
-    <a href="https://github.com/qniapp/qni/pulls">著者に加わる</a> ─ 新しい記事の追加などは Pull
-    Request をお願いします
-  </li>
-</ul>
-
-<p>
-  本チュートリアルでは、読者からのフィードバックを元にアップデートを続けていくことで、最新のトピックにも対応しつつ、初心者にも優しい内容を充実させていく予定です。
+  最後の測定で 0, 4, 8, 12 のいずれかが求まることを確認してください。 長い道程でしたが、\(15 = 3
+  \times 5\) の因数分解を実行するショアのアルゴリズムができました!
 </p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
-     
-    <a
-      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./qpu.html"
-      >QPU とは<svg class="ml-3 h-4 w-auto overflow-visible
-      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-</a
-    >
     
+    <a
+      class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      href="./shor_u.html"
+      ><svg
+  class="mr-3 h-4 w-auto overflow-visible text-slate-400
+      group-hover:text-slate-600 dark:group-hover:text-slate-300"
+  width="15"
+  height="15"
+  viewBox="0 0 15 15"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z"
+    fill="currentColor"
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+  ></path>
+</svg>
+\(a^xmod(N)\) の実装</a
+    >
+     
   </div>
 </footer>
 </div>
