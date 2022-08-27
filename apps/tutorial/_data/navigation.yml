@@ -163,8 +163,8 @@
     - name: 周期 \(r\) を求める
       link: ./shor_r.html
       new: true
-    - name: ショアの因数分解回路
-      link: ./shor_circuit.html
+    - name: U の実装
+      link: ./shor_u.html
       new: true
 - name: ふろく
   pages:

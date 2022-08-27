@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>ショアの因数分解回路</title>
+    <title>U の実装</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -709,10 +709,10 @@
   </a>
    
   <a
-    href="./shor_circuit.html"
+    href="./shor_u.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
-    <span class="flex-1">ショアの因数分解回路</span>
+    <span class="flex-1">U の実装</span>
     
       <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
     
@@ -1356,10 +1356,10 @@
   </a>
    
   <a
-    href="./shor_circuit.html"
+    href="./shor_u.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
-    <span class="flex-1">ショアの因数分解回路</span>
+    <span class="flex-1">U の実装</span>
     
       <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
     
@@ -1431,13 +1431,25 @@
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-zinc-900">
-                  ショアの因数分解回路
+                  U の実装
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-zinc-500">いよいよ 15 = 3 x 5 を計算</p>
+              <p class="mt-1 mb-0 text-lg text-zinc-500">べき剰余の実装方法</p>
             </div>
             <div class="content-with-margin"><p>
-  ショアのアルゴリズムで \(a^xmod(N)\) (べき剰余) を求める回路は、まともに実装すると非常に複雑です。
+  今回は \(a^x\,mod(N)\) を実際に計算する回路を Qni で実装します。
+  以前見たようにこの回路を構成するブラックボックス U ゲートの一つひとつは \(a\,mod(N)\) を計算するのでした。
+  今回はこれらの連続した U をひとまとめにした、\(a^xmod(N)\) 回路 (べき剰余回路) の実装を考えます。
+</p>
+
+<figure>
+  <img src="./images/shor_us.png" class="h-auto w-full" />
+</figure>
+
+<h2>まともに実装した場合</h2>
+
+<p>
+  べき剰余回路は、まともに実装すると非常に複雑です。
   V. Vedral らの論文<label for="margin-note-vedral" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-vedral" class="margin-note__toggle hidden"><span class="margin-note">V. Vedral, A. Barenco, A. Ekert,
   <a href="https://arxiv.org/abs/quant-ph/9511018" class="italic"
     >Quantum Networks for Elementary Arithmetic Operations</a
@@ -1460,12 +1472,16 @@
   <img src="./images/ctrl_mult_mod.png" class="h-auto w-full" />
 </figure>
 
-<h2>べき剰余の簡易実装</h2>
+<p>
+  これをそのまま Qni で実装すると Qni の最大量子ビット数 16 を簡単に超えてしまうため、今回は別の方法を採ります。
+</p>
+
+<h2>べき剰余回路の小さい (ずるい) 実装</h2>
 
 <p>
-  まともにべき剰余回路を実装すると日が暮れてしまう (または、いつ実装できるか分からない)
-  ので、今回は小さい実装を見てみましょう。 \(a^xmod(N)\) はべき乗 \(a^x\) と剰余 \(mod(N)\) の 2
-  つから構成されます。 ごく特別な場合に限定されますが、それぞれを短く実装することができます。
+  今回はずっと小さい実装を見てみましょう。
+  \(a^xmod(N)\) はべき乗 \(a^x\) と剰余 \(mod(N)\) の 2 つから構成されます。
+  ごく特別な場合に限定されますが、それぞれを短く実装できます。
 </p>
 
 <p>
@@ -9610,7 +9626,7 @@
     
     <a
       class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./shor_fx.html"
+      href="./shor_r.html"
       ><svg
   class="mr-3 h-4 w-auto overflow-visible text-slate-400
       group-hover:text-slate-600 dark:group-hover:text-slate-300"
@@ -9627,7 +9643,7 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-\(a^xmod(N)\) の計算</a
+周期 \(r\) を求める</a
     >
      
   </div>
