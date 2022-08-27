@@ -1438,8 +1438,9 @@
             </div>
             <div class="content-with-margin"><p>
   今回は \(a^x\,mod(N)\) を実際に計算する回路を Qni で実装します。
-  以前見たようにこの回路を構成するブラックボックス U ゲートの一つひとつは \(a\,mod(N)\) を計算するのでした。
-  今回はこれらの連続した U をひとまとめにした、\(a^xmod(N)\) 回路 (べき剰余回路) の実装を考えます。
+  以前見たようにこの回路を構成するブラックボックス U ゲートの一つひとつは \(a\,mod(N)\)
+  を計算するのでした。 今回はこれらの連続した U をひとまとめにした、\(a^xmod(N)\) 回路
+  (べき剰余回路) の実装を考えます。
 </p>
 
 <figure>
@@ -1449,8 +1450,8 @@
 <h2>まともに実装した場合</h2>
 
 <p>
-  べき剰余回路は、まともに実装すると非常に複雑です。
-  V. Vedral らの論文<label for="margin-note-vedral" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-vedral" class="margin-note__toggle hidden"><span class="margin-note">V. Vedral, A. Barenco, A. Ekert,
+  べき剰余回路は、まともに実装すると非常に複雑です。 V. Vedral らの論文<label for="margin-note-vedral" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-vedral" class="margin-note__toggle hidden"><span class="margin-note">V.
+  Vedral, A. Barenco, A. Ekert,
   <a href="https://arxiv.org/abs/quant-ph/9511018" class="italic"
     >Quantum Networks for Elementary Arithmetic Operations</a
   >
@@ -1473,15 +1474,15 @@
 </figure>
 
 <p>
-  これをそのまま Qni で実装すると Qni の最大量子ビット数 16 を簡単に超えてしまうため、今回は別の方法を採ります。
+  これをそのまま Qni で実装すると Qni の最大量子ビット数 16
+  を簡単に超えてしまうため、今回は別の方法を採ります。
 </p>
 
 <h2>べき剰余回路の小さい (ずるい) 実装</h2>
 
 <p>
-  今回はずっと小さい実装を見てみましょう。
-  \(a^xmod(N)\) はべき乗 \(a^x\) と剰余 \(mod(N)\) の 2 つから構成されます。
-  ごく特別な場合に限定されますが、それぞれを短く実装できます。
+  今回はずっと小さい実装を見てみましょう。 \(a^xmod(N)\) はべき乗 \(a^x\) と剰余 \(mod(N)\) の 2
+  つから構成されます。 ごく特別な場合に限定されますが、それぞれを短く実装できます。
 </p>
 
 <p>
