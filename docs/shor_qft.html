@@ -1348,13 +1348,14 @@
             </div>
             <div class="content-with-margin"><p>
   あとは状態ベクトルに展開された \(2^x mod(15)\) の周期パターンを QFT で読み出すだけです。
-  測定した値は 0, 4, 8, 12 のいずれかになるはずで、連分数アルゴリズムにかければ、\(r = 4, 8\) が得られます。
-  そして gcd を計算して実際に \(N = 15\) の約数として正しい 3, 5 が求まるという流れです。
+  測定した値は 0, 4, 8, 12 のいずれかになるはずで、連分数アルゴリズムにかければ、\(r = 4, 8\)
+  が得られます。 そして gcd を計算して実際に \(N = 15\) の約数として正しい 3, 5
+  が求まるという流れです。
 </p>
 
 <p>
-  ここで QFT をなんとなく回路全体に適用したくなりますが、それは間違いです。
-  QFT で取り出したいパターンがどのように状態ベクトル中に埋め込まれているか、もう一度確認してみましょう。
+  ここで QFT をなんとなく回路全体に適用したくなりますが、それは間違いです。 QFT
+  で取り出したいパターンがどのように状態ベクトル中に埋め込まれているか、もう一度確認してみましょう。
 </p>
 
 <div class="flex w-min flex-col">
@@ -4037,8 +4038,8 @@
 
 <p>
   ここで取り出したいのは、確率がゼロではない振幅が 3 つおきに登場しているというパターンです。
-  この「3 つおき」は \(x\) の値として現れる情報です。
-  なので QFT は次のように \(x\) を表す量子ビットにだけにかける必要があります。
+  この「3 つおき」は \(x\) の値として現れる情報です。 なので QFT は次のように \(x\)
+  を表す量子ビットにだけにかける必要があります。
 </p>
 
 <div class="relative my-5 mb-10 rounded-md bg-neutral-50">
@@ -4062,22 +4063,22 @@
         </div>
 
         <quantum-circuit
-            class="mt-12 mb-40"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["[f(x)を入れる用"],["|1>","|0>","|0>","|0>"],["]"],[1],["[x=0〜15"],[1,1,1,1,"|0>","|0>","|0>","|0>"],[1,1,1,1,"H","H","H","H"],["]"],[1],["[左シフト mod(15)"],[1,1,"Swap","Swap","•"],[1,"Swap","Swap",1,"•"],["Swap","Swap",1,1,"•"],["]"],[1],["[左シフト2回 mod(15)"],[1,"Swap",1,"Swap",1,"•"],["Swap",1,"Swap",1,1,"•"],["]"],[1],["{QFT"],[1,1,1,1,1,1,1,"H"],[1,1,1,1,1,1,"P(-π_2)","•"],[1,1,1,1,1,"P(-π_4)",1,"•"],[1,1,1,1,"P(-π_8)",1,1,"•"],[1,1,1,1,1,1,"H"],[1,1,1,1,1,"P(-π_2)","•"],[1,1,1,1,"P(-π_4)",1,"•"],[1,1,1,1,1,"H"],[1,1,1,1,"P(-π_2)","•"],[1,1,1,1,"H"],[1,1,1,1,"Swap",1,1,"Swap"],[1,1,1,1,1,"Swap","Swap"],["}"],[1],[1,1,1,1,"Measure","Measure","Measure","Measure"]]}'
+          class="mt-12 mb-40"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[f(x)を入れる用"],["|1>","|0>","|0>","|0>"],["]"],[1],["[x=0〜15"],[1,1,1,1,"|0>","|0>","|0>","|0>"],[1,1,1,1,"H","H","H","H"],["]"],[1],["[左シフト mod(15)"],[1,1,"Swap","Swap","•"],[1,"Swap","Swap",1,"•"],["Swap","Swap",1,1,"•"],["]"],[1],["[左シフト2回 mod(15)"],[1,"Swap",1,"Swap",1,"•"],["Swap",1,"Swap",1,1,"•"],["]"],[1],["{QFT"],[1,1,1,1,1,1,1,"H"],[1,1,1,1,1,1,"P(-π_2)","•"],[1,1,1,1,1,"P(-π_4)",1,"•"],[1,1,1,1,"P(-π_8)",1,1,"•"],[1,1,1,1,1,1,"H"],[1,1,1,1,1,"P(-π_2)","•"],[1,1,1,1,"P(-π_4)",1,"•"],[1,1,1,1,1,"H"],[1,1,1,1,"P(-π_2)","•"],[1,1,1,1,"H"],[1,1,1,1,"Swap",1,1,"Swap"],[1,1,1,1,1,"Swap","Swap"],["}"],[1],[1,1,1,1,"Measure","Measure","Measure","Measure"]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -4092,8 +4093,8 @@
 </div>
 
 <p>
-  最後の測定で 0, 4, 8, 12 のいずれかが求まることを確認してください。
-  長い道程でしたが、\(15 = 3 \times 5\) の因数分解を実行するショアのアルゴリズムができました!
+  最後の測定で 0, 4, 8, 12 のいずれかが求まることを確認してください。 長い道程でしたが、\(15 = 3
+  \times 5\) の因数分解を実行するショアのアルゴリズムができました!
 </p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
