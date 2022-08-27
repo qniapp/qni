@@ -160,6 +160,9 @@
     - name: \(a^xmod(N)\) の計算
       link: ./shor_fx.html
       new: true
+    - name: 周期 \(r\) を求める
+      link: ./shor_r.html
+      new: true
     - name: ショアの因数分解回路
       link: ./shor_circuit.html
       new: true
