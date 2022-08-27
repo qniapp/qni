@@ -160,9 +160,8 @@ next_url: ./shor_r.html
   この回路の形を見て、何か思い出した人はいるでしょうか？ そう、<a
     href="./quantum_phase_estimation_circuit.html"
     >量子位相推定回路</a
-  >の前半とそっくりです。 実際にショアの因数分解回路の後半では、\(f(x)\) の周期 \(r\)
-  を求めるために逆 QFT を実行します。
-  こうなると量子位相推定回路と完全に見ためは一緒で、数学的にも同等です。
+  >の前半とそっくりです。 実際にショアの因数分解回路の後半では、\(f(x)\) の周期 \(r\) を求めるために
+  QFT を実行します。 こうなると量子位相推定回路と完全に見ためは一緒で、数学的にも同等です。
 </p>
 
 <figure>
@@ -176,8 +175,7 @@ next_url: ./shor_r.html
   「ショアのアルゴリズム」を参照してください。<a
     href="https://qiskit.org/textbook/ja/ch-algorithms/shor.html"
     >https://qiskit.org/textbook/ja/ch-algorithms/shor.html</a
-  >{% endnmargin_note %}。 逆 QFT
-  のパートについては次の回に説明しますので、動作の理解には問題ありません。
+  >{% endnmargin_note %}。 QFT のパートについては次回説明しますので、動作の理解には問題ありません。
 </p>
 
 <h2>まとめ</h2>
@@ -191,4 +189,4 @@ next_url: ./shor_r.html
   <img src="./images/shor_mod15.png" class="h-auto w-full" />
 </figure>
 
-<p>ここから周期 \(r\) を取り出すには、パターンを取り出すツールである逆 QFT を使います。</p>
+<p>ここから周期 \(r\) を取り出すには、パターンを取り出すツールである QFT を使います。</p>
