@@ -1349,8 +1349,8 @@
             <div class="content-with-margin"><p>
   今回はいよいよ、\(a^x\,mod(N)\) を実際に計算できる回路を実装します。
   前々回では、ブラックボックスである U ゲートをいくつも使った場合の実装を見てきました。
-  この実装では、U ゲートの一つひとつは \(a\,mod(N)\) を計算するのでした。
-  今回は、これらの連続した U と同じ動作をする一つの \(a^xmod(N)\) 回路 (べき剰余回路) の実装を考えます。
+  この実装では、U ゲートの一つひとつは \(a\,mod(N)\) を計算するのでした。 今回は、これらの連続した U
+  と同じ動作をする一つの \(a^xmod(N)\) 回路 (べき剰余回路) の実装を考えます。
 </p>
 
 <figure>
@@ -1360,8 +1360,7 @@
 <h2>まともに実装した場合</h2>
 
 <p>
-  べき剰余回路は、まともに実装すると非常に大きくなります。 V. Vedral らの論文<label for="margin-note-vedral" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-vedral" class="margin-note__toggle hidden"><span class="margin-note">V.
-  Vedral, A. Barenco, A. Ekert,
+  べき剰余回路は、まともに実装すると非常に大きくなります。 V. Vedral らの論文<label for="margin-note-vedral" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-vedral" class="margin-note__toggle hidden"><span class="margin-note">V. Vedral, A. Barenco, A. Ekert,
   <a href="https://arxiv.org/abs/quant-ph/9511018" class="italic"
     >Quantum Networks for Elementary Arithmetic Operations</a
   >
@@ -1420,8 +1419,8 @@
 <h2>べき剰余回路</h2>
 
 <p>
-  シフト演算とラップアラウンドで \(2^x mod(15)\) を計算する回路を見てみましょう <label for="margin-note-register_order" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-register_order" class="margin-note__toggle hidden"><span class="margin-note">説明の都合上、\(2^x mod(15)\) を書き込む用の 4 量子ビットと \(x\)
-  を入れる用の 4 量子ビットを上下入れ替えてあります。</span>。 \(2^x mod(15)\) を書き込む量子ビットは
+  シフト演算とラップアラウンドで \(2^x mod(15)\) を計算する回路を見てみましょう <label for="margin-note-register_order" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-register_order" class="margin-note__toggle hidden"><span class="margin-note">説明の都合上、\(2^x mod(15)\) を書き込む用の 4 量子ビットと \(x\) を入れる用の 4
+  量子ビットを上下入れ替えてあります。</span>。 \(2^x mod(15)\) を書き込む量子ビットは
   mod(15) のラップアラウンドを実現するので 4 量子ビットになります。
 </p>
 
@@ -4158,8 +4157,7 @@
 </div>
 
 <p>
-  \(f(x) = 2^x mod(15)\)
-  の値は列方向 (縦方向) に読みます。 \(|1\rangle\) や \(|17\rangle\)
+  \(f(x) = 2^x mod(15)\) の値は列方向 (縦方向) に読みます。 \(|1\rangle\) や \(|17\rangle\)
   などに確率が散らばっていますが、測定すると \(f(x)\) は 100% の確率で 1 となります。 これは
   \(f(x)\) を \(|1\rangle\) に初期化したので当然です。 x の値は行方向 (横方向) に読みます。 <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> で重ね合わせを作ったので、x の値は 0 から 15 までそれぞれ 6.25%
   の等しい重みを持ちます。
@@ -4169,8 +4167,8 @@
   回路の次のブロックでは、条件つきの左シフト \(mod(15)\) を計算します。 \(x\) の最下位ビットが 1
   の場合、\(f(x)\) の各ビットを左シフトすることで 2 倍します。
   そして最上位ビットを最下位ビットにラップアラウンドすることで \(mod(15)\) します。
-  このとき状態ベクトルは次の状態になり、\(x\) の最下位ビットが 1 の場合だけ (= \(x\) が偶数の場合だけ)
-  \(f(x)\) が 2 倍されたことが分かります。
+  このとき状態ベクトルは次の状態になり、\(x\) の最下位ビットが 1 の場合だけ (= \(x\)
+  が偶数の場合だけ) \(f(x)\) が 2 倍されたことが分かります。
 </p>
 
 <div class="flex w-min flex-col">
