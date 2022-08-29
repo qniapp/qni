@@ -142,33 +142,29 @@
   pages:
     - name: 固有位相
       link: ./eigenphases.html
-      new: true
     - name: 量子位相推定回路
       link: ./quantum_phase_estimation_circuit.html
-      new: true
     - name: 位相キックバック
       link: ./phase_kickback.html
-      new: true
     - name: 量子位相推定の出力
       link: ./qpe_output.html
+- name: ショアの因数分解
+  pages:
+    - name: 別問題に帰着する
+      link: ./shor_hsp.html
       new: true
-# - name: ショアの因数分解
-#   pages:
-#     - name: 別問題に帰着する
-#       link: ./shor_hsp.html
-#       new: true
-#     - name: \(a^xmod(N)\) の計算
-#       link: ./shor_fx.html
-#       new: true
-#     - name: 周期 \(r\) を求める
-#       link: ./shor_r.html
-#       new: true
-#     - name: \(a^xmod(N)\) の実装
-#       link: ./shor_u.html
-#       new: true
-#     - name: 周期パターンの読み出し
-#       link: ./shor_qft.html
-#       new: true
+    - name: \(a^xmod(N)\) の計算
+      link: ./shor_fx.html
+      new: true
+    - name: 周期 \(r\) を求める
+      link: ./shor_r.html
+      new: true
+    - name: \(a^xmod(N)\) の実装
+      link: ./shor_u.html
+      new: true
+    - name: 周期パターンの読み出し
+      link: ./shor_qft.html
+      new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
