@@ -1090,13 +1090,6 @@
   dependencies:
     prettier ">=1.10"
 
-"@qni/common@^0.0.80":
-  version "0.0.80"
-  resolved "https://registry.yarnpkg.com/@qni/common/-/common-0.0.80.tgz#17d47330cdeb4a5eb4a2dd79c883ae28de6f86f2"
-  integrity sha512-ii1C8uZQftNfpW02d7gFzZQk4xiHc/X0wQG6AGymekxCJBas77IhcOBKU4BAflYfOF5Rc8bfkWEATJL96aMyWA==
-  dependencies:
-    fraction.js "~4.2"
-
 "@rails/ujs@~7.0":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.0.1.tgz#cb515d52c85be107908dd00822042f04e52cdea7"

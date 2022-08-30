@@ -44,7 +44,7 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
-    "@qni/common": "^0.0.80",
+    "@qni/common": "^0.0.83",
     "@qni/elements": "^0.0.83",
     "@qni/simulator": "^0.0.83",
     "@rails/ujs": "~7.0",
