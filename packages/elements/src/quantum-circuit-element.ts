@@ -2,6 +2,7 @@ import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzo
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
+import {QftGateElement, QftGateElementProps} from './qft-gate-element'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
@@ -649,6 +650,32 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Circuit Operation
    */
+  qft(...args: number[] | [QftGateElementProps]): QuantumCircuitElement {
+    let targetBits: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targetBits = args as number[]
+    } else {
+      const props = args[0]
+      targetBits = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const qft = new QftGateElement()
+      if (disabled) qft.disable()
+      return qft
+    }, ...targetBits)
+
+    this.resize()
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
   swap(...targetBits: number[]): QuantumCircuitElement {
     const step = this.applyOperationToTargets(() => new SwapGateElement(), ...targetBits)
     this.updateStepOperationAttributes(step)
@@ -1013,6 +1040,12 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             const rzGate = new RzGateElement()
             rzGate.angle = this.angleParameter(operation.slice(2))
             newStep.appendOperation(rzGate)
+            break
+          }
+          case /^QFT/.test(operation): {
+            const qftGate = new QftGateElement()
+            qftGate.if = this.ifVariable(operation.slice(1))
+            newStep.appendOperation(qftGate)
             break
           }
           case /^Swap$/.test(operation): {

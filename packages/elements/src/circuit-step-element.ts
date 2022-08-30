@@ -4,6 +4,7 @@ import {
   SerializedHGate,
   SerializedMeasurementGate,
   SerializedPhaseGate,
+  SerializedQftGate,
   SerializedRnotGate,
   SerializedRxGate,
   SerializedRyGate,
@@ -42,6 +43,7 @@ import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {PhaseGateElement} from './phase-gate-element'
+import {QftGateElement} from './qft-gate-element'
 import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
@@ -1065,6 +1067,21 @@ export class CircuitStepElement extends HTMLElement {
                 if (controlsStr !== '') serializedGate.controls = gate0.controls
                 serializedStep.push(serializedGate)
               }
+            }
+          }
+          break
+        }
+        case QftGateElement: {
+          const qftGates = sameOps as QftGateElement[]
+          for (const [ifStr, sameIfGates] of groupBy(qftGates, gate => gate.if)) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              const gate0 = sameControlGates[0]
+              const opType = gate0.operationType
+              const targets = sameControlGates.map(each => each.bit)
+              const serializedGate: SerializedQftGate = {type: opType, targets}
+              if (ifStr !== '') serializedGate.if = ifStr
+              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              serializedStep.push(serializedGate)
             }
           }
           break
