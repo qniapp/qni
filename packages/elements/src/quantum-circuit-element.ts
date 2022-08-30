@@ -22,6 +22,7 @@ import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
 import {WriteGateElement} from './write-gate-element'
+import {QftGateElement} from './qft-gate-element'
 
 export type SnapTarget = {
   dropzone: CircuitDropzoneElement | null
@@ -1013,6 +1014,12 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             const rzGate = new RzGateElement()
             rzGate.angle = this.angleParameter(operation.slice(2))
             newStep.appendOperation(rzGate)
+            break
+          }
+          case /^QFT/.test(operation): {
+            const qftGate = new QftGateElement()
+            qftGate.if = this.ifVariable(operation.slice(1))
+            newStep.appendOperation(qftGate)
             break
           }
           case /^Swap$/.test(operation): {

@@ -21,5 +21,6 @@ export * from './control-gate'
 export * from './bloch-display'
 export * from './write-gate'
 export * from './measurement-gate'
+export * from './qft-gate'
 
 export * from './circuit-step'
