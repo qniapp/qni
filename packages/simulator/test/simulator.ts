@@ -260,6 +260,67 @@ QUnit.module('Simulator', () => {
     })
   })
 
+  QUnit.module('.qft', () => {
+    QUnit.test('|0>.qft(0) should be |+>', assert => {
+      const simulator = new Simulator('0')
+      assert.approximatelyEquates(simulator.qft(0).state, new StateVector('+'))
+    })
+
+    QUnit.test('|1>.qft(0) should be |->', assert => {
+      const simulator = new Simulator('1')
+      assert.approximatelyEquates(simulator.qft(0).state, new StateVector('-'))
+    })
+
+    QUnit.test('|+>.qft(0) should be |0>', assert => {
+      const simulator = new Simulator('+')
+      assert.approximatelyEquates(simulator.qft(0).state, new StateVector('0'))
+    })
+
+    QUnit.test('|->.qft(0) should be |1>', assert => {
+      const simulator = new Simulator('-')
+      assert.approximatelyEquates(simulator.qft(0).state, new StateVector('1'))
+    })
+
+    QUnit.test('|i>.qft(0) should be e^{iπ/4}|-i>', assert => {
+      const π = Math.PI
+      const i = Complex.I
+      const e = new Complex(Math.E, 0)
+
+      const simulator = new Simulator('i')
+      assert.approximatelyEquates(
+        simulator.qft(0).state.matrix,
+        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)))
+      )
+    })
+
+    QUnit.test('|-i>.qft(0) should be e^{-iπ/4}|i>', assert => {
+      const π = Math.PI
+      const i = Complex.I
+      const e = new Complex(Math.E, 0)
+
+      const simulator = new Simulator('(-i)')
+      assert.approximatelyEquates(
+        simulator.qft(0).state.matrix,
+        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)))
+      )
+    })
+
+    QUnit.test('|00>.qft(0) should be |0+>', assert => {
+      const simulator = new Simulator('00')
+      assert.approximatelyEquates(simulator.qft(0).state, new StateVector('0+'))
+    })
+
+    QUnit.test('|00>.qft(1) should be |+0>', assert => {
+      const simulator = new Simulator('00')
+      assert.approximatelyEquates(simulator.qft(1).state, new StateVector('+0'))
+    })
+
+    QUnit.test('|00>.qft(0, 1) should be |++>', assert => {
+      const simulator = new Simulator('00')
+      assert.approximatelyEquates(simulator.qft(0, 1).state, new StateVector('++'))
+    })
+  })
+
   QUnit.module('.swap', () => {
     QUnit.test('|01>.swap(0, 1) should be |10>', assert => {
       const simulator = new Simulator('01')
