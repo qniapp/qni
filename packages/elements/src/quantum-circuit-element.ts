@@ -2,6 +2,7 @@ import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzo
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
+import {QftGateElement, QftGateElementProps} from './qft-gate-element'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
@@ -22,7 +23,6 @@ import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
 import {WriteGateElement} from './write-gate-element'
-import {QftGateElement} from './qft-gate-element'
 
 export type SnapTarget = {
   dropzone: CircuitDropzoneElement | null
@@ -643,6 +643,32 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       if (disabled) rz.disable()
       return rz
     }, ...targetBits)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  qft(...args: number[] | [QftGateElementProps]): QuantumCircuitElement {
+    let targetBits: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targetBits = args as number[]
+    } else {
+      const props = args[0]
+      targetBits = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const qft = new QftGateElement()
+      if (disabled) qft.disable()
+      return qft
+    }, ...targetBits)
+
+    this.resize()
 
     return this
   }
