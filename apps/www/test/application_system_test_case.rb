@@ -150,6 +150,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       'Rx' => 'rx-gate',
       'Ry' => 'ry-gate',
       'Rz' => 'rz-gate',
+      'QFT' => 'qft-gate',
       'Swap' => 'swap-gate',
       'Control' => 'control-gate',
       '•' => 'control-gate',
