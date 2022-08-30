@@ -4597,23 +4597,23 @@ var de = u(class {
 }, "o");
 var Zr = de;
 Zr.ZERO = new de(0, 0), Zr.ONE = new de(1, 0), Zr.I = new de(0, 1);
-var ua = "H";
-var ca = "X";
-var pa = "Y";
-var da = "Z";
-var fa = "P";
-var ha = "T";
-var va = "X^\xBD";
-var ma = "Rx";
-var ga = "Ry";
-var ba = "Rz";
-var Bs = "Swap";
+var Bs = "Bloch";
 var Hs = "\u2022";
-var $s = "Bloch";
+var ua = "H";
+var ca = "Measure";
+var pa = "P";
+var da = "QFT1";
+var fa = "X^\xBD";
+var ha = "Rx";
+var va = "Ry";
+var ma = "Rz";
+var $s = "Swap";
+var ga = "T";
 var ec = "|0>";
 var tc = "|1>";
-var ya = "Measure";
-var wa = "QFT1";
+var ba = "X";
+var ya = "Y";
+var wa = "Z";
 var Fs = /* @__PURE__ */ new WeakSet();
 function Ws(r) {
   Fs.add(r), r.shadowRoot && Us(r.shadowRoot), Ys(r), Vs(r.ownerDocument);
@@ -9278,7 +9278,7 @@ var ot = /* @__PURE__ */ __name(class extends Te(Ce(Se(Ee(ye(HTMLElement))))) {
     this.z = 0;
   }
   get operationType() {
-    return $s;
+    return Bs;
   }
   showPopup() {
     this.showInspector();
@@ -9462,7 +9462,7 @@ var ot = /* @__PURE__ */ __name(class extends Te(Ce(Se(Ee(ye(HTMLElement))))) {
         </div>`, this.shadowRoot);
   }
   toJson() {
-    return `"${$s}"`;
+    return `"${Bs}"`;
   }
   updateBlochVector() {
     var t;
@@ -9555,7 +9555,7 @@ var Kt = /* @__PURE__ */ __name(class extends Te(Ce(Uc(Se(Ae(Ee(ye(HTMLElement))
     this.value = "";
   }
   get operationType() {
-    return ya;
+    return ca;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9567,7 +9567,7 @@ var Kt = /* @__PURE__ */ __name(class extends Te(Ce(Uc(Se(Ae(Ee(ye(HTMLElement))
       </div>`, this.shadowRoot);
   }
   toJson() {
-    return this.flag === "" ? `"${ya}"` : `"${ya}>${this.flag}"`;
+    return this.flag === "" ? `"${ca}"` : `"${ca}>${this.flag}"`;
   }
 }, "Kt");
 u(Kt, "MeasurementGateElement"), A([R], Kt.prototype, "value", 2);
@@ -9578,7 +9578,7 @@ var Fp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 `;
 var er = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Kr(Se(je(Ae(Ee(ye(HTMLElement)))))))))) {
   get operationType() {
-    return fa;
+    return pa;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9587,7 +9587,7 @@ var er = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Kr(Se(je(Ae(Ee(ye(HTML
     Z(Y`<div part="body">${this.iconHtml(Fp)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.angle === "" ? `"${fa}"` : `"${fa}(${this.angle.replace("/", "_")})"`;
+    return this.angle === "" ? `"${pa}"` : `"${pa}(${this.angle.replace("/", "_")})"`;
   }
 }, "er");
 u(er, "PhaseGateElement");
@@ -9604,7 +9604,7 @@ var qp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 `;
 var Br = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLElement))))))))) {
   get operationType() {
-    return wa;
+    return da;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9613,7 +9613,7 @@ var Br = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLEle
     Z(Y`<div part="body">${this.iconHtml(qp)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.if !== "" ? `"${wa}<${this.if}"` : `"${wa}"`;
+    return this.if !== "" ? `"${da}<${this.if}"` : `"${da}"`;
   }
 }, "Br");
 u(Br, "QftGateElement");
@@ -9634,7 +9634,7 @@ var Wp = `<svg
 `;
 var tr = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLElement))))))))) {
   get operationType() {
-    return va;
+    return fa;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9643,7 +9643,7 @@ var tr = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLEle
     Z(Y`<div part="body">${this.iconHtml(Wp)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.if !== "" ? `"${va}<${this.if}"` : `"${va}"`;
+    return this.if !== "" ? `"${fa}<${this.if}"` : `"${fa}"`;
   }
 }, "tr");
 u(tr, "RnotGateElement");
@@ -9656,7 +9656,7 @@ var Up = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 `;
 var rr = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Kr(Se(je(Ae(Ee(ye(HTMLElement)))))))))) {
   get operationType() {
-    return ma;
+    return ha;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9665,7 +9665,7 @@ var rr = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Kr(Se(je(Ae(Ee(ye(HTML
     Z(Y`<div part="body">${this.iconHtml(Up)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.angle === "" ? `"${ma}"` : `"${ma}(${this.angle.replace("/", "_")})"`;
+    return this.angle === "" ? `"${ha}"` : `"${ha}(${this.angle.replace("/", "_")})"`;
   }
 }, "rr");
 u(rr, "RxGateElement");
@@ -9678,7 +9678,7 @@ var Vp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 `;
 var nr = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Kr(Se(je(Ae(Ee(ye(HTMLElement)))))))))) {
   get operationType() {
-    return ga;
+    return va;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9687,7 +9687,7 @@ var nr = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Kr(Se(je(Ae(Ee(ye(HTML
     Z(Y`<div part="body">${this.iconHtml(Vp)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.angle === "" ? `"${ga}"` : `"${ga}(${this.angle.replace("/", "_")})"`;
+    return this.angle === "" ? `"${va}"` : `"${va}(${this.angle.replace("/", "_")})"`;
   }
 }, "nr");
 u(nr, "RyGateElement");
@@ -9699,7 +9699,7 @@ var Yp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 `;
 var ir = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Kr(Se(je(Ae(Ee(ye(HTMLElement)))))))))) {
   get operationType() {
-    return ba;
+    return ma;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9708,7 +9708,7 @@ var ir = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Kr(Se(je(Ae(Ee(ye(HTML
     Z(Y`<div part="body">${this.iconHtml(Yp)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.angle === "" ? `"${ba}"` : `"${ba}(${this.angle.replace("/", "_")})"`;
+    return this.angle === "" ? `"${ma}"` : `"${ma}(${this.angle.replace("/", "_")})"`;
   }
 }, "ir");
 u(ir, "RzGateElement");
@@ -9719,7 +9719,7 @@ var Xp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 `;
 var or = /* @__PURE__ */ __name(class extends Te(Ce($e(Se(je(Ae(Ee(ye(HTMLElement)))))))) {
   get operationType() {
-    return Bs;
+    return $s;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9728,7 +9728,7 @@ var or = /* @__PURE__ */ __name(class extends Te(Ce($e(Se(je(Ae(Ee(ye(HTMLElemen
     Z(Y`<div part="body">${this.iconHtml(Xp)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return `"${Bs}"`;
+    return `"${$s}"`;
   }
 }, "or");
 u(or, "SwapGateElement");
@@ -9739,7 +9739,7 @@ var Zp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 `;
 var ar = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLElement))))))))) {
   get operationType() {
-    return ha;
+    return ga;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9748,7 +9748,7 @@ var ar = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLEle
     Z(Y`<div part="body">${this.iconHtml(Zp)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.if !== "" ? `"${ha}<${this.if}"` : `"${ha}"`;
+    return this.if !== "" ? `"${ga}<${this.if}"` : `"${ga}"`;
   }
 }, "ar");
 u(ar, "TGateElement");
@@ -9793,7 +9793,7 @@ var Jp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 `;
 var sr = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLElement))))))))) {
   get operationType() {
-    return ca;
+    return ba;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9802,7 +9802,7 @@ var sr = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLEle
     Z(Y`<div part="body">${this.iconHtml(Jp)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.if !== "" ? `"${ca}<${this.if}"` : `"${ca}"`;
+    return this.if !== "" ? `"${ba}<${this.if}"` : `"${ba}"`;
   }
 }, "sr");
 u(sr, "XGateElement");
@@ -9813,7 +9813,7 @@ var Kp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 `;
 var lr = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLElement))))))))) {
   get operationType() {
-    return pa;
+    return ya;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9822,7 +9822,7 @@ var lr = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLEle
     Z(Y`<div part="body">${this.iconHtml(Kp)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.if !== "" ? `"${pa}<${this.if}"` : `"${pa}"`;
+    return this.if !== "" ? `"${ya}<${this.if}"` : `"${ya}"`;
   }
 }, "lr");
 u(lr, "YGateElement");
@@ -9833,7 +9833,7 @@ var ed = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 `;
 var ur = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLElement))))))))) {
   get operationType() {
-    return da;
+    return wa;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
@@ -9842,7 +9842,7 @@ var ur = /* @__PURE__ */ __name(class extends Te(Ce(We($e(Se(je(Ae(Ee(ye(HTMLEle
     Z(Y`<div part="body">${this.iconHtml(ed)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.if !== "" ? `"${da}<${this.if}"` : `"${da}"`;
+    return this.if !== "" ? `"${wa}<${this.if}"` : `"${wa}"`;
   }
 }, "ur");
 u(ur, "ZGateElement");
