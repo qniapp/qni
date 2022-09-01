@@ -151,6 +151,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       'Ry' => 'ry-gate',
       'Rz' => 'rz-gate',
       'QFT' => 'qft-gate',
+      'QFT†' => 'qft-dagger-gate',
       'Swap' => 'swap-gate',
       'Control' => 'control-gate',
       '•' => 'control-gate',

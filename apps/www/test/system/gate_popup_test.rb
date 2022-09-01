@@ -148,6 +148,20 @@ class GatePopupTest < ApplicationSystemTestCase
     TEXT
   end
 
+  test 'QFT† gate popup' do
+    visit circuit_path
+
+    sleep 1
+
+    operation = palette('QFT†')
+    operation.hover
+
+    assert_popup <<~TEXT.chomp, operation
+      Inverse Quantum Fourier Transform Gate
+      Transforms to/from phase frequency space.
+    TEXT
+  end
+
   test 'Swap gate popup' do
     visit circuit_path
 

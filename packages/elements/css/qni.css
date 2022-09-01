@@ -24,6 +24,7 @@
 @import './palette_dropzone';
 @import './phase_gate';
 @import './qft_gate';
+@import './qft_dagger_gate';
 @import './quantum_circuit';
 @import './rnot_gate';
 @import './rx_gate';

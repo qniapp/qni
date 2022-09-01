@@ -3646,6 +3646,172 @@ qft-gate::part(icon) {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+qft-dagger-gate {
+  display: inline-block;
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+}
+
+qft-dagger-gate::after {
+  position: absolute;
+  content: '';
+}
+
+qft-dagger-gate[data-active]::after {
+  border-radius: 0.375rem;
+  --tw-border-opacity: 1;
+  border-color: rgb(192 132 252 / var(--tw-border-opacity));
+  border-width: 0px;
+  top: -4px;
+  right: -4px;
+  bottom: -4px;
+  left: -4px;
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-active]::after {
+    border-width: 2px;
+  }
+}
+
+qft-dagger-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
+  --tw-bg-opacity: 1;
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
+}
+
+qft-dagger-gate {
+  touch-action: none;
+}
+
+circuit-editor palette-dropzone qft-dagger-gate, circuit-editor quantum-circuit:not([data-editing]) qft-dagger-gate {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+quantum-circuit([data-editing]) qft-dagger-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
+  --tw-border-opacity: 1;
+}
+
+circuit-dropzone qft-dagger-gate:not([data-snapped])::part(icon)::before {
+  position: absolute;
+  top: -33.333333%;
+  right: -33.333333%;
+  height: 1.5rem;
+  width: 1.5rem;
+  z-index: 10;
+  content: '';
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+qft-dagger-gate[data-grabbed] {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+qft-dagger-gate[data-grabbed]:not([data-snapped]) {
+  z-index: 40;
+}
+
+qft-dagger-gate[data-grabbed]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+}
+
+qft-dagger-gate[data-grabbed]::part(icon) {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+qft-dagger-gate[data-grabbed]::after {
+  border-style: none;
+}
+
+palette-dropzone qft-dagger-gate[data-hoverable]::after, quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active])::after {
+  border-radius: 0.375rem;
+  border-color: transparent;
+  border-width: 0px;
+  top: -4px;
+  right: -4px;
+  bottom: -4px;
+  left: -4px;
+}
+
+@media (min-width: 640px) {
+  palette-dropzone qft-dagger-gate[data-hoverable]::after, quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active])::after {
+    border-width: 2px;
+  }
+
+  palette-dropzone qft-dagger-gate[data-hoverable]::after, quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active])::after {
+    border-width: 2px;
+  }
+}
+
+palette-dropzone qft-dagger-gate[data-hoverable]:hover::after, quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active]):hover::after {
+  --tw-border-opacity: 1;
+  border-color: rgb(161 161 170 / var(--tw-border-opacity));
+}
+
+qft-dagger-gate[data-if]::before {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: -0.05em;
+  font-size: 0.75rem;
+  line-height: .75rem;
+  white-space: nowrap;
+}
+
+circuit-dropzone qft-dagger-gate[data-if]:not([data-if=''])::before {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
+  content: 'if\2009'attr(data-if);
+}
+
+circuit-dropzone qft-dagger-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
+  content: attr(data-angle) '\2009if\2009'attr(data-if);
+}
+
+circuit-dropzone:not([data-connect-top]) qft-dagger-gate[data-if]::before {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
+}
+
+circuit-dropzone[data-connect-top][data-connect-bottom] qft-dagger-gate[data-if]::before {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
+  text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
+        -1px 0 0 #fff, 1px 0 0 #fff;
+}
+
+circuit-dropzone[data-connect-top]:not([data-connect-bottom]) qft-dagger-gate[data-if]::before {
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: -0.875rem;
+}
+
+qft-dagger-gate::part(body) {
+  height: 100%;
+  width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+  border-radius: 0.25rem;
+}
+
+qft-dagger-gate::part(icon) {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
 quantum-circuit {
   display: flex;
   flex-direction: column;

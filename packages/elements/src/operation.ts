@@ -3,6 +3,7 @@ import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {PhaseGateElement} from './phase-gate-element'
+import {QftDaggerGateElement} from './qft-dagger-gate-element'
 import {QftGateElement} from './qft-gate-element'
 import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
@@ -32,6 +33,7 @@ export type Operation =
   | WriteGateElement
   | MeasurementGateElement
   | QftGateElement
+  | QftDaggerGateElement
 
 export const isOperation = (arg: unknown): arg is Operation =>
   arg instanceof HGateElement ||
@@ -49,7 +51,8 @@ export const isOperation = (arg: unknown): arg is Operation =>
   arg instanceof BlochDisplayElement ||
   arg instanceof WriteGateElement ||
   arg instanceof MeasurementGateElement ||
-  arg instanceof QftGateElement
+  arg instanceof QftGateElement ||
+  arg instanceof QftDaggerGateElement
 
 export const isHGateElement = (arg: unknown): arg is HGateElement =>
   arg !== undefined && arg !== null && arg instanceof HGateElement
