@@ -9594,8 +9594,8 @@ var er = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(en(xe(_e(Oe(we(ye(HTML
 u(er, "PhaseGateElement");
 ee(er);
 var Up = `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<line x1="26.2898" y1="9.72778" x2="29.25" y2="9.72778" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-<line x1="27.75" y1="8.75" x2="27.75" y2="13.6925" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+<line x1="26.2" y1="7.47778" x2="29.2" y2="7.47778" stroke="white" stroke-width="2" stroke-linecap="round"/>
+<line x1="27.7" y1="6" x2="27.7" y2="11" stroke="white" stroke-width="2" stroke-linecap="round"/>
 <line x1="20.0973" y1="12" x2="25.0353" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
 <line x1="22.7" y1="13" x2="22.7" y2="20" stroke="white" stroke-width="2" stroke-linecap="round"/>
 <line x1="13" y1="12" x2="16.4513" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/>
