@@ -62,6 +62,10 @@ describe('quantum-circuit element', function () {
       testSimpleCircuitApi('qft', window.QftGateElement)
     })
 
+    describe('QFT†', function () {
+      testSimpleCircuitApi('qftDagger', window.QftDaggerGateElement)
+    })
+
     describe('swap', function () {
       testSimpleCircuitApi('swap', window.SwapGateElement)
 
