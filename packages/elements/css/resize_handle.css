@@ -23,6 +23,8 @@
   background-color: var(--qni-component-resize-handle-fill-color-default);
 
   border-radius: var(--qni-component-resize-handle-radius);
+
+  @apply flex flex-row justify-center;
 }
 
 .resize-handle:hover {
