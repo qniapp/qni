@@ -37,6 +37,8 @@
 @import './y_gate';
 @import './z_gate';
 
+@import './resize_handle';
+
 @import 'tailwindcss/utilities';
 
 @layer utilities {
