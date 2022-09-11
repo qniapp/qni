@@ -25,6 +25,7 @@
   border-radius: var(--qni-component-resize-handle-radius);
 
   @apply flex flex-row justify-center;
+  @apply cursor-grab;
 }
 
 .resize-handle:hover {
