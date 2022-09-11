@@ -3,6 +3,7 @@
   --qni-semantic-size-qpu-operation-base-¾: theme(height.6);
 
   --qni-semantic-fill-color-handle: theme(colors.orange.400);
+  --qni-semantic-fill-color-handle-hover: theme(colors.orange.500);
 
   --qni-semantic-radius-default: theme(borderRadius.DEFAULT);
 }
@@ -12,6 +13,7 @@
   --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
 
   --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
+  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
 
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 
@@ -21,4 +23,8 @@
   background-color: var(--qni-component-resize-handle-fill-color-default);
 
   border-radius: var(--qni-component-resize-handle-radius);
+}
+
+.resize-handle:hover {
+  background-color: var(--qni-component-resize-handle-fill-color-hovered);
 }
