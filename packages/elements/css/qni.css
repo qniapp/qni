@@ -109,7 +109,7 @@
   /* QPU operation outline */
 
   .qpu-operation-outline-hover {
-    @apply border-zinc-400;
+    @apply border-zinc-300;
   }
 
   .qpu-operation-outline-active {
