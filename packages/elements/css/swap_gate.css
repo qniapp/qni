@@ -1,12 +1,12 @@
 swap-gate {
-  @apply operation;
-  @apply operation-draggable;
-  @apply operation-grabbable;
-  @apply operation-transparent;
-
+  @apply qpu-operation;
   @apply qpu-operation-outlineable;
   @apply qpu-operation-hoverable;
   @apply qpu-operation-activateable;
+
+  @apply operation-draggable;
+  @apply operation-grabbable;
+  @apply operation-transparent;
 
   &::part(icon) {
     @apply text-emerald-500;

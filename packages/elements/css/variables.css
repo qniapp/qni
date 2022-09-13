@@ -1,4 +1,6 @@
 :root {
+  --qni-semantic-size-qpu-operation-base: theme('spacing.8');
+
   --qni-semantic-spacing-qpu-operation-border-gap: theme('spacing[0.5]');
   --qni-semantic-border-color-default: theme(colors.transparent);
   --qni-semantic-border-color-qpu-operation-outline-hovered: theme(colors.zinc.300);

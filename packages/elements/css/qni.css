@@ -44,16 +44,12 @@
 @import 'tailwindcss/utilities';
 
 @layer utilities {
-  .operation {
+  .qpu-operation {
     @apply inline-block;
     @apply relative;
-    @apply h-8 w-8;
 
-    &::after {
-      @apply absolute;
-
-      content: '';
-    }
+    width: var(--qni-semantic-size-qpu-operation-base);
+    height: var(--qni-semantic-size-qpu-operation-base);
   }
 
   /* QPU operation size */
@@ -163,6 +159,9 @@
 
   .qpu-operation-outlineable {
     &[data-hoverable]::after {
+      position: absolute;
+      content: '';
+
       border-radius: var(--qni-semantic-radius-qpu-operation-outline);
       border-width: var(--qni-semantic-border-width-0);
       border-color: var(--qni-semantic-border-color-default);
