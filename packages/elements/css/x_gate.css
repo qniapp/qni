@@ -1,10 +1,12 @@
 x-gate {
   @apply operation;
-  @apply operation-activateable;
   @apply operation-circle;
   @apply operation-disableable;
   @apply operation-draggable;
   @apply operation-grabbable;
-  @apply operation-hoverable;
   @apply operation-ifable;
+
+  @apply qpu-operation-outlineable;
+  @apply qpu-operation-hoverable;
+  @apply qpu-operation-activateable;
 }

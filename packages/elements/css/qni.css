@@ -157,51 +157,47 @@
     }
   }
 
-  /* data-hoverable */
+  /* QPU operation outline */
 
-  .operation-hoverable {
-    palette-dropzone &[data-hoverable]::after,
-    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active])::after {
-      @apply qpu-operation-outline-border-radius;
-      @apply border-transparent;
+  .qpu-operation-outlineable {
+    &[data-hoverable]::after {
+      border-radius: var(--qni-semantic-radius-qpu-operation-outline);
+      border-width: var(--qni-semantic-border-width-0);
+      border-color: var(--qni-semantic-border-color-default);
 
-      @apply border-0;
-
-      top: -4px;
-      right: -4px;
-      bottom: -4px;
-      left: -4px;
+      top: calc(
+        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
+              var(--qni-semantic-border-width-qpu-operation-outline))
+      );
+      right: calc(
+        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
+              var(--qni-semantic-border-width-qpu-operation-outline))
+      );
+      bottom: calc(
+        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
+              var(--qni-semantic-border-width-qpu-operation-outline))
+      );
+      left: calc(
+        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
+              var(--qni-semantic-border-width-qpu-operation-outline))
+      );
 
       @screen sm {
-        @apply qpu-operation-outline-width;
+        border-width: var(--qni-semantic-border-width-qpu-operation-outline);
       }
     }
   }
 
-  .operation-hoverable {
+  .qpu-operation-hoverable {
     palette-dropzone &[data-hoverable]:hover::after,
     quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::after {
-      @apply qpu-operation-outline-hover;
+      border-color: var(--qni-semantic-border-color-qpu-operation-outline-hovered);
     }
   }
 
-  /* data-active */
-
-  .operation-activateable {
+  .qpu-operation-activateable {
     &[data-active]::after {
-      @apply qpu-operation-outline-border-radius;
-      @apply qpu-operation-outline-active;
-
-      @apply border-0;
-
-      top: -4px;
-      right: -4px;
-      bottom: -4px;
-      left: -4px;
-
-      @screen sm {
-        @apply qpu-operation-outline-width;
-      }
+      border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
     }
   }
 

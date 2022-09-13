@@ -1,3 +1,4 @@
+/* todo: しかるべき場所に移動 */
 :root {
   --qni-semantic-spacing-qpu-operation-border-gap: theme('spacing[0.5]');
   --qni-semantic-border-color-default: theme(colors.transparent);
@@ -17,42 +18,7 @@ qft-gate {
   @apply operation-ifable;
   @apply operation-square;
 
-  /* Outlineable */
-  &[data-hoverable]::after {
-    border-radius: var(--qni-semantic-radius-qpu-operation-outline);
-    border-width: var(--qni-semantic-border-width-0);
-    border-color: var(--qni-semantic-border-color-default);
-
-    top: calc(
-      -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-            var(--qni-semantic-border-width-qpu-operation-outline))
-    );
-    right: calc(
-      -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-            var(--qni-semantic-border-width-qpu-operation-outline))
-    );
-    bottom: calc(
-      -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-            var(--qni-semantic-border-width-qpu-operation-outline))
-    );
-    left: calc(
-      -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-            var(--qni-semantic-border-width-qpu-operation-outline))
-    );
-
-    @screen sm {
-      border-width: var(--qni-semantic-border-width-qpu-operation-outline);
-    }
-  }
-
-  /* hover */
-  palette-dropzone &[data-hoverable]:hover::after,
-  quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::after {
-    border-color: var(--qni-semantic-border-color-qpu-operation-outline-hovered);
-  }
-
-  /* active */
-  &[data-active]::after {
-    border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
-  }
+  @apply qpu-operation-outlineable;
+  @apply qpu-operation-hoverable;
+  @apply qpu-operation-activateable;
 }
