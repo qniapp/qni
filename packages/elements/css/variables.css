@@ -1,0 +1,10 @@
+:root {
+  --qni-semantic-spacing-qpu-operation-border-gap: theme('spacing[0.5]');
+  --qni-semantic-border-color-default: theme(colors.transparent);
+  --qni-semantic-border-color-qpu-operation-outline-hovered: theme(colors.zinc.300);
+  --qni-semantic-border-color-qpu-operation-outline-active: theme(colors.purple.500);
+
+  --qni-semantic-radius-qpu-operation-outline: theme(borderRadius.md);
+  --qni-semantic-border-width-0: theme(borderWidth.0);
+  --qni-semantic-border-width-qpu-operation-outline: theme(borderWidth.2);
+}

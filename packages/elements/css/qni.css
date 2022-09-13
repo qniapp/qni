@@ -1,6 +1,8 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 
+@import './variables';
+
 @import 'tippy.js/dist/border.css';
 @import 'tippy.js/dist/svg-arrow.css';
 @import 'tippy.js/dist/tippy.css';
