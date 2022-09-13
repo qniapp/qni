@@ -1,17 +1,12 @@
 :root {
-  --qni-core-radius-md: theme(borderRadius.md);
-  --qni-core-border-width-0: theme(borderWidth.0);
-  --qni-core-border-width-2: theme(borderWidth.2);
-
-  /* semantic */
-  --semantic-spacing-qpu-operation-border-gap: theme('spacing[0.5]');
+  --qni-semantic-spacing-qpu-operation-border-gap: theme('spacing[0.5]');
   --qni-semantic-border-color-default: theme(colors.transparent);
   --qni-semantic-border-color-qpu-operation-outline-hovered: theme(colors.zinc.300);
   --qni-semantic-border-color-qpu-operation-outline-active: theme(colors.purple.500);
 
-  --qni-semantic-radius-qpu-operation-outline: var(--qni-core-radius-md);
-  --qni-semantic-border-width-0: var(--qni-core-border-width-0);
-  --qni-semantic-border-width-qpu-operation-outline: var(--qni-core-border-width-2);
+  --qni-semantic-radius-qpu-operation-outline: theme(borderRadius.md);
+  --qni-semantic-border-width-0: theme(borderWidth.0);
+  --qni-semantic-border-width-qpu-operation-outline: theme(borderWidth.2);
 }
 
 qft-gate {
@@ -22,23 +17,27 @@ qft-gate {
   @apply operation-ifable;
   @apply operation-square;
 
-  /* QPU operation outline */
+  /* Outlineable */
   &[data-hoverable]::after {
     border-radius: var(--qni-semantic-radius-qpu-operation-outline);
     border-width: var(--qni-semantic-border-width-0);
     border-color: var(--qni-semantic-border-color-default);
 
     top: calc(
-      -1 * (var(--semantic-spacing-qpu-operation-border-gap) + var(--qni-semantic-border-width-qpu-operation-outline))
+      -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
+            var(--qni-semantic-border-width-qpu-operation-outline))
     );
     right: calc(
-      -1 * (var(--semantic-spacing-qpu-operation-border-gap) + var(--qni-semantic-border-width-qpu-operation-outline))
+      -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
+            var(--qni-semantic-border-width-qpu-operation-outline))
     );
     bottom: calc(
-      -1 * (var(--semantic-spacing-qpu-operation-border-gap) + var(--qni-semantic-border-width-qpu-operation-outline))
+      -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
+            var(--qni-semantic-border-width-qpu-operation-outline))
     );
     left: calc(
-      -1 * (var(--semantic-spacing-qpu-operation-border-gap) + var(--qni-semantic-border-width-qpu-operation-outline))
+      -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
+            var(--qni-semantic-border-width-qpu-operation-outline))
     );
 
     @screen sm {
