@@ -1,5 +1,10 @@
 :root {
+  --qni-semantic-size-qpu-operation-xs: theme('spacing.4');
+  --qni-semantic-size-qpu-operation-sm: theme('spacing.6');
   --qni-semantic-size-qpu-operation-base: theme('spacing.8');
+  --qni-semantic-size-qpu-operation-lg: theme('spacing.10');
+  --qni-semantic-size-qpu-operation-xl: theme('spacing.12');
+  --qni-semantic-size-qpu-operation-2xl: theme('spacing.16');
 
   --qni-semantic-spacing-qpu-operation-border-gap: theme('spacing[0.5]');
   --qni-semantic-border-color-default: theme(colors.transparent);

@@ -43,6 +43,8 @@
 
 @import 'tailwindcss/utilities';
 
+@import 'qpu_operation';
+
 @layer utilities {
   .qpu-operation {
     @apply inline-block;
@@ -50,32 +52,6 @@
 
     width: var(--qni-semantic-size-qpu-operation-base);
     height: var(--qni-semantic-size-qpu-operation-base);
-  }
-
-  /* QPU operation size */
-
-  .qpu-operation-xs {
-    @apply h-4 w-4;
-  }
-
-  .qpu-operation-sm {
-    @apply h-6 w-6;
-  }
-
-  .qpu-operation-base {
-    @apply h-8 w-8;
-  }
-
-  .qpu-operation-lg {
-    @apply h-10 w-10;
-  }
-
-  .qpu-operation-xl {
-    @apply h-12 w-12;
-  }
-
-  .qpu-operation-2xl {
-    @apply h-16 w-16;
   }
 
   /* QPU operation text color */
