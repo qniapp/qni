@@ -2912,6 +2912,12 @@ control-gate[data-active]::after {
   border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
 }
 
+control-gate::part(body) {
+  border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-radius: var(--qni-semantic-radius-default);
+}
+
 control-gate {
   touch-action: none;
 }
@@ -2959,20 +2965,16 @@ control-gate[data-grabbed]::after {
   border-style: none;
 }
 
-control-gate::part(body) {
-  height: 100%;
-  width: 100%;
-  border-radius: 0.25rem;
-}
-
 control-gate::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(16 185 129 / var(--tw-text-opacity));
+  color: #10b981;
+  color: #10b981;
+  color: var(--qni-semantic-fill-color-default);
 }
 
 control-gate[data-disabled]:not([data-grabbed])::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
+  color: #71717a;
+  color: #71717a;
+  color: var(--qni-semantic-fill-color-disabled);
 }
 
 h-gate {
@@ -3298,6 +3300,12 @@ measurement-gate[data-active]::after {
   border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
 }
 
+measurement-gate::part(body) {
+  border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-radius: var(--qni-semantic-radius-default);
+}
+
 measurement-gate {
   touch-action: none;
 }
@@ -3381,12 +3389,6 @@ measurement-gate[data-grabbed]::part(icon) {
 
 measurement-gate[data-grabbed]::after {
   border-style: none;
-}
-
-measurement-gate::part(body) {
-  height: 100%;
-  width: 100%;
-  border-radius: 0.25rem;
 }
 
 measurement-gate::part(icon) {
@@ -5413,6 +5415,12 @@ swap-gate[data-active]::after {
   border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
 }
 
+swap-gate::part(body) {
+  border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-radius: var(--qni-semantic-radius-default);
+}
+
 swap-gate {
   touch-action: none;
 }
@@ -5460,20 +5468,16 @@ swap-gate[data-grabbed]::after {
   border-style: none;
 }
 
-swap-gate::part(body) {
-  height: 100%;
-  width: 100%;
-  border-radius: 0.25rem;
-}
-
 swap-gate::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(16 185 129 / var(--tw-text-opacity));
+  color: #10b981;
+  color: #10b981;
+  color: var(--qni-semantic-fill-color-default);
 }
 
 swap-gate[data-disabled]:not([data-grabbed])::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
+  color: #71717a;
+  color: #71717a;
+  color: var(--qni-semantic-fill-color-disabled);
 }
 
 t-gate {
@@ -5794,6 +5798,12 @@ write-gate[data-active]::after {
   border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
 }
 
+write-gate::part(body) {
+  border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-radius: var(--qni-semantic-radius-default);
+}
+
 write-gate {
   touch-action: none;
 }
@@ -5841,15 +5851,10 @@ write-gate[data-grabbed]::after {
   border-style: none;
 }
 
-write-gate::part(body) {
-  height: 100%;
-  width: 100%;
-  border-radius: 0.25rem;
-}
-
 write-gate::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(113 113 122 / var(--tw-text-opacity));
+  color: #71717a;
+  color: #71717a;
+  color: var(--qni-semantic-fill-color-disabled);
 }
 
 write-gate[data-dark-mode]::part(icon) {

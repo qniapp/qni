@@ -77,14 +77,6 @@
     @apply border-purple-400;
   }
 
-  .qpu-operation-outline-width {
-    @apply border-2;
-  }
-
-  .qpu-operation-outline-border-radius {
-    @apply rounded-md;
-  }
-
   /* operation shapes */
 
   .qpu-operation-rectangular {
@@ -106,13 +98,6 @@
 
     &::part(icon) {
       color: var(--qni-semantic-icon-color-qpu-operation-name);
-    }
-  }
-
-  .operation-transparent {
-    &::part(body) {
-      @apply h-full w-full;
-      @apply rounded;
     }
   }
 
