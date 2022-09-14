@@ -3,9 +3,9 @@ x-gate {
   @apply qpu-operation-outlineable;
   @apply qpu-operation-hoverable;
   @apply qpu-operation-activateable;
+  @apply qpu-operation-disableable;
 
   @apply operation-circle;
-  @apply operation-disableable;
   @apply operation-draggable;
   @apply operation-grabbable;
   @apply operation-ifable;

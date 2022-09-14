@@ -1778,9 +1778,12 @@ select {
   --qni-semantic-spacing-qpu-operation-border-gap: 0.125rem;
   --qni-semantic-spacing-resize-handle-overlap: calc(-1 * 0.5rem);
   /* Color */
+  --qni-semantic-fill-color-disabled: #71717a;
   --qni-semantic-border-color-default: transparent;
   --qni-semantic-border-color-qpu-operation-outline-hovered: #d4d4d8;
   --qni-semantic-border-color-qpu-operation-outline-active: #a855f7;
+  --qni-semantic-fill-color-qpu-operation-default: #10b981;
+  --qni-semantic-fill-color-qpu-operation-disabled: #71717a;
   --qni-semantic-fill-color-handle: #fb923c;
   --qni-semantic-fill-color-handle-hover: #f97316;
   --qni-semantic-icon-color-qpu-operation-name: #fff;
@@ -3046,9 +3049,9 @@ h-gate[data-active]::after {
 }
 
 h-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 h-gate {
@@ -3536,6 +3539,12 @@ phase-gate[data-active]::after {
   border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
 }
 
+phase-gate[data-disabled]::part(body) {
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
+}
+
 phase-gate[data-angle]::before {
   position: absolute;
   display: flex;
@@ -3605,12 +3614,6 @@ phase-gate::part(body) {
 phase-gate::part(icon) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-phase-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 phase-gate {
@@ -3800,9 +3803,9 @@ qft-gate[data-active]::after {
 }
 
 qft-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 qft-gate {
@@ -4052,9 +4055,9 @@ qft-dagger-gate[data-active]::after {
 }
 
 qft-dagger-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 qft-dagger-gate {
@@ -4279,9 +4282,9 @@ rnot-gate[data-active]::after {
 }
 
 rnot-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 rnot-gate {
@@ -4487,6 +4490,12 @@ rx-gate[data-active]::after {
   border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
 }
 
+rx-gate[data-disabled]::part(body) {
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
+}
+
 rx-gate[data-angle]::before {
   position: absolute;
   display: flex;
@@ -4543,12 +4552,6 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-angle
   left: 0px;
   right: 0px;
   margin-bottom: -0.75rem;
-}
-
-rx-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 rx-gate {
@@ -4754,6 +4757,12 @@ ry-gate[data-active]::after {
   border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
 }
 
+ry-gate[data-disabled]::part(body) {
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
+}
+
 ry-gate[data-angle]::before {
   position: absolute;
   display: flex;
@@ -4810,12 +4819,6 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-angle
   left: 0px;
   right: 0px;
   margin-bottom: -0.75rem;
-}
-
-ry-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 ry-gate {
@@ -5021,6 +5024,12 @@ rz-gate[data-active]::after {
   border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
 }
 
+rz-gate[data-disabled]::part(body) {
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
+}
+
 rz-gate[data-angle]::before {
   position: absolute;
   display: flex;
@@ -5077,12 +5086,6 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-angle
   left: 0px;
   right: 0px;
   margin-bottom: -0.75rem;
-}
-
-rz-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 rz-gate {
@@ -5445,9 +5448,9 @@ t-gate[data-active]::after {
 }
 
 t-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 t-gate {
@@ -5915,6 +5918,12 @@ x-gate[data-active]::after {
   border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
 }
 
+x-gate[data-disabled]::part(body) {
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
+}
+
 x-gate::part(body) {
   --tw-bg-opacity: 1;
   background-color: rgb(16 185 129 / var(--tw-bg-opacity));
@@ -5926,12 +5935,6 @@ x-gate::part(body) {
 x-gate::part(icon) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-x-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 x-gate {
@@ -6121,9 +6124,9 @@ y-gate[data-active]::after {
 }
 
 y-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 y-gate {
@@ -6330,9 +6333,9 @@ z-gate[data-active]::after {
 }
 
 z-gate[data-disabled]::part(body) {
-  /* @apply bg-gray-500; */
-  --tw-bg-opacity: 1;
-  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
+  background-color: #71717a;
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 z-gate {

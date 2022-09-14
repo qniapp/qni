@@ -68,10 +68,6 @@
     @apply bg-purple-500;
   }
 
-  .qpu-operation-bg-disable {
-    @apply bg-zinc-500;
-  }
-
   /* QPU operation border radius */
 
   .qpu-operation-border-radius {
@@ -204,10 +200,9 @@
 
   /* data-disabled */
 
-  .operation-disableable {
+  .qpu-operation-disableable {
     &[data-disabled]::part(body) {
-      /* @apply bg-gray-500; */
-      @apply qpu-operation-bg-disable;
+      background-color: var(--qni-semantic-fill-color-disabled);
     }
   }
 
