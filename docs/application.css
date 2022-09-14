@@ -1783,8 +1783,6 @@ select {
   --qni-semantic-border-color-default: transparent;
   --qni-semantic-border-color-hover: #d4d4d8;
   --qni-semantic-border-color-active: #a855f7;
-  --qni-semantic-fill-color-qpu-operation-default: #10b981;
-  --qni-semantic-fill-color-qpu-operation-disabled: #71717a;
   --qni-semantic-fill-color-handle: #fb923c;
   --qni-semantic-fill-color-handle-hover: #f97316;
   --qni-semantic-color-icon-light: #fff;

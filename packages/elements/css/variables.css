@@ -20,10 +20,9 @@
   --qni-semantic-border-color-hover: theme(colors.zinc.300);
   --qni-semantic-border-color-active: theme(colors.purple.500);
 
-  --qni-semantic-fill-color-qpu-operation-default: theme(colors.emerald.500);
-  --qni-semantic-fill-color-qpu-operation-disabled: theme(colors.zinc.500);
   --qni-semantic-fill-color-handle: theme(colors.orange.400);
   --qni-semantic-fill-color-handle-hover: theme(colors.orange.500);
+
   --qni-semantic-color-icon-light: theme(colors.white);
 
   /* Border radius */
