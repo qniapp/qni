@@ -3,29 +3,59 @@
 .qpu-operation-xs {
   width: var(--qni-semantic-size-qpu-operation-xs);
   height: var(--qni-semantic-size-qpu-operation-xs);
+
+  &::part(body) {
+    width: var(--qni-semantic-size-qpu-operation-xs);
+    height: var(--qni-semantic-size-qpu-operation-xs);
+  }
 }
 
 .qpu-operation-sm {
   width: var(--qni-semantic-size-qpu-operation-sm);
   height: var(--qni-semantic-size-qpu-operation-sm);
+
+  &::part(body) {
+    width: var(--qni-semantic-size-qpu-operation-sm);
+    height: var(--qni-semantic-size-qpu-operation-sm);
+  }
 }
 
 .qpu-operation-base {
   width: var(--qni-semantic-size-qpu-operation-base);
   height: var(--qni-semantic-size-qpu-operation-base);
+
+  &::part(body) {
+    width: var(--qni-semantic-size-qpu-operation-base);
+    height: var(--qni-semantic-size-qpu-operation-base);
+  }
 }
 
 .qpu-operation-lg {
   width: var(--qni-semantic-size-qpu-operation-lg);
   height: var(--qni-semantic-size-qpu-operation-lg);
+
+  &::part(body) {
+    width: var(--qni-semantic-size-qpu-operation-lg);
+    height: var(--qni-semantic-size-qpu-operation-lg);
+  }
 }
 
 .qpu-operation-xl {
   width: var(--qni-semantic-size-qpu-operation-xl);
   height: var(--qni-semantic-size-qpu-operation-xl);
+
+  &::part(body) {
+    width: var(--qni-semantic-size-qpu-operation-xl);
+    height: var(--qni-semantic-size-qpu-operation-xl);
+  }
 }
 
 .qpu-operation-2xl {
   width: var(--qni-semantic-size-qpu-operation-2xl);
   height: var(--qni-semantic-size-qpu-operation-2xl);
+
+  &::part(body) {
+    width: var(--qni-semantic-size-qpu-operation-2xl);
+    height: var(--qni-semantic-size-qpu-operation-2xl);
+  }
 }
