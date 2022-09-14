@@ -2261,6 +2261,15 @@ bloch-display {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+bloch-display::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 bloch-display[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -2812,6 +2821,15 @@ control-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+control-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 control-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -2968,6 +2986,15 @@ h-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+h-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 h-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -3057,18 +3084,12 @@ h-gate[data-disabled]::part(body) {
 }
 
 h-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 h-gate::part(icon) {
@@ -3178,6 +3199,15 @@ html[data-grabbing] {
 measurement-gate {
   display: inline-block;
   position: relative;
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
+measurement-gate::part(body) {
   width: 2rem;
   width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
@@ -3463,6 +3493,15 @@ phase-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+phase-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 phase-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -3552,12 +3591,6 @@ phase-gate[data-disabled]::part(body) {
 }
 
 phase-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
   border-radius: 9999px;
   border-radius: 9999px;
   border-radius: var(--qni-semantic-radius-circular);
@@ -3741,12 +3774,12 @@ qft-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 qft-gate::part(icon) {
@@ -3982,6 +4015,15 @@ qft-dagger-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+qft-dagger-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 qft-dagger-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -4106,18 +4148,12 @@ circuit-dropzone qft-dagger-gate:not([data-grabbed]):hover::part(resize-handle) 
 }
 
 qft-dagger-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 qft-dagger-gate::part(icon) {
@@ -4248,6 +4284,15 @@ rnot-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+rnot-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 rnot-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -4337,18 +4382,12 @@ rnot-gate[data-disabled]::part(body) {
 }
 
 rnot-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 rnot-gate::part(icon) {
@@ -4461,6 +4500,15 @@ rx-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+rx-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 rx-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -4550,18 +4598,12 @@ rx-gate[data-disabled]::part(body) {
 }
 
 rx-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 rx-gate::part(icon) {
@@ -4732,6 +4774,15 @@ ry-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+ry-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 ry-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -4821,18 +4872,12 @@ ry-gate[data-disabled]::part(body) {
 }
 
 ry-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 ry-gate::part(icon) {
@@ -5003,6 +5048,15 @@ rz-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+rz-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 rz-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -5092,18 +5146,12 @@ rz-gate[data-disabled]::part(body) {
 }
 
 rz-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 rz-gate::part(icon) {
@@ -5274,6 +5322,15 @@ swap-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+swap-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 swap-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -5430,6 +5487,15 @@ t-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+t-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 t-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -5519,18 +5585,12 @@ t-gate[data-disabled]::part(body) {
 }
 
 t-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 t-gate::part(icon) {
@@ -5635,6 +5695,15 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) t-gate[data-if]::b
 write-gate {
   display: inline-block;
   position: relative;
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
+write-gate::part(body) {
   width: 2rem;
   width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
@@ -5905,6 +5974,15 @@ x-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+x-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 x-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -5994,12 +6072,6 @@ x-gate[data-disabled]::part(body) {
 }
 
 x-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
   border-radius: 9999px;
   border-radius: 9999px;
   border-radius: var(--qni-semantic-radius-circular);
@@ -6118,6 +6190,15 @@ y-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+y-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 y-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -6207,18 +6288,12 @@ y-gate[data-disabled]::part(body) {
 }
 
 y-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 y-gate::part(icon) {
@@ -6331,6 +6406,15 @@ z-gate {
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
+z-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
 z-gate[data-hoverable]::after {
   position: absolute;
   content: '';
@@ -6420,18 +6504,12 @@ z-gate[data-disabled]::part(body) {
 }
 
 z-gate::part(body) {
-  width: 2rem;
-  width: 2rem;
-  width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
-  height: 2rem;
-  height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 z-gate::part(icon) {

@@ -1,6 +1,7 @@
 qft-gate {
   @apply qpu-operation;
   @apply qpu-operation-rectangular;
+  @apply qpu-operation-color-filled;
   @apply qpu-operation-outlineable;
   @apply qpu-operation-hoverable;
   @apply qpu-operation-activateable;

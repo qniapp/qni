@@ -50,6 +50,11 @@
 
     width: var(--qni-semantic-size-qpu-operation-base);
     height: var(--qni-semantic-size-qpu-operation-base);
+
+    &::part(body) {
+      width: var(--qni-semantic-size-qpu-operation-base);
+      height: var(--qni-semantic-size-qpu-operation-base);
+    }
   }
 
   /* QPU operation background color */
@@ -84,21 +89,12 @@
 
   .qpu-operation-rectangular {
     &::part(body) {
-      width: var(--qni-semantic-size-qpu-operation-base);
-      height: var(--qni-semantic-size-qpu-operation-base);
-      background-color: var(--qni-semantic-fill-color-default);
       border-radius: var(--qni-semantic-radius-default);
-    }
-
-    &::part(icon) {
-      color: var(--qni-semantic-icon-color-qpu-operation-name);
     }
   }
 
   .qpu-operation-circular {
     &::part(body) {
-      width: var(--qni-semantic-size-qpu-operation-base);
-      height: var(--qni-semantic-size-qpu-operation-base);
       border-radius: var(--qni-semantic-radius-circular);
     }
   }
