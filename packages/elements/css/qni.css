@@ -68,12 +68,6 @@
     @apply bg-purple-500;
   }
 
-  /* QPU operation border radius */
-
-  .qpu-operation-border-radius {
-    @apply rounded;
-  }
-
   /* QPU operation outline */
 
   .qpu-operation-outline-hover {
@@ -94,17 +88,16 @@
 
   /* operation shapes */
 
-  .operation-square {
+  .qpu-operation-rectangular {
     &::part(body) {
       width: var(--qni-semantic-size-qpu-operation-base);
       height: var(--qni-semantic-size-qpu-operation-base);
-
-      @apply qpu-operation-bg-default;
-      @apply qpu-operation-border-radius;
+      background-color: var(--qni-semantic-fill-color-default);
+      border-radius: var(--qni-semantic-radius-default);
     }
 
     &::part(icon) {
-      @apply qpu-operation-text;
+      color: var(--qni-semantic-icon-color-qpu-operation-name);
     }
   }
 

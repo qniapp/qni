@@ -1,5 +1,6 @@
 qft-gate {
   @apply qpu-operation;
+  @apply qpu-operation-rectangular;
   @apply qpu-operation-outlineable;
   @apply qpu-operation-hoverable;
   @apply qpu-operation-activateable;
@@ -9,5 +10,4 @@ qft-gate {
   @apply operation-draggable;
   @apply operation-grabbable;
   @apply operation-ifable;
-  @apply operation-square;
 }

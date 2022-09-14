@@ -4,10 +4,10 @@ ry-gate {
   @apply qpu-operation-hoverable;
   @apply qpu-operation-activateable;
   @apply qpu-operation-disableable;
+  @apply qpu-operation-rectangular;
 
   @apply operation-angleable;
   @apply operation-draggable;
   @apply operation-grabbable;
   @apply operation-ifable;
-  @apply operation-square;
 }

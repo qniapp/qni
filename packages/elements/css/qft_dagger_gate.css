@@ -5,9 +5,9 @@ qft-dagger-gate {
   @apply qpu-operation-activateable;
   @apply qpu-operation-disableable;
   @apply qpu-operation-resizeable;
+  @apply qpu-operation-rectangular;
 
   @apply operation-draggable;
   @apply operation-grabbable;
   @apply operation-ifable;
-  @apply operation-square;
 }

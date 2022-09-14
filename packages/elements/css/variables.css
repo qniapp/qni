@@ -14,6 +14,7 @@
   --qni-semantic-spacing-resize-handle-overlap: calc(-1 * theme('spacing.2'));
 
   /* Color */
+  --qni-semantic-fill-color-default: theme(colors.emerald.500);
   --qni-semantic-fill-color-disabled: theme(colors.zinc.500);
   --qni-semantic-border-color-default: theme(colors.transparent);
   --qni-semantic-border-color-qpu-operation-outline-hovered: theme(colors.zinc.300);
