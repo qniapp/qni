@@ -206,6 +206,51 @@
     }
   }
 
+  .qpu-operation-resizeable {
+    &::part(resize-handle) {
+      --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
+      --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+
+      --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
+      --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
+      --qni-component-resize-handle-icon-color: var(--qni-semantic-icon-color-qpu-operation-name);
+
+      --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
+
+      width: var(--qni-component-resize-handle-width);
+      height: var(--qni-component-resize-handle-height);
+
+      color: var(--qni-component-resize-handle-icon-color);
+      background-color: var(--qni-component-resize-handle-fill-color-default);
+
+      border-radius: var(--qni-component-resize-handle-radius);
+
+      margin-top: var(--qni-semantic-spacing-resize-handle-overlap);
+
+      @apply flex flex-row justify-center;
+      @apply cursor-grab;
+      @apply z-10;
+
+      &:hover {
+        background-color: var(--qni-component-resize-handle-fill-color-hovered);
+      }
+    }
+
+    /* Show resize-handle only when hovering the mouse pointer */
+    &::part(resize-handle) {
+      @apply hidden;
+    }
+
+    /*
+     * Do not display resize-handle
+     * - on palette
+     * - while dragging
+     */
+    circuit-dropzone &:not([data-grabbed]):hover::part(resize-handle) {
+      @apply flex;
+    }
+  }
+
   .operation-draggable {
     touch-action: none;
 

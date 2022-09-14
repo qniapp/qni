@@ -11,6 +11,7 @@ import {
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedQftDaggerGateType} from '@qni/common'
+import chevronSelectorVerticalIcon from '../icon/chevron_selector_vertical.svg'
 import {controller} from '@github/catalyst'
 import qftDaggerGateIcon from '../icon/qft-dagger-gate.svg'
 
@@ -38,7 +39,20 @@ export class QftDaggerGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(qftDaggerGateIcon)}</div>`, this.shadowRoot!)
+    render(
+      html`<style>
+          :host::part(layout) {
+            display: flex;
+            flex-direction: column;
+          }
+        </style>
+
+        <div part="layout">
+          <div part="body">${this.iconHtml(qftDaggerGateIcon)}</div>
+          <div part="resize-handle">${this.iconHtml(chevronSelectorVerticalIcon)}</div>
+        </div>`,
+      this.shadowRoot!
+    )
   }
 
   toJson(): string {

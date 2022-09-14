@@ -3808,6 +3808,41 @@ qft-gate[data-disabled]::part(body) {
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
+qft-gate::part(resize-handle) {
+  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
+  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+  --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
+  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
+  --qni-component-resize-handle-icon-color: var(--qni-semantic-icon-color-qpu-operation-name);
+  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
+  width: var(--qni-component-resize-handle-width);
+  height: var(--qni-component-resize-handle-height);
+  color: var(--qni-component-resize-handle-icon-color);
+  background-color: var(--qni-component-resize-handle-fill-color-default);
+  border-radius: var(--qni-component-resize-handle-radius);
+  margin-top: calc(-1 * 0.5rem);
+  margin-top: calc(-1 * 0.5rem);
+  margin-top: var(--qni-semantic-spacing-resize-handle-overlap);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  cursor: -webkit-grab;
+  cursor: grab;
+  z-index: 10;
+}
+
+qft-gate::part(resize-handle):hover {
+  background-color: var(--qni-component-resize-handle-fill-color-hovered);
+}
+
+qft-gate::part(resize-handle) {
+  display: none;
+}
+
+circuit-dropzone qft-gate:not([data-grabbed]):hover::part(resize-handle) {
+  display: flex;
+}
+
 qft-gate {
   touch-action: none;
 }
@@ -3918,49 +3953,6 @@ qft-gate::part(icon) {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-qft-gate::part(resize-handle) {
-  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
-  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
-  --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
-  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
-  --qni-component-resize-handle-icon-color: var(--qni-semantic-icon-color-qpu-operation-name);
-  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
-  width: var(--qni-component-resize-handle-width);
-  height: var(--qni-component-resize-handle-height);
-  color: var(--qni-component-resize-handle-icon-color);
-  background-color: var(--qni-component-resize-handle-fill-color-default);
-  border-radius: var(--qni-component-resize-handle-radius);
-  margin-top: calc(-1 * 0.5rem);
-  margin-top: calc(-1 * 0.5rem);
-  margin-top: var(--qni-semantic-spacing-resize-handle-overlap);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  cursor: -webkit-grab;
-  cursor: grab;
-  z-index: 10;
-}
-
-qft-gate::part(resize-handle):hover {
-  background-color: var(--qni-component-resize-handle-fill-color-hovered);
-}
-
-/* Show resize-handle only when hovering the mouse pointer */
-
-qft-gate::part(resize-handle) {
-  display: none;
-}
-
-/*
-   * Do not display resize-handle
-   * - on palette
-   * - while dragging
-   */
-
-circuit-dropzone qft-gate:not([data-grabbed]):hover::part(resize-handle) {
-  display: flex;
-}
-
 qft-dagger-gate {
   display: inline-block;
   position: relative;
@@ -4058,6 +4050,41 @@ qft-dagger-gate[data-disabled]::part(body) {
   background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
+}
+
+qft-dagger-gate::part(resize-handle) {
+  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
+  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+  --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
+  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
+  --qni-component-resize-handle-icon-color: var(--qni-semantic-icon-color-qpu-operation-name);
+  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
+  width: var(--qni-component-resize-handle-width);
+  height: var(--qni-component-resize-handle-height);
+  color: var(--qni-component-resize-handle-icon-color);
+  background-color: var(--qni-component-resize-handle-fill-color-default);
+  border-radius: var(--qni-component-resize-handle-radius);
+  margin-top: calc(-1 * 0.5rem);
+  margin-top: calc(-1 * 0.5rem);
+  margin-top: var(--qni-semantic-spacing-resize-handle-overlap);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  cursor: -webkit-grab;
+  cursor: grab;
+  z-index: 10;
+}
+
+qft-dagger-gate::part(resize-handle):hover {
+  background-color: var(--qni-component-resize-handle-fill-color-hovered);
+}
+
+qft-dagger-gate::part(resize-handle) {
+  display: none;
+}
+
+circuit-dropzone qft-dagger-gate:not([data-grabbed]):hover::part(resize-handle) {
+  display: flex;
 }
 
 qft-dagger-gate {
@@ -6526,6 +6553,14 @@ z-gate::part(icon) {
 /* data-grabbed */
 
 /* data-disabled */
+
+/* Show resize-handle only when hovering the mouse pointer */
+
+/*
+     * Do not display resize-handle
+     * - on palette
+     * - while dragging
+     */
 
 /* grabbable cursor style */
 
