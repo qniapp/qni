@@ -2280,54 +2280,18 @@ bloch-display[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -2840,54 +2804,18 @@ control-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -3007,54 +2935,18 @@ h-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -3228,54 +3120,18 @@ measurement-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -3514,54 +3370,18 @@ phase-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -3800,54 +3620,18 @@ qft-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -4036,54 +3820,18 @@ qft-dagger-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -4305,54 +4053,18 @@ rnot-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -4521,54 +4233,18 @@ rx-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -4795,54 +4471,18 @@ ry-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -5069,54 +4709,18 @@ rz-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -5343,54 +4947,18 @@ swap-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -5510,54 +5078,18 @@ t-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -5726,54 +5258,18 @@ write-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -5998,54 +5494,18 @@ x-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -6214,54 +5674,18 @@ y-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
@@ -6430,54 +5854,18 @@ z-gate[data-hoverable]::after {
   border-color: transparent;
   border-color: transparent;
   border-color: var(--qni-semantic-border-color-default);
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  top: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  right: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  bottom: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (0.125rem +
-              2px)
-      );
-  left: calc(
-        -1 * (var(--qni-semantic-spacing-outline-gap) +
-              var(--qni-semantic-border-width-outline))
-      );
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (0.125rem + 2px));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (0.125rem + 2px));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (0.125rem + 2px));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (0.125rem + 2px));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
 }
 
 @media (min-width: 640px) {
