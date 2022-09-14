@@ -97,7 +97,7 @@
     }
 
     &::part(icon) {
-      color: var(--qni-semantic-icon-color-qpu-operation-name);
+      color: var(--qni-semantic-color-icon-light);
     }
   }
 
@@ -108,7 +108,7 @@
       position: absolute;
       content: '';
 
-      border-radius: var(--qni-semantic-radius-qpu-operation-outline);
+      border-radius: var(--qni-semantic-radius-outline);
       border-width: var(--qni-semantic-border-width-0);
       border-color: var(--qni-semantic-border-color-default);
 
@@ -138,13 +138,13 @@
   .qpu-operation-hoverable {
     palette-dropzone &[data-hoverable]:hover::after,
     quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::after {
-      border-color: var(--qni-semantic-border-color-qpu-operation-outline-hovered);
+      border-color: var(--qni-semantic-border-color-hover);
     }
   }
 
   .qpu-operation-activateable {
     &[data-active]::after {
-      border-color: var(--qni-semantic-border-color-qpu-operation-outline-active);
+      border-color: var(--qni-semantic-border-color-active);
     }
   }
 
@@ -187,7 +187,7 @@
 
       --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
       --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
-      --qni-component-resize-handle-icon-color: var(--qni-semantic-icon-color-qpu-operation-name);
+      --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
 
       --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 

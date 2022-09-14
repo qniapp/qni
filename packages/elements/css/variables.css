@@ -17,19 +17,19 @@
   --qni-semantic-fill-color-default: theme(colors.emerald.500);
   --qni-semantic-fill-color-disabled: theme(colors.zinc.500);
   --qni-semantic-border-color-default: theme(colors.transparent);
-  --qni-semantic-border-color-qpu-operation-outline-hovered: theme(colors.zinc.300);
-  --qni-semantic-border-color-qpu-operation-outline-active: theme(colors.purple.500);
+  --qni-semantic-border-color-hover: theme(colors.zinc.300);
+  --qni-semantic-border-color-active: theme(colors.purple.500);
 
   --qni-semantic-fill-color-qpu-operation-default: theme(colors.emerald.500);
   --qni-semantic-fill-color-qpu-operation-disabled: theme(colors.zinc.500);
   --qni-semantic-fill-color-handle: theme(colors.orange.400);
   --qni-semantic-fill-color-handle-hover: theme(colors.orange.500);
-  --qni-semantic-icon-color-qpu-operation-name: theme(colors.white);
+  --qni-semantic-color-icon-light: theme(colors.white);
 
   /* Border radius */
   --qni-semantic-radius-default: theme(borderRadius.DEFAULT);
+  --qni-semantic-radius-outline: theme(borderRadius.md);
   --qni-semantic-radius-circular: theme(borderRadius.full);
-  --qni-semantic-radius-qpu-operation-outline: theme(borderRadius.md);
 
   /* Border width */
   --qni-semantic-border-width-0: theme(borderWidth.0);
