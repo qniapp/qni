@@ -39,8 +39,6 @@
 @import './y_gate';
 @import './z_gate';
 
-@import './resize_handle';
-
 @import 'tailwindcss/utilities';
 
 @import 'qpu_operation';
@@ -102,7 +100,9 @@
 
   .operation-square {
     &::part(body) {
-      @apply h-full w-full;
+      width: var(--qni-semantic-size-qpu-operation-base);
+      height: var(--qni-semantic-size-qpu-operation-base);
+
       @apply qpu-operation-bg-default;
       @apply qpu-operation-border-radius;
     }
