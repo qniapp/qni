@@ -44,7 +44,12 @@ qft-gate {
     @apply hidden;
   }
 
-  circuit-dropzone &:hover::part(resize-handle) {
+  /*
+   * Do not display resize-handle
+   * - on palette
+   * - while dragging
+   */
+  circuit-dropzone &:not([data-grabbed]):hover::part(resize-handle) {
     @apply flex;
   }
 }

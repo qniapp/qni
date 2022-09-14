@@ -3942,11 +3942,19 @@ qft-gate::part(resize-handle):hover {
   background-color: var(--qni-component-resize-handle-fill-color-hovered);
 }
 
+/* Show resize-handle only when hovering the mouse pointer */
+
 qft-gate::part(resize-handle) {
   display: none;
 }
 
-circuit-dropzone qft-gate:hover::part(resize-handle) {
+/*
+   * Do not display resize-handle
+   * - on palette
+   * - while dragging
+   */
+
+circuit-dropzone qft-gate:not([data-grabbed]):hover::part(resize-handle) {
   display: flex;
 }
 
