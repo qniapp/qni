@@ -28,6 +28,7 @@
 
   /* Border radius */
   --qni-semantic-radius-default: theme(borderRadius.DEFAULT);
+  --qni-semantic-radius-circular: theme(borderRadius.full);
   --qni-semantic-radius-qpu-operation-outline: theme(borderRadius.md);
 
   /* Border width */

@@ -52,12 +52,6 @@
     height: var(--qni-semantic-size-qpu-operation-base);
   }
 
-  /* QPU operation text color */
-
-  .qpu-operation-text {
-    @apply text-white;
-  }
-
   /* QPU operation background color */
 
   .qpu-operation-bg-default {
@@ -101,15 +95,16 @@
     }
   }
 
-  .operation-circle {
+  .qpu-operation-circular {
     &::part(body) {
-      @apply qpu-operation-bg-default;
-      @apply h-full w-full;
-      @apply rounded-full;
+      width: var(--qni-semantic-size-qpu-operation-base);
+      height: var(--qni-semantic-size-qpu-operation-base);
+      background-color: var(--qni-semantic-fill-color-default);
+      border-radius: var(--qni-semantic-radius-circular);
     }
 
     &::part(icon) {
-      @apply qpu-operation-text;
+      color: var(--qni-semantic-icon-color-qpu-operation-name);
     }
   }
 

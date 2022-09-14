@@ -1790,6 +1790,7 @@ select {
   --qni-semantic-icon-color-qpu-operation-name: #fff;
   /* Border radius */
   --qni-semantic-radius-default: 0.25rem;
+  --qni-semantic-radius-circular: 9999px;
   --qni-semantic-radius-qpu-operation-outline: 0.375rem;
   /* Border width */
   --qni-semantic-border-width-0: 0px;
@@ -3550,6 +3551,27 @@ phase-gate[data-disabled]::part(body) {
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
+phase-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
+  border-radius: 9999px;
+  border-radius: 9999px;
+  border-radius: var(--qni-semantic-radius-circular);
+}
+
+phase-gate::part(icon) {
+  color: #fff;
+  color: #fff;
+  color: var(--qni-semantic-icon-color-qpu-operation-name);
+}
+
 phase-gate[data-angle]::before {
   position: absolute;
   display: flex;
@@ -3606,19 +3628,6 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) phase-gate[data-an
   left: 0px;
   right: 0px;
   margin-bottom: -0.75rem;
-}
-
-phase-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
-  height: 100%;
-  width: 100%;
-  border-radius: 9999px;
-}
-
-phase-gate::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 phase-gate {
@@ -5985,16 +5994,24 @@ x-gate[data-disabled]::part(body) {
 }
 
 x-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
-  height: 100%;
-  width: 100%;
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 9999px;
+  border-radius: 9999px;
+  border-radius: var(--qni-semantic-radius-circular);
 }
 
 x-gate::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: #fff;
+  color: #fff;
+  color: var(--qni-semantic-icon-color-qpu-operation-name);
 }
 
 x-gate {
@@ -6578,8 +6595,6 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 .ease-out {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
-
-/* QPU operation text color */
 
 /* QPU operation background color */
 
