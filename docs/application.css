@@ -1775,8 +1775,8 @@ select {
   --qni-semantic-size-qpu-operation-xl: 3rem;
   --qni-semantic-size-qpu-operation-2xl: 4rem;
   /* Spacing */
-  --qni-semantic-spacing-qpu-operation-border-gap: 0.125rem;
-  --qni-semantic-spacing-resize-handle-overlap: calc(-1 * 0.5rem);
+  --qni-semantic-spacing-outline-gap: 0.125rem;
+  --qni-semantic-spacing-handle-overlap: calc(-1 * 0.5rem);
   /* Color */
   --qni-semantic-fill-color-default: #10b981;
   --qni-semantic-fill-color-disabled: #71717a;
@@ -1792,7 +1792,7 @@ select {
   --qni-semantic-radius-circular: 9999px;
   /* Border width */
   --qni-semantic-border-width-0: 0px;
-  --qni-semantic-border-width-qpu-operation-outline: 2px;
+  --qni-semantic-border-width-outline: 2px;
 }
 
 .tippy-box{
@@ -2289,8 +2289,8 @@ bloch-display[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -2301,8 +2301,8 @@ bloch-display[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -2313,8 +2313,8 @@ bloch-display[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -2325,8 +2325,8 @@ bloch-display[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -2334,7 +2334,7 @@ bloch-display[data-hoverable]::after {
   bloch-display[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -2849,8 +2849,8 @@ control-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -2861,8 +2861,8 @@ control-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -2873,8 +2873,8 @@ control-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -2885,8 +2885,8 @@ control-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -2894,7 +2894,7 @@ control-gate[data-hoverable]::after {
   control-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -3016,8 +3016,8 @@ h-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -3028,8 +3028,8 @@ h-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -3040,8 +3040,8 @@ h-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -3052,8 +3052,8 @@ h-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -3061,7 +3061,7 @@ h-gate[data-hoverable]::after {
   h-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -3237,8 +3237,8 @@ measurement-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -3249,8 +3249,8 @@ measurement-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -3261,8 +3261,8 @@ measurement-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -3273,8 +3273,8 @@ measurement-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -3282,7 +3282,7 @@ measurement-gate[data-hoverable]::after {
   measurement-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -3523,8 +3523,8 @@ phase-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -3535,8 +3535,8 @@ phase-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -3547,8 +3547,8 @@ phase-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -3559,8 +3559,8 @@ phase-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -3568,7 +3568,7 @@ phase-gate[data-hoverable]::after {
   phase-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -3809,8 +3809,8 @@ qft-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -3821,8 +3821,8 @@ qft-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -3833,8 +3833,8 @@ qft-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -3845,8 +3845,8 @@ qft-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -3854,7 +3854,7 @@ qft-gate[data-hoverable]::after {
   qft-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -3890,7 +3890,7 @@ qft-gate::part(resize-handle) {
   border-radius: var(--qni-component-resize-handle-radius);
   margin-top: calc(-1 * 0.5rem);
   margin-top: calc(-1 * 0.5rem);
-  margin-top: var(--qni-semantic-spacing-resize-handle-overlap);
+  margin-top: var(--qni-semantic-spacing-handle-overlap);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -4045,8 +4045,8 @@ qft-dagger-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -4057,8 +4057,8 @@ qft-dagger-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -4069,8 +4069,8 @@ qft-dagger-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -4081,8 +4081,8 @@ qft-dagger-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -4090,7 +4090,7 @@ qft-dagger-gate[data-hoverable]::after {
   qft-dagger-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -4126,7 +4126,7 @@ qft-dagger-gate::part(resize-handle) {
   border-radius: var(--qni-component-resize-handle-radius);
   margin-top: calc(-1 * 0.5rem);
   margin-top: calc(-1 * 0.5rem);
-  margin-top: var(--qni-semantic-spacing-resize-handle-overlap);
+  margin-top: var(--qni-semantic-spacing-handle-overlap);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -4314,8 +4314,8 @@ rnot-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -4326,8 +4326,8 @@ rnot-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -4338,8 +4338,8 @@ rnot-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -4350,8 +4350,8 @@ rnot-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -4359,7 +4359,7 @@ rnot-gate[data-hoverable]::after {
   rnot-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -4530,8 +4530,8 @@ rx-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -4542,8 +4542,8 @@ rx-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -4554,8 +4554,8 @@ rx-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -4566,8 +4566,8 @@ rx-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -4575,7 +4575,7 @@ rx-gate[data-hoverable]::after {
   rx-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -4804,8 +4804,8 @@ ry-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -4816,8 +4816,8 @@ ry-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -4828,8 +4828,8 @@ ry-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -4840,8 +4840,8 @@ ry-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -4849,7 +4849,7 @@ ry-gate[data-hoverable]::after {
   ry-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -5078,8 +5078,8 @@ rz-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -5090,8 +5090,8 @@ rz-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -5102,8 +5102,8 @@ rz-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -5114,8 +5114,8 @@ rz-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -5123,7 +5123,7 @@ rz-gate[data-hoverable]::after {
   rz-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -5352,8 +5352,8 @@ swap-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -5364,8 +5364,8 @@ swap-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -5376,8 +5376,8 @@ swap-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -5388,8 +5388,8 @@ swap-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -5397,7 +5397,7 @@ swap-gate[data-hoverable]::after {
   swap-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -5519,8 +5519,8 @@ t-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -5531,8 +5531,8 @@ t-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -5543,8 +5543,8 @@ t-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -5555,8 +5555,8 @@ t-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -5564,7 +5564,7 @@ t-gate[data-hoverable]::after {
   t-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -5735,8 +5735,8 @@ write-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -5747,8 +5747,8 @@ write-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -5759,8 +5759,8 @@ write-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -5771,8 +5771,8 @@ write-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -5780,7 +5780,7 @@ write-gate[data-hoverable]::after {
   write-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -6007,8 +6007,8 @@ x-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -6019,8 +6019,8 @@ x-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -6031,8 +6031,8 @@ x-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -6043,8 +6043,8 @@ x-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -6052,7 +6052,7 @@ x-gate[data-hoverable]::after {
   x-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -6223,8 +6223,8 @@ y-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -6235,8 +6235,8 @@ y-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -6247,8 +6247,8 @@ y-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -6259,8 +6259,8 @@ y-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -6268,7 +6268,7 @@ y-gate[data-hoverable]::after {
   y-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 
@@ -6439,8 +6439,8 @@ z-gate[data-hoverable]::after {
               2px)
       );
   top: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   right: calc(
         -1 * (0.125rem +
@@ -6451,8 +6451,8 @@ z-gate[data-hoverable]::after {
               2px)
       );
   right: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   bottom: calc(
         -1 * (0.125rem +
@@ -6463,8 +6463,8 @@ z-gate[data-hoverable]::after {
               2px)
       );
   bottom: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
   left: calc(
         -1 * (0.125rem +
@@ -6475,8 +6475,8 @@ z-gate[data-hoverable]::after {
               2px)
       );
   left: calc(
-        -1 * (var(--qni-semantic-spacing-qpu-operation-border-gap) +
-              var(--qni-semantic-border-width-qpu-operation-outline))
+        -1 * (var(--qni-semantic-spacing-outline-gap) +
+              var(--qni-semantic-border-width-outline))
       );
 }
 
@@ -6484,7 +6484,7 @@ z-gate[data-hoverable]::after {
   z-gate[data-hoverable]::after {
     border-width: 2px;
     border-width: 2px;
-    border-width: var(--qni-semantic-border-width-qpu-operation-outline)
+    border-width: var(--qni-semantic-border-width-outline)
   }
 }
 

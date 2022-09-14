@@ -10,8 +10,8 @@
   --qni-semantic-size-qpu-operation-2xl: theme('spacing.16');
 
   /* Spacing */
-  --qni-semantic-spacing-qpu-operation-border-gap: theme('spacing[0.5]');
-  --qni-semantic-spacing-resize-handle-overlap: calc(-1 * theme('spacing.2'));
+  --qni-semantic-spacing-outline-gap: theme('spacing[0.5]');
+  --qni-semantic-spacing-handle-overlap: calc(-1 * theme('spacing.2'));
 
   /* Color */
   --qni-semantic-fill-color-default: theme(colors.emerald.500);
@@ -32,5 +32,5 @@
 
   /* Border width */
   --qni-semantic-border-width-0: theme(borderWidth.0);
-  --qni-semantic-border-width-qpu-operation-outline: theme(borderWidth.2);
+  --qni-semantic-border-width-outline: theme(borderWidth.2);
 }
