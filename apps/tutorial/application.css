@@ -3942,6 +3942,14 @@ qft-gate::part(resize-handle):hover {
   background-color: var(--qni-component-resize-handle-fill-color-hovered);
 }
 
+qft-gate::part(resize-handle) {
+  display: none;
+}
+
+circuit-dropzone qft-gate:hover::part(resize-handle) {
+  display: flex;
+}
+
 qft-dagger-gate {
   display: inline-block;
   position: relative;

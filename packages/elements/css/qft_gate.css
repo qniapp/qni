@@ -38,4 +38,13 @@ qft-gate {
       background-color: var(--qni-component-resize-handle-fill-color-hovered);
     }
   }
+
+  /* Show resize-handle only when hovering the mouse pointer */
+  &::part(resize-handle) {
+    @apply hidden;
+  }
+
+  circuit-dropzone &:hover::part(resize-handle) {
+    @apply flex;
+  }
 }
