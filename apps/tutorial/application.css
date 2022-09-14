@@ -3558,12 +3558,12 @@ phase-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 9999px;
   border-radius: 9999px;
   border-radius: var(--qni-semantic-radius-circular);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 phase-gate::part(icon) {
@@ -6000,12 +6000,12 @@ x-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
-  background-color: #10b981;
-  background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
   border-radius: 9999px;
   border-radius: 9999px;
   border-radius: var(--qni-semantic-radius-circular);
+  background-color: #10b981;
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-default);
 }
 
 x-gate::part(icon) {

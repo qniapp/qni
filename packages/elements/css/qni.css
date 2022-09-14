@@ -99,8 +99,13 @@
     &::part(body) {
       width: var(--qni-semantic-size-qpu-operation-base);
       height: var(--qni-semantic-size-qpu-operation-base);
-      background-color: var(--qni-semantic-fill-color-default);
       border-radius: var(--qni-semantic-radius-circular);
+    }
+  }
+
+  .qpu-operation-color-filled {
+    &::part(body) {
+      background-color: var(--qni-semantic-fill-color-default);
     }
 
     &::part(icon) {

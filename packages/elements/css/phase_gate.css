@@ -5,6 +5,7 @@ phase-gate {
   @apply qpu-operation-activateable;
   @apply qpu-operation-disableable;
   @apply qpu-operation-circular;
+  @apply qpu-operation-color-filled;
 
   @apply operation-angleable;
   @apply operation-draggable;
