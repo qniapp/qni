@@ -6,8 +6,8 @@ t-gate {
   @apply qpu-operation-disableable;
   @apply qpu-operation-rectangular;
   @apply qpu-operation-color-filled;
+  @apply qpu-operation-grabbable;
 
   @apply operation-draggable;
-  @apply operation-grabbable;
   @apply operation-ifable;
 }

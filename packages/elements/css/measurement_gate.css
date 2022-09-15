@@ -4,10 +4,10 @@ measurement-gate {
   @apply qpu-operation-hoverable;
   @apply qpu-operation-activateable;
   @apply qpu-operation-rectangular;
+  @apply qpu-operation-grabbable;
 
   @apply operation-draggable;
   @apply operation-flaggable;
-  @apply operation-grabbable;
 
   &::part(icon) {
     @apply text-purple-500;

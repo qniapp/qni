@@ -134,7 +134,7 @@
 
   /* data-grabbed */
 
-  .operation-grabbable {
+  .qpu-operation-grabbable {
     &[data-grabbed] {
       @apply cursor-grabbing;
     }
@@ -144,15 +144,15 @@
     }
 
     &[data-grabbed]::part(body) {
-      @apply qpu-operation-bg-grab;
+      background-color: var(--qni-semantic-fill-color-intermediate);
     }
 
     &[data-grabbed]::part(icon) {
-      @apply text-white;
+      color: var(--qni-semantic-color-icon-light);
     }
 
-    &[data-grabbed]::after {
-      @apply border-none;
+    &[data-grabbed]::part(outline) {
+      outline: none;
     }
   }
 

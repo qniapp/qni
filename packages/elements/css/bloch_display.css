@@ -3,9 +3,9 @@ bloch-display {
   @apply qpu-operation-outlineable;
   @apply qpu-operation-hoverable;
   @apply qpu-operation-activateable;
+  @apply qpu-operation-grabbable;
 
   @apply operation-draggable;
-  @apply operation-grabbable;
 
   /* 3D perspective */
 

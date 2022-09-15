@@ -7,8 +7,8 @@ qft-gate {
   @apply qpu-operation-activateable;
   @apply qpu-operation-disableable;
   @apply qpu-operation-resizeable;
+  @apply qpu-operation-grabbable;
 
   @apply operation-draggable;
-  @apply operation-grabbable;
   @apply operation-ifable;
 }
