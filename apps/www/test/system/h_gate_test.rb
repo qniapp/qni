@@ -34,4 +34,14 @@ class HGateTest < ApplicationSystemTestCase
 
     assert_outline(h_gate)
   end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    h_gate = palette('H')
+    grab h_gate
+
+    assert_no_outline(h_gate)
+  end
 end

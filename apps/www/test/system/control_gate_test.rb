@@ -109,4 +109,14 @@ class ControlGateTest < ApplicationSystemTestCase
 
     assert_outline(control_gate)
   end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    control_gate = palette('•')
+    grab control_gate
+
+    assert_no_outline(control_gate)
+  end
 end

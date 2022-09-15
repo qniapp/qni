@@ -34,4 +34,14 @@ class QftDaggerGateTest < ApplicationSystemTestCase
 
     assert_outline(qft_dagger_gate)
   end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    qft_dagger_gate = palette('QFT†')
+    grab qft_dagger_gate
+
+    assert_no_outline(qft_dagger_gate)
+  end
 end

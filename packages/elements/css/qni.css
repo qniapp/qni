@@ -118,7 +118,7 @@
   }
 
   .qpu-operation-hoverable {
-    palette-dropzone &[data-hoverable]:hover::part(outline),
+    palette-dropzone &[data-hoverable]:not([data-grabbed]):hover::part(outline),
     quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::part(outline) {
       @apply block;
       outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
@@ -152,7 +152,7 @@
     }
 
     &[data-grabbed]::part(outline) {
-      outline: none;
+      @apply hidden;
     }
   }
 
