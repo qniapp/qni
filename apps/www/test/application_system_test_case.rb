@@ -163,6 +163,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       'Y' => 'y-gate',
       'Z' => 'z-gate',
       'Phase' => 'phase-gate',
+      'T' => 't-gate',
       '√X' => 'rnot-gate',
       'Rx' => 'rx-gate',
       'Ry' => 'ry-gate',
