@@ -1778,8 +1778,10 @@ select {
   --qni-semantic-spacing-outline-gap: 0.125rem;
   --qni-semantic-spacing-handle-overlap: calc(-1 * 0.5rem);
   /* Color */
-  --qni-semantic-fill-color-default: #10b981;
-  --qni-semantic-fill-color-intermediate: #a855f7;
+  --qni-semantic-color-primary: #10b981;
+  --qni-semantic-fill-color-primary: var(--qni-semantic-color-primary);
+  --qni-semantic-color-intermediate: #a855f7;
+  --qni-semantic-fill-color-intermediate: var(--qni-semantic-color-intermediate);
   --qni-semantic-fill-color-disabled: #71717a;
   --qni-semantic-border-color-hover: #d4d4d8;
   --qni-semantic-border-color-active: #a855f7;
@@ -2874,7 +2876,7 @@ circuit-dropzone control-gate:not([data-snapped])::part(icon)::before {
 control-gate::part(icon) {
   color: #10b981;
   color: #10b981;
-  color: var(--qni-semantic-fill-color-default);
+  color: var(--qni-semantic-fill-color-primary);
 }
 
 control-gate[data-disabled]:not([data-grabbed])::part(icon) {
@@ -2949,7 +2951,7 @@ h-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 h-gate::part(icon) {
@@ -3206,8 +3208,9 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) measurement-gate[d
 }
 
 measurement-gate::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(168 85 247 / var(--tw-text-opacity));
+  color: #a855f7;
+  color: #a855f7;
+  color: var(--qni-semantic-color-intermediate);
 }
 
 circuit-dropzone measurement-gate[data-snapped]::part(icon) {
@@ -3277,8 +3280,9 @@ measurement-gate[data-value='1']::part(value)::after {
 /* data-grabbed */
 
 measurement-gate[data-grabbed]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: #a855f7;
+  background-color: #a855f7;
+  background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 measurement-gate[data-grabbed]::part(icon) {
@@ -3364,7 +3368,7 @@ phase-gate::part(body) {
   border-radius: var(--qni-semantic-radius-circular);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 phase-gate::part(icon) {
@@ -3549,7 +3553,7 @@ qft-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 qft-gate::part(icon) {
@@ -3839,7 +3843,7 @@ qft-dagger-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 qft-dagger-gate::part(icon) {
@@ -4027,7 +4031,7 @@ rnot-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 rnot-gate::part(icon) {
@@ -4197,7 +4201,7 @@ rx-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 rx-gate::part(icon) {
@@ -4425,7 +4429,7 @@ ry-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 ry-gate::part(icon) {
@@ -4653,7 +4657,7 @@ rz-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 rz-gate::part(icon) {
@@ -4927,7 +4931,7 @@ circuit-dropzone swap-gate:not([data-snapped])::part(icon)::before {
 swap-gate::part(icon) {
   color: #10b981;
   color: #10b981;
-  color: var(--qni-semantic-fill-color-default);
+  color: var(--qni-semantic-fill-color-primary);
 }
 
 swap-gate[data-disabled]:not([data-grabbed])::part(icon) {
@@ -5002,7 +5006,7 @@ t-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 t-gate::part(icon) {
@@ -5398,7 +5402,7 @@ x-gate::part(body) {
   border-radius: var(--qni-semantic-radius-circular);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 x-gate::part(icon) {
@@ -5568,7 +5572,7 @@ y-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 y-gate::part(icon) {
@@ -5738,7 +5742,7 @@ z-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 z-gate::part(icon) {
@@ -5908,10 +5912,6 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 .ease-out {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
-
-/* QPU operation background color */
-
-/* QPU operation outline */
 
 /* operation shapes */
 

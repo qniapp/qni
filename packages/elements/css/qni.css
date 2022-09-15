@@ -57,26 +57,6 @@
     }
   }
 
-  /* QPU operation background color */
-
-  .qpu-operation-bg-default {
-    @apply bg-emerald-500;
-  }
-
-  .qpu-operation-bg-grab {
-    @apply bg-purple-500;
-  }
-
-  /* QPU operation outline */
-
-  .qpu-operation-outline-hover {
-    @apply border-zinc-300;
-  }
-
-  .qpu-operation-outline-active {
-    @apply border-purple-400;
-  }
-
   /* operation shapes */
 
   .qpu-operation-rectangular {
@@ -93,7 +73,7 @@
 
   .qpu-operation-color-filled {
     &::part(body) {
-      background-color: var(--qni-semantic-fill-color-default);
+      background-color: var(--qni-semantic-fill-color-primary);
     }
 
     &::part(icon) {

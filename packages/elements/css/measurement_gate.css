@@ -10,7 +10,7 @@ measurement-gate {
   @apply operation-flaggable;
 
   &::part(icon) {
-    @apply text-purple-500;
+    color: var(--qni-semantic-color-intermediate);
   }
 
   circuit-dropzone &[data-snapped]::part(icon) {
@@ -54,7 +54,7 @@ measurement-gate {
   /* data-grabbed */
 
   &[data-grabbed]::part(body) {
-    @apply qpu-operation-bg-grab;
+    background-color: var(--qni-semantic-fill-color-intermediate);
   }
 
   &[data-grabbed]::part(icon) {
