@@ -38,6 +38,10 @@ bloch-display {
     @apply bg-green-50;
   }
 
+  &[data-grabbed]::part(sphere-border) {
+    @apply border-purple-500;
+  }
+
   &::part(sphere-lines) {
     @apply text-gray-400;
   }
