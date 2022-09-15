@@ -38,12 +38,12 @@ write-gate {
   }
 
   &[data-value='0']::part(value)::after {
-    @apply text-red-500;
+    color: var(--qni-semantic-color-off);
     content: '0';
   }
 
   &[data-value='1']::part(value)::after {
-    @apply text-sky-500;
+    color: var(--qni-semantic-color-on);
     content: '1';
   }
 

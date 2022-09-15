@@ -1782,6 +1782,8 @@ select {
   --qni-semantic-fill-color-primary: var(--qni-semantic-color-primary);
   --qni-semantic-color-intermediate: #a855f7;
   --qni-semantic-fill-color-intermediate: var(--qni-semantic-color-intermediate);
+  --qni-semantic-color-on: #0ea5e9;
+  --qni-semantic-color-off: #ef4444;
   --qni-semantic-fill-color-disabled: #71717a;
   --qni-semantic-border-color-hover: #d4d4d8;
   --qni-semantic-border-color-active: #a855f7;
@@ -5278,14 +5280,16 @@ write-gate::part(value)::after {
 }
 
 write-gate[data-value='0']::part(value)::after {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
+  color: #ef4444;
+  color: #ef4444;
+  color: var(--qni-semantic-color-off);
   content: '0';
 }
 
 write-gate[data-value='1']::part(value)::after {
-  --tw-text-opacity: 1;
-  color: rgb(14 165 233 / var(--tw-text-opacity));
+  color: #0ea5e9;
+  color: #0ea5e9;
+  color: var(--qni-semantic-color-on);
   content: '1';
 }
 
