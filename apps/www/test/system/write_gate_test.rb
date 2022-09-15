@@ -33,4 +33,14 @@ class WriteGateTest < ApplicationSystemTestCase
     assert_input_wire_classical dropzone(0, 0)
     assert_output_wire_quantum dropzone(0, 0)
   end
+
+  test 'hover' do
+    visit circuit_path
+
+    write0_gate = hover_palette_operation('|0>')
+    assert_outline(write0_gate)
+
+    write1_gate = hover_palette_operation('|1>')
+    assert_outline(write1_gate)
+  end
 end
