@@ -41,7 +41,11 @@ export class PhaseGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(phaseGateIcon)}</div>`, this.shadowRoot!)
+    render(
+      html`<div part="body">${this.iconHtml(phaseGateIcon)}</div>
+        <div part="outline"></div>`,
+      this.shadowRoot!
+    )
   }
 
   toJson(): string {

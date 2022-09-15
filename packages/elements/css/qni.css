@@ -104,35 +104,31 @@
   /* QPU operation outline */
 
   .qpu-operation-outlineable {
-    &[data-hoverable]::after {
-      position: absolute;
-      content: '';
+    &[data-hoverable]::part(outline) {
+      @apply absolute;
+      @apply hidden;
+
+      top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+      right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+      bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+      left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
 
       border-radius: var(--qni-semantic-radius-outline);
-      border-width: var(--qni-semantic-border-width-0);
-      border-color: var(--qni-semantic-border-color-default);
-
-      top: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
-      right: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
-      bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
-      left: calc(-1 * (var(--qni-semantic-spacing-outline-gap) + var(--qni-semantic-border-width-outline)));
-
-      @screen sm {
-        border-width: var(--qni-semantic-border-width-outline);
-      }
     }
   }
 
   .qpu-operation-hoverable {
-    palette-dropzone &[data-hoverable]:hover::after,
-    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::after {
-      border-color: var(--qni-semantic-border-color-hover);
+    palette-dropzone &[data-hoverable]:hover::part(outline),
+    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::part(outline) {
+      @apply block;
+      outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
     }
   }
 
   .qpu-operation-activateable {
-    &[data-active]::after {
-      border-color: var(--qni-semantic-border-color-active);
+    &[data-active]::part(outline) {
+      @apply block;
+      outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
     }
   }
 
@@ -169,6 +165,10 @@
   }
 
   .qpu-operation-resizeable {
+    &::part(layout) {
+      @apply flex flex-col;
+    }
+
     &::part(resize-handle) {
       --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
       --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);

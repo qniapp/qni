@@ -16,7 +16,6 @@
   /* Color */
   --qni-semantic-fill-color-default: theme(colors.emerald.500);
   --qni-semantic-fill-color-disabled: theme(colors.zinc.500);
-  --qni-semantic-border-color-default: theme(colors.transparent);
   --qni-semantic-border-color-hover: theme(colors.zinc.300);
   --qni-semantic-border-color-active: theme(colors.purple.500);
 

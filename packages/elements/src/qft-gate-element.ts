@@ -40,17 +40,11 @@ export class QftGateElement extends MenuableMixin(
 
   update(): void {
     render(
-      html`<style>
-          :host::part(layout) {
-            display: flex;
-            flex-direction: column;
-          }
-        </style>
-
-        <div part="layout">
+      html`<div part="layout">
           <div part="body">${this.iconHtml(qftGateIcon)}</div>
           <div part="resize-handle">${this.iconHtml(chevronSelectorVerticalIcon)}</div>
-        </div>`,
+        </div>
+        <div part="outline"></div>`,
       this.shadowRoot!
     )
   }

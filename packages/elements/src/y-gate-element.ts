@@ -38,7 +38,11 @@ export class YGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(yGateIcon)}</div>`, this.shadowRoot!)
+    render(
+      html`<div part="body">${this.iconHtml(yGateIcon)}</div>
+        <div part="outline"></div>`,
+      this.shadowRoot!
+    )
   }
 
   toJson(): string {

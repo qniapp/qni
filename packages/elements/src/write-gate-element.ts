@@ -30,9 +30,10 @@ export class WriteGateElement extends MenuableMixin(
   update(): void {
     render(
       html`<div part="body">
-        ${this.iconHtml(writeGateIcon)}
-        <div part="value"></div>
-      </div>`,
+          ${this.iconHtml(writeGateIcon)}
+          <div part="value"></div>
+        </div>
+        <div part="outline"></div>`,
       this.shadowRoot!
     )
   }

@@ -9460,7 +9460,8 @@ var ot = /* @__PURE__ */ __name(class extends Se(Ee(xe(we(ye(HTMLElement))))) {
               </div>
             </div>
           </div>
-        </div>`, this.shadowRoot);
+        </div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return `"${qs}"`;
@@ -9516,7 +9517,8 @@ var Ht = /* @__PURE__ */ __name(class extends Se(Ee(xe(_e(Oe(we(ye(HTMLElement))
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(qp)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(qp)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return `"${Fs}"`;
@@ -9536,7 +9538,8 @@ var Jt = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(xe(_e(Oe(we(ye(HTMLEle
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(Fp)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(Fp)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.if !== "" ? `"${ca}<${this.if}"` : `"${ca}"`;
@@ -9563,9 +9566,10 @@ var Kt = /* @__PURE__ */ __name(class extends Se(Ee(Xc(xe(Oe(we(ye(HTMLElement))
   }
   update() {
     Z(U`<div part="body">
-        ${this.iconHtml(Wp)}
-        <div id="value" part="value"></div>
-      </div>`, this.shadowRoot);
+          ${this.iconHtml(Wp)}
+          <div id="value" part="value"></div>
+        </div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.flag === "" ? `"${pa}"` : `"${pa}>${this.flag}"`;
@@ -9585,7 +9589,8 @@ var er = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(en(xe(_e(Oe(we(ye(HTML
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(Up)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(Up)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.angle === "" ? `"${da}"` : `"${da}(${this.angle.replace("/", "_")})"`;
@@ -9623,17 +9628,11 @@ var Mr = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(xe(_e(Oe(we(ye(HTMLEle
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<style>
-          :host::part(layout) {
-            display: flex;
-            flex-direction: column;
-          }
-        </style>
-
-        <div part="layout">
+    Z(U`<div part="layout">
           <div part="body">${this.iconHtml(Vp)}</div>
           <div part="resize-handle">${this.iconHtml(ns)}</div>
-        </div>`, this.shadowRoot);
+        </div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.if !== "" ? `"${ha}<${this.if}"` : `"${ha}"`;
@@ -9659,17 +9658,11 @@ var Pr = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(xe(_e(Oe(we(ye(HTMLEle
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<style>
-          :host::part(layout) {
-            display: flex;
-            flex-direction: column;
-          }
-        </style>
-
-        <div part="layout">
+    Z(U`<div part="layout">
           <div part="body">${this.iconHtml(Yp)}</div>
           <div part="resize-handle">${this.iconHtml(ns)}</div>
-        </div>`, this.shadowRoot);
+        </div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.if !== "" ? `"${fa}<${this.if}"` : `"${fa}"`;
@@ -9699,7 +9692,8 @@ var tr = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(xe(_e(Oe(we(ye(HTMLEle
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(Xp)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(Xp)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.if !== "" ? `"${va}<${this.if}"` : `"${va}"`;
@@ -9721,7 +9715,8 @@ var rr = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(en(xe(_e(Oe(we(ye(HTML
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(Zp)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(Zp)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.angle === "" ? `"${ma}"` : `"${ma}(${this.angle.replace("/", "_")})"`;
@@ -9743,7 +9738,8 @@ var nr = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(en(xe(_e(Oe(we(ye(HTML
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(Qp)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(Qp)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.angle === "" ? `"${ga}"` : `"${ga}(${this.angle.replace("/", "_")})"`;
@@ -9764,7 +9760,8 @@ var ir = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(en(xe(_e(Oe(we(ye(HTML
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(Jp)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(Jp)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.angle === "" ? `"${ba}"` : `"${ba}(${this.angle.replace("/", "_")})"`;
@@ -9784,7 +9781,8 @@ var or = /* @__PURE__ */ __name(class extends Se(Ee(Be(xe(_e(Oe(we(ye(HTMLElemen
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(Kp)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(Kp)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return `"${Ws}"`;
@@ -9804,7 +9802,8 @@ var ar = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(xe(_e(Oe(we(ye(HTMLEle
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(ed)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(ed)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.if !== "" ? `"${ya}<${this.if}"` : `"${ya}"`;
@@ -9836,9 +9835,10 @@ var $t = /* @__PURE__ */ __name(class extends Se(Ee(xe(Oe(we(ye(HTMLElement)))))
   }
   update() {
     Z(U`<div part="body">
-        ${this.iconHtml(td)}
-        <div part="value"></div>
-      </div>`, this.shadowRoot);
+          ${this.iconHtml(td)}
+          <div part="value"></div>
+        </div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return `"|${this.value}>"`;
@@ -9858,7 +9858,8 @@ var sr = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(xe(_e(Oe(we(ye(HTMLEle
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(rd)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(rd)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.if !== "" ? `"${wa}<${this.if}"` : `"${wa}"`;
@@ -9878,7 +9879,8 @@ var lr = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(xe(_e(Oe(we(ye(HTMLEle
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(nd)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(nd)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.if !== "" ? `"${xa}<${this.if}"` : `"${xa}"`;
@@ -9898,7 +9900,8 @@ var ur = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(xe(_e(Oe(we(ye(HTMLEle
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(id)}</div>`, this.shadowRoot);
+    Z(U`<div part="body">${this.iconHtml(id)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.if !== "" ? `"${Ea}<${this.if}"` : `"${Ea}"`;

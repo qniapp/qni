@@ -41,7 +41,11 @@ export class RyGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(ryGateIcon)}</div>`, this.shadowRoot!)
+    render(
+      html`<div part="body">${this.iconHtml(ryGateIcon)}</div>
+        <div part="outline"></div>`,
+      this.shadowRoot!
+    )
   }
 
   toJson(): string {
