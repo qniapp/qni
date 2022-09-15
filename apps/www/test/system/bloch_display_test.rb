@@ -15,4 +15,13 @@ class BlochDisplayTest < ApplicationSystemTestCase
       x: +0.0000, y: +0.0000, z: +1.0000
     TEXT
   end
+
+  test 'hover' do
+    visit circuit_path
+
+    bloch_display = hover_palette_operation('Bloch')
+
+    assert_outline(bloch_display)
+  end
+
 end
