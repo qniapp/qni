@@ -18,8 +18,10 @@ class BlochDisplayTest < ApplicationSystemTestCase
 
   test 'hover' do
     visit circuit_path
+    sleep 1
 
-    bloch_display = hover_palette_operation('Bloch')
+    bloch_display = palette('Bloch')
+    bloch_display.hover
 
     assert_outline(bloch_display)
   end

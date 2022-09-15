@@ -35,8 +35,10 @@ class PhaseGateTest < ApplicationSystemTestCase
 
   test 'hover' do
     visit circuit_path
+    sleep 1
 
-    phase_gate = hover_palette_operation('Phase')
+    phase_gate = palette('Phase')
+    phase_gate.hover
 
     assert_outline(phase_gate)
   end

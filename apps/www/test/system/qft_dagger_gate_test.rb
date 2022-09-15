@@ -27,8 +27,10 @@ class QftDaggerGateTest < ApplicationSystemTestCase
 
   test 'hover' do
     visit circuit_path
+    sleep 1
 
-    qft_dagger_gate = hover_palette_operation('QFT†')
+    qft_dagger_gate = palette('QFT†')
+    qft_dagger_gate.hover
 
     assert_outline(qft_dagger_gate)
   end

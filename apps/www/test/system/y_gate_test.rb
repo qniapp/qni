@@ -27,8 +27,10 @@ class YGateTest < ApplicationSystemTestCase
 
   test 'hover' do
     visit circuit_path
+    sleep 1
 
-    y_gate = hover_palette_operation('Y')
+    y_gate = palette('Y')
+    y_gate.hover
 
     assert_outline(y_gate)
   end

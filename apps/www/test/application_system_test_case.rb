@@ -129,16 +129,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     operation
   end
 
-  def hover_palette_operation(name)
-    sleep 1
-
-    operation = palette(name)
-    page.driver.browser.action
-        .move_to(operation.native, 0, 0)
-        .perform
-    operation
-  end
-
   # rubocop:disable Metrics/AbcSize
   def hover_circuit_operation(name, col:, row:)
     dropzone = dropzone(col, row)

@@ -27,8 +27,10 @@ class RnotGateTest < ApplicationSystemTestCase
 
   test 'hover' do
     visit circuit_path
+    sleep 1
 
-    rnot_gate = hover_palette_operation('√X')
+    rnot_gate = palette('√X')
+    rnot_gate.hover
 
     assert_outline(rnot_gate)
   end

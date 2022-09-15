@@ -61,8 +61,10 @@ class MeasurementGateTest < ApplicationSystemTestCase
 
   test 'hover' do
     visit circuit_path
+    sleep 1
 
-    measurement_gate = hover_palette_operation('Measure')
+    measurement_gate = palette('Measure')
+    measurement_gate.hover
 
     assert_outline(measurement_gate)
   end

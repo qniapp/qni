@@ -102,8 +102,10 @@ class ControlGateTest < ApplicationSystemTestCase
 
   test 'hover' do
     visit circuit_path
+    sleep 1
 
-    control_gate = hover_palette_operation('•')
+    control_gate = palette('•')
+    control_gate.hover
 
     assert_outline(control_gate)
   end

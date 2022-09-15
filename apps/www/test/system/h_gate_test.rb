@@ -27,8 +27,10 @@ class HGateTest < ApplicationSystemTestCase
 
   test 'hover' do
     visit circuit_path
+    sleep 1
 
-    h_gate = hover_palette_operation('H')
+    h_gate = palette('H')
+    h_gate.hover
 
     assert_outline(h_gate)
   end
