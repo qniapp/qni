@@ -58,4 +58,12 @@ class MeasurementGateTest < ApplicationSystemTestCase
 
     assert_value '1', measurement_gate
   end
+
+  test 'hover' do
+    visit circuit_path
+
+    measurement_gate = hover_palette_operation('Measure')
+
+    assert_outline(measurement_gate)
+  end
 end
