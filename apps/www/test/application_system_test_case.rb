@@ -26,7 +26,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def assert_outline(qpu_operation)
-    outline_el = shadow_root(qpu_operation).find_element(:css, '#outline')
+    # outline_el = shadow_root(qpu_operation).find_element(:css, 'x-gate::part(outline)')
+    outline_el = shadow_root(qpu_operation).find_element(css: '[part="outline"]')
 
     assert_not_nil outline_el
     assert outline_el.displayed?
