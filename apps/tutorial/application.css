@@ -2131,6 +2131,12 @@ operation-inspector[data-conditional-flag-pane-disabled] #conditional-flag-pane 
   background-color: transparent;
 }
 
+run-circuit-button {
+  background-color: #a855f7;
+  background-color: #a855f7;
+  background-color: var(--qni-semantic-fill-color-intermediate);
+}
+
 run-circuit-button[data-running] {
   cursor: wait;
 }

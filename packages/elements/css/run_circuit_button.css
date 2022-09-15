@@ -1,4 +1,6 @@
 run-circuit-button {
+  background-color: var(--qni-semantic-fill-color-intermediate);
+
   &[data-running] {
     @apply cursor-wait;
   }
