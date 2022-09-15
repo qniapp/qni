@@ -25,4 +25,14 @@ class SwapGateTest < ApplicationSystemTestCase
 
     assert_outline(swap_gate)
   end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    swap_gate = palette('Swap')
+    grab swap_gate
+
+    assert_no_outline(swap_gate)
+  end
 end

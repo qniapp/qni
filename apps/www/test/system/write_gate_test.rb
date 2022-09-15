@@ -46,4 +46,17 @@ class WriteGateTest < ApplicationSystemTestCase
     write1_gate.hover
     assert_outline(write1_gate)
   end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    write0_gate = palette('|0>')
+    grab write0_gate
+    assert_no_outline(write0_gate)
+
+    write1_gate = palette('|1>')
+    grab write1_gate
+    assert_no_outline(write1_gate)
+  end
 end

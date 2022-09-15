@@ -42,4 +42,14 @@ class PhaseGateTest < ApplicationSystemTestCase
 
     assert_outline(phase_gate)
   end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    phase_gate = palette('Phase')
+    grab phase_gate
+
+    assert_no_outline(phase_gate)
+  end
 end

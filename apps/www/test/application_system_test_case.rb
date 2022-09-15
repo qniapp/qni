@@ -32,6 +32,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert outline_el.displayed?
   end
 
+  def assert_no_outline(qpu_operation)
+    outline_el = shadow_root(qpu_operation).find_element(css: '[part="outline"]')
+
+    assert_not_nil outline_el
+    assert !outline_el.displayed?
+  end
+
   def assert_enabled(operation)
     assert_nil operation['data-disabled']
   end
@@ -127,6 +134,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     operation.drag_to dropzone(col, row), html5: false
 
     operation
+  end
+
+  def grab(operation)
+    page.driver.browser.action
+        .move_to(operation.native, 0, 0)
+        .click_and_hold
+        .perform
   end
 
   # rubocop:disable Metrics/AbcSize

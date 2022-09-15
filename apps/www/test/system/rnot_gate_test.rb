@@ -34,4 +34,14 @@ class RnotGateTest < ApplicationSystemTestCase
 
     assert_outline(rnot_gate)
   end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    rnot_gate = palette('√X')
+    grab rnot_gate
+
+    assert_no_outline(rnot_gate)
+  end
 end

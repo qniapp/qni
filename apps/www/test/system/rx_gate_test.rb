@@ -42,4 +42,14 @@ class RxGateTest < ApplicationSystemTestCase
 
     assert_outline(rx_gate)
   end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    rx_gate = palette('Rx')
+    grab rx_gate
+
+    assert_no_outline(rx_gate)
+  end
 end

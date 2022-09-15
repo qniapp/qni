@@ -34,4 +34,14 @@ class YGateTest < ApplicationSystemTestCase
 
     assert_outline(y_gate)
   end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    y_gate = palette('Y')
+    grab y_gate
+
+    assert_no_outline(y_gate)
+  end
 end

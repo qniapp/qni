@@ -68,4 +68,14 @@ class MeasurementGateTest < ApplicationSystemTestCase
 
     assert_outline(measurement_gate)
   end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    measurement_gate = palette('Measure')
+    grab measurement_gate
+
+    assert_no_outline(measurement_gate)
+  end
 end
