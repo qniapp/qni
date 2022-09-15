@@ -2325,7 +2325,6 @@ bloch-display[data-grabbed]::part(icon) {
 
 bloch-display[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 bloch-display {
@@ -2841,7 +2840,6 @@ control-gate[data-grabbed]::part(icon) {
 
 control-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 control-gate {
@@ -2978,7 +2976,6 @@ h-gate[data-grabbed]::part(icon) {
 
 h-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 h-gate {
@@ -3139,7 +3136,6 @@ measurement-gate[data-grabbed]::part(icon) {
 
 measurement-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 measurement-gate {
@@ -3395,7 +3391,6 @@ phase-gate[data-grabbed]::part(icon) {
 
 phase-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 phase-gate[data-angle]::before {
@@ -3661,7 +3656,6 @@ qft-gate[data-grabbed]::part(icon) {
 
 qft-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 qft-gate {
@@ -3872,7 +3866,6 @@ qft-dagger-gate[data-grabbed]::part(icon) {
 
 qft-dagger-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 qft-dagger-gate {
@@ -4061,7 +4054,6 @@ rnot-gate[data-grabbed]::part(icon) {
 
 rnot-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 rnot-gate {
@@ -4232,7 +4224,6 @@ rx-gate[data-grabbed]::part(icon) {
 
 rx-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 rx-gate[data-angle]::before {
@@ -4461,7 +4452,6 @@ ry-gate[data-grabbed]::part(icon) {
 
 ry-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 ry-gate[data-angle]::before {
@@ -4690,7 +4680,6 @@ rz-gate[data-grabbed]::part(icon) {
 
 rz-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 rz-gate[data-angle]::before {
@@ -4904,7 +4893,6 @@ swap-gate[data-grabbed]::part(icon) {
 
 swap-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 swap-gate {
@@ -5041,7 +5029,6 @@ t-gate[data-grabbed]::part(icon) {
 
 t-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 t-gate {
@@ -5197,7 +5184,6 @@ write-gate[data-grabbed]::part(icon) {
 
 write-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 write-gate {
@@ -5439,7 +5425,6 @@ x-gate[data-grabbed]::part(icon) {
 
 x-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 x-gate {
@@ -5610,7 +5595,6 @@ y-gate[data-grabbed]::part(icon) {
 
 y-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 y-gate {
@@ -5781,7 +5765,6 @@ z-gate[data-grabbed]::part(icon) {
 
 z-gate[data-grabbed]::part(outline) {
   display: none;
-  /* outline: none; */
 }
 
 z-gate {
