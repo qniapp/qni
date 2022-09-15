@@ -40,7 +40,7 @@ export class HGateElement extends MenuableMixin(
   update(): void {
     render(
       html`<div part="body">${this.iconHtml(hGateIcon)}</div>
-        <div part="outline"></div>`,
+        <div id="outline" part="outline"></div>`,
       this.shadowRoot!
     )
   }

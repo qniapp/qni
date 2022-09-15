@@ -24,4 +24,12 @@ class HGateTest < ApplicationSystemTestCase
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
     assert_phases 0, 180
   end
+
+  test 'hover' do
+    visit circuit_path
+
+    h_gate = hover_palette_operation('H')
+
+    assert_outline(h_gate)
+  end
 end

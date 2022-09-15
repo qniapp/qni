@@ -28,7 +28,7 @@ class WriteGateTest < ApplicationSystemTestCase
 
     sleep 1
 
-    hover_operation '|0>', col: 0, row: 0
+    hover_circuit_operation '|0>', col: 0, row: 0
 
     assert_input_wire_classical dropzone(0, 0)
     assert_output_wire_quantum dropzone(0, 0)

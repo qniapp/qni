@@ -9539,7 +9539,7 @@ var Jt = /* @__PURE__ */ __name(class extends Se(Ee(qe(Be(xe(_e(Oe(we(ye(HTMLEle
   }
   update() {
     Z(U`<div part="body">${this.iconHtml(Fp)}</div>
-        <div part="outline"></div>`, this.shadowRoot);
+        <div id="outline" part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return this.if !== "" ? `"${ca}<${this.if}"` : `"${ca}"`;
