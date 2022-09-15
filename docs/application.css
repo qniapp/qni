@@ -2381,11 +2381,6 @@ bloch-display::part(sphere-border) {
   background-color: rgb(240 253 244 / var(--tw-bg-opacity));
 }
 
-bloch-display[data-grabbed]::part(sphere-border) {
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-}
-
 bloch-display::part(sphere-lines) {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
