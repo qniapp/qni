@@ -2,15 +2,15 @@
 
 require 'application_system_test_case'
 
-class HGateTest < ApplicationSystemTestCase
+class TGateTest < ApplicationSystemTestCase
   test 'apply to |0>' do
     visit circuit_path
     put_operation '|0>', col: 0, row: 0
 
-    put_operation 'H', col: 1, row: 0
+    put_operation 'T', col: 1, row: 0
 
     assert_qubit_circles 2
-    assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
+    assert_magnitudes 1, 0
     assert_phases 0, 0
   end
 
@@ -18,20 +18,20 @@ class HGateTest < ApplicationSystemTestCase
     visit circuit_path
     put_operation '|1>', col: 0, row: 0
 
-    put_operation 'H', col: 1, row: 0
+    put_operation 'T', col: 1, row: 0
 
     assert_qubit_circles 2
-    assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
-    assert_phases 0, 180
+    assert_magnitudes 0, 1
+    assert_phases 0, 45
   end
 
   test 'hover' do
     visit circuit_path
     sleep 1
 
-    h_gate = palette('H')
-    h_gate.hover
+    t_gate = palette('T')
+    t_gate.hover
 
-    assert_outline(h_gate)
+    assert_outline(t_gate)
   end
 end

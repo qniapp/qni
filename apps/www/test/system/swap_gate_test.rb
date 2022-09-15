@@ -15,4 +15,14 @@ class SwapGateTest < ApplicationSystemTestCase
     assert_magnitudes 0, 1, 0, 0
     assert_phases 0, 0, 0, 0
   end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    swap_gate = palette('Swap')
+    swap_gate.hover
+
+    assert_outline(swap_gate)
+  end
 end

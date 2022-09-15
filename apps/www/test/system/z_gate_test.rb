@@ -24,4 +24,14 @@ class ZGateTest < ApplicationSystemTestCase
     assert_magnitudes 0, 1
     assert_phases 0, 180
   end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    z_gate = palette('Z')
+    z_gate.hover
+
+    assert_outline(z_gate)
+  end
 end

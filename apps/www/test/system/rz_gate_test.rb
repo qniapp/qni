@@ -32,4 +32,14 @@ class RzGateTest < ApplicationSystemTestCase
     assert_magnitudes 0, 1
     assert_phases 0, 45
   end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    rz_gate = palette('Rz')
+    rz_gate.hover
+
+    assert_outline(rz_gate)
+  end
 end

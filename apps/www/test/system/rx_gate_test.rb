@@ -32,4 +32,14 @@ class RxGateTest < ApplicationSystemTestCase
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
     assert_phases(-90, 0)
   end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    rx_gate = palette('Rx')
+    rx_gate.hover
+
+    assert_outline(rx_gate)
+  end
 end

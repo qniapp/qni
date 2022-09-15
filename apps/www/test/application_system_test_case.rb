@@ -25,6 +25,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
+  def assert_outline(qpu_operation)
+    outline_el = shadow_root(qpu_operation).find_element(css: '[part="outline"]')
+
+    assert_not_nil outline_el
+    assert outline_el.displayed?
+  end
+
   def assert_enabled(operation)
     assert_nil operation['data-disabled']
   end
@@ -123,7 +130,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   # rubocop:disable Metrics/AbcSize
-  def hover_operation(name, col:, row:)
+  def hover_circuit_operation(name, col:, row:)
     dropzone = dropzone(col, row)
 
     page.driver.browser.action
@@ -146,6 +153,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       'Y' => 'y-gate',
       'Z' => 'z-gate',
       'Phase' => 'phase-gate',
+      'T' => 't-gate',
       '√X' => 'rnot-gate',
       'Rx' => 'rx-gate',
       'Ry' => 'ry-gate',

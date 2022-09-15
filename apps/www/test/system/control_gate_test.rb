@@ -99,4 +99,14 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_magnitudes Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8)
     assert_phases 0, 0, 0, 0, 0, 0, 0, 180
   end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    control_gate = palette('•')
+    control_gate.hover
+
+    assert_outline(control_gate)
+  end
 end

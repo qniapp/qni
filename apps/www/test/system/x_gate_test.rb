@@ -24,4 +24,14 @@ class XGateTest < ApplicationSystemTestCase
     assert_magnitudes 1, 0
     assert_phases 0, 0
   end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    x_gate = palette('X')
+    x_gate.hover
+
+    assert_outline(x_gate)
+  end
 end

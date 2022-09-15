@@ -8,7 +8,7 @@ class MeasurementGateTest < ApplicationSystemTestCase
 
     sleep 1
 
-    measurement_gate = hover_operation('Measure', col: 0, row: 0)
+    measurement_gate = hover_circuit_operation('Measure', col: 0, row: 0)
 
     assert_value '0', measurement_gate
   end
@@ -35,7 +35,7 @@ class MeasurementGateTest < ApplicationSystemTestCase
     visit circuit_path
     put_operation '|0>', col: 0, row: 0
 
-    hover_operation 'Measure', col: 1, row: 0
+    hover_circuit_operation 'Measure', col: 1, row: 0
 
     assert_input_wire_quantum dropzone(1, 0)
     assert_output_wire_classical dropzone(1, 0)
@@ -57,5 +57,15 @@ class MeasurementGateTest < ApplicationSystemTestCase
     measurement_gate = put_operation('Measure', col: 1, row: 0)
 
     assert_value '1', measurement_gate
+  end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    measurement_gate = palette('Measure')
+    measurement_gate.hover
+
+    assert_outline(measurement_gate)
   end
 end

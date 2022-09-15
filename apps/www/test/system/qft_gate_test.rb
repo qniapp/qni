@@ -24,4 +24,14 @@ class QftGateTest < ApplicationSystemTestCase
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
     assert_phases 0, 180
   end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    qft_gate = palette('QFT')
+    qft_gate.hover
+
+    assert_outline(qft_gate)
+  end
 end
