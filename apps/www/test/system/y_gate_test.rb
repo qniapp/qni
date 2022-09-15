@@ -24,4 +24,12 @@ class YGateTest < ApplicationSystemTestCase
     assert_magnitudes 1, 0
     assert_phases(-90, 0)
   end
+
+  test 'hover' do
+    visit circuit_path
+
+    y_gate = hover_palette_operation('Y')
+
+    assert_outline(y_gate)
+  end
 end
