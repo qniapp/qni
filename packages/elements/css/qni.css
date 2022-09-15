@@ -1,6 +1,8 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 
+@import './variables';
+
 @import 'tippy.js/dist/border.css';
 @import 'tippy.js/dist/svg-arrow.css';
 @import 'tippy.js/dist/tippy.css';
@@ -39,49 +41,20 @@
 
 @import 'tailwindcss/utilities';
 
+@import 'qpu_operation';
+
 @layer utilities {
-  .operation {
+  .qpu-operation {
     @apply inline-block;
     @apply relative;
-    @apply h-8 w-8;
 
-    &::after {
-      @apply absolute;
+    width: var(--qni-semantic-size-qpu-operation-base);
+    height: var(--qni-semantic-size-qpu-operation-base);
 
-      content: '';
+    &::part(body) {
+      width: var(--qni-semantic-size-qpu-operation-base);
+      height: var(--qni-semantic-size-qpu-operation-base);
     }
-  }
-
-  /* QPU operation size */
-
-  .qpu-operation-xs {
-    @apply h-4 w-4;
-  }
-
-  .qpu-operation-sm {
-    @apply h-6 w-6;
-  }
-
-  .qpu-operation-base {
-    @apply h-8 w-8;
-  }
-
-  .qpu-operation-lg {
-    @apply h-10 w-10;
-  }
-
-  .qpu-operation-xl {
-    @apply h-12 w-12;
-  }
-
-  .qpu-operation-2xl {
-    @apply h-16 w-16;
-  }
-
-  /* QPU operation text color */
-
-  .qpu-operation-text {
-    @apply text-white;
   }
 
   /* QPU operation background color */
@@ -94,118 +67,74 @@
     @apply bg-purple-500;
   }
 
-  .qpu-operation-bg-disable {
-    @apply bg-zinc-500;
-  }
-
-  /* QPU operation border radius */
-
-  .qpu-operation-border-radius {
-    @apply rounded;
-  }
-
   /* QPU operation outline */
 
   .qpu-operation-outline-hover {
-    @apply border-zinc-400;
+    @apply border-zinc-300;
   }
 
   .qpu-operation-outline-active {
     @apply border-purple-400;
   }
 
-  .qpu-operation-outline-width {
-    @apply border-2;
-  }
-
-  .qpu-operation-outline-border-radius {
-    @apply rounded-md;
-  }
-
   /* operation shapes */
 
-  .operation-square {
+  .qpu-operation-rectangular {
     &::part(body) {
-      @apply h-full w-full;
-      @apply qpu-operation-bg-default;
-      @apply qpu-operation-border-radius;
+      border-radius: var(--qni-semantic-radius-default);
+    }
+  }
+
+  .qpu-operation-circular {
+    &::part(body) {
+      border-radius: var(--qni-semantic-radius-circular);
+    }
+  }
+
+  .qpu-operation-color-filled {
+    &::part(body) {
+      background-color: var(--qni-semantic-fill-color-default);
     }
 
     &::part(icon) {
-      @apply qpu-operation-text;
+      color: var(--qni-semantic-color-icon-light);
     }
   }
 
-  .operation-circle {
-    &::part(body) {
-      @apply qpu-operation-bg-default;
-      @apply h-full w-full;
-      @apply rounded-full;
-    }
+  /* QPU operation outline */
 
-    &::part(icon) {
-      @apply qpu-operation-text;
-    }
-  }
+  .qpu-operation-outlineable {
+    &[data-hoverable]::part(outline) {
+      @apply absolute;
+      @apply hidden;
 
-  .operation-transparent {
-    &::part(body) {
-      @apply h-full w-full;
-      @apply rounded;
+      top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+      right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+      bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+      left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+
+      border-radius: var(--qni-semantic-radius-outline);
     }
   }
 
-  /* data-hoverable */
-
-  .operation-hoverable {
-    palette-dropzone &[data-hoverable]::after,
-    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active])::after {
-      @apply qpu-operation-outline-border-radius;
-      @apply border-transparent;
-
-      @apply border-0;
-
-      top: -4px;
-      right: -4px;
-      bottom: -4px;
-      left: -4px;
-
-      @screen sm {
-        @apply qpu-operation-outline-width;
-      }
+  .qpu-operation-hoverable {
+    palette-dropzone &[data-hoverable]:hover::part(outline),
+    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::part(outline) {
+      @apply block;
+      outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
     }
   }
 
-  .operation-hoverable {
-    palette-dropzone &[data-hoverable]:hover::after,
-    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::after {
-      @apply qpu-operation-outline-hover;
-    }
-  }
-
-  /* data-active */
-
-  .operation-activateable {
-    &[data-active]::after {
-      @apply qpu-operation-outline-border-radius;
-      @apply qpu-operation-outline-active;
-
-      @apply border-0;
-
-      top: -4px;
-      right: -4px;
-      bottom: -4px;
-      left: -4px;
-
-      @screen sm {
-        @apply qpu-operation-outline-width;
-      }
+  .qpu-operation-activateable {
+    &[data-active]::part(outline) {
+      @apply block;
+      outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
     }
   }
 
   /* data-grabbed */
 
-  .operation-grabbable {
+  .qpu-operation-grabbable {
     &[data-grabbed] {
       @apply cursor-grabbing;
     }
@@ -215,24 +144,72 @@
     }
 
     &[data-grabbed]::part(body) {
-      @apply qpu-operation-bg-grab;
+      background-color: var(--qni-semantic-fill-color-intermediate);
     }
 
     &[data-grabbed]::part(icon) {
-      @apply text-white;
+      color: var(--qni-semantic-color-icon-light);
     }
 
-    &[data-grabbed]::after {
-      @apply border-none;
+    &[data-grabbed]::part(outline) {
+      outline: none;
     }
   }
 
   /* data-disabled */
 
-  .operation-disableable {
+  .qpu-operation-disableable {
     &[data-disabled]::part(body) {
-      /* @apply bg-gray-500; */
-      @apply qpu-operation-bg-disable;
+      background-color: var(--qni-semantic-fill-color-disabled);
+    }
+  }
+
+  .qpu-operation-resizeable {
+    &::part(layout) {
+      @apply flex flex-col;
+    }
+
+    &::part(resize-handle) {
+      --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
+      --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+
+      --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
+      --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
+      --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+
+      --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
+
+      width: var(--qni-component-resize-handle-width);
+      height: var(--qni-component-resize-handle-height);
+
+      color: var(--qni-component-resize-handle-icon-color);
+      background-color: var(--qni-component-resize-handle-fill-color-default);
+
+      border-radius: var(--qni-component-resize-handle-radius);
+
+      margin-top: var(--qni-semantic-spacing-handle-overlap);
+
+      @apply flex flex-row justify-center;
+      @apply cursor-grab;
+      @apply z-10;
+
+      &:hover {
+        background-color: var(--qni-component-resize-handle-fill-color-hovered);
+      }
+    }
+
+    /* Show resize-handle only when hovering the mouse pointer */
+    &::part(resize-handle) {
+      @apply hidden;
+    }
+
+    /*
+     * Do not display resize-handle
+     * - on palette
+     * - while dragging
+     */
+    circuit-dropzone &:not([data-grabbed]):hover::part(resize-handle) {
+      @apply flex;
     }
   }
 

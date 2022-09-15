@@ -1,9 +1,11 @@
 bloch-display {
-  @apply operation;
-  @apply operation-activateable;
+  @apply qpu-operation;
+  @apply qpu-operation-outlineable;
+  @apply qpu-operation-hoverable;
+  @apply qpu-operation-activateable;
+  @apply qpu-operation-grabbable;
+
   @apply operation-draggable;
-  @apply operation-grabbable;
-  @apply operation-hoverable;
 
   /* 3D perspective */
 
@@ -34,10 +36,6 @@ bloch-display {
     @apply border-2;
     @apply border-gray-400;
     @apply bg-green-50;
-  }
-
-  &[data-grabbed]::part(sphere-border) {
-    @apply border-purple-500;
   }
 
   &::part(sphere-lines) {

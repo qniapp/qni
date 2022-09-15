@@ -253,7 +253,8 @@ export class BlochDisplayElement extends MenuableMixin(
               </div>
             </div>
           </div>
-        </div>`,
+        </div>
+        <div part="outline"></div>`,
       this.shadowRoot!
     )
   }
