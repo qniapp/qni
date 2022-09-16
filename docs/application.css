@@ -1776,7 +1776,7 @@ select {
   --qni-semantic-size-qpu-operation-2xl: 4rem;
   /* Spacing */
   --qni-semantic-spacing-outline-gap: 0.125rem;
-  --qni-semantic-spacing-handle-overlap: calc(-1 * 0.5rem);
+  --qni-semantic-spacing-element-overlap: calc(-1 * 0.5rem);
   /* Color */
   --qni-semantic-color-primary: #10b981;
   --qni-semantic-fill-color-primary: var(--qni-semantic-color-primary);
@@ -3613,10 +3613,11 @@ qft-gate[data-disabled]::part(body) {
 }
 
 qft-gate {
-  --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
-  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
   --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
   --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+  --qni-component-resize-handle-overlap: var(--qni-semantic-spacing-element-overlap);
+  --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
+  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
   --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 }
@@ -3632,9 +3633,7 @@ qft-gate::part(resize-handle) {
   color: var(--qni-component-resize-handle-icon-color);
   background-color: var(--qni-component-resize-handle-fill-color);
   border-radius: var(--qni-component-resize-handle-radius);
-  margin-top: calc(-1 * 0.5rem);
-  margin-top: calc(-1 * 0.5rem);
-  margin-top: var(--qni-semantic-spacing-handle-overlap);
+  margin-top: var(--qni-component-resize-handle-overlap);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -3810,10 +3809,11 @@ qft-dagger-gate[data-disabled]::part(body) {
 }
 
 qft-dagger-gate {
-  --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
-  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
   --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
   --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+  --qni-component-resize-handle-overlap: var(--qni-semantic-spacing-element-overlap);
+  --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
+  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
   --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 }
@@ -3829,9 +3829,7 @@ qft-dagger-gate::part(resize-handle) {
   color: var(--qni-component-resize-handle-icon-color);
   background-color: var(--qni-component-resize-handle-fill-color);
   border-radius: var(--qni-component-resize-handle-radius);
-  margin-top: calc(-1 * 0.5rem);
-  margin-top: calc(-1 * 0.5rem);
-  margin-top: var(--qni-semantic-spacing-handle-overlap);
+  margin-top: var(--qni-component-resize-handle-overlap);
   display: flex;
   flex-direction: row;
   justify-content: center;

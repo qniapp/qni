@@ -6,7 +6,8 @@ import {
   HoverableMixin,
   IconableMixin,
   IfableMixin,
-  MenuableMixin
+  MenuableMixin,
+  ResizeableMixin
 } from './mixin'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
@@ -23,7 +24,9 @@ export type QftGateElementProps = {
 export class QftGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
-      ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
+      ControllableMixin(
+        ResizeableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
+      )
     )
   )
 ) {
@@ -36,6 +39,7 @@ export class QftGateElement extends MenuableMixin(
     this.attachShadow({mode: 'open'})
     this.update()
     this.initDraggable()
+    this.initResizeable()
   }
 
   update(): void {
