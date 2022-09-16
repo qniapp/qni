@@ -27,9 +27,10 @@ circuit-step {
   }
 
   &::after {
+    background-color: var(--qni-semantic-fill-color-on);
+
     @apply absolute;
     @apply z-10;
-    @apply bg-purple-500;
     @apply opacity-0;
 
     @apply left-0 sm:left-auto sm:top-0;

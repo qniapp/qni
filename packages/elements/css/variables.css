@@ -21,11 +21,15 @@
   --qni-semantic-fill-color-intermediate: var(--qni-semantic-color-intermediate);
 
   --qni-semantic-color-on: theme(colors.sky.500);
+  --qni-semantic-fill-color-on: var(--qni-semantic-color-on);
+
   --qni-semantic-color-off: theme(colors.red.500);
 
   --qni-semantic-fill-color-disabled: theme(colors.zinc.500);
   --qni-semantic-border-color-hover: theme(colors.zinc.300);
-  --qni-semantic-border-color-active: theme(colors.purple.500);
+
+  --qni-semantic-color-active: var(--qni-semantic-color-on);
+  --qni-semantic-border-color-active: var(--qni-semantic-color-active);
 
   --qni-semantic-fill-color-handle: theme(colors.orange.400);
   --qni-semantic-fill-color-handle-hover: theme(colors.orange.500);
