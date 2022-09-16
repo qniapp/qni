@@ -1,4 +1,4 @@
-import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isIfable, isMenuable} from './mixin'
+import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isResizeable, isIfable, isMenuable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {DetailedError, Util, describe} from '@qni/common'
 import {Operation, isOperation} from './operation'
@@ -332,6 +332,7 @@ export class CircuitEditorElement extends HTMLElement {
   connectedCallback(): void {
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
     this.addEventListener('draggable-init', this.enableDragging)
+    this.addEventListener('resizeable-init', this.enableResizing)
     this.addEventListener('operation-active', this.activateOperation)
     this.addEventListener('operation-show-menu', this.showOperationMenu)
     this.addEventListener('operation-menu-if', this.showOperationInspectorIf)
@@ -371,6 +372,16 @@ export class CircuitEditorElement extends HTMLElement {
       el.draggable = true
     } else {
       throw new DetailedError('Not a draggable element.', {el})
+    }
+  }
+
+  private enableResizing(event: Event): void {
+    const el = event.target
+
+    if (isResizeable(el)) {
+      el.resizeable = true
+    } else {
+      throw new DetailedError('Not a resizeable element.', {el})
     }
   }
 
