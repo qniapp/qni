@@ -3613,8 +3613,8 @@ qft-gate[data-disabled]::part(body) {
 }
 
 qft-gate {
-  --qni-component-fill-color-resize-handle: var(--qni-semantic-color-intermediate-light);
-  --qni-component-fill-color-resize-handle-hovered: var(--qni-semantic-color-intermediate);
+  --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
+  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
   --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
   --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
   --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
@@ -3630,7 +3630,7 @@ qft-gate::part(resize-handle) {
   width: var(--qni-component-resize-handle-width);
   height: var(--qni-component-resize-handle-height);
   color: var(--qni-component-resize-handle-icon-color);
-  background-color: var(--qni-component-fill-color-resize-handle);
+  background-color: var(--qni-component-resize-handle-fill-color);
   border-radius: var(--qni-component-resize-handle-radius);
   margin-top: calc(-1 * 0.5rem);
   margin-top: calc(-1 * 0.5rem);
@@ -3643,7 +3643,7 @@ qft-gate::part(resize-handle) {
 }
 
 qft-gate::part(resize-handle):hover {
-  background-color: var(--qni-component-fill-color-resize-handle-hovered);
+  background-color: var(--qni-component-resize-handle-fill-color-hovered);
 }
 
 qft-gate::part(resize-handle) {
@@ -3810,8 +3810,8 @@ qft-dagger-gate[data-disabled]::part(body) {
 }
 
 qft-dagger-gate {
-  --qni-component-fill-color-resize-handle: var(--qni-semantic-color-intermediate-light);
-  --qni-component-fill-color-resize-handle-hovered: var(--qni-semantic-color-intermediate);
+  --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
+  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
   --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
   --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
   --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
@@ -3827,7 +3827,7 @@ qft-dagger-gate::part(resize-handle) {
   width: var(--qni-component-resize-handle-width);
   height: var(--qni-component-resize-handle-height);
   color: var(--qni-component-resize-handle-icon-color);
-  background-color: var(--qni-component-fill-color-resize-handle);
+  background-color: var(--qni-component-resize-handle-fill-color);
   border-radius: var(--qni-component-resize-handle-radius);
   margin-top: calc(-1 * 0.5rem);
   margin-top: calc(-1 * 0.5rem);
@@ -3840,7 +3840,7 @@ qft-dagger-gate::part(resize-handle) {
 }
 
 qft-dagger-gate::part(resize-handle):hover {
-  background-color: var(--qni-component-fill-color-resize-handle-hovered);
+  background-color: var(--qni-component-resize-handle-fill-color-hovered);
 }
 
 qft-dagger-gate::part(resize-handle) {
