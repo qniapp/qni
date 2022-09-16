@@ -145,11 +145,15 @@
   }
 
   .qpu-operation-resizeable {
-    --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
-    --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
     --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
     --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+
+    --qni-component-resize-handle-overlap: var(--qni-semantic-spacing-element-overlap);
+
+    --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
+    --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
     --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+
     --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 
     &::part(layout) {
@@ -165,7 +169,7 @@
 
       border-radius: var(--qni-component-resize-handle-radius);
 
-      margin-top: var(--qni-semantic-spacing-handle-overlap);
+      margin-top: var(--qni-component-resize-handle-overlap);
 
       @apply flex flex-row justify-center;
       @apply cursor-ns-resize;

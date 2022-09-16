@@ -11,7 +11,7 @@
 
   /* Spacing */
   --qni-semantic-spacing-outline-gap: theme('spacing[0.5]');
-  --qni-semantic-spacing-handle-overlap: calc(-1 * theme(spacing.2));
+  --qni-semantic-spacing-element-overlap: calc(-1 * theme(spacing.2));
 
   /* Color */
   --qni-semantic-color-primary: theme(colors.emerald.500);
