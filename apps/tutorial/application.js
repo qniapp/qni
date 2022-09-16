@@ -9267,8 +9267,10 @@ function qp(r) {
     constructor() {
       super(...arguments);
       this.debugResizeable = true;
-      this.resizeableMachine = ot({ id: "resizeable", initial: "idle", states: { idle: { entry: ["init"] } } }, { actions: { init: () => {
+      this.resizeableMachine = ot({ id: "resizeable", initial: "idle", states: { idle: { entry: ["init"], on: { SET_INTERACT: { target: "grabbable", actions: ["setInteract"] } } }, grabbable: { on: { UNSET_INTERACT: { target: "idle" } } } } }, { actions: { init: () => {
         this.dispatchEvent(new Event("resizeable-init", { bubbles: true }));
+      }, setInteract: () => {
+        console.log("setInteract");
       } } });
       this.resizeableService = Je(this.resizeableMachine).onTransition((i) => {
         this.debugResizeable && console.log(`resizeable: ${Ve(i.value)}`);
@@ -9278,7 +9280,7 @@ function qp(r) {
       return this.resizeableService.state !== void 0;
     }
     set resizeable(i) {
-      console.log(i ? "resizeable = true" : "resizeable = false");
+      i ? this.resizeableService.send({ type: "SET_INTERACT" }) : this.resizeableService.send({ type: "UNSET_INTERACT" });
     }
     initResizeable() {
       this.resizeableService.state === void 0 && this.resizeableService.start();

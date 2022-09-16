@@ -24,7 +24,20 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
         initial: 'idle',
         states: {
           idle: {
-            entry: ['init']
+            entry: ['init'],
+            on: {
+              SET_INTERACT: {
+                target: 'grabbable',
+                actions: ['setInteract']
+              }
+            }
+          },
+          grabbable: {
+            on: {
+              UNSET_INTERACT: {
+                target: 'idle'
+              }
+            }
           }
         }
       },
@@ -32,6 +45,27 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
         actions: {
           init: () => {
             this.dispatchEvent(new Event('resizeable-init', {bubbles: true}))
+          },
+          setInteract: () => {
+            // eslint-disable-next-line no-console
+            console.log('setInteract')
+
+            // const interactable = interact(this)
+            // interactable.styleCursor(false)
+            // interactable.on('down', this.grab.bind(this))
+            // interactable.on('up', this.release.bind(this))
+            // interactable.draggable({
+            //   onstart: this.startDragging.bind(this),
+            //   onmove: this.dragMove.bind(this),
+            //   onend: this.endDragging.bind(this)
+            // })
+
+            // const dropzone = this.dropzone
+            // if (isCircuitDropzoneElement(dropzone)) {
+            //   this.snappedDropzone = dropzone
+            // } else {
+            //   this.snappedDropzone = null
+            // }
           }
         }
       }
@@ -50,13 +84,9 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
 
     set resizeable(value: boolean) {
       if (value) {
-        // eslint-disable-next-line no-console
-        console.log('resizeable = true')
-        // this.resizeableService.send({type: 'SET_INTERACT'})
+        this.resizeableService.send({type: 'SET_INTERACT'})
       } else {
-        // eslint-disable-next-line no-console
-        console.log('resizeable = false')
-        // this.resizeableService.send({type: 'UNSET_INTERACT'})
+        this.resizeableService.send({type: 'UNSET_INTERACT'})
       }
     }
 
