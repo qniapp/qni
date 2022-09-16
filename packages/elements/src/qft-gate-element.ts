@@ -46,7 +46,9 @@ export class QftGateElement extends MenuableMixin(
     render(
       html`<div part="layout">
           <div part="body">${this.iconHtml(qftGateIcon)}</div>
-          <div part="resize-handle">${this.iconHtml(chevronSelectorVerticalIcon)}</div>
+          <div part="resize-handle" data-target="qft-gate.resizeHandle">
+            ${this.iconHtml(chevronSelectorVerticalIcon)}
+          </div>
         </div>
         <div part="outline"></div>`,
       this.shadowRoot!

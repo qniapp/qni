@@ -3646,11 +3646,11 @@ qft-gate::part(resize-handle):hover {
 }
 
 qft-gate::part(resize-handle) {
-  display: none;
+  visibility: hidden;
 }
 
 quantum-circuit:not([data-editing]) circuit-dropzone qft-gate:not([data-grabbed]):hover::part(resize-handle) {
-  display: flex;
+  visibility: visible;
 }
 
 qft-gate[data-grabbed] {
@@ -3842,11 +3842,11 @@ qft-dagger-gate::part(resize-handle):hover {
 }
 
 qft-dagger-gate::part(resize-handle) {
-  display: none;
+  visibility: hidden;
 }
 
 quantum-circuit:not([data-editing]) circuit-dropzone qft-dagger-gate:not([data-grabbed]):hover::part(resize-handle) {
-  display: flex;
+  visibility: visible;
 }
 
 qft-dagger-gate::part(body) {

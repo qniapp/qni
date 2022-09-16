@@ -1,4 +1,4 @@
-import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isResizeable, isIfable, isMenuable} from './mixin'
+import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isIfable, isMenuable, isResizeable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {DetailedError, Util, describe} from '@qni/common'
 import {Operation, isOperation} from './operation'

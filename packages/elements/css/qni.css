@@ -182,7 +182,7 @@
 
     /* Show resize-handle only when hovering the mouse pointer */
     &::part(resize-handle) {
-      @apply hidden;
+      @apply invisible;
     }
 
     /*
@@ -191,7 +191,7 @@
      * - while dragging
      */
     quantum-circuit:not([data-editing]) circuit-dropzone &:not([data-grabbed]):hover::part(resize-handle) {
-      @apply flex;
+      @apply visible;
     }
   }
 

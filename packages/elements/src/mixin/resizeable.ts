@@ -1,7 +1,7 @@
+import {Util, describe} from '@qni/common'
+import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Constructor} from './constructor'
-import {attr} from '@github/catalyst'
-import {describe} from '@qni/common'
 
 export const isResizeable = (arg: unknown): arg is Resizeable =>
   arg !== undefined && arg !== null && typeof (arg as Resizeable).resizeable === 'boolean'
@@ -17,6 +17,7 @@ type ResizeableEvent = {type: 'SET_INTERACT'} | {type: 'UNSET_INTERACT'}
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
     @attr debugResizeable = true
+    @target resizeHandle!: HTMLElement
 
     private resizeableMachine = createMachine<ResizeableContext, ResizeableEvent>(
       {
@@ -47,8 +48,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             this.dispatchEvent(new Event('resizeable-init', {bubbles: true}))
           },
           setInteract: () => {
-            // eslint-disable-next-line no-console
-            console.log('setInteract')
+            Util.notNull(this.resizeHandle)
 
             // const interactable = interact(this)
             // interactable.styleCursor(false)
