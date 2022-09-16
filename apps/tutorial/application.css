@@ -1778,13 +1778,18 @@ select {
   --qni-semantic-spacing-outline-gap: 0.125rem;
   --qni-semantic-spacing-handle-overlap: calc(-1 * 0.5rem);
   /* Color */
-  --qni-semantic-fill-color-default: #10b981;
-  --qni-semantic-fill-color-intermediate: #a855f7;
+  --qni-semantic-color-primary: #10b981;
+  --qni-semantic-fill-color-primary: var(--qni-semantic-color-primary);
+  --qni-semantic-color-intermediate: #a855f7;
+  --qni-semantic-color-intermediate-light: #c084fc;
+  --qni-semantic-fill-color-intermediate: var(--qni-semantic-color-intermediate);
+  --qni-semantic-color-on: #0ea5e9;
+  --qni-semantic-fill-color-on: var(--qni-semantic-color-on);
+  --qni-semantic-color-off: #ef4444;
   --qni-semantic-fill-color-disabled: #71717a;
   --qni-semantic-border-color-hover: #d4d4d8;
-  --qni-semantic-border-color-active: #a855f7;
-  --qni-semantic-fill-color-handle: #fb923c;
-  --qni-semantic-fill-color-handle-hover: #f97316;
+  --qni-semantic-color-active: var(--qni-semantic-color-on);
+  --qni-semantic-border-color-active: var(--qni-semantic-color-active);
   --qni-semantic-color-icon-light: #fff;
   /* Border radius */
   --qni-semantic-radius-default: 0.25rem;
@@ -2127,6 +2132,12 @@ operation-inspector[data-conditional-flag-pane-disabled] #conditional-flag-pane 
   background-color: transparent;
 }
 
+run-circuit-button {
+  background-color: #a855f7;
+  background-color: #a855f7;
+  background-color: var(--qni-semantic-fill-color-intermediate);
+}
+
 run-circuit-button[data-running] {
   cursor: wait;
 }
@@ -2297,8 +2308,8 @@ palette-dropzone bloch-display[data-hoverable]:not([data-grabbed]):hover::part(o
 
 bloch-display[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -2692,10 +2703,11 @@ circuit-step[data-shadow]::after {
 }
 
 circuit-step::after {
+  background-color: #0ea5e9;
+  background-color: #0ea5e9;
+  background-color: var(--qni-semantic-fill-color-on);
   position: absolute;
   z-index: 10;
-  --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   opacity: 0;
   left: 0px;
 }
@@ -2811,8 +2823,8 @@ palette-dropzone control-gate[data-hoverable]:not([data-grabbed]):hover::part(ou
 
 control-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -2874,7 +2886,7 @@ circuit-dropzone control-gate:not([data-snapped])::part(icon)::before {
 control-gate::part(icon) {
   color: #10b981;
   color: #10b981;
-  color: var(--qni-semantic-fill-color-default);
+  color: var(--qni-semantic-fill-color-primary);
 }
 
 control-gate[data-disabled]:not([data-grabbed])::part(icon) {
@@ -2932,8 +2944,8 @@ palette-dropzone h-gate[data-hoverable]:not([data-grabbed]):hover::part(outline)
 
 h-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -2949,7 +2961,7 @@ h-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 h-gate::part(icon) {
@@ -3107,8 +3119,8 @@ palette-dropzone measurement-gate[data-hoverable]:not([data-grabbed]):hover::par
 
 measurement-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -3206,8 +3218,9 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) measurement-gate[d
 }
 
 measurement-gate::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(168 85 247 / var(--tw-text-opacity));
+  color: #a855f7;
+  color: #a855f7;
+  color: var(--qni-semantic-color-intermediate);
 }
 
 circuit-dropzone measurement-gate[data-snapped]::part(icon) {
@@ -3277,8 +3290,9 @@ measurement-gate[data-value='1']::part(value)::after {
 /* data-grabbed */
 
 measurement-gate[data-grabbed]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: #a855f7;
+  background-color: #a855f7;
+  background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 measurement-gate[data-grabbed]::part(icon) {
@@ -3347,8 +3361,8 @@ palette-dropzone phase-gate[data-hoverable]:not([data-grabbed]):hover::part(outl
 
 phase-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -3364,7 +3378,7 @@ phase-gate::part(body) {
   border-radius: var(--qni-semantic-radius-circular);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 phase-gate::part(icon) {
@@ -3549,7 +3563,7 @@ qft-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 qft-gate::part(icon) {
@@ -3587,8 +3601,8 @@ palette-dropzone qft-gate[data-hoverable]:not([data-grabbed]):hover::part(outlin
 
 qft-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -3598,22 +3612,25 @@ qft-gate[data-disabled]::part(body) {
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
+qft-gate {
+  --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
+  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
+  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
+  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
+}
+
 qft-gate::part(layout) {
   display: flex;
   flex-direction: column;
 }
 
 qft-gate::part(resize-handle) {
-  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
-  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
-  --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
-  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
-  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
-  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
   width: var(--qni-component-resize-handle-width);
   height: var(--qni-component-resize-handle-height);
   color: var(--qni-component-resize-handle-icon-color);
-  background-color: var(--qni-component-resize-handle-fill-color-default);
+  background-color: var(--qni-component-resize-handle-fill-color);
   border-radius: var(--qni-component-resize-handle-radius);
   margin-top: calc(-1 * 0.5rem);
   margin-top: calc(-1 * 0.5rem);
@@ -3621,8 +3638,7 @@ qft-gate::part(resize-handle) {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  cursor: -webkit-grab;
-  cursor: grab;
+  cursor: ns-resize;
   z-index: 10;
 }
 
@@ -3782,8 +3798,8 @@ palette-dropzone qft-dagger-gate[data-hoverable]:not([data-grabbed]):hover::part
 
 qft-dagger-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -3793,22 +3809,25 @@ qft-dagger-gate[data-disabled]::part(body) {
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
+qft-dagger-gate {
+  --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
+  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
+  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
+  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
+}
+
 qft-dagger-gate::part(layout) {
   display: flex;
   flex-direction: column;
 }
 
 qft-dagger-gate::part(resize-handle) {
-  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
-  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
-  --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
-  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
-  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
-  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
   width: var(--qni-component-resize-handle-width);
   height: var(--qni-component-resize-handle-height);
   color: var(--qni-component-resize-handle-icon-color);
-  background-color: var(--qni-component-resize-handle-fill-color-default);
+  background-color: var(--qni-component-resize-handle-fill-color);
   border-radius: var(--qni-component-resize-handle-radius);
   margin-top: calc(-1 * 0.5rem);
   margin-top: calc(-1 * 0.5rem);
@@ -3816,8 +3835,7 @@ qft-dagger-gate::part(resize-handle) {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  cursor: -webkit-grab;
-  cursor: grab;
+  cursor: ns-resize;
   z-index: 10;
 }
 
@@ -3839,7 +3857,7 @@ qft-dagger-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 qft-dagger-gate::part(icon) {
@@ -4010,8 +4028,8 @@ palette-dropzone rnot-gate[data-hoverable]:not([data-grabbed]):hover::part(outli
 
 rnot-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -4027,7 +4045,7 @@ rnot-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 rnot-gate::part(icon) {
@@ -4180,8 +4198,8 @@ palette-dropzone rx-gate[data-hoverable]:not([data-grabbed]):hover::part(outline
 
 rx-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -4197,7 +4215,7 @@ rx-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 rx-gate::part(icon) {
@@ -4408,8 +4426,8 @@ palette-dropzone ry-gate[data-hoverable]:not([data-grabbed]):hover::part(outline
 
 ry-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -4425,7 +4443,7 @@ ry-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 ry-gate::part(icon) {
@@ -4636,8 +4654,8 @@ palette-dropzone rz-gate[data-hoverable]:not([data-grabbed]):hover::part(outline
 
 rz-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -4653,7 +4671,7 @@ rz-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 rz-gate::part(icon) {
@@ -4864,8 +4882,8 @@ palette-dropzone swap-gate[data-hoverable]:not([data-grabbed]):hover::part(outli
 
 swap-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -4927,7 +4945,7 @@ circuit-dropzone swap-gate:not([data-snapped])::part(icon)::before {
 swap-gate::part(icon) {
   color: #10b981;
   color: #10b981;
-  color: var(--qni-semantic-fill-color-default);
+  color: var(--qni-semantic-fill-color-primary);
 }
 
 swap-gate[data-disabled]:not([data-grabbed])::part(icon) {
@@ -4985,8 +5003,8 @@ palette-dropzone t-gate[data-hoverable]:not([data-grabbed]):hover::part(outline)
 
 t-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -5002,7 +5020,7 @@ t-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 t-gate::part(icon) {
@@ -5155,8 +5173,8 @@ palette-dropzone write-gate[data-hoverable]:not([data-grabbed]):hover::part(outl
 
 write-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -5274,14 +5292,16 @@ write-gate::part(value)::after {
 }
 
 write-gate[data-value='0']::part(value)::after {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
+  color: #ef4444;
+  color: #ef4444;
+  color: var(--qni-semantic-color-off);
   content: '0';
 }
 
 write-gate[data-value='1']::part(value)::after {
-  --tw-text-opacity: 1;
-  color: rgb(14 165 233 / var(--tw-text-opacity));
+  color: #0ea5e9;
+  color: #0ea5e9;
+  color: var(--qni-semantic-color-on);
   content: '1';
 }
 
@@ -5381,8 +5401,8 @@ palette-dropzone x-gate[data-hoverable]:not([data-grabbed]):hover::part(outline)
 
 x-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -5398,7 +5418,7 @@ x-gate::part(body) {
   border-radius: var(--qni-semantic-radius-circular);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 x-gate::part(icon) {
@@ -5551,8 +5571,8 @@ palette-dropzone y-gate[data-hoverable]:not([data-grabbed]):hover::part(outline)
 
 y-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -5568,7 +5588,7 @@ y-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 y-gate::part(icon) {
@@ -5721,8 +5741,8 @@ palette-dropzone z-gate[data-hoverable]:not([data-grabbed]):hover::part(outline)
 
 z-gate[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
-  outline: 2px solid #a855f7;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
@@ -5738,7 +5758,7 @@ z-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
   background-color: #10b981;
   background-color: #10b981;
-  background-color: var(--qni-semantic-fill-color-default);
+  background-color: var(--qni-semantic-fill-color-primary);
 }
 
 z-gate::part(icon) {
@@ -5908,10 +5928,6 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 .ease-out {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
-
-/* QPU operation background color */
-
-/* QPU operation outline */
 
 /* operation shapes */
 

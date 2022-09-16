@@ -9,7 +9,7 @@ swap-gate {
   @apply operation-draggable;
 
   &::part(icon) {
-    color: var(--qni-semantic-fill-color-default);
+    color: var(--qni-semantic-fill-color-primary);
   }
 
   &[data-disabled]:not([data-grabbed])::part(icon) {

@@ -57,26 +57,6 @@
     }
   }
 
-  /* QPU operation background color */
-
-  .qpu-operation-bg-default {
-    @apply bg-emerald-500;
-  }
-
-  .qpu-operation-bg-grab {
-    @apply bg-purple-500;
-  }
-
-  /* QPU operation outline */
-
-  .qpu-operation-outline-hover {
-    @apply border-zinc-300;
-  }
-
-  .qpu-operation-outline-active {
-    @apply border-purple-400;
-  }
-
   /* operation shapes */
 
   .qpu-operation-rectangular {
@@ -93,7 +73,7 @@
 
   .qpu-operation-color-filled {
     &::part(body) {
-      background-color: var(--qni-semantic-fill-color-default);
+      background-color: var(--qni-semantic-fill-color-primary);
     }
 
     &::part(icon) {
@@ -165,32 +145,34 @@
   }
 
   .qpu-operation-resizeable {
+    --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
+    --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+
+    --qni-component-resize-handle-overlap: var(--qni-semantic-spacing-element-overlap);
+
+    --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
+    --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
+    --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+
+    --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
+
     &::part(layout) {
       @apply flex flex-col;
     }
 
     &::part(resize-handle) {
-      --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
-      --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
-
-      --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
-      --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
-      --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
-
-      --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
-
       width: var(--qni-component-resize-handle-width);
       height: var(--qni-component-resize-handle-height);
 
       color: var(--qni-component-resize-handle-icon-color);
-      background-color: var(--qni-component-resize-handle-fill-color-default);
+      background-color: var(--qni-component-resize-handle-fill-color);
 
       border-radius: var(--qni-component-resize-handle-radius);
 
-      margin-top: var(--qni-semantic-spacing-handle-overlap);
+      margin-top: var(--qni-component-resize-handle-overlap);
 
       @apply flex flex-row justify-center;
-      @apply cursor-grab;
+      @apply cursor-ns-resize;
       @apply z-10;
 
       &:hover {

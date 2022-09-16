@@ -11,17 +11,26 @@
 
   /* Spacing */
   --qni-semantic-spacing-outline-gap: theme('spacing[0.5]');
-  --qni-semantic-spacing-handle-overlap: calc(-1 * theme(spacing.2));
+  --qni-semantic-spacing-element-overlap: calc(-1 * theme(spacing.2));
 
   /* Color */
-  --qni-semantic-fill-color-default: theme(colors.emerald.500);
-  --qni-semantic-fill-color-intermediate: theme(colors.purple.500);
+  --qni-semantic-color-primary: theme(colors.emerald.500);
+  --qni-semantic-fill-color-primary: var(--qni-semantic-color-primary);
+
+  --qni-semantic-color-intermediate: theme(colors.purple.500);
+  --qni-semantic-color-intermediate-light: theme(colors.purple.400);
+  --qni-semantic-fill-color-intermediate: var(--qni-semantic-color-intermediate);
+
+  --qni-semantic-color-on: theme(colors.sky.500);
+  --qni-semantic-fill-color-on: var(--qni-semantic-color-on);
+
+  --qni-semantic-color-off: theme(colors.red.500);
+
   --qni-semantic-fill-color-disabled: theme(colors.zinc.500);
   --qni-semantic-border-color-hover: theme(colors.zinc.300);
-  --qni-semantic-border-color-active: theme(colors.purple.500);
 
-  --qni-semantic-fill-color-handle: theme(colors.orange.400);
-  --qni-semantic-fill-color-handle-hover: theme(colors.orange.500);
+  --qni-semantic-color-active: var(--qni-semantic-color-on);
+  --qni-semantic-border-color-active: var(--qni-semantic-color-active);
 
   --qni-semantic-color-icon-light: theme(colors.white);
 
