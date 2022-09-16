@@ -2,6 +2,7 @@ import {Util, describe} from '@qni/common'
 import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Constructor} from './constructor'
+import interact from 'interactjs'
 
 export const isResizeable = (arg: unknown): arg is Resizeable =>
   arg !== undefined && arg !== null && typeof (arg as Resizeable).resizeable === 'boolean'
@@ -12,7 +13,11 @@ export declare class Resizeable {
 }
 
 type ResizeableContext = Record<string, never>
-type ResizeableEvent = {type: 'SET_INTERACT'} | {type: 'UNSET_INTERACT'}
+type ResizeableEvent =
+  | {type: 'SET_INTERACT'}
+  | {type: 'UNSET_INTERACT'}
+  | {type: 'GRAB'; x: number; y: number}
+  | {type: 'RELEASE'}
 
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
@@ -35,8 +40,20 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           },
           grabbable: {
             on: {
+              GRAB: {
+                target: 'grabbed',
+                actions: ['grabResizeHandle']
+              },
               UNSET_INTERACT: {
                 target: 'idle'
+              }
+            }
+          },
+          grabbed: {
+            on: {
+              RELEASE: {
+                target: 'grabbable',
+                actions: ['releaseResizeHandle']
               }
             }
           }
@@ -50,10 +67,11 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           setInteract: () => {
             Util.notNull(this.resizeHandle)
 
-            // const interactable = interact(this)
-            // interactable.styleCursor(false)
-            // interactable.on('down', this.grab.bind(this))
-            // interactable.on('up', this.release.bind(this))
+            const interactable = interact(this.resizeHandle)
+            interactable.styleCursor(false)
+            interactable.on('down', this.grabResizeHandle.bind(this))
+            interactable.on('up', this.releaseResizeHandle.bind(this))
+
             // interactable.draggable({
             //   onstart: this.startDragging.bind(this),
             //   onmove: this.dragMove.bind(this),
@@ -66,6 +84,24 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             // } else {
             //   this.snappedDropzone = null
             // }
+          },
+          grabResizeHandle: (_context, event) => {
+            if (event.type !== 'GRAB') return
+
+            // this.grabbed = true
+            // this.dispatchEvent(new Event('operation-grab', {bubbles: true}))
+
+            // if (isPaletteDropzoneElement(this.dropzone)) {
+            //   this.snapped = false
+            //   this.moveByOffset(event.x, event.y)
+            //   this.classList.remove('qpu-operation-xl')
+            // }
+          },
+          releaseResizeHandle: (_context, event) => {
+            // if (event.type !== 'RELEASE') return
+
+            // eslint-disable-next-line no-console
+            console.log('RELEASE resize-handler')
           }
         }
       }
@@ -96,6 +132,19 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
       }
 
       this.resizeableService.start()
+    }
+
+    private grabResizeHandle(event: MouseEvent): void {
+      if (event.currentTarget !== this.resizeHandle) return
+
+      this.resizeableService.send({type: 'GRAB', x: event.offsetX, y: event.offsetY})
+    }
+
+    private releaseResizeHandle(event: MouseEvent): void {
+      console.log('releaseResizeHandle')
+      if (event.currentTarget !== this.resizeHandle) return
+
+      this.resizeableService.send({type: 'RELEASE'})
     }
   }
 

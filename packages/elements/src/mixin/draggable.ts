@@ -160,12 +160,18 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           setInteract: () => {
             const interactable = interact(this)
             interactable.styleCursor(false)
+
+            interactable.pointerEvents({
+              ignoreFrom: '.resize-handle'
+            })
             interactable.on('down', this.grab.bind(this))
             interactable.on('up', this.release.bind(this))
+
             interactable.draggable({
               onstart: this.startDragging.bind(this),
               onmove: this.dragMove.bind(this),
-              onend: this.endDragging.bind(this)
+              onend: this.endDragging.bind(this),
+              ignoreFrom: '.resize-handle'
             })
 
             const dropzone = this.dropzone
