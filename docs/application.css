@@ -1781,6 +1781,7 @@ select {
   --qni-semantic-color-primary: #10b981;
   --qni-semantic-fill-color-primary: var(--qni-semantic-color-primary);
   --qni-semantic-color-intermediate: #a855f7;
+  --qni-semantic-color-intermediate-light: #c084fc;
   --qni-semantic-fill-color-intermediate: var(--qni-semantic-color-intermediate);
   --qni-semantic-color-on: #0ea5e9;
   --qni-semantic-fill-color-on: var(--qni-semantic-color-on);
@@ -1789,8 +1790,6 @@ select {
   --qni-semantic-border-color-hover: #d4d4d8;
   --qni-semantic-color-active: var(--qni-semantic-color-on);
   --qni-semantic-border-color-active: var(--qni-semantic-color-active);
-  --qni-semantic-fill-color-handle: #fb923c;
-  --qni-semantic-fill-color-handle-hover: #f97316;
   --qni-semantic-color-icon-light: #fff;
   /* Border radius */
   --qni-semantic-radius-default: 0.25rem;
@@ -3613,22 +3612,25 @@ qft-gate[data-disabled]::part(body) {
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
+qft-gate {
+  --qni-component-fill-color-resize-handle: var(--qni-semantic-color-intermediate-light);
+  --qni-component-fill-color-resize-handle-hovered: var(--qni-semantic-color-intermediate);
+  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
+  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
+}
+
 qft-gate::part(layout) {
   display: flex;
   flex-direction: column;
 }
 
 qft-gate::part(resize-handle) {
-  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
-  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
-  --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
-  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
-  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
-  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
   width: var(--qni-component-resize-handle-width);
   height: var(--qni-component-resize-handle-height);
   color: var(--qni-component-resize-handle-icon-color);
-  background-color: var(--qni-component-resize-handle-fill-color-default);
+  background-color: var(--qni-component-fill-color-resize-handle);
   border-radius: var(--qni-component-resize-handle-radius);
   margin-top: calc(-1 * 0.5rem);
   margin-top: calc(-1 * 0.5rem);
@@ -3636,13 +3638,12 @@ qft-gate::part(resize-handle) {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  cursor: -webkit-grab;
-  cursor: grab;
+  cursor: ns-resize;
   z-index: 10;
 }
 
 qft-gate::part(resize-handle):hover {
-  background-color: var(--qni-component-resize-handle-fill-color-hovered);
+  background-color: var(--qni-component-fill-color-resize-handle-hovered);
 }
 
 qft-gate::part(resize-handle) {
@@ -3808,22 +3809,25 @@ qft-dagger-gate[data-disabled]::part(body) {
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
+qft-dagger-gate {
+  --qni-component-fill-color-resize-handle: var(--qni-semantic-color-intermediate-light);
+  --qni-component-fill-color-resize-handle-hovered: var(--qni-semantic-color-intermediate);
+  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
+  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
+  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
+}
+
 qft-dagger-gate::part(layout) {
   display: flex;
   flex-direction: column;
 }
 
 qft-dagger-gate::part(resize-handle) {
-  --qni-component-resize-handle-width: var(--qni-semantic-size-qpu-operation-base);
-  --qni-component-resize-handle-height: var(--qni-semantic-size-qpu-operation-base-¾);
-  --qni-component-resize-handle-fill-color-default: var(--qni-semantic-fill-color-handle);
-  --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-fill-color-handle-hover);
-  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
-  --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
   width: var(--qni-component-resize-handle-width);
   height: var(--qni-component-resize-handle-height);
   color: var(--qni-component-resize-handle-icon-color);
-  background-color: var(--qni-component-resize-handle-fill-color-default);
+  background-color: var(--qni-component-fill-color-resize-handle);
   border-radius: var(--qni-component-resize-handle-radius);
   margin-top: calc(-1 * 0.5rem);
   margin-top: calc(-1 * 0.5rem);
@@ -3831,13 +3835,12 @@ qft-dagger-gate::part(resize-handle) {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  cursor: -webkit-grab;
-  cursor: grab;
+  cursor: ns-resize;
   z-index: 10;
 }
 
 qft-dagger-gate::part(resize-handle):hover {
-  background-color: var(--qni-component-resize-handle-fill-color-hovered);
+  background-color: var(--qni-component-fill-color-resize-handle-hovered);
 }
 
 qft-dagger-gate::part(resize-handle) {
