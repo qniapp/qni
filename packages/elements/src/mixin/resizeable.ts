@@ -2,6 +2,7 @@ import {Util, describe} from '@qni/common'
 import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Constructor} from './constructor'
+import {InteractEvent} from '@interactjs/types'
 import interact from 'interactjs'
 
 export const isResizeable = (arg: unknown): arg is Resizeable =>
@@ -18,10 +19,13 @@ type ResizeableEvent =
   | {type: 'UNSET_INTERACT'}
   | {type: 'GRAB'; x: number; y: number}
   | {type: 'RELEASE'}
+  | {type: 'START_RESIZING'}
+  | {type: 'END_RESIZING'}
 
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
     @attr debugResizeable = true
+    @attr resizing = false
     @target resizeHandle!: HTMLElement
 
     private resizeableMachine = createMachine<ResizeableContext, ResizeableEvent>(
@@ -51,12 +55,24 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           },
           grabbed: {
             on: {
+              START_RESIZING: {
+                target: 'resizeStart',
+                actions: ['startResizing']
+              },
               RELEASE: {
                 target: 'grabbable',
                 actions: ['releaseResizeHandle']
               }
             }
-          }
+          },
+          resizeStart: {
+            on: {
+              END_RESIZING: {
+                target: 'resizeEnd'
+              }
+            }
+          },
+          resizeEnd: {}
         }
       },
       {
@@ -72,11 +88,11 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             interactable.on('down', this.grabResizeHandle.bind(this))
             interactable.on('up', this.releaseResizeHandle.bind(this))
 
-            // interactable.draggable({
-            //   onstart: this.startDragging.bind(this),
-            //   onmove: this.dragMove.bind(this),
-            //   onend: this.endDragging.bind(this)
-            // })
+            interactable.draggable({
+              onstart: this.startResizing.bind(this),
+              onmove: this.moveResizeHandle.bind(this),
+              onend: this.endResizing.bind(this)
+            })
 
             // const dropzone = this.dropzone
             // if (isCircuitDropzoneElement(dropzone)) {
@@ -99,6 +115,9 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           },
           releaseResizeHandle: (_context, event) => {
             if (event.type !== 'RELEASE') return
+          },
+          startResizing: () => {
+            this.resizing = true
           }
         }
       }
@@ -141,6 +160,20 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
       if (event.currentTarget !== this.resizeHandle) return
 
       this.resizeableService.send({type: 'RELEASE'})
+    }
+
+    private startResizing(): void {
+      this.resizeableService.send({type: 'START_RESIZING'})
+    }
+
+    private moveResizeHandle(event: InteractEvent): void {
+      // eslint-disable-next-line no-console
+      console.log('dx: ', event.dx, 'dy: ', event.dy)
+      // this.move(event.dx, event.dy)
+    }
+
+    private endResizing(): void {
+      this.resizeableService.send({type: 'END_RESIZING'})
     }
   }
 

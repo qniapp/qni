@@ -9268,16 +9268,19 @@ function Fp(r) {
     constructor() {
       super(...arguments);
       this.debugResizeable = true;
-      this.resizeableMachine = ot({ id: "resizeable", initial: "idle", states: { idle: { entry: ["init"], on: { SET_INTERACT: { target: "grabbable", actions: ["setInteract"] } } }, grabbable: { on: { GRAB: { target: "grabbed", actions: ["grabResizeHandle"] }, UNSET_INTERACT: { target: "idle" } } }, grabbed: { on: { RELEASE: { target: "grabbable", actions: ["releaseResizeHandle"] } } } } }, { actions: { init: () => {
+      this.resizing = false;
+      this.resizeableMachine = ot({ id: "resizeable", initial: "idle", states: { idle: { entry: ["init"], on: { SET_INTERACT: { target: "grabbable", actions: ["setInteract"] } } }, grabbable: { on: { GRAB: { target: "grabbed", actions: ["grabResizeHandle"] }, UNSET_INTERACT: { target: "idle" } } }, grabbed: { on: { START_RESIZING: { target: "resizing", actions: ["startResizing"] }, RELEASE: { target: "grabbable", actions: ["releaseResizeHandle"] } } }, resizing: { on: { END_RESIZING: { target: "dropped" } } }, dropped: {} } }, { actions: { init: () => {
         this.dispatchEvent(new Event("resizeable-init", { bubbles: true }));
       }, setInteract: () => {
         q.notNull(this.resizeHandle);
         let i = (0, $p.default)(this.resizeHandle);
-        i.styleCursor(false), i.on("down", this.grabResizeHandle.bind(this)), i.on("up", this.releaseResizeHandle.bind(this));
+        i.styleCursor(false), i.on("down", this.grabResizeHandle.bind(this)), i.on("up", this.releaseResizeHandle.bind(this)), i.draggable({ onstart: this.startResizing.bind(this), onmove: this.moveResizeHandle.bind(this), onend: this.endResizing.bind(this) });
       }, grabResizeHandle: (i, l) => {
         l.type === "GRAB";
       }, releaseResizeHandle: (i, l) => {
         l.type === "RELEASE";
+      }, startResizing: () => {
+        this.resizing = true;
       } } });
       this.resizeableService = Je(this.resizeableMachine).onTransition((i) => {
         this.debugResizeable && console.log(`resizeable: ${Ve(i.value)}`);
@@ -9298,9 +9301,18 @@ function Fp(r) {
     releaseResizeHandle(i) {
       i.currentTarget === this.resizeHandle && this.resizeableService.send({ type: "RELEASE" });
     }
+    startResizing() {
+      this.resizeableService.send({ type: "START_RESIZING" });
+    }
+    moveResizeHandle(i) {
+      console.log("dx: ", i.dx, "dy: ", i.dy);
+    }
+    endResizing() {
+      this.resizeableService.send({ type: "END_RESIZING" });
+    }
   }
   __name(e, "e");
-  return u(e, "ResizeableMixinClass"), A([R], e.prototype, "debugResizeable", 2), A([we], e.prototype, "resizeHandle", 2), e;
+  return u(e, "ResizeableMixinClass"), A([R], e.prototype, "debugResizeable", 2), A([R], e.prototype, "resizing", 2), A([we], e.prototype, "resizeHandle", 2), e;
 }
 __name(Fp, "Fp");
 u(Fp, "ResizeableMixin");
