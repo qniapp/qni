@@ -109,8 +109,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           grabResizeHandle: (_context, event) => {
             if (event.type !== 'GRAB') return
 
-            // this.grabbed = true
-            // this.dispatchEvent(new Event('operation-grab', {bubbles: true}))
+            this.dispatchEvent(new Event('resize-handle-grab', {bubbles: true}))
 
             // if (isPaletteDropzoneElement(this.dropzone)) {
             //   this.snapped = false

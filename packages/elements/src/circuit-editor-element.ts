@@ -21,6 +21,7 @@ type CircuitEditorEvent =
   | {type: 'SET_OPERATION_ANGLE'; operation: Angleable; angle: string; reducedAngle: string}
   | {type: 'SET_OPERATION_FLAG'; operation: Flaggable; flag: string}
   | {type: 'GRAB_OPERATION'; operation: Operation}
+  | {type: 'GRAB_RESIZE_HANDLE'; operation: Operation}
   | {type: 'RELEASE_OPERATION'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
   | {type: 'DROP_OPERATION'; operation: Operation}
@@ -343,6 +344,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-inspector-angle-update', this.setOperationAngle)
     this.addEventListener('operation-inspector-flag-change', this.setOperationFlag)
     this.addEventListener('operation-grab', this.grabOperation)
+    this.addEventListener('resize-handle-grab', this.grabResizeHandle)
     this.addEventListener('operation-release', this.releaseOperation)
     this.addEventListener('operation-end-dragging', this.endDraggingOperation)
     this.addEventListener('operation-drop', this.dropOperation)
@@ -486,6 +488,13 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 
     this.circuitEditorService.send({type: 'GRAB_OPERATION', operation})
+  }
+
+  private grabResizeHandle(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    this.circuitEditorService.send({type: 'GRAB_RESIZE_HANDLE', operation})
   }
 
   private releaseOperation(event: Event): void {
