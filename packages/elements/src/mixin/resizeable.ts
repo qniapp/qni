@@ -74,7 +74,10 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
               }
             }
           },
-          resizeEnd: {}
+          resizeEnd: {
+            entry: ['endResizing'],
+            always: [{target: 'grabbable'}]
+          }
         }
       },
       {
@@ -120,6 +123,9 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           },
           startResizing: () => {
             this.resizing = true
+          },
+          endResizing: () => {
+            this.moveResizeHandleTo(0, 0)
           }
         }
       }
@@ -171,10 +177,10 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     private moveResizeHandle(event: InteractEvent): void {
       const x = this.resizeHandleX + event.dx
       const y = this.resizeHandleY + event.dy
-      this.moveHandleTo(x, y)
+      this.moveResizeHandleTo(x, y)
     }
 
-    private moveHandleTo(x: number, y: number): void {
+    private moveResizeHandleTo(x: number, y: number): void {
       this.resizeHandleX = x
       this.resizeHandleY = y
       this.resizeHandle.style.transform = `translate(${x}px, ${y}px)`
