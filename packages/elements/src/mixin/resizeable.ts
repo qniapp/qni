@@ -24,6 +24,8 @@ type ResizeableEvent =
 
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
+    @attr resizeHandleX = 0
+    @attr resizeHandleY = 0
     @attr debugResizeable = true
     @attr resizing = false
     @target resizeHandle!: HTMLElement
@@ -167,9 +169,15 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     }
 
     private moveResizeHandle(event: InteractEvent): void {
-      // eslint-disable-next-line no-console
-      console.log('dx: ', event.dx, 'dy: ', event.dy)
-      // this.move(event.dx, event.dy)
+      const x = this.resizeHandleX + event.dx
+      const y = this.resizeHandleY + event.dy
+      this.moveHandleTo(x, y)
+    }
+
+    private moveHandleTo(x: number, y: number): void {
+      this.resizeHandleX = x
+      this.resizeHandleY = y
+      this.resizeHandle.style.transform = `translate(${x}px, ${y}px)`
     }
 
     private endResizing(): void {
