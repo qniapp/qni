@@ -1281,6 +1281,72 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Drag and Drop
    */
+  setResizeHandleSnapTargets(operation: Operation): void {
+    console.log('--- setResizeHandleSnapTargets ---')
+
+    // const freeDropzones = this.dropzones.filter(each => !each.occupied)
+    // const snapTargets = []
+    // this.snapTargets = {}
+
+    // const myDropzone = operation.dropzone
+    // if (isCircuitDropzoneElement(myDropzone)) freeDropzones.push(myDropzone)
+
+    // for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
+    //   const snapTarget = each.snapTarget
+    //   const i = this.isVertical ? snapTarget.y : snapTarget.x
+    //   const j = this.isVertical ? snapTarget.x : snapTarget.y
+    //   const wireIndex = parseInt(dropzoneIndex) % this.wireCount
+
+    //   const prevI = i - operation.snapRange * 0.75
+    //   const nextI = i + operation.snapRange * 0.75
+
+    //   if (parseInt(dropzoneIndex) < this.wireCount) {
+    //     if (this.isVertical) {
+    //       snapTargets.push({x: j, y: prevI})
+    //     } else {
+    //       snapTargets.push({x: prevI, y: j})
+    //     }
+    //     if (this.snapTargets[prevI] === undefined) this.snapTargets[prevI] = {}
+    //     if (this.snapTargets[prevI][j] === undefined)
+    //       this.snapTargets[prevI][j] = {
+    //         dropzone: null,
+    //         stepIndex: -1,
+    //         wireIndex
+    //       }
+    //   }
+
+    //   if (this.isVertical) {
+    //     snapTargets.push({x: j, y: nextI})
+    //   } else {
+    //     snapTargets.push({x: nextI, y: j})
+    //   }
+    //   if (this.snapTargets[nextI] === undefined) this.snapTargets[nextI] = {}
+    //   if (this.snapTargets[nextI][j] === undefined)
+    //     this.snapTargets[nextI][j] = {
+    //       dropzone: null,
+    //       stepIndex: Math.floor(parseInt(dropzoneIndex) / this.wireCount),
+    //       wireIndex
+    //     }
+
+    //   if (!each.occupied || each === myDropzone) {
+    //     snapTargets.push(snapTarget)
+    //   }
+
+    //   if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
+    //   if (this.snapTargets[i][j] === undefined)
+    //     this.snapTargets[i][j] = {
+    //       dropzone: each,
+    //       stepIndex: null,
+    //       wireIndex
+    //     }
+    // }
+
+    // operation.snapTargets = snapTargets
+  }
+
+  /**
+   * @category Drag and Drop
+   */
   updateSnapTargets(newDropzones: CircuitDropzoneElement[]): void {
     const firstDropzone = newDropzones[0]
     Util.notNull(firstDropzone)

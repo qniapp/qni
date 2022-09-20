@@ -82,6 +82,10 @@ export class CircuitEditorElement extends HTMLElement {
                     'setSnapTargets'
                   ]
                 },
+                GRAB_RESIZE_HANDLE: {
+                  target: 'editing',
+                  actions: ['setResizeHandleSnapTargets']
+                },
                 CLICK_STEP: {
                   target: 'idle',
                   actions: ['deactivateAllSteps', 'setBreakpoint']
@@ -238,6 +242,11 @@ export class CircuitEditorElement extends HTMLElement {
           if (event.type !== 'GRAB_OPERATION') return
 
           this.circuit.setSnapTargets(event.operation)
+        },
+        setResizeHandleSnapTargets: (_context, event) => {
+          if (event.type !== 'GRAB_RESIZE_HANDLE') return
+
+          this.circuit.setResizeHandleSnapTargets(event.operation)
         },
         setBreakpoint: (_context, event) => {
           if (event.type !== 'CLICK_STEP') return

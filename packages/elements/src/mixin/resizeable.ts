@@ -68,6 +68,9 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             }
           },
           resizeStart: {
+            always: [{target: 'resizing'}]
+          },
+          resizing: {
             on: {
               END_RESIZING: {
                 target: 'resizeEnd'
