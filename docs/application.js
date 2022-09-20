@@ -7268,7 +7268,7 @@ function Ee(r) {
         this.snapped && this.draggableService.send({ type: "UNSNAP" });
     }
     grab(i) {
-      console.log(i.currentTarget), !i.currentTarget.classList.contains(".resize-handle") && (console.log("grabbbbbbbbbbbbb"), this.draggableService.send({ type: "GRAB", x: i.offsetX, y: i.offsetY }));
+      this.draggableService.send({ type: "GRAB", x: i.offsetX, y: i.offsetY });
     }
     release() {
       this.draggableService.send({ type: "RELEASE" });
@@ -9277,7 +9277,7 @@ function Fp(r) {
       }, grabResizeHandle: (i, l) => {
         l.type === "GRAB";
       }, releaseResizeHandle: (i, l) => {
-        console.log("RELEASE resize-handler");
+        l.type === "RELEASE";
       } } });
       this.resizeableService = Je(this.resizeableMachine).onTransition((i) => {
         this.debugResizeable && console.log(`resizeable: ${Ve(i.value)}`);
@@ -9296,7 +9296,7 @@ function Fp(r) {
       i.currentTarget === this.resizeHandle && this.resizeableService.send({ type: "GRAB", x: i.offsetX, y: i.offsetY });
     }
     releaseResizeHandle(i) {
-      console.log("releaseResizeHandle"), i.currentTarget === this.resizeHandle && this.resizeableService.send({ type: "RELEASE" });
+      i.currentTarget === this.resizeHandle && this.resizeableService.send({ type: "RELEASE" });
     }
   }
   __name(e, "e");

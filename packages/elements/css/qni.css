@@ -77,7 +77,7 @@
     }
 
     &::part(icon) {
-      color: var(--qni-semantic-color-icon-light);
+      color: var(--qni-semantic-color-icon-inverse);
     }
   }
 
@@ -128,7 +128,7 @@
     }
 
     &[data-grabbed]::part(icon) {
-      color: var(--qni-semantic-color-icon-light);
+      color: var(--qni-semantic-color-icon-inverse);
     }
 
     &[data-grabbed]::part(outline) {
@@ -152,7 +152,7 @@
 
     --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
     --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
-    --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+    --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-inverse);
 
     --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 

@@ -98,10 +98,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             // }
           },
           releaseResizeHandle: (_context, event) => {
-            // if (event.type !== 'RELEASE') return
-
-            // eslint-disable-next-line no-console
-            console.log('RELEASE resize-handler')
+            if (event.type !== 'RELEASE') return
           }
         }
       }
@@ -141,7 +138,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     }
 
     private releaseResizeHandle(event: MouseEvent): void {
-      console.log('releaseResizeHandle')
       if (event.currentTarget !== this.resizeHandle) return
 
       this.resizeableService.send({type: 'RELEASE'})

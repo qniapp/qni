@@ -1790,7 +1790,7 @@ select {
   --qni-semantic-border-color-hover: #d4d4d8;
   --qni-semantic-color-active: var(--qni-semantic-color-on);
   --qni-semantic-border-color-active: var(--qni-semantic-color-active);
-  --qni-semantic-color-icon-light: #fff;
+  --qni-semantic-color-icon-inverse: #fff;
   /* Border radius */
   --qni-semantic-radius-default: 0.25rem;
   --qni-semantic-radius-outline: 0.375rem;
@@ -2331,7 +2331,7 @@ bloch-display[data-grabbed]::part(body) {
 bloch-display[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 bloch-display[data-grabbed]::part(outline) {
@@ -2852,7 +2852,7 @@ control-gate[data-grabbed]::part(body) {
 control-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 control-gate[data-grabbed]::part(outline) {
@@ -2967,7 +2967,7 @@ h-gate::part(body) {
 h-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 h-gate[data-grabbed] {
@@ -2988,7 +2988,7 @@ h-gate[data-grabbed]::part(body) {
 h-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 h-gate[data-grabbed]::part(outline) {
@@ -3148,7 +3148,7 @@ measurement-gate[data-grabbed]::part(body) {
 measurement-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 measurement-gate[data-grabbed]::part(outline) {
@@ -3384,7 +3384,7 @@ phase-gate::part(body) {
 phase-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 phase-gate[data-grabbed] {
@@ -3405,7 +3405,7 @@ phase-gate[data-grabbed]::part(body) {
 phase-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 phase-gate[data-grabbed]::part(outline) {
@@ -3569,7 +3569,7 @@ qft-gate::part(body) {
 qft-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 qft-gate[data-hoverable]::part(outline) {
@@ -3618,7 +3618,7 @@ qft-gate {
   --qni-component-resize-handle-overlap: var(--qni-semantic-spacing-element-overlap);
   --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
   --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
-  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-inverse);
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 }
 
@@ -3671,7 +3671,7 @@ qft-gate[data-grabbed]::part(body) {
 qft-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 qft-gate[data-grabbed]::part(outline) {
@@ -3814,7 +3814,7 @@ qft-dagger-gate {
   --qni-component-resize-handle-overlap: var(--qni-semantic-spacing-element-overlap);
   --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
   --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
-  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+  --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-inverse);
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 }
 
@@ -3861,7 +3861,7 @@ qft-dagger-gate::part(body) {
 qft-dagger-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 qft-dagger-gate[data-grabbed] {
@@ -3882,7 +3882,7 @@ qft-dagger-gate[data-grabbed]::part(body) {
 qft-dagger-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 qft-dagger-gate[data-grabbed]::part(outline) {
@@ -4049,7 +4049,7 @@ rnot-gate::part(body) {
 rnot-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 rnot-gate[data-grabbed] {
@@ -4070,7 +4070,7 @@ rnot-gate[data-grabbed]::part(body) {
 rnot-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 rnot-gate[data-grabbed]::part(outline) {
@@ -4219,7 +4219,7 @@ rx-gate::part(body) {
 rx-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 rx-gate[data-grabbed] {
@@ -4240,7 +4240,7 @@ rx-gate[data-grabbed]::part(body) {
 rx-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 rx-gate[data-grabbed]::part(outline) {
@@ -4447,7 +4447,7 @@ ry-gate::part(body) {
 ry-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 ry-gate[data-grabbed] {
@@ -4468,7 +4468,7 @@ ry-gate[data-grabbed]::part(body) {
 ry-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 ry-gate[data-grabbed]::part(outline) {
@@ -4675,7 +4675,7 @@ rz-gate::part(body) {
 rz-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 rz-gate[data-grabbed] {
@@ -4696,7 +4696,7 @@ rz-gate[data-grabbed]::part(body) {
 rz-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 rz-gate[data-grabbed]::part(outline) {
@@ -4909,7 +4909,7 @@ swap-gate[data-grabbed]::part(body) {
 swap-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 swap-gate[data-grabbed]::part(outline) {
@@ -5024,7 +5024,7 @@ t-gate::part(body) {
 t-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 t-gate[data-grabbed] {
@@ -5045,7 +5045,7 @@ t-gate[data-grabbed]::part(body) {
 t-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 t-gate[data-grabbed]::part(outline) {
@@ -5200,7 +5200,7 @@ write-gate[data-grabbed]::part(body) {
 write-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 write-gate[data-grabbed]::part(outline) {
@@ -5422,7 +5422,7 @@ x-gate::part(body) {
 x-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 x-gate[data-grabbed] {
@@ -5443,7 +5443,7 @@ x-gate[data-grabbed]::part(body) {
 x-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 x-gate[data-grabbed]::part(outline) {
@@ -5592,7 +5592,7 @@ y-gate::part(body) {
 y-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 y-gate[data-grabbed] {
@@ -5613,7 +5613,7 @@ y-gate[data-grabbed]::part(body) {
 y-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 y-gate[data-grabbed]::part(outline) {
@@ -5762,7 +5762,7 @@ z-gate::part(body) {
 z-gate::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 z-gate[data-grabbed] {
@@ -5783,7 +5783,7 @@ z-gate[data-grabbed]::part(body) {
 z-gate[data-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
-  color: var(--qni-semantic-color-icon-light);
+  color: var(--qni-semantic-color-icon-inverse);
 }
 
 z-gate[data-grabbed]::part(outline) {
