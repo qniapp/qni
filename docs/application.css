@@ -3996,7 +3996,7 @@ qft-gate::part(resize-handle) {
   z-index: 10;
 }
 
-qft-gate::part(resize-handle):hover {
+qft-gate::part(resize-handle):hover, qft-gate[data-resizing]::part(resize-handle) {
   background-color: var(--qni-component-resize-handle-fill-color-hovered);
 }
 
@@ -4499,7 +4499,7 @@ qft-dagger-gate::part(resize-handle) {
   z-index: 10;
 }
 
-qft-dagger-gate::part(resize-handle):hover {
+qft-dagger-gate::part(resize-handle):hover, qft-dagger-gate[data-resizing]::part(resize-handle) {
   background-color: var(--qni-component-resize-handle-fill-color-hovered);
 }
 
@@ -6603,7 +6603,6 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
      * Do not display resize-handle
      * - on palette
      * - while dragging
-     * - while resizing
      */
 
 /* grabbable cursor style */

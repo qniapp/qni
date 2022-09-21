@@ -299,10 +299,11 @@
       @apply flex flex-row justify-center;
       @apply cursor-ns-resize;
       @apply z-10;
+    }
 
-      &:hover {
-        background-color: var(--qni-component-resize-handle-fill-color-hovered);
-      }
+    &::part(resize-handle):hover,
+    &[data-resizing]::part(resize-handle) {
+      background-color: var(--qni-component-resize-handle-fill-color-hovered);
     }
 
     /* Show resize-handle only when hovering the mouse pointer */
