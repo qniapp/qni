@@ -156,6 +156,14 @@
 
     --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 
+    &[data-nqubit='2'] {
+      height: var(--qni-semantic-size-qpu-operation-2qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-2qubit);
+      }
+    }
+
     &::part(layout) {
       @apply flex flex-col;
     }

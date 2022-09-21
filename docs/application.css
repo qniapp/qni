@@ -1767,6 +1767,7 @@ select {
 
 :root {
   /* Sizing */
+  --qni-semantic-size-qpu-operation-base-½: 1rem;
   --qni-semantic-size-qpu-operation-base-¾: 1.5rem;
   --qni-semantic-size-qpu-operation-xs: 1rem;
   --qni-semantic-size-qpu-operation-sm: 1.5rem;
@@ -1774,6 +1775,8 @@ select {
   --qni-semantic-size-qpu-operation-lg: 2.5rem;
   --qni-semantic-size-qpu-operation-xl: 3rem;
   --qni-semantic-size-qpu-operation-2xl: 4rem;
+  --qni-semantic-size-qpu-operation-1qubit: var(--qni-semantic-size-qpu-operation-base);
+  --qni-semantic-size-qpu-operation-2qubit: calc(var(--qni-semantic-size-qpu-operation-base) * 2 + var(--qni-semantic-size-qpu-operation-base-½));
   /* Spacing */
   --qni-semantic-spacing-outline-gap: 0.125rem;
   --qni-semantic-spacing-element-overlap: calc(-1 * 0.5rem);
@@ -3622,6 +3625,18 @@ qft-gate {
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 }
 
+qft-gate[data-nqubit="2"] {
+  height: calc(2rem * 2 + 1rem);
+  height: calc(2rem * 2 + 1rem);
+  height: var(--qni-semantic-size-qpu-operation-2qubit);
+}
+
+qft-gate[data-nqubit="2"]::part(body) {
+  height: calc(2rem * 2 + 1rem);
+  height: calc(2rem * 2 + 1rem);
+  height: var(--qni-semantic-size-qpu-operation-2qubit);
+}
+
 qft-gate::part(layout) {
   display: flex;
   flex-direction: column;
@@ -3816,6 +3831,18 @@ qft-dagger-gate {
   --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
   --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-inverse);
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
+}
+
+qft-dagger-gate[data-nqubit="2"] {
+  height: calc(2rem * 2 + 1rem);
+  height: calc(2rem * 2 + 1rem);
+  height: var(--qni-semantic-size-qpu-operation-2qubit);
+}
+
+qft-dagger-gate[data-nqubit="2"]::part(body) {
+  height: calc(2rem * 2 + 1rem);
+  height: calc(2rem * 2 + 1rem);
+  height: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
 qft-dagger-gate::part(layout) {

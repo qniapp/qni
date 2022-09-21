@@ -1,3 +1,4 @@
+import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
@@ -5,6 +6,7 @@ import {createMachine, interpret} from 'xstate'
 import {Util} from '@qni/common'
 import interact from 'interactjs'
 import wiresIcon from '../icon/wires.svg'
+import {isResizeable, Resizeable} from './mixin'
 
 export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitDropzoneElement
@@ -156,6 +158,15 @@ export class CircuitDropzoneElement extends HTMLElement {
     }
   }
 
+  get resizeHandleSnapTarget(): {x: number; y: number} {
+    const rect = this.getBoundingClientRect()
+
+    return {
+      x: window.pageXOffset + rect.left + this.clientWidth / 2,
+      y: window.pageYOffset + rect.top + this.clientHeight + 4
+    }
+  }
+
   toJson(): string | number {
     const operation = this.operation
 
@@ -190,8 +201,9 @@ export class CircuitDropzoneElement extends HTMLElement {
           #body {
             position: relative;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             height: 100%;
             width: 100%;
           }
@@ -222,6 +234,15 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   put(operation: Operation): void {
     this.circuitDropzoneService.send({type: 'PUT_OPERATION', operation})
+  }
+
+  get circuitStep(): CircuitStepElement | null {
+    const el = this.parentElement
+    Util.notNull(el)
+
+    if (!isCircuitStepElement(el)) return null
+
+    return el as CircuitStepElement
   }
 
   private initDropzone(): void {

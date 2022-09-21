@@ -1,3 +1,4 @@
+import {CircuitDropzoneElement, isCircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Util, describe} from '@qni/common'
 import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
@@ -10,6 +11,10 @@ export const isResizeable = (arg: unknown): arg is Resizeable =>
 
 export declare class Resizeable {
   set resizeable(value: boolean)
+  get resizeHandle(): HTMLElement
+  set resizeHandleSnapTargets(values: Array<{x: number; y: number}>)
+  get nqubit(): number
+  set nqubit(value: number)
   initResizeable(): void
 }
 
@@ -21,14 +26,19 @@ type ResizeableEvent =
   | {type: 'RELEASE'}
   | {type: 'START_RESIZING'}
   | {type: 'END_RESIZING'}
+  | {type: 'SNAP'}
+  | {type: 'UNSNAP'}
 
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
+    @attr nqubit = 1
     @attr resizeHandleX = 0
     @attr resizeHandleY = 0
     @attr debugResizeable = true
     @attr resizing = false
     @target resizeHandle!: HTMLElement
+
+    private resizeHandleSnappedDropzone!: CircuitDropzoneElement | null | undefined
 
     private resizeableMachine = createMachine<ResizeableContext, ResizeableEvent>(
       {
@@ -102,23 +112,17 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
               onend: this.endResizing.bind(this)
             })
 
-            // const dropzone = this.dropzone
-            // if (isCircuitDropzoneElement(dropzone)) {
-            //   this.snappedDropzone = dropzone
-            // } else {
-            //   this.snappedDropzone = null
-            // }
+            const dropzone = this.resizeHandleDropzone
+            if (dropzone) {
+              this.resizeHandleSnappedDropzone = dropzone
+            } else {
+              this.resizeHandleSnappedDropzone = null
+            }
           },
           grabResizeHandle: (_context, event) => {
             if (event.type !== 'GRAB') return
 
             this.dispatchEvent(new Event('resize-handle-grab', {bubbles: true}))
-
-            // if (isPaletteDropzoneElement(this.dropzone)) {
-            //   this.snapped = false
-            //   this.moveByOffset(event.x, event.y)
-            //   this.classList.remove('qpu-operation-xl')
-            // }
           },
           releaseResizeHandle: (_context, event) => {
             if (event.type !== 'RELEASE') return
@@ -127,6 +131,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             this.resizing = true
           },
           endResizing: () => {
+            this.resizing = false
             this.moveResizeHandleTo(0, 0)
           }
         }
@@ -150,6 +155,60 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
       } else {
         this.resizeableService.send({type: 'UNSET_INTERACT'})
       }
+    }
+
+    set resizeHandleSnapTargets(values: Array<{x: number; y: number}>) {
+      interact(this.resizeHandle).draggable({
+        modifiers: [
+          interact.modifiers.snap({
+            targets: values,
+            range: this.resizeHandleSnapRange,
+            relativePoints: [{x: 0.5, y: 0.5}]
+          })
+        ],
+        listeners: {
+          move: this.resizeHandleMoveEventListener.bind(this)
+        }
+      })
+    }
+
+    // これで合ってる?
+    get resizeHandleSnapRange(): number {
+      return 32
+    }
+
+    private resizeHandleMoveEventListener(event: InteractEvent) {
+      const snapModifier = event.modifiers![0]
+
+      if (snapModifier.inRange) {
+        const snapTargetInfo = snapModifier.target.source
+        this.dispatchEvent(new CustomEvent('resize-handle-in-snap-range', {detail: {snapTargetInfo}, bubbles: true}))
+
+        this.moveResizeHandleTo(0, 0)
+
+        const dropzone = this.parentElement
+        if (!isCircuitDropzoneElement(dropzone)) {
+          throw new Error('ResizeableMixin: parentElement is not CircuitDropzoneElement')
+        }
+
+        if (this.resizeHandleSnappedDropzone && this.resizeHandleSnappedDropzone !== this.resizeHandleDropzone) {
+          this.resizeableService.send({type: 'UNSNAP'})
+        }
+
+        console.log('*** SNAP ***')
+        this.resizeableService.send({type: 'SNAP'})
+      }
+    }
+
+    get resizeHandleDropzone(): CircuitDropzoneElement | null {
+      const el = this.parentElement
+      Util.notNull(el)
+
+      if (!isCircuitDropzoneElement(el)) {
+        throw new Error('ResizeableMixin: parentElement is not CircuitDropzoneElement')
+      }
+
+      return el as CircuitDropzoneElement
     }
 
     initResizeable(): void {

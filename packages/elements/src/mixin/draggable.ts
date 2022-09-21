@@ -10,10 +10,10 @@ import interact from 'interactjs'
 export const isDraggable = (arg: unknown): arg is Draggable =>
   arg !== undefined && arg !== null && typeof (arg as Draggable).draggable === 'boolean'
 
-const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
+export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
   arg !== undefined && arg !== null && (arg as Element).tagName === 'CIRCUIT-DROPZONE'
 
-const isPaletteDropzoneElement = (arg: unknown): arg is PaletteDropzoneElement =>
+export const isPaletteDropzoneElement = (arg: unknown): arg is PaletteDropzoneElement =>
   arg !== undefined && arg !== null && (arg as Element).tagName === 'PALETTE-DROPZONE'
 
 export declare class Draggable {

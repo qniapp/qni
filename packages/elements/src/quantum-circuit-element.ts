@@ -2,8 +2,8 @@ import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzo
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
-import {QftGateElement, QftGateElementProps} from './qft-gate-element'
 import {QftDaggerGateElement, QftDaggerGateElementProps} from './qft-dagger-gate-element'
+import {QftGateElement, QftGateElementProps} from './qft-gate-element'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
@@ -19,13 +19,18 @@ import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
 import {ControlGateElement} from './control-gate-element'
-import {HoverableMixin} from './mixin'
+import {HoverableMixin, isResizeable} from './mixin'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
 import {WriteGateElement} from './write-gate-element'
 
 export type SnapTarget = {
+  dropzone: CircuitDropzoneElement | null
+  stepIndex: number | null
+  wireIndex: number
+}
+export type ResizeHandleSnapTarget = {
   dropzone: CircuitDropzoneElement | null
   stepIndex: number | null
   wireIndex: number
@@ -122,9 +127,15 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       }
     })
     .start()
+
   private snapTargets!: {
     [i: number]: {
       [j: number]: SnapTarget
+    }
+  }
+  private resizeHandleSnapTargets!: {
+    [i: number]: {
+      [j: number]: ResizeHandleSnapTarget
     }
   }
 
@@ -1217,6 +1228,17 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Drag and Drop
    */
+  resizeHandleSnapTargetAt(x: number, y: number): SnapTarget {
+    if (this.isVertical) {
+      return this.resizeHandleSnapTargets[y][x]
+    } else {
+      return this.resizeHandleSnapTargets[x][y]
+    }
+  }
+
+  /**
+   * @category Drag and Drop
+   */
   setSnapTargets(operation: Operation): void {
     const freeDropzones = this.dropzones.filter(each => !each.occupied)
     const snapTargets = []
@@ -1282,66 +1304,43 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
    * @category Drag and Drop
    */
   setResizeHandleSnapTargets(operation: Operation): void {
-    console.log('--- setResizeHandleSnapTargets ---')
+    if (!isResizeable(operation)) {
+      throw new Error(`${operation} isn't a resizeable operation.`)
+    }
+    if (!isCircuitDropzoneElement(operation?.dropzone)) {
+      throw new Error(`${operation.dropzone} isn't a circuit-dropzone.`)
+    }
 
-    // const freeDropzones = this.dropzones.filter(each => !each.occupied)
-    // const snapTargets = []
-    // this.snapTargets = {}
+    const circuitStep = operation.dropzone.circuitStep
+    Util.notNull(circuitStep)
 
-    // const myDropzone = operation.dropzone
-    // if (isCircuitDropzoneElement(myDropzone)) freeDropzones.push(myDropzone)
+    const freeDropzones = circuitStep.dropzones.filter((each: CircuitDropzoneElement) => !each.occupied)
+    const myDropzone = operation.dropzone
+    freeDropzones.push(myDropzone)
 
-    // for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
-    //   const snapTarget = each.snapTarget
-    //   const i = this.isVertical ? snapTarget.y : snapTarget.x
-    //   const j = this.isVertical ? snapTarget.x : snapTarget.y
-    //   const wireIndex = parseInt(dropzoneIndex) % this.wireCount
+    const resizeHandleSnapTargets = []
+    this.resizeHandleSnapTargets = {}
 
-    //   const prevI = i - operation.snapRange * 0.75
-    //   const nextI = i + operation.snapRange * 0.75
+    for (const [dropzoneIndex, each] of Object.entries(circuitStep.dropzones)) {
+      const resizeHandleSnapTarget = each.resizeHandleSnapTarget
+      const i = this.isVertical ? resizeHandleSnapTarget.y : resizeHandleSnapTarget.x
+      const j = this.isVertical ? resizeHandleSnapTarget.x : resizeHandleSnapTarget.y
+      const wireIndex = parseInt(dropzoneIndex) % this.wireCount
 
-    //   if (parseInt(dropzoneIndex) < this.wireCount) {
-    //     if (this.isVertical) {
-    //       snapTargets.push({x: j, y: prevI})
-    //     } else {
-    //       snapTargets.push({x: prevI, y: j})
-    //     }
-    //     if (this.snapTargets[prevI] === undefined) this.snapTargets[prevI] = {}
-    //     if (this.snapTargets[prevI][j] === undefined)
-    //       this.snapTargets[prevI][j] = {
-    //         dropzone: null,
-    //         stepIndex: -1,
-    //         wireIndex
-    //       }
-    //   }
+      if (!each.occupied || each === myDropzone) {
+        resizeHandleSnapTargets.push(resizeHandleSnapTarget)
+      }
 
-    //   if (this.isVertical) {
-    //     snapTargets.push({x: j, y: nextI})
-    //   } else {
-    //     snapTargets.push({x: nextI, y: j})
-    //   }
-    //   if (this.snapTargets[nextI] === undefined) this.snapTargets[nextI] = {}
-    //   if (this.snapTargets[nextI][j] === undefined)
-    //     this.snapTargets[nextI][j] = {
-    //       dropzone: null,
-    //       stepIndex: Math.floor(parseInt(dropzoneIndex) / this.wireCount),
-    //       wireIndex
-    //     }
+      if (this.resizeHandleSnapTargets[i] === undefined) this.resizeHandleSnapTargets[i] = {}
+      if (this.resizeHandleSnapTargets[i][j] === undefined)
+        this.resizeHandleSnapTargets[i][j] = {
+          dropzone: each,
+          stepIndex: null,
+          wireIndex
+        }
+    }
 
-    //   if (!each.occupied || each === myDropzone) {
-    //     snapTargets.push(snapTarget)
-    //   }
-
-    //   if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
-    //   if (this.snapTargets[i][j] === undefined)
-    //     this.snapTargets[i][j] = {
-    //       dropzone: each,
-    //       stepIndex: null,
-    //       wireIndex
-    //     }
-    // }
-
-    // operation.snapTargets = snapTargets
+    operation.resizeHandleSnapTargets = resizeHandleSnapTargets
   }
 
   /**

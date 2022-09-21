@@ -9,6 +9,7 @@ import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {isFlaggable} from './mixin/flaggable'
+import {isCircuitDropzoneElement} from './circuit-dropzone-element'
 
 type CircuitEditorContext = Record<string, never>
 type CircuitEditorEvent =
@@ -27,6 +28,7 @@ type CircuitEditorEvent =
   | {type: 'DROP_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'}
   | {type: 'OPERATION_IN_SNAP_RANGE'; operation: Operation; x: number; y: number}
+  | {type: 'RESIZE_HANDLE_IN_SNAP_RANGE'; operation: Operation; x: number; y: number}
   | {type: 'MOUSE_ENTER_STEP'; step: CircuitStepElement}
   | {type: 'MOUSE_LEAVE_STEP'; step: CircuitStepElement}
   | {type: 'MOUSE_LEAVE_CIRCUIT'}
@@ -138,6 +140,10 @@ export class CircuitEditorElement extends HTMLElement {
                   target: 'editing',
                   actions: ['snapOperationIntoDropzone']
                 },
+                RESIZE_HANDLE_IN_SNAP_RANGE: {
+                  target: 'editing',
+                  actions: ['snapResizeHandleIntoDropzone']
+                },
                 SNAP_STEP: {
                   target: 'editing',
                   actions: ['deactivateAllSteps', 'activateStep']
@@ -219,6 +225,29 @@ export class CircuitEditorElement extends HTMLElement {
           } else {
             snapTarget.dropzone.append(operation)
           }
+        },
+        snapResizeHandleIntoDropzone: (_context, event) => {
+          if (event.type !== 'RESIZE_HANDLE_IN_SNAP_RANGE') return
+
+          const operation = event.operation
+          if (!isResizeable(operation)) {
+            throw new Error(`${operation} is not resizeable`)
+          }
+          // const resizeHandle = operation.resizeHandle
+          const dropzone = operation.dropzone
+          if (!isCircuitDropzoneElement(dropzone)) {
+            throw new Error(`${dropzone} is not a circuit dropzone`)
+          }
+          Util.notNull(dropzone.circuitStep)
+          const wireIndex = dropzone.circuitStep.dropzones.indexOf(dropzone)
+          const snapTarget = this.circuit.resizeHandleSnapTargetAt(event.x, event.y)
+          const operationNqubit = snapTarget.wireIndex - wireIndex + 1
+
+          console.log(`wireIndex: ${wireIndex}`)
+          console.log(`snapTarget.wireIndex: ${snapTarget.wireIndex}`)
+          console.log(`operationNqubit: ${operationNqubit}`)
+
+          operation.nqubit = operationNqubit
         },
         addDocumentCursorGrabbingStyle: () => {
           document.documentElement.setAttribute('data-grabbing', '')
@@ -362,6 +391,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-snap', this.snapStep)
     this.addEventListener('circuit-step-unsnap', this.unsnapStep)
     this.addEventListener('operation-in-snap-range', this.operationInSnapRange)
+    this.addEventListener('resize-handle-in-snap-range', this.resizeHandleInSnapRange)
     this.addEventListener('circuit-step-mouseenter', this.mouseEnterStep)
     this.addEventListener('circuit-step-mouseleave', this.mouseLeaveStep)
     this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
@@ -561,6 +591,17 @@ export class CircuitEditorElement extends HTMLElement {
     const x = snapTargetInfo.x
     const y = snapTargetInfo.y
     this.circuitEditorService.send({type: 'OPERATION_IN_SNAP_RANGE', operation, x, y})
+  }
+
+  private resizeHandleInSnapRange(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    const customEvent = event as CustomEvent
+    const snapTargetInfo = customEvent.detail.snapTargetInfo
+    const x = snapTargetInfo.x
+    const y = snapTargetInfo.y
+    this.circuitEditorService.send({type: 'RESIZE_HANDLE_IN_SNAP_RANGE', operation, x, y})
   }
 
   private mouseEnterStep(event: Event): void {
