@@ -315,7 +315,8 @@
      * - on palette
      * - while dragging
      */
-    quantum-circuit:not([data-editing]) circuit-dropzone &:not([data-grabbed]):hover::part(resize-handle) {
+    quantum-circuit:not([data-editing]) circuit-dropzone &:not([data-grabbed]):hover::part(resize-handle),
+    &[data-resizing]::part(resize-handle) {
       @apply visible;
     }
   }
