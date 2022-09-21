@@ -1776,7 +1776,51 @@ select {
   --qni-semantic-size-qpu-operation-xl: 3rem;
   --qni-semantic-size-qpu-operation-2xl: 4rem;
   --qni-semantic-size-qpu-operation-1qubit: var(--qni-semantic-size-qpu-operation-base);
-  --qni-semantic-size-qpu-operation-2qubit: calc(var(--qni-semantic-size-qpu-operation-base) * 2 + var(--qni-semantic-size-qpu-operation-base-½));
+  --qni-semantic-size-qpu-operation-2qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 2 + var(--qni-semantic-size-qpu-operation-base-½)
+  );
+  --qni-semantic-size-qpu-operation-3qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 3 + var(--qni-semantic-size-qpu-operation-base-½) * 2
+  );
+  --qni-semantic-size-qpu-operation-4qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 4 + var(--qni-semantic-size-qpu-operation-base-½) * 3
+  );
+  --qni-semantic-size-qpu-operation-5qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 5 + var(--qni-semantic-size-qpu-operation-base-½) * 4
+  );
+  --qni-semantic-size-qpu-operation-6qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 6 + var(--qni-semantic-size-qpu-operation-base-½) * 5
+  );
+  --qni-semantic-size-qpu-operation-7qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 7 + var(--qni-semantic-size-qpu-operation-base-½) * 6
+  );
+  --qni-semantic-size-qpu-operation-8qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 8 + var(--qni-semantic-size-qpu-operation-base-½) * 7
+  );
+  --qni-semantic-size-qpu-operation-9qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 9 + var(--qni-semantic-size-qpu-operation-base-½) * 8
+  );
+  --qni-semantic-size-qpu-operation-10qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 10 + var(--qni-semantic-size-qpu-operation-base-½) * 9
+  );
+  --qni-semantic-size-qpu-operation-11qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 11 + var(--qni-semantic-size-qpu-operation-base-½) * 10
+  );
+  --qni-semantic-size-qpu-operation-12qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 12 + var(--qni-semantic-size-qpu-operation-base-½) * 11
+  );
+  --qni-semantic-size-qpu-operation-13qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 13 + var(--qni-semantic-size-qpu-operation-base-½) * 12
+  );
+  --qni-semantic-size-qpu-operation-14qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 14 + var(--qni-semantic-size-qpu-operation-base-½) * 13
+  );
+  --qni-semantic-size-qpu-operation-15qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 15 + var(--qni-semantic-size-qpu-operation-base-½) * 14
+  );
+  --qni-semantic-size-qpu-operation-16qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 16 + var(--qni-semantic-size-qpu-operation-base-½) * 15
+  );
   /* Spacing */
   --qni-semantic-spacing-outline-gap: 0.125rem;
   --qni-semantic-spacing-element-overlap: calc(-1 * 0.5rem);
@@ -3625,16 +3669,304 @@ qft-gate {
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 }
 
-qft-gate[data-nqubit="2"] {
-  height: calc(2rem * 2 + 1rem);
-  height: calc(2rem * 2 + 1rem);
+qft-gate[data-nqubit='2'] {
+  height: calc(
+    2rem * 2 + 1rem
+  );
+  height: calc(
+    2rem * 2 + 1rem
+  );
   height: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
-qft-gate[data-nqubit="2"]::part(body) {
-  height: calc(2rem * 2 + 1rem);
-  height: calc(2rem * 2 + 1rem);
+qft-gate[data-nqubit='2']::part(body) {
+  height: calc(
+    2rem * 2 + 1rem
+  );
+  height: calc(
+    2rem * 2 + 1rem
+  );
   height: var(--qni-semantic-size-qpu-operation-2qubit);
+}
+
+qft-gate[data-nqubit='3'] {
+  height: calc(
+    2rem * 3 + 1rem * 2
+  );
+  height: calc(
+    2rem * 3 + 1rem * 2
+  );
+  height: var(--qni-semantic-size-qpu-operation-3qubit);
+}
+
+qft-gate[data-nqubit='3']::part(body) {
+  height: calc(
+    2rem * 3 + 1rem * 2
+  );
+  height: calc(
+    2rem * 3 + 1rem * 2
+  );
+  height: var(--qni-semantic-size-qpu-operation-3qubit);
+}
+
+qft-gate[data-nqubit='4'] {
+  height: calc(
+    2rem * 4 + 1rem * 3
+  );
+  height: calc(
+    2rem * 4 + 1rem * 3
+  );
+  height: var(--qni-semantic-size-qpu-operation-4qubit);
+}
+
+qft-gate[data-nqubit='4']::part(body) {
+  height: calc(
+    2rem * 4 + 1rem * 3
+  );
+  height: calc(
+    2rem * 4 + 1rem * 3
+  );
+  height: var(--qni-semantic-size-qpu-operation-4qubit);
+}
+
+qft-gate[data-nqubit='5'] {
+  height: calc(
+    2rem * 5 + 1rem * 4
+  );
+  height: calc(
+    2rem * 5 + 1rem * 4
+  );
+  height: var(--qni-semantic-size-qpu-operation-5qubit);
+}
+
+qft-gate[data-nqubit='5']::part(body) {
+  height: calc(
+    2rem * 5 + 1rem * 4
+  );
+  height: calc(
+    2rem * 5 + 1rem * 4
+  );
+  height: var(--qni-semantic-size-qpu-operation-5qubit);
+}
+
+qft-gate[data-nqubit='6'] {
+  height: calc(
+    2rem * 6 + 1rem * 5
+  );
+  height: calc(
+    2rem * 6 + 1rem * 5
+  );
+  height: var(--qni-semantic-size-qpu-operation-6qubit);
+}
+
+qft-gate[data-nqubit='6']::part(body) {
+  height: calc(
+    2rem * 6 + 1rem * 5
+  );
+  height: calc(
+    2rem * 6 + 1rem * 5
+  );
+  height: var(--qni-semantic-size-qpu-operation-6qubit);
+}
+
+qft-gate[data-nqubit='7'] {
+  height: calc(
+    2rem * 7 + 1rem * 6
+  );
+  height: calc(
+    2rem * 7 + 1rem * 6
+  );
+  height: var(--qni-semantic-size-qpu-operation-7qubit);
+}
+
+qft-gate[data-nqubit='7']::part(body) {
+  height: calc(
+    2rem * 7 + 1rem * 6
+  );
+  height: calc(
+    2rem * 7 + 1rem * 6
+  );
+  height: var(--qni-semantic-size-qpu-operation-7qubit);
+}
+
+qft-gate[data-nqubit='8'] {
+  height: calc(
+    2rem * 8 + 1rem * 7
+  );
+  height: calc(
+    2rem * 8 + 1rem * 7
+  );
+  height: var(--qni-semantic-size-qpu-operation-8qubit);
+}
+
+qft-gate[data-nqubit='8']::part(body) {
+  height: calc(
+    2rem * 8 + 1rem * 7
+  );
+  height: calc(
+    2rem * 8 + 1rem * 7
+  );
+  height: var(--qni-semantic-size-qpu-operation-8qubit);
+}
+
+qft-gate[data-nqubit='9'] {
+  height: calc(
+    2rem * 9 + 1rem * 8
+  );
+  height: calc(
+    2rem * 9 + 1rem * 8
+  );
+  height: var(--qni-semantic-size-qpu-operation-9qubit);
+}
+
+qft-gate[data-nqubit='9']::part(body) {
+  height: calc(
+    2rem * 9 + 1rem * 8
+  );
+  height: calc(
+    2rem * 9 + 1rem * 8
+  );
+  height: var(--qni-semantic-size-qpu-operation-9qubit);
+}
+
+qft-gate[data-nqubit='10'] {
+  height: calc(
+    2rem * 10 + 1rem * 9
+  );
+  height: calc(
+    2rem * 10 + 1rem * 9
+  );
+  height: var(--qni-semantic-size-qpu-operation-10qubit);
+}
+
+qft-gate[data-nqubit='10']::part(body) {
+  height: calc(
+    2rem * 10 + 1rem * 9
+  );
+  height: calc(
+    2rem * 10 + 1rem * 9
+  );
+  height: var(--qni-semantic-size-qpu-operation-10qubit);
+}
+
+qft-gate[data-nqubit='11'] {
+  height: calc(
+    2rem * 11 + 1rem * 10
+  );
+  height: calc(
+    2rem * 11 + 1rem * 10
+  );
+  height: var(--qni-semantic-size-qpu-operation-11qubit);
+}
+
+qft-gate[data-nqubit='11']::part(body) {
+  height: calc(
+    2rem * 11 + 1rem * 10
+  );
+  height: calc(
+    2rem * 11 + 1rem * 10
+  );
+  height: var(--qni-semantic-size-qpu-operation-11qubit);
+}
+
+qft-gate[data-nqubit='12'] {
+  height: calc(
+    2rem * 12 + 1rem * 11
+  );
+  height: calc(
+    2rem * 12 + 1rem * 11
+  );
+  height: var(--qni-semantic-size-qpu-operation-12qubit);
+}
+
+qft-gate[data-nqubit='12']::part(body) {
+  height: calc(
+    2rem * 12 + 1rem * 11
+  );
+  height: calc(
+    2rem * 12 + 1rem * 11
+  );
+  height: var(--qni-semantic-size-qpu-operation-12qubit);
+}
+
+qft-gate[data-nqubit='13'] {
+  height: calc(
+    2rem * 13 + 1rem * 12
+  );
+  height: calc(
+    2rem * 13 + 1rem * 12
+  );
+  height: var(--qni-semantic-size-qpu-operation-13qubit);
+}
+
+qft-gate[data-nqubit='13']::part(body) {
+  height: calc(
+    2rem * 13 + 1rem * 12
+  );
+  height: calc(
+    2rem * 13 + 1rem * 12
+  );
+  height: var(--qni-semantic-size-qpu-operation-13qubit);
+}
+
+qft-gate[data-nqubit='14'] {
+  height: calc(
+    2rem * 14 + 1rem * 13
+  );
+  height: calc(
+    2rem * 14 + 1rem * 13
+  );
+  height: var(--qni-semantic-size-qpu-operation-14qubit);
+}
+
+qft-gate[data-nqubit='14']::part(body) {
+  height: calc(
+    2rem * 14 + 1rem * 13
+  );
+  height: calc(
+    2rem * 14 + 1rem * 13
+  );
+  height: var(--qni-semantic-size-qpu-operation-14qubit);
+}
+
+qft-gate[data-nqubit='15'] {
+  height: calc(
+    2rem * 15 + 1rem * 14
+  );
+  height: calc(
+    2rem * 15 + 1rem * 14
+  );
+  height: var(--qni-semantic-size-qpu-operation-15qubit);
+}
+
+qft-gate[data-nqubit='15']::part(body) {
+  height: calc(
+    2rem * 15 + 1rem * 14
+  );
+  height: calc(
+    2rem * 15 + 1rem * 14
+  );
+  height: var(--qni-semantic-size-qpu-operation-15qubit);
+}
+
+qft-gate[data-nqubit='16'] {
+  height: calc(
+    2rem * 16 + 1rem * 15
+  );
+  height: calc(
+    2rem * 16 + 1rem * 15
+  );
+  height: var(--qni-semantic-size-qpu-operation-16qubit);
+}
+
+qft-gate[data-nqubit='16']::part(body) {
+  height: calc(
+    2rem * 16 + 1rem * 15
+  );
+  height: calc(
+    2rem * 16 + 1rem * 15
+  );
+  height: var(--qni-semantic-size-qpu-operation-16qubit);
 }
 
 qft-gate::part(layout) {
@@ -3833,16 +4165,304 @@ qft-dagger-gate {
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 }
 
-qft-dagger-gate[data-nqubit="2"] {
-  height: calc(2rem * 2 + 1rem);
-  height: calc(2rem * 2 + 1rem);
+qft-dagger-gate[data-nqubit='2'] {
+  height: calc(
+    2rem * 2 + 1rem
+  );
+  height: calc(
+    2rem * 2 + 1rem
+  );
   height: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
-qft-dagger-gate[data-nqubit="2"]::part(body) {
-  height: calc(2rem * 2 + 1rem);
-  height: calc(2rem * 2 + 1rem);
+qft-dagger-gate[data-nqubit='2']::part(body) {
+  height: calc(
+    2rem * 2 + 1rem
+  );
+  height: calc(
+    2rem * 2 + 1rem
+  );
   height: var(--qni-semantic-size-qpu-operation-2qubit);
+}
+
+qft-dagger-gate[data-nqubit='3'] {
+  height: calc(
+    2rem * 3 + 1rem * 2
+  );
+  height: calc(
+    2rem * 3 + 1rem * 2
+  );
+  height: var(--qni-semantic-size-qpu-operation-3qubit);
+}
+
+qft-dagger-gate[data-nqubit='3']::part(body) {
+  height: calc(
+    2rem * 3 + 1rem * 2
+  );
+  height: calc(
+    2rem * 3 + 1rem * 2
+  );
+  height: var(--qni-semantic-size-qpu-operation-3qubit);
+}
+
+qft-dagger-gate[data-nqubit='4'] {
+  height: calc(
+    2rem * 4 + 1rem * 3
+  );
+  height: calc(
+    2rem * 4 + 1rem * 3
+  );
+  height: var(--qni-semantic-size-qpu-operation-4qubit);
+}
+
+qft-dagger-gate[data-nqubit='4']::part(body) {
+  height: calc(
+    2rem * 4 + 1rem * 3
+  );
+  height: calc(
+    2rem * 4 + 1rem * 3
+  );
+  height: var(--qni-semantic-size-qpu-operation-4qubit);
+}
+
+qft-dagger-gate[data-nqubit='5'] {
+  height: calc(
+    2rem * 5 + 1rem * 4
+  );
+  height: calc(
+    2rem * 5 + 1rem * 4
+  );
+  height: var(--qni-semantic-size-qpu-operation-5qubit);
+}
+
+qft-dagger-gate[data-nqubit='5']::part(body) {
+  height: calc(
+    2rem * 5 + 1rem * 4
+  );
+  height: calc(
+    2rem * 5 + 1rem * 4
+  );
+  height: var(--qni-semantic-size-qpu-operation-5qubit);
+}
+
+qft-dagger-gate[data-nqubit='6'] {
+  height: calc(
+    2rem * 6 + 1rem * 5
+  );
+  height: calc(
+    2rem * 6 + 1rem * 5
+  );
+  height: var(--qni-semantic-size-qpu-operation-6qubit);
+}
+
+qft-dagger-gate[data-nqubit='6']::part(body) {
+  height: calc(
+    2rem * 6 + 1rem * 5
+  );
+  height: calc(
+    2rem * 6 + 1rem * 5
+  );
+  height: var(--qni-semantic-size-qpu-operation-6qubit);
+}
+
+qft-dagger-gate[data-nqubit='7'] {
+  height: calc(
+    2rem * 7 + 1rem * 6
+  );
+  height: calc(
+    2rem * 7 + 1rem * 6
+  );
+  height: var(--qni-semantic-size-qpu-operation-7qubit);
+}
+
+qft-dagger-gate[data-nqubit='7']::part(body) {
+  height: calc(
+    2rem * 7 + 1rem * 6
+  );
+  height: calc(
+    2rem * 7 + 1rem * 6
+  );
+  height: var(--qni-semantic-size-qpu-operation-7qubit);
+}
+
+qft-dagger-gate[data-nqubit='8'] {
+  height: calc(
+    2rem * 8 + 1rem * 7
+  );
+  height: calc(
+    2rem * 8 + 1rem * 7
+  );
+  height: var(--qni-semantic-size-qpu-operation-8qubit);
+}
+
+qft-dagger-gate[data-nqubit='8']::part(body) {
+  height: calc(
+    2rem * 8 + 1rem * 7
+  );
+  height: calc(
+    2rem * 8 + 1rem * 7
+  );
+  height: var(--qni-semantic-size-qpu-operation-8qubit);
+}
+
+qft-dagger-gate[data-nqubit='9'] {
+  height: calc(
+    2rem * 9 + 1rem * 8
+  );
+  height: calc(
+    2rem * 9 + 1rem * 8
+  );
+  height: var(--qni-semantic-size-qpu-operation-9qubit);
+}
+
+qft-dagger-gate[data-nqubit='9']::part(body) {
+  height: calc(
+    2rem * 9 + 1rem * 8
+  );
+  height: calc(
+    2rem * 9 + 1rem * 8
+  );
+  height: var(--qni-semantic-size-qpu-operation-9qubit);
+}
+
+qft-dagger-gate[data-nqubit='10'] {
+  height: calc(
+    2rem * 10 + 1rem * 9
+  );
+  height: calc(
+    2rem * 10 + 1rem * 9
+  );
+  height: var(--qni-semantic-size-qpu-operation-10qubit);
+}
+
+qft-dagger-gate[data-nqubit='10']::part(body) {
+  height: calc(
+    2rem * 10 + 1rem * 9
+  );
+  height: calc(
+    2rem * 10 + 1rem * 9
+  );
+  height: var(--qni-semantic-size-qpu-operation-10qubit);
+}
+
+qft-dagger-gate[data-nqubit='11'] {
+  height: calc(
+    2rem * 11 + 1rem * 10
+  );
+  height: calc(
+    2rem * 11 + 1rem * 10
+  );
+  height: var(--qni-semantic-size-qpu-operation-11qubit);
+}
+
+qft-dagger-gate[data-nqubit='11']::part(body) {
+  height: calc(
+    2rem * 11 + 1rem * 10
+  );
+  height: calc(
+    2rem * 11 + 1rem * 10
+  );
+  height: var(--qni-semantic-size-qpu-operation-11qubit);
+}
+
+qft-dagger-gate[data-nqubit='12'] {
+  height: calc(
+    2rem * 12 + 1rem * 11
+  );
+  height: calc(
+    2rem * 12 + 1rem * 11
+  );
+  height: var(--qni-semantic-size-qpu-operation-12qubit);
+}
+
+qft-dagger-gate[data-nqubit='12']::part(body) {
+  height: calc(
+    2rem * 12 + 1rem * 11
+  );
+  height: calc(
+    2rem * 12 + 1rem * 11
+  );
+  height: var(--qni-semantic-size-qpu-operation-12qubit);
+}
+
+qft-dagger-gate[data-nqubit='13'] {
+  height: calc(
+    2rem * 13 + 1rem * 12
+  );
+  height: calc(
+    2rem * 13 + 1rem * 12
+  );
+  height: var(--qni-semantic-size-qpu-operation-13qubit);
+}
+
+qft-dagger-gate[data-nqubit='13']::part(body) {
+  height: calc(
+    2rem * 13 + 1rem * 12
+  );
+  height: calc(
+    2rem * 13 + 1rem * 12
+  );
+  height: var(--qni-semantic-size-qpu-operation-13qubit);
+}
+
+qft-dagger-gate[data-nqubit='14'] {
+  height: calc(
+    2rem * 14 + 1rem * 13
+  );
+  height: calc(
+    2rem * 14 + 1rem * 13
+  );
+  height: var(--qni-semantic-size-qpu-operation-14qubit);
+}
+
+qft-dagger-gate[data-nqubit='14']::part(body) {
+  height: calc(
+    2rem * 14 + 1rem * 13
+  );
+  height: calc(
+    2rem * 14 + 1rem * 13
+  );
+  height: var(--qni-semantic-size-qpu-operation-14qubit);
+}
+
+qft-dagger-gate[data-nqubit='15'] {
+  height: calc(
+    2rem * 15 + 1rem * 14
+  );
+  height: calc(
+    2rem * 15 + 1rem * 14
+  );
+  height: var(--qni-semantic-size-qpu-operation-15qubit);
+}
+
+qft-dagger-gate[data-nqubit='15']::part(body) {
+  height: calc(
+    2rem * 15 + 1rem * 14
+  );
+  height: calc(
+    2rem * 15 + 1rem * 14
+  );
+  height: var(--qni-semantic-size-qpu-operation-15qubit);
+}
+
+qft-dagger-gate[data-nqubit='16'] {
+  height: calc(
+    2rem * 16 + 1rem * 15
+  );
+  height: calc(
+    2rem * 16 + 1rem * 15
+  );
+  height: var(--qni-semantic-size-qpu-operation-16qubit);
+}
+
+qft-dagger-gate[data-nqubit='16']::part(body) {
+  height: calc(
+    2rem * 16 + 1rem * 15
+  );
+  height: calc(
+    2rem * 16 + 1rem * 15
+  );
+  height: var(--qni-semantic-size-qpu-operation-16qubit);
 }
 
 qft-dagger-gate::part(layout) {

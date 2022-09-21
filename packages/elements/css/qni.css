@@ -164,6 +164,118 @@
       }
     }
 
+    &[data-nqubit='3'] {
+      height: var(--qni-semantic-size-qpu-operation-3qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-3qubit);
+      }
+    }
+
+    &[data-nqubit='4'] {
+      height: var(--qni-semantic-size-qpu-operation-4qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-4qubit);
+      }
+    }
+
+    &[data-nqubit='5'] {
+      height: var(--qni-semantic-size-qpu-operation-5qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-5qubit);
+      }
+    }
+
+    &[data-nqubit='6'] {
+      height: var(--qni-semantic-size-qpu-operation-6qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-6qubit);
+      }
+    }
+
+    &[data-nqubit='7'] {
+      height: var(--qni-semantic-size-qpu-operation-7qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-7qubit);
+      }
+    }
+
+    &[data-nqubit='8'] {
+      height: var(--qni-semantic-size-qpu-operation-8qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-8qubit);
+      }
+    }
+
+    &[data-nqubit='9'] {
+      height: var(--qni-semantic-size-qpu-operation-9qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-9qubit);
+      }
+    }
+
+    &[data-nqubit='10'] {
+      height: var(--qni-semantic-size-qpu-operation-10qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-10qubit);
+      }
+    }
+
+    &[data-nqubit='11'] {
+      height: var(--qni-semantic-size-qpu-operation-11qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-11qubit);
+      }
+    }
+
+    &[data-nqubit='12'] {
+      height: var(--qni-semantic-size-qpu-operation-12qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-12qubit);
+      }
+    }
+
+    &[data-nqubit='13'] {
+      height: var(--qni-semantic-size-qpu-operation-13qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-13qubit);
+      }
+    }
+
+    &[data-nqubit='14'] {
+      height: var(--qni-semantic-size-qpu-operation-14qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-14qubit);
+      }
+    }
+
+    &[data-nqubit='15'] {
+      height: var(--qni-semantic-size-qpu-operation-15qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-15qubit);
+      }
+    }
+
+    &[data-nqubit='16'] {
+      height: var(--qni-semantic-size-qpu-operation-16qubit);
+
+      &::part(body) {
+        height: var(--qni-semantic-size-qpu-operation-16qubit);
+      }
+    }
+
     &::part(layout) {
       @apply flex flex-col;
     }
