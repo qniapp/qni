@@ -10257,10 +10257,7 @@ function Xp(r) {
       i ? this.resizeableService.send({ type: "SET_INTERACT" }) : this.resizeableService.send({ type: "UNSET_INTERACT" });
     }
     set resizeHandleSnapTargets(i) {
-      (0, us.default)(this.resizeHandle).draggable({ modifiers: [us.default.modifiers.snap({ targets: i, range: this.resizeHandleSnapRange, relativePoints: [{ x: 0.5, y: 0.5 }] })], listeners: { move: this.resizeHandleMoveEventListener.bind(this) } });
-    }
-    get resizeHandleSnapRange() {
-      return 32;
+      (0, us.default)(this.resizeHandle).draggable({ modifiers: [us.default.modifiers.snap({ targets: i, relativePoints: [{ x: 0.5, y: 0.5 }] })], listeners: { move: this.resizeHandleMoveEventListener.bind(this) } });
     }
     resizeHandleMoveEventListener(i) {
       let l = i.modifiers[0];

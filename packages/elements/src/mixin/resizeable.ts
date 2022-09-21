@@ -165,7 +165,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
         modifiers: [
           interact.modifiers.snap({
             targets: values,
-            range: this.resizeHandleSnapRange,
             relativePoints: [{x: 0.5, y: 0.5}]
           })
         ],
@@ -173,11 +172,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           move: this.resizeHandleMoveEventListener.bind(this)
         }
       })
-    }
-
-    // これで合ってる?
-    get resizeHandleSnapRange(): number {
-      return 32
     }
 
     private resizeHandleMoveEventListener(event: InteractEvent) {
