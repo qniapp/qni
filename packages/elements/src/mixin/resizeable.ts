@@ -22,12 +22,12 @@ type ResizeableContext = Record<string, never>
 type ResizeableEvent =
   | {type: 'SET_INTERACT'}
   | {type: 'UNSET_INTERACT'}
-  | {type: 'GRAB'; x: number; y: number}
-  | {type: 'RELEASE'}
+  | {type: 'GRAB_HANDLE'; x: number; y: number}
+  | {type: 'RELEASE_HANDLE'}
   | {type: 'START_RESIZING'}
   | {type: 'END_RESIZING'}
-  | {type: 'SNAP'}
-  | {type: 'UNSNAP'}
+  | {type: 'SNAP_HANDLE'}
+  | {type: 'UNSNAP_HANDLE'}
 
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
@@ -49,15 +49,15 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             entry: ['init'],
             on: {
               SET_INTERACT: {
-                target: 'grabbable',
+                target: 'handleGrabbable',
                 actions: ['setInteract']
               }
             }
           },
-          grabbable: {
+          handleGrabbable: {
             on: {
-              GRAB: {
-                target: 'grabbed',
+              GRAB_HANDLE: {
+                target: 'handleGrabbed',
                 actions: ['grabResizeHandle']
               },
               UNSET_INTERACT: {
@@ -65,14 +65,14 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
               }
             }
           },
-          grabbed: {
+          handleGrabbed: {
             on: {
               START_RESIZING: {
                 target: 'resizeStart',
                 actions: ['startResizing']
               },
-              RELEASE: {
-                target: 'grabbable',
+              RELEASE_HANDLE: {
+                target: 'handleGrabbable',
                 actions: ['releaseResizeHandle']
               }
             }
@@ -82,6 +82,10 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           },
           resizing: {
             on: {
+              SNAP_HANDLE: {
+                target: 'resizing',
+                actions: ['snap']
+              },
               END_RESIZING: {
                 target: 'resizeEnd'
               }
@@ -89,7 +93,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           },
           resizeEnd: {
             entry: ['endResizing'],
-            always: [{target: 'grabbable'}]
+            always: [{target: 'handleGrabbable'}]
           }
         }
       },
@@ -120,18 +124,21 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             }
           },
           grabResizeHandle: (_context, event) => {
-            if (event.type !== 'GRAB') return
+            if (event.type !== 'GRAB_HANDLE') return
 
             this.resizing = true
             this.dispatchEvent(new Event('resize-handle-grab', {bubbles: true}))
           },
           releaseResizeHandle: (_context, event) => {
-            if (event.type !== 'RELEASE') return
+            if (event.type !== 'RELEASE_HANDLE') return
 
             this.resizing = false
           },
           startResizing: () => {
             this.resizing = true
+          },
+          snap: () => {
+            this.dispatchEvent(new Event('resize-handle-snap', {bubbles: true}))
           },
           endResizing: () => {
             this.resizing = false
@@ -189,11 +196,10 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
         }
 
         if (this.resizeHandleSnappedDropzone && this.resizeHandleSnappedDropzone !== this.resizeHandleDropzone) {
-          this.resizeableService.send({type: 'UNSNAP'})
+          this.resizeableService.send({type: 'UNSNAP_HANDLE'})
         }
 
-        console.log('*** SNAP ***')
-        this.resizeableService.send({type: 'SNAP'})
+        this.resizeableService.send({type: 'SNAP_HANDLE'})
       }
     }
 
@@ -219,13 +225,13 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     private grabResizeHandle(event: MouseEvent): void {
       if (event.currentTarget !== this.resizeHandle) return
 
-      this.resizeableService.send({type: 'GRAB', x: event.offsetX, y: event.offsetY})
+      this.resizeableService.send({type: 'GRAB_HANDLE', x: event.offsetX, y: event.offsetY})
     }
 
     private releaseResizeHandle(event: MouseEvent): void {
       if (event.currentTarget !== this.resizeHandle) return
 
-      this.resizeableService.send({type: 'RELEASE'})
+      this.resizeableService.send({type: 'RELEASE_HANDLE'})
     }
 
     private startResizing(): void {
