@@ -10238,9 +10238,9 @@ function Xp(r) {
         let l = this.resizeHandleDropzone;
         l ? this.resizeHandleSnappedDropzone = l : this.resizeHandleSnappedDropzone = null;
       }, grabResizeHandle: (i, l) => {
-        l.type === "GRAB" && this.dispatchEvent(new Event("resize-handle-grab", { bubbles: true }));
+        l.type === "GRAB" && (this.resizing = true, this.dispatchEvent(new Event("resize-handle-grab", { bubbles: true })));
       }, releaseResizeHandle: (i, l) => {
-        l.type === "RELEASE";
+        l.type === "RELEASE" && (this.resizing = false);
       }, startResizing: () => {
         this.resizing = true;
       }, endResizing: () => {

@@ -1829,6 +1829,7 @@ select {
   --qni-semantic-fill-color-primary: var(--qni-semantic-color-primary);
   --qni-semantic-color-intermediate: #a855f7;
   --qni-semantic-color-intermediate-light: #c084fc;
+  --qni-semantic-border-color-intermediate: var(--qni-semantic-color-intermediate);
   --qni-semantic-fill-color-intermediate: var(--qni-semantic-color-intermediate);
   --qni-semantic-color-on: #0ea5e9;
   --qni-semantic-fill-color-on: var(--qni-semantic-color-on);
@@ -2346,7 +2347,7 @@ bloch-display[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone bloch-display[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) bloch-display[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone bloch-display[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) bloch-display[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -2861,7 +2862,7 @@ control-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone control-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) control-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone control-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) control-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -2982,7 +2983,7 @@ h-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone h-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) h-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone h-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) h-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3157,7 +3158,7 @@ measurement-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone measurement-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) measurement-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone measurement-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) measurement-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3399,7 +3400,7 @@ phase-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone phase-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) phase-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone phase-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) phase-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3639,7 +3640,7 @@ qft-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone qft-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) qft-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone qft-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) qft-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3969,6 +3970,13 @@ qft-gate[data-nqubit='16']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-16qubit);
 }
 
+qft-gate[data-resizing]::part(outline) {
+  display: block;
+  outline: 2px solid #a855f7;
+  outline: 2px solid #a855f7;
+  outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-intermediate);
+}
+
 qft-gate::part(layout) {
   display: flex;
   flex-direction: column;
@@ -4135,7 +4143,7 @@ qft-dagger-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone qft-dagger-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone qft-dagger-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -4465,6 +4473,13 @@ qft-dagger-gate[data-nqubit='16']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-16qubit);
 }
 
+qft-dagger-gate[data-resizing]::part(outline) {
+  display: block;
+  outline: 2px solid #a855f7;
+  outline: 2px solid #a855f7;
+  outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-intermediate);
+}
+
 qft-dagger-gate::part(layout) {
   display: flex;
   flex-direction: column;
@@ -4664,7 +4679,7 @@ rnot-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone rnot-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rnot-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone rnot-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rnot-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -4834,7 +4849,7 @@ rx-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone rx-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rx-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone rx-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rx-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -5062,7 +5077,7 @@ ry-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone ry-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) ry-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone ry-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) ry-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -5290,7 +5305,7 @@ rz-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone rz-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rz-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone rz-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rz-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -5518,7 +5533,7 @@ swap-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone swap-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) swap-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone swap-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) swap-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -5639,7 +5654,7 @@ t-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone t-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) t-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone t-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) t-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -5809,7 +5824,7 @@ write-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone write-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) write-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone write-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) write-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6037,7 +6052,7 @@ x-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone x-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) x-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone x-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) x-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6207,7 +6222,7 @@ y-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone y-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) y-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone y-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) y-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6377,7 +6392,7 @@ z-gate[data-hoverable]::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone z-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) z-gate[data-hoverable]:not([data-active]):hover::part(outline) {
+palette-dropzone z-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) z-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;

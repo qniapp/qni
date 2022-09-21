@@ -99,7 +99,7 @@
 
   .qpu-operation-hoverable {
     palette-dropzone &[data-hoverable]:not([data-grabbed]):hover::part(outline),
-    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::part(outline) {
+    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
       @apply block;
       outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
     }
@@ -274,6 +274,11 @@
       &::part(body) {
         height: var(--qni-semantic-size-qpu-operation-16qubit);
       }
+    }
+
+    &[data-resizing]::part(outline) {
+      @apply block;
+      outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-intermediate);
     }
 
     &::part(layout) {
