@@ -24,7 +24,7 @@ type CircuitEditorEvent =
   | {type: 'GRAB_OPERATION'; operation: Operation}
   | {type: 'GRAB_RESIZE_HANDLE'; operation: Operation}
   | {type: 'RELEASE_OPERATION'; operation: Operation}
-  | {type: 'RELEASE_RESIZE_HANDLE'; operation: Operation}
+  | {type: 'END_RESIZE'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
   | {type: 'DROP_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'}
@@ -157,7 +157,7 @@ export class CircuitEditorElement extends HTMLElement {
                   target: 'idle',
                   actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorGrabbingStyle', 'endCircuitEdit']
                 },
-                RELEASE_RESIZE_HANDLE: {
+                END_RESIZE: {
                   target: 'idle',
                   actions: ['endCircuitEdit']
                 },
@@ -386,7 +386,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-grab', this.grabOperation)
     this.addEventListener('resize-handle-grab', this.grabResizeHandle)
     this.addEventListener('operation-release', this.releaseOperation)
-    this.addEventListener('resize-handle-release', this.releaseResizeHandle)
+    this.addEventListener('resize-end', this.resizeEnd)
     this.addEventListener('operation-end-dragging', this.endDraggingOperation)
     this.addEventListener('operation-drop', this.dropOperation)
     this.addEventListener('operation-delete', this.deleteOperation)
@@ -546,11 +546,11 @@ export class CircuitEditorElement extends HTMLElement {
     this.circuitEditorService.send({type: 'RELEASE_OPERATION', operation})
   }
 
-  private releaseResizeHandle(event: Event): void {
+  private resizeEnd(event: Event): void {
     const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 
-    this.circuitEditorService.send({type: 'RELEASE_RELEASE_HANDLE', operation})
+    this.circuitEditorService.send({type: 'END_RESIZE', operation})
   }
 
   private endDraggingOperation(event: Event): void {
