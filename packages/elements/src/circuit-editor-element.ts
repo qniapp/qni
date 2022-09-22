@@ -392,7 +392,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-grab', this.grabOperation)
     this.addEventListener('resizeable:grab-resize-handle', this.grabResizeHandle)
     this.addEventListener('operation-release', this.releaseOperation)
-    this.addEventListener('resizeable:end-resize', this.resizeEnd)
+    this.addEventListener('resizeable:end-resizing', this.resizeEnd)
     this.addEventListener('operation-end-dragging', this.endDraggingOperation)
     this.addEventListener('operation-drop', this.dropOperation)
     this.addEventListener('operation-delete', this.deleteOperation)

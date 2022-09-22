@@ -150,7 +150,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           endResizing: () => {
             this.resizing = false
             this.moveResizeHandleTo(0, 0)
-            this.dispatchEvent(new CustomEvent('resizeable:end-resize', {bubbles: true}))
+            this.dispatchEvent(new CustomEvent('resizeable:end-resizing', {bubbles: true}))
           }
         }
       }
