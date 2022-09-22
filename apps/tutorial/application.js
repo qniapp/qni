@@ -10249,7 +10249,7 @@ function Qp(r) {
       this.resizeHandleY = 0;
       this.debugResizeable = false;
       this.resizing = false;
-      this.resizeableMachine = ot({ id: "resizeable", initial: "idle", states: { idle: { entry: ["init"], on: { SET_INTERACT: { target: "resizeHandleGrabbable", actions: ["setInteract"] } } }, resizeHandleGrabbable: { on: { GRAB_RESIZE_HANDLE: { target: "resizeHandleGrabbed", actions: ["grabResizeHandle"] }, UNSET_INTERACT: { target: "idle" } } }, resizeHandleGrabbed: { on: { START_RESIZING: { target: "resizeStart", actions: ["startResizing"] }, RELEASE_RESIZE_HANDLE: { target: "resizeHandleGrabbable", actions: ["releaseResizeHandle"] } } }, resizeStart: { always: [{ target: "resizing" }] }, resizing: { on: { SNAP_RESIZE_HANDLE: { target: "resizing", actions: ["snap"] }, END_RESIZING: { target: "resizeEnd" } } }, resizeEnd: { entry: ["endResizing"], always: [{ target: "resizeHandleGrabbable" }] } } }, { actions: { init: () => {
+      this.resizeableMachine = ot({ id: "resizeable", initial: "idle", states: { idle: { entry: ["init"], on: { SET_INTERACT: { target: "resizeHandleGrabbable", actions: ["setInteract"] } } }, resizeHandleGrabbable: { on: { GRAB_RESIZE_HANDLE: { target: "resizeHandleGrabbed", actions: ["grabResizeHandle"] }, UNSET_INTERACT: { target: "idle" } } }, resizeHandleGrabbed: { on: { START_RESIZING: { target: "resizeStart", actions: ["startResizing"] }, RELEASE_RESIZE_HANDLE: { target: "resizeHandleGrabbable", actions: ["releaseResizeHandle"] } } }, resizeStart: { always: [{ target: "resizing" }] }, resizing: { on: { RESIZE_HANDLE_SNAP: { target: "resizing", actions: ["snap"] }, END_RESIZING: { target: "resizeEnd" } } }, resizeEnd: { entry: ["endResizing"], always: [{ target: "resizeHandleGrabbable" }] } } }, { actions: { init: () => {
         oi("resizeable:init", {}, this);
       }, setInteract: (i, l) => {
         H.need(l.type === "SET_INTERACT", "event type must be SET_INTERACT"), H.notNull(this.resizeHandle);
@@ -10262,7 +10262,7 @@ function Qp(r) {
       }, startResizing: (i, l) => {
         H.need(l.type === "START_RESIZING", "event type must be START_RESIZING"), this.resizing = true;
       }, snap: (i, l) => {
-        H.need(l.type === "SNAP_RESIZE_HANDLE", "event type must be SNAP_RESIZE_HANDLE"), oi("resizeable:resize", {}, this);
+        H.need(l.type === "RESIZE_HANDLE_SNAP", "event type must be RESIZE_HANDLE_SNAP"), oi("resizeable:resize", {}, this);
       }, endResizing: () => {
         this.resizing = false, this.moveResizeHandleTo(0, 0), oi("resizeable:end-resizing", {}, this);
       } } });
@@ -10284,7 +10284,7 @@ function Qp(r) {
       if (!l.inRange)
         return;
       let c = l.target.source;
-      oi("resizeable:resize-handle-in-snap-range", { snapTargetInfo: c }, this), this.moveResizeHandleTo(0, 0), this.resizeableService.send({ type: "SNAP_RESIZE_HANDLE" });
+      oi("resizeable:resize-handle-in-snap-range", { snapTargetInfo: c }, this), this.moveResizeHandleTo(0, 0), this.resizeableService.send({ type: "RESIZE_HANDLE_SNAP" });
     }
     get resizeHandleDropzone() {
       let i = this.parentElement;

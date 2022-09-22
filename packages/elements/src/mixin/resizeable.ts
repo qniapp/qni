@@ -28,7 +28,7 @@ type ResizeableEvent =
   | {type: 'RELEASE_RESIZE_HANDLE'}
   | {type: 'START_RESIZING'}
   | {type: 'END_RESIZING'}
-  | {type: 'SNAP_RESIZE_HANDLE'}
+  | {type: 'RESIZE_HANDLE_SNAP'}
 
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
@@ -81,7 +81,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           },
           resizing: {
             on: {
-              SNAP_RESIZE_HANDLE: {
+              RESIZE_HANDLE_SNAP: {
                 target: 'resizing',
                 actions: ['snap']
               },
@@ -133,7 +133,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             this.resizing = true
           },
           snap: (_context, event) => {
-            Util.need(event.type === 'SNAP_RESIZE_HANDLE', 'event type must be SNAP_RESIZE_HANDLE')
+            Util.need(event.type === 'RESIZE_HANDLE_SNAP', 'event type must be RESIZE_HANDLE_SNAP')
 
             emitEvent('resizeable:resize', {}, this)
           },
@@ -186,7 +186,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
       const snapTargetInfo = snapModifier.target.source
       emitEvent('resizeable:resize-handle-in-snap-range', {snapTargetInfo}, this)
       this.moveResizeHandleTo(0, 0)
-      this.resizeableService.send({type: 'SNAP_RESIZE_HANDLE'})
+      this.resizeableService.send({type: 'RESIZE_HANDLE_SNAP'})
     }
 
     get resizeHandleDropzone(): CircuitDropzoneElement | PaletteDropzoneElement {
