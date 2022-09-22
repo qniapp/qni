@@ -1,5 +1,5 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from '../circuit-dropzone-element'
-import {Util, describe} from '@qni/common'
+import {Util, describe, emitEvent} from '@qni/common'
 import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Constructor} from './constructor'
@@ -99,7 +99,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
       {
         actions: {
           init: () => {
-            this.dispatchEvent(new CustomEvent('resizeable:init', {bubbles: true}))
+            emitEvent('resizeable:init', {}, this)
           },
           setInteract: (_context, event) => {
             Util.need(event.type === 'SET_INTERACT', 'event type must be SET_INTERACT')
@@ -120,7 +120,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             Util.need(event.type === 'GRAB_RESIZE_HANDLE', 'event type must be GRAB_RESIZE_HANDLE')
 
             this.resizing = true
-            this.dispatchEvent(new CustomEvent('resizeable:grab-resize-handle', {bubbles: true}))
+            emitEvent('resizeable:grab-resize-handle', {}, this)
           },
           releaseResizeHandle: (_context, event) => {
             Util.need(event.type === 'RELEASE_RESIZE_HANDLE', 'event type must be RELEASE_RESIZE_HANDLE')
@@ -135,12 +135,12 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
           snap: (_context, event) => {
             Util.need(event.type === 'SNAP_RESIZE_HANDLE', 'event type must be SNAP_RESIZE_HANDLE')
 
-            this.dispatchEvent(new CustomEvent('resizeable:resize', {bubbles: true}))
+            emitEvent('resizeable:resize', {}, this)
           },
           endResizing: () => {
             this.resizing = false
             this.moveResizeHandleTo(0, 0)
-            this.dispatchEvent(new CustomEvent('resizeable:end-resizing', {bubbles: true}))
+            emitEvent('resizeable:end-resizing', {}, this)
           }
         }
       }
@@ -181,22 +181,12 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
 
     private resizeHandleMoveEventListener(event: InteractEvent) {
       const snapModifier = event.modifiers![0]
+      if (!snapModifier.inRange) return
 
-      if (snapModifier.inRange) {
-        const snapTargetInfo = snapModifier.target.source
-        this.dispatchEvent(
-          new CustomEvent('resizeable:resize-handle-in-snap-range', {detail: {snapTargetInfo}, bubbles: true})
-        )
-
-        this.moveResizeHandleTo(0, 0)
-
-        const dropzone = this.parentElement
-        if (!isCircuitDropzoneElement(dropzone)) {
-          throw new Error('ResizeableMixin: parentElement is not CircuitDropzoneElement')
-        }
-
-        this.resizeableService.send({type: 'SNAP_RESIZE_HANDLE'})
-      }
+      const snapTargetInfo = snapModifier.target.source
+      emitEvent('resizeable:resize-handle-in-snap-range', {snapTargetInfo}, this)
+      this.moveResizeHandleTo(0, 0)
+      this.resizeableService.send({type: 'SNAP_RESIZE_HANDLE'})
     }
 
     get resizeHandleDropzone(): CircuitDropzoneElement | PaletteDropzoneElement {
