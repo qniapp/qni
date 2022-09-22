@@ -1,7 +1,7 @@
 import {Operation, isOperation} from './operation'
 import {html, render} from '@github/jtml'
+import {isDraggable, isHelpable, isResizeable} from './mixin'
 import {controller} from '@github/catalyst'
-import {isHelpable} from './mixin'
 
 export class PaletteDropzoneElement extends HTMLElement {
   #eventAbortController: AbortController | null = null
@@ -35,9 +35,12 @@ export class PaletteDropzoneElement extends HTMLElement {
   }
 
   private initOperation(operation: Operation): void {
-    operation.draggable = true
-    operation.snapped = true
-    operation.grabbed = false
+    if (isDraggable(operation)) {
+      operation.draggable = true
+      operation.grabbed = false
+      operation.snapped = true
+    }
+    if (isResizeable(operation)) operation.resizeable = true
     if (isHelpable(operation)) operation.initHelp()
   }
 

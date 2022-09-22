@@ -8,8 +8,8 @@ import {html, render} from '@github/jtml'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
-import {isFlaggable} from './mixin/flaggable'
 import {isCircuitDropzoneElement} from './circuit-dropzone-element'
+import {isFlaggable} from './mixin/flaggable'
 
 type CircuitEditorContext = Record<string, never>
 type CircuitEditorEvent =
@@ -239,13 +239,10 @@ export class CircuitEditorElement extends HTMLElement {
             throw new Error(`${dropzone} is not a circuit dropzone`)
           }
           Util.notNull(dropzone.circuitStep)
+
           const wireIndex = dropzone.circuitStep.dropzones.indexOf(dropzone)
           const snapTarget = this.circuit.resizeHandleSnapTargetAt(event.x, event.y)
           const operationNqubit = snapTarget.wireIndex - wireIndex + 1
-
-          console.log(`wireIndex: ${wireIndex}`)
-          console.log(`snapTarget.wireIndex: ${snapTarget.wireIndex}`)
-          console.log(`operationNqubit: ${operationNqubit}`)
 
           operation.nqubit = operationNqubit
         },

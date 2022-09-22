@@ -36,7 +36,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     @attr nqubit = 1
     @attr resizeHandleX = 0
     @attr resizeHandleY = 0
-    @attr debugResizeable = true
+    @attr debugResizeable = false
     @attr resizing = false
     @target resizeHandle!: HTMLElement
 
@@ -225,13 +225,17 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     }
 
     private grabResizeHandle(event: MouseEvent): void {
-      if (event.currentTarget !== this.resizeHandle) return
+      if (event.currentTarget !== this.resizeHandle) {
+        throw new Error('ResizeableMixin: grabResizeHandle: event.currentTarget !== this.resizeHandle')
+      }
 
       this.resizeableService.send({type: 'GRAB_HANDLE', x: event.offsetX, y: event.offsetY})
     }
 
     private releaseResizeHandle(event: MouseEvent): void {
-      if (event.currentTarget !== this.resizeHandle) return
+      if (event.currentTarget !== this.resizeHandle) {
+        throw new Error('ResizeableMixin: releaseResizeHandle: event.currentTarget !== this.resizeHandle')
+      }
 
       this.resizeableService.send({type: 'RELEASE_HANDLE'})
     }
