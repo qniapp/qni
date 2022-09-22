@@ -111,7 +111,7 @@ export class Simulator {
         case SerializedQftGateType:
           if (each.if && !this.flags[each.if]) break
           if (each.controls && each.controls.length > 0) {
-            this.cqft(each.controls, ...each.targets)
+            this.cqft(each.nqubit, each.controls, ...each.targets)
           } else {
             this.qft(each.nqubit, ...each.targets)
           }
@@ -307,12 +307,12 @@ export class Simulator {
     return this
   }
 
-  qft(nqubit, ...targets: number[]): Simulator {
+  qft(nqubit: number, ...targets: number[]): Simulator {
     this.u(Matrix.H, ...targets)
     return this
   }
 
-  cqft(nqubit, controls: number | number[], ...targets: number[]): Simulator {
+  cqft(nqubit: number, controls: number | number[], ...targets: number[]): Simulator {
     this.cu(controls, Matrix.H, ...targets)
     return this
   }
