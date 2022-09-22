@@ -141,6 +141,7 @@ type CircuitStepEvent =
   | {type: 'SNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'DELETE_OPERATION'; dropzone: CircuitDropzoneElement}
+  | {type: 'RESIZE_OPERATION'; dropzone: CircuitDropzoneElement}
   | {type: 'OCCUPY_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSHADOW'}
 
@@ -220,6 +221,10 @@ export class CircuitStepElement extends HTMLElement {
             DELETE_OPERATION: {
               target: 'visible',
               actions: ['dispatchDeleteOperationEvent']
+            },
+            RESIZE_OPERATION: {
+              target: 'visible',
+              actions: ['dispatchResizeOperationEvent']
             }
           },
           states: {
@@ -320,6 +325,16 @@ export class CircuitStepElement extends HTMLElement {
             })
           )
         },
+        dispatchResizeOperationEvent: (_context, event) => {
+          if (event.type !== 'RESIZE_OPERATION') return
+
+          this.dispatchEvent(
+            new CustomEvent('circuit-step-resize-operation', {
+              detail: {dropzone: event.dropzone},
+              bubbles: true
+            })
+          )
+        },
         unshadow: () => {
           this.shadow = false
         }
@@ -379,6 +394,7 @@ export class CircuitStepElement extends HTMLElement {
     this.addEventListener('circuit-dropzone-snap', this.snapDropzone)
     this.addEventListener('circuit-dropzone-unsnap', this.unsnapDropzone)
     this.addEventListener('circuit-dropzone-operation-delete', this.deleteOperation)
+    this.addEventListener('circuit-dropzone-operation-resize', this.resizeOperation)
     this.addEventListener('circuit-dropzone-drop', this.unshadow)
     this.addEventListener('circuit-dropzone-occupy', this.occupyDropzone)
 
@@ -871,6 +887,11 @@ export class CircuitStepElement extends HTMLElement {
   private deleteOperation(event: Event): void {
     const dropzone = event.target as CircuitDropzoneElement
     this.circuitStepService.send({type: 'DELETE_OPERATION', dropzone})
+  }
+
+  private resizeOperation(event: Event): void {
+    const dropzone = event.target as CircuitDropzoneElement
+    this.circuitStepService.send({type: 'RESIZE_OPERATION', dropzone})
   }
 
   private dispatchMouseenterEvent(): void {

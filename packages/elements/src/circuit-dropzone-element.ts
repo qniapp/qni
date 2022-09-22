@@ -5,8 +5,8 @@ import {attr, controller} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Util} from '@qni/common'
 import interact from 'interactjs'
+import {isResizeable} from './mixin'
 import wiresIcon from '../icon/wires.svg'
-import {isResizeable, Resizeable} from './mixin'
 
 export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitDropzoneElement
@@ -18,6 +18,7 @@ type CircuitDropzoneEvent =
   | {type: 'DROP_OPERATION'}
   | {type: 'PUT_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'; operation: Operation}
+  | {type: 'RESIZE_OPERATION'}
 
 export class CircuitDropzoneElement extends HTMLElement {
   #eventAbortController: AbortController | null = null
@@ -75,6 +76,10 @@ export class CircuitDropzoneElement extends HTMLElement {
             DELETE_OPERATION: {
               target: 'empty',
               actions: ['deleteOperation', 'dispatchDeleteOperationEvent']
+            },
+            RESIZE_OPERATION: {
+              target: 'occupied',
+              actions: ['resizeOperation']
             }
           }
         }
@@ -112,6 +117,10 @@ export class CircuitDropzoneElement extends HTMLElement {
 
           this.operationName = ''
           this.removeChild(event.operation as Node)
+        },
+        resizeOperation: () => {
+          console.log('circuit-dropzone-operation-resize')
+          this.dispatchEvent(new Event('circuit-dropzone-operation-resize', {bubbles: true}))
         },
         dispatchOccupiedEvent: () => {
           this.dispatchEvent(new Event('circuit-dropzone-occupy', {bubbles: true}))
@@ -189,6 +198,7 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.addEventListener('operation-unsnap', this.unsnapOperation, {signal})
     this.addEventListener('operation-end-dragging', this.dropOperation, {signal})
     this.addEventListener('operation-delete', this.deleteOperation, {signal})
+    this.addEventListener('operation-resize', this.resizeOperation, {signal})
   }
 
   disconnectedCallback() {
@@ -271,7 +281,15 @@ export class CircuitDropzoneElement extends HTMLElement {
   private deleteOperation(event: Event): void {
     const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} isn't an Operation.`)
+
     this.circuitDropzoneService.send({type: 'DELETE_OPERATION', operation})
+  }
+
+  private resizeOperation(event: Event): void {
+    const operation = event.target
+    if (!isResizeable(operation)) throw new Error(`${operation} isn't a Resizeable.`)
+
+    this.circuitDropzoneService.send({type: 'RESIZE_OPERATION'})
   }
 
   private get wireSvg(): TemplateResult {

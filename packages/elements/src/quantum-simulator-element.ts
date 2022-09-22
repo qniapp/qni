@@ -51,7 +51,8 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('run-circuit-button-click', this.freshRun)
     this.addEventListener('circuit-step-snap', this.maybeUpdateUrl)
     this.addEventListener('circuit-step-unsnap', this.maybeUpdateUrl)
-    this.addEventListener('resize-handle-snap', this.maybeUpdateUrl)
+    this.addEventListener('circuit-step-resize-operation', this.maybeUpdateUrl)
+    this.addEventListener('circuit-step-resize-operation', this.freshRun)
     this.addEventListener('circuit-editor-resize', this.freshRun)
 
     this.attachShadow({mode: 'open'})

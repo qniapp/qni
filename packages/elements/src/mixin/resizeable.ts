@@ -141,7 +141,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             this.resizing = true
           },
           snap: () => {
-            this.dispatchEvent(new Event('resize-handle-snap', {bubbles: true}))
+            this.dispatchEvent(new Event('operation-resize', {bubbles: true}))
           },
           endResizing: () => {
             this.resizing = false

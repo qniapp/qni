@@ -299,6 +299,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
     this.addEventListener('circuit-step-delete-operation', this.updateStep)
     this.addEventListener('circuit-step-delete-operation', this.updateChangedWire)
+    this.addEventListener('circuit-step-resize-operation', this.updateStep)
 
     this.dispatchEvent(new Event('quantum-circuit-init', {bubbles: true}))
   }
