@@ -227,8 +227,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     }
 
     private grabResizeHandle(event: MouseEvent): void {
-      console.log('resizeable: grabResizeHandle')
-
       if (event.currentTarget !== this.resizeHandle) {
         throw new Error('ResizeableMixin: grabResizeHandle: event.currentTarget !== this.resizeHandle')
       }
@@ -237,8 +235,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     }
 
     private releaseResizeHandle(event: MouseEvent): void {
-      console.log('resizeable: releaseResizeHandle')
-
       if (event.currentTarget !== this.resizeHandle) {
         throw new Error('ResizeableMixin: releaseResizeHandle: event.currentTarget !== this.resizeHandle')
       }
@@ -247,8 +243,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     }
 
     private startResizing(): void {
-      console.log('resizeable: startResizing')
-
       this.resizeableService.send({type: 'START_RESIZING'})
     }
 
@@ -265,8 +259,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     }
 
     private endResizing(): void {
-      console.log('resizeable: endResizing')
-
       this.resizeableService.send({type: 'END_RESIZING'})
     }
   }

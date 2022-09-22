@@ -87,7 +87,7 @@ export class CircuitEditorElement extends HTMLElement {
                 },
                 GRAB_RESIZE_HANDLE: {
                   target: 'editing',
-                  actions: ['startCircuitEdit', 'setResizeHandleSnapTargets']
+                  actions: ['startCircuitEdit', 'addDocumentCursorResizingStyle', 'setResizeHandleSnapTargets']
                 },
                 CLICK_STEP: {
                   target: 'idle',
@@ -159,7 +159,7 @@ export class CircuitEditorElement extends HTMLElement {
                 },
                 END_RESIZE: {
                   target: 'idle',
-                  actions: ['endCircuitEdit']
+                  actions: ['removeDocumentCursorResizingStyle', 'endCircuitEdit']
                 },
                 END_DRAGGING_OPERATION: {
                   target: 'idle',
@@ -254,8 +254,14 @@ export class CircuitEditorElement extends HTMLElement {
         addDocumentCursorGrabbingStyle: () => {
           document.documentElement.setAttribute('data-grabbing', '')
         },
+        addDocumentCursorResizingStyle: () => {
+          document.documentElement.setAttribute('data-resizing', '')
+        },
         removeDocumentCursorGrabbingStyle: () => {
           document.documentElement.removeAttribute('data-grabbing')
+        },
+        removeDocumentCursorResizingStyle: () => {
+          document.documentElement.removeAttribute('data-resizing')
         },
         maybeAppendCircuitWire: () => {
           if (this.circuit.wireCount < this.circuit.maxWireCount) {

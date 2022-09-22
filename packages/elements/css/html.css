@@ -1,3 +1,9 @@
-html[data-grabbing] {
-  @apply cursor-grabbing;
+html {
+  &[data-grabbing] {
+    @apply cursor-grabbing;
+  }
+
+  &[data-resizing] {
+    @apply cursor-ns-resize;
+  }
 }

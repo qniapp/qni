@@ -3118,6 +3118,10 @@ html[data-grabbing] {
   cursor: grabbing;
 }
 
+html[data-resizing] {
+  cursor: ns-resize;
+}
+
 measurement-gate {
   display: inline-block;
   position: relative;
