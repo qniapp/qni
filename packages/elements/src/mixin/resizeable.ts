@@ -102,9 +102,10 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
       {
         actions: {
           init: () => {
-            this.dispatchEvent(new Event('resizeable-init', {bubbles: true}))
+            this.dispatchEvent(new CustomEvent('resizeable:init', {bubbles: true}))
           },
-          setInteract: () => {
+          setInteract: (_context, event) => {
+            Util.need(event.type === 'SET_INTERACT', 'event type must be SET_INTERACT')
             Util.notNull(this.resizeHandle)
 
             const interactable = interact(this.resizeHandle)
@@ -126,27 +127,31 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             }
           },
           grabResizeHandle: (_context, event) => {
-            if (event.type !== 'GRAB_RESIZE_HANDLE') return
+            Util.need(event.type === 'GRAB_RESIZE_HANDLE', 'event type must be GRAB_RESIZE_HANDLE')
 
             this.resizing = true
-            this.dispatchEvent(new Event('resize-handle-grab', {bubbles: true}))
+            this.dispatchEvent(new CustomEvent('resizeable:grab-resize-handle', {bubbles: true}))
           },
           releaseResizeHandle: (_context, event) => {
-            if (event.type !== 'RELEASE_RESIZE_HANDLE') return
+            Util.need(event.type === 'RELEASE_RESIZE_HANDLE', 'event type must be RELEASE_RESIZE_HANDLE')
 
             this.resizing = false
-            this.dispatchEvent(new Event('resize-handle-release', {bubbles: true}))
+            this.dispatchEvent(new CustomEvent('resizeable:release-resize-handle', {bubbles: true}))
           },
-          startResizing: () => {
+          startResizing: (_context, event) => {
+            Util.need(event.type === 'START_RESIZING', 'event type must be START_RESIZING')
+
             this.resizing = true
           },
-          snap: () => {
-            this.dispatchEvent(new Event('operation-resize', {bubbles: true}))
+          snap: (_context, event) => {
+            Util.need(event.type === 'SNAP_RESIZE_HANDLE', 'event type must be SNAP_RESIZE_HANDLE')
+
+            this.dispatchEvent(new CustomEvent('resizeable:resize', {bubbles: true}))
           },
           endResizing: () => {
             this.resizing = false
             this.moveResizeHandleTo(0, 0)
-            this.dispatchEvent(new Event('resize-end', {bubbles: true}))
+            this.dispatchEvent(new CustomEvent('resizeable:end-resize', {bubbles: true}))
           }
         }
       }
@@ -190,7 +195,9 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
 
       if (snapModifier.inRange) {
         const snapTargetInfo = snapModifier.target.source
-        this.dispatchEvent(new CustomEvent('resize-handle-in-snap-range', {detail: {snapTargetInfo}, bubbles: true}))
+        this.dispatchEvent(
+          new CustomEvent('resizeable:resize-handle-in-snap-range', {detail: {snapTargetInfo}, bubbles: true})
+        )
 
         this.moveResizeHandleTo(0, 0)
 

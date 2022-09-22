@@ -119,7 +119,6 @@ export class CircuitDropzoneElement extends HTMLElement {
           this.removeChild(event.operation as Node)
         },
         resizeOperation: () => {
-          console.log('circuit-dropzone-operation-resize')
           this.dispatchEvent(new Event('circuit-dropzone-operation-resize', {bubbles: true}))
         },
         dispatchOccupiedEvent: () => {
@@ -198,7 +197,7 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.addEventListener('operation-unsnap', this.unsnapOperation, {signal})
     this.addEventListener('operation-end-dragging', this.dropOperation, {signal})
     this.addEventListener('operation-delete', this.deleteOperation, {signal})
-    this.addEventListener('operation-resize', this.resizeOperation, {signal})
+    this.addEventListener('resizeable:resize', this.resizeOperation, {signal})
   }
 
   disconnectedCallback() {
