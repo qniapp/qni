@@ -29,7 +29,6 @@ type ResizeableEvent =
   | {type: 'START_RESIZING'}
   | {type: 'END_RESIZING'}
   | {type: 'SNAP_RESIZE_HANDLE'}
-  | {type: 'UNSNAP_RESIZE_HANDLE'}
 
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
@@ -39,8 +38,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     @attr debugResizeable = false
     @attr resizing = false
     @target resizeHandle!: HTMLElement
-
-    private resizeHandleSnappedDropzone!: CircuitDropzoneElement | null | undefined
 
     private resizeableMachine = createMachine<ResizeableContext, ResizeableEvent>(
       {
@@ -118,13 +115,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
               onmove: this.moveResizeHandle.bind(this),
               onend: this.endResizing.bind(this)
             })
-
-            const dropzone = this.resizeHandleDropzone
-            if (isCircuitDropzoneElement(dropzone)) {
-              this.resizeHandleSnappedDropzone = dropzone
-            } else {
-              this.resizeHandleSnappedDropzone = null
-            }
           },
           grabResizeHandle: (_context, event) => {
             Util.need(event.type === 'GRAB_RESIZE_HANDLE', 'event type must be GRAB_RESIZE_HANDLE')
@@ -203,10 +193,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
         const dropzone = this.parentElement
         if (!isCircuitDropzoneElement(dropzone)) {
           throw new Error('ResizeableMixin: parentElement is not CircuitDropzoneElement')
-        }
-
-        if (this.resizeHandleSnappedDropzone && this.resizeHandleSnappedDropzone !== this.resizeHandleDropzone) {
-          this.resizeableService.send({type: 'UNSNAP_RESIZE_HANDLE'})
         }
 
         this.resizeableService.send({type: 'SNAP_RESIZE_HANDLE'})
