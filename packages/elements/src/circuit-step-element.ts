@@ -149,7 +149,7 @@ export class CircuitStepElement extends HTMLElement {
   @attr breakpoint = false
   @attr shadow = false
   @attr keep = false
-  @attr debug = false
+  @attr debug = true
 
   private circuitStepMachine = createMachine<CircuitStepContext, CircuitStepEvent>(
     {
