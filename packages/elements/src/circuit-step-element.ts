@@ -1080,7 +1080,7 @@ export class CircuitStepElement extends HTMLElement {
               const gate0 = sameControlGates[0]
               const opType = gate0.operationType
               const targets = sameControlGates.map(each => each.bit)
-              const serializedGate: SerializedQftGate = {type: opType, targets}
+              const serializedGate: SerializedQftGate = {type: opType, nqubit: gate0.nqubit, targets}
               if (ifStr !== '') serializedGate.if = ifStr
               if (controlsStr !== '') serializedGate.controls = gate0.controls
               serializedStep.push(serializedGate)

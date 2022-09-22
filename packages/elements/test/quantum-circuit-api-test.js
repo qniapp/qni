@@ -58,13 +58,13 @@ describe('quantum-circuit element', function () {
       testSimpleCircuitApi('rz', window.RzGateElement)
     })
 
-    describe('QFT', function () {
-      testSimpleCircuitApi('qft', window.QftGateElement)
-    })
+    // describe('QFT', function () {
+    //   testSimpleCircuitApi('qft', window.QftGateElement)
+    // })
 
-    describe('QFT†', function () {
-      testSimpleCircuitApi('qftDagger', window.QftDaggerGateElement)
-    })
+    // describe('QFT†', function () {
+    //   testSimpleCircuitApi('qftDagger', window.QftDaggerGateElement)
+    // })
 
     describe('swap', function () {
       testSimpleCircuitApi('swap', window.SwapGateElement)
@@ -335,8 +335,8 @@ describe('quantum-circuit element', function () {
       testCircuitApi('rz', window.RzGateElement)
     })
 
-    describe('QFT', function () {
-      testCircuitApi('qft', window.QftGateElement)
-    })
+    // describe('QFT', function () {
+    //   testCircuitApi('qft', window.QftGateElement)
+    // })
   })
 })

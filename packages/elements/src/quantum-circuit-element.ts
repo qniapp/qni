@@ -662,7 +662,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Circuit Operation
    */
-  qft(...args: number[] | [QftGateElementProps]): QuantumCircuitElement {
+  qft(nqubit: number, ...args: number[] | [QftGateElementProps]): QuantumCircuitElement {
     let targetBits: number[]
     let disabled: boolean | undefined
 
@@ -676,6 +676,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
 
     this.applyOperationToTargets(() => {
       const qft = new QftGateElement()
+      qft.nqubit = nqubit
       if (disabled) qft.disable()
       return qft
     }, ...targetBits)

@@ -1,4 +1,4 @@
-export const SerializedQftDaggerGateType = 'QFT†1'
+export const SerializedQftDaggerGateType = 'QFT†'
 
 export type SerializedQftDaggerGate = {
   type: typeof SerializedQftDaggerGateType

@@ -113,7 +113,7 @@ export class Simulator {
           if (each.controls && each.controls.length > 0) {
             this.cqft(each.controls, ...each.targets)
           } else {
-            this.qft(...each.targets)
+            this.qft(each.nqubit, ...each.targets)
           }
           break
         case SerializedQftDaggerGateType:
@@ -307,12 +307,12 @@ export class Simulator {
     return this
   }
 
-  qft(...targets: number[]): Simulator {
+  qft(nqubit, ...targets: number[]): Simulator {
     this.u(Matrix.H, ...targets)
     return this
   }
 
-  cqft(controls: number | number[], ...targets: number[]): Simulator {
+  cqft(nqubit, controls: number | number[], ...targets: number[]): Simulator {
     this.cu(controls, Matrix.H, ...targets)
     return this
   }

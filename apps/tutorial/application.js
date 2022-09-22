@@ -4374,7 +4374,7 @@ function Th(r, e) {
   return `${i === {}.constructor.name ? "" : `(Type: ${i})`}{${t.join(", ")}}`;
 }
 __name(Th, "Th");
-u(Th, "N");
+u(Th, "q");
 var Vs = 0;
 var nt = u(class extends Error {
   constructor(r, e) {
@@ -4602,8 +4602,8 @@ var Xs = "\u2022";
 var ha = "H";
 var va = "Measure";
 var ma = "P";
-var ga = "QFT1";
-var ba = "QFT\u20201";
+var ga = "QFT";
+var ba = "QFT\u2020";
 var ya = "X^\xBD";
 var wa = "Rx";
 var xa = "Ry";
@@ -9423,7 +9423,7 @@ var Ir = /* @__PURE__ */ __name(class extends Ce(Se(qe(He(Zp(Ee(_e(Oe(xe(ye(HTML
         <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
-    return this.if !== "" ? `"${ga}<${this.if}"` : `"${ga}"`;
+    return this.if !== "" ? `"${ga}${this.nqubit}<${this.if}"` : `"${ga}${this.nqubit}"`;
   }
 }, "Ir");
 u(Ir, "QftGateElement");
@@ -9977,7 +9977,7 @@ var kt = /* @__PURE__ */ __name(class extends HTMLElement {
           let l = i;
           for (let [c, f] of ze(l, (b) => b.if))
             for (let [b, h] of ze(f, (d) => d.controls.toString())) {
-              let d = h[0], v = d.operationType, w = h.map((S) => S.bit), y = { type: v, targets: w };
+              let d = h[0], v = d.operationType, w = h.map((S) => S.bit), y = { type: v, nqubit: d.nqubit, targets: w };
               c !== "" && (y.if = c), b !== "" && (y.controls = d.controls), e.push(y);
             }
           break;
@@ -12670,18 +12670,18 @@ var se = /* @__PURE__ */ __name(class extends ye(HTMLElement) {
       return i && l.disable(), l;
     }, ...t), this;
   }
-  qft(...e) {
-    let t, i;
-    if (typeof e[0] == "number")
-      t = e;
+  qft(e, ...t) {
+    let i, l;
+    if (typeof t[0] == "number")
+      i = t;
     else {
-      let l = e[0];
-      t = l.targets, i = l.disabled;
+      let c = t[0];
+      i = c.targets, l = c.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let l = new Ir();
-      return i && l.disable(), l;
-    }, ...t), this.resize(), this;
+      let c = new Ir();
+      return c.nqubit = e, l && c.disable(), c;
+    }, ...i), this.resize(), this;
   }
   qftDagger(...e) {
     let t, i;
