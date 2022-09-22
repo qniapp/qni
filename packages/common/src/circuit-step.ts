@@ -3,6 +3,7 @@ import {SerializedControlGate} from './control-gate'
 import {SerializedHGate} from './h-gate'
 import {SerializedMeasurementGate} from './measurement-gate'
 import {SerializedPhaseGate} from './phase-gate'
+import {SerializedQftDaggerGate} from './qft-dagger-gate'
 import {SerializedQftGate} from './qft-gate'
 import {SerializedRnotGate} from './rnot-gate'
 import {SerializedRxGate} from './rx-gate'
@@ -21,6 +22,8 @@ export type SerializedCircuitStep = Array<
   | SerializedHGate
   | SerializedMeasurementGate
   | SerializedPhaseGate
+  | SerializedQftDaggerGate
+  | SerializedQftGate
   | SerializedQftGate
   | SerializedRnotGate
   | SerializedRxGate

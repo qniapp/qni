@@ -9364,39 +9364,7 @@ var ss = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="htt
   />
 </svg>
 `;
-var Yp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <line x1="32" y1="17" x2="42" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-  <line x1="37" y1="18" x2="37" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-  <line x1="21" y1="17" x2="21" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-  <line x1="21" y1="17" x2="28" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-  <line x1="21" y1="23" x2="27" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-  <line x1="13.3868" y1="27.2774" x2="16.2773" y2="31.6132" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-  <path d="M17 23.5C17 27.229 14.408 30 11.5 30C8.59199 30 6 27.229 6 23.5C6 19.771 8.59199 17 11.5 17C14.408 17 17 19.771 17 23.5Z" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/>
-</svg>
-`;
-var Mr = /* @__PURE__ */ __name(class extends Ce(Se(qe(He(Xp(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
-  get operationType() {
-    return ga;
-  }
-  connectedCallback() {
-    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable(), this.initResizeable());
-  }
-  update() {
-    Z(U`<div part="layout">
-          <div part="body">${this.iconHtml(Yp)}</div>
-          <div class="resize-handle" part="resize-handle" data-target="qft-gate.resizeHandle">
-            ${this.iconHtml(ss)}
-          </div>
-        </div>
-        <div part="outline"></div>`, this.shadowRoot);
-  }
-  toJson() {
-    return this.if !== "" ? `"${ga}<${this.if}"` : `"${ga}"`;
-  }
-}, "Mr");
-u(Mr, "QftGateElement");
-ee(Mr);
-var Zp = `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+var Yp = `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
   <line x1="26.2" y1="7.47778" x2="29.2" y2="7.47778" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
   <line x1="27.7" y1="6" x2="27.7" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
   <line x1="20.0973" y1="12" x2="25.0353" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -9408,7 +9376,7 @@ var Zp = `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="htt
   <line x1="1" y1="-1" x2="3.34292" y2="-1" transform="matrix(0.570556 0.821259 -0.805999 0.591917 5.9646 18.5332)" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
 `;
-var Pr = /* @__PURE__ */ __name(class extends Ce(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
+var Mr = /* @__PURE__ */ __name(class extends Ce(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
   get operationType() {
     return ba;
   }
@@ -9417,7 +9385,7 @@ var Pr = /* @__PURE__ */ __name(class extends Ce(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLEle
   }
   update() {
     Z(U`<div part="layout">
-          <div part="body">${this.iconHtml(Zp)}</div>
+          <div part="body">${this.iconHtml(Yp)}</div>
           <div part="resize-handle">${this.iconHtml(ss)}</div>
         </div>
         <div part="outline"></div>`, this.shadowRoot);
@@ -9425,8 +9393,40 @@ var Pr = /* @__PURE__ */ __name(class extends Ce(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLEle
   toJson() {
     return this.if !== "" ? `"${ba}<${this.if}"` : `"${ba}"`;
   }
+}, "Mr");
+u(Mr, "QftDaggerGateElement");
+ee(Mr);
+var Xp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line x1="32" y1="17" x2="42" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="37" y1="18" x2="37" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="21" y1="17" x2="21" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="21" y1="17" x2="28" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="21" y1="23" x2="27" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="13.3868" y1="27.2774" x2="16.2773" y2="31.6132" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <path d="M17 23.5C17 27.229 14.408 30 11.5 30C8.59199 30 6 27.229 6 23.5C6 19.771 8.59199 17 11.5 17C14.408 17 17 19.771 17 23.5Z" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var Pr = /* @__PURE__ */ __name(class extends Ce(Se(qe(He(Zp(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
+  get operationType() {
+    return ga;
+  }
+  connectedCallback() {
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable(), this.initResizeable());
+  }
+  update() {
+    Z(U`<div part="layout">
+          <div part="body">${this.iconHtml(Xp)}</div>
+          <div class="resize-handle" part="resize-handle" data-target="qft-gate.resizeHandle">
+            ${this.iconHtml(ss)}
+          </div>
+        </div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.if !== "" ? `"${ga}<${this.if}"` : `"${ga}"`;
+  }
 }, "Pr");
-u(Pr, "QftDaggerGateElement");
+u(Pr, "QftGateElement");
 ee(Pr);
 var Qp = `<svg
   width="48"
@@ -9973,7 +9973,7 @@ var Rt = /* @__PURE__ */ __name(class extends HTMLElement {
               }
           break;
         }
-        case Mr: {
+        case Pr: {
           let l = i;
           for (let [c, f] of ze(l, (b) => b.if))
             for (let [b, h] of ze(f, (d) => d.controls.toString())) {
@@ -9982,7 +9982,7 @@ var Rt = /* @__PURE__ */ __name(class extends HTMLElement {
             }
           break;
         }
-        case Pr: {
+        case Mr: {
           let l = i;
           for (let [c, f] of ze(l, (b) => b.if))
             for (let [b, h] of ze(f, (d) => d.controls.toString())) {
@@ -10220,7 +10220,7 @@ u(Ct, "CircuitDropzoneElement"), Mo = /* @__PURE__ */ new WeakMap(), A([D], Ct.p
 ee(Ct);
 var ps = Sn(ao(), 1);
 var Wn = u((r) => r != null && typeof r.resizeable == "boolean", "isResizeable");
-function Xp(r) {
+function Zp(r) {
   class e extends r {
     constructor() {
       super(...arguments);
@@ -10308,8 +10308,8 @@ function Xp(r) {
   __name(e, "e");
   return u(e, "ResizeableMixinClass"), A([D], e.prototype, "nqubit", 2), A([D], e.prototype, "resizeHandleX", 2), A([D], e.prototype, "resizeHandleY", 2), A([D], e.prototype, "debugResizeable", 2), A([D], e.prototype, "resizing", 2), A([we], e.prototype, "resizeHandle", 2), e;
 }
-__name(Xp, "Xp");
-u(Xp, "ResizeableMixin");
+__name(Zp, "Zp");
+u(Zp, "ResizeableMixin");
 function md(r) {
   return /^-?\d+$/.test(r);
 }
@@ -10554,7 +10554,7 @@ var lt = /* @__PURE__ */ __name(class extends Ce(Se(Ee(xe(ye(HTMLElement))))) {
 }, "lt");
 u(lt, "BlochDisplayElement"), A([we], lt.prototype, "body", 2), A([we], lt.prototype, "vectorLine", 2), A([we], lt.prototype, "vectorEnd", 2), A([we], lt.prototype, "vector", 2), A([It], lt.prototype, "vectorEndCircles", 2), A([D], lt.prototype, "x", 2), A([D], lt.prototype, "y", 2), A([D], lt.prototype, "z", 2);
 ee(lt);
-var Ue = u((r) => r instanceof Jt || r instanceof sr || r instanceof lr || r instanceof ur || r instanceof er || r instanceof ar || r instanceof tr || r instanceof rr || r instanceof nr || r instanceof ir || r instanceof or || r instanceof Bt || r instanceof lt || r instanceof $t || r instanceof Kt || r instanceof Mr || r instanceof Pr, "isOperation");
+var Ue = u((r) => r instanceof Jt || r instanceof sr || r instanceof lr || r instanceof ur || r instanceof er || r instanceof ar || r instanceof tr || r instanceof rr || r instanceof nr || r instanceof ir || r instanceof or || r instanceof Bt || r instanceof lt || r instanceof $t || r instanceof Kt || r instanceof Pr || r instanceof Mr, "isOperation");
 var sd = u((r) => r != null && r instanceof Jt, "isHGateElement");
 var ld = u((r) => r != null && r instanceof sr, "isXGateElement");
 var ud = u((r) => r != null && r instanceof lr, "isYGateElement");
@@ -12669,7 +12669,7 @@ var se = /* @__PURE__ */ __name(class extends ye(HTMLElement) {
       t = l.targets, i = l.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let l = new Mr();
+      let l = new Pr();
       return i && l.disable(), l;
     }, ...t), this.resize(), this;
   }
@@ -12682,7 +12682,7 @@ var se = /* @__PURE__ */ __name(class extends ye(HTMLElement) {
       t = l.targets, i = l.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let l = new Pr();
+      let l = new Mr();
       return i && l.disable(), l;
     }, ...t), this.resize(), this;
   }
@@ -12876,12 +12876,12 @@ var se = /* @__PURE__ */ __name(class extends ye(HTMLElement) {
             break;
           }
           case /^QFT\d/.test(b): {
-            let h = new Mr();
+            let h = new Pr();
             h.if = this.ifVariable(b.slice(1)), f.appendOperation(h);
             break;
           }
           case /^QFT†\d/.test(b): {
-            let h = new Pr();
+            let h = new Mr();
             h.if = this.ifVariable(b.slice(1)), f.appendOperation(h);
             break;
           }

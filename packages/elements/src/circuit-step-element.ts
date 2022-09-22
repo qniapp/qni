@@ -4,8 +4,8 @@ import {
   SerializedHGate,
   SerializedMeasurementGate,
   SerializedPhaseGate,
-  SerializedQftGate,
   SerializedQftDaggerGate,
+  SerializedQftGate,
   SerializedRnotGate,
   SerializedRxGate,
   SerializedRyGate,
@@ -44,8 +44,8 @@ import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {PhaseGateElement} from './phase-gate-element'
-import {QftGateElement} from './qft-gate-element'
 import {QftDaggerGateElement} from './qft-dagger-gate-element'
+import {QftGateElement} from './qft-gate-element'
 import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
