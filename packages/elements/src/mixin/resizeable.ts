@@ -136,7 +136,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             Util.need(event.type === 'RELEASE_RESIZE_HANDLE', 'event type must be RELEASE_RESIZE_HANDLE')
 
             this.resizing = false
-            this.dispatchEvent(new CustomEvent('resizeable:release-resize-handle', {bubbles: true}))
           },
           startResizing: (_context, event) => {
             Util.need(event.type === 'START_RESIZING', 'event type must be START_RESIZING')

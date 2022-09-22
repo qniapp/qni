@@ -10254,7 +10254,7 @@ function Zp(r) {
       }, grabResizeHandle: (i, l) => {
         H.need(l.type === "GRAB_RESIZE_HANDLE", "event type must be GRAB_RESIZE_HANDLE"), this.resizing = true, this.dispatchEvent(new CustomEvent("resizeable:grab-resize-handle", { bubbles: true }));
       }, releaseResizeHandle: (i, l) => {
-        H.need(l.type === "RELEASE_RESIZE_HANDLE", "event type must be RELEASE_RESIZE_HANDLE"), this.resizing = false, this.dispatchEvent(new CustomEvent("resizeable:release-resize-handle", { bubbles: true }));
+        H.need(l.type === "RELEASE_RESIZE_HANDLE", "event type must be RELEASE_RESIZE_HANDLE"), this.resizing = false;
       }, startResizing: (i, l) => {
         H.need(l.type === "START_RESIZING", "event type must be START_RESIZING"), this.resizing = true;
       }, snap: (i, l) => {
