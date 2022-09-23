@@ -1,9 +1,9 @@
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
+import {Util, emitEvent} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
-import {Util} from '@qni/common'
 import interact from 'interactjs'
 import {isResizeable} from './mixin'
 import wiresIcon from '../icon/wires.svg'
@@ -96,14 +96,14 @@ export class CircuitDropzoneElement extends HTMLElement {
           Util.notNull(this.operation)
 
           this.operationName = this.operation.tagName.toLocaleLowerCase()
-          this.dispatchEvent(new Event('circuit-dropzone:qpu-operation-snap', {bubbles: true}))
+          emitEvent('circuit-dropzone:qpu-operation-snap', {}, this)
         },
         unsnapOperation: () => {
           this.operationName = ''
-          this.dispatchEvent(new Event('circuit-dropzone:qpu-operation-unsnap', {bubbles: true}))
+          emitEvent('circuit-dropzone:qpu-operation-unsnap', {}, this)
         },
         dropOperation: () => {
-          this.dispatchEvent(new Event('circuit-dropzone:qpu-operation-drop', {bubbles: true}))
+          emitEvent('circuit-dropzone:qpu-operation-drop', {}, this)
         },
         putOperation: (_context, event) => {
           if (event.type !== 'PUT_OPERATION') return
@@ -119,13 +119,13 @@ export class CircuitDropzoneElement extends HTMLElement {
           this.removeChild(event.operation as Node)
         },
         resizeOperation: () => {
-          this.dispatchEvent(new Event('circuit-dropzone:qpu-operation-resize', {bubbles: true}))
+          emitEvent('circuit-dropzone:qpu-operation-resize', {}, this)
         },
         dispatchOccupiedEvent: () => {
-          this.dispatchEvent(new Event('circuit-dropzone:occupied', {bubbles: true}))
+          emitEvent('circuit-dropzone:occupied', {}, this)
         },
         dispatchDeleteOperationEvent: () => {
-          this.dispatchEvent(new Event('circuit-dropzone:qpu-operation-delete', {bubbles: true}))
+          emitEvent('circuit-dropzone:qpu-operation-delete', {}, this)
         }
       },
       guards: {
