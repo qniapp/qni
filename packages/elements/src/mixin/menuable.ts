@@ -158,7 +158,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
 
     private dispatchOperationDeleteEvent(): void {
       // TODO: menuable:qpu-operation-delete に変更
-      this.dispatchEvent(new Event('draggable:qpu-operation-delete', {bubbles: true}))
+      this.dispatchEvent(new Event('draggable:delete', {bubbles: true}))
     }
   }
 

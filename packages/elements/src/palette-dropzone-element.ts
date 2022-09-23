@@ -13,8 +13,8 @@ export class PaletteDropzoneElement extends HTMLElement {
     this.update()
 
     this.initOperation(this.operation)
-    this.addEventListener('draggable:qpu-operation-grab', this.newOperation, {signal})
-    this.addEventListener('draggable:qpu-operation-delete', this.deleteOperation, {signal})
+    this.addEventListener('draggable:grab-qpu-operation', this.newOperation, {signal})
+    this.addEventListener('draggable:delete', this.deleteOperation, {signal})
   }
 
   disconnectedCallback() {

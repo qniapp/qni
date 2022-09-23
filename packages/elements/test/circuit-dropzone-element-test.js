@@ -115,7 +115,7 @@ describe('circuit-dropzone element', function () {
       })
 
       it('should reach "empty" when delete its operation', async function () {
-        operation.dispatchEvent(new Event('draggable:qpu-operation-delete', {bubbles: true}))
+        operation.dispatchEvent(new Event('draggable:delete', {bubbles: true}))
 
         assert.equal(circuitDropzone.circuitDropzoneService.state.value, 'empty')
         assert.equal(circuitDropzone.operation, null)

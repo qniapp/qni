@@ -182,7 +182,7 @@ export function testDraggableOperation(operationName) {
       assert.deepEqual(operation.draggableService.state.value, 'deleted')
     })
 
-    it(`dispatches draggable:qpu-operation-grab event on mousedown`, async function () {
+    it(`dispatches draggable:grab-qpu-operation event on mousedown`, async function () {
       const container = document.createElement('div')
       container.innerHTML = `
   <palette-dropzone>
@@ -191,14 +191,14 @@ export function testDraggableOperation(operationName) {
       document.body.append(container)
       const operation = document.querySelector(operationName)
 
-      const grabEvent = once(operation, 'draggable:qpu-operation-grab')
+      const grabEvent = once(operation, 'draggable:grab-qpu-operation')
       mousedown(operation)
       await grabEvent
 
       assert.isTrue(operation.grabbed)
     })
 
-    it(`dispatches draggable:qpu-operation-release event on mouseup`, async function () {
+    it(`dispatches draggable:release-qpu-operation event on mouseup`, async function () {
       const container = document.createElement('div')
       container.innerHTML = `
   <palette-dropzone>
@@ -208,7 +208,7 @@ export function testDraggableOperation(operationName) {
       const operation = document.querySelector(operationName)
       mousedown(operation)
 
-      const releaseEvent = once(operation, 'draggable:qpu-operation-release')
+      const releaseEvent = once(operation, 'draggable:release-qpu-operation')
       mouseup(operation)
       await releaseEvent
 

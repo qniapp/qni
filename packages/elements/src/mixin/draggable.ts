@@ -185,7 +185,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             if (event.type !== 'GRAB') return
 
             this.grabbed = true
-            this.dispatchEvent(new Event('draggable:qpu-operation-grab', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:grab-qpu-operation', {bubbles: true}))
 
             if (isPaletteDropzoneElement(this.dropzone)) {
               this.snapped = false
@@ -195,7 +195,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           },
           release: () => {
             this.grabbed = false
-            this.dispatchEvent(new Event('draggable:qpu-operation-release', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:release-qpu-operation', {bubbles: true}))
           },
           startDragging: () => {
             this.dragging = true
@@ -203,28 +203,28 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           endDragging: () => {
             this.grabbed = false
             this.dragging = false
-            this.dispatchEvent(new Event('draggable:qpu-operation-end-dragging', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:end-dragging', {bubbles: true}))
           },
           snap: () => {
             this.snapped = true
             this.snappedDropzone = this.dropzone as CircuitDropzoneElement
-            this.dispatchEvent(new Event('draggable:qpu-operation-snap', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:snap-to-dropzone', {bubbles: true}))
           },
           unsnap: () => {
             this.snapped = false
             if (this.snappedDropzone) {
-              this.snappedDropzone.dispatchEvent(new Event('draggable:qpu-operation-unsnap', {bubbles: true}))
+              this.snappedDropzone.dispatchEvent(new Event('draggable:unsnap-from-dropzone', {bubbles: true}))
             }
           },
           drop: () => {
             if (!this.snapped) return
 
             this.moveTo(0, 0)
-            this.dispatchEvent(new Event('draggable:qpu-operation-drop', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:drop-qpu-operation', {bubbles: true}))
           },
           delete: () => {
             interact(this).unset()
-            this.dispatchEvent(new Event('draggable:qpu-operation-delete', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:delete', {bubbles: true}))
           }
         },
         guards: {
