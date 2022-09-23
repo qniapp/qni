@@ -155,7 +155,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       {
         actions: {
           init: () => {
-            this.dispatchEvent(new Event('draggable-init', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:init', {bubbles: true}))
           },
           setInteract: () => {
             const interactable = interact(this)
@@ -185,7 +185,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             if (event.type !== 'GRAB') return
 
             this.grabbed = true
-            this.dispatchEvent(new Event('operation-grab', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:qpu-operation-grab', {bubbles: true}))
 
             if (isPaletteDropzoneElement(this.dropzone)) {
               this.snapped = false
@@ -195,7 +195,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           },
           release: () => {
             this.grabbed = false
-            this.dispatchEvent(new Event('operation-release', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:qpu-operation-release', {bubbles: true}))
           },
           startDragging: () => {
             this.dragging = true
@@ -203,28 +203,28 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           endDragging: () => {
             this.grabbed = false
             this.dragging = false
-            this.dispatchEvent(new Event('operation-end-dragging', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:qpu-operation-end-dragging', {bubbles: true}))
           },
           snap: () => {
             this.snapped = true
             this.snappedDropzone = this.dropzone as CircuitDropzoneElement
-            this.dispatchEvent(new Event('operation-snap', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:qpu-operation-snap', {bubbles: true}))
           },
           unsnap: () => {
             this.snapped = false
             if (this.snappedDropzone) {
-              this.snappedDropzone.dispatchEvent(new Event('operation-unsnap', {bubbles: true}))
+              this.snappedDropzone.dispatchEvent(new Event('draggable:qpu-operation-unsnap', {bubbles: true}))
             }
           },
           drop: () => {
             if (!this.snapped) return
 
             this.moveTo(0, 0)
-            this.dispatchEvent(new Event('operation-drop', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:qpu-operation-drop', {bubbles: true}))
           },
           delete: () => {
             interact(this).unset()
-            this.dispatchEvent(new Event('operation-delete', {bubbles: true}))
+            this.dispatchEvent(new Event('draggable:qpu-operation-delete', {bubbles: true}))
           }
         },
         guards: {
@@ -304,7 +304,9 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
 
       if (snapModifier.inRange) {
         const snapTargetInfo = snapModifier.target.source
-        this.dispatchEvent(new CustomEvent('operation-in-snap-range', {detail: {snapTargetInfo}, bubbles: true}))
+        this.dispatchEvent(
+          new CustomEvent('draggable:qpu-operation-in-snap-range', {detail: {snapTargetInfo}, bubbles: true})
+        )
 
         this.moveTo(0, 0)
 

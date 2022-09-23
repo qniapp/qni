@@ -3,25 +3,25 @@ var __name = (target, value) => __defProp(target, "name", { value, configurable:
 
 // ../../packages/elements/dist/index.js
 var ph = Object.create;
-var $i = Object.defineProperty;
+var qi = Object.defineProperty;
 var Ju = Object.getOwnPropertyDescriptor;
 var dh = Object.getOwnPropertyNames;
 var fh = Object.getPrototypeOf;
 var hh = Object.prototype.hasOwnProperty;
-var vh = /* @__PURE__ */ __name((r) => $i(r, "__esModule", { value: true }), "vh");
-var u = /* @__PURE__ */ __name((r, e) => $i(r, "name", { value: e, configurable: true }), "u");
+var vh = /* @__PURE__ */ __name((r) => qi(r, "__esModule", { value: true }), "vh");
+var u = /* @__PURE__ */ __name((r, e) => qi(r, "name", { value: e, configurable: true }), "u");
 var ca = /* @__PURE__ */ __name((r, e) => () => (e || r((e = { exports: {} }).exports, e), e.exports), "ca");
 var mh = /* @__PURE__ */ __name((r, e, t, i) => {
   if (e && typeof e == "object" || typeof e == "function")
     for (let l of dh(e))
-      !hh.call(r, l) && (t || l !== "default") && $i(r, l, { get: () => e[l], enumerable: !(i = Ju(e, l)) || i.enumerable });
+      !hh.call(r, l) && (t || l !== "default") && qi(r, l, { get: () => e[l], enumerable: !(i = Ju(e, l)) || i.enumerable });
   return r;
 }, "mh");
-var Tn = /* @__PURE__ */ __name((r, e) => mh(vh($i(r != null ? ph(fh(r)) : {}, "default", !e && r && r.__esModule ? { get: () => r.default, enumerable: true } : { value: r, enumerable: true })), r), "Tn");
+var Tn = /* @__PURE__ */ __name((r, e) => mh(vh(qi(r != null ? ph(fh(r)) : {}, "default", !e && r && r.__esModule ? { get: () => r.default, enumerable: true } : { value: r, enumerable: true })), r), "Tn");
 var A = /* @__PURE__ */ __name((r, e, t, i) => {
   for (var l = i > 1 ? void 0 : i ? Ju(e, t) : e, c = r.length - 1, f; c >= 0; c--)
     (f = r[c]) && (l = (i ? f(e, t, l) : f(l)) || l);
-  return i && l && $i(e, t, l), l;
+  return i && l && qi(e, t, l), l;
 }, "A");
 var Ku = /* @__PURE__ */ __name((r, e, t) => {
   if (!e.has(r))
@@ -66,7 +66,7 @@ var tc = ca((Us, ec) => {
     __name(c, "c");
     u(c, "factorize");
     var f = u(function(y, S) {
-      var O = 0, M = 1, _ = 1, q = 0, L = 0, F = 0, I = 1, Q = 1, z = 0, j = 1, Y = 1, K = 1, ie = 1e7, ne;
+      var O = 0, M = 1, _ = 1, $ = 0, L = 0, F = 0, I = 1, Q = 1, z = 0, j = 1, Y = 1, K = 1, ie = 1e7, ne;
       if (y != null)
         if (S !== void 0) {
           if (O = y, M = S, _ = O * M, O % 1 !== 0 || M % 1 !== 0)
@@ -101,8 +101,8 @@ var tc = ca((Us, ec) => {
             case "string": {
               if (j = y.match(/\d+|./g), j === null)
                 throw w.InvalidParameter;
-              if (j[z] === "-" ? (_ = -1, z++) : j[z] === "+" && z++, j.length === z + 1 ? L = i(j[z++], _) : j[z + 1] === "." || j[z] === "." ? (j[z] !== "." && (q = i(j[z++], _)), z++, (z + 1 === j.length || j[z + 1] === "(" && j[z + 3] === ")" || j[z + 1] === "'" && j[z + 3] === "'") && (L = i(j[z], _), I = Math.pow(10, j[z].length), z++), (j[z] === "(" && j[z + 2] === ")" || j[z] === "'" && j[z + 2] === "'") && (F = i(j[z + 1], _), Q = Math.pow(10, j[z + 1].length) - 1, z += 3)) : j[z + 1] === "/" || j[z + 1] === ":" ? (L = i(j[z], _), I = i(j[z + 2], 1), z += 3) : j[z + 3] === "/" && j[z + 1] === " " && (q = i(j[z], _), L = i(j[z + 2], _), I = i(j[z + 4], 1), z += 5), j.length <= z) {
-                M = I * Q, _ = O = F + M * q + Q * L;
+              if (j[z] === "-" ? (_ = -1, z++) : j[z] === "+" && z++, j.length === z + 1 ? L = i(j[z++], _) : j[z + 1] === "." || j[z] === "." ? (j[z] !== "." && ($ = i(j[z++], _)), z++, (z + 1 === j.length || j[z + 1] === "(" && j[z + 3] === ")" || j[z + 1] === "'" && j[z + 3] === "'") && (L = i(j[z], _), I = Math.pow(10, j[z].length), z++), (j[z] === "(" && j[z + 2] === ")" || j[z] === "'" && j[z + 2] === "'") && (F = i(j[z + 1], _), Q = Math.pow(10, j[z + 1].length) - 1, z += 3)) : j[z + 1] === "/" || j[z + 1] === ":" ? (L = i(j[z], _), I = i(j[z + 2], 1), z += 3) : j[z + 3] === "/" && j[z + 1] === " " && ($ = i(j[z], _), L = i(j[z + 2], _), I = i(j[z + 4], 1), z += 5), j.length <= z) {
+                M = I * Q, _ = O = F + M * $ + Q * L;
                 break;
               }
             }
@@ -135,9 +135,9 @@ var tc = ca((Us, ec) => {
     __name(h, "h");
     u(h, "cycleLen");
     function d(y, S, O) {
-      for (var M = 1, _ = b(10, O, S), q = 0; q < 300; q++) {
+      for (var M = 1, _ = b(10, O, S), $ = 0; $ < 300; $++) {
         if (M === _)
-          return q;
+          return $;
         M = M * 10 % S, _ = _ * 10 % S;
       }
       return 0;
@@ -204,7 +204,7 @@ var tc = ca((Us, ec) => {
         return t.s < 0 ? l(Math.pow(this.s * this.d, t.n), Math.pow(this.n, t.n)) : l(Math.pow(this.s * this.n, t.n), Math.pow(this.d, t.n));
       if (this.s < 0)
         return null;
-      var O = c(this.n), M = c(this.d), _ = 1, q = 1;
+      var O = c(this.n), M = c(this.d), _ = 1, $ = 1;
       for (var L in O)
         if (L !== "1") {
           if (L === "0") {
@@ -223,9 +223,9 @@ var tc = ca((Us, ec) => {
             M[L] /= t.d;
           else
             return null;
-          q *= Math.pow(L, M[L]);
+          $ *= Math.pow(L, M[L]);
         }
-      return t.s < 0 ? l(q, _) : l(_, q);
+      return t.s < 0 ? l($, _) : l(_, $);
     }, equals: function(y, S) {
       return f(y, S), this.s * this.n * t.d === t.s * t.n * this.d;
     }, compare: function(y, S) {
@@ -237,8 +237,8 @@ var tc = ca((Us, ec) => {
         return this;
       y = y || 1e-3;
       for (var S = this.abs(), O = S.toContinued(), M = 1; M < O.length; M++) {
-        for (var _ = l(O[M - 1], 1), q = M - 2; q >= 0; q--)
-          _ = _.inverse().add(O[q]);
+        for (var _ = l(O[M - 1], 1), $ = M - 2; $ >= 0; $--)
+          _ = _.inverse().add(O[$]);
         if (_.sub(S).abs().valueOf() < y)
           return _.mul(this.s);
       }
@@ -266,18 +266,18 @@ var tc = ca((Us, ec) => {
       if (isNaN(S) || isNaN(O))
         return "NaN";
       y = y || 15;
-      var M = h(S, O), _ = d(S, O, M), q = this.s < 0 ? "-" : "";
-      if (q += S / O | 0, S %= O, S *= 10, S && (q += "."), M) {
+      var M = h(S, O), _ = d(S, O, M), $ = this.s < 0 ? "-" : "";
+      if ($ += S / O | 0, S %= O, S *= 10, S && ($ += "."), M) {
         for (var L = _; L--; )
-          q += S / O | 0, S %= O, S *= 10;
-        q += "(";
+          $ += S / O | 0, S %= O, S *= 10;
+        $ += "(";
         for (var L = M; L--; )
-          q += S / O | 0, S %= O, S *= 10;
-        q += ")";
+          $ += S / O | 0, S %= O, S *= 10;
+        $ += ")";
       } else
         for (var L = y; S && L--; )
-          q += S / O | 0, S %= O, S *= 10;
-      return q;
+          $ += S / O | 0, S %= O, S *= 10;
+      return $;
     } }, typeof define == "function" && define.amd ? define([], function() {
       return w;
     }) : typeof Us == "object" ? (Object.defineProperty(w, "__esModule", { value: true }), w.default = w, w.Fraction = w, ec.exports = w) : r.Fraction = w;
@@ -379,12 +379,12 @@ var so = ca((Qc, Tl) => {
     Object.defineProperty(M, "__esModule", { value: true }), M.default = void 0;
     var _ = { init: function(n) {
       var o = n;
-      _.document = o.document, _.DocumentFragment = o.DocumentFragment || q, _.SVGElement = o.SVGElement || q, _.SVGSVGElement = o.SVGSVGElement || q, _.SVGElementInstance = o.SVGElementInstance || q, _.Element = o.Element || q, _.HTMLElement = o.HTMLElement || _.Element, _.Event = o.Event, _.Touch = o.Touch || q, _.PointerEvent = o.PointerEvent || o.MSPointerEvent;
+      _.document = o.document, _.DocumentFragment = o.DocumentFragment || $, _.SVGElement = o.SVGElement || $, _.SVGSVGElement = o.SVGSVGElement || $, _.SVGElementInstance = o.SVGElementInstance || $, _.Element = o.Element || $, _.HTMLElement = o.HTMLElement || _.Element, _.Event = o.Event, _.Touch = o.Touch || $, _.PointerEvent = o.PointerEvent || o.MSPointerEvent;
     }, document: null, DocumentFragment: null, SVGElement: null, SVGSVGElement: null, SVGElementInstance: null, Element: null, HTMLElement: null, Event: null, Touch: null, PointerEvent: null };
-    function q() {
+    function $() {
     }
-    __name(q, "q");
-    u(q, "y");
+    __name($, "$");
+    u($, "y");
     var L = _;
     M.default = L;
     var F = {};
@@ -956,23 +956,23 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           return c.default.bool(g) ? (E.options.drop.enabled = g, E) : E.options.drop;
         }(this, m);
       }, s.prototype.dropCheck = function(m, E, g, x, T, C) {
-        return function(P, D, G, R, B, X, $) {
+        return function(P, D, G, R, B, X, q) {
           var re = false;
-          if (!($ = $ || P.getRect(X)))
+          if (!(q = q || P.getRect(X)))
             return !!P.options.drop.checker && P.options.drop.checker(D, G, re, P, X, R, B);
           var oe = P.options.drop.overlap;
           if (oe === "pointer") {
             var pe = (0, Le.default)(R, B, "drag"), Ie = J.getPageXY(D);
             Ie.x += pe.x, Ie.y += pe.y;
-            var je = Ie.x > $.left && Ie.x < $.right, me = Ie.y > $.top && Ie.y < $.bottom;
+            var je = Ie.x > q.left && Ie.x < q.right, me = Ie.y > q.top && Ie.y < q.bottom;
             re = je && me;
           }
           var Ne = R.getRect(B);
           if (Ne && oe === "center") {
             var Xt = Ne.left + Ne.width / 2, Gr = Ne.top + Ne.height / 2;
-            re = Xt >= $.left && Xt <= $.right && Gr >= $.top && Gr <= $.bottom;
+            re = Xt >= q.left && Xt <= q.right && Gr >= q.top && Gr <= q.bottom;
           }
-          return Ne && c.default.number(oe) && (re = Math.max(0, Math.min($.right, Ne.right) - Math.max($.left, Ne.left)) * Math.max(0, Math.min($.bottom, Ne.bottom) - Math.max($.top, Ne.top)) / (Ne.width * Ne.height) >= oe), P.options.drop.checker && (re = P.options.drop.checker(D, G, re, P, X, R, B)), re;
+          return Ne && c.default.number(oe) && (re = Math.max(0, Math.min(q.right, Ne.right) - Math.max(q.left, Ne.left)) * Math.max(0, Math.min(q.bottom, Ne.bottom) - Math.max(q.top, Ne.top)) / (Ne.width * Ne.height) >= oe), P.options.drop.checker && (re = P.options.drop.checker(D, G, re, P, X, R, B)), re;
         }(this, m, E, g, x, T, C);
       }, a.dynamicDrop = function(m) {
         return c.default.bool(m) ? (n.dynamicDrop = m, a) : n.dynamicDrop;
@@ -1403,11 +1403,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
               var B = a.interactable.options.drag;
               if (!B.manualStart && R.testIgnoreAllow(B, P, s)) {
                 var X = R.getAction(a.downPointer, a.downEvent, a, P);
-                if (X && X.name === "drag" && function($, re) {
+                if (X && X.name === "drag" && function(q, re) {
                   if (!re)
                     return false;
                   var oe = re.options.drag.startAxis;
-                  return $ === "xy" || oe === "xy" || oe === $;
+                  return q === "xy" || oe === "xy" || oe === q;
                 }(C, R) && Qn.default.validateAction(X, R, P, s, o))
                   return R;
               }
@@ -1496,19 +1496,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     __name(uu, "uu");
     u(uu, "fe"), Object.defineProperty(Jn, "__esModule", { value: true }), Jn.default = void 0, Jn.install = uu;
-    var $d = { id: "core/interactablePreventDefault", install: uu, listeners: ["down", "move", "up", "cancel"].reduce(function(n, o) {
+    var qd = { id: "core/interactablePreventDefault", install: uu, listeners: ["down", "move", "up", "cancel"].reduce(function(n, o) {
       return n["interactions:".concat(o)] = Bd, n;
     }, {}) };
-    Jn.default = $d;
+    Jn.default = qd;
     var ms = {};
     Object.defineProperty(ms, "__esModule", { value: true }), ms.default = void 0, ms.default = {};
     var Ii, gs = {};
     Object.defineProperty(gs, "__esModule", { value: true }), gs.default = void 0, function(n) {
       n.touchAction = "touchAction", n.boxSizing = "boxSizing", n.noListeners = "noListeners";
     }(Ii || (Ii = {})), Ii.touchAction, Ii.boxSizing, Ii.noListeners;
-    var qd = { id: "dev-tools", install: function() {
+    var $d = { id: "dev-tools", install: function() {
     } };
-    gs.default = qd;
+    gs.default = $d;
     var gn = {};
     Object.defineProperty(gn, "__esModule", { value: true }), gn.default = u(/* @__PURE__ */ __name(function n(o) {
       var a = {};
@@ -1616,9 +1616,9 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           (P = D.methods) != null && P.set && this.shouldDo(G, m, p) && (s.state = D, B = D.methods.set(s), ue.addEdges(this.interaction.edges, s.rect, { x: s.coords.x - R.x, y: s.coords.y - R.y })), T.eventProps.push(B);
         }
         T.delta.x = s.coords.x - s.pageCoords.x, T.delta.y = s.coords.y - s.pageCoords.y, T.rectDelta.left = s.rect.left - g.left, T.rectDelta.right = s.rect.right - g.right, T.rectDelta.top = s.rect.top - g.top, T.rectDelta.bottom = s.rect.bottom - g.bottom;
-        var X = this.result.coords, $ = this.result.rect;
-        if (X && $) {
-          var re = T.rect.left !== $.left || T.rect.right !== $.right || T.rect.top !== $.top || T.rect.bottom !== $.bottom;
+        var X = this.result.coords, q = this.result.rect;
+        if (X && q) {
+          var re = T.rect.left !== q.left || T.rect.right !== q.right || T.rect.top !== q.top || T.rect.bottom !== q.bottom;
           T.changed = re || X.x !== T.coords.x || X.y !== T.coords.y;
         }
         return T;
@@ -1702,12 +1702,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(du, "du");
     u(du, "Ee"), bn.default = Wd;
     var ht = {};
-    function $o(n) {
+    function qo(n) {
       var o = n.iEvent, a = n.interaction.modification.result;
       a && (o.modifiers = a.eventProps);
     }
-    __name($o, "$o");
-    u($o, "Te"), Object.defineProperty(ht, "__esModule", { value: true }), ht.addEventModifiers = $o, ht.default = void 0, ht.makeModifier = function(n, o) {
+    __name(qo, "qo");
+    u(qo, "Te"), Object.defineProperty(ht, "__esModule", { value: true }), ht.addEventModifiers = qo, ht.default = void 0, ht.makeModifier = function(n, o) {
       var a = n.defaults, s = { start: n.start, set: n.set, beforeEnd: n.beforeEnd, stop: n.stop }, p = u(function(m) {
         var E = m || {};
         for (var g in E.enabled = E.enabled !== false, a)
@@ -1733,7 +1733,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       return n.interaction.modification.setAndApply(n);
     }, "interactions:before-action-end": function(n) {
       return n.interaction.modification.beforeEnd(n);
-    }, "interactions:action-start": $o, "interactions:action-move": $o, "interactions:action-end": $o, "interactions:after-action-start": function(n) {
+    }, "interactions:action-start": qo, "interactions:action-move": qo, "interactions:action-end": qo, "interactions:after-action-start": function(n) {
       return n.interaction.modification.restoreInteractionCoords(n);
     }, "interactions:after-action-move": function(n) {
       return n.interaction.modification.restoreInteractionCoords(n);
@@ -1784,18 +1784,18 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     __name(De, "De");
     u(De, "Re");
-    function qo(n) {
-      return qo = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(o) {
+    function $o(n) {
+      return $o = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(o) {
         return o.__proto__ || Object.getPrototypeOf(o);
-      }, qo(n);
+      }, $o(n);
     }
-    __name(qo, "qo");
-    u(qo, "Fe");
-    function $e(n, o, a) {
+    __name($o, "$o");
+    u($o, "Fe");
+    function qe(n, o, a) {
       return o in n ? Object.defineProperty(n, o, { value: a, enumerable: true, configurable: true, writable: true }) : n[o] = a, n;
     }
-    __name($e, "$e");
-    u($e, "Xe"), Object.defineProperty(Ai, "__esModule", { value: true }), Ai.InteractEvent = void 0;
+    __name(qe, "qe");
+    u(qe, "Xe"), Object.defineProperty(Ai, "__esModule", { value: true }), Ai.InteractEvent = void 0;
     var fu = function(n) {
       (function(g, x) {
         if (typeof x != "function" && x !== null)
@@ -1814,9 +1814,9 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           return false;
         }
       }(), function() {
-        var g, x = qo(s);
+        var g, x = $o(s);
         if (p) {
-          var T = qo(this).constructor;
+          var T = $o(this).constructor;
           g = Reflect.construct(x, arguments, T);
         } else
           g = x.apply(this, arguments);
@@ -1827,9 +1827,9 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         (function(je, me) {
           if (!(je instanceof me))
             throw new TypeError("Cannot call a class as a function");
-        })(this, E), $e(De(R = m.call(this, g)), "relatedTarget", null), $e(De(R), "screenX", void 0), $e(De(R), "screenY", void 0), $e(De(R), "button", void 0), $e(De(R), "buttons", void 0), $e(De(R), "ctrlKey", void 0), $e(De(R), "shiftKey", void 0), $e(De(R), "altKey", void 0), $e(De(R), "metaKey", void 0), $e(De(R), "page", void 0), $e(De(R), "client", void 0), $e(De(R), "delta", void 0), $e(De(R), "rect", void 0), $e(De(R), "x0", void 0), $e(De(R), "y0", void 0), $e(De(R), "t0", void 0), $e(De(R), "dt", void 0), $e(De(R), "duration", void 0), $e(De(R), "clientX0", void 0), $e(De(R), "clientY0", void 0), $e(De(R), "velocity", void 0), $e(De(R), "speed", void 0), $e(De(R), "swipe", void 0), $e(De(R), "axes", void 0), $e(De(R), "preEnd", void 0), P = P || g.element;
-        var B = g.interactable, X = (B && B.options || Pi.defaults).deltaSource, $ = (0, Le.default)(B, P, T), re = C === "start", oe = C === "end", pe = re ? De(R) : g.prevEvent, Ie = re ? g.coords.start : oe ? { page: pe.page, client: pe.client, timeStamp: g.coords.cur.timeStamp } : g.coords.cur;
-        return R.page = (0, W.default)({}, Ie.page), R.client = (0, W.default)({}, Ie.client), R.rect = (0, W.default)({}, g.rect), R.timeStamp = Ie.timeStamp, oe || (R.page.x -= $.x, R.page.y -= $.y, R.client.x -= $.x, R.client.y -= $.y), R.ctrlKey = x.ctrlKey, R.altKey = x.altKey, R.shiftKey = x.shiftKey, R.metaKey = x.metaKey, R.button = x.button, R.buttons = x.buttons, R.target = P, R.currentTarget = P, R.preEnd = D, R.type = G || T + (C || ""), R.interactable = B, R.t0 = re ? g.pointers[g.pointers.length - 1].downTime : pe.t0, R.x0 = g.coords.start.page.x - $.x, R.y0 = g.coords.start.page.y - $.y, R.clientX0 = g.coords.start.client.x - $.x, R.clientY0 = g.coords.start.client.y - $.y, R.delta = re || oe ? { x: 0, y: 0 } : { x: R[X].x - pe[X].x, y: R[X].y - pe[X].y }, R.dt = g.coords.delta.timeStamp, R.duration = R.timeStamp - R.t0, R.velocity = (0, W.default)({}, g.coords.velocity[X]), R.speed = (0, tt.default)(R.velocity.x, R.velocity.y), R.swipe = oe || C === "inertiastart" ? R.getSwipe() : null, R;
+        })(this, E), qe(De(R = m.call(this, g)), "relatedTarget", null), qe(De(R), "screenX", void 0), qe(De(R), "screenY", void 0), qe(De(R), "button", void 0), qe(De(R), "buttons", void 0), qe(De(R), "ctrlKey", void 0), qe(De(R), "shiftKey", void 0), qe(De(R), "altKey", void 0), qe(De(R), "metaKey", void 0), qe(De(R), "page", void 0), qe(De(R), "client", void 0), qe(De(R), "delta", void 0), qe(De(R), "rect", void 0), qe(De(R), "x0", void 0), qe(De(R), "y0", void 0), qe(De(R), "t0", void 0), qe(De(R), "dt", void 0), qe(De(R), "duration", void 0), qe(De(R), "clientX0", void 0), qe(De(R), "clientY0", void 0), qe(De(R), "velocity", void 0), qe(De(R), "speed", void 0), qe(De(R), "swipe", void 0), qe(De(R), "axes", void 0), qe(De(R), "preEnd", void 0), P = P || g.element;
+        var B = g.interactable, X = (B && B.options || Pi.defaults).deltaSource, q = (0, Le.default)(B, P, T), re = C === "start", oe = C === "end", pe = re ? De(R) : g.prevEvent, Ie = re ? g.coords.start : oe ? { page: pe.page, client: pe.client, timeStamp: g.coords.cur.timeStamp } : g.coords.cur;
+        return R.page = (0, W.default)({}, Ie.page), R.client = (0, W.default)({}, Ie.client), R.rect = (0, W.default)({}, g.rect), R.timeStamp = Ie.timeStamp, oe || (R.page.x -= q.x, R.page.y -= q.y, R.client.x -= q.x, R.client.y -= q.y), R.ctrlKey = x.ctrlKey, R.altKey = x.altKey, R.shiftKey = x.shiftKey, R.metaKey = x.metaKey, R.button = x.button, R.buttons = x.buttons, R.target = P, R.currentTarget = P, R.preEnd = D, R.type = G || T + (C || ""), R.interactable = B, R.t0 = re ? g.pointers[g.pointers.length - 1].downTime : pe.t0, R.x0 = g.coords.start.page.x - q.x, R.y0 = g.coords.start.page.y - q.y, R.clientX0 = g.coords.start.client.x - q.x, R.clientY0 = g.coords.start.client.y - q.y, R.delta = re || oe ? { x: 0, y: 0 } : { x: R[X].x - pe[X].x, y: R[X].y - pe[X].y }, R.dt = g.coords.delta.timeStamp, R.duration = R.timeStamp - R.t0, R.velocity = (0, W.default)({}, g.coords.velocity[X]), R.speed = (0, tt.default)(R.velocity.x, R.velocity.y), R.swipe = oe || C === "inertiastart" ? R.getSwipe() : null, R;
       }
       __name(E, "E");
       return u(E, "a"), o = E, (a = [{ key: "getSwipe", value: function() {
@@ -2578,8 +2578,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         if (!s[D]) {
           s[D] = [];
           for (var X = 0; X < p.length; X++) {
-            var $ = p[X];
-            E($, D, x), E($, D, T, true);
+            var q = p[X];
+            E(q, D, x), E(q, D, T, true);
           }
         }
         var re = s[D], oe = Ce.find(re, function(pe) {
@@ -2587,15 +2587,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         });
         oe || (oe = { selector: C, context: P, listeners: [] }, re.push(oe)), oe.listeners.push([G, B]);
       }, removeDelegate: function(C, P, D, G, R) {
-        var B, X = Ni(R), $ = s[D], re = false;
-        if ($)
-          for (B = $.length - 1; B >= 0; B--) {
-            var oe = $[B];
+        var B, X = Ni(R), q = s[D], re = false;
+        if (q)
+          for (B = q.length - 1; B >= 0; B--) {
+            var oe = q[B];
             if (oe.selector === C && oe.context === P) {
               for (var pe = oe.listeners, Ie = pe.length - 1; Ie >= 0; Ie--) {
                 var je = Cs(pe[Ie], 2), me = je[0], Ne = je[1], Xt = Ne.capture, Gr = Ne.passive;
                 if (me === G && Xt === X.capture && Gr === X.passive) {
-                  pe.splice(Ie, 1), pe.length || ($.splice(B, 1), g(P, D, x), g(P, D, T, true)), re = true;
+                  pe.splice(Ie, 1), pe.length || (q.splice(B, 1), g(P, D, x), g(P, D, T, true)), re = true;
                   break;
                 }
               }
@@ -2618,7 +2618,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }), X = a[B];
         if (X && X.events)
           if (P !== "all") {
-            var $ = false, re = X.events[P];
+            var q = false, re = X.events[P];
             if (re) {
               if (D === "all") {
                 for (var oe = re.length - 1; oe >= 0; oe--)
@@ -2627,11 +2627,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
               }
               for (var pe = 0; pe < re.length; pe++)
                 if (re[pe] === D) {
-                  C.removeEventListener(P, D, m.supportsOptions ? R : R.capture), re.splice(pe, 1), re.length === 0 && (delete X.events[P], $ = true);
+                  C.removeEventListener(P, D, m.supportsOptions ? R : R.capture), re.splice(pe, 1), re.length === 0 && (delete X.events[P], q = true);
                   break;
                 }
             }
-            $ && !Object.keys(X.events).length && a.splice(B, 1);
+            q && !Object.keys(X.events).length && a.splice(B, 1);
           } else
             for (P in X.events)
               X.events.hasOwnProperty(P) && g(C, P, "all");
@@ -2640,8 +2640,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       u(g, "l");
       function x(C, P) {
         for (var D = Ni(P), G = new vf(C), R = s[C.type], B = Cs(J.getEventTargets(C), 1)[0], X = B; c.default.element(X); ) {
-          for (var $ = 0; $ < R.length; $++) {
-            var re = R[$], oe = re.selector, pe = re.context;
+          for (var q = 0; q < R.length; q++) {
+            var re = R[q], oe = re.selector, pe = re.context;
             if (z.matchesSelector(X, oe) && z.nodeContains(pe, B) && z.nodeContains(pe, X)) {
               var Ie = re.listeners;
               G.currentTarget = X;
@@ -2862,8 +2862,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             x.push([B.pointer, B.eventTarget, B.curEventTarget, X]);
           }
         }
-        for (var $ = 0; $ < x.length; $++) {
-          var re = Tu(x[$], 4), oe = re[0], pe = re[1], Ie = re[2];
+        for (var q = 0; q < x.length; q++) {
+          var re = Tu(x[q], 4), oe = re[0], pe = re[1], Ie = re[2];
           re[3][n](oe, a, pe, Ie);
         }
       };
@@ -3358,16 +3358,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     var xr = {};
     Object.defineProperty(xr, "__esModule", { value: true }), xr.restrictEdges = xr.default = void 0;
     var Hu = { top: 1 / 0, left: 1 / 0, bottom: -1 / 0, right: -1 / 0 }, Bu = { top: -1 / 0, left: -1 / 0, bottom: 1 / 0, right: 1 / 0 };
-    function $u(n, o) {
+    function qu(n, o) {
       for (var a = ["top", "left", "bottom", "right"], s = 0; s < a.length; s++) {
         var p = a[s];
         p in n || (n[p] = o[p]);
       }
       return n;
     }
-    __name($u, "$u");
-    u($u, "Qr");
-    var qu = { noInner: Hu, noOuter: Bu, start: function(n) {
+    __name(qu, "qu");
+    u(qu, "Qr");
+    var $u = { noInner: Hu, noOuter: Bu, start: function(n) {
       var o, a = n.interaction, s = n.startOffset, p = n.state, m = p.options;
       if (m) {
         var E = (0, It.getRestrictionRect)(m.offset, a, a.coords.start.page);
@@ -3378,11 +3378,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var o = n.coords, a = n.edges, s = n.interaction, p = n.state, m = p.offset, E = p.options;
       if (a) {
         var g = (0, W.default)({}, o), x = (0, It.getRestrictionRect)(E.inner, s, g) || {}, T = (0, It.getRestrictionRect)(E.outer, s, g) || {};
-        $u(x, Hu), $u(T, Bu), a.top ? o.y = Math.min(Math.max(T.top + m.top, g.y), x.top + m.top) : a.bottom && (o.y = Math.max(Math.min(T.bottom + m.bottom, g.y), x.bottom + m.bottom)), a.left ? o.x = Math.min(Math.max(T.left + m.left, g.x), x.left + m.left) : a.right && (o.x = Math.max(Math.min(T.right + m.right, g.x), x.right + m.right));
+        qu(x, Hu), qu(T, Bu), a.top ? o.y = Math.min(Math.max(T.top + m.top, g.y), x.top + m.top) : a.bottom && (o.y = Math.max(Math.min(T.bottom + m.bottom, g.y), x.bottom + m.bottom)), a.left ? o.x = Math.min(Math.max(T.left + m.left, g.x), x.left + m.left) : a.right && (o.x = Math.max(Math.min(T.right + m.right, g.x), x.right + m.right));
       }
     }, defaults: { inner: null, outer: null, offset: null, endOnly: false, enabled: false } };
-    xr.restrictEdges = qu;
-    var Gf = (0, ht.makeModifier)(qu, "restrictEdges");
+    xr.restrictEdges = $u;
+    var Gf = (0, ht.makeModifier)($u, "restrictEdges");
     xr.default = Gf;
     var ti = {};
     Object.defineProperty(ti, "__esModule", { value: true }), ti.restrictRect = ti.default = void 0;
@@ -3405,8 +3405,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }
     }, defaults: { min: null, max: null, endOnly: false, enabled: false } };
     ri.restrictSize = Wu;
-    var $f = (0, ht.makeModifier)(Wu, "restrictSize");
-    ri.default = $f;
+    var qf = (0, ht.makeModifier)(Wu, "restrictSize");
+    ri.default = qf;
     var Ns = {};
     Object.defineProperty(Ns, "__esModule", { value: true }), Object.defineProperty(Ns, "default", { enumerable: true, get: function() {
       return xn.default;
@@ -3436,15 +3436,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           var B, X = p.targets[G];
           (B = c.default.func(X) ? X(P, D, o._proxy, C, G) : X) && x.push({ x: (c.default.number(B.x) ? B.x : P) + C.x, y: (c.default.number(B.y) ? B.y : D) + C.y, range: c.default.number(B.range) ? B.range : p.range, source: X, index: G, offset: C });
         }
-      for (var $ = { target: null, inRange: false, distance: 0, range: 0, delta: { x: 0, y: 0 } }, re = 0; re < x.length; re++) {
+      for (var q = { target: null, inRange: false, distance: 0, range: 0, delta: { x: 0, y: 0 } }, re = 0; re < x.length; re++) {
         var oe = x[re], pe = oe.range, Ie = oe.x - g.x, je = oe.y - g.y, me = (0, tt.default)(Ie, je), Ne = me <= pe;
-        pe === 1 / 0 && $.inRange && $.range !== 1 / 0 && (Ne = false), $.target && !(Ne ? $.inRange && pe !== 1 / 0 ? me / pe < $.distance / $.range : pe === 1 / 0 && $.range !== 1 / 0 || me < $.distance : !$.inRange && me < $.distance) || ($.target = oe, $.distance = me, $.range = pe, $.inRange = Ne, $.delta.x = Ie, $.delta.y = je);
+        pe === 1 / 0 && q.inRange && q.range !== 1 / 0 && (Ne = false), q.target && !(Ne ? q.inRange && pe !== 1 / 0 ? me / pe < q.distance / q.range : pe === 1 / 0 && q.range !== 1 / 0 || me < q.distance : !q.inRange && me < q.distance) || (q.target = oe, q.distance = me, q.range = pe, q.inRange = Ne, q.delta.x = Ie, q.delta.y = je);
       }
-      return $.inRange && (a.x = $.target.x, a.y = $.target.y), s.closest = $, $;
+      return q.inRange && (a.x = q.target.x, a.y = q.target.y), s.closest = q, q;
     }, defaults: { range: 1 / 0, targets: null, offset: null, offsetWithOrigin: true, origin: null, relativePoints: null, endOnly: false, enabled: false } };
     Jr.snap = Uu;
-    var qf = (0, ht.makeModifier)(Uu, "snap");
-    Jr.default = qf;
+    var $f = (0, ht.makeModifier)(Uu, "snap");
+    Jr.default = $f;
     var Nr = {};
     function Vu(n, o) {
       (o == null || o > n.length) && (o = n.length);
@@ -3466,15 +3466,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         var C = (E.targets || [])[T], P = void 0;
         if (P = c.default.func(C) ? C(x.x, x.y, s) : C) {
           for (var D = 0; D < p.targetFields.length; D++) {
-            var G = (o = p.targetFields[D], a = 2, function($) {
-              if (Array.isArray($))
-                return $;
-            }(o) || function($, re) {
-              var oe = $ == null ? null : typeof Symbol != "undefined" && $[Symbol.iterator] || $["@@iterator"];
+            var G = (o = p.targetFields[D], a = 2, function(q) {
+              if (Array.isArray(q))
+                return q;
+            }(o) || function(q, re) {
+              var oe = q == null ? null : typeof Symbol != "undefined" && q[Symbol.iterator] || q["@@iterator"];
               if (oe != null) {
                 var pe, Ie, je = [], me = true, Ne = false;
                 try {
-                  for (oe = oe.call($); !(me = (pe = oe.next()).done) && (je.push(pe.value), !re || je.length !== re); me = true)
+                  for (oe = oe.call(q); !(me = (pe = oe.next()).done) && (je.push(pe.value), !re || je.length !== re); me = true)
                     ;
                 } catch (Xt) {
                   Ne = true, Ie = Xt;
@@ -3488,12 +3488,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
                 }
                 return je;
               }
-            }(o, a) || function($, re) {
-              if ($) {
-                if (typeof $ == "string")
-                  return Vu($, re);
-                var oe = Object.prototype.toString.call($).slice(8, -1);
-                return oe === "Object" && $.constructor && (oe = $.constructor.name), oe === "Map" || oe === "Set" ? Array.from($) : oe === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(oe) ? Vu($, re) : void 0;
+            }(o, a) || function(q, re) {
+              if (q) {
+                if (typeof q == "string")
+                  return Vu(q, re);
+                var oe = Object.prototype.toString.call(q).slice(8, -1);
+                return oe === "Object" && q.constructor && (oe = q.constructor.name), oe === "Map" || oe === "Set" ? Array.from(q) : oe === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(oe) ? Vu(q, re) : void 0;
               }
             }(o, a) || function() {
               throw new TypeError(`Invalid attempt to destructure non-iterable instance.
@@ -3620,8 +3620,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       });
       function E(g, x, T, C, P, D) {
         var G;
-        if (function(X, $) {
-          if (!(X instanceof $))
+        if (function(X, q) {
+          if (!(X instanceof q))
             throw new TypeError("Cannot call a class as a function");
         }(this, E), G = m.call(this, P), J.pointerExtend(Bs(G), T), T !== x && J.pointerExtend(Bs(G), x), G.timeStamp = D, G.originalEvent = T, G.type = g, G.pointerId = J.getPointerId(x), G.pointerType = J.getPointerType(x), G.target = C, G.currentTarget = null, g === "tap") {
           var R = P.getPointerIndex(x);
@@ -3656,7 +3656,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       !o && a.hold || (a.hold = { duration: 1 / 0, timeout: null });
     }, "interactions:move": function(n, o) {
       var a = n.interaction, s = n.pointer, p = n.event, m = n.eventTarget;
-      n.duplicate || a.pointerIsDown && !a.pointerWasMoved || (a.pointerIsDown && $s(n), Kr({ interaction: a, pointer: s, event: p, eventTarget: m, type: "move" }, o));
+      n.duplicate || a.pointerIsDown && !a.pointerWasMoved || (a.pointerIsDown && qs(n), Kr({ interaction: a, pointer: s, event: p, eventTarget: m, type: "move" }, o));
     }, "interactions:down": function(n, o) {
       (function(a, s) {
         for (var p = a.interaction, m = a.pointer, E = a.event, g = a.eventTarget, x = a.pointerIndex, T = p.pointers[x].hold, C = z.getPath(g), P = { interaction: p, pointer: m, event: E, eventTarget: g, type: "hold", targets: [], path: C, node: null }, D = 0; D < C.length; D++) {
@@ -3674,12 +3674,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
       })(n, o), Kr(n, o);
     }, "interactions:up": function(n, o) {
-      $s(n), Kr(n, o), function(a, s) {
+      qs(n), Kr(n, o), function(a, s) {
         var p = a.interaction, m = a.pointer, E = a.event, g = a.eventTarget;
         p.pointerWasMoved || Kr({ interaction: p, eventTarget: g, pointer: m, event: E, type: "tap" }, s);
       }(n, o);
     }, "interactions:cancel": function(n, o) {
-      $s(n), Kr(n, o);
+      qs(n), Kr(n, o);
     } }, PointerEvent: En.PointerEvent, fire: Kr, collectEventTargets: Zu, defaults: { holdDuration: 600, ignoreFrom: null, allowFrom: null, origin: { x: 0, y: 0 } }, types: { down: true, move: true, up: true, cancel: true, tap: true, doubletap: true, hold: true } };
     function Kr(n, o) {
       var a = n.interaction, s = n.pointer, p = n.event, m = n.eventTarget, E = n.type, g = n.targets, x = g === void 0 ? Zu(n, o) : g, T = new En.PointerEvent(E, s, p, m, a, o.now());
@@ -3715,12 +3715,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     __name(Zu, "Zu");
     u(Zu, "Wo");
-    function $s(n) {
+    function qs(n) {
       var o = n.interaction, a = n.pointerIndex, s = o.pointers[a].hold;
       s && s.timeout && (clearTimeout(s.timeout), s.timeout = null);
     }
-    __name($s, "$s");
-    u($s, "Lo");
+    __name(qs, "qs");
+    u(qs, "Lo");
     var Jf = aa;
     Hi.default = Jf;
     var sa = {};
@@ -3802,7 +3802,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
                 G._reflowResolve = re;
               }));
             else {
-              var B = (0, ue.tlbrToXywh)(D), X = { page: { x: B.x, y: B.y }, client: { x: B.x, y: B.y }, timeStamp: m.now() }, $ = J.coordsToEvent(X);
+              var B = (0, ue.tlbrToXywh)(D), X = { page: { x: B.x, y: B.y }, client: { x: B.x, y: B.y }, timeStamp: m.now() }, q = J.coordsToEvent(X);
               R = function(re, oe, pe, Ie, je) {
                 var me = re.interactions.new({ pointerType: "reflow" }), Ne = { interaction: me, event: je, pointer: je, eventTarget: pe, phase: "reflow" };
                 me.interactable = oe, me.element = pe, me.prevEvent = je, me.updatePointer(je, je, pe, true), J.setZeroCoords(me.coords.delta), (0, Lt.copyAction)(me.prepared, Ie), me._doPhase(Ne);
@@ -3810,7 +3810,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
                   me._reflowResolve = Ws;
                 }) : void 0;
                 return me._reflowPromise = Gr, me.start(Ie, oe, pe), me._interacting ? (me.move(Ne), me.end(je)) : (me.stop(), me._reflowResolve()), me.removePointer(je, je), Gr;
-              }(m, s, P, p, $);
+              }(m, s, P, p, q);
             }
             x && x.push(R);
           }, C = 0; C < E.length && T() !== "break"; C++)
@@ -3829,17 +3829,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     } } }, lh = sh;
     Bi.default = lh;
     var Yt = { exports: {} };
-    function qs(n) {
-      return qs = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
+    function $s(n) {
+      return $s = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
         return typeof o;
       } : function(o) {
         return o && typeof Symbol == "function" && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-      }, qs(n);
+      }, $s(n);
     }
-    __name(qs, "qs");
-    u(qs, "ai"), Object.defineProperty(Yt.exports, "__esModule", { value: true }), Yt.exports.default = void 0, rt.default.use(Jn.default), rt.default.use(wn.default), rt.default.use(ua.default), rt.default.use(Kn.default), rt.default.use(ia.default), rt.default.use(Ho.default), rt.default.use(Vt.default), rt.default.use(Zr.default), rt.default.use(Bi.default);
+    __name($s, "$s");
+    u($s, "ai"), Object.defineProperty(Yt.exports, "__esModule", { value: true }), Yt.exports.default = void 0, rt.default.use(Jn.default), rt.default.use(wn.default), rt.default.use(ua.default), rt.default.use(Kn.default), rt.default.use(ia.default), rt.default.use(Ho.default), rt.default.use(Vt.default), rt.default.use(Zr.default), rt.default.use(Bi.default);
     var uh = rt.default;
-    if (Yt.exports.default = uh, qs(Yt) === "object" && Yt)
+    if (Yt.exports.default = uh, $s(Yt) === "object" && Yt)
       try {
         Yt.exports = rt.default;
       } catch (n) {
@@ -4442,8 +4442,8 @@ var jt = u(class {
     return l !== void 0 ? `\u221A${l.character}` : r % 1 !== 0 && t !== void 0 ? r.toFixed(t) : r.toString();
   }
 }, "u");
-var qi = jt;
-qi.CONSISTENT = new jt(false, 0, 2, ", "), qi.EXACT = new jt(true, 0, void 0, ", "), qi.MINIFIED = new jt(true, 0, void 0, ","), qi.SIMPLIFIED = new jt(true, 5e-4, 3, ", ");
+var $i = jt;
+$i.CONSISTENT = new jt(false, 0, 2, ", "), $i.EXACT = new jt(true, 0, void 0, ", "), $i.MINIFIED = new jt(true, 0, void 0, ","), $i.SIMPLIFIED = new jt(true, 5e-4, 3, ", ");
 var H = u(class {
   static need(r, e, t) {
     if (r !== true) {
@@ -4559,7 +4559,7 @@ var de = u(class {
     return new de(this.real, -this.imag);
   }
   toString(r) {
-    return r = r || qi.EXACT, r.allowAbbreviation ? this.toStringAllowSingleValue(r) : this.toStringBothValues(r);
+    return r = r || $i.EXACT, r.allowAbbreviation ? this.toStringAllowSingleValue(r) : this.toStringBothValues(r);
   }
   neg() {
     return new de(-this.real, -this.imag);
@@ -5404,12 +5404,12 @@ var eo = u(function(r, e) {
     return ci(i, e);
   });
 }, "toActionObjects");
-function $a(r) {
+function qa(r) {
   var e = ci(r);
   return V(V({ id: be(r) ? r : e.id }, e), { type: e.type });
 }
-__name($a, "$a");
-u($a, "toActivityDefinition");
+__name(qa, "qa");
+u(qa, "toActivityDefinition");
 function Ac(r) {
   return be(r) ? { type: si, event: r } : ml(r, { to: on.Internal });
 }
@@ -5444,13 +5444,13 @@ var zc = u(function(r) {
   return { type: Pa, sendId: r };
 }, "cancel");
 function _c(r) {
-  var e = $a(r);
+  var e = qa(r);
   return { type: Pe.Start, activity: e, exec: void 0 };
 }
 __name(_c, "_c");
 u(_c, "start");
 function Rc(r) {
-  var e = Ae(r) ? r : $a(r);
+  var e = Ae(r) ? r : qa(r);
   return { type: Pe.Stop, activity: e, exec: void 0 };
 }
 __name(Rc, "Rc");
@@ -5512,7 +5512,7 @@ function Ba(r, e, t, i, l, c) {
         })) === null || S === void 0 ? void 0 : S.actions;
         if (!_)
           return [];
-        var q = ge(Ba(r, e, d, i, eo(Bt(_), r.options.actions), c), 2), L = q[0], F = q[1];
+        var $ = ge(Ba(r, e, d, i, eo(Bt(_), r.options.actions), c), 2), L = $[0], F = $[1];
         return d = F, v == null || v.push(d), L;
       }
       case gc: {
@@ -5648,11 +5648,11 @@ function kn(r, e) {
         throw t.error;
     }
   }
-  var q = gl(y);
+  var $ = gl(y);
   try {
     for (var L = ve(y), F = L.next(); !F.done; F = L.next()) {
       var M = F.value;
-      if (M.type === "compound" && (!q.get(M) || !q.get(M).length))
+      if (M.type === "compound" && (!$.get(M) || !$.get(M).length))
         w.get(M) ? w.get(M).forEach(function(ie) {
           return y.add(ie);
         }) : M.initialStateNodes.forEach(function(ie) {
@@ -5747,12 +5747,12 @@ function gl(r) {
 }
 __name(gl, "gl");
 u(gl, "getAdjList");
-function $c(r, e) {
+function qc(r, e) {
   var t = kn([r], e);
   return Bc(r, gl(t));
 }
-__name($c, "$c");
-u($c, "getValue");
+__name(qc, "qc");
+u(qc, "getValue");
 function no(r, e) {
   return Array.isArray(r) ? r.some(function(t) {
     return t === e;
@@ -5760,13 +5760,13 @@ function no(r, e) {
 }
 __name(no, "no");
 u(no, "has");
-function qc(r) {
+function $c(r) {
   return Re([], ge(new Set(Ge(Re([], ge(r.map(function(e) {
     return e.ownEvents;
   })), false)))), false);
 }
-__name(qc, "qc");
-u(qc, "nextEvents");
+__name($c, "$c");
+u($c, "nextEvents");
 function Dn(r, e) {
   return e.type === "compound" ? Rn(e).some(function(t) {
     return t.type === "final" && no(r, t);
@@ -5821,7 +5821,7 @@ var hr = function() {
   function r(e) {
     var t = this, i;
     this.actions = [], this.activities = dl, this.meta = {}, this.events = [], this.value = e.value, this.context = e.context, this._event = e._event, this._sessionid = e._sessionid, this.event = this._event.data, this.historyValue = e.historyValue, this.history = e.history, this.actions = e.actions || [], this.activities = e.activities || dl, this.meta = Fc(e.configuration), this.events = e.events || [], this.matches = this.matches.bind(this), this.toStrings = this.toStrings.bind(this), this.configuration = e.configuration, this.transitions = e.transitions, this.children = e.children, this.done = !!e.done, this.tags = (i = Array.isArray(e.tags) ? new Set(e.tags) : e.tags) !== null && i !== void 0 ? i : /* @__PURE__ */ new Set(), this.machine = e.machine, Object.defineProperty(this, "nextEvents", { get: function() {
-      return qc(t.configuration);
+      return $c(t.configuration);
     } });
   }
   __name(r, "r");
@@ -5920,7 +5920,7 @@ var io = { bookId: function() {
 }, free: function(r) {
   El.delete(r);
 } };
-function qa() {
+function $a() {
   if (typeof globalThis != "undefined")
     return globalThis;
   if (typeof self != "undefined")
@@ -5931,17 +5931,17 @@ function qa() {
     return global;
   Be || console.warn("XState could not find a global object in this environment. Please let the maintainers know and raise an issue here: https://github.com/statelyai/xstate/issues");
 }
-__name(qa, "qa");
-u(qa, "getGlobal");
+__name($a, "$a");
+u($a, "getGlobal");
 function Lh() {
-  var r = qa();
+  var r = $a();
   if (r && "__xstate__" in r)
     return r.__xstate__;
 }
 __name(Lh, "Lh");
 u(Lh, "getDevTools");
 function Vc(r) {
-  if (!!qa()) {
+  if (!!$a()) {
     var e = Lh();
     e && e.register(r);
   }
@@ -6071,7 +6071,7 @@ Event: `).concat(JSON.stringify(y.data)));
       }
     }
     try {
-      for (var q = ve(this.contextListeners), L = q.next(); !L.done; L = q.next()) {
+      for (var $ = ve(this.contextListeners), L = $.next(); !L.done; L = $.next()) {
         var F = L.value;
         F(this.state.context, this.state.history ? this.state.history.context : void 0);
       }
@@ -6079,7 +6079,7 @@ Event: `).concat(JSON.stringify(y.data)));
       b = { error: K };
     } finally {
       try {
-        L && !L.done && (h = q.return) && h.call(q);
+        L && !L.done && (h = $.return) && h.call($);
       } finally {
         if (b)
           throw b.error;
@@ -6174,7 +6174,7 @@ Event: `).concat(JSON.stringify(y.data)));
       }
     }
     try {
-      for (var q = ve(this.contextListeners), L = q.next(); !L.done; L = q.next()) {
+      for (var $ = ve(this.contextListeners), L = $.next(); !L.done; L = $.next()) {
         var O = L.value;
         this.contextListeners.delete(O);
       }
@@ -6182,7 +6182,7 @@ Event: `).concat(JSON.stringify(y.data)));
       c = { error: Y };
     } finally {
       try {
-        L && !L.done && (f = q.return) && f.call(q);
+        L && !L.done && (f = $.return) && f.call($);
       } finally {
         if (c)
           throw c.error;
@@ -6355,8 +6355,8 @@ Event: `).concat(JSON.stringify(event)));
           var _ = Ae(w) ? w(l, c.data, { data: M, src: v, meta: d.meta }) : w;
           if (!_)
             return;
-          var q = void 0;
-          Sr(_) && (_ = M ? _.withContext(M) : _, q = { autoForward: O }), this.spawn(_, y, q);
+          var $ = void 0;
+          Sr(_) && (_ = M ? _.withContext(M) : _, $ = { autoForward: O }), this.spawn(_, y, $);
         } else
           this.spawnActivity(d);
         break;
@@ -6519,7 +6519,7 @@ Event: `).concat(JSON.stringify(event)));
       return this;
     }, i));
   }, r.prototype.attachDev = function() {
-    var e = qa();
+    var e = $a();
     if (this.options.devTools && e) {
       if (e.__REDUX_DEVTOOLS_EXTENSION__) {
         var t = typeof this.options.devTools == "object" ? this.options.devTools : void 0;
@@ -6577,7 +6577,7 @@ var fi = u(function(r) {
 var Bh = u(function() {
   return { actions: {}, guards: {}, services: {}, activities: {}, delays: {} };
 }, "createDefaultOptions");
-var $h = u(function(r, e, t) {
+var qh = u(function(r, e, t) {
   var i = t.slice(0, -1).some(function(c) {
     return !("cond" in c) && !("in" in c) && (be(c.target) || Sr(c.target));
   }), l = e === hi ? "the transient event" : "event '".concat(e, "'");
@@ -6636,7 +6636,7 @@ var Zc = function() {
         return oo(V(V({ id: Ki(c.id, v) }, d), { src: O }));
       }
     }), this.activities = Bt(this.config.activities).concat(this.invoke).map(function(d) {
-      return $a(d);
+      return qa(d);
     }), this.transition = this.transition.bind(this), this.tags = Bt(this.config.tags);
   }
   __name(r, "r");
@@ -6752,12 +6752,12 @@ var Zc = function() {
       return this.next(t, i);
     var _ = Ge(S.map(function(L) {
       return L.entrySet;
-    })), q = Ge(Object.keys(f).map(function(L) {
+    })), $ = Ge(Object.keys(f).map(function(L) {
       return f[L].configuration;
     }));
     return { transitions: O, entrySet: _, exitSet: Ge(S.map(function(L) {
       return L.exitSet;
-    })), configuration: q, source: t, actions: Ge(Object.keys(f).map(function(L) {
+    })), configuration: $, source: t, actions: Ge(Object.keys(f).map(function(L) {
       return f[L].actions;
     })) };
   }, r.prototype._transition = function(e, t, i) {
@@ -6768,14 +6768,14 @@ var Zc = function() {
     var i, l, c = this, f = t.name, b = [], h = [], d;
     try {
       for (var v = ve(this.getCandidates(f)), w = v.next(); !w.done; w = v.next()) {
-        var y = w.value, S = y.cond, O = y.in, M = e.context, _ = O ? be(O) && fi(O) ? e.matches(li(this.getStateNodeById(O).path, this.delimiter)) : Xi(li(O, this.delimiter), yc(this.path.slice(0, -2))(e.value)) : true, q = false;
+        var y = w.value, S = y.cond, O = y.in, M = e.context, _ = O ? be(O) && fi(O) ? e.matches(li(this.getStateNodeById(O).path, this.delimiter)) : Xi(li(O, this.delimiter), yc(this.path.slice(0, -2))(e.value)) : true, $ = false;
         try {
-          q = !S || La(this.machine, S, M, t, e);
+          $ = !S || La(this.machine, S, M, t, e);
         } catch (Q) {
           throw new Error("Unable to evaluate guard '".concat(S.name || S.type, "' in transition for event '").concat(f, "' in state node '").concat(this.id, `':
 `).concat(Q.message));
         }
-        if (q && _) {
+        if ($ && _) {
           y.target !== void 0 && (h = y.target), b.push.apply(b, Re([], ge(y.actions), false)), d = y;
           break;
         }
@@ -6865,7 +6865,7 @@ var Zc = function() {
     }), e.entrySet.sort(function(j, Y) {
       return j.order - Y.order;
     });
-    var q = new Set(e.entrySet), L = new Set(e.exitSet), F = ge([Ge(Array.from(q).map(function(j) {
+    var $ = new Set(e.entrySet), L = new Set(e.exitSet), F = ge([Ge(Array.from($).map(function(j) {
       return Re(Re([], ge(j.activities.map(function(Y) {
         return _c(Y);
       })), false), ge(j.onEntry), false);
@@ -6896,7 +6896,7 @@ var Zc = function() {
   }, r.prototype.resolveTransition = function(e, t, i, l) {
     var c, f, b = this;
     l === void 0 && (l = An);
-    var h = e.configuration, d = !t || e.transitions.length > 0, v = d ? $c(this.machine, h) : void 0, w = t ? t.historyValue ? t.historyValue : e.source ? this.machine.historyValue(t.value) : void 0 : void 0, y = this.getActions(e, i, l, t), S = t ? V({}, t.activities) : {};
+    var h = e.configuration, d = !t || e.transitions.length > 0, v = d ? qc(this.machine, h) : void 0, w = t ? t.historyValue ? t.historyValue : e.source ? this.machine.historyValue(t.value) : void 0 : void 0, y = this.getActions(e, i, l, t), S = t ? V({}, t.activities) : {};
     try {
       for (var O = ve(y), M = O.next(); !M.done; M = O.next()) {
         var _ = M.value;
@@ -6912,7 +6912,7 @@ var Zc = function() {
           throw c.error;
       }
     }
-    var q = ge(Ba(this, t, i, l, y, this.machine.config.preserveActionOrder), 2), L = q[0], F = q[1], I = ge(Na(L, function(fe) {
+    var $ = ge(Ba(this, t, i, l, y, this.machine.config.preserveActionOrder), 2), L = $[0], F = $[1], I = ge(Na(L, function(fe) {
       return fe.type === si || fe.type === Mn && fe.to === on.Internal;
     }), 2), Q = I[0], z = I[1], j = L.filter(function(fe) {
       var Je;
@@ -7167,7 +7167,7 @@ var Zc = function() {
       l = Ge(Object.keys(d).map(function(L) {
         !Be && L === hi && Xe(false, "Empty string transition configs (e.g., `{ on: { '': ... }}`) for transient transitions are deprecated. Specify the transition in the `{ always: ... }` property instead. " + 'Please check the `on` configuration for "#'.concat(i.id, '".'));
         var F = Pn(L, d[L]);
-        return Be || $h(i, L, F), F;
+        return Be || qh(i, L, F), F;
       }).concat(Pn(ao, h)));
     }
     var v = this.config.always ? Pn("", this.config.always) : [], w = this.config.onDone ? Pn(String(to(this.id)), this.config.onDone) : [];
@@ -7182,8 +7182,8 @@ var Zc = function() {
     }));
     try {
       for (var M = ve(S), _ = M.next(); !_.done; _ = M.next()) {
-        var q = _.value;
-        O.push(q);
+        var $ = _.value;
+        O.push($);
       }
     } catch (L) {
       e = { error: L };
@@ -7219,28 +7219,28 @@ function Ee(r) {
       this.bit = -1;
       this.debugDraggable = false;
       this.draggableMachine = ot({ id: "draggable", initial: "idle", states: { idle: { entry: ["init"], on: { SET_INTERACT: { target: "grabbable", actions: ["setInteract"] } } }, grabbable: { on: { GRAB: { target: "grabbed", actions: ["grab"] }, UNSET_INTERACT: { target: "idle" } } }, grabbed: { on: { START_DRAGGING: { target: "dragging", actions: ["startDragging"] }, RELEASE: [{ target: "grabbable", actions: ["release"], cond: "isOnCircuitDropzone" }, { target: "deleted", actions: ["release"], cond: "isOnPaletteDropzone" }] } }, dragging: { type: "compound", initial: "unknown", on: { END_DRAGGING: { target: "dropped", actions: ["endDragging"] } }, states: { unknown: { always: [{ target: "snapped", cond: "isOnCircuitDropzone" }, { target: "unsnapped", cond: "isOnPaletteDropzone" }] }, snapped: { entry: ["snap"], on: { UNSNAP: { target: "unsnapped" } } }, unsnapped: { entry: ["unsnap"], on: { SNAP: { target: "snapped" } } } } }, dropped: { entry: ["drop"], always: [{ target: "grabbable", cond: "isDroppedOnCircuitDropzone" }, { target: "deleted", cond: "isTrashed" }] }, deleted: { type: "final", entry: "delete" } } }, { actions: { init: () => {
-        this.dispatchEvent(new Event("draggable-init", { bubbles: true }));
+        this.dispatchEvent(new Event("draggable:init", { bubbles: true }));
       }, setInteract: () => {
         let i = (0, lo.default)(this);
         i.styleCursor(false), i.pointerEvents({ ignoreFrom: ".resize-handle" }), i.on("down", this.grab.bind(this)), i.on("up", this.release.bind(this)), i.draggable({ onstart: this.startDragging.bind(this), onmove: this.dragMove.bind(this), onend: this.endDragging.bind(this), ignoreFrom: ".resize-handle" });
         let l = this.dropzone;
         Fa(l) ? this.snappedDropzone = l : this.snappedDropzone = null;
       }, grab: (i, l) => {
-        l.type === "GRAB" && (this.grabbed = true, this.dispatchEvent(new Event("operation-grab", { bubbles: true })), Cl(this.dropzone) && (this.snapped = false, this.moveByOffset(l.x, l.y), this.classList.remove("qpu-operation-xl")));
+        l.type === "GRAB" && (this.grabbed = true, this.dispatchEvent(new Event("draggable:qpu-operation-grab", { bubbles: true })), Cl(this.dropzone) && (this.snapped = false, this.moveByOffset(l.x, l.y), this.classList.remove("qpu-operation-xl")));
       }, release: () => {
-        this.grabbed = false, this.dispatchEvent(new Event("operation-release", { bubbles: true }));
+        this.grabbed = false, this.dispatchEvent(new Event("draggable:qpu-operation-release", { bubbles: true }));
       }, startDragging: () => {
         this.dragging = true;
       }, endDragging: () => {
-        this.grabbed = false, this.dragging = false, this.dispatchEvent(new Event("operation-end-dragging", { bubbles: true }));
+        this.grabbed = false, this.dragging = false, this.dispatchEvent(new Event("draggable:qpu-operation-end-dragging", { bubbles: true }));
       }, snap: () => {
-        this.snapped = true, this.snappedDropzone = this.dropzone, this.dispatchEvent(new Event("operation-snap", { bubbles: true }));
+        this.snapped = true, this.snappedDropzone = this.dropzone, this.dispatchEvent(new Event("draggable:qpu-operation-snap", { bubbles: true }));
       }, unsnap: () => {
-        this.snapped = false, this.snappedDropzone && this.snappedDropzone.dispatchEvent(new Event("operation-unsnap", { bubbles: true }));
+        this.snapped = false, this.snappedDropzone && this.snappedDropzone.dispatchEvent(new Event("draggable:qpu-operation-unsnap", { bubbles: true }));
       }, drop: () => {
-        !this.snapped || (this.moveTo(0, 0), this.dispatchEvent(new Event("operation-drop", { bubbles: true })));
+        !this.snapped || (this.moveTo(0, 0), this.dispatchEvent(new Event("draggable:qpu-operation-drop", { bubbles: true })));
       }, delete: () => {
-        (0, lo.default)(this).unset(), this.dispatchEvent(new Event("operation-delete", { bubbles: true }));
+        (0, lo.default)(this).unset(), this.dispatchEvent(new Event("draggable:qpu-operation-delete", { bubbles: true }));
       } }, guards: { isOnCircuitDropzone: () => Fa(this.dropzone), isOnPaletteDropzone: () => Cl(this.dropzone), isDroppedOnCircuitDropzone: () => this.snapped && Fa(this.dropzone), isTrashed: () => !this.snapped } });
       this.draggableService = Ke(this.draggableMachine).onTransition((i) => {
         this.debugDraggable && console.log(`draggable: ${Ye(i.value)}`);
@@ -7269,7 +7269,7 @@ function Ee(r) {
       let l = i.modifiers[0];
       if (l.inRange) {
         let c = l.target.source;
-        this.dispatchEvent(new CustomEvent("operation-in-snap-range", { detail: { snapTargetInfo: c }, bubbles: true })), this.moveTo(0, 0), this.snappedDropzone && this.snappedDropzone !== this.dropzone && this.draggableService.send({ type: "UNSNAP" }), this.draggableService.send({ type: "SNAP" });
+        this.dispatchEvent(new CustomEvent("draggable:qpu-operation-in-snap-range", { detail: { snapTargetInfo: c }, bubbles: true })), this.moveTo(0, 0), this.snappedDropzone && this.snappedDropzone !== this.dropzone && this.draggableService.send({ type: "UNSNAP" }), this.draggableService.send({ type: "SNAP" });
       } else
         this.snapped && this.draggableService.send({ type: "UNSNAP" });
     }
@@ -7336,7 +7336,7 @@ var Ol = an.reduce(function(r, e) {
 var Ya = [].concat(an, [Ua]).reduce(function(r, e) {
   return r.concat([e, e + "-" + jr, e + "-" + Gn]);
 }, []);
-var qh = "beforeRead";
+var $h = "beforeRead";
 var Fh = "read";
 var Wh = "afterRead";
 var Uh = "beforeMain";
@@ -7345,7 +7345,7 @@ var Yh = "afterMain";
 var Xh = "beforeWrite";
 var Zh = "write";
 var Qh = "afterWrite";
-var tp = [qh, Fh, Wh, Uh, Vh, Yh, Xh, Zh, Qh];
+var tp = [$h, Fh, Wh, Uh, Vh, Yh, Xh, Zh, Qh];
 function pt(r) {
   return r ? (r.nodeName || "").toLowerCase() : null;
 }
@@ -7539,7 +7539,7 @@ var tv = u(function(e, t) {
 function rv(r) {
   var e, t = r.state, i = r.name, l = r.options, c = t.elements.arrow, f = t.modifiersData.popperOffsets, b = dt(t.placement), h = Hn(b), d = [Ze, et].indexOf(b) >= 0, v = d ? "height" : "width";
   if (!(!c || !f)) {
-    var w = tv(l.padding, t), y = jn(c), S = h === "y" ? Ue : Ze, O = h === "y" ? at : et, M = t.rects.reference[v] + t.rects.reference[h] - f[h] - t.rects.popper[v], _ = f[h] - t.rects.reference[h], q = mr(c), L = q ? h === "y" ? q.clientHeight || 0 : q.clientWidth || 0 : 0, F = M / 2 - _ / 2, I = w[S], Q = L - y[v] - w[O], z = L / 2 - y[v] / 2 + F, j = Bn(I, z, Q), Y = h;
+    var w = tv(l.padding, t), y = jn(c), S = h === "y" ? Ue : Ze, O = h === "y" ? at : et, M = t.rects.reference[v] + t.rects.reference[h] - f[h] - t.rects.popper[v], _ = f[h] - t.rects.reference[h], $ = mr(c), L = $ ? h === "y" ? $.clientHeight || 0 : $.clientWidth || 0 : 0, F = M / 2 - _ / 2, I = w[S], Q = L - y[v] - w[O], z = L / 2 - y[v] / 2 + F, j = Bn(I, z, Q), Y = h;
     t.modifiersData[i] = (e = {}, e[Y] = j, e.centerOffset = j - z, e);
   }
 }
@@ -7567,7 +7567,7 @@ u(ov, "roundOffsetsByDPR");
 function op(r) {
   var e, t = r.popper, i = r.popperRect, l = r.placement, c = r.variation, f = r.offsets, b = r.position, h = r.gpuAcceleration, d = r.adaptive, v = r.roundOffsets, w = r.isFixed, y = f.x, S = y === void 0 ? 0 : y, O = f.y, M = O === void 0 ? 0 : O, _ = typeof v == "function" ? v({ x: S, y: M }) : { x: S, y: M };
   S = _.x, M = _.y;
-  var q = f.hasOwnProperty("x"), L = f.hasOwnProperty("y"), F = Ze, I = Ue, Q = window;
+  var $ = f.hasOwnProperty("x"), L = f.hasOwnProperty("y"), F = Ze, I = Ue, Q = window;
   if (d) {
     var z = mr(t), j = "clientHeight", Y = "clientWidth";
     if (z === Qe(t) && (z = gt(t), At(z).position !== "static" && b === "absolute" && (j = "scrollHeight", Y = "scrollWidth")), z = z, l === Ue || (l === Ze || l === et) && c === Gn) {
@@ -7584,9 +7584,9 @@ function op(r) {
   var ne = Object.assign({ position: b }, d && iv), ce = v === true ? ov({ x: S, y: M }) : { x: S, y: M };
   if (S = ce.x, M = ce.y, h) {
     var W;
-    return Object.assign({}, ne, (W = {}, W[I] = L ? "0" : "", W[F] = q ? "0" : "", W.transform = (Q.devicePixelRatio || 1) <= 1 ? "translate(" + S + "px, " + M + "px)" : "translate3d(" + S + "px, " + M + "px, 0)", W));
+    return Object.assign({}, ne, (W = {}, W[I] = L ? "0" : "", W[F] = $ ? "0" : "", W.transform = (Q.devicePixelRatio || 1) <= 1 ? "translate(" + S + "px, " + M + "px)" : "translate3d(" + S + "px, " + M + "px, 0)", W));
   }
-  return Object.assign({}, ne, (e = {}, e[I] = L ? M + "px" : "", e[F] = q ? S + "px" : "", e.transform = "", e));
+  return Object.assign({}, ne, (e = {}, e[I] = L ? M + "px" : "", e[F] = $ ? S + "px" : "", e.transform = "", e));
 }
 __name(op, "op");
 u(op, "mapToStyles");
@@ -7631,25 +7631,25 @@ function Qa(r) {
 }
 __name(Qa, "Qa");
 u(Qa, "getOppositeVariationPlacement");
-function $n(r) {
+function qn(r) {
   var e = Qe(r), t = e.pageXOffset, i = e.pageYOffset;
   return { scrollLeft: t, scrollTop: i };
 }
-__name($n, "$n");
-u($n, "getWindowScroll");
-function qn(r) {
-  return Zt(gt(r)).left + $n(r).scrollLeft;
-}
 __name(qn, "qn");
-u(qn, "getWindowScrollBarX");
+u(qn, "getWindowScroll");
+function $n(r) {
+  return Zt(gt(r)).left + qn(r).scrollLeft;
+}
+__name($n, "$n");
+u($n, "getWindowScrollBarX");
 function Il(r) {
   var e = Qe(r), t = gt(r), i = e.visualViewport, l = t.clientWidth, c = t.clientHeight, f = 0, b = 0;
-  return i && (l = i.width, c = i.height, /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || (f = i.offsetLeft, b = i.offsetTop)), { width: l, height: c, x: f + qn(r), y: b };
+  return i && (l = i.width, c = i.height, /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || (f = i.offsetLeft, b = i.offsetTop)), { width: l, height: c, x: f + $n(r), y: b };
 }
 __name(Il, "Il");
 u(Il, "getViewportRect");
 function Pl(r) {
-  var e, t = gt(r), i = $n(r), l = (e = r.ownerDocument) == null ? void 0 : e.body, c = vr(t.scrollWidth, t.clientWidth, l ? l.scrollWidth : 0, l ? l.clientWidth : 0), f = vr(t.scrollHeight, t.clientHeight, l ? l.scrollHeight : 0, l ? l.clientHeight : 0), b = -i.scrollLeft + qn(r), h = -i.scrollTop;
+  var e, t = gt(r), i = qn(r), l = (e = r.ownerDocument) == null ? void 0 : e.body, c = vr(t.scrollWidth, t.clientWidth, l ? l.scrollWidth : 0, l ? l.clientWidth : 0), f = vr(t.scrollHeight, t.clientHeight, l ? l.scrollHeight : 0, l ? l.clientHeight : 0), b = -i.scrollLeft + $n(r), h = -i.scrollTop;
   return At(l || t).direction === "rtl" && (b += vr(t.clientWidth, l ? l.clientWidth : 0) - c), { width: c, height: f, x: b, y: h };
 }
 __name(Pl, "Pl");
@@ -7743,7 +7743,7 @@ __name(vo, "vo");
 u(vo, "computeOffsets");
 function gr(r, e) {
   e === void 0 && (e = {});
-  var t = e, i = t.placement, l = i === void 0 ? r.placement : i, c = t.boundary, f = c === void 0 ? Kc : c, b = t.rootBoundary, h = b === void 0 ? Va : b, d = t.elementContext, v = d === void 0 ? vi : d, w = t.altBoundary, y = w === void 0 ? false : w, S = t.padding, O = S === void 0 ? 0 : S, M = fo(typeof O != "number" ? O : ho(O, an)), _ = v === vi ? ep : vi, q = r.rects.popper, L = r.elements[y ? _ : v], F = Al(Tr(L) ? L : L.contextElement || gt(r.elements.popper), f, h), I = Zt(r.elements.reference), Q = vo({ reference: I, element: q, strategy: "absolute", placement: l }), z = gi(Object.assign({}, q, Q)), j = v === vi ? z : I, Y = { top: F.top - j.top + M.top, bottom: j.bottom - F.bottom + M.bottom, left: F.left - j.left + M.left, right: j.right - F.right + M.right }, K = r.modifiersData.offset;
+  var t = e, i = t.placement, l = i === void 0 ? r.placement : i, c = t.boundary, f = c === void 0 ? Kc : c, b = t.rootBoundary, h = b === void 0 ? Va : b, d = t.elementContext, v = d === void 0 ? vi : d, w = t.altBoundary, y = w === void 0 ? false : w, S = t.padding, O = S === void 0 ? 0 : S, M = fo(typeof O != "number" ? O : ho(O, an)), _ = v === vi ? ep : vi, $ = r.rects.popper, L = r.elements[y ? _ : v], F = Al(Tr(L) ? L : L.contextElement || gt(r.elements.popper), f, h), I = Zt(r.elements.reference), Q = vo({ reference: I, element: $, strategy: "absolute", placement: l }), z = gi(Object.assign({}, $, Q)), j = v === vi ? z : I, Y = { top: F.top - j.top + M.top, bottom: j.bottom - F.bottom + M.bottom, left: F.left - j.left + M.left, right: j.right - F.right + M.right }, K = r.modifiersData.offset;
   if (v === vi && K) {
     var ie = K[l];
     Object.keys(Y).forEach(function(ne) {
@@ -7783,7 +7783,7 @@ u(dv, "getExpandedFallbackPlacements");
 function fv(r) {
   var e = r.state, t = r.options, i = r.name;
   if (!e.modifiersData[i]._skip) {
-    for (var l = t.mainAxis, c = l === void 0 ? true : l, f = t.altAxis, b = f === void 0 ? true : f, h = t.fallbackPlacements, d = t.padding, v = t.boundary, w = t.rootBoundary, y = t.altBoundary, S = t.flipVariations, O = S === void 0 ? true : S, M = t.allowedAutoPlacements, _ = e.options.placement, q = dt(_), L = q === _, F = h || (L || !O ? [mi(_)] : dv(_)), I = [_].concat(F).reduce(function(Ct, _t) {
+    for (var l = t.mainAxis, c = l === void 0 ? true : l, f = t.altAxis, b = f === void 0 ? true : f, h = t.fallbackPlacements, d = t.padding, v = t.boundary, w = t.rootBoundary, y = t.altBoundary, S = t.flipVariations, O = S === void 0 ? true : S, M = t.allowedAutoPlacements, _ = e.options.placement, $ = dt(_), L = $ === _, F = h || (L || !O ? [mi(_)] : dv(_)), I = [_].concat(F).reduce(function(Ct, _t) {
       return Ct.concat(dt(_t) === Ua ? zl(e, { placement: _t, boundary: v, rootBoundary: w, padding: d, flipVariations: O, allowedAutoPlacements: M }) : _t);
     }, []), Q = e.rects.reference, z = e.rects.popper, j = /* @__PURE__ */ new Map(), Y = true, K = I[0], ie = 0; ie < I.length; ie++) {
       var ne = I[ie], ce = dt(ne), W = Qt(ne) === jr, ue = [Ue, at].indexOf(ce) >= 0, ke = ue ? "width" : "height", Ve = gr(e, { placement: ne, boundary: v, rootBoundary: w, altBoundary: y, padding: d }), Le = ue ? W ? et : Ze : W ? at : Ue;
@@ -7866,14 +7866,14 @@ function _l(r) {
 __name(_l, "_l");
 u(_l, "getAltAxis");
 function bv(r) {
-  var e = r.state, t = r.options, i = r.name, l = t.mainAxis, c = l === void 0 ? true : l, f = t.altAxis, b = f === void 0 ? false : f, h = t.boundary, d = t.rootBoundary, v = t.altBoundary, w = t.padding, y = t.tether, S = y === void 0 ? true : y, O = t.tetherOffset, M = O === void 0 ? 0 : O, _ = gr(e, { boundary: h, rootBoundary: d, padding: w, altBoundary: v }), q = dt(e.placement), L = Qt(e.placement), F = !L, I = Hn(q), Q = _l(I), z = e.modifiersData.popperOffsets, j = e.rects.reference, Y = e.rects.popper, K = typeof M == "function" ? M(Object.assign({}, e.rects, { placement: e.placement })) : M, ie = typeof K == "number" ? { mainAxis: K, altAxis: K } : Object.assign({ mainAxis: 0, altAxis: 0 }, K), ne = e.modifiersData.offset ? e.modifiersData.offset[e.placement] : null, ce = { x: 0, y: 0 };
+  var e = r.state, t = r.options, i = r.name, l = t.mainAxis, c = l === void 0 ? true : l, f = t.altAxis, b = f === void 0 ? false : f, h = t.boundary, d = t.rootBoundary, v = t.altBoundary, w = t.padding, y = t.tether, S = y === void 0 ? true : y, O = t.tetherOffset, M = O === void 0 ? 0 : O, _ = gr(e, { boundary: h, rootBoundary: d, padding: w, altBoundary: v }), $ = dt(e.placement), L = Qt(e.placement), F = !L, I = Hn($), Q = _l(I), z = e.modifiersData.popperOffsets, j = e.rects.reference, Y = e.rects.popper, K = typeof M == "function" ? M(Object.assign({}, e.rects, { placement: e.placement })) : M, ie = typeof K == "number" ? { mainAxis: K, altAxis: K } : Object.assign({ mainAxis: 0, altAxis: 0 }, K), ne = e.modifiersData.offset ? e.modifiersData.offset[e.placement] : null, ce = { x: 0, y: 0 };
   if (!!z) {
     if (c) {
       var W, ue = I === "y" ? Ue : Ze, ke = I === "y" ? at : et, Ve = I === "y" ? "height" : "width", Le = z[I], fe = Le + _[ue], Je = Le - _[ke], tt = S ? -Y[Ve] / 2 : 0, Ft = L === jr ? j[Ve] : Y[Ve], J = L === jr ? -Y[Ve] : -j[Ve], pr = e.elements.arrow, Ct = S && pr ? jn(pr) : { width: 0, height: 0 }, _t = e.modifiersData["arrow#persistent"] ? e.modifiersData["arrow#persistent"].padding : po(), Wt = _t[ue], dr = _t[ke], Ut = Bn(0, j[Ve], Ct[Ve]), Gt = F ? j[Ve] / 2 - tt - Ut - Wt - ie.mainAxis : Ft - Ut - Wt - ie.mainAxis, yr = F ? -j[Ve] / 2 + tt + Ut + dr + ie.mainAxis : J + Ut + dr + ie.mainAxis, zr = e.elements.arrow && mr(e.elements.arrow), pn = zr ? I === "y" ? zr.clientTop || 0 : zr.clientLeft || 0 : 0, Ce = (W = ne == null ? void 0 : ne[I]) != null ? W : 0, dn = Le + Gt - Ce - pn, fn = Le + yr - Ce, Ot = Bn(S ? Ln(fe, dn) : fe, Le, S ? vr(Je, fn) : Je);
       z[I] = Ot, ce[I] = Ot - Le;
     }
     if (b) {
-      var _r, Yn = I === "x" ? Ue : Ze, Yr = I === "x" ? at : et, fr = z[Q], yt = Q === "y" ? "height" : "width", wr = fr + _[Yn], Rt = fr - _[Yr], hn = [Ue, Ze].indexOf(q) !== -1, Rr = (_r = ne == null ? void 0 : ne[Q]) != null ? _r : 0, vn = hn ? wr : fr - j[yt] - Y[yt] - Rr + ie.altAxis, Xr = hn ? fr + j[yt] + Y[yt] - Rr - ie.altAxis : Rt, mn = S && hn ? np(vn, fr, Xr) : Bn(S ? vn : wr, fr, S ? Xr : Rt);
+      var _r, Yn = I === "x" ? Ue : Ze, Yr = I === "x" ? at : et, fr = z[Q], yt = Q === "y" ? "height" : "width", wr = fr + _[Yn], Rt = fr - _[Yr], hn = [Ue, Ze].indexOf($) !== -1, Rr = (_r = ne == null ? void 0 : ne[Q]) != null ? _r : 0, vn = hn ? wr : fr - j[yt] - Y[yt] - Rr + ie.altAxis, Xr = hn ? fr + j[yt] + Y[yt] - Rr - ie.altAxis : Rt, mn = S && hn ? np(vn, fr, Xr) : Bn(S ? vn : wr, fr, S ? Xr : Rt);
       z[Q] = mn, ce[Q] = mn - fr;
     }
     e.modifiersData[i] = ce;
@@ -7888,7 +7888,7 @@ function Rl(r) {
 __name(Rl, "Rl");
 u(Rl, "getHTMLElementScroll");
 function kl(r) {
-  return r === Qe(r) || !st(r) ? $n(r) : Rl(r);
+  return r === Qe(r) || !st(r) ? qn(r) : Rl(r);
 }
 __name(kl, "kl");
 u(kl, "getNodeScroll");
@@ -7901,7 +7901,7 @@ u(yv, "isElementScaled");
 function Dl(r, e, t) {
   t === void 0 && (t = false);
   var i = st(e), l = st(e) && yv(e), c = gt(e), f = Zt(r, l), b = { scrollLeft: 0, scrollTop: 0 }, h = { x: 0, y: 0 };
-  return (i || !i && !t) && ((pt(e) !== "body" || Fn(c)) && (b = kl(e)), st(e) ? (h = Zt(e, true), h.x += e.clientLeft, h.y += e.clientTop) : c && (h.x = qn(c))), { x: f.left + b.scrollLeft - h.x, y: f.top + b.scrollTop - h.y, width: f.width, height: f.height };
+  return (i || !i && !t) && ((pt(e) !== "body" || Fn(c)) && (b = kl(e)), st(e) ? (h = Zt(e, true), h.x += e.clientLeft, h.y += e.clientTop) : c && (h.x = $n(c))), { x: f.left + b.scrollLeft - h.x, y: f.top + b.scrollTop - h.y, width: f.width, height: f.height };
 }
 __name(Dl, "Dl");
 u(Dl, "getCompositeRect");
@@ -7975,8 +7975,8 @@ function bp(r) {
   var e = r, t = e.defaultModifiers, i = t === void 0 ? [] : t, l = e.defaultOptions, c = l === void 0 ? mp : l;
   return u(function(b, h, d) {
     d === void 0 && (d = c);
-    var v = { placement: "bottom", orderedModifiers: [], options: Object.assign({}, mp, c), modifiersData: {}, elements: { reference: b, popper: h }, attributes: {}, styles: {} }, w = [], y = false, S = { state: v, setOptions: u(function(q) {
-      var L = typeof q == "function" ? q(v.options) : q;
+    var v = { placement: "bottom", orderedModifiers: [], options: Object.assign({}, mp, c), modifiersData: {}, elements: { reference: b, popper: h }, attributes: {}, styles: {} }, w = [], y = false, S = { state: v, setOptions: u(function($) {
+      var L = typeof $ == "function" ? $(v.options) : $;
       M(), v.options = Object.assign({}, c, v.options, L), v.scrollParents = { reference: Tr(b) ? sn(b) : b.contextElement ? sn(b.contextElement) : [], popper: sn(h) };
       var F = Nl(Ll([].concat(i, v.options.modifiers)));
       if (v.orderedModifiers = F.filter(function(ne) {
@@ -7990,7 +7990,7 @@ function bp(r) {
       return O(), S.update();
     }, "setOptions"), forceUpdate: u(function() {
       if (!y) {
-        var q = v.elements, L = q.reference, F = q.popper;
+        var $ = v.elements, L = $.reference, F = $.popper;
         if (!!gp(L, F)) {
           v.rects = { reference: Dl(L, mr(F), v.options.strategy === "fixed"), popper: jn(F) }, v.reset = false, v.placement = v.options.placement, v.orderedModifiers.forEach(function(ne) {
             return v.modifiersData[ne.name] = Object.assign({}, ne.data);
@@ -8019,9 +8019,9 @@ function bp(r) {
     });
     function O() {
       v.orderedModifiers.forEach(function(_) {
-        var q = _.name, L = _.options, F = L === void 0 ? {} : L, I = _.effect;
+        var $ = _.name, L = _.options, F = L === void 0 ? {} : L, I = _.effect;
         if (typeof I == "function") {
-          var Q = I({ state: v, name: q, instance: S, options: F }), z = u(function() {
+          var Q = I({ state: v, name: $, instance: S, options: F }), z = u(function() {
           }, "noopFn");
           w.push(Q || z);
         }
@@ -8180,20 +8180,20 @@ function _v(r, e) {
     var c = l.popperRect, f = l.popperState, b = l.props, h = b.interactiveBorder, d = Ov(f.placement), v = f.modifiersData.offset;
     if (!v)
       return true;
-    var w = d === "bottom" ? v.top.y : 0, y = d === "top" ? v.bottom.y : 0, S = d === "right" ? v.left.x : 0, O = d === "left" ? v.right.x : 0, M = c.top - i + w > h, _ = i - c.bottom - y > h, q = c.left - t + S > h, L = t - c.right - O > h;
-    return M || _ || q || L;
+    var w = d === "bottom" ? v.top.y : 0, y = d === "top" ? v.bottom.y : 0, S = d === "right" ? v.left.x : 0, O = d === "left" ? v.right.x : 0, M = c.top - i + w > h, _ = i - c.bottom - y > h, $ = c.left - t + S > h, L = t - c.right - O > h;
+    return M || _ || $ || L;
   });
 }
 __name(_v, "_v");
 u(_v, "isCursorOutsideInteractiveBorder");
-function $l(r, e, t) {
+function ql(r, e, t) {
   var i = e + "EventListener";
   ["transitionend", "webkitTransitionEnd"].forEach(function(l) {
     r[i](l, t);
   });
 }
-__name($l, "$l");
-u($l, "updateTransitionEndListener");
+__name(ql, "ql");
+u(ql, "updateTransitionEndListener");
 function Sp(r, e) {
   for (var t = e; t; ) {
     var i;
@@ -8269,7 +8269,7 @@ function kp(r) {
 }
 __name(kp, "kp");
 u(kp, "getExtendedPassedProps");
-function $v(r, e) {
+function qv(r, e) {
   var t = e ? Object.keys(kp(Object.assign({}, br, { plugins: e }))) : Hv, i = t.reduce(function(l, c) {
     var f = (r.getAttribute("data-tippy-" + c) || "").trim();
     if (!f)
@@ -8286,19 +8286,19 @@ function $v(r, e) {
   }, {});
   return i;
 }
-__name($v, "$v");
-u($v, "getDataAttributeProps");
+__name(qv, "qv");
+u(qv, "getDataAttributeProps");
 function Cp(r, e) {
-  var t = Object.assign({}, e, { content: _p(e.content, [r]) }, e.ignoreAttributes ? {} : $v(r, e.plugins));
+  var t = Object.assign({}, e, { content: _p(e.content, [r]) }, e.ignoreAttributes ? {} : qv(r, e.plugins));
   return t.aria = Object.assign({}, br.aria, t.aria), t.aria = { expanded: t.aria.expanded === "auto" ? e.interactive : t.aria.expanded, content: t.aria.content === "auto" ? e.interactive ? null : "describedby" : t.aria.content }, t;
 }
 __name(Cp, "Cp");
 u(Cp, "evaluateProps");
-var qv = u(function() {
+var $v = u(function() {
   return "innerHTML";
 }, "innerHTML");
 function Fl(r, e) {
-  r[qv()] = e;
+  r[$v()] = e;
 }
 __name(Fl, "Fl");
 u(Fl, "dangerouslySetInnerHTML");
@@ -8342,9 +8342,9 @@ u(Dp, "render");
 Dp.$$tippy = true;
 var Fv = 1;
 var Ka = [];
-var ql = [];
+var $l = [];
 function Wv(r, e) {
-  var t = Cp(r, Object.assign({}, br, kp(xp(e)))), i, l, c, f = false, b = false, h = false, d = false, v, w, y, S = [], O = yp(dn, t.interactiveDebounce), M, _ = Fv++, q = null, L = Cv(t.plugins), F = { isEnabled: true, isVisible: false, isDestroyed: false, isMounted: false, isShown: false }, I = { id: _, reference: r, popper: mo(), popperInstance: q, props: t, state: F, plugins: L, clearDelayTimeouts: vn, setProps: Xr, setContent: mn, show: Ti, hide: Ci, hideWithInteractivity: _o, enable: hn, disable: Rr, unmount: Ro, destroy: fs };
+  var t = Cp(r, Object.assign({}, br, kp(xp(e)))), i, l, c, f = false, b = false, h = false, d = false, v, w, y, S = [], O = yp(dn, t.interactiveDebounce), M, _ = Fv++, $ = null, L = Cv(t.plugins), F = { isEnabled: true, isVisible: false, isDestroyed: false, isMounted: false, isShown: false }, I = { id: _, reference: r, popper: mo(), popperInstance: $, props: t, state: F, plugins: L, clearDelayTimeouts: vn, setProps: Xr, setContent: mn, show: Ti, hide: Ci, hideWithInteractivity: _o, enable: hn, disable: Rr, unmount: Ro, destroy: fs };
   if (!t.render)
     return I;
   var Q = t.render(I), z = Q.popper, j = Q.onUpdate;
@@ -8500,12 +8500,12 @@ function Wv(r, e) {
   function Gt(N, te) {
     var ae = ke().box;
     function Me(he) {
-      he.target === ae && ($l(ae, "remove", Me), te());
+      he.target === ae && (ql(ae, "remove", Me), te());
     }
     __name(Me, "Me");
     if (u(Me, "listener"), N === 0)
       return te();
-    $l(ae, "remove", w), $l(ae, "add", Me), w = Me;
+    ql(ae, "remove", w), ql(ae, "add", Me), w = Me;
   }
   __name(Gt, "Gt");
   u(Gt, "onTransitionEnd");
@@ -8692,7 +8692,7 @@ function Wv(r, e) {
             var Oi = ke(), xt = Oi.box, Et = Oi.content;
             Bl([xt, Et], he), Ep([xt, Et], "visible");
           }
-          Je(), tt(), wp(ql, I), (Vt = I.popperInstance) == null || Vt.forceUpdate(), fe("onMount", [I]), I.props.animation && ce() && Ut(he, function() {
+          Je(), tt(), wp($l, I), (Vt = I.popperInstance) == null || Vt.forceUpdate(), fe("onMount", [I]), I.props.animation && ce() && Ut(he, function() {
             I.state.isShown = true, fe("onShown", [I]);
           });
         }
@@ -8721,7 +8721,7 @@ function Wv(r, e) {
   function Ro() {
     I.state.isVisible && I.hide(), !!I.state.isMounted && (Yr(), yt().forEach(function(N) {
       N._tippy.unmount();
-    }), z.parentNode && z.parentNode.removeChild(z), ql = ql.filter(function(N) {
+    }), z.parentNode && z.parentNode.removeChild(z), $l = $l.filter(function(N) {
       return N !== I;
     }), I.state.isMounted = false, fe("onHidden", [I]));
   }
@@ -8846,7 +8846,7 @@ var ln = /* @__PURE__ */ __name(function(r, e, t, i) {
 }, "ln");
 var Or;
 var ns;
-var $r = /* @__PURE__ */ __name(class {
+var qr = /* @__PURE__ */ __name(class {
   constructor(e, t) {
     this.expression = t, Or.set(this, void 0), ns.set(this, ""), Np(this, Or, e, "f"), ln(this, Or, "f").updateParent("");
   }
@@ -8871,8 +8871,8 @@ var $r = /* @__PURE__ */ __name(class {
   set booleanValue(e) {
     ln(this, Or, "f").booleanValue = e;
   }
-}, "$r");
-u($r, "AttributeTemplatePart");
+}, "qr");
+u(qr, "AttributeTemplatePart");
 Or = /* @__PURE__ */ new WeakMap(), ns = /* @__PURE__ */ new WeakMap();
 var bo = /* @__PURE__ */ __name(class {
   constructor(e, t) {
@@ -8964,7 +8964,7 @@ function wo(r, e) {
 __name(wo, "wo");
 u(wo, "processPropertyIdentity");
 function is(r, e) {
-  return typeof e == "boolean" && r instanceof $r && typeof r.element[r.attributeName] == "boolean" ? (r.booleanValue = e, true) : false;
+  return typeof e == "boolean" && r instanceof qr && typeof r.element[r.attributeName] == "boolean" ? (r.booleanValue = e, true) : false;
 }
 __name(is, "is");
 u(is, "processBooleanAttribute");
@@ -9002,7 +9002,7 @@ function* Vv(r) {
             if (f.type === "string")
               c.append(f.value);
             else {
-              let b = new $r(c, f.value);
+              let b = new qr(c, f.value);
               c.append(b), yield b;
             }
         }
@@ -9061,11 +9061,11 @@ var Co = /* @__PURE__ */ __name(class {
   }
 }, "Co");
 u(Co, "EventHandler");
-function $p(r, e) {
-  return r instanceof $r && r.attributeName.startsWith("on") ? (Co.for(r).set(e), r.element.removeAttributeNS(r.attributeNamespace, r.attributeName), true) : false;
+function qp(r, e) {
+  return r instanceof qr && r.attributeName.startsWith("on") ? (Co.for(r).set(e), r.element.removeAttributeNS(r.attributeNamespace, r.attributeName), true) : false;
 }
-__name($p, "$p");
-u($p, "processEvent");
+__name(qp, "qp");
+u(qp, "processEvent");
 function Yv(r, e) {
   return e instanceof wi && r instanceof Jt ? (e.renderInto(r), true) : false;
 }
@@ -9099,12 +9099,12 @@ function Qv(r, e) {
 __name(Qv, "Qv");
 u(Qv, "processIterable");
 function as(r, e) {
-  Bp(r, e) || is(r, e) || $p(r, e) || Yv(r, e) || Xv(r, e) || Qv(r, e) || wo(r, e);
+  Bp(r, e) || is(r, e) || qp(r, e) || Yv(r, e) || Xv(r, e) || Qv(r, e) || wo(r, e);
 }
 __name(as, "as");
 u(as, "processPart");
 var Xl = /* @__PURE__ */ new WeakMap();
-var qp = /* @__PURE__ */ new WeakMap();
+var $p = /* @__PURE__ */ new WeakMap();
 var Fp = /* @__PURE__ */ new WeakMap();
 var wi = /* @__PURE__ */ __name(class {
   constructor(e, t, i) {
@@ -9120,8 +9120,8 @@ var wi = /* @__PURE__ */ __name(class {
   }
   renderInto(e) {
     let t = this.template;
-    if (qp.get(e) !== t) {
-      qp.set(e, t);
+    if ($p.get(e) !== t) {
+      $p.set(e, t);
       let i = new un(t, this.values, this.processor);
       Fp.set(e, i), e instanceof Jt ? e.replace(...i.children) : e.appendChild(i);
       return;
@@ -9192,8 +9192,8 @@ function Oe(r) {
 }
 __name(Oe, "Oe");
 u(Oe, "IconableMixin");
-var qr = u((r) => typeof r == "object" && r !== null && typeof r.if == "string", "isIfable");
-function qe(r) {
+var $r = u((r) => typeof r == "object" && r !== null && typeof r.if == "string", "isIfable");
+function $e(r) {
   class e extends r {
     constructor() {
       super(...arguments);
@@ -9203,8 +9203,8 @@ function qe(r) {
   __name(e, "e");
   return u(e, "IfableMixinClass"), A([k], e.prototype, "if", 2), e;
 }
-__name(qe, "qe");
-u(qe, "IfableMixin");
+__name($e, "$e");
+u($e, "IfableMixin");
 var Ql = u((r) => typeof r == "object" && r !== null && typeof r.initMenu == "function", "isMenuable");
 function Te(r) {
   class e extends r {
@@ -9234,7 +9234,7 @@ function Te(r) {
       return Z(U`${l}`, c), c;
     }
     initMenuItems(i) {
-      if (qr(i.reference)) {
+      if ($r(i.reference)) {
         let c = i.popper.querySelector("button[data-operation-menu-if]");
         H.notNull(c), c.disabled = false, this.ifTooltip = c._tippy, this.ifTooltip === void 0 && (this.ifTooltip = St(c, { animation: false, content: "Set `if' Conditional" }), c.addEventListener("mousedown", this.showIfInspector.bind(this)));
       }
@@ -9259,7 +9259,7 @@ function Te(r) {
       this.hideMenu(), this.dispatchEvent(new Event("operation-menu-flag", { bubbles: true }));
     }
     dispatchOperationDeleteEvent() {
-      this.dispatchEvent(new Event("operation-delete", { bubbles: true }));
+      this.dispatchEvent(new Event("draggable:qpu-operation-delete", { bubbles: true }));
     }
   }
   __name(e, "e");
@@ -9595,7 +9595,7 @@ var Vp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16C19.5817 16 16 19.5817 16 24C16 28.4183 19.5817 32 24 32Z" fill="currentColor"/>
 </svg>
 `;
-var $t = /* @__PURE__ */ __name(class extends Te(Se(Ee(_e(Oe(xe(ye(HTMLElement))))))) {
+var qt = /* @__PURE__ */ __name(class extends Te(Se(Ee(_e(Oe(xe(ye(HTMLElement))))))) {
   get operationType() {
     return Xs;
   }
@@ -9609,14 +9609,14 @@ var $t = /* @__PURE__ */ __name(class extends Te(Se(Ee(_e(Oe(xe(ye(HTMLElement))
   toJson() {
     return `"${Xs}"`;
   }
-}, "$t");
-u($t, "ControlGateElement");
-ee($t);
+}, "qt");
+u(qt, "ControlGateElement");
+ee(qt);
 var Yp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M17 13V35M17 24H31M31 13V35" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var Kt = /* @__PURE__ */ __name(class extends Te(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
+var Kt = /* @__PURE__ */ __name(class extends Te(Se($e(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
   get operationType() {
     return ha;
   }
@@ -9667,7 +9667,7 @@ var Zp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M18.2857 36L29.7143 12M16 24.5714C16 25.622 16.2069 26.6623 16.609 27.6329C17.011 28.6035 17.6003 29.4854 18.3431 30.2283C19.086 30.9712 19.9679 31.5604 20.9385 31.9625C21.9091 32.3645 22.9494 32.5714 24 32.5714C25.0506 32.5714 26.0909 32.3645 27.0615 31.9625C28.0321 31.5604 28.914 30.9712 29.6569 30.2283C30.3997 29.4854 30.989 28.6035 31.391 27.6329C31.7931 26.6623 32 25.622 32 24.5714C32 23.5209 31.7931 22.4806 31.391 21.51C30.989 20.5394 30.3997 19.6574 29.6569 18.9146C28.914 18.1717 28.0321 17.5824 27.0615 17.1804C26.0909 16.7784 25.0506 16.5714 24 16.5714C22.9494 16.5714 21.9091 16.7784 20.9385 17.1804C19.9679 17.5824 19.086 18.1717 18.3431 18.9146C17.6003 19.6574 17.011 20.5394 16.609 21.51C16.2069 22.4806 16 23.5209 16 24.5714Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var tr = /* @__PURE__ */ __name(class extends Te(Se(qe(He(nn(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
+var tr = /* @__PURE__ */ __name(class extends Te(Se($e(He(nn(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
   get operationType() {
     return ma;
   }
@@ -9706,7 +9706,7 @@ var Qp = `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="htt
   <line x1="1" y1="-1" x2="3.34292" y2="-1" transform="matrix(0.570556 0.821259 -0.805999 0.591917 5.9646 18.5332)" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
 `;
-var Ir = /* @__PURE__ */ __name(class extends Te(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
+var Ir = /* @__PURE__ */ __name(class extends Te(Se($e(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
   get operationType() {
     return ba;
   }
@@ -9736,7 +9736,7 @@ var Jp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M17 23.5C17 27.229 14.408 30 11.5 30C8.59199 30 6 27.229 6 23.5C6 19.771 8.59199 17 11.5 17C14.408 17 17 19.771 17 23.5Z" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var Pr = /* @__PURE__ */ __name(class extends Te(Se(qe(He(Wp(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
+var Pr = /* @__PURE__ */ __name(class extends Te(Se($e(He(Wp(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
   get operationType() {
     return ga;
   }
@@ -9772,7 +9772,7 @@ var Kp = `<svg
   <path d="M24 32L34 18M34 32L24 18" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var rr = /* @__PURE__ */ __name(class extends Te(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
+var rr = /* @__PURE__ */ __name(class extends Te(Se($e(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
   get operationType() {
     return ya;
   }
@@ -9795,7 +9795,7 @@ var ed = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M24.8187 13.0016L34.6093 35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var nr = /* @__PURE__ */ __name(class extends Te(Se(qe(He(nn(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
+var nr = /* @__PURE__ */ __name(class extends Te(Se($e(He(nn(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
   get operationType() {
     return wa;
   }
@@ -9818,7 +9818,7 @@ var td = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M24.5 13L29.5 23.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var ir = /* @__PURE__ */ __name(class extends Te(Se(qe(He(nn(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
+var ir = /* @__PURE__ */ __name(class extends Te(Se($e(He(nn(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
   get operationType() {
     return xa;
   }
@@ -9840,7 +9840,7 @@ var rd = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M24.5 13H34.5L24.5 35H34.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var or = /* @__PURE__ */ __name(class extends Te(Se(qe(He(nn(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
+var or = /* @__PURE__ */ __name(class extends Te(Se($e(He(nn(Ee(_e(Oe(xe(ye(HTMLElement)))))))))) {
   get operationType() {
     return Ea;
   }
@@ -9882,7 +9882,7 @@ var id = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M15 13H33M24 13V35" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var sr = /* @__PURE__ */ __name(class extends Te(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
+var sr = /* @__PURE__ */ __name(class extends Te(Se($e(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
   get operationType() {
     return Sa;
   }
@@ -9903,7 +9903,7 @@ var od = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M6 5V43M37.4516 5L43.5 24L37.4516 43" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var qt = /* @__PURE__ */ __name(class extends Te(Se(Ee(Oe(xe(ye(HTMLElement)))))) {
+var $t = /* @__PURE__ */ __name(class extends Te(Se(Ee(Oe(xe(ye(HTMLElement)))))) {
   constructor() {
     super(...arguments);
     this.value = "";
@@ -9931,14 +9931,14 @@ var qt = /* @__PURE__ */ __name(class extends Te(Se(Ee(Oe(xe(ye(HTMLElement)))))
   toJson() {
     return `"|${this.value}>"`;
   }
-}, "qt");
-u(qt, "WriteGateElement"), A([k], qt.prototype, "value", 2);
-ee(qt);
+}, "$t");
+u($t, "WriteGateElement"), A([k], $t.prototype, "value", 2);
+ee($t);
 var ad = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M15 24H33M24 15V33" stroke="currentColor" stroke-width="2" stroke-linecap="round"/ vector-effect="non-scaling-stroke">
 </svg>
 `;
-var lr = /* @__PURE__ */ __name(class extends Te(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
+var lr = /* @__PURE__ */ __name(class extends Te(Se($e(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
   get operationType() {
     return Ta;
   }
@@ -9959,7 +9959,7 @@ var sd = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M17 13L24 24M24 24L31 13M24 24V35" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var ur = /* @__PURE__ */ __name(class extends Te(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
+var ur = /* @__PURE__ */ __name(class extends Te(Se($e(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
   get operationType() {
     return Ca;
   }
@@ -9980,7 +9980,7 @@ var ld = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M17.5 13H31L17.5 35H31" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
-var cr = /* @__PURE__ */ __name(class extends Te(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
+var cr = /* @__PURE__ */ __name(class extends Te(Se($e(He(Ee(_e(Oe(xe(ye(HTMLElement))))))))) {
   get operationType() {
     return Oa;
   }
@@ -9997,7 +9997,7 @@ var cr = /* @__PURE__ */ __name(class extends Te(Se(qe(He(Ee(_e(Oe(xe(ye(HTMLEle
 }, "cr");
 u(cr, "ZGateElement");
 ee(cr);
-var We = u((r) => r instanceof Kt || r instanceof lr || r instanceof ur || r instanceof cr || r instanceof tr || r instanceof sr || r instanceof rr || r instanceof nr || r instanceof ir || r instanceof or || r instanceof ar || r instanceof $t || r instanceof lt || r instanceof qt || r instanceof er || r instanceof Pr || r instanceof Ir, "isOperation");
+var We = u((r) => r instanceof Kt || r instanceof lr || r instanceof ur || r instanceof cr || r instanceof tr || r instanceof sr || r instanceof rr || r instanceof nr || r instanceof ir || r instanceof or || r instanceof ar || r instanceof qt || r instanceof lt || r instanceof $t || r instanceof er || r instanceof Pr || r instanceof Ir, "isOperation");
 var ud = u((r) => r != null && r instanceof Kt, "isHGateElement");
 var cd = u((r) => r != null && r instanceof lr, "isXGateElement");
 var pd = u((r) => r != null && r instanceof ur, "isYGateElement");
@@ -10009,9 +10009,9 @@ var us = u((r) => r != null && r instanceof nr, "isRxGateElement");
 var cs = u((r) => r != null && r instanceof ir, "isRyGateElement");
 var ps = u((r) => r != null && r instanceof or, "isRzGateElement");
 var vd = u((r) => r != null && r instanceof ar, "isSwapGateElement");
-var Jl = u((r) => r != null && r instanceof $t, "isControlGateElement");
+var Jl = u((r) => r != null && r instanceof qt, "isControlGateElement");
 var md = u((r) => r != null && r instanceof lt, "isBlochDisplayElement");
-var LC = u((r) => r != null && r instanceof qt, "isWriteGateElement");
+var LC = u((r) => r != null && r instanceof $t, "isWriteGateElement");
 var gd = u((r) => r != null && r instanceof er, "isMeasurementGateElement");
 var Mo = Tn(so(), 1);
 var Kl = u((r) => r !== null && r instanceof Wr, "isAngleSliderElement");
@@ -10743,8 +10743,8 @@ var ut = /* @__PURE__ */ __name(class extends HTMLElement {
     H.notNull(c);
     let f = t.getAttribute("data-amplitude-imag");
     H.notNull(f);
-    let b = parseInt(l), h = parseFloat(c), d = parseFloat(f), v = new en(h, d), w = v.abs(), y = v.phase() / Math.PI * 180, S = document.importNode(this.qubitCirclePopupTemplate.content, true), O = S.getElementById("qubit-circle-popup--ket-binary-value"), M = S.getElementById("qubit-circle-popup--ket-decimal-value"), _ = S.getElementById("qubit-circle-popup--amplitude"), q = S.getElementById("qubit-circle-popup--amplitude-real-value"), L = S.getElementById("qubit-circle-popup--amplitude-imag-value"), F = S.getElementById("qubit-circle-popup--probability"), I = S.getElementById("qubit-circle-popup--probability-value"), Q = S.getElementById("qubit-circle-popup--phase"), z = S.getElementById("qubit-circle-popup--phase-value");
-    H.notNull(_), H.notNull(q), H.notNull(L), H.notNull(F), H.notNull(I), H.notNull(Q), H.notNull(z), O && (O.textContent = b.toString(2).padStart(this.qubitCount, "0")), M && (M.textContent = b.toString()), this.showQubitCirclePopupAmplitude ? (q.textContent = bt(v.real, 5), L.textContent = `${bt(v.imag, 5)}i`) : _.style.display = "none", this.showQubitCirclePopupProbability ? I.textContent = `${bt(w * w * 100, 4)}%` : F.style.display = "none", this.showQubitCirclePopupPhase ? z.textContent = `${bt(y, 2)}\xB0` : Q.style.display = "none";
+    let b = parseInt(l), h = parseFloat(c), d = parseFloat(f), v = new en(h, d), w = v.abs(), y = v.phase() / Math.PI * 180, S = document.importNode(this.qubitCirclePopupTemplate.content, true), O = S.getElementById("qubit-circle-popup--ket-binary-value"), M = S.getElementById("qubit-circle-popup--ket-decimal-value"), _ = S.getElementById("qubit-circle-popup--amplitude"), $ = S.getElementById("qubit-circle-popup--amplitude-real-value"), L = S.getElementById("qubit-circle-popup--amplitude-imag-value"), F = S.getElementById("qubit-circle-popup--probability"), I = S.getElementById("qubit-circle-popup--probability-value"), Q = S.getElementById("qubit-circle-popup--phase"), z = S.getElementById("qubit-circle-popup--phase-value");
+    H.notNull(_), H.notNull($), H.notNull(L), H.notNull(F), H.notNull(I), H.notNull(Q), H.notNull(z), O && (O.textContent = b.toString(2).padStart(this.qubitCount, "0")), M && (M.textContent = b.toString()), this.showQubitCirclePopupAmplitude ? ($.textContent = bt(v.real, 5), L.textContent = `${bt(v.imag, 5)}i`) : _.style.display = "none", this.showQubitCirclePopupProbability ? I.textContent = `${bt(w * w * 100, 4)}%` : F.style.display = "none", this.showQubitCirclePopupPhase ? z.textContent = `${bt(y, 2)}\xB0` : Q.style.display = "none";
     let j = document.createElement("div");
     j.appendChild(S), i.setContent(j.innerHTML), i.show();
   }
@@ -11052,7 +11052,7 @@ var zt = /* @__PURE__ */ __name(class extends HTMLElement {
     return this.flagInput.value;
   }
   set operation(e) {
-    if (this.clear(), this.disableAllPanes(), qr(e) && (this.conditionalGatePaneDisabled = false, this.ifInput.value = e.if), Cn(e)) {
+    if (this.clear(), this.disableAllPanes(), $r(e) && (this.conditionalGatePaneDisabled = false, this.ifInput.value = e.if), Cn(e)) {
       let t = Fi(e.angle);
       Oo(e) ? (this.angleInputLabel.textContent = "\u{1D711}", this.denominatorVariableLabel.textContent = "\u{1D711}") : (us(e) || cs(e) || ps(e)) && (this.angleInputLabel.textContent = "\u{1D6F3}", this.denominatorVariableLabel.textContent = "\u{1D6F3}"), this.anglePaneDisabled = false, this.angleInput.value = e.angle, this.backupCurrentPhi(), this.angleSlider.angle = e.angle, this.denominatorInput.value = t.toString(), this.denominatorLabel.textContent = t.toString(), this.backupCurrentDenominator(), this.reduceAngleFractionCheckbox.checked = e.reducedAngle !== "";
     }
@@ -11835,7 +11835,7 @@ var Nt = /* @__PURE__ */ __name(class extends HTMLElement {
           f !== void 0 && f.length > 0 && (b.controls = f), e.push(b);
           break;
         }
-        case $t: {
+        case qt: {
           let l = i.filter((f) => !f.disabled);
           if (l.length < 2 || this.operations.some((f) => On(f) && f.controls.length > 0))
             break;
@@ -11848,7 +11848,7 @@ var Nt = /* @__PURE__ */ __name(class extends HTMLElement {
           e.push({ type: l[0].operationType, targets: c });
           break;
         }
-        case qt: {
+        case $t: {
           let l = i;
           for (let [, c] of ze(l, (f) => f.value)) {
             let f = c.map((b) => b.bit);
@@ -11986,7 +11986,7 @@ var Tt = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   connectedCallback() {
     let { signal: e } = fa(this, Ao, new AbortController());
-    this.attachShadow({ mode: "open" }), this.update(), this.initDropzone(), this.circuitDropzoneService.start(), this.addEventListener("operation-snap", this.snapOperation, { signal: e }), this.addEventListener("operation-unsnap", this.unsnapOperation, { signal: e }), this.addEventListener("operation-end-dragging", this.dropOperation, { signal: e }), this.addEventListener("operation-delete", this.deleteOperation, { signal: e }), this.addEventListener("resizeable:resize", this.resizeOperation, { signal: e });
+    this.attachShadow({ mode: "open" }), this.update(), this.initDropzone(), this.circuitDropzoneService.start(), this.addEventListener("draggable:qpu-operation-snap", this.snapOperation, { signal: e }), this.addEventListener("draggable:qpu-operation-unsnap", this.unsnapOperation, { signal: e }), this.addEventListener("draggable:qpu-operation-end-dragging", this.dropOperation, { signal: e }), this.addEventListener("draggable:qpu-operation-delete", this.deleteOperation, { signal: e }), this.addEventListener("resizeable:resize", this.resizeOperation, { signal: e });
   }
   disconnectedCallback() {
     var e;
@@ -12158,7 +12158,7 @@ var Si = /* @__PURE__ */ __name(class extends HTMLElement {
     });
   }
   connectedCallback() {
-    document.addEventListener("click", this.maybeDeactivateOperation.bind(this)), this.addEventListener("draggable-init", this.enableDragging), this.addEventListener("resizeable:init", this.enableResizing), this.addEventListener("operation-active", this.activateOperation), this.addEventListener("operation-show-menu", this.showOperationMenu), this.addEventListener("operation-menu-if", this.showOperationInspectorIf), this.addEventListener("operation-menu-angle", this.showOperationInspectorAngle), this.addEventListener("operation-menu-flag", this.showOperationInspectorFlag), this.addEventListener("operation-inspector-if-change", this.setOperationIf), this.addEventListener("operation-inspector-angle-change", this.setOperationAngle), this.addEventListener("operation-inspector-angle-update", this.setOperationAngle), this.addEventListener("operation-inspector-flag-change", this.setOperationFlag), this.addEventListener("operation-grab", this.grabOperation), this.addEventListener("resizeable:grab-resize-handle", this.grabResizeHandle), this.addEventListener("operation-release", this.releaseOperation), this.addEventListener("resizeable:end-resizing", this.resizeEnd), this.addEventListener("operation-end-dragging", this.endDraggingOperation), this.addEventListener("operation-drop", this.dropOperation), this.addEventListener("operation-delete", this.deleteOperation), this.addEventListener("circuit-step-click", this.clickStep), this.addEventListener("circuit-step-snap", this.snapStep), this.addEventListener("circuit-step-unsnap", this.unsnapStep), this.addEventListener("operation-in-snap-range", this.operationInSnapRange), this.addEventListener("resizeable:resize-handle-in-snap-range", this.resizeHandleInSnapRange), this.addEventListener("circuit-step-mouseenter", this.mouseEnterStep), this.addEventListener("circuit-step-mouseleave", this.mouseLeaveStep), this.addEventListener("quantum-circuit-mouseleave", this.mouseLeaveCircuit), this.addEventListener("quantum-circuit-init", this.makeCircuitHoverable), this.circuitEditorService.start(), this.attachShadow({ mode: "open" }), this.update();
+    document.addEventListener("click", this.maybeDeactivateOperation.bind(this)), this.addEventListener("draggable:init", this.enableDragging), this.addEventListener("resizeable:init", this.enableResizing), this.addEventListener("operation-active", this.activateOperation), this.addEventListener("operation-show-menu", this.showOperationMenu), this.addEventListener("operation-menu-if", this.showOperationInspectorIf), this.addEventListener("operation-menu-angle", this.showOperationInspectorAngle), this.addEventListener("operation-menu-flag", this.showOperationInspectorFlag), this.addEventListener("operation-inspector-if-change", this.setOperationIf), this.addEventListener("operation-inspector-angle-change", this.setOperationAngle), this.addEventListener("operation-inspector-angle-update", this.setOperationAngle), this.addEventListener("operation-inspector-flag-change", this.setOperationFlag), this.addEventListener("draggable:qpu-operation-grab", this.grabOperation), this.addEventListener("resizeable:grab-resize-handle", this.grabResizeHandle), this.addEventListener("draggable:qpu-operation-release", this.releaseOperation), this.addEventListener("resizeable:end-resizing", this.resizeEnd), this.addEventListener("draggable:qpu-operation-end-dragging", this.endDraggingOperation), this.addEventListener("draggable:qpu-operation-drop", this.dropOperation), this.addEventListener("draggable:qpu-operation-delete", this.deleteOperation), this.addEventListener("circuit-step-click", this.clickStep), this.addEventListener("circuit-step-snap", this.snapStep), this.addEventListener("circuit-step-unsnap", this.unsnapStep), this.addEventListener("draggable:qpu-operation-in-snap-range", this.operationInSnapRange), this.addEventListener("resizeable:resize-handle-in-snap-range", this.resizeHandleInSnapRange), this.addEventListener("circuit-step-mouseenter", this.mouseEnterStep), this.addEventListener("circuit-step-mouseleave", this.mouseLeaveStep), this.addEventListener("quantum-circuit-mouseleave", this.mouseLeaveCircuit), this.addEventListener("quantum-circuit-init", this.makeCircuitHoverable), this.circuitEditorService.start(), this.attachShadow({ mode: "open" }), this.update();
   }
   update() {
     Z(U`<slot></slot>`, this.shadowRoot);
@@ -12206,7 +12206,7 @@ var Si = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   showOperationInspectorIf(e) {
     let t = e.target;
-    if (!qr(t))
+    if (!$r(t))
       throw new Error(`${t} isn't an Ifable Operation.`);
     this.circuitEditorService.send({ type: "SHOW_OPERATION_INSPECTOR_IF", operation: t });
   }
@@ -12224,7 +12224,7 @@ var Si = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   setOperationIf(e) {
     let t = e.target, i = this.activeOperation;
-    if (!qr(i))
+    if (!$r(i))
       throw new Error("[data-if] not found.");
     this.circuitEditorService.send({ type: "SET_OPERATION_IF", operation: i, if: t.if });
   }
@@ -12341,7 +12341,7 @@ var nu = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   connectedCallback() {
     let { signal: e } = fa(this, zo, new AbortController());
-    this.attachShadow({ mode: "open" }), this.update(), this.initOperation(this.operation), this.addEventListener("operation-grab", this.newOperation, { signal: e }), this.addEventListener("operation-delete", this.deleteOperation, { signal: e });
+    this.attachShadow({ mode: "open" }), this.update(), this.initOperation(this.operation), this.addEventListener("draggable:qpu-operation-grab", this.newOperation, { signal: e }), this.addEventListener("draggable:qpu-operation-delete", this.deleteOperation, { signal: e });
   }
   disconnectedCallback() {
     var e;
@@ -12709,7 +12709,7 @@ var se = /* @__PURE__ */ __name(class extends ye(HTMLElement) {
     return this.updateStepOperationAttributes(t), this;
   }
   control(...e) {
-    let t = this.applyOperationToTargets(() => new $t(), ...e);
+    let t = this.applyOperationToTargets(() => new qt(), ...e);
     return this.updateStepOperationAttributes(t), this;
   }
   bloch(...e) {
@@ -12717,7 +12717,7 @@ var se = /* @__PURE__ */ __name(class extends ye(HTMLElement) {
   }
   write(e, ...t) {
     return this.applyOperationToTargets(() => {
-      let i = new qt();
+      let i = new $t();
       return i.value = e, i;
     }, ...t), this.resize(), this;
   }
@@ -12768,13 +12768,13 @@ var se = /* @__PURE__ */ __name(class extends ye(HTMLElement) {
   cc(...e) {
     let t = Math.max(...e) + 1, i = this.appendStepWithDropzones(t);
     for (let l of e)
-      i.dropzoneAt(l).put(new $t());
+      i.dropzoneAt(l).put(new qt());
     return this.appendMinimumWires(), this.updateStepOperationAttributes(i), this;
   }
   controlledU(e, t, i) {
     let l = [].concat(t), c = [].concat(i), f = l.concat(c), b = Math.max(...f) + 1, h = this.appendStepWithDropzones(b);
     for (let d of l)
-      h.dropzoneAt(d).put(new $t());
+      h.dropzoneAt(d).put(new qt());
     for (let d of c)
       h.dropzoneAt(d).put(new e());
     this.appendMinimumWires(), this.updateStepOperationAttributes(h);
@@ -12834,12 +12834,12 @@ var se = /* @__PURE__ */ __name(class extends ye(HTMLElement) {
       for (let b of c) {
         switch (true) {
           case /^\|0>$/.test(b): {
-            let h = new qt();
+            let h = new $t();
             h.value = "0", f.appendOperation(h);
             break;
           }
           case /^\|1>$/.test(b): {
-            let h = new qt();
+            let h = new $t();
             h.value = "1", f.appendOperation(h);
             break;
           }
@@ -12909,7 +12909,7 @@ var se = /* @__PURE__ */ __name(class extends ye(HTMLElement) {
             break;
           }
           case /^•$/.test(b): {
-            let h = new $t();
+            let h = new qt();
             f.appendOperation(h);
             break;
           }
@@ -13068,7 +13068,7 @@ var Vn = /* @__PURE__ */ __name(class extends HTMLElement {
     this.updateUrl = false;
   }
   connectedCallback() {
-    this.worker = new Worker("./serviceworker.js"), this.worker.addEventListener("message", this.handleServiceWorkerMessage.bind(this)), this.addEventListener("operation-delete", this.maybeUpdateUrl), this.addEventListener("operation-delete", this.freshRun), this.addEventListener("operation-inspector-if-change", this.freshRun), this.addEventListener("operation-inspector-angle-change", this.freshRun), this.addEventListener("operation-inspector-angle-update", this.maybeUpdateUrl), this.addEventListener("operation-inspector-flag-change", this.freshRun), this.addEventListener("circuit-step-mouseenter", this.runUnlessEditing), this.addEventListener("circuit-step-mouseleave", this.runUnlessEditing), this.addEventListener("circuit-step-snap", this.freshRun), this.addEventListener("circuit-step-unsnap", this.freshRun), this.addEventListener("circuit-step-update", this.freshRun), this.addEventListener("circle-notation-visibility-change", this.run), this.addEventListener("run-circuit-button-click", this.freshRun), this.addEventListener("circuit-step-snap", this.maybeUpdateUrl), this.addEventListener("circuit-step-unsnap", this.maybeUpdateUrl), this.addEventListener("circuit-step-resize-operation", this.maybeUpdateUrl), this.addEventListener("circuit-step-resize-operation", this.freshRun), this.addEventListener("circuit-editor-resize", this.freshRun), this.attachShadow({ mode: "open" }), this.update(), this.maybeUpdateUrl(), this.circuit.setBreakpoint(this.circuit.stepAt(0)), this.setCircleNotationQubitCount();
+    this.worker = new Worker("./serviceworker.js"), this.worker.addEventListener("message", this.handleServiceWorkerMessage.bind(this)), this.addEventListener("draggable:qpu-operation-delete", this.maybeUpdateUrl), this.addEventListener("draggable:qpu-operation-delete", this.freshRun), this.addEventListener("operation-inspector-if-change", this.freshRun), this.addEventListener("operation-inspector-angle-change", this.freshRun), this.addEventListener("operation-inspector-angle-update", this.maybeUpdateUrl), this.addEventListener("operation-inspector-flag-change", this.freshRun), this.addEventListener("circuit-step-mouseenter", this.runUnlessEditing), this.addEventListener("circuit-step-mouseleave", this.runUnlessEditing), this.addEventListener("circuit-step-snap", this.freshRun), this.addEventListener("circuit-step-unsnap", this.freshRun), this.addEventListener("circuit-step-update", this.freshRun), this.addEventListener("circle-notation-visibility-change", this.run), this.addEventListener("run-circuit-button-click", this.freshRun), this.addEventListener("circuit-step-snap", this.maybeUpdateUrl), this.addEventListener("circuit-step-unsnap", this.maybeUpdateUrl), this.addEventListener("circuit-step-resize-operation", this.maybeUpdateUrl), this.addEventListener("circuit-step-resize-operation", this.freshRun), this.addEventListener("circuit-editor-resize", this.freshRun), this.attachShadow({ mode: "open" }), this.update(), this.maybeUpdateUrl(), this.circuit.setBreakpoint(this.circuit.stepAt(0)), this.setCircleNotationQubitCount();
   }
   update() {
     Z(U`<slot></slot>`, this.shadowRoot);
@@ -13098,7 +13098,7 @@ var Vn = /* @__PURE__ */ __name(class extends HTMLElement {
         }
         for (let f of c.dropzones) {
           let b = f.operation;
-          !qr(b) || b.if !== "" && (b.disabled = !t.flags[b.if]);
+          !$r(b) || b.if !== "" && (b.disabled = !t.flags[b.if]);
         }
         if (i === t.step) {
           let f = {};
