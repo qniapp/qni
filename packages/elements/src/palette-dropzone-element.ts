@@ -13,7 +13,7 @@ export class PaletteDropzoneElement extends HTMLElement {
     this.update()
 
     this.initOperation(this.operation)
-    this.addEventListener('draggable:grab-qpu-operation', this.newOperation, {signal})
+    this.addEventListener('draggable:grab', this.newOperation, {signal})
     this.addEventListener('draggable:delete', this.deleteOperation, {signal})
   }
 

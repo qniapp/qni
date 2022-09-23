@@ -1,4 +1,4 @@
-import {Util, describe} from '@qni/common'
+import {Util, describe, emitEvent} from '@qni/common'
 import {createMachine, interpret} from 'xstate'
 import {CircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Constructor} from './constructor'
@@ -155,9 +155,11 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       {
         actions: {
           init: () => {
-            this.dispatchEvent(new Event('draggable:init', {bubbles: true}))
+            emitEvent('draggable:init', {}, this)
           },
-          setInteract: () => {
+          setInteract: (_context, event) => {
+            Util.need(event.type === 'SET_INTERACT', 'event type must be SET_INTERACT')
+
             const interactable = interact(this)
             interactable.styleCursor(false)
 
@@ -182,10 +184,11 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             }
           },
           grab: (_context, event) => {
+            Util.need(event.type === 'GRAB', 'event type must be GRAB')
             if (event.type !== 'GRAB') return
 
             this.grabbed = true
-            this.dispatchEvent(new Event('draggable:grab-qpu-operation', {bubbles: true}))
+            emitEvent('draggable:grab', {}, this)
 
             if (isPaletteDropzoneElement(this.dropzone)) {
               this.snapped = false
@@ -193,38 +196,44 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
               this.classList.remove('qpu-operation-xl')
             }
           },
-          release: () => {
+          release: (_context, event) => {
+            Util.need(event.type === 'RELEASE', 'event type must be RELEASE')
+
             this.grabbed = false
-            this.dispatchEvent(new Event('draggable:release-qpu-operation', {bubbles: true}))
+            emitEvent('draggable:release', {}, this)
           },
-          startDragging: () => {
+          startDragging: (_context, event) => {
+            Util.need(event.type === 'START_DRAGGING', 'event type must be START_DRAGGING')
+
             this.dragging = true
           },
-          endDragging: () => {
+          endDragging: (_context, event) => {
+            Util.need(event.type === 'END_DRAGGING', 'event type must be END_DRAGGING')
+
             this.grabbed = false
             this.dragging = false
-            this.dispatchEvent(new Event('draggable:end-dragging', {bubbles: true}))
+            emitEvent('draggable:end-dragging', {}, this)
           },
           snap: () => {
             this.snapped = true
             this.snappedDropzone = this.dropzone as CircuitDropzoneElement
-            this.dispatchEvent(new Event('draggable:snap-to-dropzone', {bubbles: true}))
+            emitEvent('draggable:snap-to-dropzone', {}, this)
           },
           unsnap: () => {
             this.snapped = false
             if (this.snappedDropzone) {
-              this.snappedDropzone.dispatchEvent(new Event('draggable:unsnap-from-dropzone', {bubbles: true}))
+              emitEvent('draggable:unsnap', {}, this.snappedDropzone)
             }
           },
           drop: () => {
             if (!this.snapped) return
 
             this.moveTo(0, 0)
-            this.dispatchEvent(new Event('draggable:drop-qpu-operation', {bubbles: true}))
+            emitEvent('draggable:drop', {}, this)
           },
           delete: () => {
             interact(this).unset()
-            this.dispatchEvent(new Event('draggable:delete', {bubbles: true}))
+            emitEvent('draggable:delete', {}, this)
           }
         },
         guards: {
@@ -304,9 +313,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
 
       if (snapModifier.inRange) {
         const snapTargetInfo = snapModifier.target.source
-        this.dispatchEvent(
-          new CustomEvent('draggable:qpu-operation-in-snap-range', {detail: {snapTargetInfo}, bubbles: true})
-        )
+        emitEvent('draggable:in-snap-range', {snapTargetInfo}, this)
 
         this.moveTo(0, 0)
 
