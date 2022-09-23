@@ -11987,7 +11987,7 @@ var Ct = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   connectedCallback() {
     let { signal: e } = fa(this, Ao, new AbortController());
-    this.attachShadow({ mode: "open" }), this.update(), this.initDropzone(), this.circuitDropzoneService.start(), this.addEventListener("draggable:snap-to-dropzone", this.snapOperation, { signal: e }), this.addEventListener("draggable:unsnap", this.unsnapOperation, { signal: e }), this.addEventListener("draggable:end-dragging", this.dropOperation, { signal: e }), this.addEventListener("draggable:delete", this.deleteOperation, { signal: e }), this.addEventListener("resizeable:resize", this.resizeOperation, { signal: e });
+    this.attachShadow({ mode: "open" }), this.update(), this.initDropzone(), this.circuitDropzoneService.start(), this.addEventListener("draggable:snap-to-dropzone", this.snap, { signal: e }), this.addEventListener("draggable:unsnap", this.unsnap, { signal: e }), this.addEventListener("draggable:end-dragging", this.dropOperation, { signal: e }), this.addEventListener("draggable:delete", this.deleteOperation, { signal: e }), this.addEventListener("resizeable:resize", this.resizeOperation, { signal: e });
   }
   disconnectedCallback() {
     var e;
@@ -12036,10 +12036,10 @@ var Ct = /* @__PURE__ */ __name(class extends HTMLElement {
   initDropzone() {
     this.operation !== null && (this.operationName = this.operation.tagName.toLocaleLowerCase()), (0, Md.default)(this).dropzone({ accept: "[data-draggable]", overlap: "center" });
   }
-  snapOperation() {
+  snap() {
     this.circuitDropzoneService.send({ type: "SNAP_OPERATION" });
   }
-  unsnapOperation() {
+  unsnap() {
     this.circuitDropzoneService.send({ type: "UNSNAP_OPERATION" });
   }
   dropOperation() {

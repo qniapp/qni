@@ -193,8 +193,8 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.initDropzone()
     this.circuitDropzoneService.start()
 
-    this.addEventListener('draggable:snap-to-dropzone', this.snapOperation, {signal})
-    this.addEventListener('draggable:unsnap', this.unsnapOperation, {signal})
+    this.addEventListener('draggable:snap-to-dropzone', this.snap, {signal})
+    this.addEventListener('draggable:unsnap', this.unsnap, {signal})
     this.addEventListener('draggable:end-dragging', this.dropOperation, {signal})
     this.addEventListener('draggable:delete', this.deleteOperation, {signal})
     this.addEventListener('resizeable:resize', this.resizeOperation, {signal})
@@ -265,11 +265,11 @@ export class CircuitDropzoneElement extends HTMLElement {
     })
   }
 
-  private snapOperation(): void {
+  private snap(): void {
     this.circuitDropzoneService.send({type: 'SNAP_OPERATION'})
   }
 
-  private unsnapOperation(): void {
+  private unsnap(): void {
     this.circuitDropzoneService.send({type: 'UNSNAP_OPERATION'})
   }
 
