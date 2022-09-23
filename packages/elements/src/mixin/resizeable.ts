@@ -1,12 +1,9 @@
-import {CircuitDropzoneElement, isCircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Util, describe, emitEvent} from '@qni/common'
 import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
-import {PaletteDropzoneElement} from '../palette-dropzone-element'
 import interact from 'interactjs'
-import {isPaletteDropzoneElement} from './draggable'
 
 export const isResizeable = (arg: unknown): arg is Resizeable =>
   arg !== undefined && arg !== null && typeof (arg as Resizeable).resizeable === 'boolean'
@@ -186,6 +183,12 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
       })
     }
 
+    initResizeable(): void {
+      if (this.resizeableService.state !== undefined) return
+
+      this.resizeableService.start()
+    }
+
     private resizeHandleMoveEventListener(event: InteractEvent) {
       const snapModifier = event.modifiers![0]
       if (!snapModifier.inRange) return
@@ -195,23 +198,6 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
 
       this.moveResizeHandleTo(0, 0)
       this.resizeableService.send({type: 'RESIZE_HANDLE_SNAP'})
-    }
-
-    get resizeHandleDropzone(): CircuitDropzoneElement | PaletteDropzoneElement {
-      const el = this.parentElement
-      Util.notNull(el)
-
-      if (!(isCircuitDropzoneElement(el) || isPaletteDropzoneElement(el))) {
-        throw new Error('ResizeableMixin: parentElement is not CircuitDropzoneElement or PaletteDropzoneElement')
-      }
-
-      return el as CircuitDropzoneElement | PaletteDropzoneElement
-    }
-
-    initResizeable(): void {
-      if (this.resizeableService.state !== undefined) return
-
-      this.resizeableService.start()
     }
 
     private grabResizeHandle(event: MouseEvent): void {
