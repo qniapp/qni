@@ -96,14 +96,14 @@ export class CircuitDropzoneElement extends HTMLElement {
           Util.notNull(this.operation)
 
           this.operationName = this.operation.tagName.toLocaleLowerCase()
-          this.dispatchEvent(new Event('circuit-dropzone-snap', {bubbles: true}))
+          this.dispatchEvent(new Event('circuit-dropzone:qpu-operation-snap', {bubbles: true}))
         },
         unsnapOperation: () => {
           this.operationName = ''
-          this.dispatchEvent(new Event('circuit-dropzone-unsnap', {bubbles: true}))
+          this.dispatchEvent(new Event('circuit-dropzone:qpu-operation-unsnap', {bubbles: true}))
         },
         dropOperation: () => {
-          this.dispatchEvent(new Event('circuit-dropzone-drop', {bubbles: true}))
+          this.dispatchEvent(new Event('circuit-dropzone:qpu-operation-drop', {bubbles: true}))
         },
         putOperation: (_context, event) => {
           if (event.type !== 'PUT_OPERATION') return
@@ -119,13 +119,13 @@ export class CircuitDropzoneElement extends HTMLElement {
           this.removeChild(event.operation as Node)
         },
         resizeOperation: () => {
-          this.dispatchEvent(new Event('circuit-dropzone-operation-resize', {bubbles: true}))
+          this.dispatchEvent(new Event('circuit-dropzone:qpu-operation-resize', {bubbles: true}))
         },
         dispatchOccupiedEvent: () => {
-          this.dispatchEvent(new Event('circuit-dropzone-occupy', {bubbles: true}))
+          this.dispatchEvent(new Event('circuit-dropzone:occupied', {bubbles: true}))
         },
         dispatchDeleteOperationEvent: () => {
-          this.dispatchEvent(new Event('circuit-dropzone-operation-delete', {bubbles: true}))
+          this.dispatchEvent(new Event('circuit-dropzone:qpu-operation-delete', {bubbles: true}))
         }
       },
       guards: {

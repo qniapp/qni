@@ -11540,7 +11540,7 @@ var Nt = /* @__PURE__ */ __name(class extends HTMLElement {
     return this.closest("circuit-block");
   }
   connectedCallback() {
-    this.circuitStepService.start(), this.addEventListener("mouseenter", this.dispatchMouseenterEvent), this.addEventListener("mouseleave", this.dispatchMouseleaveEvent), this.addEventListener("click", this.maybeDispatchClickEvent), this.addEventListener("circuit-dropzone-snap", this.snapDropzone), this.addEventListener("circuit-dropzone-unsnap", this.unsnapDropzone), this.addEventListener("circuit-dropzone-operation-delete", this.deleteOperation), this.addEventListener("circuit-dropzone-operation-resize", this.resizeOperation), this.addEventListener("circuit-dropzone-drop", this.unshadow), this.addEventListener("circuit-dropzone-occupy", this.occupyDropzone), this.attachShadow({ mode: "open" }), this.updateOperationAttributes(), this.update();
+    this.circuitStepService.start(), this.addEventListener("mouseenter", this.dispatchMouseenterEvent), this.addEventListener("mouseleave", this.dispatchMouseleaveEvent), this.addEventListener("click", this.maybeDispatchClickEvent), this.addEventListener("circuit-dropzone:qpu-operation-snap", this.snapDropzone), this.addEventListener("circuit-dropzone:qpu-operation-unsnap", this.unsnapDropzone), this.addEventListener("circuit-dropzone:qpu-operation-delete", this.deleteOperation), this.addEventListener("circuit-dropzone:qpu-operation-resize", this.resizeOperation), this.addEventListener("circuit-dropzone:qpu-operation-drop", this.unshadow), this.addEventListener("circuit-dropzone:occupied", this.occupyDropzone), this.attachShadow({ mode: "open" }), this.updateOperationAttributes(), this.update();
   }
   attributeChangedCallback(e, t, i) {
     if (t !== i && (e === "data-active" && (i !== null ? this.circuitStepService.send({ type: "ACTIVATE" }) : this.circuitStepService.send({ type: "DEACTIVATE" })), e === "data-breakpoint" && (i !== null ? this.circuitStepService.send({ type: "SET_BREAKPOINT" }) : this.circuitStepService.send({ type: "UNSET_BREAKPOINT" })), e === "data-shadow"))
@@ -11943,21 +11943,21 @@ var Tt = /* @__PURE__ */ __name(class extends HTMLElement {
     this.circuitDropzoneMachine = ot({ id: "circuit-dropzone", initial: "unknown", states: { unknown: { always: [{ target: "empty", cond: "isEmpty" }, { target: "occupied", cond: "isOccupied", actions: ["initOperation"] }] }, empty: { on: { SNAP_OPERATION: { target: "snapped", actions: ["snapOperation"] }, PUT_OPERATION: { target: "occupied", actions: ["putOperation"] } } }, snapped: { on: { UNSNAP_OPERATION: { target: "empty", actions: ["unsnapOperation"] }, DROP_OPERATION: { target: "occupied", actions: ["dropOperation"] } } }, occupied: { entry: "dispatchOccupiedEvent", on: { UNSNAP_OPERATION: { target: "empty", actions: ["unsnapOperation"] }, DELETE_OPERATION: { target: "empty", actions: ["deleteOperation", "dispatchDeleteOperationEvent"] }, RESIZE_OPERATION: { target: "occupied", actions: ["resizeOperation"] } } } } }, { actions: { initOperation: () => {
       H.notNull(this.operation), this.operation.snapped = true;
     }, snapOperation: () => {
-      H.notNull(this.operation), this.operationName = this.operation.tagName.toLocaleLowerCase(), this.dispatchEvent(new Event("circuit-dropzone-snap", { bubbles: true }));
+      H.notNull(this.operation), this.operationName = this.operation.tagName.toLocaleLowerCase(), this.dispatchEvent(new Event("circuit-dropzone:qpu-operation-snap", { bubbles: true }));
     }, unsnapOperation: () => {
-      this.operationName = "", this.dispatchEvent(new Event("circuit-dropzone-unsnap", { bubbles: true }));
+      this.operationName = "", this.dispatchEvent(new Event("circuit-dropzone:qpu-operation-unsnap", { bubbles: true }));
     }, dropOperation: () => {
-      this.dispatchEvent(new Event("circuit-dropzone-drop", { bubbles: true }));
+      this.dispatchEvent(new Event("circuit-dropzone:qpu-operation-drop", { bubbles: true }));
     }, putOperation: (e, t) => {
       t.type === "PUT_OPERATION" && (this.append(t.operation), this.operationName = t.operation.tagName.toLocaleLowerCase(), t.operation.snapped = true);
     }, deleteOperation: (e, t) => {
       t.type === "DELETE_OPERATION" && (this.operationName = "", this.removeChild(t.operation));
     }, resizeOperation: () => {
-      this.dispatchEvent(new Event("circuit-dropzone-operation-resize", { bubbles: true }));
+      this.dispatchEvent(new Event("circuit-dropzone:qpu-operation-resize", { bubbles: true }));
     }, dispatchOccupiedEvent: () => {
-      this.dispatchEvent(new Event("circuit-dropzone-occupy", { bubbles: true }));
+      this.dispatchEvent(new Event("circuit-dropzone:occupied", { bubbles: true }));
     }, dispatchDeleteOperationEvent: () => {
-      this.dispatchEvent(new Event("circuit-dropzone-operation-delete", { bubbles: true }));
+      this.dispatchEvent(new Event("circuit-dropzone:qpu-operation-delete", { bubbles: true }));
     } }, guards: { isEmpty: () => this.operation === null, isOccupied: () => this.operation !== null } });
     this.circuitDropzoneService = Ke(this.circuitDropzoneMachine).onTransition((e) => {
       this.debug && console.log(`circuit-dropzone: ${e.value}`);
