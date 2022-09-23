@@ -30,9 +30,16 @@ type ResizeableEvent =
   | {type: 'END_RESIZING'}
   | {type: 'RESIZE_HANDLE_SNAP'}
 
+// taken from:
+// https://github.com/Microsoft/TypeScript/issues/15480#issuecomment-1245429783
+type ArrayOfLength<N extends number, A extends any[] = []> = A['length'] extends N ? A : ArrayOfLength<N, [...A, any]>
+type Inc<N extends number> = number & [...ArrayOfLength<N>, any]['length']
+type Range<Start extends number, End extends number> = number &
+  (Start extends End ? never : Start | Range<Inc<Start>, End>)
+
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
-    @attr nqubit = 1
+    @attr nqubit: Range<1, 16> = 1
     @attr resizeHandleX = 0
     @attr resizeHandleY = 0
     @attr debugResizeable = false
@@ -83,7 +90,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             on: {
               RESIZE_HANDLE_SNAP: {
                 target: 'resizing',
-                actions: ['snap']
+                actions: ['emitResizeEvent']
               },
               END_RESIZING: {
                 target: 'resizeEnd'
@@ -132,7 +139,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
 
             this.resizing = true
           },
-          snap: (_context, event) => {
+          emitResizeEvent: (_context, event) => {
             Util.need(event.type === 'RESIZE_HANDLE_SNAP', 'event type must be RESIZE_HANDLE_SNAP')
 
             emitEvent('resizeable:resize', {}, this)
@@ -185,6 +192,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
 
       const snapTargetInfo = snapModifier.target.source
       emitEvent('resizeable:resize-handle-in-snap-range', {snapTargetInfo}, this)
+
       this.moveResizeHandleTo(0, 0)
       this.resizeableService.send({type: 'RESIZE_HANDLE_SNAP'})
     }
@@ -201,9 +209,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     }
 
     initResizeable(): void {
-      if (this.resizeableService.state !== undefined) {
-        return
-      }
+      if (this.resizeableService.state !== undefined) return
 
       this.resizeableService.start()
     }
