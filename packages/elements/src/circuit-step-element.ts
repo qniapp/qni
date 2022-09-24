@@ -1077,16 +1077,12 @@ export class CircuitStepElement extends HTMLElement {
         }
         case QftGateElement: {
           const qftGates = sameOps as QftGateElement[]
-          for (const [ifStr, sameIfGates] of groupBy(qftGates, gate => gate.if)) {
-            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
-              const gate0 = sameControlGates[0]
-              const opType = gate0.operationType
-              const targets = sameControlGates.map(each => each.bit)
-              const serializedGate: SerializedQftGate = {type: opType, nqubit: gate0.nqubit, targets}
-              if (ifStr !== '') serializedGate.if = ifStr
-              if (controlsStr !== '') serializedGate.controls = gate0.controls
-              serializedStep.push(serializedGate)
-            }
+          for (const [nqubit, sameNqubitGates] of groupBy(qftGates, gate => gate.nqubit)) {
+            const gate0 = sameNqubitGates[0]
+            const opType = gate0.operationType
+            const targets = sameNqubitGates.map(each => each.bit)
+            const serializedGate: SerializedQftGate = {type: opType, nqubit, targets}
+            serializedStep.push(serializedGate)
           }
           break
         }

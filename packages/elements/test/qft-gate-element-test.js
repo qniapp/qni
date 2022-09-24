@@ -17,6 +17,5 @@ describe('qft-gate element', function () {
   testElementCreation(window.QftGateElement, 'qft-gate')
   testHoverable('qft-gate')
   testIconable('qft-gate')
-  testIfable('qft-gate')
   testWireableOperation('qft-gate')
 })

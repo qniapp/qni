@@ -5,7 +5,6 @@ import {
   HelpableMixin,
   HoverableMixin,
   IconableMixin,
-  IfableMixin,
   MenuableMixin,
   ResizeableMixin
 } from './mixin'
@@ -23,10 +22,8 @@ export type QftGateElementProps = {
 
 export class QftGateElement extends MenuableMixin(
   HelpableMixin(
-    IfableMixin(
-      ControllableMixin(
-        ResizeableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
-      )
+    ControllableMixin(
+      ResizeableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
     )
   )
 ) {

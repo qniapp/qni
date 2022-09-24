@@ -5,5 +5,4 @@ export type SerializedQftGate = {
   nqubit: number
   targets: number[]
   controls?: number[]
-  if?: string
 }

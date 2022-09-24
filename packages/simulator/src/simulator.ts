@@ -109,7 +109,6 @@ export class Simulator {
           break
         }
         case SerializedQftGateType:
-          if (each.if && !this.flags[each.if]) break
           if (each.controls && each.controls.length > 0) {
             this.cqft(each.nqubit, each.controls, ...each.targets)
           } else {
