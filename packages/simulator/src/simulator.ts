@@ -310,7 +310,7 @@ export class Simulator {
     return this
   }
 
-  qftSingleTargetBit(nqubit: Range<1, 16>, target: number): Simulator {
+  private qftSingleTargetBit(nqubit: Range<1, 16>, target: number): Simulator {
     switch (nqubit) {
       case 1: {
         this.h(target)
@@ -321,6 +321,16 @@ export class Simulator {
           .h(target)
           .cphase(target + 1, 'π/2', target)
           .h(target + 1)
+        break
+      }
+      case 3: {
+        this.swap(target, target + 2)
+          .h(target)
+          .cphase(target + 1, 'π/2', target)
+          .cphase(target + 2, 'π/4', target)
+          .h(target + 1)
+          .cphase(target + 2, 'π/2', target + 1)
+          .h(target + 2)
         break
       }
       default: {
