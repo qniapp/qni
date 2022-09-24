@@ -299,7 +299,7 @@ export class CircuitStepElement extends HTMLElement {
           if (event.type !== 'SNAP_DROPZONE') return
 
           this.dispatchEvent(
-            new CustomEvent('circuit-step-snap', {
+            new CustomEvent('circuit-step:qpu-operation-snap', {
               detail: {dropzone: event.dropzone},
               bubbles: true
             })
@@ -309,7 +309,7 @@ export class CircuitStepElement extends HTMLElement {
           if (event.type !== 'UNSNAP_DROPZONE') return
 
           this.dispatchEvent(
-            new CustomEvent('circuit-step-unsnap', {
+            new CustomEvent('circuit-step:qpu-operation-unsnap', {
               detail: {dropzone: event.dropzone},
               bubbles: true
             })
@@ -319,7 +319,7 @@ export class CircuitStepElement extends HTMLElement {
           if (event.type !== 'DELETE_OPERATION') return
 
           this.dispatchEvent(
-            new CustomEvent('circuit-step-delete-operation', {
+            new CustomEvent('circuit-step:delete-qpu-operation', {
               detail: {dropzone: event.dropzone},
               bubbles: true
             })
@@ -329,7 +329,7 @@ export class CircuitStepElement extends HTMLElement {
           if (event.type !== 'RESIZE_OPERATION') return
 
           this.dispatchEvent(
-            new CustomEvent('circuit-step-resize-operation', {
+            new CustomEvent('circuit-step:resize-qpu-operation', {
               detail: {dropzone: event.dropzone},
               bubbles: true
             })
@@ -881,7 +881,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private dispatchUpdateEvent(): void {
-    this.dispatchEvent(new Event('circuit-step-update', {bubbles: true}))
+    this.dispatchEvent(new Event('circuit-step:update', {bubbles: true}))
   }
 
   private deleteOperation(event: Event): void {
@@ -895,17 +895,17 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private dispatchMouseenterEvent(): void {
-    this.dispatchEvent(new Event('circuit-step-mouseenter', {bubbles: true}))
+    this.dispatchEvent(new Event('circuit-step:mouseenter', {bubbles: true}))
   }
 
   private dispatchMouseleaveEvent(): void {
-    this.dispatchEvent(new Event('circuit-step-mouseleave', {bubbles: true}))
+    this.dispatchEvent(new Event('circuit-step:mouseleave', {bubbles: true}))
   }
 
   private maybeDispatchClickEvent(event: MouseEvent): void {
     if (isOperation(event.target)) return
 
-    this.dispatchEvent(new Event('circuit-step-click', {bubbles: true}))
+    this.dispatchEvent(new Event('circuit-step:click', {bubbles: true}))
   }
 
   private snapDropzone(event: Event): void {

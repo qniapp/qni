@@ -292,14 +292,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     this.updateAllWires()
 
     this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
-    this.addEventListener('circuit-step-update', this.updateStep)
-    this.addEventListener('circuit-step-snap', this.updateStep)
-    this.addEventListener('circuit-step-snap', this.updateChangedWire)
-    this.addEventListener('circuit-step-unsnap', this.updateStep)
-    this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
-    this.addEventListener('circuit-step-delete-operation', this.updateStep)
-    this.addEventListener('circuit-step-delete-operation', this.updateChangedWire)
-    this.addEventListener('circuit-step-resize-operation', this.updateStep)
+    this.addEventListener('circuit-step:update', this.updateStep)
+    this.addEventListener('circuit-step:qpu-operation-snap', this.updateStep)
+    this.addEventListener('circuit-step:qpu-operation-snap', this.updateChangedWire)
+    this.addEventListener('circuit-step:qpu-operation-unsnap', this.updateStep)
+    this.addEventListener('circuit-step:qpu-operation-unsnap', this.updateChangedWire)
+    this.addEventListener('circuit-step:delete-qpu-operation', this.updateStep)
+    this.addEventListener('circuit-step:delete-qpu-operation', this.updateChangedWire)
+    this.addEventListener('circuit-step:resize-qpu-operation', this.updateStep)
 
     this.dispatchEvent(new Event('quantum-circuit-init', {bubbles: true}))
   }
