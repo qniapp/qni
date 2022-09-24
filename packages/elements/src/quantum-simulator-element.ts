@@ -38,6 +38,8 @@ export class QuantumSimulatorElement extends HTMLElement {
 
     this.addEventListener('draggable:delete', this.maybeUpdateUrl)
     this.addEventListener('draggable:delete', this.freshRun)
+    this.addEventListener('menuable:delete', this.maybeUpdateUrl)
+    this.addEventListener('menuable:delete', this.freshRun)
     this.addEventListener('operation-inspector-if-change', this.freshRun)
     this.addEventListener('operation-inspector-angle-change', this.freshRun)
     this.addEventListener('operation-inspector-angle-update', this.maybeUpdateUrl)

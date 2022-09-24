@@ -65,7 +65,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
     }
 
     private dispatchShowMenuEvent(): void {
-      this.dispatchEvent(new Event('operation-show-menu', {bubbles: true}))
+      this.dispatchEvent(new Event('menuable:show-menu', {bubbles: true}))
     }
 
     private get menuContent(): DocumentFragment | null {
@@ -143,22 +143,21 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
 
     private showIfInspector(): void {
       this.hideMenu()
-      this.dispatchEvent(new Event('operation-menu-if', {bubbles: true}))
+      this.dispatchEvent(new Event('menuable:menu-if', {bubbles: true}))
     }
 
     private showAngleInspector(): void {
       this.hideMenu()
-      this.dispatchEvent(new Event('operation-menu-angle', {bubbles: true}))
+      this.dispatchEvent(new Event('menuable:menu-angle', {bubbles: true}))
     }
 
     private showFlagInspector(): void {
       this.hideMenu()
-      this.dispatchEvent(new Event('operation-menu-flag', {bubbles: true}))
+      this.dispatchEvent(new Event('menuable:menu-flag', {bubbles: true}))
     }
 
     private dispatchOperationDeleteEvent(): void {
-      // TODO: menuable:qpu-operation-delete に変更
-      this.dispatchEvent(new Event('draggable:delete', {bubbles: true}))
+      this.dispatchEvent(new Event('menuable:delete', {bubbles: true}))
     }
   }
 
