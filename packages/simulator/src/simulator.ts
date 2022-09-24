@@ -333,6 +333,41 @@ export class Simulator {
           .h(target + 2)
         break
       }
+      case 4: {
+        this.swap(target, target + 3)
+          .swap(target + 1, target + 2)
+          .h(target)
+          .cphase(target + 1, 'π/2', target)
+          .cphase(target + 2, 'π/4', target)
+          .cphase(target + 3, 'π/8', target)
+          .h(target + 1)
+          .cphase(target + 2, 'π/2', target + 1)
+          .cphase(target + 3, 'π/4', target + 1)
+          .h(target + 2)
+          .cphase(target + 3, 'π/2', target + 2)
+          .h(target + 3)
+        break
+      }
+      case 5: {
+        this.swap(target, target + 4)
+          .swap(target + 1, target + 3)
+          .h(target)
+          .cphase(target + 1, 'π/2', target)
+          .cphase(target + 2, 'π/4', target)
+          .cphase(target + 3, 'π/8', target)
+          .cphase(target + 4, 'π/16', target)
+          .h(target + 1)
+          .cphase(target + 2, 'π/2', target + 1)
+          .cphase(target + 3, 'π/4', target + 1)
+          .cphase(target + 4, 'π/8', target + 1)
+          .h(target + 2)
+          .cphase(target + 3, 'π/2', target + 2)
+          .cphase(target + 4, 'π/4', target + 2)
+          .h(target + 3)
+          .cphase(target + 4, 'π/2', target + 3)
+          .h(target + 4)
+        break
+      }
       default: {
         throw new Error('Not implemented')
       }
