@@ -304,7 +304,29 @@ export class Simulator {
   }
 
   qft(nqubit: Range<1, 16>, ...targets: number[]): Simulator {
-    this.u(Matrix.H, ...targets)
+    for (const each of targets) {
+      this.qftSingleTargetBit(nqubit, each)
+    }
+    return this
+  }
+
+  qftSingleTargetBit(nqubit: Range<1, 16>, target: number): Simulator {
+    switch (nqubit) {
+      case 1: {
+        this.h(target)
+        break
+      }
+      case 2: {
+        this.swap(target, target + 1)
+          .h(target)
+          .cphase(target + 1, 'π/2', target)
+          .h(target + 1)
+        break
+      }
+      default: {
+        throw new Error('Not implemented')
+      }
+    }
     return this
   }
 
