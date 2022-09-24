@@ -301,7 +301,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     this.addEventListener('circuit-step:delete-qpu-operation', this.updateChangedWire)
     this.addEventListener('circuit-step:resize-qpu-operation', this.updateStep)
 
-    this.dispatchEvent(new Event('quantum-circuit-init', {bubbles: true}))
+    this.dispatchEvent(new Event('quantum-circuit:init', {bubbles: true}))
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -399,7 +399,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   }
 
   private dispatchMouseleaveEvent(): void {
-    this.dispatchEvent(new Event('quantum-circuit-mouseleave', {bubbles: true}))
+    this.dispatchEvent(new Event('quantum-circuit:mouseleave', {bubbles: true}))
   }
 
   resize(): void {

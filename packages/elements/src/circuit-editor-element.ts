@@ -403,8 +403,8 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('resizeable:resize-handle-in-snap-range', this.resizeHandleInSnapRange)
     this.addEventListener('circuit-step:mouseenter', this.mouseEnterStep)
     this.addEventListener('circuit-step:mouseleave', this.mouseLeaveStep)
-    this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
-    this.addEventListener('quantum-circuit-init', this.makeCircuitHoverable)
+    this.addEventListener('quantum-circuit:mouseleave', this.mouseLeaveCircuit)
+    this.addEventListener('quantum-circuit:init', this.makeCircuitHoverable)
 
     this.circuitEditorService.start()
     this.attachShadow({mode: 'open'})
