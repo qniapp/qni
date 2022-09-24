@@ -3674,7 +3674,7 @@ qft-gate {
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 }
 
-qft-gate[data-nqubit='2'] {
+qft-gate[data-span='2'] {
   height: calc(
     2rem * 2 + 1rem
   );
@@ -3684,7 +3684,7 @@ qft-gate[data-nqubit='2'] {
   height: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
-qft-gate[data-nqubit='2']::part(body) {
+qft-gate[data-span='2']::part(body) {
   height: calc(
     2rem * 2 + 1rem
   );
@@ -3694,7 +3694,7 @@ qft-gate[data-nqubit='2']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
-qft-gate[data-nqubit='3'] {
+qft-gate[data-span='3'] {
   height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -3704,7 +3704,7 @@ qft-gate[data-nqubit='3'] {
   height: var(--qni-semantic-size-qpu-operation-3qubit);
 }
 
-qft-gate[data-nqubit='3']::part(body) {
+qft-gate[data-span='3']::part(body) {
   height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -3714,7 +3714,7 @@ qft-gate[data-nqubit='3']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-3qubit);
 }
 
-qft-gate[data-nqubit='4'] {
+qft-gate[data-span='4'] {
   height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -3724,7 +3724,7 @@ qft-gate[data-nqubit='4'] {
   height: var(--qni-semantic-size-qpu-operation-4qubit);
 }
 
-qft-gate[data-nqubit='4']::part(body) {
+qft-gate[data-span='4']::part(body) {
   height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -3734,7 +3734,7 @@ qft-gate[data-nqubit='4']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-4qubit);
 }
 
-qft-gate[data-nqubit='5'] {
+qft-gate[data-span='5'] {
   height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -3744,7 +3744,7 @@ qft-gate[data-nqubit='5'] {
   height: var(--qni-semantic-size-qpu-operation-5qubit);
 }
 
-qft-gate[data-nqubit='5']::part(body) {
+qft-gate[data-span='5']::part(body) {
   height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -3754,7 +3754,7 @@ qft-gate[data-nqubit='5']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-5qubit);
 }
 
-qft-gate[data-nqubit='6'] {
+qft-gate[data-span='6'] {
   height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -3764,7 +3764,7 @@ qft-gate[data-nqubit='6'] {
   height: var(--qni-semantic-size-qpu-operation-6qubit);
 }
 
-qft-gate[data-nqubit='6']::part(body) {
+qft-gate[data-span='6']::part(body) {
   height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -3774,7 +3774,7 @@ qft-gate[data-nqubit='6']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-6qubit);
 }
 
-qft-gate[data-nqubit='7'] {
+qft-gate[data-span='7'] {
   height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -3784,7 +3784,7 @@ qft-gate[data-nqubit='7'] {
   height: var(--qni-semantic-size-qpu-operation-7qubit);
 }
 
-qft-gate[data-nqubit='7']::part(body) {
+qft-gate[data-span='7']::part(body) {
   height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -3794,7 +3794,7 @@ qft-gate[data-nqubit='7']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-7qubit);
 }
 
-qft-gate[data-nqubit='8'] {
+qft-gate[data-span='8'] {
   height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -3804,7 +3804,7 @@ qft-gate[data-nqubit='8'] {
   height: var(--qni-semantic-size-qpu-operation-8qubit);
 }
 
-qft-gate[data-nqubit='8']::part(body) {
+qft-gate[data-span='8']::part(body) {
   height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -3814,7 +3814,7 @@ qft-gate[data-nqubit='8']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-8qubit);
 }
 
-qft-gate[data-nqubit='9'] {
+qft-gate[data-span='9'] {
   height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -3824,7 +3824,7 @@ qft-gate[data-nqubit='9'] {
   height: var(--qni-semantic-size-qpu-operation-9qubit);
 }
 
-qft-gate[data-nqubit='9']::part(body) {
+qft-gate[data-span='9']::part(body) {
   height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -3834,7 +3834,7 @@ qft-gate[data-nqubit='9']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-9qubit);
 }
 
-qft-gate[data-nqubit='10'] {
+qft-gate[data-span='10'] {
   height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -3844,7 +3844,7 @@ qft-gate[data-nqubit='10'] {
   height: var(--qni-semantic-size-qpu-operation-10qubit);
 }
 
-qft-gate[data-nqubit='10']::part(body) {
+qft-gate[data-span='10']::part(body) {
   height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -3854,7 +3854,7 @@ qft-gate[data-nqubit='10']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-10qubit);
 }
 
-qft-gate[data-nqubit='11'] {
+qft-gate[data-span='11'] {
   height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -3864,7 +3864,7 @@ qft-gate[data-nqubit='11'] {
   height: var(--qni-semantic-size-qpu-operation-11qubit);
 }
 
-qft-gate[data-nqubit='11']::part(body) {
+qft-gate[data-span='11']::part(body) {
   height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -3874,7 +3874,7 @@ qft-gate[data-nqubit='11']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-11qubit);
 }
 
-qft-gate[data-nqubit='12'] {
+qft-gate[data-span='12'] {
   height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -3884,7 +3884,7 @@ qft-gate[data-nqubit='12'] {
   height: var(--qni-semantic-size-qpu-operation-12qubit);
 }
 
-qft-gate[data-nqubit='12']::part(body) {
+qft-gate[data-span='12']::part(body) {
   height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -3894,7 +3894,7 @@ qft-gate[data-nqubit='12']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-12qubit);
 }
 
-qft-gate[data-nqubit='13'] {
+qft-gate[data-span='13'] {
   height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -3904,7 +3904,7 @@ qft-gate[data-nqubit='13'] {
   height: var(--qni-semantic-size-qpu-operation-13qubit);
 }
 
-qft-gate[data-nqubit='13']::part(body) {
+qft-gate[data-span='13']::part(body) {
   height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -3914,7 +3914,7 @@ qft-gate[data-nqubit='13']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-13qubit);
 }
 
-qft-gate[data-nqubit='14'] {
+qft-gate[data-span='14'] {
   height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -3924,7 +3924,7 @@ qft-gate[data-nqubit='14'] {
   height: var(--qni-semantic-size-qpu-operation-14qubit);
 }
 
-qft-gate[data-nqubit='14']::part(body) {
+qft-gate[data-span='14']::part(body) {
   height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -3934,7 +3934,7 @@ qft-gate[data-nqubit='14']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-14qubit);
 }
 
-qft-gate[data-nqubit='15'] {
+qft-gate[data-span='15'] {
   height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -3944,7 +3944,7 @@ qft-gate[data-nqubit='15'] {
   height: var(--qni-semantic-size-qpu-operation-15qubit);
 }
 
-qft-gate[data-nqubit='15']::part(body) {
+qft-gate[data-span='15']::part(body) {
   height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -3954,7 +3954,7 @@ qft-gate[data-nqubit='15']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-15qubit);
 }
 
-qft-gate[data-nqubit='16'] {
+qft-gate[data-span='16'] {
   height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -3964,7 +3964,7 @@ qft-gate[data-nqubit='16'] {
   height: var(--qni-semantic-size-qpu-operation-16qubit);
 }
 
-qft-gate[data-nqubit='16']::part(body) {
+qft-gate[data-span='16']::part(body) {
   height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -4177,7 +4177,7 @@ qft-dagger-gate {
   --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 }
 
-qft-dagger-gate[data-nqubit='2'] {
+qft-dagger-gate[data-span='2'] {
   height: calc(
     2rem * 2 + 1rem
   );
@@ -4187,7 +4187,7 @@ qft-dagger-gate[data-nqubit='2'] {
   height: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
-qft-dagger-gate[data-nqubit='2']::part(body) {
+qft-dagger-gate[data-span='2']::part(body) {
   height: calc(
     2rem * 2 + 1rem
   );
@@ -4197,7 +4197,7 @@ qft-dagger-gate[data-nqubit='2']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
-qft-dagger-gate[data-nqubit='3'] {
+qft-dagger-gate[data-span='3'] {
   height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -4207,7 +4207,7 @@ qft-dagger-gate[data-nqubit='3'] {
   height: var(--qni-semantic-size-qpu-operation-3qubit);
 }
 
-qft-dagger-gate[data-nqubit='3']::part(body) {
+qft-dagger-gate[data-span='3']::part(body) {
   height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -4217,7 +4217,7 @@ qft-dagger-gate[data-nqubit='3']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-3qubit);
 }
 
-qft-dagger-gate[data-nqubit='4'] {
+qft-dagger-gate[data-span='4'] {
   height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -4227,7 +4227,7 @@ qft-dagger-gate[data-nqubit='4'] {
   height: var(--qni-semantic-size-qpu-operation-4qubit);
 }
 
-qft-dagger-gate[data-nqubit='4']::part(body) {
+qft-dagger-gate[data-span='4']::part(body) {
   height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -4237,7 +4237,7 @@ qft-dagger-gate[data-nqubit='4']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-4qubit);
 }
 
-qft-dagger-gate[data-nqubit='5'] {
+qft-dagger-gate[data-span='5'] {
   height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -4247,7 +4247,7 @@ qft-dagger-gate[data-nqubit='5'] {
   height: var(--qni-semantic-size-qpu-operation-5qubit);
 }
 
-qft-dagger-gate[data-nqubit='5']::part(body) {
+qft-dagger-gate[data-span='5']::part(body) {
   height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -4257,7 +4257,7 @@ qft-dagger-gate[data-nqubit='5']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-5qubit);
 }
 
-qft-dagger-gate[data-nqubit='6'] {
+qft-dagger-gate[data-span='6'] {
   height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -4267,7 +4267,7 @@ qft-dagger-gate[data-nqubit='6'] {
   height: var(--qni-semantic-size-qpu-operation-6qubit);
 }
 
-qft-dagger-gate[data-nqubit='6']::part(body) {
+qft-dagger-gate[data-span='6']::part(body) {
   height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -4277,7 +4277,7 @@ qft-dagger-gate[data-nqubit='6']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-6qubit);
 }
 
-qft-dagger-gate[data-nqubit='7'] {
+qft-dagger-gate[data-span='7'] {
   height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -4287,7 +4287,7 @@ qft-dagger-gate[data-nqubit='7'] {
   height: var(--qni-semantic-size-qpu-operation-7qubit);
 }
 
-qft-dagger-gate[data-nqubit='7']::part(body) {
+qft-dagger-gate[data-span='7']::part(body) {
   height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -4297,7 +4297,7 @@ qft-dagger-gate[data-nqubit='7']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-7qubit);
 }
 
-qft-dagger-gate[data-nqubit='8'] {
+qft-dagger-gate[data-span='8'] {
   height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -4307,7 +4307,7 @@ qft-dagger-gate[data-nqubit='8'] {
   height: var(--qni-semantic-size-qpu-operation-8qubit);
 }
 
-qft-dagger-gate[data-nqubit='8']::part(body) {
+qft-dagger-gate[data-span='8']::part(body) {
   height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -4317,7 +4317,7 @@ qft-dagger-gate[data-nqubit='8']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-8qubit);
 }
 
-qft-dagger-gate[data-nqubit='9'] {
+qft-dagger-gate[data-span='9'] {
   height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -4327,7 +4327,7 @@ qft-dagger-gate[data-nqubit='9'] {
   height: var(--qni-semantic-size-qpu-operation-9qubit);
 }
 
-qft-dagger-gate[data-nqubit='9']::part(body) {
+qft-dagger-gate[data-span='9']::part(body) {
   height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -4337,7 +4337,7 @@ qft-dagger-gate[data-nqubit='9']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-9qubit);
 }
 
-qft-dagger-gate[data-nqubit='10'] {
+qft-dagger-gate[data-span='10'] {
   height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -4347,7 +4347,7 @@ qft-dagger-gate[data-nqubit='10'] {
   height: var(--qni-semantic-size-qpu-operation-10qubit);
 }
 
-qft-dagger-gate[data-nqubit='10']::part(body) {
+qft-dagger-gate[data-span='10']::part(body) {
   height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -4357,7 +4357,7 @@ qft-dagger-gate[data-nqubit='10']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-10qubit);
 }
 
-qft-dagger-gate[data-nqubit='11'] {
+qft-dagger-gate[data-span='11'] {
   height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -4367,7 +4367,7 @@ qft-dagger-gate[data-nqubit='11'] {
   height: var(--qni-semantic-size-qpu-operation-11qubit);
 }
 
-qft-dagger-gate[data-nqubit='11']::part(body) {
+qft-dagger-gate[data-span='11']::part(body) {
   height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -4377,7 +4377,7 @@ qft-dagger-gate[data-nqubit='11']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-11qubit);
 }
 
-qft-dagger-gate[data-nqubit='12'] {
+qft-dagger-gate[data-span='12'] {
   height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -4387,7 +4387,7 @@ qft-dagger-gate[data-nqubit='12'] {
   height: var(--qni-semantic-size-qpu-operation-12qubit);
 }
 
-qft-dagger-gate[data-nqubit='12']::part(body) {
+qft-dagger-gate[data-span='12']::part(body) {
   height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -4397,7 +4397,7 @@ qft-dagger-gate[data-nqubit='12']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-12qubit);
 }
 
-qft-dagger-gate[data-nqubit='13'] {
+qft-dagger-gate[data-span='13'] {
   height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -4407,7 +4407,7 @@ qft-dagger-gate[data-nqubit='13'] {
   height: var(--qni-semantic-size-qpu-operation-13qubit);
 }
 
-qft-dagger-gate[data-nqubit='13']::part(body) {
+qft-dagger-gate[data-span='13']::part(body) {
   height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -4417,7 +4417,7 @@ qft-dagger-gate[data-nqubit='13']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-13qubit);
 }
 
-qft-dagger-gate[data-nqubit='14'] {
+qft-dagger-gate[data-span='14'] {
   height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -4427,7 +4427,7 @@ qft-dagger-gate[data-nqubit='14'] {
   height: var(--qni-semantic-size-qpu-operation-14qubit);
 }
 
-qft-dagger-gate[data-nqubit='14']::part(body) {
+qft-dagger-gate[data-span='14']::part(body) {
   height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -4437,7 +4437,7 @@ qft-dagger-gate[data-nqubit='14']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-14qubit);
 }
 
-qft-dagger-gate[data-nqubit='15'] {
+qft-dagger-gate[data-span='15'] {
   height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -4447,7 +4447,7 @@ qft-dagger-gate[data-nqubit='15'] {
   height: var(--qni-semantic-size-qpu-operation-15qubit);
 }
 
-qft-dagger-gate[data-nqubit='15']::part(body) {
+qft-dagger-gate[data-span='15']::part(body) {
   height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -4457,7 +4457,7 @@ qft-dagger-gate[data-nqubit='15']::part(body) {
   height: var(--qni-semantic-size-qpu-operation-15qubit);
 }
 
-qft-dagger-gate[data-nqubit='16'] {
+qft-dagger-gate[data-span='16'] {
   height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -4467,7 +4467,7 @@ qft-dagger-gate[data-nqubit='16'] {
   height: var(--qni-semantic-size-qpu-operation-16qubit);
 }
 
-qft-dagger-gate[data-nqubit='16']::part(body) {
+qft-dagger-gate[data-span='16']::part(body) {
   height: calc(
     2rem * 16 + 1rem * 15
   );

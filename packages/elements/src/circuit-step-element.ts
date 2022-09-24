@@ -1,5 +1,6 @@
 import {
   DetailedError,
+  Range,
   SerializedCircuitStep,
   SerializedHGate,
   SerializedMeasurementGate,
@@ -58,6 +59,7 @@ import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
 import {isControllable} from './mixin/controllable'
+import {isResizeable} from './mixin'
 
 export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitStepElement
@@ -342,12 +344,26 @@ export class CircuitStepElement extends HTMLElement {
       }
     }
   )
+
   private circuitStepService = interpret(this.circuitStepMachine).onTransition(state => {
     if (this.debug) {
       // eslint-disable-next-line no-console
       console.log(`circuit-step: ${describe(state.value)}`)
     }
   })
+
+  get nqubit(): Range<0, 16> {
+    let result = 0 // this.dropzones.length
+
+    for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
+      const index = parseInt(dropzoneIndex) + 1
+      if (each.operation && index > result) result = index
+      if (isResizeable(each.operation) && index + each.operation.span - 1 > result) {
+        result = index + each.operation.span - 1
+      }
+    }
+    return result
+  }
 
   get wireCount(): number {
     return this.dropzones.length

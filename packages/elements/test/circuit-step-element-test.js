@@ -5,6 +5,54 @@ import {testElementCreation} from './common/test-element-creation'
 describe('circuit-step element', function () {
   testElementCreation(window.CircuitStepElement, 'circuit-step')
 
+  describe('nqubit', function () {
+    afterEach(function () {
+      document.body.textContent = ''
+    })
+
+    it('returns the number of qubits 0', function () {
+      const container = document.createElement('div')
+      container.innerHTML = `
+<circuit-step>
+</circuit-step>`
+      document.body.append(container)
+
+      const step = document.querySelector('circuit-step')
+
+      assert.equal(step.nqubit, 0)
+    })
+
+    it('returns the number of qubits 1', function () {
+      const container = document.createElement('div')
+      container.innerHTML = `
+<circuit-step>
+  <circuit-dropzone>
+    <h-gate></h-gate>
+  </circuit-dropzone>
+</circuit-step>`
+      document.body.append(container)
+
+      const step = document.querySelector('circuit-step')
+
+      assert.equal(step.nqubit, 1)
+    })
+
+    it('If a Resizeable gate is included, returns the number of qubits added to the its span', function () {
+      const container = document.createElement('div')
+      container.innerHTML = `
+<circuit-step>
+  <circuit-dropzone>
+    <qft-gate data-span="3"></qft-gate>
+  </circuit-dropzone>
+</circuit-step>`
+      document.body.append(container)
+
+      const step = document.querySelector('circuit-step')
+
+      assert.equal(step.nqubit, 3)
+    })
+  })
+
   describe('update connections', function () {
     afterEach(function () {
       document.body.textContent = ''

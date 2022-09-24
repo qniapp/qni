@@ -160,24 +160,14 @@ export class QuantumSimulatorElement extends HTMLElement {
   }
 
   private setCircleNotationQubitCount(): number {
-    const serializedSteps = this.circuit.serialize()
-    Util.need(serializedSteps.length > 0, 'non-zero step length')
-
-    const maxControlTargetBit = Math.max(
-      ...serializedSteps.map(serializedStep =>
-        Math.max(
-          ...serializedStep.map(operation => {
-            let controls: number[] = []
-            if (isControllable(operation)) controls = operation.controls
-
-            return Math.max(...operation.targets.concat(controls))
-          })
-        )
-      )
+    let qubitCount = Math.max(
+      ...this.circuit.steps.map(each => {
+        return each.nqubit as number
+      })
     )
-    const qubitCount = maxControlTargetBit >= 0 ? maxControlTargetBit + 1 : 1
-    this.circleNotation.qubitCount = qubitCount
+    if (qubitCount === 0) qubitCount = 1
 
+    this.circleNotation.qubitCount = qubitCount
     return qubitCount
   }
 
