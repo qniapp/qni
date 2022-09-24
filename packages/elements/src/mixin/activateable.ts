@@ -16,7 +16,7 @@ export function ActivateableMixin<TBase extends Constructor<HTMLElement>>(
 
     activate() {
       this.active = true
-      this.dispatchEvent(new Event('operation-active', {bubbles: true}))
+      this.dispatchEvent(new Event('activateable:active', {bubbles: true}))
     }
 
     deactivate() {

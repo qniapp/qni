@@ -380,7 +380,7 @@ export class CircuitEditorElement extends HTMLElement {
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
     this.addEventListener('draggable:init', this.enableDragging)
     this.addEventListener('resizeable:init', this.enableResizing)
-    this.addEventListener('operation-active', this.activateOperation)
+    this.addEventListener('activateable:active', this.activateOperation)
     this.addEventListener('operation-show-menu', this.showOperationMenu)
     this.addEventListener('operation-menu-if', this.showOperationInspectorIf)
     this.addEventListener('operation-menu-angle', this.showOperationInspectorAngle)
