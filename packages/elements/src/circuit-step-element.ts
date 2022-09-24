@@ -16,7 +16,8 @@ import {
   SerializedYGate,
   SerializedZGate,
   Util,
-  describe
+  describe,
+  emitEvent
 } from '@qni/common'
 import {
   Operation,
@@ -298,42 +299,22 @@ export class CircuitStepElement extends HTMLElement {
         dispatchSnapEvent: (_context, event) => {
           if (event.type !== 'SNAP_DROPZONE') return
 
-          this.dispatchEvent(
-            new CustomEvent('circuit-step:qpu-operation-snap', {
-              detail: {dropzone: event.dropzone},
-              bubbles: true
-            })
-          )
+          emitEvent('circuit-step:qpu-operation-snap', {dropzone: event.dropzone}, this)
         },
         dispatchUnsnapEvent: (_context, event) => {
           if (event.type !== 'UNSNAP_DROPZONE') return
 
-          this.dispatchEvent(
-            new CustomEvent('circuit-step:qpu-operation-unsnap', {
-              detail: {dropzone: event.dropzone},
-              bubbles: true
-            })
-          )
+          emitEvent('circuit-step:qpu-operation-unsnap', {dropzone: event.dropzone}, this)
         },
         dispatchDeleteOperationEvent: (_context, event) => {
           if (event.type !== 'DELETE_OPERATION') return
 
-          this.dispatchEvent(
-            new CustomEvent('circuit-step:delete-qpu-operation', {
-              detail: {dropzone: event.dropzone},
-              bubbles: true
-            })
-          )
+          emitEvent('circuit-step:delete-qpu-operation', {dropzone: event.dropzone}, this)
         },
         dispatchResizeOperationEvent: (_context, event) => {
           if (event.type !== 'RESIZE_OPERATION') return
 
-          this.dispatchEvent(
-            new CustomEvent('circuit-step:resize-qpu-operation', {
-              detail: {dropzone: event.dropzone},
-              bubbles: true
-            })
-          )
+          emitEvent('circuit-step:resize-qpu-operation', {dropzone: event.dropzone}, this)
         },
         unshadow: () => {
           this.shadow = false
@@ -881,7 +862,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private dispatchUpdateEvent(): void {
-    this.dispatchEvent(new Event('circuit-step:update', {bubbles: true}))
+    emitEvent('circuit-step:update', {}, this)
   }
 
   private deleteOperation(event: Event): void {
@@ -895,17 +876,17 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private dispatchMouseenterEvent(): void {
-    this.dispatchEvent(new Event('circuit-step:mouseenter', {bubbles: true}))
+    emitEvent('circuit-step:mouseenter', {}, this)
   }
 
   private dispatchMouseleaveEvent(): void {
-    this.dispatchEvent(new Event('circuit-step:mouseleave', {bubbles: true}))
+    emitEvent('circuit-step:mouseleave', {}, this)
   }
 
   private maybeDispatchClickEvent(event: MouseEvent): void {
     if (isOperation(event.target)) return
 
-    this.dispatchEvent(new Event('circuit-step:click', {bubbles: true}))
+    emitEvent('circuit-step:click', {}, this)
   }
 
   private snapDropzone(event: Event): void {
