@@ -157,7 +157,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
     }
 
     private dispatchOperationDeleteEvent(): void {
-      this.dispatchEvent(new Event('menuable:delete', {bubbles: true}))
+      this.dispatchEvent(new Event('menuable:menu-delete', {bubbles: true}))
     }
   }
 

@@ -396,7 +396,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('draggable:end-dragging', this.endDraggingOperation)
     this.addEventListener('draggable:drop', this.dropOperation)
     this.addEventListener('draggable:delete', this.deleteOperation)
-    this.addEventListener('menuable:delete', this.deleteOperation)
+    this.addEventListener('menuable:menu-delete', this.deleteOperation)
     this.addEventListener('circuit-step:click', this.clickStep)
     this.addEventListener('circuit-step:qpu-operation-snap', this.snapStep)
     this.addEventListener('circuit-step:qpu-operation-unsnap', this.unsnapStep)
