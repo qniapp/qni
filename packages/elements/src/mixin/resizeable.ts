@@ -1,4 +1,4 @@
-import {Util, describe, emitEvent} from '@qni/common'
+import {Range, Util, describe, emitEvent} from '@qni/common'
 import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Constructor} from './constructor'
@@ -26,13 +26,6 @@ type ResizeableEvent =
   | {type: 'START_RESIZING'}
   | {type: 'END_RESIZING'}
   | {type: 'RESIZE_HANDLE_SNAP'}
-
-// taken from:
-// https://github.com/Microsoft/TypeScript/issues/15480#issuecomment-1245429783
-type ArrayOfLength<N extends number, A extends any[] = []> = A['length'] extends N ? A : ArrayOfLength<N, [...A, any]>
-type Inc<N extends number> = number & [...ArrayOfLength<N>, any]['length']
-type Range<Start extends number, End extends number> = number &
-  (Start extends End ? never : Start | Range<Inc<Start>, End>)
 
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {

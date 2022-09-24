@@ -1,5 +1,6 @@
 import {
   Complex,
+  Range,
   SerializedBlochDisplayType,
   SerializedCircuitStep,
   SerializedControlGateType,
@@ -109,11 +110,7 @@ export class Simulator {
           break
         }
         case SerializedQftGateType:
-          if (each.controls && each.controls.length > 0) {
-            this.cqft(each.nqubit, each.controls, ...each.targets)
-          } else {
-            this.qft(each.nqubit, ...each.targets)
-          }
+          this.qft(each.nqubit, ...each.targets)
           break
         case SerializedQftDaggerGateType:
           if (each.if && !this.flags[each.if]) break
@@ -306,13 +303,8 @@ export class Simulator {
     return this
   }
 
-  qft(nqubit: number, ...targets: number[]): Simulator {
+  qft(nqubit: Range<1, 16>, ...targets: number[]): Simulator {
     this.u(Matrix.H, ...targets)
-    return this
-  }
-
-  cqft(nqubit: number, controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.H, ...targets)
     return this
   }
 
