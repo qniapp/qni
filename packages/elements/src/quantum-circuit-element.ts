@@ -1,6 +1,7 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
+import {HoverableMixin, isResizeable} from './mixin'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
 import {QftDaggerGateElement, QftDaggerGateElementProps} from './qft-dagger-gate-element'
 import {QftGateElement, QftGateElementProps} from './qft-gate-element'
@@ -8,7 +9,7 @@ import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
 import {RzGateElement, RzGateElementProps} from './rz-gate-element'
-import {SerializedCircuitStep, Util} from '@qni/common'
+import {SerializedCircuitStep, Util, emitEvent} from '@qni/common'
 import {TGateElement, TGateElementProps} from './t-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
@@ -19,7 +20,6 @@ import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
 import {ControlGateElement} from './control-gate-element'
-import {HoverableMixin, isResizeable} from './mixin'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
@@ -301,7 +301,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     this.addEventListener('circuit-step:delete-qpu-operation', this.updateChangedWire)
     this.addEventListener('circuit-step:resize-qpu-operation', this.updateStep)
 
-    this.dispatchEvent(new Event('quantum-circuit:init', {bubbles: true}))
+    emitEvent('quantum-circuit:init', {}, this)
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -399,7 +399,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   }
 
   private dispatchMouseleaveEvent(): void {
-    this.dispatchEvent(new Event('quantum-circuit:mouseleave', {bubbles: true}))
+    emitEvent('quantum-circuit:mouseleave', {}, this)
   }
 
   resize(): void {
