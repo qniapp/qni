@@ -110,7 +110,7 @@ export class Simulator {
           break
         }
         case SerializedQftGateType:
-          this.qft(each.nqubit, ...each.targets)
+          this.qft(each.span, ...each.targets)
           break
         case SerializedQftDaggerGateType:
           if (each.if && !this.flags[each.if]) break
@@ -303,15 +303,15 @@ export class Simulator {
     return this
   }
 
-  qft(nqubit: Range<1, 16>, ...targets: number[]): Simulator {
+  qft(span: Range<1, 16>, ...targets: number[]): Simulator {
     for (const each of targets) {
-      this.qftSingleTargetBit(nqubit, each)
+      this.qftSingleTargetBit(span, each)
     }
     return this
   }
 
-  private qftSingleTargetBit(nqubit: Range<1, 16>, target: number): Simulator {
-    switch (nqubit) {
+  private qftSingleTargetBit(span: Range<1, 16>, target: number): Simulator {
+    switch (span) {
       case 1: {
         this.h(target)
         break
@@ -1241,7 +1241,7 @@ export class Simulator {
         break
       }
       default: {
-        throw new Error('Not implemented')
+        throw new Error(`Invalid span: ${span}`)
       }
     }
     return this

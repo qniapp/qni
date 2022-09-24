@@ -663,22 +663,19 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Circuit Operation
    */
-  qft(nqubit: number, ...args: number[] | [QftGateElementProps]): QuantumCircuitElement {
+  qft(span: number, ...args: number[] | [QftGateElementProps]): QuantumCircuitElement {
     let targetBits: number[]
-    let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
       targetBits = args as number[]
     } else {
       const props = args[0]
       targetBits = props.targets
-      disabled = props.disabled
     }
 
     this.applyOperationToTargets(() => {
       const qft = new QftGateElement()
-      qft.nqubit = nqubit
-      if (disabled) qft.disable()
+      qft.span = span
       return qft
     }, ...targetBits)
 
@@ -1084,8 +1081,8 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           }
           case /^QFT\d/.test(operation): {
             const qftGate = new QftGateElement()
-            const nqubit = parseInt(operation.slice(3), 10)
-            qftGate.nqubit = nqubit
+            const span = parseInt(operation.slice(3), 10)
+            qftGate.span = span
             newStep.appendOperation(qftGate)
             break
           }

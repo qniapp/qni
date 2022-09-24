@@ -12,8 +12,8 @@ export declare class Resizeable {
   set resizeable(value: boolean)
   get resizeHandle(): HTMLElement
   set resizeHandleSnapTargets(values: Array<{x: number; y: number}>)
-  get nqubit(): number
-  set nqubit(value: number)
+  get span(): number
+  set span(value: number)
   initResizeable(): void
 }
 
@@ -29,7 +29,7 @@ type ResizeableEvent =
 
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
-    @attr nqubit: Range<1, 16> = 1
+    @attr span: Range<1, 16> = 1
     @attr resizeHandleX = 0
     @attr resizeHandleY = 0
     @attr debugResizeable = false

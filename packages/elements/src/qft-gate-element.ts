@@ -46,7 +46,7 @@ export class QftGateElement extends MenuableMixin(
   }
 
   toJson(): string {
-    return `"${SerializedQftGateType}${this.nqubit}"`
+    return `"${SerializedQftGateType}${this.span}"`
   }
 }
 

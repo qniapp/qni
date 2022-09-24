@@ -247,9 +247,9 @@ export class CircuitEditorElement extends HTMLElement {
 
           const wireIndex = dropzone.circuitStep.dropzones.indexOf(dropzone)
           const snapTarget = this.circuit.resizeHandleSnapTargetAt(event.x, event.y)
-          const operationNqubit = snapTarget.wireIndex - wireIndex + 1
+          const span = snapTarget.wireIndex - wireIndex + 1
 
-          operation.nqubit = operationNqubit
+          operation.span = span
         },
         addDocumentCursorGrabbingStyle: () => {
           document.documentElement.setAttribute('data-grabbing', '')
