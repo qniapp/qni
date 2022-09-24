@@ -1,6 +1,5 @@
 import {
   ActivateableMixin,
-  DisableableMixin,
   DraggableMixin,
   HelpableMixin,
   HoverableMixin,
@@ -16,13 +15,10 @@ import qftGateIcon from '../icon/qft-gate.svg'
 
 export type QftGateElementProps = {
   targets: number[]
-  disabled?: boolean
 }
 
 export class QftGateElement extends MenuableMixin(
-  HelpableMixin(
-    ResizeableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
-  )
+  HelpableMixin(ResizeableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
 ) {
   get operationType(): typeof SerializedQftGateType {
     return SerializedQftGateType
