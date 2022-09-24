@@ -9,7 +9,6 @@ import {
   ResizeableMixin
 } from './mixin'
 import {html, render} from '@github/jtml'
-import {ControllableMixin} from './mixin/controllable'
 import {SerializedQftGateType} from '@qni/common'
 import chevronSelectorVerticalIcon from '../icon/chevron_selector_vertical.svg'
 import {controller} from '@github/catalyst'
@@ -22,9 +21,7 @@ export type QftGateElementProps = {
 
 export class QftGateElement extends MenuableMixin(
   HelpableMixin(
-    ControllableMixin(
-      ResizeableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
-    )
+    ResizeableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
   )
 ) {
   get operationType(): typeof SerializedQftGateType {
@@ -53,11 +50,7 @@ export class QftGateElement extends MenuableMixin(
   }
 
   toJson(): string {
-    if (this.if !== '') {
-      return `"${SerializedQftGateType}${this.nqubit}<${this.if}"`
-    } else {
-      return `"${SerializedQftGateType}${this.nqubit}"`
-    }
+    return `"${SerializedQftGateType}${this.nqubit}"`
   }
 }
 
