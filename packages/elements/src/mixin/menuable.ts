@@ -1,7 +1,7 @@
+import {Util, emitEvent} from '@qni/common'
 import {html, render} from '@github/jtml'
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement} from 'tippy.js'
 import {Constructor} from './constructor'
-import {Util} from '@qni/common'
 import {isAngleable} from './angleable'
 import {isFlaggable} from './flaggable'
 import {isIfable} from './ifable'
@@ -65,7 +65,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
     }
 
     private dispatchShowMenuEvent(): void {
-      this.dispatchEvent(new Event('menuable:show-menu', {bubbles: true}))
+      emitEvent('menuable:show-menu', {}, this)
     }
 
     private get menuContent(): DocumentFragment | null {
@@ -143,21 +143,21 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
 
     private showIfInspector(): void {
       this.hideMenu()
-      this.dispatchEvent(new Event('menuable:menu-if', {bubbles: true}))
+      emitEvent('menuable:menu-if', {}, this)
     }
 
     private showAngleInspector(): void {
       this.hideMenu()
-      this.dispatchEvent(new Event('menuable:menu-angle', {bubbles: true}))
+      emitEvent('menuable:menu-angle', {}, this)
     }
 
     private showFlagInspector(): void {
       this.hideMenu()
-      this.dispatchEvent(new Event('menuable:menu-flag', {bubbles: true}))
+      emitEvent('menuable:menu-flag', {}, this)
     }
 
     private dispatchOperationDeleteEvent(): void {
-      this.dispatchEvent(new Event('menuable:menu-delete', {bubbles: true}))
+      emitEvent('menuable:menu-delete', {}, this)
     }
   }
 
