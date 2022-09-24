@@ -1084,7 +1084,8 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           }
           case /^QFT\d/.test(operation): {
             const qftGate = new QftGateElement()
-            qftGate.if = this.ifVariable(operation.slice(1))
+            const nqubit = parseInt(operation.slice(3), 10)
+            qftGate.nqubit = nqubit
             newStep.appendOperation(qftGate)
             break
           }

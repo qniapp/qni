@@ -12895,8 +12895,8 @@ var se = /* @__PURE__ */ __name(class extends we(HTMLElement) {
             break;
           }
           case /^QFT\d/.test(b): {
-            let h = new Pr();
-            h.if = this.ifVariable(b.slice(1)), f.appendOperation(h);
+            let h = new Pr(), d = parseInt(b.slice(3), 10);
+            h.nqubit = d, f.appendOperation(h);
             break;
           }
           case /^QFT†\d/.test(b): {
