@@ -264,7 +264,7 @@ export class CircuitEditorElement extends HTMLElement {
           document.documentElement.removeAttribute('data-resizing')
         },
         maybeAppendCircuitWire: () => {
-          if (this.circuit.wireCount < this.circuit.maxWireCount) {
+          if (this.circuit.numberOfWiresDisplayed < this.circuit.maxWireCount) {
             this.circuit.appendWire()
           }
         },

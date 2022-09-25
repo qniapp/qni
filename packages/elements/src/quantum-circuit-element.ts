@@ -139,8 +139,8 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     }
   }
 
-  get wireCount(): number {
-    return this.stepAt(0).wireCount
+  get numberOfWiresDisplayed(): number {
+    return this.stepAt(0).numberOfWiresDisplayed
   }
 
   get activeStepIndex(): number | null {
@@ -180,9 +180,9 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     let max = 0
 
     for (const each of this.steps) {
-      if (each.wireCount > 0 && each.wireCount > max) {
+      if (each.numberOfWiresDisplayed > 0 && each.numberOfWiresDisplayed > max) {
         step = each
-        max = each.wireCount
+        max = each.numberOfWiresDisplayed
       }
     }
 
@@ -213,7 +213,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   addShadowStepAfter(stepIndex: number): CircuitStepElement {
     const newStep = new CircuitStepElement()
     newStep.shadow = true
-    for (let i = 0; i < this.wireCount; i++) {
+    for (let i = 0; i < this.numberOfWiresDisplayed; i++) {
       newStep.appendDropzone()
     }
 
@@ -967,7 +967,15 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   }
 
   removeLastEmptyWires(): void {
-    while (this.steps.every(each => each.wireCount > this.minWireCount && !each.lastDropzone.occupied)) {
+    while (
+      this.steps.every(each => {
+        return (
+          each.numberOfWiresDisplayed > each.numberOfQubitsInUse &&
+          each.numberOfWiresDisplayed > this.minWireCount &&
+          !each.lastDropzone.occupied
+        )
+      })
+    ) {
       for (const each of this.steps) {
         each.lastDropzone.remove()
       }
@@ -1155,10 +1163,12 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   private appendMinimumWires(): void {
     const largestStep = this.largestStep
     const largestWireCount =
-      largestStep && largestStep.wireCount > this.minWireCount ? largestStep.wireCount : this.minWireCount
+      largestStep && largestStep.numberOfWiresDisplayed > this.minWireCount
+        ? largestStep.numberOfWiresDisplayed
+        : this.minWireCount
 
     for (const each of this.steps) {
-      const nDropzone = largestWireCount - each.wireCount
+      const nDropzone = largestWireCount - each.numberOfWiresDisplayed
       for (let i = 0; i < nDropzone; i++) {
         each.appendDropzone()
       }
@@ -1251,12 +1261,12 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       const snapTarget = each.snapTarget
       const i = this.isVertical ? snapTarget.y : snapTarget.x
       const j = this.isVertical ? snapTarget.x : snapTarget.y
-      const wireIndex = parseInt(dropzoneIndex) % this.wireCount
+      const wireIndex = parseInt(dropzoneIndex) % this.numberOfWiresDisplayed
 
       const prevI = i - operation.snapRange * 0.75
       const nextI = i + operation.snapRange * 0.75
 
-      if (parseInt(dropzoneIndex) < this.wireCount) {
+      if (parseInt(dropzoneIndex) < this.numberOfWiresDisplayed) {
         if (this.isVertical) {
           snapTargets.push({x: j, y: prevI})
         } else {
@@ -1280,7 +1290,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       if (this.snapTargets[nextI][j] === undefined)
         this.snapTargets[nextI][j] = {
           dropzone: null,
-          stepIndex: Math.floor(parseInt(dropzoneIndex) / this.wireCount),
+          stepIndex: Math.floor(parseInt(dropzoneIndex) / this.numberOfWiresDisplayed),
           wireIndex
         }
 
@@ -1325,7 +1335,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       const resizeHandleSnapTarget = each.resizeHandleSnapTarget
       const i = this.isVertical ? resizeHandleSnapTarget.y : resizeHandleSnapTarget.x
       const j = this.isVertical ? resizeHandleSnapTarget.x : resizeHandleSnapTarget.y
-      const wireIndex = parseInt(dropzoneIndex) % this.wireCount
+      const wireIndex = parseInt(dropzoneIndex) % this.numberOfWiresDisplayed
 
       if (!each.occupied || each === myDropzone) {
         resizeHandleSnapTargets.push(resizeHandleSnapTarget)

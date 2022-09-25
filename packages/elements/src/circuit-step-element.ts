@@ -352,7 +352,7 @@ export class CircuitStepElement extends HTMLElement {
     }
   })
 
-  get nqubit(): Range<0, 16> {
+  get numberOfQubitsInUse(): Range<0, 16> {
     let result = 0 // this.dropzones.length
 
     for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
@@ -365,7 +365,7 @@ export class CircuitStepElement extends HTMLElement {
     return result
   }
 
-  get wireCount(): number {
+  get numberOfWiresDisplayed(): number {
     return this.dropzones.length
   }
 
@@ -698,7 +698,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   get lastDropzone(): CircuitDropzoneElement {
-    return this.dropzones[this.wireCount - 1]
+    return this.dropzones[this.numberOfWiresDisplayed - 1]
   }
 
   appendDropzone(): CircuitDropzoneElement {
