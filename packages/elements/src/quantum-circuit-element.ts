@@ -1255,54 +1255,58 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
 
     const myDropzone = operation.dropzone
 
-    for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
-      const snapTarget = each.snapTarget
-      const i = this.isVertical ? snapTarget.y : snapTarget.x
-      const j = this.isVertical ? snapTarget.x : snapTarget.y
-      const wireIndex = parseInt(dropzoneIndex) % this.numberOfWiresDisplayed
+    for (const [_stepIndex, step] of Object.entries(this.steps)) {
+      for (const [_wireIndex, each] of Object.entries(step.dropzones)) {
+        const stepIndex = parseInt(_stepIndex)
+        const wireIndex = parseInt(_wireIndex)
+        const snapTarget = each.snapTarget
+        const i = this.isVertical ? snapTarget.y : snapTarget.x
+        const j = this.isVertical ? snapTarget.x : snapTarget.y
 
-      const prevI = i - operation.snapRange * 0.75
-      const nextI = i + operation.snapRange * 0.75
+        const prevI = i - operation.snapRange * 0.75
+        const nextI = i + operation.snapRange * 0.75
 
-      if (parseInt(dropzoneIndex) < this.numberOfWiresDisplayed) {
-        if (this.isVertical) {
-          snapTargets.push({x: j, y: prevI})
-        } else {
-          snapTargets.push({x: prevI, y: j})
+        if (stepIndex === 0) {
+          if (this.isVertical) {
+            snapTargets.push({x: j, y: prevI})
+          } else {
+            snapTargets.push({x: prevI, y: j})
+          }
+          if (this.snapTargets[prevI] === undefined) this.snapTargets[prevI] = {}
+          if (this.snapTargets[prevI][j] === undefined)
+            this.snapTargets[prevI][j] = {
+              dropzone: null,
+              stepIndex: -1,
+              wireIndex
+            }
         }
-        if (this.snapTargets[prevI] === undefined) this.snapTargets[prevI] = {}
-        if (this.snapTargets[prevI][j] === undefined)
-          this.snapTargets[prevI][j] = {
+
+        if (this.isVertical) {
+          snapTargets.push({x: j, y: nextI})
+        } else {
+          snapTargets.push({x: nextI, y: j})
+        }
+
+        if (this.snapTargets[nextI] === undefined) this.snapTargets[nextI] = {}
+        if (this.snapTargets[nextI][j] === undefined)
+          this.snapTargets[nextI][j] = {
             dropzone: null,
-            stepIndex: -1,
+            stepIndex,
+            wireIndex
+          }
+
+        if (!each.occupied || each === myDropzone) {
+          snapTargets.push(snapTarget)
+        }
+
+        if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
+        if (this.snapTargets[i][j] === undefined)
+          this.snapTargets[i][j] = {
+            dropzone: each,
+            stepIndex: null,
             wireIndex
           }
       }
-
-      if (this.isVertical) {
-        snapTargets.push({x: j, y: nextI})
-      } else {
-        snapTargets.push({x: nextI, y: j})
-      }
-      if (this.snapTargets[nextI] === undefined) this.snapTargets[nextI] = {}
-      if (this.snapTargets[nextI][j] === undefined)
-        this.snapTargets[nextI][j] = {
-          dropzone: null,
-          stepIndex: Math.floor(parseInt(dropzoneIndex) / this.numberOfWiresDisplayed),
-          wireIndex
-        }
-
-      if (!each.occupied || each === myDropzone) {
-        snapTargets.push(snapTarget)
-      }
-
-      if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
-      if (this.snapTargets[i][j] === undefined)
-        this.snapTargets[i][j] = {
-          dropzone: each,
-          stepIndex: null,
-          wireIndex
-        }
     }
 
     operation.snapTargets = snapTargets
