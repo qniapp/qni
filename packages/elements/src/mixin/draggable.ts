@@ -294,8 +294,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         modifiers: [
           interact.modifiers.snap({
             targets: values,
-            range: this.snapRange,
-            relativePoints: [{x: 0.5, y: 0.5}]
+            range: this.snapRange
           })
         ],
         listeners: {

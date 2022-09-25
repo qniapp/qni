@@ -7261,7 +7261,7 @@ function Se(r) {
       return H.notNull(i), !Cl(i) && !$a(i) ? null : i;
     }
     set snapTargets(i) {
-      (0, lo.default)(this).draggable({ modifiers: [lo.default.modifiers.snap({ targets: i, range: this.snapRange, relativePoints: [{ x: 0.5, y: 0.5 }] })], listeners: { move: this.moveEventListener.bind(this) } });
+      (0, lo.default)(this).draggable({ modifiers: [lo.default.modifiers.snap({ targets: i, range: this.snapRange })], listeners: { move: this.moveEventListener.bind(this) } });
     }
     get snapRange() {
       return 32;
