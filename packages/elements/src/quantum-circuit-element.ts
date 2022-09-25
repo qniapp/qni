@@ -1250,12 +1250,10 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
    * @category Drag and Drop
    */
   setSnapTargets(operation: Operation): void {
-    const freeDropzones = this.dropzones.filter(each => !each.occupied)
     const snapTargets = []
     this.snapTargets = {}
 
     const myDropzone = operation.dropzone
-    if (isCircuitDropzoneElement(myDropzone)) freeDropzones.push(myDropzone)
 
     for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
       const snapTarget = each.snapTarget
