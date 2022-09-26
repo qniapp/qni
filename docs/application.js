@@ -1915,11 +1915,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     __name(Jd, "Jd");
     u(Jd, "$e");
-    function $e(n, o, a) {
+    function Fe(n, o, a) {
       return o in n ? Object.defineProperty(n, o, { value: a, enumerable: true, configurable: true, writable: true }) : n[o] = a, n;
     }
-    __name($e, "$e");
-    u($e, "He"), Object.defineProperty(kt, "__esModule", { value: true }), kt.Interaction = void 0, Object.defineProperty(kt, "PointerInfo", { enumerable: true, get: function() {
+    __name(Fe, "Fe");
+    u(Fe, "He"), Object.defineProperty(kt, "__esModule", { value: true }), kt.Interaction = void 0, Object.defineProperty(kt, "PointerInfo", { enumerable: true, get: function() {
       return Pi.PointerInfo;
     } }), kt.default = kt._ProxyValues = kt._ProxyMethods = void 0, kt._ProxyValues = Fo, function(n) {
       n.interactable = "", n.element = "", n.prepared = "", n.pointerIsDown = "", n.pointerWasMoved = "", n._proxy = "";
@@ -1932,9 +1932,9 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         (function(k, G) {
           if (!(k instanceof G))
             throw new TypeError("Cannot call a class as a function");
-        })(this, n), $e(this, "interactable", null), $e(this, "element", null), $e(this, "rect", null), $e(this, "_rects", void 0), $e(this, "edges", null), $e(this, "_scopeFire", void 0), $e(this, "prepared", { name: null, axis: null, edges: null }), $e(this, "pointerType", void 0), $e(this, "pointers", []), $e(this, "downEvent", null), $e(this, "downPointer", {}), $e(this, "_latestPointer", { pointer: null, event: null, eventTarget: null }), $e(this, "prevEvent", null), $e(this, "pointerIsDown", false), $e(this, "pointerWasMoved", false), $e(this, "_interacting", false), $e(this, "_ending", false), $e(this, "_stopped", true), $e(this, "_proxy", null), $e(this, "simulation", null), $e(this, "doMove", (0, jt.warnOnce)(function(k) {
+        })(this, n), Fe(this, "interactable", null), Fe(this, "element", null), Fe(this, "rect", null), Fe(this, "_rects", void 0), Fe(this, "edges", null), Fe(this, "_scopeFire", void 0), Fe(this, "prepared", { name: null, axis: null, edges: null }), Fe(this, "pointerType", void 0), Fe(this, "pointers", []), Fe(this, "downEvent", null), Fe(this, "downPointer", {}), Fe(this, "_latestPointer", { pointer: null, event: null, eventTarget: null }), Fe(this, "prevEvent", null), Fe(this, "pointerIsDown", false), Fe(this, "pointerWasMoved", false), Fe(this, "_interacting", false), Fe(this, "_ending", false), Fe(this, "_stopped", true), Fe(this, "_proxy", null), Fe(this, "simulation", null), Fe(this, "doMove", (0, jt.warnOnce)(function(k) {
           this.move(k);
-        }, "The interaction.doMove() method has been renamed to interaction.move()")), $e(this, "coords", { start: J.newCoords(), prev: J.newCoords(), cur: J.newCoords(), delta: J.newCoords(), velocity: J.newCoords() }), $e(this, "_id", Kd++), this._scopeFire = E, this.pointerType = v;
+        }, "The interaction.doMove() method has been renamed to interaction.move()")), Fe(this, "coords", { start: J.newCoords(), prev: J.newCoords(), cur: J.newCoords(), delta: J.newCoords(), velocity: J.newCoords() }), Fe(this, "_id", Kd++), this._scopeFire = E, this.pointerType = v;
         var g = this;
         this._proxy = {};
         var x = u(function(k) {
@@ -9288,7 +9288,7 @@ function as(r) {
       }, grabResizeHandle: (i, l) => {
         H.need(l.type === "GRAB_RESIZE_HANDLE", "event type must be GRAB_RESIZE_HANDLE"), this.resizing = true, ue("resizeable:grab-resize-handle", {}, this);
       }, releaseResizeHandle: (i, l) => {
-        H.need(l.type === "RELEASE_RESIZE_HANDLE", "event type must be RELEASE_RESIZE_HANDLE"), this.resizing = false;
+        H.need(l.type === "RELEASE_RESIZE_HANDLE", "event type must be RELEASE_RESIZE_HANDLE"), this.resizing = false, ue("resizeable:release-resize-handle", {}, this);
       }, startResizing: (i, l) => {
         H.need(l.type === "START_RESIZING", "event type must be START_RESIZING"), this.resizing = true;
       }, emitResizeEvent: (i, l) => {
@@ -10000,7 +10000,7 @@ var pr = /* @__PURE__ */ __name(class extends Ce(Te(tt(We(Se(qe(Me(Ee(we(HTMLEle
 }, "pr");
 u(pr, "ZGateElement");
 ee(pr);
-var Fe = u((r) => r instanceof er || r instanceof ur || r instanceof cr || r instanceof pr || r instanceof rr || r instanceof lr || r instanceof nr || r instanceof ir || r instanceof or || r instanceof ar || r instanceof sr || r instanceof qt || r instanceof ut || r instanceof $t || r instanceof tr || r instanceof Ar || r instanceof Pr, "isOperation");
+var $e = u((r) => r instanceof er || r instanceof ur || r instanceof cr || r instanceof pr || r instanceof rr || r instanceof lr || r instanceof nr || r instanceof ir || r instanceof or || r instanceof ar || r instanceof sr || r instanceof qt || r instanceof ut || r instanceof $t || r instanceof tr || r instanceof Ar || r instanceof Pr, "isOperation");
 var ud = u((r) => r != null && r instanceof er, "isHGateElement");
 var cd = u((r) => r != null && r instanceof ur, "isXGateElement");
 var pd = u((r) => r != null && r instanceof cr, "isYGateElement");
@@ -10955,7 +10955,7 @@ var Ur = /* @__PURE__ */ __name(class extends HTMLElement {
   get gatesInActiveGateSet() {
     return Array.from(this.activeGateSet.children).map((e) => {
       let t = e.children.item(0);
-      return H.need(Fe(t), `${t} must be an operation.`), t;
+      return H.need($e(t), `${t} must be an operation.`), t;
     });
   }
   createPopinAnimationGates() {
@@ -11021,7 +11021,7 @@ var ru = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   maybeHidePopup(e) {
     let t = e.target;
-    !this.popup.popper.contains(t) && !this.popup.reference.contains(t) && !Fe(t) && this.popup.hide();
+    !this.popup.popper.contains(t) && !this.popup.reference.contains(t) && !$e(t) && this.popup.hide();
   }
   get popupContent() {
     let e = document.querySelector("#operation-inspector-template");
@@ -11705,7 +11705,7 @@ var Gt = /* @__PURE__ */ __name(class extends HTMLElement {
     ue("circuit-step:mouseleave", {}, this);
   }
   maybeDispatchClickEvent(e) {
-    Fe(e.target) || ue("circuit-step:click", {}, this);
+    $e(e.target) || ue("circuit-step:click", {}, this);
   }
   snapDropzone(e) {
     let t = e.target;
@@ -12055,7 +12055,7 @@ var Ct = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   deleteOperation(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} isn't an Operation.`);
     this.circuitDropzoneService.send({ type: "DELETE_OPERATION", operation: t });
   }
@@ -12167,7 +12167,7 @@ var xi = /* @__PURE__ */ __name(class extends HTMLElement {
     });
   }
   connectedCallback() {
-    document.addEventListener("click", this.maybeDeactivateOperation.bind(this)), this.addEventListener("draggable:init", this.enableDragging), this.addEventListener("resizeable:init", this.enableResizing), this.addEventListener("activateable:active", this.activateOperation), this.addEventListener("menuable:show-menu", this.showOperationMenu), this.addEventListener("menuable:menu-if", this.showOperationInspectorIf), this.addEventListener("menuable:menu-angle", this.showOperationInspectorAngle), this.addEventListener("menuable:menu-flag", this.showOperationInspectorFlag), this.addEventListener("operation-inspector-if-change", this.setOperationIf), this.addEventListener("operation-inspector-angle-change", this.setOperationAngle), this.addEventListener("operation-inspector-angle-update", this.setOperationAngle), this.addEventListener("operation-inspector-flag-change", this.setOperationFlag), this.addEventListener("draggable:grab", this.grabOperation), this.addEventListener("resizeable:grab-resize-handle", this.grabResizeHandle), this.addEventListener("draggable:release", this.releaseOperation), this.addEventListener("resizeable:end-resizing", this.resizeEnd), this.addEventListener("draggable:end-dragging", this.endDraggingOperation), this.addEventListener("draggable:drop", this.dropOperation), this.addEventListener("draggable:delete", this.deleteOperation), this.addEventListener("menuable:menu-delete", this.deleteOperation), this.addEventListener("circuit-step:click", this.clickStep), this.addEventListener("circuit-step:qpu-operation-snap", this.snapStep), this.addEventListener("circuit-step:qpu-operation-unsnap", this.unsnapStep), this.addEventListener("draggable:in-snap-range", this.operationInSnapRange), this.addEventListener("resizeable:resize-handle-in-snap-range", this.resizeHandleInSnapRange), this.addEventListener("circuit-step:mouseenter", this.mouseEnterStep), this.addEventListener("circuit-step:mouseleave", this.mouseLeaveStep), this.addEventListener("quantum-circuit:mouseleave", this.mouseLeaveCircuit), this.addEventListener("quantum-circuit:init", this.makeCircuitHoverable), this.circuitEditorService.start(), this.attachShadow({ mode: "open" }), this.update();
+    document.addEventListener("click", this.maybeDeactivateOperation.bind(this)), this.addEventListener("draggable:init", this.enableDragging), this.addEventListener("resizeable:init", this.enableResizing), this.addEventListener("activateable:active", this.activateOperation), this.addEventListener("menuable:show-menu", this.showOperationMenu), this.addEventListener("menuable:menu-if", this.showOperationInspectorIf), this.addEventListener("menuable:menu-angle", this.showOperationInspectorAngle), this.addEventListener("menuable:menu-flag", this.showOperationInspectorFlag), this.addEventListener("operation-inspector-if-change", this.setOperationIf), this.addEventListener("operation-inspector-angle-change", this.setOperationAngle), this.addEventListener("operation-inspector-angle-update", this.setOperationAngle), this.addEventListener("operation-inspector-flag-change", this.setOperationFlag), this.addEventListener("draggable:grab", this.grabOperation), this.addEventListener("resizeable:grab-resize-handle", this.grabResizeHandle), this.addEventListener("resizeable:release-resize-handle", this.releaseResizeHandle), this.addEventListener("draggable:release", this.releaseOperation), this.addEventListener("resizeable:end-resizing", this.resizeEnd), this.addEventListener("draggable:end-dragging", this.endDraggingOperation), this.addEventListener("draggable:drop", this.dropOperation), this.addEventListener("draggable:delete", this.deleteOperation), this.addEventListener("menuable:menu-delete", this.deleteOperation), this.addEventListener("circuit-step:click", this.clickStep), this.addEventListener("circuit-step:qpu-operation-snap", this.snapStep), this.addEventListener("circuit-step:qpu-operation-unsnap", this.unsnapStep), this.addEventListener("draggable:in-snap-range", this.operationInSnapRange), this.addEventListener("resizeable:resize-handle-in-snap-range", this.resizeHandleInSnapRange), this.addEventListener("circuit-step:mouseenter", this.mouseEnterStep), this.addEventListener("circuit-step:mouseleave", this.mouseLeaveStep), this.addEventListener("quantum-circuit:mouseleave", this.mouseLeaveCircuit), this.addEventListener("quantum-circuit:init", this.makeCircuitHoverable), this.circuitEditorService.start(), this.attachShadow({ mode: "open" }), this.update();
   }
   update() {
     Z(U`<slot></slot>`, this.shadowRoot);
@@ -12199,17 +12199,17 @@ var xi = /* @__PURE__ */ __name(class extends HTMLElement {
   maybeDeactivateOperation(e) {
     var i;
     let t = e.target;
-    !Fe(t) && this.inspectorButton && !((i = this.inspectorButton) == null ? void 0 : i.popup.popper.contains(t)) && !this.inspectorButton.popup.reference.contains(t) && this.activeOperation !== null && (this.activeOperation.active = false);
+    !$e(t) && this.inspectorButton && !((i = this.inspectorButton) == null ? void 0 : i.popup.popper.contains(t)) && !this.inspectorButton.popup.reference.contains(t) && this.activeOperation !== null && (this.activeOperation.active = false);
   }
   activateOperation(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} must be an Operation.`);
     this.circuitEditorService.send({ type: "ACTIVATE_OPERATION", operation: t });
   }
   showOperationMenu(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} must be an Operation.`);
     this.circuitEditorService.send({ type: "SHOW_OPERATION_MENU", operation: t });
   }
@@ -12251,37 +12251,43 @@ var xi = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   grabOperation(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} must be an Operation.`);
     this.circuitEditorService.send({ type: "GRAB_OPERATION", operation: t });
   }
   grabResizeHandle(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} must be an Operation.`);
     this.circuitEditorService.send({ type: "GRAB_RESIZE_HANDLE", operation: t });
   }
+  releaseResizeHandle(e) {
+    let t = e.target;
+    if (!$e(t))
+      throw new Error(`${t} must be an Operation.`);
+    this.circuitEditorService.send({ type: "END_RESIZE", operation: t });
+  }
   releaseOperation(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} must be an Operation.`);
     this.circuitEditorService.send({ type: "RELEASE_OPERATION", operation: t });
   }
   resizeEnd(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} must be an Operation.`);
     this.circuitEditorService.send({ type: "END_RESIZE", operation: t });
   }
   endDraggingOperation(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} must be an Operation.`);
     this.circuitEditorService.send({ type: "END_DRAGGING_OPERATION", operation: t });
   }
   dropOperation(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} must be an Operation.`);
     this.circuitEditorService.send({ type: "DROP_OPERATION", operation: t });
   }
@@ -12308,14 +12314,14 @@ var xi = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   operationInSnapRange(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} must be an Operation.`);
     let l = e.detail.snapTargetInfo, c = l.x, f = l.y;
     this.circuitEditorService.send({ type: "OPERATION_IN_SNAP_RANGE", operation: t, x: c, y: f });
   }
   resizeHandleInSnapRange(e) {
     let t = e.target;
-    if (!Fe(t))
+    if (!$e(t))
       throw new Error(`${t} must be an Operation.`);
     let l = e.detail.snapTargetInfo, c = l.x, f = l.y;
     this.circuitEditorService.send({ type: "RESIZE_HANDLE_IN_SNAP_RANGE", operation: t, x: c, y: f });
@@ -12376,7 +12382,7 @@ var iu = /* @__PURE__ */ __name(class extends HTMLElement {
     throw new Error("palette-dropzone cannot hold multiple operations.");
   }
   get operations() {
-    return Array.from(this.children).filter((e) => Fe(e));
+    return Array.from(this.children).filter((e) => $e(e));
   }
   newOperation(e) {
     let t = e.target;
@@ -12389,7 +12395,7 @@ var iu = /* @__PURE__ */ __name(class extends HTMLElement {
     this.assertOperation(t), this.removeChild(t);
   }
   assertOperation(e) {
-    if (!Fe(e))
+    if (!$e(e))
       throw new TypeError(`${e} isn't an operation.`);
   }
 }, "iu");
