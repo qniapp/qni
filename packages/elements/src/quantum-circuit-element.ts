@@ -687,22 +687,20 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Circuit Operation
    */
-  qftDagger(...args: number[] | [QftDaggerGateElementProps]): QuantumCircuitElement {
+  qftDagger(span: number, ...args: number[] | [QftDaggerGateElementProps]): QuantumCircuitElement {
     let targetBits: number[]
-    let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
       targetBits = args as number[]
     } else {
       const props = args[0]
       targetBits = props.targets
-      disabled = props.disabled
     }
 
     this.applyOperationToTargets(() => {
-      const qft = new QftDaggerGateElement()
-      if (disabled) qft.disable()
-      return qft
+      const qftDagger = new QftDaggerGateElement()
+      qftDagger.span = span
+      return qftDagger
     }, ...targetBits)
 
     this.resize()
@@ -1096,7 +1094,8 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           }
           case /^QFT†\d/.test(operation): {
             const qftDaggerGate = new QftDaggerGateElement()
-            qftDaggerGate.if = this.ifVariable(operation.slice(1))
+            const span = parseInt(operation.slice(4), 10)
+            qftDaggerGate.span = span
             newStep.appendOperation(qftDaggerGate)
             break
           }

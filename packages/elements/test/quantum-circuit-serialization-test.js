@@ -163,13 +163,13 @@ describe('quantum-circuit element', function () {
 
     describe('QFT†', function () {
       it('targets = 0', function () {
-        circuit.qftDagger(0)
-        assert.deepEqual(circuit.serialize(), [[{type: 'QFT†', targets: [0]}]])
+        circuit.qftDagger(1, 0)
+        assert.deepEqual(circuit.serialize(), [[{type: 'QFT†', span: 1, targets: [0]}]])
       })
 
       it('targets = 0, 2', function () {
-        circuit.qftDagger(0, 2)
-        assert.deepEqual(circuit.serialize(), [[{type: 'QFT†', targets: [0, 2]}]])
+        circuit.qftDagger(1, 0, 2)
+        assert.deepEqual(circuit.serialize(), [[{type: 'QFT†', span: 1, targets: [0, 2]}]])
       })
     })
 
