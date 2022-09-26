@@ -12,8 +12,8 @@ export declare class Resizeable {
   set resizeable(value: boolean)
   get resizeHandle(): HTMLElement
   set resizeHandleSnapTargets(values: Array<{x: number; y: number}>)
-  get span(): number
-  set span(value: number)
+  get span(): ResizeableSpan
+  set span(value: ResizeableSpan)
   initResizeable(): void
 }
 
