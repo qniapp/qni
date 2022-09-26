@@ -42,7 +42,6 @@ type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   @attr minStepCount = 1
   @attr minWireCount = 1
-  @attr maxWireCount = 10
   @attr editing = false
   @attr updateUrl = false
   @attr json = ''

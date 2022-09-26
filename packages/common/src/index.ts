@@ -1,5 +1,6 @@
 export * from './angle-parser'
 export * from './complex'
+export * from './config'
 export * from './describe'
 export * from './detailed-error'
 export * from './emit-event'

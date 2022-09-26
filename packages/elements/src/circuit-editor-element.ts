@@ -1,6 +1,6 @@
 import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isIfable, isMenuable, isResizeable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
-import {DetailedError, Util, describe} from '@qni/common'
+import {Config, DetailedError, Util, describe} from '@qni/common'
 import {Operation, isOperation} from './operation'
 import {attr, controller, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
@@ -264,7 +264,7 @@ export class CircuitEditorElement extends HTMLElement {
           document.documentElement.removeAttribute('data-resizing')
         },
         maybeAppendCircuitWire: () => {
-          if (this.circuit.numberOfWiresDisplayed < this.circuit.maxWireCount) {
+          if (this.circuit.numberOfWiresDisplayed < Config.MAX_QUBIT_COUNT) {
             this.circuit.appendWire()
           }
         },
