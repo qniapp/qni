@@ -23,7 +23,6 @@ type CircuitEditorEvent =
   | {type: 'SET_OPERATION_FLAG'; operation: Flaggable; flag: string}
   | {type: 'GRAB_OPERATION'; operation: Operation}
   | {type: 'GRAB_RESIZE_HANDLE'; operation: Operation}
-  | {type: 'RELEASE_RESIZE_HANDLE'; operation: Operation}
   | {type: 'RELEASE_OPERATION'; operation: Operation}
   | {type: 'END_RESIZE'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
