@@ -1,9 +1,9 @@
-import {Range} from './range'
+import {ResizeableSpan} from './numeric-range'
 
 export const SerializedQftGateType = 'QFT'
 
 export type SerializedQftGate = {
   type: typeof SerializedQftGateType
-  span: Range<1, 16>
+  span: ResizeableSpan
   targets: number[]
 }

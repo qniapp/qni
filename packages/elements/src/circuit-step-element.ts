@@ -18,7 +18,8 @@ import {
   SerializedZGate,
   Util,
   describe,
-  emitEvent
+  emitEvent,
+  ResizeableSpan
 } from '@qni/common'
 import {
   Operation,
@@ -352,8 +353,8 @@ export class CircuitStepElement extends HTMLElement {
     }
   })
 
-  get numberOfQubitsInUse(): Range<0, 16> {
-    let result = 0 // this.dropzones.length
+  get numberOfQubitsInUse(): 0 | ResizeableSpan {
+    let result: ResizeableSpan = 0
 
     for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
       const index = parseInt(dropzoneIndex) + 1
@@ -362,6 +363,9 @@ export class CircuitStepElement extends HTMLElement {
         result = index + each.operation.span - 1
       }
     }
+
+    Util.need(0 <= result && result <= 16, 'invalid number of qubits in use')
+
     return result
   }
 

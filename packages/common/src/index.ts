@@ -5,7 +5,7 @@ export * from './detailed-error'
 export * from './emit-event'
 export * from './equate'
 export * from './format'
-export * from './range'
+export * from './numeric-range'
 export * from './util'
 
 export * from './bloch-display'

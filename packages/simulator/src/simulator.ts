@@ -1,6 +1,6 @@
 import {
   Complex,
-  Range,
+  ResizeableSpan,
   SerializedBlochDisplayType,
   SerializedCircuitStep,
   SerializedControlGateType,
@@ -298,14 +298,14 @@ export class Simulator {
     return this
   }
 
-  qft(span: Range<1, 17>, ...targets: number[]): Simulator {
+  qft(span: ResizeableSpan, ...targets: number[]): Simulator {
     for (const each of targets) {
       this.qftSingleTargetBit(span, each)
     }
     return this
   }
 
-  private qftSingleTargetBit(span: Range<1, 17>, target: number): Simulator {
+  private qftSingleTargetBit(span: ResizeableSpan, target: number): Simulator {
     switch (span) {
       case 1: {
         this.h(target)
@@ -1242,14 +1242,14 @@ export class Simulator {
     return this
   }
 
-  qftDagger(span: Range<1, 17>, ...targets: number[]): Simulator {
+  qftDagger(span: ResizeableSpan, ...targets: number[]): Simulator {
     for (const each of targets) {
       this.qftDaggerSingleTargetBit(span, each)
     }
     return this
   }
 
-  private qftDaggerSingleTargetBit(span: Range<1, 17>, target: number): Simulator {
+  private qftDaggerSingleTargetBit(span: ResizeableSpan, target: number): Simulator {
     switch (span) {
       case 1: {
         this.h(target)

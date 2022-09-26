@@ -1,9 +1,9 @@
-import {Range} from './range'
+import {ResizeableSpan} from './numeric-range'
 
 export const SerializedQftDaggerGateType = 'QFT†'
 
 export type SerializedQftDaggerGate = {
   type: typeof SerializedQftDaggerGateType
-  span: Range<1, 16>
+  span: ResizeableSpan
   targets: number[]
 }

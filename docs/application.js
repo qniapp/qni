@@ -11539,7 +11539,7 @@ var Gt = /* @__PURE__ */ __name(class extends HTMLElement {
       let l = parseInt(t) + 1;
       i.operation && l > e && (e = l), Kt(i.operation) && l + i.operation.span - 1 > e && (e = l + i.operation.span - 1);
     }
-    return e;
+    return H.need(0 <= e && e <= 16, "invalid number of qubits in use"), e;
   }
   get numberOfWiresDisplayed() {
     return this.dropzones.length;

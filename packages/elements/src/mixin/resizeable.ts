@@ -1,4 +1,4 @@
-import {Range, Util, describe, emitEvent} from '@qni/common'
+import {ResizeableSpan, Util, describe, emitEvent} from '@qni/common'
 import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Constructor} from './constructor'
@@ -29,7 +29,7 @@ type ResizeableEvent =
 
 export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Resizeable> & TBase {
   class ResizeableMixinClass extends Base {
-    @attr span: Range<1, 16> = 1
+    @attr span: ResizeableSpan = 1
     @attr resizeHandleX = 0
     @attr resizeHandleY = 0
     @attr debugResizeable = false
