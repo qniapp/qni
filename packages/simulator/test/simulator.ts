@@ -324,22 +324,22 @@ QUnit.module('Simulator', () => {
   QUnit.module('.qftDagger', () => {
     QUnit.test('|0>.qftDagger(0) should be |+>', assert => {
       const simulator = new Simulator('0')
-      assert.approximatelyEquates(simulator.qftDagger(0).state, new StateVector('+'))
+      assert.approximatelyEquates(simulator.qftDagger(1, 0).state, new StateVector('+'))
     })
 
     QUnit.test('|1>.qftDagger(0) should be |->', assert => {
       const simulator = new Simulator('1')
-      assert.approximatelyEquates(simulator.qftDagger(0).state, new StateVector('-'))
+      assert.approximatelyEquates(simulator.qftDagger(1, 0).state, new StateVector('-'))
     })
 
     QUnit.test('|+>.qftDagger(0) should be |0>', assert => {
       const simulator = new Simulator('+')
-      assert.approximatelyEquates(simulator.qftDagger(0).state, new StateVector('0'))
+      assert.approximatelyEquates(simulator.qftDagger(1, 0).state, new StateVector('0'))
     })
 
     QUnit.test('|->.qftDagger(0) should be |1>', assert => {
       const simulator = new Simulator('-')
-      assert.approximatelyEquates(simulator.qftDagger(0).state, new StateVector('1'))
+      assert.approximatelyEquates(simulator.qftDagger(1, 0).state, new StateVector('1'))
     })
 
     QUnit.test('|i>.qftDagger(0) should be e^{iπ/4}|-i>', assert => {
@@ -349,7 +349,7 @@ QUnit.module('Simulator', () => {
 
       const simulator = new Simulator('i')
       assert.approximatelyEquates(
-        simulator.qftDagger(0).state.matrix,
+        simulator.qftDagger(1, 0).state.matrix,
         new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)))
       )
     })
@@ -361,24 +361,24 @@ QUnit.module('Simulator', () => {
 
       const simulator = new Simulator('(-i)')
       assert.approximatelyEquates(
-        simulator.qftDagger(0).state.matrix,
+        simulator.qftDagger(1, 0).state.matrix,
         new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)))
       )
     })
 
     QUnit.test('|00>.qftDagger(0) should be |0+>', assert => {
       const simulator = new Simulator('00')
-      assert.approximatelyEquates(simulator.qftDagger(0).state, new StateVector('0+'))
+      assert.approximatelyEquates(simulator.qftDagger(1, 0).state, new StateVector('0+'))
     })
 
     QUnit.test('|00>.qftDagger(1) should be |+0>', assert => {
       const simulator = new Simulator('00')
-      assert.approximatelyEquates(simulator.qftDagger(1).state, new StateVector('+0'))
+      assert.approximatelyEquates(simulator.qftDagger(1, 1).state, new StateVector('+0'))
     })
 
     QUnit.test('|00>.qftDagger(0, 1) should be |++>', assert => {
       const simulator = new Simulator('00')
-      assert.approximatelyEquates(simulator.qftDagger(0, 1).state, new StateVector('++'))
+      assert.approximatelyEquates(simulator.qftDagger(1, 0, 1).state, new StateVector('++'))
     })
   })
 
