@@ -7,8 +7,8 @@ import {
   SerializedHGateType,
   SerializedMeasurementGateType,
   SerializedPhaseGateType,
-  SerializedQftGateType,
   SerializedQftDaggerGateType,
+  SerializedQftGateType,
   SerializedRnotGateType,
   SerializedRxGateType,
   SerializedRyGateType,
@@ -298,14 +298,14 @@ export class Simulator {
     return this
   }
 
-  qft(span: Range<1, 16>, ...targets: number[]): Simulator {
+  qft(span: Range<1, 17>, ...targets: number[]): Simulator {
     for (const each of targets) {
       this.qftSingleTargetBit(span, each)
     }
     return this
   }
 
-  private qftSingleTargetBit(span: Range<1, 16>, target: number): Simulator {
+  private qftSingleTargetBit(span: Range<1, 17>, target: number): Simulator {
     switch (span) {
       case 1: {
         this.h(target)
@@ -1242,14 +1242,14 @@ export class Simulator {
     return this
   }
 
-  qftDagger(span: Range<1, 16>, ...targets: number[]): Simulator {
+  qftDagger(span: Range<1, 17>, ...targets: number[]): Simulator {
     for (const each of targets) {
       this.qftDaggerSingleTargetBit(span, each)
     }
     return this
   }
 
-  private qftDaggerSingleTargetBit(span: Range<1, 16>, target: number): Simulator {
+  private qftDaggerSingleTargetBit(span: Range<1, 17>, target: number): Simulator {
     switch (span) {
       case 1: {
         this.h(target)
