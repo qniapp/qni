@@ -1253,25 +1253,30 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     const snapTargets = []
     this.snapTargets = {}
 
+    let span = 1
+    if (isResizeable(operation)) span = operation.span
+
     const myDropzone = operation.dropzone
 
     for (const [_stepIndex, step] of Object.entries(this.steps)) {
-      for (const [_wireIndex, each] of Object.entries(step.dropzones)) {
-        const stepIndex = parseInt(_stepIndex)
+      const stepIndex = parseInt(_stepIndex)
+
+      for (const [_wireIndex, dropzone] of Object.entries(step.dropzones)) {
         const wireIndex = parseInt(_wireIndex)
-        const snapTarget = each.snapTarget
+        const snapTarget = dropzone.snapTarget
+
         const i = this.isVertical ? snapTarget.y : snapTarget.x
         const j = this.isVertical ? snapTarget.x : snapTarget.y
 
-        const prevI = i - operation.snapRange * 0.75
-        const nextI = i + operation.snapRange * 0.75
+        if (stepIndex === 0 && step.dropzones[wireIndex + span - 1] !== undefined) {
+          const prevI = i - operation.snapRange * 0.75
 
-        if (stepIndex === 0) {
           if (this.isVertical) {
             snapTargets.push({x: j, y: prevI})
           } else {
             snapTargets.push({x: prevI, y: j})
           }
+
           if (this.snapTargets[prevI] === undefined) this.snapTargets[prevI] = {}
           if (this.snapTargets[prevI][j] === undefined)
             this.snapTargets[prevI][j] = {
@@ -1281,10 +1286,31 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             }
         }
 
-        if (this.isVertical) {
-          snapTargets.push({x: j, y: nextI})
+        if (span === 1) {
+          if (dropzone === myDropzone || !dropzone.occupied) {
+            snapTargets.push(snapTarget)
+          }
         } else {
-          snapTargets.push({x: nextI, y: j})
+          const gateFit = Array.from(Array(span).keys())
+            .slice(1)
+            .map(y => {
+              const dz = step.dropzones[wireIndex + y]
+              return dz !== undefined && (dz === myDropzone || !dz.occupied)
+            })
+            .every(_ => _)
+          if ((!dropzone.occupied || dropzone === myDropzone) && gateFit) {
+            snapTargets.push(snapTarget)
+          }
+        }
+
+        const nextI = i + operation.snapRange * 0.75
+
+        if (step.dropzones[wireIndex + span - 1] !== undefined) {
+          if (this.isVertical) {
+            snapTargets.push({x: j, y: nextI})
+          } else {
+            snapTargets.push({x: nextI, y: j})
+          }
         }
 
         if (this.snapTargets[nextI] === undefined) this.snapTargets[nextI] = {}
@@ -1295,14 +1321,10 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             wireIndex
           }
 
-        if (!each.occupied || each === myDropzone) {
-          snapTargets.push(snapTarget)
-        }
-
         if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
         if (this.snapTargets[i][j] === undefined)
           this.snapTargets[i][j] = {
-            dropzone: each,
+            dropzone,
             stepIndex: null,
             wireIndex
           }
