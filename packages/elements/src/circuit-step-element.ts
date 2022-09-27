@@ -1,6 +1,7 @@
 import {
+  Config,
   DetailedError,
-  Range,
+  ResizeableSpan,
   SerializedCircuitStep,
   SerializedHGate,
   SerializedMeasurementGate,
@@ -18,8 +19,7 @@ import {
   SerializedZGate,
   Util,
   describe,
-  emitEvent,
-  ResizeableSpan
+  emitEvent
 } from '@qni/common'
 import {
   Operation,
@@ -354,17 +354,26 @@ export class CircuitStepElement extends HTMLElement {
   })
 
   get numberOfQubitsInUse(): 0 | ResizeableSpan {
-    let result: ResizeableSpan = 0
+    let result: 0 | ResizeableSpan = 0
 
-    for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
-      const index = parseInt(dropzoneIndex) + 1
-      if (each.operation && index > result) result = index
-      if (isResizeable(each.operation) && index + each.operation.span - 1 > result) {
-        result = index + each.operation.span - 1
+    for (const [_dropzoneIndex, each] of Object.entries(this.dropzones)) {
+      const bit = (parseInt(_dropzoneIndex, 10) + 1) as ResizeableSpan
+
+      if (each.operation && bit > result) result = bit
+      if (isResizeable(each.operation)) {
+        const operationMSB = bit + each.operation.span - 1
+
+        if (operationMSB > result) {
+          if (operationMSB <= Config.MAX_QUBIT_COUNT) {
+            result = operationMSB as ResizeableSpan
+          } else {
+            result = Config.MAX_QUBIT_COUNT
+          }
+        }
       }
     }
 
-    Util.need(0 <= result && result <= 16, 'invalid number of qubits in use')
+    Util.need(0 <= result && result <= Config.MAX_QUBIT_COUNT, 'invalid number of qubits in use')
 
     return result
   }

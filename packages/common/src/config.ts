@@ -1,3 +1,3 @@
-export class Config {
-  static readonly MAX_QUBIT_COUNT = 16
-}
+export const Config = {
+  MAX_QUBIT_COUNT: 16
+} as const
