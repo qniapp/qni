@@ -9,7 +9,7 @@ import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
 import {RzGateElement, RzGateElementProps} from './rz-gate-element'
-import {SerializedCircuitStep, Util, emitEvent} from '@qni/common'
+import {SerializedCircuitStep, Util, emitEvent, ResizeableSpan} from '@qni/common'
 import {TGateElement, TGateElementProps} from './t-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
@@ -1010,114 +1010,139 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
         keepStep = false
       }
 
+      const operations = []
+
       for (const operation of step) {
         switch (true) {
           case /^\|0>$/.test(operation): {
             const writeGate = new WriteGateElement()
             writeGate.value = '0'
-            newStep.appendOperation(writeGate)
+            operations.push(writeGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^\|1>$/.test(operation): {
             const writeGate = new WriteGateElement()
             writeGate.value = '1'
-            newStep.appendOperation(writeGate)
+            operations.push(writeGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^H/.test(operation): {
             const hGate = new HGateElement()
             hGate.if = this.ifVariable(operation.slice(1))
-            newStep.appendOperation(hGate)
+            operations.push(hGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^X$/.test(operation) || /^X<(.+)$/.test(operation): {
             const xGate = new XGateElement()
             xGate.if = operation.slice(2).trim()
-            newStep.appendOperation(xGate)
+            operations.push(xGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Y/.test(operation): {
             const yGate = new YGateElement()
             yGate.if = this.ifVariable(operation.slice(1))
-            newStep.appendOperation(yGate)
+            operations.push(yGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Z/.test(operation): {
             const zGate = new ZGateElement()
             zGate.if = this.ifVariable(operation.slice(1))
-            newStep.appendOperation(zGate)
+            operations.push(zGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^P/.test(operation): {
             const phaseGate = new PhaseGateElement()
             phaseGate.angle = this.angleParameter(operation.slice(1))
-            newStep.appendOperation(phaseGate)
+            operations.push(phaseGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^T/.test(operation): {
             const tGate = new TGateElement()
             tGate.if = this.ifVariable(operation.slice(1))
-            newStep.appendOperation(tGate)
+            operations.push(tGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^X\^½/.test(operation): {
             const rnotGate = new RnotGateElement()
             rnotGate.if = this.ifVariable(operation.slice(3))
-            newStep.appendOperation(rnotGate)
+            operations.push(rnotGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Rx/.test(operation): {
             const rxGate = new RxGateElement()
             rxGate.angle = this.angleParameter(operation.slice(2))
-            newStep.appendOperation(rxGate)
+            operations.push(rxGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Ry/.test(operation): {
             const ryGate = new RyGateElement()
             ryGate.angle = this.angleParameter(operation.slice(2))
-            newStep.appendOperation(ryGate)
+            operations.push(ryGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Rz/.test(operation): {
             const rzGate = new RzGateElement()
             rzGate.angle = this.angleParameter(operation.slice(2))
-            newStep.appendOperation(rzGate)
+            operations.push(rzGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^QFT\d/.test(operation): {
             const qftGate = new QftGateElement()
-            const span = parseInt(operation.slice(3), 10)
+            const span = parseInt(operation.slice(3), 10) as ResizeableSpan
             qftGate.span = span
-            newStep.appendOperation(qftGate)
+            operations.push(qftGate)
+            for (let i = 0; i < span; i++) {
+              newStep.append(new CircuitDropzoneElement())
+            }
             break
           }
           case /^QFT†\d/.test(operation): {
             const qftDaggerGate = new QftDaggerGateElement()
-            const span = parseInt(operation.slice(4), 10)
+            const span = parseInt(operation.slice(4), 10) as ResizeableSpan
             qftDaggerGate.span = span
-            newStep.appendOperation(qftDaggerGate)
+            operations.push(qftDaggerGate)
+            newStep.append(new CircuitDropzoneElement())
+            for (let i = 0; i < span; i++) {
+              newStep.append(new CircuitDropzoneElement())
+            }
             break
           }
           case /^Swap$/.test(operation): {
             const swapGate = new SwapGateElement()
-            newStep.appendOperation(swapGate)
+            operations.push(swapGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^•$/.test(operation): {
             const controlGate = new ControlGateElement()
-            newStep.appendOperation(controlGate)
+            operations.push(controlGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Bloch$/.test(operation): {
             const blochDisplay = new BlochDisplayElement()
-            newStep.appendOperation(blochDisplay)
+            operations.push(blochDisplay)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Measure/.test(operation): {
             const measurementGate = new MeasurementGateElement()
             const flag = ((/^>(.+)$/.exec(operation.slice(7)) || [])[1] || '').trim()
             measurementGate.flag = flag
-            newStep.appendOperation(measurementGate)
+            operations.push(measurementGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^[[{](.+)$/.test(operation): {
@@ -1139,8 +1164,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             if (operation !== 1) {
               throw new Error(`Unknown operation: ${operation}`)
             }
-            newStep.appendDropzone()
+            newStep.append(new CircuitDropzoneElement())
+            operations.push(null)
           }
+        }
+
+        for (const [dropzoneIndex, each] of Object.entries(operations)) {
+          if (each === null) continue
+          newStep.dropzoneAt(parseInt(dropzoneIndex)).put(each)
         }
         // circuitStep.updateConnections()
         newStep.updateOperationAttributes()

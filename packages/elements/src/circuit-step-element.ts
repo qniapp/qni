@@ -309,7 +309,12 @@ export class CircuitStepElement extends HTMLElement {
             return
           if (!isResizeable(event.dropzone.operation)) return
 
-          console.log('occupySpanDropzones')
+          const dropzone = event.dropzone
+          const operation = dropzone.operation
+          const bit = this.bit(dropzone)
+          for (let b = bit; b < bit + operation.span; b++) {
+            this.dropzoneAt(b).occupied = true
+          }
         },
         freeSpanDropzones: (_context, event) => {
           if (
