@@ -29,6 +29,8 @@ export class CircuitDropzoneElement extends HTMLElement {
   @attr connectTop = false
   @attr connectBottom = false
   @attr shadow = false
+  @attr targets = 'circuit-step.dropzones circuit-step.freeDropzones'
+
   @attr debug = false
 
   private circuitDropzoneMachine = createMachine<CircuitDropzoneContext, CircuitDropzoneEvent>(
@@ -96,10 +98,12 @@ export class CircuitDropzoneElement extends HTMLElement {
           Util.notNull(this.operation)
 
           this.operationName = this.operation.tagName.toLocaleLowerCase()
+          this.targets = 'circuit-step.dropzones'
           emitEvent('circuit-dropzone:qpu-operation-snap', {}, this)
         },
         unsnapOperation: () => {
           this.operationName = ''
+          this.targets = 'circuit-step.dropzones circuit-step.freeDropzones'
           emitEvent('circuit-dropzone:qpu-operation-unsnap', {}, this)
         },
         dropOperation: () => {
@@ -110,12 +114,14 @@ export class CircuitDropzoneElement extends HTMLElement {
 
           this.append(event.operation)
           this.operationName = event.operation.tagName.toLocaleLowerCase()
+          this.targets = 'circuit-step.dropzones'
           event.operation.snapped = true
         },
         deleteOperation: (_context, event) => {
           if (event.type !== 'DELETE_OPERATION') return
 
           this.operationName = ''
+          this.targets = 'circuit-step.dropzones'
           this.removeChild(event.operation as Node)
         },
         resizeOperation: () => {
@@ -258,6 +264,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   private initDropzone(): void {
     if (this.operation !== null) {
       this.operationName = this.operation.tagName.toLocaleLowerCase()
+      this.targets = 'circuit-step.dropzones'
     }
 
     interact(this).dropzone({

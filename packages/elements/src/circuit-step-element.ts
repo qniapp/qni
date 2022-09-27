@@ -37,7 +37,7 @@ import {
   isYGateElement,
   isZGateElement
 } from './operation'
-import {attr, controller} from '@github/catalyst'
+import {attr, controller, targets} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
@@ -155,6 +155,8 @@ export class CircuitStepElement extends HTMLElement {
   @attr shadow = false
   @attr keep = false
   @attr debug = false
+  @targets dropzones!: CircuitDropzoneElement[]
+  @targets freeDropzones!: CircuitDropzoneElement[]
 
   private circuitStepMachine = createMachine<CircuitStepContext, CircuitStepEvent>(
     {
@@ -697,14 +699,6 @@ export class CircuitStepElement extends HTMLElement {
     Util.notNull(dropzone)
 
     return dropzone
-  }
-
-  get dropzones(): CircuitDropzoneElement[] {
-    return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
-  }
-
-  get freeDropzones(): CircuitDropzoneElement[] {
-    return this.dropzones.filter(each => !each.occupied)
   }
 
   get lastDropzone(): CircuitDropzoneElement {
