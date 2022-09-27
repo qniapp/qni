@@ -157,6 +157,7 @@ export class CircuitStepElement extends HTMLElement {
   @attr debug = false
   @targets dropzones!: CircuitDropzoneElement[]
   @targets freeDropzones!: CircuitDropzoneElement[]
+  @targets occupiedDropzones!: CircuitDropzoneElement[]
 
   private circuitStepMachine = createMachine<CircuitStepContext, CircuitStepEvent>(
     {
@@ -691,7 +692,8 @@ export class CircuitStepElement extends HTMLElement {
 
   get isEmpty(): boolean {
     if (this.keep) return false
-    return this.dropzones.every(each => !each.occupied)
+
+    return this.occupiedDropzones.length === 0
   }
 
   dropzoneAt(dropzoneIndex: number): CircuitDropzoneElement {
@@ -719,15 +721,15 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private get swapGateDropzones(): CircuitDropzoneElement[] {
-    return this.dropzones.filter(each => each.occupied).filter(each => each.operationName === 'swap-gate')
+    return this.occupiedDropzones.filter(each => each.operationName === 'swap-gate')
   }
 
   private get phaseGateDropzones(): CircuitDropzoneElement[] {
-    return this.dropzones.filter(each => each.occupied).filter(each => each.operationName === 'phase-gate')
+    return this.occupiedDropzones.filter(each => each.operationName === 'phase-gate')
   }
 
   private get controlGateDropzones(): CircuitDropzoneElement[] {
-    return this.dropzones.filter(each => each.occupied && isControlGateElement(each.operation))
+    return this.occupiedDropzones.filter(each => isControlGateElement(each.operation))
   }
 
   private numControlGateDropzones(
@@ -799,8 +801,7 @@ export class CircuitStepElement extends HTMLElement {
     let numRy = 0
     let numRz = 0
 
-    return this.dropzones
-      .filter(each => each.occupied)
+    return this.occupiedDropzones
       .filter(each => isControllable(each.operation))
       .filter(each => {
         if (connectionProps === undefined) return true
@@ -1170,8 +1171,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private get operations(): Operation[] {
-    return this.dropzones
-      .filter(each => each.occupied)
+    return this.occupiedDropzones
       .map(each => each.operation)
       .filter((each): each is NonNullable<Operation> => each !== null)
   }
