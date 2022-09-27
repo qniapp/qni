@@ -23,6 +23,7 @@ type CircuitDropzoneEvent =
 export class CircuitDropzoneElement extends HTMLElement {
   #eventAbortController: AbortController | null = null
 
+  @attr occupied = false
   @attr operationName = ''
   @attr inputWireQuantum = false
   @attr outputWireQuantum = false
@@ -98,11 +99,13 @@ export class CircuitDropzoneElement extends HTMLElement {
           Util.notNull(this.operation)
 
           this.operationName = this.operation.tagName.toLocaleLowerCase()
+          this.occupied = true
           this.targets = 'circuit-step.dropzones circuit-step.occupiedDropzones'
           emitEvent('circuit-dropzone:qpu-operation-snap', {}, this)
         },
         unsnapOperation: () => {
           this.operationName = ''
+          this.occupied = false
           this.targets = 'circuit-step.dropzones circuit-step.freeDropzones'
           emitEvent('circuit-dropzone:qpu-operation-unsnap', {}, this)
         },
@@ -114,6 +117,7 @@ export class CircuitDropzoneElement extends HTMLElement {
 
           this.append(event.operation)
           this.operationName = event.operation.tagName.toLocaleLowerCase()
+          this.occupied = true
           this.targets = 'circuit-step.dropzones circuit-step.occupiedDropzones'
           event.operation.snapped = true
         },
@@ -121,6 +125,7 @@ export class CircuitDropzoneElement extends HTMLElement {
           if (event.type !== 'DELETE_OPERATION') return
 
           this.operationName = ''
+          this.occupied = false
           this.targets = 'circuit-step.dropzones circuit-step.freeDropzones'
           this.removeChild(event.operation as Node)
         },
@@ -153,10 +158,6 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   get noConnections(): boolean {
     return !this.connectTop && !this.connectBottom
-  }
-
-  get occupied(): boolean {
-    return this.operation !== null && this.operationName !== ''
   }
 
   get operation(): Operation | null {
@@ -264,6 +265,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   private initDropzone(): void {
     if (this.operation !== null) {
       this.operationName = this.operation.tagName.toLocaleLowerCase()
+      this.occupied = true
       this.targets = 'circuit-step.dropzones circuit-step.occupiedDropzones'
     }
 
