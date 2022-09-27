@@ -100,13 +100,11 @@ export class CircuitDropzoneElement extends HTMLElement {
 
           this.operationName = this.operation.tagName.toLocaleLowerCase()
           this.occupied = true
-          this.targets = 'circuit-step.dropzones circuit-step.occupiedDropzones'
           emitEvent('circuit-dropzone:qpu-operation-snap', {}, this)
         },
         unsnapOperation: () => {
           this.operationName = ''
           this.occupied = false
-          this.targets = 'circuit-step.dropzones circuit-step.freeDropzones'
           emitEvent('circuit-dropzone:qpu-operation-unsnap', {}, this)
         },
         dropOperation: () => {
@@ -118,7 +116,6 @@ export class CircuitDropzoneElement extends HTMLElement {
           this.append(event.operation)
           this.operationName = event.operation.tagName.toLocaleLowerCase()
           this.occupied = true
-          this.targets = 'circuit-step.dropzones circuit-step.occupiedDropzones'
           event.operation.snapped = true
         },
         deleteOperation: (_context, event) => {
@@ -126,7 +123,6 @@ export class CircuitDropzoneElement extends HTMLElement {
 
           this.operationName = ''
           this.occupied = false
-          this.targets = 'circuit-step.dropzones circuit-step.freeDropzones'
           this.removeChild(event.operation as Node)
         },
         resizeOperation: () => {
@@ -212,6 +208,18 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.#eventAbortController?.abort()
   }
 
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    if (oldValue === newValue) return
+
+    if (name === 'data-occupied') {
+      if (newValue !== null) {
+        this.targets = 'circuit-step.dropzones circuit-step.occupiedDropzones'
+      } else {
+        this.targets = 'circuit-step.dropzones circuit-step.freeDropzones'
+      }
+    }
+  }
+
   update(): void {
     render(
       html`<style>
@@ -266,7 +274,6 @@ export class CircuitDropzoneElement extends HTMLElement {
     if (this.operation !== null) {
       this.operationName = this.operation.tagName.toLocaleLowerCase()
       this.occupied = true
-      this.targets = 'circuit-step.dropzones circuit-step.occupiedDropzones'
     }
 
     interact(this).dropzone({

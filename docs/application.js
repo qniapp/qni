@@ -11958,15 +11958,15 @@ var vt = /* @__PURE__ */ __name(class extends HTMLElement {
     this.circuitDropzoneMachine = st({ id: "circuit-dropzone", initial: "unknown", states: { unknown: { always: [{ target: "empty", cond: "isEmpty" }, { target: "occupied", cond: "isOccupied", actions: ["initOperation"] }] }, empty: { on: { SNAP_OPERATION: { target: "snapped", actions: ["snapOperation"] }, PUT_OPERATION: { target: "occupied", actions: ["putOperation"] } } }, snapped: { on: { UNSNAP_OPERATION: { target: "empty", actions: ["unsnapOperation"] }, DROP_OPERATION: { target: "occupied", actions: ["dropOperation"] } } }, occupied: { entry: "dispatchOccupiedEvent", on: { UNSNAP_OPERATION: { target: "empty", actions: ["unsnapOperation"] }, DELETE_OPERATION: { target: "empty", actions: ["deleteOperation", "dispatchDeleteOperationEvent"] }, RESIZE_OPERATION: { target: "occupied", actions: ["resizeOperation"] } } } } }, { actions: { initOperation: () => {
       H.notNull(this.operation), this.operation.snapped = true;
     }, snapOperation: () => {
-      H.notNull(this.operation), this.operationName = this.operation.tagName.toLocaleLowerCase(), this.occupied = true, this.targets = "circuit-step.dropzones circuit-step.occupiedDropzones", ue("circuit-dropzone:qpu-operation-snap", {}, this);
+      H.notNull(this.operation), this.operationName = this.operation.tagName.toLocaleLowerCase(), this.occupied = true, ue("circuit-dropzone:qpu-operation-snap", {}, this);
     }, unsnapOperation: () => {
-      this.operationName = "", this.occupied = false, this.targets = "circuit-step.dropzones circuit-step.freeDropzones", ue("circuit-dropzone:qpu-operation-unsnap", {}, this);
+      this.operationName = "", this.occupied = false, ue("circuit-dropzone:qpu-operation-unsnap", {}, this);
     }, dropOperation: () => {
       ue("circuit-dropzone:qpu-operation-drop", {}, this);
     }, putOperation: (e, t) => {
-      t.type === "PUT_OPERATION" && (this.append(t.operation), this.operationName = t.operation.tagName.toLocaleLowerCase(), this.occupied = true, this.targets = "circuit-step.dropzones circuit-step.occupiedDropzones", t.operation.snapped = true);
+      t.type === "PUT_OPERATION" && (this.append(t.operation), this.operationName = t.operation.tagName.toLocaleLowerCase(), this.occupied = true, t.operation.snapped = true);
     }, deleteOperation: (e, t) => {
-      t.type === "DELETE_OPERATION" && (this.operationName = "", this.occupied = false, this.targets = "circuit-step.dropzones circuit-step.freeDropzones", this.removeChild(t.operation));
+      t.type === "DELETE_OPERATION" && (this.operationName = "", this.occupied = false, this.removeChild(t.operation));
     }, resizeOperation: () => {
       ue("circuit-dropzone:qpu-operation-resize", {}, this);
     }, dispatchOccupiedEvent: () => {
@@ -12003,6 +12003,9 @@ var vt = /* @__PURE__ */ __name(class extends HTMLElement {
   disconnectedCallback() {
     var e;
     (e = pa(this, Po)) == null || e.abort();
+  }
+  attributeChangedCallback(e, t, i) {
+    t !== i && e === "data-occupied" && (i !== null ? this.targets = "circuit-step.dropzones circuit-step.occupiedDropzones" : this.targets = "circuit-step.dropzones circuit-step.freeDropzones");
   }
   update() {
     Z(U`<style>
@@ -12045,7 +12048,7 @@ var vt = /* @__PURE__ */ __name(class extends HTMLElement {
     return H.notNull(e), zr(e) ? e : null;
   }
   initDropzone() {
-    this.operation !== null && (this.operationName = this.operation.tagName.toLocaleLowerCase(), this.occupied = true, this.targets = "circuit-step.dropzones circuit-step.occupiedDropzones"), (0, Id.default)(this).dropzone({ accept: "[data-draggable]", overlap: "center" });
+    this.operation !== null && (this.operationName = this.operation.tagName.toLocaleLowerCase(), this.occupied = true), (0, Id.default)(this).dropzone({ accept: "[data-draggable]", overlap: "center" });
   }
   snap() {
     this.circuitDropzoneService.send({ type: "SNAP_OPERATION" });
