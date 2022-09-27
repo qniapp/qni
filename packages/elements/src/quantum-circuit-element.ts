@@ -138,8 +138,8 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     }
   }
 
-  get numberOfWiresDisplayed(): number {
-    return this.stepAt(0).numberOfWiresDisplayed
+  get wireCount(): number {
+    return this.stepAt(0).wireCount
   }
 
   get activeStepIndex(): number | null {
@@ -179,9 +179,9 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     let max = 0
 
     for (const each of this.steps) {
-      if (each.numberOfWiresDisplayed > 0 && each.numberOfWiresDisplayed > max) {
+      if (each.wireCount > 0 && each.wireCount > max) {
         step = each
-        max = each.numberOfWiresDisplayed
+        max = each.wireCount
       }
     }
 
@@ -212,7 +212,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   addShadowStepAfter(stepIndex: number): CircuitStepElement {
     const newStep = new CircuitStepElement()
     newStep.shadow = true
-    for (let i = 0; i < this.numberOfWiresDisplayed; i++) {
+    for (let i = 0; i < this.wireCount; i++) {
       newStep.appendDropzone()
     }
 
@@ -967,8 +967,8 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     while (
       this.steps.every(each => {
         return (
-          each.numberOfWiresDisplayed > each.maxOccupiedDropzoneBit &&
-          each.numberOfWiresDisplayed > this.minWireCount &&
+          each.wireCount > each.maxOccupiedDropzoneBit &&
+          each.wireCount > this.minWireCount &&
           !each.lastDropzone.occupied
         )
       })
@@ -1161,12 +1161,10 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   private appendMinimumWires(): void {
     const largestStep = this.largestStep
     const largestWireCount =
-      largestStep && largestStep.numberOfWiresDisplayed > this.minWireCount
-        ? largestStep.numberOfWiresDisplayed
-        : this.minWireCount
+      largestStep && largestStep.wireCount > this.minWireCount ? largestStep.wireCount : this.minWireCount
 
     for (const each of this.steps) {
-      const nDropzone = largestWireCount - each.numberOfWiresDisplayed
+      const nDropzone = largestWireCount - each.wireCount
       for (let i = 0; i < nDropzone; i++) {
         each.appendDropzone()
       }
@@ -1357,7 +1355,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       const resizeHandleSnapTarget = each.resizeHandleSnapTarget
       const i = this.isVertical ? resizeHandleSnapTarget.y : resizeHandleSnapTarget.x
       const j = this.isVertical ? resizeHandleSnapTarget.x : resizeHandleSnapTarget.y
-      const wireIndex = parseInt(dropzoneIndex) % this.numberOfWiresDisplayed
+      const wireIndex = parseInt(dropzoneIndex) % this.wireCount
 
       if (!each.occupied || each === myDropzone) {
         resizeHandleSnapTargets.push(resizeHandleSnapTarget)

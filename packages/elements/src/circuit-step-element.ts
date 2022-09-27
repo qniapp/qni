@@ -378,7 +378,7 @@ export class CircuitStepElement extends HTMLElement {
     return bit
   }
 
-  get numberOfWiresDisplayed(): number {
+  get wireCount(): number {
     return this.dropzones.length
   }
 
@@ -704,7 +704,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   get lastDropzone(): CircuitDropzoneElement {
-    return this.dropzones[this.numberOfWiresDisplayed - 1]
+    return this.dropzones[this.wireCount - 1]
   }
 
   appendDropzone(): CircuitDropzoneElement {
