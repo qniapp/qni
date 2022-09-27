@@ -162,7 +162,7 @@ export class QuantumSimulatorElement extends HTMLElement {
   private setCircleNotationQubitCount(): number {
     let qubitCount = Math.max(
       ...this.circuit.steps.map(each => {
-        return each.numberOfQubitsInUse as number
+        return each.maxOccupiedDropzoneBit as number
       })
     )
     if (qubitCount === 0) qubitCount = 1

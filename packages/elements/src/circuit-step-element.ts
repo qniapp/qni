@@ -353,29 +353,26 @@ export class CircuitStepElement extends HTMLElement {
     }
   })
 
-  get numberOfQubitsInUse(): 0 | ResizeableSpan {
-    let result: 0 | ResizeableSpan = 0
+  get maxOccupiedDropzoneBit(): 0 | ResizeableSpan {
+    let bit: 0 | ResizeableSpan = 0
 
-    for (const [_dropzoneIndex, each] of Object.entries(this.dropzones)) {
-      const bit = (parseInt(_dropzoneIndex, 10) + 1) as ResizeableSpan
+    for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
+      if (!each.occupied) continue
 
-      if (each.operation && bit > result) result = bit
+      const dropzoneBit = (parseInt(dropzoneIndex, 10) + 1) as ResizeableSpan
+
+      if (dropzoneBit > bit) bit = dropzoneBit
       if (isResizeable(each.operation)) {
-        const operationMSB = bit + each.operation.span - 1
-
-        if (operationMSB > result) {
-          if (operationMSB <= Config.MAX_QUBIT_COUNT) {
-            result = operationMSB as ResizeableSpan
-          } else {
-            result = Config.MAX_QUBIT_COUNT
-          }
+        const operationMSB = dropzoneBit + each.operation.span - 1
+        if (operationMSB > bit) {
+          bit = operationMSB as ResizeableSpan
         }
       }
     }
 
-    Util.need(0 <= result && result <= Config.MAX_QUBIT_COUNT, 'invalid number of qubits in use')
+    Util.need(0 <= bit && bit <= Config.MAX_QUBIT_COUNT, 'invalid number of qubits in use')
 
-    return result
+    return bit
   }
 
   get numberOfWiresDisplayed(): number {

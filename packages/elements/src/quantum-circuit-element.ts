@@ -967,7 +967,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     while (
       this.steps.every(each => {
         return (
-          each.numberOfWiresDisplayed > each.numberOfQubitsInUse &&
+          each.numberOfWiresDisplayed > each.maxOccupiedDropzoneBit &&
           each.numberOfWiresDisplayed > this.minWireCount &&
           !each.lastDropzone.occupied
         )

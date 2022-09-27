@@ -5,7 +5,7 @@ import {testElementCreation} from './common/test-element-creation'
 describe('circuit-step element', function () {
   testElementCreation(window.CircuitStepElement, 'circuit-step')
 
-  describe('numberOfQubitsInUse', function () {
+  describe('maxOccupiedDropzoneBit', function () {
     afterEach(function () {
       document.body.textContent = ''
     })
@@ -19,7 +19,7 @@ describe('circuit-step element', function () {
 
       const step = document.querySelector('circuit-step')
 
-      assert.equal(step.numberOfQubitsInUse, 0)
+      assert.equal(step.maxOccupiedDropzoneBit, 0)
     })
 
     it('returns the number of qubits 1', function () {
@@ -34,7 +34,7 @@ describe('circuit-step element', function () {
 
       const step = document.querySelector('circuit-step')
 
-      assert.equal(step.numberOfQubitsInUse, 1)
+      assert.equal(step.maxOccupiedDropzoneBit, 1)
     })
 
     it('If a Resizeable gate is included, returns the number of qubits added to the its span', function () {
@@ -49,7 +49,7 @@ describe('circuit-step element', function () {
 
       const step = document.querySelector('circuit-step')
 
-      assert.equal(step.numberOfQubitsInUse, 3)
+      assert.equal(step.maxOccupiedDropzoneBit, 3)
     })
   })
 
