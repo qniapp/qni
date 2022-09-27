@@ -11982,7 +11982,7 @@ var Ct = /* @__PURE__ */ __name(class extends HTMLElement {
     return !this.connectTop && !this.connectBottom;
   }
   get occupied() {
-    return this.operationName !== "";
+    return this.operation !== null && this.operationName !== "";
   }
   get operation() {
     return this.firstElementChild;
