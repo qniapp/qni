@@ -225,10 +225,6 @@ export class CircuitDropzoneElement extends HTMLElement {
       html`<style>
           #body {
             position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
             height: 100%;
             width: 100%;
           }
@@ -252,7 +248,7 @@ export class CircuitDropzoneElement extends HTMLElement {
           }
         </style>
 
-        <div id="body"><slot></slot>${this.wireSvg}</div>`,
+        <div id="body" part="body"><slot></slot>${this.wireSvg}</div>`,
       this.shadowRoot!
     )
   }

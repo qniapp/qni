@@ -12019,10 +12019,6 @@ var me = /* @__PURE__ */ __name(class extends HTMLElement {
     Z(U`<style>
           #body {
             position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
             height: 100%;
             width: 100%;
           }
@@ -12046,7 +12042,7 @@ var me = /* @__PURE__ */ __name(class extends HTMLElement {
           }
         </style>
 
-        <div id="body"><slot></slot>${this.wireSvg}</div>`, this.shadowRoot);
+        <div id="body" part="body"><slot></slot>${this.wireSvg}</div>`, this.shadowRoot);
   }
   put(e) {
     this.circuitDropzoneService.send({ type: "PUT_OPERATION", operation: e });

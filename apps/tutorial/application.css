@@ -2542,6 +2542,19 @@ circuit-dropzone {
   }
 }
 
+circuit-dropzone::part(body) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+}
+
+@media (min-width: 640px) {
+  circuit-dropzone::part(body) {
+    flex-direction: column;
+  }
+}
+
 /* Wires */
 
 circuit-dropzone::part(wires) {
