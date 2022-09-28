@@ -3675,303 +3675,1113 @@ qft-gate {
 }
 
 qft-gate[data-span='2'] {
-  height: calc(
+  width: calc(
     2rem * 2 + 1rem
   );
-  height: calc(
+  width: calc(
     2rem * 2 + 1rem
   );
-  height: var(--qni-semantic-size-qpu-operation-2qubit);
+  width: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
 qft-gate[data-span='2']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 2 + 1rem
   );
-  height: calc(
+  width: calc(
     2rem * 2 + 1rem
   );
-  height: var(--qni-semantic-size-qpu-operation-2qubit);
+  width: var(--qni-semantic-size-qpu-operation-2qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='2'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: var(--qni-semantic-size-qpu-operation-2qubit)
+  }
+
+  qft-gate[data-span='2']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: var(--qni-semantic-size-qpu-operation-2qubit);
+  }
+
+  qft-gate[data-span='2'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: var(--qni-semantic-size-qpu-operation-2qubit)
+  }
+
+  qft-gate[data-span='2']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: var(--qni-semantic-size-qpu-operation-2qubit);
+  }
 }
 
 qft-gate[data-span='3'] {
-  height: calc(
+  width: calc(
     2rem * 3 + 1rem * 2
   );
-  height: calc(
+  width: calc(
     2rem * 3 + 1rem * 2
   );
-  height: var(--qni-semantic-size-qpu-operation-3qubit);
+  width: var(--qni-semantic-size-qpu-operation-3qubit);
 }
 
 qft-gate[data-span='3']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 3 + 1rem * 2
   );
-  height: calc(
+  width: calc(
     2rem * 3 + 1rem * 2
   );
-  height: var(--qni-semantic-size-qpu-operation-3qubit);
+  width: var(--qni-semantic-size-qpu-operation-3qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='3'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: var(--qni-semantic-size-qpu-operation-3qubit)
+  }
+
+  qft-gate[data-span='3']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: var(--qni-semantic-size-qpu-operation-3qubit);
+  }
+
+  qft-gate[data-span='3'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: var(--qni-semantic-size-qpu-operation-3qubit)
+  }
+
+  qft-gate[data-span='3']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: var(--qni-semantic-size-qpu-operation-3qubit);
+  }
 }
 
 qft-gate[data-span='4'] {
-  height: calc(
+  width: calc(
     2rem * 4 + 1rem * 3
   );
-  height: calc(
+  width: calc(
     2rem * 4 + 1rem * 3
   );
-  height: var(--qni-semantic-size-qpu-operation-4qubit);
+  width: var(--qni-semantic-size-qpu-operation-4qubit);
 }
 
 qft-gate[data-span='4']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 4 + 1rem * 3
   );
-  height: calc(
+  width: calc(
     2rem * 4 + 1rem * 3
   );
-  height: var(--qni-semantic-size-qpu-operation-4qubit);
+  width: var(--qni-semantic-size-qpu-operation-4qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='4'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: var(--qni-semantic-size-qpu-operation-4qubit)
+  }
+
+  qft-gate[data-span='4']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: var(--qni-semantic-size-qpu-operation-4qubit);
+  }
+
+  qft-gate[data-span='4'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: var(--qni-semantic-size-qpu-operation-4qubit)
+  }
+
+  qft-gate[data-span='4']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: var(--qni-semantic-size-qpu-operation-4qubit);
+  }
 }
 
 qft-gate[data-span='5'] {
-  height: calc(
+  width: calc(
     2rem * 5 + 1rem * 4
   );
-  height: calc(
+  width: calc(
     2rem * 5 + 1rem * 4
   );
-  height: var(--qni-semantic-size-qpu-operation-5qubit);
+  width: var(--qni-semantic-size-qpu-operation-5qubit);
 }
 
 qft-gate[data-span='5']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 5 + 1rem * 4
   );
-  height: calc(
+  width: calc(
     2rem * 5 + 1rem * 4
   );
-  height: var(--qni-semantic-size-qpu-operation-5qubit);
+  width: var(--qni-semantic-size-qpu-operation-5qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='5'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: var(--qni-semantic-size-qpu-operation-5qubit)
+  }
+
+  qft-gate[data-span='5']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: var(--qni-semantic-size-qpu-operation-5qubit);
+  }
+
+  qft-gate[data-span='5'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: var(--qni-semantic-size-qpu-operation-5qubit)
+  }
+
+  qft-gate[data-span='5']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: var(--qni-semantic-size-qpu-operation-5qubit);
+  }
 }
 
 qft-gate[data-span='6'] {
-  height: calc(
+  width: calc(
     2rem * 6 + 1rem * 5
   );
-  height: calc(
+  width: calc(
     2rem * 6 + 1rem * 5
   );
-  height: var(--qni-semantic-size-qpu-operation-6qubit);
+  width: var(--qni-semantic-size-qpu-operation-6qubit);
 }
 
 qft-gate[data-span='6']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 6 + 1rem * 5
   );
-  height: calc(
+  width: calc(
     2rem * 6 + 1rem * 5
   );
-  height: var(--qni-semantic-size-qpu-operation-6qubit);
+  width: var(--qni-semantic-size-qpu-operation-6qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='6'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: var(--qni-semantic-size-qpu-operation-6qubit)
+  }
+
+  qft-gate[data-span='6']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: var(--qni-semantic-size-qpu-operation-6qubit);
+  }
+
+  qft-gate[data-span='6'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: var(--qni-semantic-size-qpu-operation-6qubit)
+  }
+
+  qft-gate[data-span='6']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: var(--qni-semantic-size-qpu-operation-6qubit);
+  }
 }
 
 qft-gate[data-span='7'] {
-  height: calc(
+  width: calc(
     2rem * 7 + 1rem * 6
   );
-  height: calc(
+  width: calc(
     2rem * 7 + 1rem * 6
   );
-  height: var(--qni-semantic-size-qpu-operation-7qubit);
+  width: var(--qni-semantic-size-qpu-operation-7qubit);
 }
 
 qft-gate[data-span='7']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 7 + 1rem * 6
   );
-  height: calc(
+  width: calc(
     2rem * 7 + 1rem * 6
   );
-  height: var(--qni-semantic-size-qpu-operation-7qubit);
+  width: var(--qni-semantic-size-qpu-operation-7qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='7'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: var(--qni-semantic-size-qpu-operation-7qubit)
+  }
+
+  qft-gate[data-span='7']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: var(--qni-semantic-size-qpu-operation-7qubit);
+  }
+
+  qft-gate[data-span='7'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: var(--qni-semantic-size-qpu-operation-7qubit)
+  }
+
+  qft-gate[data-span='7']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: var(--qni-semantic-size-qpu-operation-7qubit);
+  }
 }
 
 qft-gate[data-span='8'] {
-  height: calc(
+  width: calc(
     2rem * 8 + 1rem * 7
   );
-  height: calc(
+  width: calc(
     2rem * 8 + 1rem * 7
   );
-  height: var(--qni-semantic-size-qpu-operation-8qubit);
+  width: var(--qni-semantic-size-qpu-operation-8qubit);
 }
 
 qft-gate[data-span='8']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 8 + 1rem * 7
   );
-  height: calc(
+  width: calc(
     2rem * 8 + 1rem * 7
   );
-  height: var(--qni-semantic-size-qpu-operation-8qubit);
+  width: var(--qni-semantic-size-qpu-operation-8qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='8'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: var(--qni-semantic-size-qpu-operation-8qubit)
+  }
+
+  qft-gate[data-span='8']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: var(--qni-semantic-size-qpu-operation-8qubit);
+  }
+
+  qft-gate[data-span='8'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: var(--qni-semantic-size-qpu-operation-8qubit)
+  }
+
+  qft-gate[data-span='8']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: var(--qni-semantic-size-qpu-operation-8qubit);
+  }
 }
 
 qft-gate[data-span='9'] {
-  height: calc(
+  width: calc(
     2rem * 9 + 1rem * 8
   );
-  height: calc(
+  width: calc(
     2rem * 9 + 1rem * 8
   );
-  height: var(--qni-semantic-size-qpu-operation-9qubit);
+  width: var(--qni-semantic-size-qpu-operation-9qubit);
 }
 
 qft-gate[data-span='9']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 9 + 1rem * 8
   );
-  height: calc(
+  width: calc(
     2rem * 9 + 1rem * 8
   );
-  height: var(--qni-semantic-size-qpu-operation-9qubit);
+  width: var(--qni-semantic-size-qpu-operation-9qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='9'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: var(--qni-semantic-size-qpu-operation-9qubit)
+  }
+
+  qft-gate[data-span='9']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: var(--qni-semantic-size-qpu-operation-9qubit);
+  }
+
+  qft-gate[data-span='9'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: var(--qni-semantic-size-qpu-operation-9qubit)
+  }
+
+  qft-gate[data-span='9']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: var(--qni-semantic-size-qpu-operation-9qubit);
+  }
 }
 
 qft-gate[data-span='10'] {
-  height: calc(
+  width: calc(
     2rem * 10 + 1rem * 9
   );
-  height: calc(
+  width: calc(
     2rem * 10 + 1rem * 9
   );
-  height: var(--qni-semantic-size-qpu-operation-10qubit);
+  width: var(--qni-semantic-size-qpu-operation-10qubit);
 }
 
 qft-gate[data-span='10']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 10 + 1rem * 9
   );
-  height: calc(
+  width: calc(
     2rem * 10 + 1rem * 9
   );
-  height: var(--qni-semantic-size-qpu-operation-10qubit);
+  width: var(--qni-semantic-size-qpu-operation-10qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='10'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: var(--qni-semantic-size-qpu-operation-10qubit)
+  }
+
+  qft-gate[data-span='10']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: var(--qni-semantic-size-qpu-operation-10qubit);
+  }
+
+  qft-gate[data-span='10'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: var(--qni-semantic-size-qpu-operation-10qubit)
+  }
+
+  qft-gate[data-span='10']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: var(--qni-semantic-size-qpu-operation-10qubit);
+  }
 }
 
 qft-gate[data-span='11'] {
-  height: calc(
+  width: calc(
     2rem * 11 + 1rem * 10
   );
-  height: calc(
+  width: calc(
     2rem * 11 + 1rem * 10
   );
-  height: var(--qni-semantic-size-qpu-operation-11qubit);
+  width: var(--qni-semantic-size-qpu-operation-11qubit);
 }
 
 qft-gate[data-span='11']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 11 + 1rem * 10
   );
-  height: calc(
+  width: calc(
     2rem * 11 + 1rem * 10
   );
-  height: var(--qni-semantic-size-qpu-operation-11qubit);
+  width: var(--qni-semantic-size-qpu-operation-11qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='11'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: var(--qni-semantic-size-qpu-operation-11qubit)
+  }
+
+  qft-gate[data-span='11']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: var(--qni-semantic-size-qpu-operation-11qubit);
+  }
+
+  qft-gate[data-span='11'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: var(--qni-semantic-size-qpu-operation-11qubit)
+  }
+
+  qft-gate[data-span='11']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: var(--qni-semantic-size-qpu-operation-11qubit);
+  }
 }
 
 qft-gate[data-span='12'] {
-  height: calc(
+  width: calc(
     2rem * 12 + 1rem * 11
   );
-  height: calc(
+  width: calc(
     2rem * 12 + 1rem * 11
   );
-  height: var(--qni-semantic-size-qpu-operation-12qubit);
+  width: var(--qni-semantic-size-qpu-operation-12qubit);
 }
 
 qft-gate[data-span='12']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 12 + 1rem * 11
   );
-  height: calc(
+  width: calc(
     2rem * 12 + 1rem * 11
   );
-  height: var(--qni-semantic-size-qpu-operation-12qubit);
+  width: var(--qni-semantic-size-qpu-operation-12qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='12'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: var(--qni-semantic-size-qpu-operation-12qubit)
+  }
+
+  qft-gate[data-span='12']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: var(--qni-semantic-size-qpu-operation-12qubit);
+  }
+
+  qft-gate[data-span='12'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: var(--qni-semantic-size-qpu-operation-12qubit)
+  }
+
+  qft-gate[data-span='12']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: var(--qni-semantic-size-qpu-operation-12qubit);
+  }
 }
 
 qft-gate[data-span='13'] {
-  height: calc(
+  width: calc(
     2rem * 13 + 1rem * 12
   );
-  height: calc(
+  width: calc(
     2rem * 13 + 1rem * 12
   );
-  height: var(--qni-semantic-size-qpu-operation-13qubit);
+  width: var(--qni-semantic-size-qpu-operation-13qubit);
 }
 
 qft-gate[data-span='13']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 13 + 1rem * 12
   );
-  height: calc(
+  width: calc(
     2rem * 13 + 1rem * 12
   );
-  height: var(--qni-semantic-size-qpu-operation-13qubit);
+  width: var(--qni-semantic-size-qpu-operation-13qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='13'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: var(--qni-semantic-size-qpu-operation-13qubit)
+  }
+
+  qft-gate[data-span='13']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: var(--qni-semantic-size-qpu-operation-13qubit);
+  }
+
+  qft-gate[data-span='13'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: var(--qni-semantic-size-qpu-operation-13qubit)
+  }
+
+  qft-gate[data-span='13']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: var(--qni-semantic-size-qpu-operation-13qubit);
+  }
 }
 
 qft-gate[data-span='14'] {
-  height: calc(
+  width: calc(
     2rem * 14 + 1rem * 13
   );
-  height: calc(
+  width: calc(
     2rem * 14 + 1rem * 13
   );
-  height: var(--qni-semantic-size-qpu-operation-14qubit);
+  width: var(--qni-semantic-size-qpu-operation-14qubit);
 }
 
 qft-gate[data-span='14']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 14 + 1rem * 13
   );
-  height: calc(
+  width: calc(
     2rem * 14 + 1rem * 13
   );
-  height: var(--qni-semantic-size-qpu-operation-14qubit);
+  width: var(--qni-semantic-size-qpu-operation-14qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='14'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: var(--qni-semantic-size-qpu-operation-14qubit)
+  }
+
+  qft-gate[data-span='14']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: var(--qni-semantic-size-qpu-operation-14qubit);
+  }
+
+  qft-gate[data-span='14'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: var(--qni-semantic-size-qpu-operation-14qubit)
+  }
+
+  qft-gate[data-span='14']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: var(--qni-semantic-size-qpu-operation-14qubit);
+  }
 }
 
 qft-gate[data-span='15'] {
-  height: calc(
+  width: calc(
     2rem * 15 + 1rem * 14
   );
-  height: calc(
+  width: calc(
     2rem * 15 + 1rem * 14
   );
-  height: var(--qni-semantic-size-qpu-operation-15qubit);
+  width: var(--qni-semantic-size-qpu-operation-15qubit);
 }
 
 qft-gate[data-span='15']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 15 + 1rem * 14
   );
-  height: calc(
+  width: calc(
     2rem * 15 + 1rem * 14
   );
-  height: var(--qni-semantic-size-qpu-operation-15qubit);
+  width: var(--qni-semantic-size-qpu-operation-15qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='15'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: var(--qni-semantic-size-qpu-operation-15qubit)
+  }
+
+  qft-gate[data-span='15']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: var(--qni-semantic-size-qpu-operation-15qubit);
+  }
+
+  qft-gate[data-span='15'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: var(--qni-semantic-size-qpu-operation-15qubit)
+  }
+
+  qft-gate[data-span='15']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: var(--qni-semantic-size-qpu-operation-15qubit);
+  }
 }
 
 qft-gate[data-span='16'] {
-  height: calc(
+  width: calc(
     2rem * 16 + 1rem * 15
   );
-  height: calc(
+  width: calc(
     2rem * 16 + 1rem * 15
   );
-  height: var(--qni-semantic-size-qpu-operation-16qubit);
+  width: var(--qni-semantic-size-qpu-operation-16qubit);
 }
 
 qft-gate[data-span='16']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 16 + 1rem * 15
   );
-  height: calc(
+  width: calc(
     2rem * 16 + 1rem * 15
   );
-  height: var(--qni-semantic-size-qpu-operation-16qubit);
+  width: var(--qni-semantic-size-qpu-operation-16qubit);
+}
+
+@media (min-width: 640px) {
+  qft-gate[data-span='16'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: var(--qni-semantic-size-qpu-operation-16qubit)
+  }
+
+  qft-gate[data-span='16']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: var(--qni-semantic-size-qpu-operation-16qubit);
+  }
+
+  qft-gate[data-span='16'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: var(--qni-semantic-size-qpu-operation-16qubit)
+  }
+
+  qft-gate[data-span='16']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: var(--qni-semantic-size-qpu-operation-16qubit);
+  }
 }
 
 qft-gate[data-resizing]::part(outline) {
@@ -4178,303 +4988,1113 @@ qft-dagger-gate {
 }
 
 qft-dagger-gate[data-span='2'] {
-  height: calc(
+  width: calc(
     2rem * 2 + 1rem
   );
-  height: calc(
+  width: calc(
     2rem * 2 + 1rem
   );
-  height: var(--qni-semantic-size-qpu-operation-2qubit);
+  width: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
 qft-dagger-gate[data-span='2']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 2 + 1rem
   );
-  height: calc(
+  width: calc(
     2rem * 2 + 1rem
   );
-  height: var(--qni-semantic-size-qpu-operation-2qubit);
+  width: var(--qni-semantic-size-qpu-operation-2qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='2'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: var(--qni-semantic-size-qpu-operation-2qubit)
+  }
+
+  qft-dagger-gate[data-span='2']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: var(--qni-semantic-size-qpu-operation-2qubit);
+  }
+
+  qft-dagger-gate[data-span='2'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: var(--qni-semantic-size-qpu-operation-2qubit)
+  }
+
+  qft-dagger-gate[data-span='2']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: calc(
+    2rem * 2 + 1rem
+  );
+    height: var(--qni-semantic-size-qpu-operation-2qubit);
+  }
 }
 
 qft-dagger-gate[data-span='3'] {
-  height: calc(
+  width: calc(
     2rem * 3 + 1rem * 2
   );
-  height: calc(
+  width: calc(
     2rem * 3 + 1rem * 2
   );
-  height: var(--qni-semantic-size-qpu-operation-3qubit);
+  width: var(--qni-semantic-size-qpu-operation-3qubit);
 }
 
 qft-dagger-gate[data-span='3']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 3 + 1rem * 2
   );
-  height: calc(
+  width: calc(
     2rem * 3 + 1rem * 2
   );
-  height: var(--qni-semantic-size-qpu-operation-3qubit);
+  width: var(--qni-semantic-size-qpu-operation-3qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='3'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: var(--qni-semantic-size-qpu-operation-3qubit)
+  }
+
+  qft-dagger-gate[data-span='3']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: var(--qni-semantic-size-qpu-operation-3qubit);
+  }
+
+  qft-dagger-gate[data-span='3'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: var(--qni-semantic-size-qpu-operation-3qubit)
+  }
+
+  qft-dagger-gate[data-span='3']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: calc(
+    2rem * 3 + 1rem * 2
+  );
+    height: var(--qni-semantic-size-qpu-operation-3qubit);
+  }
 }
 
 qft-dagger-gate[data-span='4'] {
-  height: calc(
+  width: calc(
     2rem * 4 + 1rem * 3
   );
-  height: calc(
+  width: calc(
     2rem * 4 + 1rem * 3
   );
-  height: var(--qni-semantic-size-qpu-operation-4qubit);
+  width: var(--qni-semantic-size-qpu-operation-4qubit);
 }
 
 qft-dagger-gate[data-span='4']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 4 + 1rem * 3
   );
-  height: calc(
+  width: calc(
     2rem * 4 + 1rem * 3
   );
-  height: var(--qni-semantic-size-qpu-operation-4qubit);
+  width: var(--qni-semantic-size-qpu-operation-4qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='4'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: var(--qni-semantic-size-qpu-operation-4qubit)
+  }
+
+  qft-dagger-gate[data-span='4']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: var(--qni-semantic-size-qpu-operation-4qubit);
+  }
+
+  qft-dagger-gate[data-span='4'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: var(--qni-semantic-size-qpu-operation-4qubit)
+  }
+
+  qft-dagger-gate[data-span='4']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: calc(
+    2rem * 4 + 1rem * 3
+  );
+    height: var(--qni-semantic-size-qpu-operation-4qubit);
+  }
 }
 
 qft-dagger-gate[data-span='5'] {
-  height: calc(
+  width: calc(
     2rem * 5 + 1rem * 4
   );
-  height: calc(
+  width: calc(
     2rem * 5 + 1rem * 4
   );
-  height: var(--qni-semantic-size-qpu-operation-5qubit);
+  width: var(--qni-semantic-size-qpu-operation-5qubit);
 }
 
 qft-dagger-gate[data-span='5']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 5 + 1rem * 4
   );
-  height: calc(
+  width: calc(
     2rem * 5 + 1rem * 4
   );
-  height: var(--qni-semantic-size-qpu-operation-5qubit);
+  width: var(--qni-semantic-size-qpu-operation-5qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='5'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: var(--qni-semantic-size-qpu-operation-5qubit)
+  }
+
+  qft-dagger-gate[data-span='5']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: var(--qni-semantic-size-qpu-operation-5qubit);
+  }
+
+  qft-dagger-gate[data-span='5'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: var(--qni-semantic-size-qpu-operation-5qubit)
+  }
+
+  qft-dagger-gate[data-span='5']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: calc(
+    2rem * 5 + 1rem * 4
+  );
+    height: var(--qni-semantic-size-qpu-operation-5qubit);
+  }
 }
 
 qft-dagger-gate[data-span='6'] {
-  height: calc(
+  width: calc(
     2rem * 6 + 1rem * 5
   );
-  height: calc(
+  width: calc(
     2rem * 6 + 1rem * 5
   );
-  height: var(--qni-semantic-size-qpu-operation-6qubit);
+  width: var(--qni-semantic-size-qpu-operation-6qubit);
 }
 
 qft-dagger-gate[data-span='6']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 6 + 1rem * 5
   );
-  height: calc(
+  width: calc(
     2rem * 6 + 1rem * 5
   );
-  height: var(--qni-semantic-size-qpu-operation-6qubit);
+  width: var(--qni-semantic-size-qpu-operation-6qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='6'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: var(--qni-semantic-size-qpu-operation-6qubit)
+  }
+
+  qft-dagger-gate[data-span='6']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: var(--qni-semantic-size-qpu-operation-6qubit);
+  }
+
+  qft-dagger-gate[data-span='6'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: var(--qni-semantic-size-qpu-operation-6qubit)
+  }
+
+  qft-dagger-gate[data-span='6']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: calc(
+    2rem * 6 + 1rem * 5
+  );
+    height: var(--qni-semantic-size-qpu-operation-6qubit);
+  }
 }
 
 qft-dagger-gate[data-span='7'] {
-  height: calc(
+  width: calc(
     2rem * 7 + 1rem * 6
   );
-  height: calc(
+  width: calc(
     2rem * 7 + 1rem * 6
   );
-  height: var(--qni-semantic-size-qpu-operation-7qubit);
+  width: var(--qni-semantic-size-qpu-operation-7qubit);
 }
 
 qft-dagger-gate[data-span='7']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 7 + 1rem * 6
   );
-  height: calc(
+  width: calc(
     2rem * 7 + 1rem * 6
   );
-  height: var(--qni-semantic-size-qpu-operation-7qubit);
+  width: var(--qni-semantic-size-qpu-operation-7qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='7'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: var(--qni-semantic-size-qpu-operation-7qubit)
+  }
+
+  qft-dagger-gate[data-span='7']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: var(--qni-semantic-size-qpu-operation-7qubit);
+  }
+
+  qft-dagger-gate[data-span='7'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: var(--qni-semantic-size-qpu-operation-7qubit)
+  }
+
+  qft-dagger-gate[data-span='7']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: calc(
+    2rem * 7 + 1rem * 6
+  );
+    height: var(--qni-semantic-size-qpu-operation-7qubit);
+  }
 }
 
 qft-dagger-gate[data-span='8'] {
-  height: calc(
+  width: calc(
     2rem * 8 + 1rem * 7
   );
-  height: calc(
+  width: calc(
     2rem * 8 + 1rem * 7
   );
-  height: var(--qni-semantic-size-qpu-operation-8qubit);
+  width: var(--qni-semantic-size-qpu-operation-8qubit);
 }
 
 qft-dagger-gate[data-span='8']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 8 + 1rem * 7
   );
-  height: calc(
+  width: calc(
     2rem * 8 + 1rem * 7
   );
-  height: var(--qni-semantic-size-qpu-operation-8qubit);
+  width: var(--qni-semantic-size-qpu-operation-8qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='8'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: var(--qni-semantic-size-qpu-operation-8qubit)
+  }
+
+  qft-dagger-gate[data-span='8']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: var(--qni-semantic-size-qpu-operation-8qubit);
+  }
+
+  qft-dagger-gate[data-span='8'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: var(--qni-semantic-size-qpu-operation-8qubit)
+  }
+
+  qft-dagger-gate[data-span='8']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: calc(
+    2rem * 8 + 1rem * 7
+  );
+    height: var(--qni-semantic-size-qpu-operation-8qubit);
+  }
 }
 
 qft-dagger-gate[data-span='9'] {
-  height: calc(
+  width: calc(
     2rem * 9 + 1rem * 8
   );
-  height: calc(
+  width: calc(
     2rem * 9 + 1rem * 8
   );
-  height: var(--qni-semantic-size-qpu-operation-9qubit);
+  width: var(--qni-semantic-size-qpu-operation-9qubit);
 }
 
 qft-dagger-gate[data-span='9']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 9 + 1rem * 8
   );
-  height: calc(
+  width: calc(
     2rem * 9 + 1rem * 8
   );
-  height: var(--qni-semantic-size-qpu-operation-9qubit);
+  width: var(--qni-semantic-size-qpu-operation-9qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='9'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: var(--qni-semantic-size-qpu-operation-9qubit)
+  }
+
+  qft-dagger-gate[data-span='9']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: var(--qni-semantic-size-qpu-operation-9qubit);
+  }
+
+  qft-dagger-gate[data-span='9'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: var(--qni-semantic-size-qpu-operation-9qubit)
+  }
+
+  qft-dagger-gate[data-span='9']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: calc(
+    2rem * 9 + 1rem * 8
+  );
+    height: var(--qni-semantic-size-qpu-operation-9qubit);
+  }
 }
 
 qft-dagger-gate[data-span='10'] {
-  height: calc(
+  width: calc(
     2rem * 10 + 1rem * 9
   );
-  height: calc(
+  width: calc(
     2rem * 10 + 1rem * 9
   );
-  height: var(--qni-semantic-size-qpu-operation-10qubit);
+  width: var(--qni-semantic-size-qpu-operation-10qubit);
 }
 
 qft-dagger-gate[data-span='10']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 10 + 1rem * 9
   );
-  height: calc(
+  width: calc(
     2rem * 10 + 1rem * 9
   );
-  height: var(--qni-semantic-size-qpu-operation-10qubit);
+  width: var(--qni-semantic-size-qpu-operation-10qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='10'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: var(--qni-semantic-size-qpu-operation-10qubit)
+  }
+
+  qft-dagger-gate[data-span='10']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: var(--qni-semantic-size-qpu-operation-10qubit);
+  }
+
+  qft-dagger-gate[data-span='10'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: var(--qni-semantic-size-qpu-operation-10qubit)
+  }
+
+  qft-dagger-gate[data-span='10']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: calc(
+    2rem * 10 + 1rem * 9
+  );
+    height: var(--qni-semantic-size-qpu-operation-10qubit);
+  }
 }
 
 qft-dagger-gate[data-span='11'] {
-  height: calc(
+  width: calc(
     2rem * 11 + 1rem * 10
   );
-  height: calc(
+  width: calc(
     2rem * 11 + 1rem * 10
   );
-  height: var(--qni-semantic-size-qpu-operation-11qubit);
+  width: var(--qni-semantic-size-qpu-operation-11qubit);
 }
 
 qft-dagger-gate[data-span='11']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 11 + 1rem * 10
   );
-  height: calc(
+  width: calc(
     2rem * 11 + 1rem * 10
   );
-  height: var(--qni-semantic-size-qpu-operation-11qubit);
+  width: var(--qni-semantic-size-qpu-operation-11qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='11'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: var(--qni-semantic-size-qpu-operation-11qubit)
+  }
+
+  qft-dagger-gate[data-span='11']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: var(--qni-semantic-size-qpu-operation-11qubit);
+  }
+
+  qft-dagger-gate[data-span='11'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: var(--qni-semantic-size-qpu-operation-11qubit)
+  }
+
+  qft-dagger-gate[data-span='11']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: calc(
+    2rem * 11 + 1rem * 10
+  );
+    height: var(--qni-semantic-size-qpu-operation-11qubit);
+  }
 }
 
 qft-dagger-gate[data-span='12'] {
-  height: calc(
+  width: calc(
     2rem * 12 + 1rem * 11
   );
-  height: calc(
+  width: calc(
     2rem * 12 + 1rem * 11
   );
-  height: var(--qni-semantic-size-qpu-operation-12qubit);
+  width: var(--qni-semantic-size-qpu-operation-12qubit);
 }
 
 qft-dagger-gate[data-span='12']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 12 + 1rem * 11
   );
-  height: calc(
+  width: calc(
     2rem * 12 + 1rem * 11
   );
-  height: var(--qni-semantic-size-qpu-operation-12qubit);
+  width: var(--qni-semantic-size-qpu-operation-12qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='12'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: var(--qni-semantic-size-qpu-operation-12qubit)
+  }
+
+  qft-dagger-gate[data-span='12']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: var(--qni-semantic-size-qpu-operation-12qubit);
+  }
+
+  qft-dagger-gate[data-span='12'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: var(--qni-semantic-size-qpu-operation-12qubit)
+  }
+
+  qft-dagger-gate[data-span='12']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: calc(
+    2rem * 12 + 1rem * 11
+  );
+    height: var(--qni-semantic-size-qpu-operation-12qubit);
+  }
 }
 
 qft-dagger-gate[data-span='13'] {
-  height: calc(
+  width: calc(
     2rem * 13 + 1rem * 12
   );
-  height: calc(
+  width: calc(
     2rem * 13 + 1rem * 12
   );
-  height: var(--qni-semantic-size-qpu-operation-13qubit);
+  width: var(--qni-semantic-size-qpu-operation-13qubit);
 }
 
 qft-dagger-gate[data-span='13']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 13 + 1rem * 12
   );
-  height: calc(
+  width: calc(
     2rem * 13 + 1rem * 12
   );
-  height: var(--qni-semantic-size-qpu-operation-13qubit);
+  width: var(--qni-semantic-size-qpu-operation-13qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='13'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: var(--qni-semantic-size-qpu-operation-13qubit)
+  }
+
+  qft-dagger-gate[data-span='13']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: var(--qni-semantic-size-qpu-operation-13qubit);
+  }
+
+  qft-dagger-gate[data-span='13'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: var(--qni-semantic-size-qpu-operation-13qubit)
+  }
+
+  qft-dagger-gate[data-span='13']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: calc(
+    2rem * 13 + 1rem * 12
+  );
+    height: var(--qni-semantic-size-qpu-operation-13qubit);
+  }
 }
 
 qft-dagger-gate[data-span='14'] {
-  height: calc(
+  width: calc(
     2rem * 14 + 1rem * 13
   );
-  height: calc(
+  width: calc(
     2rem * 14 + 1rem * 13
   );
-  height: var(--qni-semantic-size-qpu-operation-14qubit);
+  width: var(--qni-semantic-size-qpu-operation-14qubit);
 }
 
 qft-dagger-gate[data-span='14']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 14 + 1rem * 13
   );
-  height: calc(
+  width: calc(
     2rem * 14 + 1rem * 13
   );
-  height: var(--qni-semantic-size-qpu-operation-14qubit);
+  width: var(--qni-semantic-size-qpu-operation-14qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='14'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: var(--qni-semantic-size-qpu-operation-14qubit)
+  }
+
+  qft-dagger-gate[data-span='14']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: var(--qni-semantic-size-qpu-operation-14qubit);
+  }
+
+  qft-dagger-gate[data-span='14'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: var(--qni-semantic-size-qpu-operation-14qubit)
+  }
+
+  qft-dagger-gate[data-span='14']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: calc(
+    2rem * 14 + 1rem * 13
+  );
+    height: var(--qni-semantic-size-qpu-operation-14qubit);
+  }
 }
 
 qft-dagger-gate[data-span='15'] {
-  height: calc(
+  width: calc(
     2rem * 15 + 1rem * 14
   );
-  height: calc(
+  width: calc(
     2rem * 15 + 1rem * 14
   );
-  height: var(--qni-semantic-size-qpu-operation-15qubit);
+  width: var(--qni-semantic-size-qpu-operation-15qubit);
 }
 
 qft-dagger-gate[data-span='15']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 15 + 1rem * 14
   );
-  height: calc(
+  width: calc(
     2rem * 15 + 1rem * 14
   );
-  height: var(--qni-semantic-size-qpu-operation-15qubit);
+  width: var(--qni-semantic-size-qpu-operation-15qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='15'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: var(--qni-semantic-size-qpu-operation-15qubit)
+  }
+
+  qft-dagger-gate[data-span='15']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: var(--qni-semantic-size-qpu-operation-15qubit);
+  }
+
+  qft-dagger-gate[data-span='15'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: var(--qni-semantic-size-qpu-operation-15qubit)
+  }
+
+  qft-dagger-gate[data-span='15']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: calc(
+    2rem * 15 + 1rem * 14
+  );
+    height: var(--qni-semantic-size-qpu-operation-15qubit);
+  }
 }
 
 qft-dagger-gate[data-span='16'] {
-  height: calc(
+  width: calc(
     2rem * 16 + 1rem * 15
   );
-  height: calc(
+  width: calc(
     2rem * 16 + 1rem * 15
   );
-  height: var(--qni-semantic-size-qpu-operation-16qubit);
+  width: var(--qni-semantic-size-qpu-operation-16qubit);
 }
 
 qft-dagger-gate[data-span='16']::part(body) {
-  height: calc(
+  width: calc(
     2rem * 16 + 1rem * 15
   );
-  height: calc(
+  width: calc(
     2rem * 16 + 1rem * 15
   );
-  height: var(--qni-semantic-size-qpu-operation-16qubit);
+  width: var(--qni-semantic-size-qpu-operation-16qubit);
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate[data-span='16'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: var(--qni-semantic-size-qpu-operation-16qubit)
+  }
+
+  qft-dagger-gate[data-span='16']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: var(--qni-semantic-size-qpu-operation-16qubit);
+  }
+
+  qft-dagger-gate[data-span='16'] {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: var(--qni-semantic-size-qpu-operation-16qubit)
+  }
+
+  qft-dagger-gate[data-span='16']::part(body) {
+    width: 2rem;
+    width: 2rem;
+    width: var(--qni-semantic-size-qpu-operation-1qubit);
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: calc(
+    2rem * 16 + 1rem * 15
+  );
+    height: var(--qni-semantic-size-qpu-operation-16qubit);
+  }
 }
 
 qft-dagger-gate[data-resizing]::part(outline) {
