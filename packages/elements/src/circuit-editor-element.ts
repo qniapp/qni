@@ -88,6 +88,7 @@ export class CircuitEditorElement extends HTMLElement {
                 GRAB_RESIZE_HANDLE: {
                   target: 'editing',
                   actions: [
+                    'maybeHideOperationMenu',
                     'startCircuitEdit',
                     'addDocumentCursorResizingStyle',
                     'maybeAppendCircuitWire',
