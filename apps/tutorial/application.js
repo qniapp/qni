@@ -13031,9 +13031,9 @@ var se = /* @__PURE__ */ __name(class extends xe(HTMLElement) {
         }
         if (i === 1)
           (p === l || !p.occupied) && t.push(b);
-        else if (p.occupied || t.push(b), p === l) {
+        else if (!p.occupied && h + i < f.dropzones.length && t.push(b), p === l) {
           t.push(b);
-          for (let M = 1; M < i; M++) {
+          for (let M = 1; M < i && h + M < f.dropzones.length; M++) {
             let _ = f.dropzones[h + M];
             H.notNull(_), t.push(_.snapTarget);
           }

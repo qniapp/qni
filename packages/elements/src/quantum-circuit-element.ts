@@ -1288,14 +1288,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     for (const [stepKey, step] of Object.entries(this.steps)) {
       const stepIndex = parseInt(stepKey)
 
-      for (const [wireKey, dropzone] of Object.entries(step.dropzones)) {
-        const wireIndex = parseInt(wireKey)
+      for (const [dropzoneKey, dropzone] of Object.entries(step.dropzones)) {
+        const dropzoneIndex = parseInt(dropzoneKey)
         const snapTarget = dropzone.snapTarget
 
         const i = this.isVertical ? snapTarget.y : snapTarget.x
         const j = this.isVertical ? snapTarget.x : snapTarget.y
 
-        if (stepIndex === 0 && step.dropzones[wireIndex + span - 1] !== undefined) {
+        if (stepIndex === 0 && step.dropzones[dropzoneIndex + span - 1] !== undefined) {
           const prevI = i - operation.snapRange * 0.75
 
           if (this.isVertical) {
@@ -1309,7 +1309,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             this.snapTargets[prevI][j] = {
               dropzone: null,
               stepIndex: -1,
-              wireIndex
+              wireIndex: dropzoneIndex
             }
         }
 
@@ -1318,13 +1318,13 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             snapTargets.push(snapTarget)
           }
         } else {
-          if (!dropzone.occupied) {
+          if (!dropzone.occupied && dropzoneIndex + span < step.dropzones.length) {
             snapTargets.push(snapTarget)
           }
           if (dropzone === myDropzone) {
             snapTargets.push(snapTarget)
-            for (let s = 1; s < span; s++) {
-              const spanDropzone: CircuitDropzoneElement | null = step.dropzones[wireIndex + s]
+            for (let s = 1; s < span && dropzoneIndex + s < step.dropzones.length; s++) {
+              const spanDropzone: CircuitDropzoneElement | null = step.dropzones[dropzoneIndex + s]
               Util.notNull(spanDropzone)
               snapTargets.push(spanDropzone.snapTarget)
             }
@@ -1333,7 +1333,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
 
         const nextI = i + operation.snapRange * 0.75
 
-        if (step.dropzones[wireIndex + span - 1] !== undefined) {
+        if (step.dropzones[dropzoneIndex + span - 1] !== undefined) {
           if (this.isVertical) {
             snapTargets.push({x: j, y: nextI})
           } else {
@@ -1346,7 +1346,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           this.snapTargets[nextI][j] = {
             dropzone: null,
             stepIndex,
-            wireIndex
+            wireIndex: dropzoneIndex
           }
 
         if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
@@ -1354,7 +1354,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           this.snapTargets[i][j] = {
             dropzone,
             stepIndex: null,
-            wireIndex
+            wireIndex: dropzoneIndex
           }
       }
     }
