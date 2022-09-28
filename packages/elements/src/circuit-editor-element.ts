@@ -87,7 +87,12 @@ export class CircuitEditorElement extends HTMLElement {
                 },
                 GRAB_RESIZE_HANDLE: {
                   target: 'editing',
-                  actions: ['startCircuitEdit', 'addDocumentCursorResizingStyle', 'setResizeHandleSnapTargets']
+                  actions: [
+                    'startCircuitEdit',
+                    'addDocumentCursorResizingStyle',
+                    'maybeAppendCircuitWire',
+                    'setResizeHandleSnapTargets'
+                  ]
                 },
                 CLICK_STEP: {
                   target: 'idle',
@@ -159,7 +164,7 @@ export class CircuitEditorElement extends HTMLElement {
                 },
                 END_RESIZE: {
                   target: 'idle',
-                  actions: ['removeDocumentCursorResizingStyle', 'endCircuitEdit']
+                  actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorResizingStyle', 'endCircuitEdit']
                 },
                 END_DRAGGING_OPERATION: {
                   target: 'idle',
