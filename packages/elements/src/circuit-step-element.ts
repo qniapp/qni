@@ -176,11 +176,11 @@ export class CircuitStepElement extends HTMLElement {
           on: {
             SNAP_DROPZONE: {
               target: 'shadow',
-              actions: ['setOperationBit', 'occupySpanDropzones', 'dispatchSnapEvent']
+              actions: ['setOperationBit', 'updateResizeableSpanDropzones', 'dispatchSnapEvent']
             },
             UNSNAP_DROPZONE: {
               target: 'shadow',
-              actions: ['dispatchUnsnapEvent']
+              actions: ['updateResizeableSpanDropzones', 'dispatchUnsnapEvent']
             },
             UNSHADOW: {
               target: 'visible',
@@ -215,23 +215,23 @@ export class CircuitStepElement extends HTMLElement {
           on: {
             SNAP_DROPZONE: {
               target: 'visible',
-              actions: ['setOperationBit', 'occupySpanDropzones', 'dispatchSnapEvent']
+              actions: ['setOperationBit', 'updateResizeableSpanDropzones', 'dispatchSnapEvent']
             },
             UNSNAP_DROPZONE: {
               target: 'visible',
-              actions: ['dispatchUnsnapEvent']
+              actions: ['updateResizeableSpanDropzones', 'dispatchUnsnapEvent']
             },
             OCCUPY_DROPZONE: {
               target: 'visible',
-              actions: ['setOperationBit', 'occupySpanDropzones']
+              actions: ['setOperationBit', 'updateResizeableSpanDropzones']
             },
             DELETE_OPERATION: {
               target: 'visible',
-              actions: ['dispatchDeleteOperationEvent']
+              actions: ['updateResizeableSpanDropzones', 'dispatchDeleteOperationEvent']
             },
             RESIZE_OPERATION: {
               target: 'visible',
-              actions: ['occupySpanDropzones', 'dispatchResizeOperationEvent']
+              actions: ['updateResizeableSpanDropzones', 'dispatchResizeOperationEvent']
             }
           },
           states: {
@@ -302,14 +302,17 @@ export class CircuitStepElement extends HTMLElement {
 
           dropzone.operation.bit = bit
         },
-        occupySpanDropzones: (_context, event) => {
+        updateResizeableSpanDropzones: (_context, event) => {
           if (
-            !(event.type === 'SNAP_DROPZONE' || event.type === 'OCCUPY_DROPZONE' || event.type === 'RESIZE_OPERATION')
+            !(
+              event.type === 'SNAP_DROPZONE' ||
+              event.type === 'UNSNAP_DROPZONE' ||
+              event.type === 'OCCUPY_DROPZONE' ||
+              event.type === 'DELETE_OPERATION' ||
+              event.type === 'RESIZE_OPERATION'
+            )
           )
             return
-
-          // const myDropzone = event.dropzone
-          // if (!isResizeable(event.dropzone.operation)) return
 
           let span = 1
           for (const each of this.dropzones) {
