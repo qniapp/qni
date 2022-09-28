@@ -15,7 +15,7 @@
  */
 
 export class Util {
-  static need(expression: boolean | unknown, message: string, args?: unknown[]): void {
+  static need(expression: boolean, message: string, args?: unknown[]): asserts expression {
     if (expression !== true) {
       const argDesc = args === undefined ? '(not provided)' : `[${Array.prototype.slice.call(args).join(', ')}]`
       const msgDesc = message === undefined ? '(not provided)' : message

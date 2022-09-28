@@ -36,21 +36,25 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.worker = new Worker('./serviceworker.js')
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
 
-    this.addEventListener('operation-delete', this.maybeUpdateUrl)
-    this.addEventListener('operation-delete', this.freshRun)
+    this.addEventListener('draggable:delete', this.maybeUpdateUrl)
+    this.addEventListener('draggable:delete', this.freshRun)
+    this.addEventListener('menuable:menu-delete', this.maybeUpdateUrl)
+    this.addEventListener('menuable:menu-delete', this.freshRun)
     this.addEventListener('operation-inspector-if-change', this.freshRun)
     this.addEventListener('operation-inspector-angle-change', this.freshRun)
     this.addEventListener('operation-inspector-angle-update', this.maybeUpdateUrl)
     this.addEventListener('operation-inspector-flag-change', this.freshRun)
-    this.addEventListener('circuit-step-mouseenter', this.runUnlessEditing)
-    this.addEventListener('circuit-step-mouseleave', this.runUnlessEditing)
-    this.addEventListener('circuit-step-snap', this.freshRun)
-    this.addEventListener('circuit-step-unsnap', this.freshRun)
-    this.addEventListener('circuit-step-update', this.freshRun)
+    this.addEventListener('circuit-step:mouseenter', this.runUnlessEditing)
+    this.addEventListener('circuit-step:mouseleave', this.runUnlessEditing)
+    this.addEventListener('circuit-step:qpu-operation-snap', this.freshRun)
+    this.addEventListener('circuit-step:qpu-operation-unsnap', this.freshRun)
+    this.addEventListener('circuit-step:update', this.freshRun)
     this.addEventListener('circle-notation-visibility-change', this.run)
     this.addEventListener('run-circuit-button-click', this.freshRun)
-    this.addEventListener('circuit-step-snap', this.maybeUpdateUrl)
-    this.addEventListener('circuit-step-unsnap', this.maybeUpdateUrl)
+    this.addEventListener('circuit-step:qpu-operation-snap', this.maybeUpdateUrl)
+    this.addEventListener('circuit-step:qpu-operation-unsnap', this.maybeUpdateUrl)
+    this.addEventListener('circuit-step:resize-qpu-operation', this.maybeUpdateUrl)
+    this.addEventListener('circuit-step:resize-qpu-operation', this.freshRun)
     this.addEventListener('circuit-editor-resize', this.freshRun)
 
     this.attachShadow({mode: 'open'})
@@ -156,24 +160,14 @@ export class QuantumSimulatorElement extends HTMLElement {
   }
 
   private setCircleNotationQubitCount(): number {
-    const serializedSteps = this.circuit.serialize()
-    Util.need(serializedSteps.length > 0, 'non-zero step length')
-
-    const maxControlTargetBit = Math.max(
-      ...serializedSteps.map(serializedStep =>
-        Math.max(
-          ...serializedStep.map(operation => {
-            let controls: number[] = []
-            if (isControllable(operation)) controls = operation.controls
-
-            return Math.max(...operation.targets.concat(controls))
-          })
-        )
-      )
+    let qubitCount = Math.max(
+      ...this.circuit.steps.map(each => {
+        return each.maxOccupiedDropzoneBit as number
+      })
     )
-    const qubitCount = maxControlTargetBit >= 0 ? maxControlTargetBit + 1 : 1
-    this.circleNotation.qubitCount = qubitCount
+    if (qubitCount === 0) qubitCount = 1
 
+    this.circleNotation.qubitCount = qubitCount
     return qubitCount
   }
 

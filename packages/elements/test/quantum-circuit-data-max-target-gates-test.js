@@ -324,7 +324,7 @@ describe('quantum-circuit element', function () {
       circuit.controlControlMaxTargetGates = 1
       circuit.control(1, 3)
       circuit.stepAt(0).dropzoneAt(2).put(new window.HGateElement())
-      circuit.stepAt(0).dispatchEvent(new Event('circuit-step-update', {bubbles: true}))
+      circuit.stepAt(0).dispatchEvent(new Event('circuit-step:update', {bubbles: true}))
 
       const step = circuit.stepAt(0)
       assert.instanceOf(step.dropzoneAt(1).operation, window.ControlGateElement)
@@ -427,7 +427,7 @@ describe('quantum-circuit element', function () {
       const piPhase = new window.PhaseGateElement()
       piPhase.angle = 'π'
       circuit.stepAt(0).dropzoneAt(3).put(piPhase)
-      circuit.stepAt(0).dispatchEvent(new Event('circuit-step-update', {bubbles: true}))
+      circuit.stepAt(0).dispatchEvent(new Event('circuit-step:update', {bubbles: true}))
 
       const step = circuit.stepAt(0)
       assert.instanceOf(step.dropzoneAt(1).operation, window.PhaseGateElement)

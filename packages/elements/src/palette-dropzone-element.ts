@@ -1,7 +1,7 @@
 import {Operation, isOperation} from './operation'
 import {html, render} from '@github/jtml'
+import {isDraggable, isHelpable, isResizeable} from './mixin'
 import {controller} from '@github/catalyst'
-import {isHelpable} from './mixin'
 
 export class PaletteDropzoneElement extends HTMLElement {
   #eventAbortController: AbortController | null = null
@@ -13,8 +13,8 @@ export class PaletteDropzoneElement extends HTMLElement {
     this.update()
 
     this.initOperation(this.operation)
-    this.addEventListener('operation-grab', this.newOperation, {signal})
-    this.addEventListener('operation-delete', this.deleteOperation, {signal})
+    this.addEventListener('draggable:grab', this.newOperation, {signal})
+    this.addEventListener('draggable:delete', this.deleteOperation, {signal})
   }
 
   disconnectedCallback() {
@@ -35,9 +35,12 @@ export class PaletteDropzoneElement extends HTMLElement {
   }
 
   private initOperation(operation: Operation): void {
-    operation.draggable = true
-    operation.snapped = true
-    operation.grabbed = false
+    if (isDraggable(operation)) {
+      operation.draggable = true
+      operation.grabbed = false
+      operation.snapped = true
+    }
+    if (isResizeable(operation)) operation.resizeable = true
     if (isHelpable(operation)) operation.initHelp()
   }
 

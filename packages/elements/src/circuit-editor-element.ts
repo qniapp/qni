@@ -1,6 +1,6 @@
-import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isIfable, isMenuable} from './mixin'
+import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isIfable, isMenuable, isResizeable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
-import {DetailedError, Util, describe} from '@qni/common'
+import {Config, DetailedError, Util, describe} from '@qni/common'
 import {Operation, isOperation} from './operation'
 import {attr, controller, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
@@ -8,6 +8,7 @@ import {html, render} from '@github/jtml'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
+import {isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {isFlaggable} from './mixin/flaggable'
 
 type CircuitEditorContext = Record<string, never>
@@ -21,11 +22,14 @@ type CircuitEditorEvent =
   | {type: 'SET_OPERATION_ANGLE'; operation: Angleable; angle: string; reducedAngle: string}
   | {type: 'SET_OPERATION_FLAG'; operation: Flaggable; flag: string}
   | {type: 'GRAB_OPERATION'; operation: Operation}
+  | {type: 'GRAB_RESIZE_HANDLE'; operation: Operation}
   | {type: 'RELEASE_OPERATION'; operation: Operation}
+  | {type: 'END_RESIZE'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
   | {type: 'DROP_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'}
   | {type: 'OPERATION_IN_SNAP_RANGE'; operation: Operation; x: number; y: number}
+  | {type: 'RESIZE_HANDLE_IN_SNAP_RANGE'; operation: Operation; x: number; y: number}
   | {type: 'MOUSE_ENTER_STEP'; step: CircuitStepElement}
   | {type: 'MOUSE_LEAVE_STEP'; step: CircuitStepElement}
   | {type: 'MOUSE_LEAVE_CIRCUIT'}
@@ -81,6 +85,16 @@ export class CircuitEditorElement extends HTMLElement {
                     'setSnapTargets'
                   ]
                 },
+                GRAB_RESIZE_HANDLE: {
+                  target: 'editing',
+                  actions: [
+                    'maybeHideOperationMenu',
+                    'startCircuitEdit',
+                    'addDocumentCursorResizingStyle',
+                    'maybeAppendCircuitWire',
+                    'setResizeHandleSnapTargets'
+                  ]
+                },
                 CLICK_STEP: {
                   target: 'idle',
                   actions: ['deactivateAllSteps', 'setBreakpoint']
@@ -133,6 +147,10 @@ export class CircuitEditorElement extends HTMLElement {
                   target: 'editing',
                   actions: ['snapOperationIntoDropzone']
                 },
+                RESIZE_HANDLE_IN_SNAP_RANGE: {
+                  target: 'editing',
+                  actions: ['snapResizeHandleIntoDropzone']
+                },
                 SNAP_STEP: {
                   target: 'editing',
                   actions: ['deactivateAllSteps', 'activateStep']
@@ -144,6 +162,10 @@ export class CircuitEditorElement extends HTMLElement {
                 RELEASE_OPERATION: {
                   target: 'idle',
                   actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorGrabbingStyle', 'endCircuitEdit']
+                },
+                END_RESIZE: {
+                  target: 'idle',
+                  actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorResizingStyle', 'endCircuitEdit']
                 },
                 END_DRAGGING_OPERATION: {
                   target: 'idle',
@@ -215,14 +237,40 @@ export class CircuitEditorElement extends HTMLElement {
             snapTarget.dropzone.append(operation)
           }
         },
+        snapResizeHandleIntoDropzone: (_context, event) => {
+          if (event.type !== 'RESIZE_HANDLE_IN_SNAP_RANGE') return
+
+          const operation = event.operation
+          if (!isResizeable(operation)) {
+            throw new Error(`${operation} is not resizeable`)
+          }
+          // const resizeHandle = operation.resizeHandle
+          const dropzone = operation.dropzone
+          if (!isCircuitDropzoneElement(dropzone)) {
+            throw new Error(`${dropzone} is not a circuit dropzone`)
+          }
+          Util.notNull(dropzone.circuitStep)
+
+          const wireIndex = dropzone.circuitStep.dropzones.indexOf(dropzone)
+          const snapTarget = this.circuit.resizeHandleSnapTargetAt(event.x, event.y)
+          const span = snapTarget.wireIndex - wireIndex + 1
+
+          operation.span = span
+        },
         addDocumentCursorGrabbingStyle: () => {
           document.documentElement.setAttribute('data-grabbing', '')
+        },
+        addDocumentCursorResizingStyle: () => {
+          document.documentElement.setAttribute('data-resizing', '')
         },
         removeDocumentCursorGrabbingStyle: () => {
           document.documentElement.removeAttribute('data-grabbing')
         },
+        removeDocumentCursorResizingStyle: () => {
+          document.documentElement.removeAttribute('data-resizing')
+        },
         maybeAppendCircuitWire: () => {
-          if (this.circuit.wireCount < this.circuit.maxWireCount) {
+          if (this.circuit.wireCount < Config.MAX_QUBIT_COUNT) {
             this.circuit.appendWire()
           }
         },
@@ -237,6 +285,11 @@ export class CircuitEditorElement extends HTMLElement {
           if (event.type !== 'GRAB_OPERATION') return
 
           this.circuit.setSnapTargets(event.operation)
+        },
+        setResizeHandleSnapTargets: (_context, event) => {
+          if (event.type !== 'GRAB_RESIZE_HANDLE') return
+
+          this.circuit.setResizeHandleSnapTargets(event.operation)
         },
         setBreakpoint: (_context, event) => {
           if (event.type !== 'CLICK_STEP') return
@@ -331,29 +384,35 @@ export class CircuitEditorElement extends HTMLElement {
 
   connectedCallback(): void {
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
-    this.addEventListener('draggable-init', this.enableDragging)
-    this.addEventListener('operation-active', this.activateOperation)
-    this.addEventListener('operation-show-menu', this.showOperationMenu)
-    this.addEventListener('operation-menu-if', this.showOperationInspectorIf)
-    this.addEventListener('operation-menu-angle', this.showOperationInspectorAngle)
-    this.addEventListener('operation-menu-flag', this.showOperationInspectorFlag)
+    this.addEventListener('draggable:init', this.enableDragging)
+    this.addEventListener('resizeable:init', this.enableResizing)
+    this.addEventListener('activateable:active', this.activateOperation)
+    this.addEventListener('menuable:show-menu', this.showOperationMenu)
+    this.addEventListener('menuable:menu-if', this.showOperationInspectorIf)
+    this.addEventListener('menuable:menu-angle', this.showOperationInspectorAngle)
+    this.addEventListener('menuable:menu-flag', this.showOperationInspectorFlag)
     this.addEventListener('operation-inspector-if-change', this.setOperationIf)
     this.addEventListener('operation-inspector-angle-change', this.setOperationAngle)
     this.addEventListener('operation-inspector-angle-update', this.setOperationAngle)
     this.addEventListener('operation-inspector-flag-change', this.setOperationFlag)
-    this.addEventListener('operation-grab', this.grabOperation)
-    this.addEventListener('operation-release', this.releaseOperation)
-    this.addEventListener('operation-end-dragging', this.endDraggingOperation)
-    this.addEventListener('operation-drop', this.dropOperation)
-    this.addEventListener('operation-delete', this.deleteOperation)
-    this.addEventListener('circuit-step-click', this.clickStep)
-    this.addEventListener('circuit-step-snap', this.snapStep)
-    this.addEventListener('circuit-step-unsnap', this.unsnapStep)
-    this.addEventListener('operation-in-snap-range', this.operationInSnapRange)
-    this.addEventListener('circuit-step-mouseenter', this.mouseEnterStep)
-    this.addEventListener('circuit-step-mouseleave', this.mouseLeaveStep)
-    this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
-    this.addEventListener('quantum-circuit-init', this.makeCircuitHoverable)
+    this.addEventListener('draggable:grab', this.grabOperation)
+    this.addEventListener('resizeable:grab-resize-handle', this.grabResizeHandle)
+    this.addEventListener('resizeable:release-resize-handle', this.releaseResizeHandle)
+    this.addEventListener('draggable:release', this.releaseOperation)
+    this.addEventListener('resizeable:end-resizing', this.resizeEnd)
+    this.addEventListener('draggable:end-dragging', this.endDraggingOperation)
+    this.addEventListener('draggable:drop', this.dropOperation)
+    this.addEventListener('draggable:delete', this.deleteOperation)
+    this.addEventListener('menuable:menu-delete', this.deleteOperation)
+    this.addEventListener('circuit-step:click', this.clickStep)
+    this.addEventListener('circuit-step:qpu-operation-snap', this.snapStep)
+    this.addEventListener('circuit-step:qpu-operation-unsnap', this.unsnapStep)
+    this.addEventListener('draggable:in-snap-range', this.operationInSnapRange)
+    this.addEventListener('resizeable:resize-handle-in-snap-range', this.resizeHandleInSnapRange)
+    this.addEventListener('circuit-step:mouseenter', this.mouseEnterStep)
+    this.addEventListener('circuit-step:mouseleave', this.mouseLeaveStep)
+    this.addEventListener('quantum-circuit:mouseleave', this.mouseLeaveCircuit)
+    this.addEventListener('quantum-circuit:init', this.makeCircuitHoverable)
 
     this.circuitEditorService.start()
     this.attachShadow({mode: 'open'})
@@ -371,6 +430,16 @@ export class CircuitEditorElement extends HTMLElement {
       el.draggable = true
     } else {
       throw new DetailedError('Not a draggable element.', {el})
+    }
+  }
+
+  private enableResizing(event: Event): void {
+    const el = event.target
+
+    if (isResizeable(el)) {
+      el.resizeable = true
+    } else {
+      throw new DetailedError('Not a resizeable element.', {el})
     }
   }
 
@@ -477,11 +546,32 @@ export class CircuitEditorElement extends HTMLElement {
     this.circuitEditorService.send({type: 'GRAB_OPERATION', operation})
   }
 
+  private grabResizeHandle(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    this.circuitEditorService.send({type: 'GRAB_RESIZE_HANDLE', operation})
+  }
+
+  private releaseResizeHandle(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    this.circuitEditorService.send({type: 'END_RESIZE', operation})
+  }
+
   private releaseOperation(event: Event): void {
     const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 
     this.circuitEditorService.send({type: 'RELEASE_OPERATION', operation})
+  }
+
+  private resizeEnd(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    this.circuitEditorService.send({type: 'END_RESIZE', operation})
   }
 
   private endDraggingOperation(event: Event): void {
@@ -532,6 +622,17 @@ export class CircuitEditorElement extends HTMLElement {
     const x = snapTargetInfo.x
     const y = snapTargetInfo.y
     this.circuitEditorService.send({type: 'OPERATION_IN_SNAP_RANGE', operation, x, y})
+  }
+
+  private resizeHandleInSnapRange(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    const customEvent = event as CustomEvent
+    const snapTargetInfo = customEvent.detail.snapTargetInfo
+    const x = snapTargetInfo.x
+    const y = snapTargetInfo.y
+    this.circuitEditorService.send({type: 'RESIZE_HANDLE_IN_SNAP_RANGE', operation, x, y})
   }
 
   private mouseEnterStep(event: Event): void {

@@ -1,9 +1,11 @@
+import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
+import {Util, emitEvent} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
-import {Util} from '@qni/common'
 import interact from 'interactjs'
+import {isResizeable} from './mixin'
 import wiresIcon from '../icon/wires.svg'
 
 export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
@@ -16,16 +18,20 @@ type CircuitDropzoneEvent =
   | {type: 'DROP_OPERATION'}
   | {type: 'PUT_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'; operation: Operation}
+  | {type: 'RESIZE_OPERATION'}
 
 export class CircuitDropzoneElement extends HTMLElement {
   #eventAbortController: AbortController | null = null
 
+  @attr occupied = false
   @attr operationName = ''
   @attr inputWireQuantum = false
   @attr outputWireQuantum = false
   @attr connectTop = false
   @attr connectBottom = false
   @attr shadow = false
+  @attr targets = 'circuit-step.dropzones circuit-step.freeDropzones'
+
   @attr debug = false
 
   private circuitDropzoneMachine = createMachine<CircuitDropzoneContext, CircuitDropzoneEvent>(
@@ -73,6 +79,10 @@ export class CircuitDropzoneElement extends HTMLElement {
             DELETE_OPERATION: {
               target: 'empty',
               actions: ['deleteOperation', 'dispatchDeleteOperationEvent']
+            },
+            RESIZE_OPERATION: {
+              target: 'occupied',
+              actions: ['resizeOperation']
             }
           }
         }
@@ -89,33 +99,40 @@ export class CircuitDropzoneElement extends HTMLElement {
           Util.notNull(this.operation)
 
           this.operationName = this.operation.tagName.toLocaleLowerCase()
-          this.dispatchEvent(new Event('circuit-dropzone-snap', {bubbles: true}))
+          this.occupied = true
+          emitEvent('circuit-dropzone:qpu-operation-snap', {}, this)
         },
         unsnapOperation: () => {
           this.operationName = ''
-          this.dispatchEvent(new Event('circuit-dropzone-unsnap', {bubbles: true}))
+          this.occupied = false
+          emitEvent('circuit-dropzone:qpu-operation-unsnap', {}, this)
         },
         dropOperation: () => {
-          this.dispatchEvent(new Event('circuit-dropzone-drop', {bubbles: true}))
+          emitEvent('circuit-dropzone:qpu-operation-drop', {}, this)
         },
         putOperation: (_context, event) => {
           if (event.type !== 'PUT_OPERATION') return
 
           this.append(event.operation)
           this.operationName = event.operation.tagName.toLocaleLowerCase()
+          this.occupied = true
           event.operation.snapped = true
         },
         deleteOperation: (_context, event) => {
           if (event.type !== 'DELETE_OPERATION') return
 
           this.operationName = ''
+          this.occupied = false
           this.removeChild(event.operation as Node)
         },
+        resizeOperation: () => {
+          emitEvent('circuit-dropzone:qpu-operation-resize', {}, this)
+        },
         dispatchOccupiedEvent: () => {
-          this.dispatchEvent(new Event('circuit-dropzone-occupy', {bubbles: true}))
+          emitEvent('circuit-dropzone:occupied', {}, this)
         },
         dispatchDeleteOperationEvent: () => {
-          this.dispatchEvent(new Event('circuit-dropzone-operation-delete', {bubbles: true}))
+          emitEvent('circuit-dropzone:qpu-operation-delete', {}, this)
         }
       },
       guards: {
@@ -139,10 +156,6 @@ export class CircuitDropzoneElement extends HTMLElement {
     return !this.connectTop && !this.connectBottom
   }
 
-  get occupied(): boolean {
-    return this.operationName !== ''
-  }
-
   get operation(): Operation | null {
     return this.firstElementChild as Operation
   }
@@ -153,6 +166,15 @@ export class CircuitDropzoneElement extends HTMLElement {
     return {
       x: window.pageXOffset + rect.left + this.clientWidth / 2,
       y: window.pageYOffset + rect.top + this.clientHeight / 2
+    }
+  }
+
+  get resizeHandleSnapTarget(): {x: number; y: number} {
+    const rect = this.getBoundingClientRect()
+
+    return {
+      x: window.pageXOffset + rect.left + this.clientWidth / 2,
+      y: window.pageYOffset + rect.top + this.clientHeight + 4
     }
   }
 
@@ -174,14 +196,28 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.initDropzone()
     this.circuitDropzoneService.start()
 
-    this.addEventListener('operation-snap', this.snapOperation, {signal})
-    this.addEventListener('operation-unsnap', this.unsnapOperation, {signal})
-    this.addEventListener('operation-end-dragging', this.dropOperation, {signal})
-    this.addEventListener('operation-delete', this.deleteOperation, {signal})
+    this.addEventListener('draggable:snap-to-dropzone', this.snap, {signal})
+    this.addEventListener('draggable:unsnap', this.unsnap, {signal})
+    this.addEventListener('draggable:end-dragging', this.dropOperation, {signal})
+    this.addEventListener('draggable:delete', this.deleteOperation, {signal})
+    this.addEventListener('menuable:menu-delete', this.deleteOperation, {signal})
+    this.addEventListener('resizeable:resize', this.resizeOperation, {signal})
   }
 
   disconnectedCallback() {
     this.#eventAbortController?.abort()
+  }
+
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    if (oldValue === newValue) return
+
+    if (name === 'data-occupied') {
+      if (newValue !== null) {
+        this.targets = 'circuit-step.dropzones circuit-step.occupiedDropzones'
+      } else {
+        this.targets = 'circuit-step.dropzones circuit-step.freeDropzones'
+      }
+    }
   }
 
   update(): void {
@@ -189,9 +225,6 @@ export class CircuitDropzoneElement extends HTMLElement {
       html`<style>
           #body {
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             height: 100%;
             width: 100%;
           }
@@ -215,7 +248,7 @@ export class CircuitDropzoneElement extends HTMLElement {
           }
         </style>
 
-        <div id="body"><slot></slot>${this.wireSvg}</div>`,
+        <div id="body" part="body"><slot></slot>${this.wireSvg}</div>`,
       this.shadowRoot!
     )
   }
@@ -224,9 +257,19 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.circuitDropzoneService.send({type: 'PUT_OPERATION', operation})
   }
 
+  get circuitStep(): CircuitStepElement | null {
+    const el = this.parentElement
+    Util.notNull(el)
+
+    if (!isCircuitStepElement(el)) return null
+
+    return el as CircuitStepElement
+  }
+
   private initDropzone(): void {
     if (this.operation !== null) {
       this.operationName = this.operation.tagName.toLocaleLowerCase()
+      this.occupied = true
     }
 
     interact(this).dropzone({
@@ -235,11 +278,11 @@ export class CircuitDropzoneElement extends HTMLElement {
     })
   }
 
-  private snapOperation(): void {
+  private snap(): void {
     this.circuitDropzoneService.send({type: 'SNAP_OPERATION'})
   }
 
-  private unsnapOperation(): void {
+  private unsnap(): void {
     this.circuitDropzoneService.send({type: 'UNSNAP_OPERATION'})
   }
 
@@ -250,7 +293,15 @@ export class CircuitDropzoneElement extends HTMLElement {
   private deleteOperation(event: Event): void {
     const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} isn't an Operation.`)
+
     this.circuitDropzoneService.send({type: 'DELETE_OPERATION', operation})
+  }
+
+  private resizeOperation(event: Event): void {
+    const operation = event.target
+    if (!isResizeable(operation)) throw new Error(`${operation} isn't a Resizeable.`)
+
+    this.circuitDropzoneService.send({type: 'RESIZE_OPERATION'})
   }
 
   private get wireSvg(): TemplateResult {

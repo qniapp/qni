@@ -182,7 +182,7 @@ export function testDraggableOperation(operationName) {
       assert.deepEqual(operation.draggableService.state.value, 'deleted')
     })
 
-    it(`dispatches operation-grab event on mousedown`, async function () {
+    it(`dispatches draggable:grab event on mousedown`, async function () {
       const container = document.createElement('div')
       container.innerHTML = `
   <palette-dropzone>
@@ -191,14 +191,14 @@ export function testDraggableOperation(operationName) {
       document.body.append(container)
       const operation = document.querySelector(operationName)
 
-      const grabEvent = once(operation, 'operation-grab')
+      const grabEvent = once(operation, 'draggable:grab')
       mousedown(operation)
       await grabEvent
 
       assert.isTrue(operation.grabbed)
     })
 
-    it(`dispatches operation-release event on mouseup`, async function () {
+    it(`dispatches draggable:release event on mouseup`, async function () {
       const container = document.createElement('div')
       container.innerHTML = `
   <palette-dropzone>
@@ -208,7 +208,7 @@ export function testDraggableOperation(operationName) {
       const operation = document.querySelector(operationName)
       mousedown(operation)
 
-      const releaseEvent = once(operation, 'operation-release')
+      const releaseEvent = once(operation, 'draggable:release')
       mouseup(operation)
       await releaseEvent
 

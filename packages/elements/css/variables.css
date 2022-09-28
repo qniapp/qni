@@ -1,6 +1,7 @@
 :root {
   /* Sizing */
   --qni-semantic-size-qpu-operation-base: theme(width.8);
+  --qni-semantic-size-qpu-operation-base-½: theme(height.4);
   --qni-semantic-size-qpu-operation-base-¾: theme(height.6);
   --qni-semantic-size-qpu-operation-xs: theme(spacing.4);
   --qni-semantic-size-qpu-operation-sm: theme(spacing.6);
@@ -8,6 +9,53 @@
   --qni-semantic-size-qpu-operation-lg: theme(spacing.10);
   --qni-semantic-size-qpu-operation-xl: theme(spacing.12);
   --qni-semantic-size-qpu-operation-2xl: theme(spacing.16);
+
+  --qni-semantic-size-qpu-operation-1qubit: var(--qni-semantic-size-qpu-operation-base);
+  --qni-semantic-size-qpu-operation-2qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 2 + var(--qni-semantic-size-qpu-operation-base-½)
+  );
+  --qni-semantic-size-qpu-operation-3qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 3 + var(--qni-semantic-size-qpu-operation-base-½) * 2
+  );
+  --qni-semantic-size-qpu-operation-4qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 4 + var(--qni-semantic-size-qpu-operation-base-½) * 3
+  );
+  --qni-semantic-size-qpu-operation-5qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 5 + var(--qni-semantic-size-qpu-operation-base-½) * 4
+  );
+  --qni-semantic-size-qpu-operation-6qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 6 + var(--qni-semantic-size-qpu-operation-base-½) * 5
+  );
+  --qni-semantic-size-qpu-operation-7qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 7 + var(--qni-semantic-size-qpu-operation-base-½) * 6
+  );
+  --qni-semantic-size-qpu-operation-8qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 8 + var(--qni-semantic-size-qpu-operation-base-½) * 7
+  );
+  --qni-semantic-size-qpu-operation-9qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 9 + var(--qni-semantic-size-qpu-operation-base-½) * 8
+  );
+  --qni-semantic-size-qpu-operation-10qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 10 + var(--qni-semantic-size-qpu-operation-base-½) * 9
+  );
+  --qni-semantic-size-qpu-operation-11qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 11 + var(--qni-semantic-size-qpu-operation-base-½) * 10
+  );
+  --qni-semantic-size-qpu-operation-12qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 12 + var(--qni-semantic-size-qpu-operation-base-½) * 11
+  );
+  --qni-semantic-size-qpu-operation-13qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 13 + var(--qni-semantic-size-qpu-operation-base-½) * 12
+  );
+  --qni-semantic-size-qpu-operation-14qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 14 + var(--qni-semantic-size-qpu-operation-base-½) * 13
+  );
+  --qni-semantic-size-qpu-operation-15qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 15 + var(--qni-semantic-size-qpu-operation-base-½) * 14
+  );
+  --qni-semantic-size-qpu-operation-16qubit: calc(
+    var(--qni-semantic-size-qpu-operation-base) * 16 + var(--qni-semantic-size-qpu-operation-base-½) * 15
+  );
 
   /* Spacing */
   --qni-semantic-spacing-outline-gap: theme('spacing[0.5]');
@@ -19,6 +67,7 @@
 
   --qni-semantic-color-intermediate: theme(colors.purple.500);
   --qni-semantic-color-intermediate-light: theme(colors.purple.400);
+  --qni-semantic-border-color-intermediate: var(--qni-semantic-color-intermediate);
   --qni-semantic-fill-color-intermediate: var(--qni-semantic-color-intermediate);
 
   --qni-semantic-color-on: theme(colors.sky.500);
@@ -32,7 +81,7 @@
   --qni-semantic-color-active: var(--qni-semantic-color-on);
   --qni-semantic-border-color-active: var(--qni-semantic-color-active);
 
-  --qni-semantic-color-icon-light: theme(colors.white);
+  --qni-semantic-color-icon-inverse: theme(colors.white);
 
   /* Border radius */
   --qni-semantic-radius-default: theme(borderRadius.DEFAULT);

@@ -53,7 +53,9 @@ describe('circuit-dropzone element', function () {
       </palette-dropzone>
 
       <quantum-circuit data-target="circuit-editor.circuit">
-        <circuit-dropzone></circuit-dropzone>
+        <circuit-step>
+          <circuit-dropzone></circuit-dropzone>
+        </circuit-step>
       </quantum-circuit>
     </circuit-editor>`
         document.body.append(container)
@@ -115,7 +117,7 @@ describe('circuit-dropzone element', function () {
       })
 
       it('should reach "empty" when delete its operation', async function () {
-        operation.dispatchEvent(new Event('operation-delete', {bubbles: true}))
+        operation.dispatchEvent(new Event('draggable:delete', {bubbles: true}))
 
         assert.equal(circuitDropzone.circuitDropzoneService.state.value, 'empty')
         assert.equal(circuitDropzone.operation, null)
@@ -136,7 +138,9 @@ describe('circuit-dropzone element', function () {
       </palette-dropzone>
 
       <quantum-circuit data-target="circuit-editor.circuit">
-        <circuit-dropzone></circuit-dropzone>
+        <circuit-step>
+          <circuit-dropzone></circuit-dropzone>
+        </circuit-step>
       </quantum-circuit>
     </circuit-editor>`
         document.body.append(container)

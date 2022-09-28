@@ -37,10 +37,10 @@ export function testActivateable(operationName) {
       assert.isFalse(operation.hasAttribute('data-active'))
     })
 
-    it('dispatches operation-active event', async function () {
+    it('dispatches activateable:active event', async function () {
       const operation = document.querySelector(operationName)
 
-      const activeEvent = once(operation, 'operation-active')
+      const activeEvent = once(operation, 'activateable:active')
       operation.activate()
 
       await activeEvent

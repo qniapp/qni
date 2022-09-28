@@ -11,12 +11,9 @@ import {testWireableOperation} from './common/test-wireable'
 
 describe('qft-gate element', function () {
   testActivateable('qft-gate')
-  testControllable('qft-gate')
-  testDisableable('qft-gate')
   testDraggableOperation('qft-gate')
   testElementCreation(window.QftGateElement, 'qft-gate')
   testHoverable('qft-gate')
   testIconable('qft-gate')
-  testIfable('qft-gate')
   testWireableOperation('qft-gate')
 })

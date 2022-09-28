@@ -1,9 +1,12 @@
 export * from './angle-parser'
 export * from './complex'
+export * from './config'
 export * from './describe'
 export * from './detailed-error'
+export * from './emit-event'
 export * from './equate'
 export * from './format'
+export * from './numeric-range'
 export * from './util'
 
 export * from './bloch-display'

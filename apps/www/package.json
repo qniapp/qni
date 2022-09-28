@@ -29,7 +29,8 @@
     "dev": "./bin/dev",
     "lint": "eslint . --ext .js,.ts",
     "typecheck": "tsc --noEmit",
-    "build": "esbuild app/javascript/application.js --bundle --keep-names --sourcemap --minify --outdir=app/assets/builds && esbuild app/assets/javascripts/serviceworker.js --bundle --sourcemap --minify --outdir=app/assets/builds",
+    "build": "yarn build:css && yarn build:js",
+    "build:js": "esbuild app/javascript/application.js --bundle --keep-names --sourcemap --minify --outdir=app/assets/builds && esbuild app/assets/javascripts/serviceworker.js --bundle --sourcemap --minify --outdir=app/assets/builds",
     "build:css": "tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
     "build:npm": "rollup -c && yarn build:css && cp ./app/assets/builds/application.css dist/qni.css",
     "build:docs": "cd docs && JEKYLL_ENV=production bundle exec jekyll build",
@@ -73,7 +74,7 @@
     "rollup-plugin-dts": "~4.2",
     "rollup-plugin-replace": "^2.2.0",
     "tailwindcss": "^3.0.23",
-    "typescript": "~4.6"
+    "typescript": "~4.8"
   },
   "directories": {
     "doc": "doc",

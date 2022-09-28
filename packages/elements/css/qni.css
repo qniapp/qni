@@ -54,6 +54,7 @@
     &::part(body) {
       width: var(--qni-semantic-size-qpu-operation-base);
       height: var(--qni-semantic-size-qpu-operation-base);
+      @apply shrink-0;
     }
   }
 
@@ -77,7 +78,7 @@
     }
 
     &::part(icon) {
-      color: var(--qni-semantic-color-icon-light);
+      color: var(--qni-semantic-color-icon-inverse);
     }
   }
 
@@ -99,7 +100,7 @@
 
   .qpu-operation-hoverable {
     palette-dropzone &[data-hoverable]:not([data-grabbed]):hover::part(outline),
-    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::part(outline) {
+    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
       @apply block;
       outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
     }
@@ -128,7 +129,7 @@
     }
 
     &[data-grabbed]::part(icon) {
-      color: var(--qni-semantic-color-icon-light);
+      color: var(--qni-semantic-color-icon-inverse);
     }
 
     &[data-grabbed]::part(outline) {
@@ -152,37 +153,332 @@
 
     --qni-component-resize-handle-fill-color: var(--qni-semantic-color-intermediate-light);
     --qni-component-resize-handle-fill-color-hovered: var(--qni-semantic-color-intermediate);
-    --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-light);
+    --qni-component-resize-handle-icon-color: var(--qni-semantic-color-icon-inverse);
 
     --qni-component-resize-handle-radius: var(--qni-semantic-radius-default);
 
+    &[data-span='2'] {
+      width: var(--qni-semantic-size-qpu-operation-2qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-2qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-2qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-2qubit);
+        }
+      }
+    }
+
+    &[data-span='3'] {
+      width: var(--qni-semantic-size-qpu-operation-3qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-3qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-3qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-3qubit);
+        }
+      }
+    }
+
+    &[data-span='4'] {
+      width: var(--qni-semantic-size-qpu-operation-4qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-4qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-4qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-4qubit);
+        }
+      }
+    }
+
+    &[data-span='5'] {
+      width: var(--qni-semantic-size-qpu-operation-5qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-5qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-5qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-5qubit);
+        }
+      }
+    }
+
+    &[data-span='6'] {
+      width: var(--qni-semantic-size-qpu-operation-6qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-6qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-6qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-6qubit);
+        }
+      }
+    }
+
+    &[data-span='7'] {
+      width: var(--qni-semantic-size-qpu-operation-7qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-7qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-7qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-7qubit);
+        }
+      }
+    }
+
+    &[data-span='8'] {
+      width: var(--qni-semantic-size-qpu-operation-8qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-8qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-8qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-8qubit);
+        }
+      }
+    }
+
+    &[data-span='9'] {
+      width: var(--qni-semantic-size-qpu-operation-9qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-9qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-9qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-9qubit);
+        }
+      }
+    }
+
+    &[data-span='10'] {
+      width: var(--qni-semantic-size-qpu-operation-10qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-10qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-10qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-10qubit);
+        }
+      }
+    }
+
+    &[data-span='11'] {
+      width: var(--qni-semantic-size-qpu-operation-11qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-11qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-11qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-11qubit);
+        }
+      }
+    }
+
+    &[data-span='12'] {
+      width: var(--qni-semantic-size-qpu-operation-12qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-12qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-12qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-12qubit);
+        }
+      }
+    }
+
+    &[data-span='13'] {
+      width: var(--qni-semantic-size-qpu-operation-13qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-13qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-13qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-13qubit);
+        }
+      }
+    }
+
+    &[data-span='14'] {
+      width: var(--qni-semantic-size-qpu-operation-14qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-14qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-14qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-14qubit);
+        }
+      }
+    }
+
+    &[data-span='15'] {
+      width: var(--qni-semantic-size-qpu-operation-15qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-15qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-15qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-15qubit);
+        }
+      }
+    }
+
+    &[data-span='16'] {
+      width: var(--qni-semantic-size-qpu-operation-16qubit);
+
+      &::part(body) {
+        width: var(--qni-semantic-size-qpu-operation-16qubit);
+      }
+
+      @media screen(sm) {
+        width: var(--qni-semantic-size-qpu-operation-1qubit);
+        height: var(--qni-semantic-size-qpu-operation-16qubit);
+
+        &::part(body) {
+          width: var(--qni-semantic-size-qpu-operation-1qubit);
+          height: var(--qni-semantic-size-qpu-operation-16qubit);
+        }
+      }
+    }
+
+    &[data-resizing]::part(outline) {
+      @apply block;
+      outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-intermediate);
+    }
+
     &::part(layout) {
-      @apply flex flex-col;
+      @apply flex;
+
+      @apply flex-row-reverse;
+
+      @media screen(sm) {
+        @apply flex-col;
+      }
     }
 
     &::part(resize-handle) {
-      width: var(--qni-component-resize-handle-width);
-      height: var(--qni-component-resize-handle-height);
-
       color: var(--qni-component-resize-handle-icon-color);
       background-color: var(--qni-component-resize-handle-fill-color);
 
       border-radius: var(--qni-component-resize-handle-radius);
 
-      margin-top: var(--qni-component-resize-handle-overlap);
+      width: var(--qni-component-resize-handle-height);
+      height: var(--qni-component-resize-handle-width);
 
-      @apply flex flex-row justify-center;
+      margin-right: var(--qni-component-resize-handle-overlap);
+
+      @apply shrink-0;
+      @apply flex;
+      @apply flex-row;
+      @apply justify-center;
       @apply cursor-ns-resize;
       @apply z-10;
 
-      &:hover {
-        background-color: var(--qni-component-resize-handle-fill-color-hovered);
+      @media screen(sm) {
+        width: var(--qni-component-resize-handle-width);
+        height: var(--qni-component-resize-handle-height);
+
+        margin-right: 0;
+        margin-top: var(--qni-component-resize-handle-overlap);
+
+        @apply flex-col;
       }
+    }
+
+    &::part(resize-handle):hover,
+    &[data-resizing]::part(resize-handle) {
+      background-color: var(--qni-component-resize-handle-fill-color-hovered);
     }
 
     /* Show resize-handle only when hovering the mouse pointer */
     &::part(resize-handle) {
-      @apply hidden;
+      @apply invisible;
     }
 
     /*
@@ -190,8 +486,18 @@
      * - on palette
      * - while dragging
      */
-    quantum-circuit:not([data-editing]) circuit-dropzone &:not([data-grabbed]):hover::part(resize-handle) {
-      @apply flex;
+    quantum-circuit:not([data-editing]) circuit-dropzone &:not([data-grabbed]):hover::part(resize-handle),
+    &[data-resizing]::part(resize-handle) {
+      @apply visible;
+    }
+
+    &::part(resize-handle-icon) {
+      @apply h-full w-full;
+      @apply rotate-90;
+
+      @media screen(sm) {
+        @apply rotate-0;
+      }
     }
   }
 

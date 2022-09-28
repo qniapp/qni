@@ -1,11 +1,13 @@
 import {
+  Config,
   DetailedError,
+  ResizeableSpan,
   SerializedCircuitStep,
   SerializedHGate,
   SerializedMeasurementGate,
   SerializedPhaseGate,
-  SerializedQftGate,
   SerializedQftDaggerGate,
+  SerializedQftGate,
   SerializedRnotGate,
   SerializedRxGate,
   SerializedRyGate,
@@ -16,7 +18,8 @@ import {
   SerializedYGate,
   SerializedZGate,
   Util,
-  describe
+  describe,
+  emitEvent
 } from '@qni/common'
 import {
   Operation,
@@ -34,7 +37,7 @@ import {
   isYGateElement,
   isZGateElement
 } from './operation'
-import {attr, controller} from '@github/catalyst'
+import {attr, controller, targets} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
@@ -44,8 +47,8 @@ import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {PhaseGateElement} from './phase-gate-element'
-import {QftGateElement} from './qft-gate-element'
 import {QftDaggerGateElement} from './qft-dagger-gate-element'
+import {QftGateElement} from './qft-gate-element'
 import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
@@ -57,6 +60,7 @@ import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
 import {isControllable} from './mixin/controllable'
+import {isResizeable} from './mixin'
 
 export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitStepElement
@@ -141,6 +145,7 @@ type CircuitStepEvent =
   | {type: 'SNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'DELETE_OPERATION'; dropzone: CircuitDropzoneElement}
+  | {type: 'RESIZE_OPERATION'; dropzone: CircuitDropzoneElement}
   | {type: 'OCCUPY_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSHADOW'}
 
@@ -150,11 +155,15 @@ export class CircuitStepElement extends HTMLElement {
   @attr shadow = false
   @attr keep = false
   @attr debug = false
+  @targets dropzones!: CircuitDropzoneElement[]
+  @targets freeDropzones!: CircuitDropzoneElement[]
+  @targets occupiedDropzones!: CircuitDropzoneElement[]
 
   private circuitStepMachine = createMachine<CircuitStepContext, CircuitStepEvent>(
     {
       id: 'circuit-step',
       initial: 'unknown',
+      strict: true,
       states: {
         unknown: {
           always: [
@@ -168,11 +177,11 @@ export class CircuitStepElement extends HTMLElement {
           on: {
             SNAP_DROPZONE: {
               target: 'shadow',
-              actions: ['setOperationBit', 'dispatchSnapEvent']
+              actions: ['setOperationBit', 'updateResizeableSpanDropzones', 'dispatchSnapEvent']
             },
             UNSNAP_DROPZONE: {
               target: 'shadow',
-              actions: ['dispatchUnsnapEvent']
+              actions: ['updateResizeableSpanDropzones', 'dispatchUnsnapEvent']
             },
             UNSHADOW: {
               target: 'visible',
@@ -207,19 +216,23 @@ export class CircuitStepElement extends HTMLElement {
           on: {
             SNAP_DROPZONE: {
               target: 'visible',
-              actions: ['setOperationBit', 'dispatchSnapEvent']
+              actions: ['setOperationBit', 'updateResizeableSpanDropzones', 'dispatchSnapEvent']
             },
             UNSNAP_DROPZONE: {
               target: 'visible',
-              actions: ['dispatchUnsnapEvent']
+              actions: ['updateResizeableSpanDropzones', 'dispatchUnsnapEvent']
             },
             OCCUPY_DROPZONE: {
               target: 'visible',
-              actions: ['setOperationBit']
+              actions: ['setOperationBit', 'updateResizeableSpanDropzones']
             },
             DELETE_OPERATION: {
               target: 'visible',
-              actions: ['dispatchDeleteOperationEvent']
+              actions: ['updateResizeableSpanDropzones', 'dispatchDeleteOperationEvent']
+            },
+            RESIZE_OPERATION: {
+              target: 'visible',
+              actions: ['updateResizeableSpanDropzones', 'dispatchResizeOperationEvent']
             }
           },
           states: {
@@ -282,7 +295,7 @@ export class CircuitStepElement extends HTMLElement {
     {
       actions: {
         setOperationBit: (_context, event) => {
-          if (event.type !== 'SNAP_DROPZONE' && event.type !== 'OCCUPY_DROPZONE') return
+          if (!(event.type === 'SNAP_DROPZONE' || event.type === 'OCCUPY_DROPZONE')) return
 
           const dropzone = event.dropzone
           const bit = this.bit(dropzone)
@@ -290,35 +303,54 @@ export class CircuitStepElement extends HTMLElement {
 
           dropzone.operation.bit = bit
         },
+        updateResizeableSpanDropzones: (_context, event) => {
+          if (
+            !(
+              event.type === 'SNAP_DROPZONE' ||
+              event.type === 'UNSNAP_DROPZONE' ||
+              event.type === 'OCCUPY_DROPZONE' ||
+              event.type === 'DELETE_OPERATION' ||
+              event.type === 'RESIZE_OPERATION'
+            )
+          )
+            return
+
+          let span = 1
+          for (const each of this.dropzones) {
+            const operation = each.operation
+            if (isResizeable(operation)) {
+              span = operation.span
+              continue
+            }
+            if (operation !== null) continue
+
+            if (span > 1) {
+              each.occupied = true
+              span -= 1
+            } else {
+              each.occupied = false
+            }
+          }
+        },
         dispatchSnapEvent: (_context, event) => {
           if (event.type !== 'SNAP_DROPZONE') return
 
-          this.dispatchEvent(
-            new CustomEvent('circuit-step-snap', {
-              detail: {dropzone: event.dropzone},
-              bubbles: true
-            })
-          )
+          emitEvent('circuit-step:qpu-operation-snap', {dropzone: event.dropzone}, this)
         },
         dispatchUnsnapEvent: (_context, event) => {
           if (event.type !== 'UNSNAP_DROPZONE') return
 
-          this.dispatchEvent(
-            new CustomEvent('circuit-step-unsnap', {
-              detail: {dropzone: event.dropzone},
-              bubbles: true
-            })
-          )
+          emitEvent('circuit-step:qpu-operation-unsnap', {dropzone: event.dropzone}, this)
         },
         dispatchDeleteOperationEvent: (_context, event) => {
           if (event.type !== 'DELETE_OPERATION') return
 
-          this.dispatchEvent(
-            new CustomEvent('circuit-step-delete-operation', {
-              detail: {dropzone: event.dropzone},
-              bubbles: true
-            })
-          )
+          emitEvent('circuit-step:delete-qpu-operation', {dropzone: event.dropzone}, this)
+        },
+        dispatchResizeOperationEvent: (_context, event) => {
+          if (event.type !== 'RESIZE_OPERATION') return
+
+          emitEvent('circuit-step:resize-qpu-operation', {dropzone: event.dropzone}, this)
         },
         unshadow: () => {
           this.shadow = false
@@ -346,12 +378,35 @@ export class CircuitStepElement extends HTMLElement {
       }
     }
   )
+
   private circuitStepService = interpret(this.circuitStepMachine).onTransition(state => {
-    if (this.debug) {
-      // eslint-disable-next-line no-console
-      console.log(`circuit-step: ${describe(state.value)}`)
-    }
+    if (!this.debug) return
+
+    // eslint-disable-next-line no-console
+    console.log(`circuit-step: ${describe(state.value)}`)
   })
+
+  get maxOccupiedDropzoneBit(): 0 | ResizeableSpan {
+    let bit: 0 | ResizeableSpan = 0
+
+    for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
+      if (!each.occupied) continue
+
+      const dropzoneBit = (parseInt(dropzoneIndex, 10) + 1) as ResizeableSpan
+
+      if (dropzoneBit > bit) bit = dropzoneBit
+      if (isResizeable(each.operation)) {
+        const operationMSB = dropzoneBit + each.operation.span - 1
+        if (operationMSB > bit) {
+          bit = operationMSB as ResizeableSpan
+        }
+      }
+    }
+
+    Util.need(0 <= bit && bit <= Config.MAX_QUBIT_COUNT, 'invalid number of qubits in use')
+
+    return bit
+  }
 
   get wireCount(): number {
     return this.dropzones.length
@@ -376,11 +431,12 @@ export class CircuitStepElement extends HTMLElement {
     this.addEventListener('mouseenter', this.dispatchMouseenterEvent)
     this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
     this.addEventListener('click', this.maybeDispatchClickEvent)
-    this.addEventListener('circuit-dropzone-snap', this.snapDropzone)
-    this.addEventListener('circuit-dropzone-unsnap', this.unsnapDropzone)
-    this.addEventListener('circuit-dropzone-operation-delete', this.deleteOperation)
-    this.addEventListener('circuit-dropzone-drop', this.unshadow)
-    this.addEventListener('circuit-dropzone-occupy', this.occupyDropzone)
+    this.addEventListener('circuit-dropzone:qpu-operation-snap', this.snapDropzone)
+    this.addEventListener('circuit-dropzone:qpu-operation-unsnap', this.unsnapDropzone)
+    this.addEventListener('circuit-dropzone:qpu-operation-delete', this.deleteOperation)
+    this.addEventListener('circuit-dropzone:qpu-operation-resize', this.resizeOperation)
+    this.addEventListener('circuit-dropzone:qpu-operation-drop', this.unshadow)
+    this.addEventListener('circuit-dropzone:occupied', this.occupyDropzone)
 
     this.attachShadow({mode: 'open'})
     this.updateOperationAttributes()
@@ -666,7 +722,8 @@ export class CircuitStepElement extends HTMLElement {
 
   get isEmpty(): boolean {
     if (this.keep) return false
-    return this.dropzones.every(each => !each.occupied)
+
+    return this.occupiedDropzones.length === 0
   }
 
   dropzoneAt(dropzoneIndex: number): CircuitDropzoneElement {
@@ -674,14 +731,6 @@ export class CircuitStepElement extends HTMLElement {
     Util.notNull(dropzone)
 
     return dropzone
-  }
-
-  get dropzones(): CircuitDropzoneElement[] {
-    return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
-  }
-
-  get freeDropzones(): CircuitDropzoneElement[] {
-    return this.dropzones.filter(each => !each.occupied)
   }
 
   get lastDropzone(): CircuitDropzoneElement {
@@ -702,15 +751,15 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private get swapGateDropzones(): CircuitDropzoneElement[] {
-    return this.dropzones.filter(each => each.occupied).filter(each => each.operationName === 'swap-gate')
+    return this.occupiedDropzones.filter(each => each.operationName === 'swap-gate')
   }
 
   private get phaseGateDropzones(): CircuitDropzoneElement[] {
-    return this.dropzones.filter(each => each.occupied).filter(each => each.operationName === 'phase-gate')
+    return this.occupiedDropzones.filter(each => each.operationName === 'phase-gate')
   }
 
   private get controlGateDropzones(): CircuitDropzoneElement[] {
-    return this.dropzones.filter(each => each.occupied && isControlGateElement(each.operation))
+    return this.occupiedDropzones.filter(each => isControlGateElement(each.operation))
   }
 
   private numControlGateDropzones(
@@ -782,8 +831,7 @@ export class CircuitStepElement extends HTMLElement {
     let numRy = 0
     let numRz = 0
 
-    return this.dropzones
-      .filter(each => each.occupied)
+    return this.occupiedDropzones
       .filter(each => isControllable(each.operation))
       .filter(each => {
         if (connectionProps === undefined) return true
@@ -865,7 +913,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private dispatchUpdateEvent(): void {
-    this.dispatchEvent(new Event('circuit-step-update', {bubbles: true}))
+    emitEvent('circuit-step:update', {}, this)
   }
 
   private deleteOperation(event: Event): void {
@@ -873,18 +921,23 @@ export class CircuitStepElement extends HTMLElement {
     this.circuitStepService.send({type: 'DELETE_OPERATION', dropzone})
   }
 
+  private resizeOperation(event: Event): void {
+    const dropzone = event.target as CircuitDropzoneElement
+    this.circuitStepService.send({type: 'RESIZE_OPERATION', dropzone})
+  }
+
   private dispatchMouseenterEvent(): void {
-    this.dispatchEvent(new Event('circuit-step-mouseenter', {bubbles: true}))
+    emitEvent('circuit-step:mouseenter', {}, this)
   }
 
   private dispatchMouseleaveEvent(): void {
-    this.dispatchEvent(new Event('circuit-step-mouseleave', {bubbles: true}))
+    emitEvent('circuit-step:mouseleave', {}, this)
   }
 
   private maybeDispatchClickEvent(event: MouseEvent): void {
     if (isOperation(event.target)) return
 
-    this.dispatchEvent(new Event('circuit-step-click', {bubbles: true}))
+    emitEvent('circuit-step:click', {}, this)
   }
 
   private snapDropzone(event: Event): void {
@@ -1075,31 +1128,23 @@ export class CircuitStepElement extends HTMLElement {
         }
         case QftGateElement: {
           const qftGates = sameOps as QftGateElement[]
-          for (const [ifStr, sameIfGates] of groupBy(qftGates, gate => gate.if)) {
-            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
-              const gate0 = sameControlGates[0]
-              const opType = gate0.operationType
-              const targets = sameControlGates.map(each => each.bit)
-              const serializedGate: SerializedQftGate = {type: opType, targets}
-              if (ifStr !== '') serializedGate.if = ifStr
-              if (controlsStr !== '') serializedGate.controls = gate0.controls
-              serializedStep.push(serializedGate)
-            }
+          for (const [span, sameSpanGates] of groupBy(qftGates, gate => gate.span)) {
+            const gate0 = sameSpanGates[0]
+            const opType = gate0.operationType
+            const targets = sameSpanGates.map(each => each.bit)
+            const serializedGate: SerializedQftGate = {type: opType, span, targets}
+            serializedStep.push(serializedGate)
           }
           break
         }
         case QftDaggerGateElement: {
-          const qftGates = sameOps as QftDaggerGateElement[]
-          for (const [ifStr, sameIfGates] of groupBy(qftGates, gate => gate.if)) {
-            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
-              const gate0 = sameControlGates[0]
-              const opType = gate0.operationType
-              const targets = sameControlGates.map(each => each.bit)
-              const serializedGate: SerializedQftDaggerGate = {type: opType, targets}
-              if (ifStr !== '') serializedGate.if = ifStr
-              if (controlsStr !== '') serializedGate.controls = gate0.controls
-              serializedStep.push(serializedGate)
-            }
+          const qftDaggerGates = sameOps as QftDaggerGateElement[]
+          for (const [span, sameSpanGates] of groupBy(qftDaggerGates, gate => gate.span)) {
+            const gate0 = sameSpanGates[0]
+            const opType = gate0.operationType
+            const targets = sameSpanGates.map(each => each.bit)
+            const serializedGate: SerializedQftDaggerGate = {type: opType, span, targets}
+            serializedStep.push(serializedGate)
           }
           break
         }
@@ -1156,8 +1201,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private get operations(): Operation[] {
-    return this.dropzones
-      .filter(each => each.occupied)
+    return this.occupiedDropzones
       .map(each => each.operation)
       .filter((each): each is NonNullable<Operation> => each !== null)
   }

@@ -219,7 +219,7 @@ describe('quantum-circuit element', function () {
 
         circuit.cnot([0, 2, 5], [3, 4])
         circuit.stepAt(0).dropzoneAt(1).put(new window.HGateElement())
-        circuit.stepAt(0).dispatchEvent(new Event('circuit-step-update', {bubbles: true}))
+        circuit.stepAt(0).dispatchEvent(new Event('circuit-step:update', {bubbles: true}))
 
         const step = circuit.stepAt(0)
         assert.instanceOf(step.dropzoneAt(0).operation, window.ControlGateElement)

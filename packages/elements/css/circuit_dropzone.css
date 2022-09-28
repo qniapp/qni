@@ -3,6 +3,18 @@ circuit-dropzone {
   @apply h-12 w-8;
   @apply sm:h-8 sm:w-12;
 
+  &::part(body) {
+    @apply flex;
+    @apply items-center;
+    @apply justify-start;
+
+    @apply flex-row-reverse;
+
+    @media screen(sm) {
+      @apply flex-col;
+    }
+  }
+
   /* Wires */
   &::part(wires) {
     @apply absolute;

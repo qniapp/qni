@@ -1,14 +1,15 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
+import {HoverableMixin, isResizeable} from './mixin'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
-import {QftGateElement, QftGateElementProps} from './qft-gate-element'
 import {QftDaggerGateElement, QftDaggerGateElementProps} from './qft-dagger-gate-element'
+import {QftGateElement, QftGateElementProps} from './qft-gate-element'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
 import {RzGateElement, RzGateElementProps} from './rz-gate-element'
-import {SerializedCircuitStep, Util} from '@qni/common'
+import {SerializedCircuitStep, Util, emitEvent, ResizeableSpan} from '@qni/common'
 import {TGateElement, TGateElementProps} from './t-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
@@ -19,13 +20,17 @@ import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
 import {ControlGateElement} from './control-gate-element'
-import {HoverableMixin} from './mixin'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
 import {WriteGateElement} from './write-gate-element'
 
 export type SnapTarget = {
+  dropzone: CircuitDropzoneElement | null
+  stepIndex: number | null
+  wireIndex: number
+}
+export type ResizeHandleSnapTarget = {
   dropzone: CircuitDropzoneElement | null
   stepIndex: number | null
   wireIndex: number
@@ -37,7 +42,6 @@ type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   @attr minStepCount = 1
   @attr minWireCount = 1
-  @attr maxWireCount = 10
   @attr editing = false
   @attr updateUrl = false
   @attr json = ''
@@ -122,9 +126,15 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       }
     })
     .start()
+
   private snapTargets!: {
     [i: number]: {
       [j: number]: SnapTarget
+    }
+  }
+  private resizeHandleSnapTargets!: {
+    [i: number]: {
+      [j: number]: ResizeHandleSnapTarget
     }
   }
 
@@ -281,15 +291,16 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     this.updateAllWires()
 
     this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
-    this.addEventListener('circuit-step-update', this.updateStep)
-    this.addEventListener('circuit-step-snap', this.updateStep)
-    this.addEventListener('circuit-step-snap', this.updateChangedWire)
-    this.addEventListener('circuit-step-unsnap', this.updateStep)
-    this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
-    this.addEventListener('circuit-step-delete-operation', this.updateStep)
-    this.addEventListener('circuit-step-delete-operation', this.updateChangedWire)
+    this.addEventListener('circuit-step:update', this.updateStep)
+    this.addEventListener('circuit-step:qpu-operation-snap', this.updateStep)
+    this.addEventListener('circuit-step:qpu-operation-snap', this.updateChangedWire)
+    this.addEventListener('circuit-step:qpu-operation-unsnap', this.updateStep)
+    this.addEventListener('circuit-step:qpu-operation-unsnap', this.updateChangedWire)
+    this.addEventListener('circuit-step:delete-qpu-operation', this.updateStep)
+    this.addEventListener('circuit-step:delete-qpu-operation', this.updateChangedWire)
+    this.addEventListener('circuit-step:resize-qpu-operation', this.updateStep)
 
-    this.dispatchEvent(new Event('quantum-circuit-init', {bubbles: true}))
+    emitEvent('quantum-circuit:init', {}, this)
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -387,7 +398,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   }
 
   private dispatchMouseleaveEvent(): void {
-    this.dispatchEvent(new Event('quantum-circuit-mouseleave', {bubbles: true}))
+    emitEvent('quantum-circuit:mouseleave', {}, this)
   }
 
   resize(): void {
@@ -651,21 +662,19 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Circuit Operation
    */
-  qft(...args: number[] | [QftGateElementProps]): QuantumCircuitElement {
+  qft(span: number, ...args: number[] | [QftGateElementProps]): QuantumCircuitElement {
     let targetBits: number[]
-    let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
       targetBits = args as number[]
     } else {
       const props = args[0]
       targetBits = props.targets
-      disabled = props.disabled
     }
 
     this.applyOperationToTargets(() => {
       const qft = new QftGateElement()
-      if (disabled) qft.disable()
+      qft.span = span
       return qft
     }, ...targetBits)
 
@@ -677,22 +686,20 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Circuit Operation
    */
-  qftDagger(...args: number[] | [QftDaggerGateElementProps]): QuantumCircuitElement {
+  qftDagger(span: number, ...args: number[] | [QftDaggerGateElementProps]): QuantumCircuitElement {
     let targetBits: number[]
-    let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
       targetBits = args as number[]
     } else {
       const props = args[0]
       targetBits = props.targets
-      disabled = props.disabled
     }
 
     this.applyOperationToTargets(() => {
-      const qft = new QftDaggerGateElement()
-      if (disabled) qft.disable()
-      return qft
+      const qftDagger = new QftDaggerGateElement()
+      qftDagger.span = span
+      return qftDagger
     }, ...targetBits)
 
     this.resize()
@@ -957,7 +964,15 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   }
 
   removeLastEmptyWires(): void {
-    while (this.steps.every(each => each.wireCount > this.minWireCount && !each.lastDropzone.occupied)) {
+    while (
+      this.steps.every(each => {
+        return (
+          each.wireCount > each.maxOccupiedDropzoneBit &&
+          each.wireCount > this.minWireCount &&
+          !each.lastDropzone.occupied
+        )
+      })
+    ) {
       for (const each of this.steps) {
         each.lastDropzone.remove()
       }
@@ -995,112 +1010,139 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
         keepStep = false
       }
 
+      const operations = []
+
       for (const operation of step) {
         switch (true) {
           case /^\|0>$/.test(operation): {
             const writeGate = new WriteGateElement()
             writeGate.value = '0'
-            newStep.appendOperation(writeGate)
+            operations.push(writeGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^\|1>$/.test(operation): {
             const writeGate = new WriteGateElement()
             writeGate.value = '1'
-            newStep.appendOperation(writeGate)
+            operations.push(writeGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^H/.test(operation): {
             const hGate = new HGateElement()
             hGate.if = this.ifVariable(operation.slice(1))
-            newStep.appendOperation(hGate)
+            operations.push(hGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^X$/.test(operation) || /^X<(.+)$/.test(operation): {
             const xGate = new XGateElement()
             xGate.if = operation.slice(2).trim()
-            newStep.appendOperation(xGate)
+            operations.push(xGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Y/.test(operation): {
             const yGate = new YGateElement()
             yGate.if = this.ifVariable(operation.slice(1))
-            newStep.appendOperation(yGate)
+            operations.push(yGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Z/.test(operation): {
             const zGate = new ZGateElement()
             zGate.if = this.ifVariable(operation.slice(1))
-            newStep.appendOperation(zGate)
+            operations.push(zGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^P/.test(operation): {
             const phaseGate = new PhaseGateElement()
             phaseGate.angle = this.angleParameter(operation.slice(1))
-            newStep.appendOperation(phaseGate)
+            operations.push(phaseGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^T/.test(operation): {
             const tGate = new TGateElement()
             tGate.if = this.ifVariable(operation.slice(1))
-            newStep.appendOperation(tGate)
+            operations.push(tGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^X\^½/.test(operation): {
             const rnotGate = new RnotGateElement()
             rnotGate.if = this.ifVariable(operation.slice(3))
-            newStep.appendOperation(rnotGate)
+            operations.push(rnotGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Rx/.test(operation): {
             const rxGate = new RxGateElement()
             rxGate.angle = this.angleParameter(operation.slice(2))
-            newStep.appendOperation(rxGate)
+            operations.push(rxGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Ry/.test(operation): {
             const ryGate = new RyGateElement()
             ryGate.angle = this.angleParameter(operation.slice(2))
-            newStep.appendOperation(ryGate)
+            operations.push(ryGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Rz/.test(operation): {
             const rzGate = new RzGateElement()
             rzGate.angle = this.angleParameter(operation.slice(2))
-            newStep.appendOperation(rzGate)
+            operations.push(rzGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^QFT\d/.test(operation): {
             const qftGate = new QftGateElement()
-            qftGate.if = this.ifVariable(operation.slice(1))
-            newStep.appendOperation(qftGate)
+            const span = parseInt(operation.slice(3), 10) as ResizeableSpan
+            qftGate.span = span
+            operations.push(qftGate)
+            for (let i = 0; i < span; i++) {
+              newStep.append(new CircuitDropzoneElement())
+            }
             break
           }
           case /^QFT†\d/.test(operation): {
             const qftDaggerGate = new QftDaggerGateElement()
-            qftDaggerGate.if = this.ifVariable(operation.slice(1))
-            newStep.appendOperation(qftDaggerGate)
+            const span = parseInt(operation.slice(4), 10) as ResizeableSpan
+            qftDaggerGate.span = span
+            operations.push(qftDaggerGate)
+            newStep.append(new CircuitDropzoneElement())
+            for (let i = 0; i < span; i++) {
+              newStep.append(new CircuitDropzoneElement())
+            }
             break
           }
           case /^Swap$/.test(operation): {
             const swapGate = new SwapGateElement()
-            newStep.appendOperation(swapGate)
+            operations.push(swapGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^•$/.test(operation): {
             const controlGate = new ControlGateElement()
-            newStep.appendOperation(controlGate)
+            operations.push(controlGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Bloch$/.test(operation): {
             const blochDisplay = new BlochDisplayElement()
-            newStep.appendOperation(blochDisplay)
+            operations.push(blochDisplay)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^Measure/.test(operation): {
             const measurementGate = new MeasurementGateElement()
             const flag = ((/^>(.+)$/.exec(operation.slice(7)) || [])[1] || '').trim()
             measurementGate.flag = flag
-            newStep.appendOperation(measurementGate)
+            operations.push(measurementGate)
+            newStep.append(new CircuitDropzoneElement())
             break
           }
           case /^[[{](.+)$/.test(operation): {
@@ -1122,8 +1164,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             if (operation !== 1) {
               throw new Error(`Unknown operation: ${operation}`)
             }
-            newStep.appendDropzone()
+            newStep.append(new CircuitDropzoneElement())
+            operations.push(null)
           }
+        }
+
+        for (const [dropzoneIndex, each] of Object.entries(operations)) {
+          if (each === null) continue
+          newStep.dropzoneAt(parseInt(dropzoneIndex)).put(each)
         }
         // circuitStep.updateConnections()
         newStep.updateOperationAttributes()
@@ -1217,65 +1265,154 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Drag and Drop
    */
+  resizeHandleSnapTargetAt(x: number, y: number): SnapTarget {
+    if (this.isVertical) {
+      return this.resizeHandleSnapTargets[y][x]
+    } else {
+      return this.resizeHandleSnapTargets[x][y]
+    }
+  }
+
+  /**
+   * @category Drag and Drop
+   */
   setSnapTargets(operation: Operation): void {
-    const freeDropzones = this.dropzones.filter(each => !each.occupied)
     const snapTargets = []
     this.snapTargets = {}
 
+    let span = 1
+    if (isResizeable(operation)) span = operation.span
+
     const myDropzone = operation.dropzone
-    if (isCircuitDropzoneElement(myDropzone)) freeDropzones.push(myDropzone)
 
-    for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
-      const snapTarget = each.snapTarget
-      const i = this.isVertical ? snapTarget.y : snapTarget.x
-      const j = this.isVertical ? snapTarget.x : snapTarget.y
-      const wireIndex = parseInt(dropzoneIndex) % this.wireCount
+    for (const [stepKey, step] of Object.entries(this.steps)) {
+      const stepIndex = parseInt(stepKey)
 
-      const prevI = i - operation.snapRange * 0.75
-      const nextI = i + operation.snapRange * 0.75
+      for (const [dropzoneKey, dropzone] of Object.entries(step.dropzones)) {
+        const dropzoneIndex = parseInt(dropzoneKey)
+        const snapTarget = dropzone.snapTarget
 
-      if (parseInt(dropzoneIndex) < this.wireCount) {
-        if (this.isVertical) {
-          snapTargets.push({x: j, y: prevI})
-        } else {
-          snapTargets.push({x: prevI, y: j})
+        const i = this.isVertical ? snapTarget.y : snapTarget.x
+        const j = this.isVertical ? snapTarget.x : snapTarget.y
+
+        if (stepIndex === 0 && step.dropzones[dropzoneIndex + span - 1] !== undefined) {
+          const prevI = i - operation.snapRange * 0.75
+
+          if (this.isVertical) {
+            snapTargets.push({x: j, y: prevI})
+          } else {
+            snapTargets.push({x: prevI, y: j})
+          }
+
+          if (this.snapTargets[prevI] === undefined) this.snapTargets[prevI] = {}
+          if (this.snapTargets[prevI][j] === undefined)
+            this.snapTargets[prevI][j] = {
+              dropzone: null,
+              stepIndex: -1,
+              wireIndex: dropzoneIndex
+            }
         }
-        if (this.snapTargets[prevI] === undefined) this.snapTargets[prevI] = {}
-        if (this.snapTargets[prevI][j] === undefined)
-          this.snapTargets[prevI][j] = {
+
+        if (span === 1) {
+          if (dropzone === myDropzone || !dropzone.occupied) {
+            snapTargets.push(snapTarget)
+          }
+        } else {
+          if (!dropzone.occupied && dropzoneIndex + span < step.dropzones.length) {
+            snapTargets.push(snapTarget)
+          }
+          if (dropzone === myDropzone) {
+            snapTargets.push(snapTarget)
+            for (let s = 1; s < span && dropzoneIndex + s < step.dropzones.length; s++) {
+              const spanDropzone: CircuitDropzoneElement | null = step.dropzones[dropzoneIndex + s]
+              Util.notNull(spanDropzone)
+              snapTargets.push(spanDropzone.snapTarget)
+            }
+          }
+        }
+
+        const nextI = i + operation.snapRange * 0.75
+
+        if (step.dropzones[dropzoneIndex + span - 1] !== undefined) {
+          if (this.isVertical) {
+            snapTargets.push({x: j, y: nextI})
+          } else {
+            snapTargets.push({x: nextI, y: j})
+          }
+        }
+
+        if (this.snapTargets[nextI] === undefined) this.snapTargets[nextI] = {}
+        if (this.snapTargets[nextI][j] === undefined)
+          this.snapTargets[nextI][j] = {
             dropzone: null,
-            stepIndex: -1,
-            wireIndex
+            stepIndex,
+            wireIndex: dropzoneIndex
+          }
+
+        if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
+        if (this.snapTargets[i][j] === undefined)
+          this.snapTargets[i][j] = {
+            dropzone,
+            stepIndex: null,
+            wireIndex: dropzoneIndex
           }
       }
+    }
 
-      if (this.isVertical) {
-        snapTargets.push({x: j, y: nextI})
-      } else {
-        snapTargets.push({x: nextI, y: j})
+    operation.snapTargets = snapTargets
+  }
+
+  /**
+   * @category Drag and Drop
+   */
+  setResizeHandleSnapTargets(operation: Operation): void {
+    if (!isResizeable(operation)) {
+      throw new Error(`${operation} isn't a resizeable operation.`)
+    }
+    if (!isCircuitDropzoneElement(operation?.dropzone)) {
+      throw new Error(`${operation.dropzone} isn't a circuit-dropzone.`)
+    }
+
+    const circuitStep = operation.dropzone.circuitStep
+    Util.notNull(circuitStep)
+
+    const freeDropzones = circuitStep.freeDropzones
+    const myDropzone = operation.dropzone
+    freeDropzones.push(myDropzone)
+
+    const resizeHandleSnapTargets = []
+    this.resizeHandleSnapTargets = {}
+
+    for (const [dropzoneIndex, each] of Object.entries(circuitStep.dropzones)) {
+      const resizeHandleSnapTarget = each.resizeHandleSnapTarget
+      const i = this.isVertical ? resizeHandleSnapTarget.y : resizeHandleSnapTarget.x
+      const j = this.isVertical ? resizeHandleSnapTarget.x : resizeHandleSnapTarget.y
+      const wireIndex = parseInt(dropzoneIndex) % this.wireCount
+
+      if (!each.occupied) {
+        resizeHandleSnapTargets.push(resizeHandleSnapTarget)
       }
-      if (this.snapTargets[nextI] === undefined) this.snapTargets[nextI] = {}
-      if (this.snapTargets[nextI][j] === undefined)
-        this.snapTargets[nextI][j] = {
-          dropzone: null,
-          stepIndex: Math.floor(parseInt(dropzoneIndex) / this.wireCount),
-          wireIndex
+      if (each === myDropzone) {
+        resizeHandleSnapTargets.push(resizeHandleSnapTarget)
+
+        const span = operation.span
+        for (let s = 1; s < span; s++) {
+          const spanDropzone: CircuitDropzoneElement | null = circuitStep.dropzones[parseInt(dropzoneIndex) + s]
+          Util.notNull(spanDropzone)
+          resizeHandleSnapTargets.push(spanDropzone.resizeHandleSnapTarget)
         }
-
-      if (!each.occupied || each === myDropzone) {
-        snapTargets.push(snapTarget)
       }
 
-      if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
-      if (this.snapTargets[i][j] === undefined)
-        this.snapTargets[i][j] = {
+      if (this.resizeHandleSnapTargets[i] === undefined) this.resizeHandleSnapTargets[i] = {}
+      if (this.resizeHandleSnapTargets[i][j] === undefined)
+        this.resizeHandleSnapTargets[i][j] = {
           dropzone: each,
           stepIndex: null,
           wireIndex
         }
     }
 
-    operation.snapTargets = snapTargets
+    operation.resizeHandleSnapTargets = resizeHandleSnapTargets
   }
 
   /**

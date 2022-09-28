@@ -1,5 +1,6 @@
 import {Constructor} from './constructor'
 import {attr} from '@github/catalyst'
+import {emitEvent} from '@qni/common'
 
 export declare class Activateable {
   get active(): boolean
@@ -16,7 +17,7 @@ export function ActivateableMixin<TBase extends Constructor<HTMLElement>>(
 
     activate() {
       this.active = true
-      this.dispatchEvent(new Event('operation-active', {bubbles: true}))
+      emitEvent('activateable:active', {}, this)
     }
 
     deactivate() {
