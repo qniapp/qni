@@ -9719,7 +9719,9 @@ var Pr = /* @__PURE__ */ __name(class extends Oe(Ce(ss(Te(Ie(Se(xe(HTMLElement))
     Z(U`<div part="layout">
           <div part="body">${this.iconHtml(Kp)}</div>
           <div class="resize-handle" part="resize-handle" data-target="qft-dagger-gate.resizeHandle">
-            ${this.iconHtml(ls)}
+            <div part="resize-handle-icon">
+              ${this.iconHtml(ls)}
+            </div>
           </div>
         </div>
         <div part="outline"></div>`, this.shadowRoot);
@@ -9751,7 +9753,9 @@ var Ar = /* @__PURE__ */ __name(class extends Oe(Ce(ss(Te(Ie(Se(xe(HTMLElement))
     Z(U`<div part="layout">
           <div part="body">${this.iconHtml(Jp)}</div>
           <div class="resize-handle" part="resize-handle" data-target="qft-gate.resizeHandle">
-            ${this.iconHtml(ls)}
+            <div part="resize-handle-icon">
+              ${this.iconHtml(ls)}
+            </div>
           </div>
         </div>
         <div part="outline"></div>`, this.shadowRoot);

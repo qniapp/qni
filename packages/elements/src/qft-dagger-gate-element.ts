@@ -37,7 +37,7 @@ export class QftDaggerGateElement extends MenuableMixin(
       html`<div part="layout">
           <div part="body">${this.iconHtml(qftDaggerGateIcon)}</div>
           <div class="resize-handle" part="resize-handle" data-target="qft-dagger-gate.resizeHandle">
-            ${this.iconHtml(chevronSelectorVerticalIcon)}
+            <div part="resize-handle-icon">${this.iconHtml(chevronSelectorVerticalIcon)}</div>
           </div>
         </div>
         <div part="outline"></div>`,

@@ -2325,6 +2325,7 @@ bloch-display::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 bloch-display[data-hoverable]::part(outline) {
@@ -2853,6 +2854,7 @@ control-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 control-gate[data-hoverable]::part(outline) {
@@ -2974,6 +2976,7 @@ h-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 h-gate[data-hoverable]::part(outline) {
@@ -3153,6 +3156,7 @@ measurement-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 measurement-gate[data-hoverable]::part(outline) {
@@ -3395,6 +3399,7 @@ phase-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 phase-gate[data-hoverable]::part(outline) {
@@ -3623,6 +3628,7 @@ qft-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
   border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
@@ -4806,21 +4812,52 @@ qft-gate[data-resizing]::part(outline) {
 
 qft-gate::part(layout) {
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
+}
+
+@media (min-width: 640px) {
+  qft-gate::part(layout) {
+    flex-direction: column;
+  }
 }
 
 qft-gate::part(resize-handle) {
-  width: var(--qni-component-resize-handle-width);
-  height: var(--qni-component-resize-handle-height);
   color: var(--qni-component-resize-handle-icon-color);
   background-color: var(--qni-component-resize-handle-fill-color);
   border-radius: var(--qni-component-resize-handle-radius);
-  margin-top: var(--qni-component-resize-handle-overlap);
+  width: var(--qni-component-resize-handle-height);
+  height: var(--qni-component-resize-handle-width);
+  margin-right: var(--qni-component-resize-handle-overlap);
+  flex-shrink: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   cursor: ns-resize;
   z-index: 10;
+}
+
+@media (min-width: 640px) {
+  qft-gate::part(resize-handle) {
+    width: var(--qni-component-resize-handle-width);
+    height: var(--qni-component-resize-handle-height);
+    margin-right: 0;
+    margin-top: var(--qni-component-resize-handle-overlap)
+  }
+
+  qft-gate::part(resize-handle) {
+    flex-direction: column;
+  }
+
+  qft-gate::part(resize-handle) {
+    width: var(--qni-component-resize-handle-width);
+    height: var(--qni-component-resize-handle-height);
+    margin-right: 0;
+    margin-top: var(--qni-component-resize-handle-overlap)
+  }
+
+  qft-gate::part(resize-handle) {
+    flex-direction: column;
+  }
 }
 
 qft-gate::part(resize-handle):hover, qft-gate[data-resizing]::part(resize-handle) {
@@ -4833,6 +4870,20 @@ qft-gate::part(resize-handle) {
 
 quantum-circuit:not([data-editing]) circuit-dropzone qft-gate:not([data-grabbed]):hover::part(resize-handle), qft-gate[data-resizing]::part(resize-handle) {
   visibility: visible;
+}
+
+qft-gate::part(resize-handle-icon) {
+  height: 100%;
+  width: 100%;
+  --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@media (min-width: 640px) {
+  qft-gate::part(resize-handle-icon) {
+    --tw-rotate: 0deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
 }
 
 qft-gate[data-grabbed] {
@@ -4948,6 +4999,7 @@ qft-dagger-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 qft-dagger-gate[data-hoverable]::part(outline) {
@@ -6119,21 +6171,52 @@ qft-dagger-gate[data-resizing]::part(outline) {
 
 qft-dagger-gate::part(layout) {
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate::part(layout) {
+    flex-direction: column;
+  }
 }
 
 qft-dagger-gate::part(resize-handle) {
-  width: var(--qni-component-resize-handle-width);
-  height: var(--qni-component-resize-handle-height);
   color: var(--qni-component-resize-handle-icon-color);
   background-color: var(--qni-component-resize-handle-fill-color);
   border-radius: var(--qni-component-resize-handle-radius);
-  margin-top: var(--qni-component-resize-handle-overlap);
+  width: var(--qni-component-resize-handle-height);
+  height: var(--qni-component-resize-handle-width);
+  margin-right: var(--qni-component-resize-handle-overlap);
+  flex-shrink: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   cursor: ns-resize;
   z-index: 10;
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate::part(resize-handle) {
+    width: var(--qni-component-resize-handle-width);
+    height: var(--qni-component-resize-handle-height);
+    margin-right: 0;
+    margin-top: var(--qni-component-resize-handle-overlap)
+  }
+
+  qft-dagger-gate::part(resize-handle) {
+    flex-direction: column;
+  }
+
+  qft-dagger-gate::part(resize-handle) {
+    width: var(--qni-component-resize-handle-width);
+    height: var(--qni-component-resize-handle-height);
+    margin-right: 0;
+    margin-top: var(--qni-component-resize-handle-overlap)
+  }
+
+  qft-dagger-gate::part(resize-handle) {
+    flex-direction: column;
+  }
 }
 
 qft-dagger-gate::part(resize-handle):hover, qft-dagger-gate[data-resizing]::part(resize-handle) {
@@ -6146,6 +6229,20 @@ qft-dagger-gate::part(resize-handle) {
 
 quantum-circuit:not([data-editing]) circuit-dropzone qft-dagger-gate:not([data-grabbed]):hover::part(resize-handle), qft-dagger-gate[data-resizing]::part(resize-handle) {
   visibility: visible;
+}
+
+qft-dagger-gate::part(resize-handle-icon) {
+  height: 100%;
+  width: 100%;
+  --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@media (min-width: 640px) {
+  qft-dagger-gate::part(resize-handle-icon) {
+    --tw-rotate: 0deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
 }
 
 qft-dagger-gate::part(body) {
@@ -6294,6 +6391,7 @@ rnot-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 rnot-gate[data-hoverable]::part(outline) {
@@ -6464,6 +6562,7 @@ rx-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 rx-gate[data-hoverable]::part(outline) {
@@ -6692,6 +6791,7 @@ ry-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 ry-gate[data-hoverable]::part(outline) {
@@ -6920,6 +7020,7 @@ rz-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 rz-gate[data-hoverable]::part(outline) {
@@ -7148,6 +7249,7 @@ swap-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 swap-gate[data-hoverable]::part(outline) {
@@ -7269,6 +7371,7 @@ t-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 t-gate[data-hoverable]::part(outline) {
@@ -7439,6 +7542,7 @@ write-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 write-gate[data-hoverable]::part(outline) {
@@ -7667,6 +7771,7 @@ x-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 x-gate[data-hoverable]::part(outline) {
@@ -7837,6 +7942,7 @@ y-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 y-gate[data-hoverable]::part(outline) {
@@ -8007,6 +8113,7 @@ z-gate::part(body) {
   height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
 }
 
 z-gate[data-hoverable]::part(outline) {
