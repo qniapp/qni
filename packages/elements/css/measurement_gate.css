@@ -1,14 +1,16 @@
 measurement-gate {
-  @apply operation;
-  @apply operation-activateable;
+  @apply qpu-operation;
+  @apply qpu-operation-outlineable;
+  @apply qpu-operation-hoverable;
+  @apply qpu-operation-activateable;
+  @apply qpu-operation-rectangular;
+  @apply qpu-operation-grabbable;
+
   @apply operation-draggable;
   @apply operation-flaggable;
-  @apply operation-grabbable;
-  @apply operation-hoverable;
-  @apply operation-transparent;
 
   &::part(icon) {
-    @apply text-purple-500;
+    color: var(--qni-semantic-color-intermediate);
   }
 
   circuit-dropzone &[data-snapped]::part(icon) {
@@ -52,7 +54,7 @@ measurement-gate {
   /* data-grabbed */
 
   &[data-grabbed]::part(body) {
-    @apply qpu-operation-bg-grab;
+    background-color: var(--qni-semantic-fill-color-intermediate);
   }
 
   &[data-grabbed]::part(icon) {

@@ -41,7 +41,11 @@ export class RzGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(rzGateIcon)}</div>`, this.shadowRoot!)
+    render(
+      html`<div part="body">${this.iconHtml(rzGateIcon)}</div>
+        <div part="outline"></div>`,
+      this.shadowRoot!
+    )
   }
 
   toJson(): string {

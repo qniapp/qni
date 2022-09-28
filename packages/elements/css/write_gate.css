@@ -1,13 +1,15 @@
 write-gate {
-  @apply operation;
-  @apply operation-activateable;
+  @apply qpu-operation;
+  @apply qpu-operation-outlineable;
+  @apply qpu-operation-hoverable;
+  @apply qpu-operation-activateable;
+  @apply qpu-operation-rectangular;
+  @apply qpu-operation-grabbable;
+
   @apply operation-draggable;
-  @apply operation-grabbable;
-  @apply operation-hoverable;
-  @apply operation-transparent;
 
   &::part(icon) {
-    @apply text-zinc-500;
+    color: var(--qni-semantic-fill-color-disabled);
   }
 
   &[data-dark-mode]::part(icon) {
@@ -36,12 +38,12 @@ write-gate {
   }
 
   &[data-value='0']::part(value)::after {
-    @apply text-red-500;
+    color: var(--qni-semantic-color-off);
     content: '0';
   }
 
   &[data-value='1']::part(value)::after {
-    @apply text-sky-500;
+    color: var(--qni-semantic-color-on);
     content: '1';
   }
 

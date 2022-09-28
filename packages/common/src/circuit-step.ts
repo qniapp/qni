@@ -3,6 +3,7 @@ import {SerializedControlGate} from './control-gate'
 import {SerializedHGate} from './h-gate'
 import {SerializedMeasurementGate} from './measurement-gate'
 import {SerializedPhaseGate} from './phase-gate'
+import {SerializedQftGate} from './qft-gate'
 import {SerializedRnotGate} from './rnot-gate'
 import {SerializedRxGate} from './rx-gate'
 import {SerializedRyGate} from './ry-gate'
@@ -15,19 +16,20 @@ import {SerializedYGate} from './y-gate'
 import {SerializedZGate} from './z-gate'
 
 export type SerializedCircuitStep = Array<
+  | SerializedBlochDisplay
+  | SerializedControlGate
   | SerializedHGate
-  | SerializedXGate
-  | SerializedYGate
-  | SerializedZGate
+  | SerializedMeasurementGate
   | SerializedPhaseGate
-  | SerializedTGate
+  | SerializedQftGate
   | SerializedRnotGate
   | SerializedRxGate
   | SerializedRyGate
   | SerializedRzGate
   | SerializedSwapGate
-  | SerializedControlGate
-  | SerializedBlochDisplay
+  | SerializedTGate
   | SerializedWriteGate
-  | SerializedMeasurementGate
+  | SerializedXGate
+  | SerializedYGate
+  | SerializedZGate
 >

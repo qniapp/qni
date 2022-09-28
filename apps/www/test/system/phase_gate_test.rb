@@ -32,4 +32,24 @@ class PhaseGateTest < ApplicationSystemTestCase
     assert_magnitudes 0, 1
     assert_phases 0, 90
   end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    phase_gate = palette('Phase')
+    phase_gate.hover
+
+    assert_outline(phase_gate)
+  end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    phase_gate = palette('Phase')
+    grab phase_gate
+
+    assert_no_outline(phase_gate)
+  end
 end

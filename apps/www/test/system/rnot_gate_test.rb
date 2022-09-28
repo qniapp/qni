@@ -24,4 +24,24 @@ class RnotGateTest < ApplicationSystemTestCase
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
     assert_phases(-45, 45)
   end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    rnot_gate = palette('√X')
+    rnot_gate.hover
+
+    assert_outline(rnot_gate)
+  end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    rnot_gate = palette('√X')
+    grab rnot_gate
+
+    assert_no_outline(rnot_gate)
+  end
 end

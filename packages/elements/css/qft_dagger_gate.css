@@ -1,0 +1,14 @@
+qft-dagger-gate {
+  @apply qpu-operation;
+  @apply qpu-operation-outlineable;
+  @apply qpu-operation-hoverable;
+  @apply qpu-operation-activateable;
+  @apply qpu-operation-disableable;
+  @apply qpu-operation-resizeable;
+  @apply qpu-operation-rectangular;
+  @apply qpu-operation-color-filled;
+  @apply qpu-operation-grabbable;
+
+  @apply operation-draggable;
+  @apply operation-ifable;
+}

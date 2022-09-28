@@ -122,15 +122,48 @@
   pages:
     - name: 折り返し変換
       link: ./grover_iam.html
-      new: true
     - name: グロヴァー反復
       link: ./grover_iteration.html
-      new: true
     - name: 複数の振幅を増幅
       link: ./multiple_marked_values.html
-      new: true
     - name: 折り返しの仕組み
       link: ./grover_iam_indetail.html
+- name: 量子フーリエ変換 (QFT)
+  pages:
+    - name: パターンの読み出し
+      link: ./readout_of_patterns.html
+    - name: 逆 QFT
+      link: ./inverse_qft.html
+    - name: QFT の内部
+      link: ./inside_the_qft.html
+    - name: QFT 足し算
+      link: ./qft_adder.html
+- name: 量子位相推定
+  pages:
+    - name: 固有位相
+      link: ./eigenphases.html
+    - name: 量子位相推定回路
+      link: ./quantum_phase_estimation_circuit.html
+    - name: 位相キックバック
+      link: ./phase_kickback.html
+    - name: 量子位相推定の出力
+      link: ./qpe_output.html
+- name: ショアの因数分解
+  pages:
+    - name: 別問題に帰着する
+      link: ./shor_hsp.html
+      new: true
+    - name: \(a^xmod(N)\) の計算
+      link: ./shor_fx.html
+      new: true
+    - name: 周期 \(r\) を求める
+      link: ./shor_r.html
+      new: true
+    - name: \(a^xmod(N)\) の実装
+      link: ./shor_u.html
+      new: true
+    - name: 周期パターンの読み出し
+      link: ./shor_qft.html
       new: true
 - name: ふろく
   pages:

@@ -32,4 +32,24 @@ class RyGateTest < ApplicationSystemTestCase
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
     assert_phases 180, 0
   end
+
+  test 'hover' do
+    visit circuit_path
+    sleep 1
+
+    ry_gate = palette('Ry')
+    ry_gate.hover
+
+    assert_outline(ry_gate)
+  end
+
+  test 'grab' do
+    visit circuit_path
+    sleep 1
+
+    ry_gate = palette('Ry')
+    grab ry_gate
+
+    assert_no_outline(ry_gate)
+  end
 end

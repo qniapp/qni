@@ -1,6 +1,6 @@
 {
   "name": "@qni/tutorial",
-  "version": "0.0.82",
+  "version": "0.0.83",
   "description": "An interactive tutorial for @qni/www.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni#readme",
@@ -22,15 +22,14 @@
     "url": "https://github.com/qniapp/qni/issues"
   },
   "dependencies": {
-    "@qni/common": "^0.0.80",
-    "@qni/elements": "^0.0.82",
-    "@qni/simulator": "^0.0.82"
+    "@qni/common": "^0.0.83",
+    "@qni/elements": "^0.0.83",
+    "@qni/simulator": "^0.0.83"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.4.2",
-    "postcss-import": "^14.0.2",
-    "prettier-plugin-erb": "0.4.0"
+    "postcss-import": "^14.0.2"
   },
   "eslintIgnore": [
     "application.css",

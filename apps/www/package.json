@@ -1,6 +1,6 @@
 {
   "name": "@qni/www",
-  "version": "0.0.82",
+  "version": "0.0.83",
   "description": "Web service for @qni.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni/tree/main/apps/www#readme",
@@ -44,9 +44,9 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
-    "@qni/common": "^0.0.80",
-    "@qni/elements": "^0.0.82",
-    "@qni/simulator": "^0.0.82",
+    "@qni/common": "^0.0.83",
+    "@qni/elements": "^0.0.83",
+    "@qni/simulator": "^0.0.83",
     "@rails/ujs": "~7.0",
     "@svgdotjs/svg.filter.js": "^3.0.8",
     "@svgdotjs/svg.js": "^3.1.1",
@@ -68,7 +68,6 @@
     "postcss-import": "^14.0.2",
     "postcss-nested": "^5.0.6",
     "postcss-preset-env": "~7.2",
-    "prettier-plugin-erb": "^0.4.0",
     "rollup": "~2.70",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-dts": "~4.2",

@@ -1,0 +1,15 @@
+<div class="flex flex-row items-center space-x-2">
+  <div class="flex flex-row space-x-2">
+    <% @from.each_with_index do |each, index| %>
+      <%= render QubitCircleComponent.new ket: index, amplitude: each, dark_mode: @dark_mode %>
+    <% end %>
+  </div>
+
+  <%= render QpuOperationOnArrowComponent.new operation: @operation, angle: @angle, value: @value %>
+
+  <div class="flex flex-row space-x-2 pr-2">
+    <% @to.each_with_index do |each, index| %>
+      <%= render QubitCircleComponent.new ket: index, amplitude: each, dark_mode: @dark_mode %>
+    <% end %>
+  </div>
+</div>

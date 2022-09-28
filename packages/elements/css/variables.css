@@ -1,0 +1,45 @@
+:root {
+  /* Sizing */
+  --qni-semantic-size-qpu-operation-base: theme(width.8);
+  --qni-semantic-size-qpu-operation-base-¾: theme(height.6);
+  --qni-semantic-size-qpu-operation-xs: theme(spacing.4);
+  --qni-semantic-size-qpu-operation-sm: theme(spacing.6);
+  --qni-semantic-size-qpu-operation-base: theme(spacing.8);
+  --qni-semantic-size-qpu-operation-lg: theme(spacing.10);
+  --qni-semantic-size-qpu-operation-xl: theme(spacing.12);
+  --qni-semantic-size-qpu-operation-2xl: theme(spacing.16);
+
+  /* Spacing */
+  --qni-semantic-spacing-outline-gap: theme('spacing[0.5]');
+  --qni-semantic-spacing-element-overlap: calc(-1 * theme(spacing.2));
+
+  /* Color */
+  --qni-semantic-color-primary: theme(colors.emerald.500);
+  --qni-semantic-fill-color-primary: var(--qni-semantic-color-primary);
+
+  --qni-semantic-color-intermediate: theme(colors.purple.500);
+  --qni-semantic-color-intermediate-light: theme(colors.purple.400);
+  --qni-semantic-fill-color-intermediate: var(--qni-semantic-color-intermediate);
+
+  --qni-semantic-color-on: theme(colors.sky.500);
+  --qni-semantic-fill-color-on: var(--qni-semantic-color-on);
+
+  --qni-semantic-color-off: theme(colors.red.500);
+
+  --qni-semantic-fill-color-disabled: theme(colors.zinc.500);
+  --qni-semantic-border-color-hover: theme(colors.zinc.300);
+
+  --qni-semantic-color-active: var(--qni-semantic-color-on);
+  --qni-semantic-border-color-active: var(--qni-semantic-color-active);
+
+  --qni-semantic-color-icon-light: theme(colors.white);
+
+  /* Border radius */
+  --qni-semantic-radius-default: theme(borderRadius.DEFAULT);
+  --qni-semantic-radius-outline: theme(borderRadius.md);
+  --qni-semantic-radius-circular: theme(borderRadius.full);
+
+  /* Border width */
+  --qni-semantic-border-width-0: theme(borderWidth.0);
+  --qni-semantic-border-width-outline: theme(borderWidth.2);
+}

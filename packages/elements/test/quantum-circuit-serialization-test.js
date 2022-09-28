@@ -149,6 +149,30 @@ describe('quantum-circuit element', function () {
       })
     })
 
+    describe('QFT', function () {
+      it('targets = 0', function () {
+        circuit.qft(0)
+        assert.deepEqual(circuit.serialize(), [[{type: 'QFT1', targets: [0]}]])
+      })
+
+      it('targets = 0, 2', function () {
+        circuit.qft(0, 2)
+        assert.deepEqual(circuit.serialize(), [[{type: 'QFT1', targets: [0, 2]}]])
+      })
+    })
+
+    describe('QFT†', function () {
+      it('targets = 0', function () {
+        circuit.qftDagger(0)
+        assert.deepEqual(circuit.serialize(), [[{type: 'QFT†1', targets: [0]}]])
+      })
+
+      it('targets = 0, 2', function () {
+        circuit.qftDagger(0, 2)
+        assert.deepEqual(circuit.serialize(), [[{type: 'QFT†1', targets: [0, 2]}]])
+      })
+    })
+
     describe('Bloch', function () {
       it('targets = 0', function () {
         circuit.bloch(0)

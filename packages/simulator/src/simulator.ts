@@ -6,6 +6,8 @@ import {
   SerializedHGateType,
   SerializedMeasurementGateType,
   SerializedPhaseGateType,
+  SerializedQftGateType,
+  SerializedQftDaggerGateType,
   SerializedRnotGateType,
   SerializedRxGateType,
   SerializedRyGateType,
@@ -106,6 +108,22 @@ export class Simulator {
           }
           break
         }
+        case SerializedQftGateType:
+          if (each.if && !this.flags[each.if]) break
+          if (each.controls && each.controls.length > 0) {
+            this.cqft(each.controls, ...each.targets)
+          } else {
+            this.qft(...each.targets)
+          }
+          break
+        case SerializedQftDaggerGateType:
+          if (each.if && !this.flags[each.if]) break
+          if (each.controls && each.controls.length > 0) {
+            this.cqftDagger(each.controls, ...each.targets)
+          } else {
+            this.qftDagger(...each.targets)
+          }
+          break
         case SerializedControlGateType: {
           this.cz(each.targets.slice(1), each.targets[0])
           break
@@ -286,6 +304,26 @@ export class Simulator {
 
   crz(controls: number | number[], theta: string, ...targets: number[]): Simulator {
     this.cu(controls, Matrix.RZ(theta), ...targets)
+    return this
+  }
+
+  qft(...targets: number[]): Simulator {
+    this.u(Matrix.H, ...targets)
+    return this
+  }
+
+  cqft(controls: number | number[], ...targets: number[]): Simulator {
+    this.cu(controls, Matrix.H, ...targets)
+    return this
+  }
+
+  qftDagger(...targets: number[]): Simulator {
+    this.u(Matrix.H, ...targets)
+    return this
+  }
+
+  cqftDagger(controls: number | number[], ...targets: number[]): Simulator {
+    this.cu(controls, Matrix.H, ...targets)
     return this
   }
 
