@@ -163,6 +163,7 @@ export class CircuitStepElement extends HTMLElement {
     {
       id: 'circuit-step',
       initial: 'unknown',
+      strict: true,
       states: {
         unknown: {
           always: [
@@ -379,10 +380,10 @@ export class CircuitStepElement extends HTMLElement {
   )
 
   private circuitStepService = interpret(this.circuitStepMachine).onTransition(state => {
-    if (this.debug) {
-      // eslint-disable-next-line no-console
-      console.log(`circuit-step: ${describe(state.value)}`)
-    }
+    if (!this.debug) return
+
+    // eslint-disable-next-line no-console
+    console.log(`circuit-step: ${describe(state.value)}`)
   })
 
   get maxOccupiedDropzoneBit(): 0 | ResizeableSpan {
