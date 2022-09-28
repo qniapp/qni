@@ -1375,7 +1375,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     const circuitStep = operation.dropzone.circuitStep
     Util.notNull(circuitStep)
 
-    const freeDropzones = circuitStep.dropzones.filter((each: CircuitDropzoneElement) => !each.occupied)
+    const freeDropzones = circuitStep.freeDropzones
     const myDropzone = operation.dropzone
     freeDropzones.push(myDropzone)
 
@@ -1388,8 +1388,18 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       const j = this.isVertical ? resizeHandleSnapTarget.x : resizeHandleSnapTarget.y
       const wireIndex = parseInt(dropzoneIndex) % this.wireCount
 
-      if (!each.occupied || each === myDropzone) {
+      if (!each.occupied) {
         resizeHandleSnapTargets.push(resizeHandleSnapTarget)
+      }
+      if (each === myDropzone) {
+        resizeHandleSnapTargets.push(resizeHandleSnapTarget)
+
+        const span = operation.span
+        for (let s = 1; s < span; s++) {
+          const spanDropzone: CircuitDropzoneElement | null = circuitStep.dropzones[parseInt(dropzoneIndex) + s]
+          Util.notNull(spanDropzone)
+          resizeHandleSnapTargets.push(spanDropzone.resizeHandleSnapTarget)
+        }
       }
 
       if (this.resizeHandleSnapTargets[i] === undefined) this.resizeHandleSnapTargets[i] = {}

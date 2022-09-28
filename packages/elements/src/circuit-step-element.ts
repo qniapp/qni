@@ -180,7 +180,7 @@ export class CircuitStepElement extends HTMLElement {
             },
             UNSNAP_DROPZONE: {
               target: 'shadow',
-              actions: ['dispatchUnsnapEvent', 'freeSpanDropzones']
+              actions: ['dispatchUnsnapEvent']
             },
             UNSHADOW: {
               target: 'visible',
@@ -219,7 +219,7 @@ export class CircuitStepElement extends HTMLElement {
             },
             UNSNAP_DROPZONE: {
               target: 'visible',
-              actions: ['freeSpanDropzones', 'dispatchUnsnapEvent']
+              actions: ['dispatchUnsnapEvent']
             },
             OCCUPY_DROPZONE: {
               target: 'visible',
@@ -227,7 +227,7 @@ export class CircuitStepElement extends HTMLElement {
             },
             DELETE_OPERATION: {
               target: 'visible',
-              actions: ['freeSpanDropzones', 'dispatchDeleteOperationEvent']
+              actions: ['dispatchDeleteOperationEvent']
             },
             RESIZE_OPERATION: {
               target: 'visible',
@@ -307,27 +307,26 @@ export class CircuitStepElement extends HTMLElement {
             !(event.type === 'SNAP_DROPZONE' || event.type === 'OCCUPY_DROPZONE' || event.type === 'RESIZE_OPERATION')
           )
             return
-          if (!isResizeable(event.dropzone.operation)) return
 
-          const dropzone = event.dropzone
-          const operation = dropzone.operation
-          const bit = this.bit(dropzone)
-          for (let b = bit; b < bit + operation.span; b++) {
-            this.dropzoneAt(b).occupied = true
+          // const myDropzone = event.dropzone
+          // if (!isResizeable(event.dropzone.operation)) return
+
+          let span = 1
+          for (const each of this.dropzones) {
+            const operation = each.operation
+            if (isResizeable(operation)) {
+              span = operation.span
+              continue
+            }
+            if (operation !== null) continue
+
+            if (span > 1) {
+              each.occupied = true
+              span -= 1
+            } else {
+              each.occupied = false
+            }
           }
-        },
-        freeSpanDropzones: (_context, event) => {
-          if (
-            !(
-              event.type === 'UNSNAP_DROPZONE' ||
-              event.type === 'DELETE_OPERATION' ||
-              event.type === 'RESIZE_OPERATION'
-            )
-          )
-            return
-          if (!isResizeable(event.dropzone.operation)) return
-
-          console.log('freeSpanDropzones')
         },
         dispatchSnapEvent: (_context, event) => {
           if (event.type !== 'SNAP_DROPZONE') return
