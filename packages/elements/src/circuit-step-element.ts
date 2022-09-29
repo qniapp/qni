@@ -723,7 +723,8 @@ export class CircuitStepElement extends HTMLElement {
   get isEmpty(): boolean {
     if (this.keep) return false
 
-    return this.occupiedDropzones.length === 0
+    return this.dropzones.every(each => each.operation === null)
+    // return this.occupiedDropzones.length === 0
   }
 
   dropzoneAt(dropzoneIndex: number): CircuitDropzoneElement {
@@ -918,6 +919,8 @@ export class CircuitStepElement extends HTMLElement {
 
   private deleteOperation(event: Event): void {
     const dropzone = event.target as CircuitDropzoneElement
+
+    console.log(`circuit-step: DELETE_OPERATION`)
     this.circuitStepService.send({type: 'DELETE_OPERATION', dropzone})
   }
 

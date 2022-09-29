@@ -38,6 +38,7 @@ export class CircuitDropzoneElement extends HTMLElement {
     {
       id: 'circuit-dropzone',
       initial: 'unknown',
+      strict: true,
       states: {
         unknown: {
           always: [
@@ -54,6 +55,13 @@ export class CircuitDropzoneElement extends HTMLElement {
             PUT_OPERATION: {
               target: 'occupied',
               actions: ['putOperation']
+            },
+            // 子要素のゲートをドラッグアンドドロップで消そうとしている場合、
+            // UNSNAP_OPERATION イベント後に empty となり、DELETE_OPERATION イベントが飛んでくることがある。
+            // このような empty とは別個の状態を CircuitDropzone に作るべき?
+            DELETE_OPERATION: {
+              target: 'empty',
+              actions: ['deleteOperation', 'dispatchDeleteOperationEvent']
             }
           }
         },
@@ -103,7 +111,7 @@ export class CircuitDropzoneElement extends HTMLElement {
           emitEvent('circuit-dropzone:qpu-operation-snap', {}, this)
         },
         unsnapOperation: () => {
-          this.operationName = ''
+          this.removeAttribute('data-operation-name')
           this.occupied = false
           emitEvent('circuit-dropzone:qpu-operation-unsnap', {}, this)
         },
@@ -121,7 +129,7 @@ export class CircuitDropzoneElement extends HTMLElement {
         deleteOperation: (_context, event) => {
           if (event.type !== 'DELETE_OPERATION') return
 
-          this.operationName = ''
+          this.removeAttribute('data-operation-name')
           this.occupied = false
           this.removeChild(event.operation as Node)
         },
