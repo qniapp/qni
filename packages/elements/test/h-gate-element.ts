@@ -2,7 +2,7 @@ import {HGateElement, isControllable} from '../dist/index'
 import {expect, fixture, html} from '@open-wc/testing'
 
 describe('HGateElement', () => {
-  let instance
+  let instance: HGateElement
 
   beforeEach(async () => {
     instance = await fixture(html`<h-gate></h-gate>`)
@@ -63,19 +63,19 @@ describe('HGateElement', () => {
 
     it('is not controlled by default', function () {
       expect(instance.isControlled).to.be.false
-      expect(instance.controls).to.deep.equal([])
+      expect(instance.controlBits).to.deep.equal([])
     })
 
     it('can set control bits', function () {
-      instance.controls = [1, 2, 3]
+      instance.controlBits = [1, 2, 3]
 
       expect(instance.isControlled).to.be.true
-      expect(instance.controls).to.deep.equal([1, 2, 3])
+      expect(instance.controlBits).to.deep.equal([1, 2, 3])
     })
   })
 })
 
-function once(element, eventName) {
+function once(element: HTMLElement, eventName: string) {
   return new Promise(resolve => {
     element.addEventListener(eventName, resolve, {once: true})
   })

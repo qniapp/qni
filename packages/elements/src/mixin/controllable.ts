@@ -2,38 +2,35 @@ import {Constructor} from './constructor'
 import {attr} from '@github/catalyst'
 
 export declare class Controllable {
-  set controls(value: number[])
-  get controls(): number[]
+  set controlBits(value: number[])
+  get controlBits(): number[]
   get isControlled(): boolean
 }
 
 export const isControllable = (arg: unknown): arg is Controllable =>
-  typeof arg === 'object' && arg !== null && typeof (arg as Controllable).controls === 'object'
+  typeof arg === 'object' && arg !== null && typeof (arg as Controllable).controlBits === 'object'
 
 export function ControllableMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase
 ): Constructor<Controllable> & TBase {
   class ControllableMixinClass extends Base {
-    // todo: _controls → _controlBits
-    @attr _controls = ''
+    @attr _controlBits = ''
 
-    // todo: controls → controlBits
-    set controls(controls: number[]) {
-      this._controls = controls.sort().join()
+    set controlBits(controls: number[]) {
+      this._controlBits = controls.sort().join()
     }
 
-    // todo: controls → controlBits
-    get controls(): number[] {
-      if (this._controls === '') return []
+    get controlBits(): number[] {
+      if (this._controlBits === '') return []
 
-      return this._controls
+      return this._controlBits
         .split(',')
         .map(each => parseInt(each))
         .sort()
     }
 
     get isControlled(): boolean {
-      return this.controls.length > 0
+      return this.controlBits.length > 0
     }
   }
 
