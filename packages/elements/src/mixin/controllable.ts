@@ -1,4 +1,5 @@
 import {Constructor} from './constructor'
+import {attr} from '@github/catalyst'
 
 export declare class Controllable {
   set controls(value: number[])
@@ -13,16 +14,19 @@ export function ControllableMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase
 ): Constructor<Controllable> & TBase {
   class ControllableMixinClass extends Base {
+    // todo: _controls → _controlBits
+    @attr _controls = ''
+
+    // todo: controls → controlBits
     set controls(controls: number[]) {
-      this.setAttribute('data-controls', controls.sort().join())
+      this._controls = controls.sort().join()
     }
 
+    // todo: controls → controlBits
     get controls(): number[] {
-      const dataControls = this.getAttribute('data-controls')
-      if (dataControls === null) return []
-      if (dataControls === '') return []
+      if (this._controls === '') return []
 
-      return dataControls
+      return this._controls
         .split(',')
         .map(each => parseInt(each))
         .sort()

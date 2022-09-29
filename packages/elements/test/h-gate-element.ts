@@ -1,5 +1,5 @@
+import {HGateElement, isControllable} from '../dist/index'
 import {expect, fixture, html} from '@open-wc/testing'
-import {HGateElement} from '../dist/index'
 
 describe('HGateElement', () => {
   let instance
@@ -33,19 +33,19 @@ describe('HGateElement', () => {
 
   describe('activateable', function () {
     it('is not active by default', function () {
-      expect(instance.isActive()).to.be.false
+      expect(instance.isActive).to.be.false
     })
 
     it('can be activated', function () {
       instance.activate()
 
-      expect(instance.isActive()).to.be.true
+      expect(instance.isActive).to.be.true
     })
 
     it('can be deactivated', function () {
       instance.deactivate()
 
-      expect(instance.isActive()).to.be.false
+      expect(instance.isActive).to.be.false
     })
 
     it('dispatches activateable:active event', async function () {
@@ -53,6 +53,24 @@ describe('HGateElement', () => {
       instance.activate()
 
       await activeEvent
+    })
+  })
+
+  describe('controllable', function () {
+    it('is controllable', function () {
+      expect(isControllable(instance)).to.be.true
+    })
+
+    it('is not controlled by default', function () {
+      expect(instance.isControlled).to.be.false
+      expect(instance.controls).to.deep.equal([])
+    })
+
+    it('can set control bits', function () {
+      instance.controls = [1, 2, 3]
+
+      expect(instance.isControlled).to.be.true
+      expect(instance.controls).to.deep.equal([1, 2, 3])
     })
   })
 })

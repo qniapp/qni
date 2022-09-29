@@ -5,7 +5,7 @@ import {emitEvent} from '@qni/common'
 export declare class Activateable {
   activate(): void
   deactivate(): void
-  isActive(): boolean
+  get isActive(): boolean
 }
 
 export function ActivateableMixin<TBase extends Constructor<HTMLElement>>(
@@ -23,7 +23,7 @@ export function ActivateableMixin<TBase extends Constructor<HTMLElement>>(
       this._active = false
     }
 
-    isActive() {
+    get isActive() {
       return this._active
     }
   }
