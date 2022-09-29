@@ -90,6 +90,7 @@ export class CircuitEditorElement extends HTMLElement {
                   actions: [
                     'maybeHideOperationMenu',
                     'startCircuitEdit',
+                    'setOperationActive',
                     'addDocumentCursorResizingStyle',
                     'maybeAppendCircuitWire',
                     'setResizeHandleSnapTargets'
@@ -207,7 +208,7 @@ export class CircuitEditorElement extends HTMLElement {
           this.circuit.editing = false
         },
         setOperationActive: (_context, event) => {
-          if (event.type !== 'GRAB_OPERATION') return
+          if (event.type !== 'GRAB_OPERATION' && event.type !== 'GRAB_RESIZE_HANDLE') return
 
           this.circuit.activateOperation(event.operation)
         },
