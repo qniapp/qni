@@ -51,9 +51,11 @@
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
     "@github/prettier-config": "^0.0.4",
+    "@open-wc/testing": "^3.1.6",
     "@rollup/plugin-commonjs": "^18",
     "@rollup/plugin-replace": "^3.0.1",
     "@size-limit/preset-small-lib": "^7.0.8",
+    "@web/dev-server-esbuild": "^0.3.2",
     "@web/dev-server-rollup": "^0.3.14",
     "@web/test-runner": "^0.13.25",
     "autoprefixer": "^10.4.0",

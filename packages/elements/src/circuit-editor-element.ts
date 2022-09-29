@@ -471,7 +471,7 @@ export class CircuitEditorElement extends HTMLElement {
       !this.inspectorButton.popup.reference.contains(clickedEl) &&
       this.activeOperation !== null
     ) {
-      this.activeOperation.active = false
+      this.activeOperation.deactivate()
     }
   }
 

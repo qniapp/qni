@@ -952,9 +952,9 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
 
   activateOperation(operation: Operation): void {
     for (const each of this.operations) {
-      each.active = false
+      each.deactivate()
     }
-    operation.active = true
+    operation.activate()
   }
 
   appendWire(): void {
