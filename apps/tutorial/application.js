@@ -9697,15 +9697,15 @@ var ls = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="htt
 </svg>
 `;
 var Kp = `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <line x1="26.2" y1="7.47778" x2="29.2" y2="7.47778" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <line x1="27.7" y1="6" x2="27.7" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <line x1="20.0973" y1="12" x2="25.0353" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <line x1="22.7" y1="13" x2="22.7" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <line x1="13" y1="12" x2="16.4513" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <line x1="14" y1="16" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <line x1="13" y1="12" x2="13" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <path d="M8.9292 16C8.9292 18.4379 7.39801 20 5.9646 20C4.53119 20 3 18.4379 3 16C3 13.5621 4.53119 12 5.9646 12C7.39801 12 8.9292 13.5621 8.9292 16Z" stroke="currentColor" stroke-width="2"/>
-  <line x1="1" y1="-1" x2="3.34292" y2="-1" transform="matrix(0.570556 0.821259 -0.805999 0.591917 5.9646 18.5332)" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <line x1="26.2" y1="7.47778" x2="29.2" y2="7.47778" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="27.7" y1="6" x2="27.7" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="20.0973" y1="12" x2="25.0353" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="22.7" y1="13" x2="22.7" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="13" y1="12" x2="16.4513" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="14" y1="16" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <line x1="13" y1="12" x2="13" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <path d="M8.9292 16C8.9292 18.4379 7.39801 20 5.9646 20C4.53119 20 3 18.4379 3 16C3 13.5621 4.53119 12 5.9646 12C7.39801 12 8.9292 13.5621 8.9292 16Z" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/>
+  <line x1="1" y1="-1" x2="3.34292" y2="-1" transform="matrix(0.570556 0.821259 -0.805999 0.591917 5.9646 18.5332)" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
 var Pr = /* @__PURE__ */ __name(class extends Oe(Ce(ss(Te(Ie(Se(xe(HTMLElement))))))) {
@@ -9719,9 +9719,7 @@ var Pr = /* @__PURE__ */ __name(class extends Oe(Ce(ss(Te(Ie(Se(xe(HTMLElement))
     Z(U`<div part="layout">
           <div part="body">${this.iconHtml(Kp)}</div>
           <div class="resize-handle" part="resize-handle" data-target="qft-dagger-gate.resizeHandle">
-            <div part="resize-handle-icon">
-              ${this.iconHtml(ls)}
-            </div>
+            <div part="resize-handle-icon">${this.iconHtml(ls)}</div>
           </div>
         </div>
         <div part="outline"></div>`, this.shadowRoot);
@@ -9753,9 +9751,7 @@ var Ar = /* @__PURE__ */ __name(class extends Oe(Ce(ss(Te(Ie(Se(xe(HTMLElement))
     Z(U`<div part="layout">
           <div part="body">${this.iconHtml(Jp)}</div>
           <div class="resize-handle" part="resize-handle" data-target="qft-gate.resizeHandle">
-            <div part="resize-handle-icon">
-              ${this.iconHtml(ls)}
-            </div>
+            <div part="resize-handle-icon">${this.iconHtml(ls)}</div>
           </div>
         </div>
         <div part="outline"></div>`, this.shadowRoot);

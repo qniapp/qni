@@ -49,6 +49,15 @@
 
   <%= gate_set do %>
     <%= gate_carousel_dropzone do %>
+      <qft-gate class="qpu-operation-xl"></qft-gate>
+    <% end %>
+    <%= gate_carousel_dropzone do %>
+      <qft-dagger-gate class="qpu-operation-xl"></qft-dagger-gate>
+    <% end %>
+  <% end %>
+
+  <%= gate_set do %>
+    <%= gate_carousel_dropzone do %>
       <write-gate data-value="0" class="qpu-operation-xl"></write-gate>
     <% end %>
     <%= gate_carousel_dropzone do %>
