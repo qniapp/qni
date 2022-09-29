@@ -516,7 +516,7 @@
 
     /* show trash icon */
     circuit-dropzone &:not([data-snapped])::part(icon)::before {
-      @apply absolute -top-1/3 -right-1/3;
+      @apply absolute -top-2.5 -right-2.5;
       @apply h-6 w-6;
       @apply z-10;
 

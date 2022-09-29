@@ -2402,8 +2402,8 @@ quantum-circuit([data-editing]) bloch-display:not([data-operation-x='0']):not([d
 
 circuit-dropzone bloch-display:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -2937,8 +2937,8 @@ quantum-circuit([data-editing]) control-gate:not([data-operation-x='0']):not([da
 
 circuit-dropzone control-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -3074,8 +3074,8 @@ quantum-circuit([data-editing]) h-gate:not([data-operation-x='0']):not([data-ope
 
 circuit-dropzone h-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -3239,8 +3239,8 @@ quantum-circuit([data-editing]) measurement-gate:not([data-operation-x='0']):not
 
 circuit-dropzone measurement-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -3555,8 +3555,8 @@ quantum-circuit([data-editing]) phase-gate:not([data-operation-x='0']):not([data
 
 circuit-dropzone phase-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -4926,8 +4926,8 @@ quantum-circuit([data-editing]) qft-gate:not([data-operation-x='0']):not([data-o
 
 circuit-dropzone qft-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -6300,8 +6300,8 @@ quantum-circuit([data-editing]) qft-dagger-gate:not([data-operation-x='0']):not(
 
 circuit-dropzone qft-dagger-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -6489,8 +6489,8 @@ quantum-circuit([data-editing]) rnot-gate:not([data-operation-x='0']):not([data-
 
 circuit-dropzone rnot-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -6718,8 +6718,8 @@ quantum-circuit([data-editing]) rx-gate:not([data-operation-x='0']):not([data-op
 
 circuit-dropzone rx-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -6947,8 +6947,8 @@ quantum-circuit([data-editing]) ry-gate:not([data-operation-x='0']):not([data-op
 
 circuit-dropzone ry-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -7176,8 +7176,8 @@ quantum-circuit([data-editing]) rz-gate:not([data-operation-x='0']):not([data-op
 
 circuit-dropzone rz-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -7332,8 +7332,8 @@ quantum-circuit([data-editing]) swap-gate:not([data-operation-x='0']):not([data-
 
 circuit-dropzone swap-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -7469,8 +7469,8 @@ quantum-circuit([data-editing]) t-gate:not([data-operation-x='0']):not([data-ope
 
 circuit-dropzone t-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -7625,8 +7625,8 @@ quantum-circuit([data-editing]) write-gate:not([data-operation-x='0']):not([data
 
 circuit-dropzone write-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -7869,8 +7869,8 @@ quantum-circuit([data-editing]) x-gate:not([data-operation-x='0']):not([data-ope
 
 circuit-dropzone x-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -8040,8 +8040,8 @@ quantum-circuit([data-editing]) y-gate:not([data-operation-x='0']):not([data-ope
 
 circuit-dropzone y-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
@@ -8211,8 +8211,8 @@ quantum-circuit([data-editing]) z-gate:not([data-operation-x='0']):not([data-ope
 
 circuit-dropzone z-gate:not([data-snapped])::part(icon)::before {
   position: absolute;
-  top: -33.333333%;
-  right: -33.333333%;
+  top: -0.625rem;
+  right: -0.625rem;
   height: 1.5rem;
   width: 1.5rem;
   z-index: 10;
