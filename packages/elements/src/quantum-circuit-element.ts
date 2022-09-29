@@ -1318,7 +1318,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             snapTargets.push(snapTarget)
           }
         } else {
-          if (!dropzone.occupied && dropzoneIndex + span < step.dropzones.length) {
+          if (!dropzone.occupied && dropzoneIndex + span <= step.dropzones.length) {
             snapTargets.push(snapTarget)
           }
           if (dropzone === myDropzone) {
