@@ -2328,7 +2328,7 @@ bloch-display::part(body) {
   flex-shrink: 0;
 }
 
-bloch-display[data-hoverable]::part(outline) {
+bloch-display::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -2857,7 +2857,7 @@ control-gate::part(body) {
   flex-shrink: 0;
 }
 
-control-gate[data-hoverable]::part(outline) {
+control-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -2979,7 +2979,7 @@ h-gate::part(body) {
   flex-shrink: 0;
 }
 
-h-gate[data-hoverable]::part(outline) {
+h-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -3159,7 +3159,7 @@ measurement-gate::part(body) {
   flex-shrink: 0;
 }
 
-measurement-gate[data-hoverable]::part(outline) {
+measurement-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -3402,7 +3402,7 @@ phase-gate::part(body) {
   flex-shrink: 0;
 }
 
-phase-gate[data-hoverable]::part(outline) {
+phase-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -3643,7 +3643,7 @@ qft-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-qft-gate[data-hoverable]::part(outline) {
+qft-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -5002,7 +5002,7 @@ qft-dagger-gate::part(body) {
   flex-shrink: 0;
 }
 
-qft-dagger-gate[data-hoverable]::part(outline) {
+qft-dagger-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -6394,7 +6394,7 @@ rnot-gate::part(body) {
   flex-shrink: 0;
 }
 
-rnot-gate[data-hoverable]::part(outline) {
+rnot-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -6565,7 +6565,7 @@ rx-gate::part(body) {
   flex-shrink: 0;
 }
 
-rx-gate[data-hoverable]::part(outline) {
+rx-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -6794,7 +6794,7 @@ ry-gate::part(body) {
   flex-shrink: 0;
 }
 
-ry-gate[data-hoverable]::part(outline) {
+ry-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -7023,7 +7023,7 @@ rz-gate::part(body) {
   flex-shrink: 0;
 }
 
-rz-gate[data-hoverable]::part(outline) {
+rz-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -7252,7 +7252,7 @@ swap-gate::part(body) {
   flex-shrink: 0;
 }
 
-swap-gate[data-hoverable]::part(outline) {
+swap-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -7374,7 +7374,7 @@ t-gate::part(body) {
   flex-shrink: 0;
 }
 
-t-gate[data-hoverable]::part(outline) {
+t-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -7545,7 +7545,7 @@ write-gate::part(body) {
   flex-shrink: 0;
 }
 
-write-gate[data-hoverable]::part(outline) {
+write-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -7774,7 +7774,7 @@ x-gate::part(body) {
   flex-shrink: 0;
 }
 
-x-gate[data-hoverable]::part(outline) {
+x-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -7945,7 +7945,7 @@ y-gate::part(body) {
   flex-shrink: 0;
 }
 
-y-gate[data-hoverable]::part(outline) {
+y-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
@@ -8116,7 +8116,7 @@ z-gate::part(body) {
   flex-shrink: 0;
 }
 
-z-gate[data-hoverable]::part(outline) {
+z-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));

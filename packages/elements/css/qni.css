@@ -85,7 +85,7 @@
   /* QPU operation outline */
 
   .qpu-operation-outlineable {
-    &[data-hoverable]::part(outline) {
+    &::part(outline) {
       @apply absolute;
       @apply hidden;
 
