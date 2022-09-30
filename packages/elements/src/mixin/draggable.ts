@@ -23,10 +23,9 @@ export declare class Draggable {
   get operationY(): number
   set operationY(value: number)
   get isIdle(): boolean
+  get isGrabbed(): boolean
   enableDrag(): void
   disableDrag(): void
-  get grabbed(): boolean
-  set grabbed(value: boolean)
   get dragging(): boolean
   set dragging(value: boolean)
   get snapped(): boolean
@@ -55,8 +54,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
   class DraggableMixinClass extends Base {
     @attr operationX = 0
     @attr operationY = 0
-    @attr _grabbable = false
-    @attr grabbed = false
+    @attr draggableGrabbable = false
+    @attr draggableGrabbed = false
     @attr dragging = false
     @attr snapped = false
     @attr bit = -1
@@ -190,16 +189,16 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             }
           },
           setGrabbableAttribute: () => {
-            this._grabbable = true
+            this.draggableGrabbable = true
           },
           unsetGrabbableAttribute: () => {
-            this._grabbable = false
+            this.draggableGrabbable = false
           },
           grab: (_context, event) => {
             Util.need(event.type === 'GRAB', 'event type must be GRAB')
             if (event.type !== 'GRAB') return
 
-            this.grabbed = true
+            this.draggableGrabbed = true
             emitEvent('draggable:grab', {}, this)
 
             if (isPaletteDropzoneElement(this.dropzone)) {
@@ -211,7 +210,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           release: (_context, event) => {
             Util.need(event.type === 'RELEASE', 'event type must be RELEASE')
 
-            this.grabbed = false
+            this.draggableGrabbed = false
             emitEvent('draggable:release', {}, this)
           },
           startDragging: (_context, event) => {
@@ -222,7 +221,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           endDragging: (_context, event) => {
             Util.need(event.type === 'END_DRAGGING', 'event type must be END_DRAGGING')
 
-            this.grabbed = false
+            this.draggableGrabbed = false
             this.dragging = false
             emitEvent('draggable:end-dragging', {}, this)
           },
@@ -276,7 +275,11 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     }
 
     get isGrabbable(): boolean {
-      return this._grabbable
+      return this.draggableGrabbable
+    }
+
+    get isGrabbed(): boolean {
+      return this.draggableGrabbed
     }
 
     enableDrag() {

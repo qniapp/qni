@@ -129,20 +129,16 @@ describe('HGateElement', () => {
       expect(operation.isIdle).to.be.true
     })
 
-    //   it('should reach "grabbed" given "grabbable" when the "GRAB" event occurs', function () {
-    //     const container = document.createElement('div')
-    //     container.innerHTML = `
-    // <palette-dropzone>
-    //   <h-gate></h-gate>
-    // </palette-dropzone>`
-    //     document.body.append(container)
-    //     const operation = document.querySelector('h-gate')
+    it('should become grabbed when a mousedown event occurs', async function () {
+      const paletteDropzone: PaletteDropzoneElement = await fixture(html`<palette-dropzone>
+        <h-gate></h-gate>
+      </palette-dropzone>`)
+      const operation = paletteDropzone.operation
 
-    //     mousedown(operation)
+      mousedown(operation)
 
-    //     assert.isTrue(operation.grabbed)
-    //     assert.equal(operation.draggableService.state.value, 'grabbed')
-    //   })
+      expect(operation.isGrabbed).to.be.true
+    })
 
     //   it('should reach "dragging (unsnapped)" given "grabbed" when "START_DRAGGING" event occurs', function () {
     //     const container = document.createElement('div')
@@ -300,4 +296,8 @@ function once(element: HTMLElement, eventName: string) {
   return new Promise(resolve => {
     element.addEventListener(eventName, resolve, {once: true})
   })
+}
+
+function mousedown(element: HTMLElement) {
+  element.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}))
 }

@@ -38,7 +38,7 @@ bloch-display {
     @apply bg-green-50;
   }
 
-  &[data-grabbed]::part(sphere-border) {
+  &[data-draggable-grabbed]::part(sphere-border) {
     @apply border-purple-500;
   }
 

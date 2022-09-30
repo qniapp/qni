@@ -51,17 +51,17 @@ measurement-gate {
     content: '1';
   }
 
-  /* data-grabbed */
+  /* data-draggable-grabbed */
 
-  &[data-grabbed]::part(body) {
+  &[data-draggable-grabbed]::part(body) {
     background-color: var(--qni-semantic-fill-color-intermediate);
   }
 
-  &[data-grabbed]::part(icon) {
+  &[data-draggable-grabbed]::part(icon) {
     @apply text-purple-400;
   }
 
-  &[data-grabbed]::part(value)::after {
+  &[data-draggable-grabbed]::part(value)::after {
     @apply text-white;
   }
 }

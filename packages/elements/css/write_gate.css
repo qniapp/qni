@@ -71,17 +71,17 @@ write-gate {
     @apply text-4xl;
   }
 
-  /* data-grabbed */
+  /* data-draggable-grabbed */
 
-  &[data-grabbed]::part(icon) {
+  &[data-draggable-grabbed]::part(icon) {
     @apply text-purple-400;
   }
 
-  &[data-grabbed][data-value='0']::part(value)::after {
+  &[data-draggable-grabbed][data-value='0']::part(value)::after {
     @apply text-white;
   }
 
-  &[data-grabbed][data-value='1']::part(value)::after {
+  &[data-draggable-grabbed][data-value='1']::part(value)::after {
     @apply text-white;
   }
 }

@@ -12,7 +12,7 @@ control-gate {
     color: var(--qni-semantic-fill-color-primary);
   }
 
-  &[data-disabled]:not([data-grabbed])::part(icon) {
+  &[data-disabled]:not([data-draggable-grabbed])::part(icon) {
     color: var(--qni-semantic-fill-color-disabled);
   }
 }
