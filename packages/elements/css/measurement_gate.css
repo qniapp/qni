@@ -13,7 +13,7 @@ measurement-gate {
     color: var(--qni-semantic-color-intermediate);
   }
 
-  circuit-dropzone &[data-snapped]::part(icon) {
+  circuit-dropzone &[data-draggable-snapped]::part(icon) {
     @apply origin-center transform-gpu;
     @apply rotate-90 sm:rotate-0;
   }
@@ -27,7 +27,7 @@ measurement-gate {
     @apply absolute inset-0;
   }
 
-  circuit-dropzone &[data-snapped]::part(value) {
+  circuit-dropzone &[data-draggable-snapped]::part(value) {
     @apply origin-center transform-gpu;
     @apply rotate-90 sm:rotate-0;
   }
@@ -51,17 +51,17 @@ measurement-gate {
     content: '1';
   }
 
-  /* data-grabbed */
+  /* data-draggable-grabbed */
 
-  &[data-grabbed]::part(body) {
+  &[data-draggable-grabbed]::part(body) {
     background-color: var(--qni-semantic-fill-color-intermediate);
   }
 
-  &[data-grabbed]::part(icon) {
+  &[data-draggable-grabbed]::part(icon) {
     @apply text-purple-400;
   }
 
-  &[data-grabbed]::part(value)::after {
+  &[data-draggable-grabbed]::part(value)::after {
     @apply text-white;
   }
 }

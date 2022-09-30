@@ -3,25 +3,28 @@ import {attr} from '@github/catalyst'
 import {emitEvent} from '@qni/common'
 
 export declare class Activateable {
-  get active(): boolean
-  set active(value: boolean)
   activate(): void
   deactivate(): void
+  get isActive(): boolean
 }
 
 export function ActivateableMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase
 ): Constructor<Activateable> & TBase {
   class ActivateableMixinClass extends Base {
-    @attr active = false
+    @attr _active = false
 
     activate() {
-      this.active = true
+      this._active = true
       emitEvent('activateable:active', {}, this)
     }
 
     deactivate() {
-      this.active = false
+      this._active = false
+    }
+
+    get isActive() {
+      return this._active
     }
   }
 

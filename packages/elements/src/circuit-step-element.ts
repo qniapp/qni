@@ -487,7 +487,7 @@ export class CircuitStepElement extends HTMLElement {
     const controlDropzones = this.controlGateDropzones
     const controllableDropzones = this.controllableDropzones(connectionProps)
     for (const each of controllableDropzones) {
-      if (isControllable(each.operation)) each.operation.controls = []
+      if (isControllable(each.operation)) each.operation.controlBits = []
     }
 
     this.updateSwapConnections(connectionProps)
@@ -648,7 +648,7 @@ export class CircuitStepElement extends HTMLElement {
     for (const each of controllableDropzones) {
       if (!isControllable(each.operation)) throw new Error(`${each.operation} isn't controllable.`)
 
-      each.operation.controls = this.controlBits(each, allControlBits, connectionProps)
+      each.operation.controlBits = this.controlBits(each, allControlBits, connectionProps)
       each.connectTop = activeperationBits.some(other => {
         return other < this.bit(each)
       })
@@ -661,7 +661,7 @@ export class CircuitStepElement extends HTMLElement {
   private updateFreeDropzoneConnections(connectionProps?: ConnectionProps): void {
     const controllableDropzones = this.controllableDropzones(connectionProps)
     const activeControlBits = this.controlGateDropzones
-      .filter(each => isControlGateElement(each.operation) && !each.operation.disabled)
+      .filter(each => isControlGateElement(each.operation) && !each.operation.isDisabled)
       .map(each => this.bit(each))
     const controllableBits = controllableDropzones.map(dz => this.bit(dz))
     const activeOperationBits = activeControlBits.concat(controllableBits)
@@ -970,13 +970,13 @@ export class CircuitStepElement extends HTMLElement {
         case HGateElement: {
           const hGates = sameOps as HGateElement[]
           for (const [ifStr, sameIfGates] of groupBy(hGates, gate => gate.if)) {
-            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controlBits.toString())) {
               const gate0 = sameControlGates[0]
               const opType = gate0.operationType
               const targets = sameControlGates.map(each => each.bit)
               const serializedGate: SerializedHGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
-              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (controlsStr !== '') serializedGate.controls = gate0.controlBits
               serializedStep.push(serializedGate)
             }
           }
@@ -985,13 +985,13 @@ export class CircuitStepElement extends HTMLElement {
         case XGateElement: {
           const xGates = sameOps as XGateElement[]
           for (const [ifStr, sameIfGates] of groupBy(xGates, gate => gate.if)) {
-            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controlBits.toString())) {
               const gate0 = sameControlGates[0]
               const opType = gate0.operationType
               const targets = sameControlGates.map(each => each.bit)
               const serializedGate: SerializedXGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
-              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (controlsStr !== '') serializedGate.controls = gate0.controlBits
               serializedStep.push(serializedGate)
             }
           }
@@ -1000,13 +1000,13 @@ export class CircuitStepElement extends HTMLElement {
         case YGateElement: {
           const yGates = sameOps as YGateElement[]
           for (const [ifStr, sameIfGates] of groupBy(yGates, gate => gate.if)) {
-            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controlBits.toString())) {
               const gate0 = sameControlGates[0]
               const opType = gate0.operationType
               const targets = sameControlGates.map(each => each.bit)
               const serializedGate: SerializedYGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
-              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (controlsStr !== '') serializedGate.controls = gate0.controlBits
               serializedStep.push(serializedGate)
             }
           }
@@ -1015,13 +1015,13 @@ export class CircuitStepElement extends HTMLElement {
         case ZGateElement: {
           const zGates = sameOps as ZGateElement[]
           for (const [ifStr, sameIfGates] of groupBy(zGates, gate => gate.if)) {
-            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controlBits.toString())) {
               const gate0 = sameControlGates[0]
               const opType = gate0.operationType
               const targets = sameControlGates.map(each => each.bit)
               const serializedGate: SerializedZGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
-              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (controlsStr !== '') serializedGate.controls = gate0.controlBits
               serializedStep.push(serializedGate)
             }
           }
@@ -1031,14 +1031,14 @@ export class CircuitStepElement extends HTMLElement {
           const phaseGates = sameOps as PhaseGateElement[]
           for (const [angle, sameAngleGates] of groupBy(phaseGates, gate => gate.angle)) {
             for (const [ifStr, sameIfGates] of groupBy(sameAngleGates, gate => gate.if)) {
-              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controlBits.toString())) {
                 const gate0 = sameControlGates[0]
                 const opType = gate0.operationType
                 const targets = sameControlGates.map(each => each.bit)
                 const serializedGate: SerializedPhaseGate = {type: opType, targets}
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
-                if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (controlsStr !== '') serializedGate.controls = gate0.controlBits
                 serializedStep.push(serializedGate)
               }
             }
@@ -1048,13 +1048,13 @@ export class CircuitStepElement extends HTMLElement {
         case TGateElement: {
           const tGates = sameOps as TGateElement[]
           for (const [ifStr, sameIfGates] of groupBy(tGates, gate => gate.if)) {
-            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controlBits.toString())) {
               const gate0 = sameControlGates[0]
               const opType = gate0.operationType
               const targets = sameControlGates.map(each => each.bit)
               const serializedGate: SerializedTGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
-              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (controlsStr !== '') serializedGate.controls = gate0.controlBits
               serializedStep.push(serializedGate)
             }
           }
@@ -1063,13 +1063,13 @@ export class CircuitStepElement extends HTMLElement {
         case RnotGateElement: {
           const rnotGates = sameOps as RnotGateElement[]
           for (const [ifStr, sameIfGates] of groupBy(rnotGates, gate => gate.if)) {
-            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controlBits.toString())) {
               const gate0 = sameControlGates[0]
               const opType = gate0.operationType
               const targets = sameControlGates.map(each => each.bit)
               const serializedGate: SerializedRnotGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
-              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (controlsStr !== '') serializedGate.controls = gate0.controlBits
               serializedStep.push(serializedGate)
             }
           }
@@ -1079,14 +1079,14 @@ export class CircuitStepElement extends HTMLElement {
           const rxGates = sameOps as RxGateElement[]
           for (const [angle, sameAngleGates] of groupBy(rxGates, gate => gate.angle)) {
             for (const [ifStr, sameIfGates] of groupBy(sameAngleGates, gate => gate.if)) {
-              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controlBits.toString())) {
                 const gate0 = sameControlGates[0]
                 const opType = gate0.operationType
                 const targets = sameControlGates.map(each => each.bit)
                 const serializedGate: SerializedRxGate = {type: opType, targets}
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
-                if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (controlsStr !== '') serializedGate.controls = gate0.controlBits
                 serializedStep.push(serializedGate)
               }
             }
@@ -1097,14 +1097,14 @@ export class CircuitStepElement extends HTMLElement {
           const ryGates = sameOps as RyGateElement[]
           for (const [angle, sameAngleGates] of groupBy(ryGates, gate => gate.angle)) {
             for (const [ifStr, sameIfGates] of groupBy(sameAngleGates, gate => gate.if)) {
-              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controlBits.toString())) {
                 const gate0 = sameControlGates[0]
                 const opType = gate0.operationType
                 const targets = sameControlGates.map(each => each.bit)
                 const serializedGate: SerializedRyGate = {type: opType, targets}
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
-                if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (controlsStr !== '') serializedGate.controls = gate0.controlBits
                 serializedStep.push(serializedGate)
               }
             }
@@ -1115,14 +1115,14 @@ export class CircuitStepElement extends HTMLElement {
           const rzGates = sameOps as RzGateElement[]
           for (const [angle, sameAngleGates] of groupBy(rzGates, gate => gate.angle)) {
             for (const [ifStr, sameIfGates] of groupBy(sameAngleGates, gate => gate.if)) {
-              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controlBits.toString())) {
                 const gate0 = sameControlGates[0]
                 const opType = gate0.operationType
                 const targets = sameControlGates.map(each => each.bit)
                 const serializedGate: SerializedRzGate = {type: opType, targets}
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
-                if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (controlsStr !== '') serializedGate.controls = gate0.controlBits
                 serializedStep.push(serializedGate)
               }
             }
@@ -1152,20 +1152,20 @@ export class CircuitStepElement extends HTMLElement {
           break
         }
         case SwapGateElement: {
-          const swapGates = (sameOps as SwapGateElement[]).filter(each => !each.disabled)
+          const swapGates = (sameOps as SwapGateElement[]).filter(each => !each.isDisabled)
           if (swapGates.length !== 2) break
 
           const opType = swapGates[0].operationType
-          const controls = swapGates[0].controls
+          const controls = swapGates[0].controlBits
           const serializedGate: SerializedSwapGate = {type: opType, targets: [swapGates[0].bit, swapGates[1].bit]}
           if (controls !== undefined && controls.length > 0) serializedGate.controls = controls
           serializedStep.push(serializedGate)
           break
         }
         case ControlGateElement: {
-          const controlGates = (sameOps as ControlGateElement[]).filter(each => !each.disabled)
+          const controlGates = (sameOps as ControlGateElement[]).filter(each => !each.isDisabled)
           if (controlGates.length < 2) break
-          if (this.operations.some(each => isControllable(each) && each.controls.length > 0)) break
+          if (this.operations.some(each => isControllable(each) && each.controlBits.length > 0)) break
 
           const targets = controlGates.map(each => each.bit)
           serializedStep.push({type: controlGates[0].operationType, targets})

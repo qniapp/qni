@@ -218,7 +218,7 @@ export class CircuitEditorElement extends HTMLElement {
           const operation = event.operation
           const snapTarget = this.circuit.snapTargetAt(event.x, event.y)
 
-          operation.snapped = true
+          operation.snap()
 
           if (snapTarget.dropzone === null) {
             const stepIndex = snapTarget.stepIndex
@@ -314,7 +314,7 @@ export class CircuitEditorElement extends HTMLElement {
           if (event.type !== 'END_DRAGGING_OPERATION') return
 
           const operation = event.operation
-          if (operation.snapped) return
+          if (operation.isSnapped) return
 
           if (this.inspectorButton === undefined) return
           if (!this.inspectorButton.isInspectorShown) return
@@ -428,7 +428,7 @@ export class CircuitEditorElement extends HTMLElement {
     const el = event.target
 
     if (isDraggable(el)) {
-      el.draggable = true
+      el.enableDrag()
     } else {
       throw new DetailedError('Not a draggable element.', {el})
     }
@@ -471,7 +471,7 @@ export class CircuitEditorElement extends HTMLElement {
       !this.inspectorButton.popup.reference.contains(clickedEl) &&
       this.activeOperation !== null
     ) {
-      this.activeOperation.active = false
+      this.activeOperation.deactivate()
     }
   }
 

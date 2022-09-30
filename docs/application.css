@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.0.22 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.23 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -1081,7 +1081,7 @@ select {
 }
 
 /*
-! tailwindcss v3.0.22 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.23 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -2348,7 +2348,7 @@ bloch-display::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone bloch-display[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) bloch-display[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone bloch-display[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) bloch-display[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -2362,28 +2362,28 @@ bloch-display[data-active]::part(outline) {
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
-bloch-display[data-grabbed] {
+bloch-display[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-bloch-display[data-grabbed]:not([data-snapped]) {
+bloch-display[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-bloch-display[data-grabbed]::part(body) {
+bloch-display[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-bloch-display[data-grabbed]::part(icon) {
+bloch-display[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-bloch-display[data-grabbed]::part(outline) {
+bloch-display[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -2400,7 +2400,7 @@ quantum-circuit([data-editing]) bloch-display:not([data-operation-x='0']):not([d
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone bloch-display:not([data-snapped])::part(icon)::before {
+circuit-dropzone bloch-display:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -2444,7 +2444,7 @@ bloch-display::part(sphere-border) {
   background-color: rgb(240 253 244 / var(--tw-bg-opacity));
 }
 
-bloch-display[data-grabbed]::part(sphere-border) {
+bloch-display[data-draggable-grabbed]::part(sphere-border) {
   --tw-border-opacity: 1;
   border-color: rgb(168 85 247 / var(--tw-border-opacity));
 }
@@ -2877,7 +2877,7 @@ control-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone control-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) control-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone control-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) control-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -2897,28 +2897,28 @@ control-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
 }
 
-control-gate[data-grabbed] {
+control-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-control-gate[data-grabbed]:not([data-snapped]) {
+control-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-control-gate[data-grabbed]::part(body) {
+control-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-control-gate[data-grabbed]::part(icon) {
+control-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-control-gate[data-grabbed]::part(outline) {
+control-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -2935,7 +2935,7 @@ quantum-circuit([data-editing]) control-gate:not([data-operation-x='0']):not([da
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone control-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone control-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -2952,7 +2952,7 @@ control-gate::part(icon) {
   color: var(--qni-semantic-fill-color-primary);
 }
 
-control-gate[data-disabled]:not([data-grabbed])::part(icon) {
+control-gate[data-disabled]:not([data-draggable-grabbed])::part(icon) {
   color: #71717a;
   color: #71717a;
   color: var(--qni-semantic-fill-color-disabled);
@@ -2999,7 +2999,7 @@ h-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone h-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) h-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone h-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) h-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3034,28 +3034,28 @@ h-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-h-gate[data-grabbed] {
+h-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-h-gate[data-grabbed]:not([data-snapped]) {
+h-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-h-gate[data-grabbed]::part(body) {
+h-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-h-gate[data-grabbed]::part(icon) {
+h-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-h-gate[data-grabbed]::part(outline) {
+h-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -3072,7 +3072,7 @@ quantum-circuit([data-editing]) h-gate:not([data-operation-x='0']):not([data-ope
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone h-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone h-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -3179,7 +3179,7 @@ measurement-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone measurement-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) measurement-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone measurement-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) measurement-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3199,28 +3199,28 @@ measurement-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
 }
 
-measurement-gate[data-grabbed] {
+measurement-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-measurement-gate[data-grabbed]:not([data-snapped]) {
+measurement-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-measurement-gate[data-grabbed]::part(body) {
+measurement-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-measurement-gate[data-grabbed]::part(icon) {
+measurement-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-measurement-gate[data-grabbed]::part(outline) {
+measurement-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -3237,7 +3237,7 @@ quantum-circuit([data-editing]) measurement-gate:not([data-operation-x='0']):not
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone measurement-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone measurement-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -3292,7 +3292,7 @@ measurement-gate::part(icon) {
   color: var(--qni-semantic-color-intermediate);
 }
 
-circuit-dropzone measurement-gate[data-snapped]::part(icon) {
+circuit-dropzone measurement-gate[data-draggable-snapped]::part(icon) {
   transform-origin: center;
   transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-rotate: 90deg;
@@ -3300,7 +3300,7 @@ circuit-dropzone measurement-gate[data-snapped]::part(icon) {
 }
 
 @media (min-width: 640px) {
-  circuit-dropzone measurement-gate[data-snapped]::part(icon) {
+  circuit-dropzone measurement-gate[data-draggable-snapped]::part(icon) {
     --tw-rotate: 0deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
@@ -3319,7 +3319,7 @@ measurement-gate::part(value) {
   left: 0px;
 }
 
-circuit-dropzone measurement-gate[data-snapped]::part(value) {
+circuit-dropzone measurement-gate[data-draggable-snapped]::part(value) {
   transform-origin: center;
   transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-rotate: 90deg;
@@ -3327,7 +3327,7 @@ circuit-dropzone measurement-gate[data-snapped]::part(value) {
 }
 
 @media (min-width: 640px) {
-  circuit-dropzone measurement-gate[data-snapped]::part(value) {
+  circuit-dropzone measurement-gate[data-draggable-snapped]::part(value) {
     --tw-rotate: 0deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
@@ -3356,20 +3356,20 @@ measurement-gate[data-value='1']::part(value)::after {
   content: '1';
 }
 
-/* data-grabbed */
+/* data-draggable-grabbed */
 
-measurement-gate[data-grabbed]::part(body) {
+measurement-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-measurement-gate[data-grabbed]::part(icon) {
+measurement-gate[data-draggable-grabbed]::part(icon) {
   --tw-text-opacity: 1;
   color: rgb(192 132 252 / var(--tw-text-opacity));
 }
 
-measurement-gate[data-grabbed]::part(value)::after {
+measurement-gate[data-draggable-grabbed]::part(value)::after {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -3422,7 +3422,7 @@ phase-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone phase-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) phase-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone phase-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) phase-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3457,28 +3457,28 @@ phase-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-phase-gate[data-grabbed] {
+phase-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-phase-gate[data-grabbed]:not([data-snapped]) {
+phase-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-phase-gate[data-grabbed]::part(body) {
+phase-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-phase-gate[data-grabbed]::part(icon) {
+phase-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-phase-gate[data-grabbed]::part(outline) {
+phase-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -3553,7 +3553,7 @@ quantum-circuit([data-editing]) phase-gate:not([data-operation-x='0']):not([data
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone phase-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone phase-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -3663,7 +3663,7 @@ qft-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone qft-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) qft-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone qft-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) qft-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -4868,7 +4868,7 @@ qft-gate::part(resize-handle) {
   visibility: hidden;
 }
 
-quantum-circuit:not([data-editing]) circuit-dropzone qft-gate:not([data-grabbed]):hover::part(resize-handle), qft-gate[data-resizing]::part(resize-handle) {
+quantum-circuit:not([data-editing]) circuit-dropzone qft-gate:not([data-draggable-grabbed]):hover::part(resize-handle), qft-gate[data-resizing]::part(resize-handle) {
   visibility: visible;
 }
 
@@ -4886,28 +4886,28 @@ qft-gate::part(resize-handle-icon) {
   }
 }
 
-qft-gate[data-grabbed] {
+qft-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-qft-gate[data-grabbed]:not([data-snapped]) {
+qft-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-qft-gate[data-grabbed]::part(body) {
+qft-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-qft-gate[data-grabbed]::part(icon) {
+qft-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-qft-gate[data-grabbed]::part(outline) {
+qft-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -4924,7 +4924,7 @@ quantum-circuit([data-editing]) qft-gate:not([data-operation-x='0']):not([data-o
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone qft-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone qft-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -5022,7 +5022,7 @@ qft-dagger-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone qft-dagger-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone qft-dagger-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6227,7 +6227,7 @@ qft-dagger-gate::part(resize-handle) {
   visibility: hidden;
 }
 
-quantum-circuit:not([data-editing]) circuit-dropzone qft-dagger-gate:not([data-grabbed]):hover::part(resize-handle), qft-dagger-gate[data-resizing]::part(resize-handle) {
+quantum-circuit:not([data-editing]) circuit-dropzone qft-dagger-gate:not([data-draggable-grabbed]):hover::part(resize-handle), qft-dagger-gate[data-resizing]::part(resize-handle) {
   visibility: visible;
 }
 
@@ -6260,28 +6260,28 @@ qft-dagger-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-qft-dagger-gate[data-grabbed] {
+qft-dagger-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-qft-dagger-gate[data-grabbed]:not([data-snapped]) {
+qft-dagger-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-qft-dagger-gate[data-grabbed]::part(body) {
+qft-dagger-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-qft-dagger-gate[data-grabbed]::part(icon) {
+qft-dagger-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-qft-dagger-gate[data-grabbed]::part(outline) {
+qft-dagger-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -6298,7 +6298,7 @@ quantum-circuit([data-editing]) qft-dagger-gate:not([data-operation-x='0']):not(
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone qft-dagger-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone qft-dagger-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -6414,7 +6414,7 @@ rnot-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone rnot-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rnot-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone rnot-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rnot-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6449,28 +6449,28 @@ rnot-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-rnot-gate[data-grabbed] {
+rnot-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-rnot-gate[data-grabbed]:not([data-snapped]) {
+rnot-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-rnot-gate[data-grabbed]::part(body) {
+rnot-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-rnot-gate[data-grabbed]::part(icon) {
+rnot-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-rnot-gate[data-grabbed]::part(outline) {
+rnot-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -6487,7 +6487,7 @@ quantum-circuit([data-editing]) rnot-gate:not([data-operation-x='0']):not([data-
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone rnot-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone rnot-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -6585,7 +6585,7 @@ rx-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone rx-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rx-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone rx-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rx-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6620,28 +6620,28 @@ rx-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-rx-gate[data-grabbed] {
+rx-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-rx-gate[data-grabbed]:not([data-snapped]) {
+rx-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-rx-gate[data-grabbed]::part(body) {
+rx-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-rx-gate[data-grabbed]::part(icon) {
+rx-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-rx-gate[data-grabbed]::part(outline) {
+rx-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -6716,7 +6716,7 @@ quantum-circuit([data-editing]) rx-gate:not([data-operation-x='0']):not([data-op
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone rx-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone rx-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -6814,7 +6814,7 @@ ry-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone ry-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) ry-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone ry-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) ry-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6849,28 +6849,28 @@ ry-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-ry-gate[data-grabbed] {
+ry-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-ry-gate[data-grabbed]:not([data-snapped]) {
+ry-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-ry-gate[data-grabbed]::part(body) {
+ry-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-ry-gate[data-grabbed]::part(icon) {
+ry-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-ry-gate[data-grabbed]::part(outline) {
+ry-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -6945,7 +6945,7 @@ quantum-circuit([data-editing]) ry-gate:not([data-operation-x='0']):not([data-op
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone ry-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone ry-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7043,7 +7043,7 @@ rz-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone rz-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rz-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone rz-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rz-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -7078,28 +7078,28 @@ rz-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-rz-gate[data-grabbed] {
+rz-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-rz-gate[data-grabbed]:not([data-snapped]) {
+rz-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-rz-gate[data-grabbed]::part(body) {
+rz-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-rz-gate[data-grabbed]::part(icon) {
+rz-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-rz-gate[data-grabbed]::part(outline) {
+rz-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -7174,7 +7174,7 @@ quantum-circuit([data-editing]) rz-gate:not([data-operation-x='0']):not([data-op
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone rz-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone rz-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7272,7 +7272,7 @@ swap-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone swap-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) swap-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone swap-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) swap-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -7292,28 +7292,28 @@ swap-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
 }
 
-swap-gate[data-grabbed] {
+swap-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-swap-gate[data-grabbed]:not([data-snapped]) {
+swap-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-swap-gate[data-grabbed]::part(body) {
+swap-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-swap-gate[data-grabbed]::part(icon) {
+swap-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-swap-gate[data-grabbed]::part(outline) {
+swap-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -7330,7 +7330,7 @@ quantum-circuit([data-editing]) swap-gate:not([data-operation-x='0']):not([data-
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone swap-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone swap-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7347,7 +7347,7 @@ swap-gate::part(icon) {
   color: var(--qni-semantic-fill-color-primary);
 }
 
-swap-gate[data-disabled]:not([data-grabbed])::part(icon) {
+swap-gate[data-disabled]:not([data-draggable-grabbed])::part(icon) {
   color: #71717a;
   color: #71717a;
   color: var(--qni-semantic-fill-color-disabled);
@@ -7394,7 +7394,7 @@ t-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone t-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) t-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone t-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) t-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -7429,28 +7429,28 @@ t-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-t-gate[data-grabbed] {
+t-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-t-gate[data-grabbed]:not([data-snapped]) {
+t-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-t-gate[data-grabbed]::part(body) {
+t-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-t-gate[data-grabbed]::part(icon) {
+t-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-t-gate[data-grabbed]::part(outline) {
+t-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -7467,7 +7467,7 @@ quantum-circuit([data-editing]) t-gate:not([data-operation-x='0']):not([data-ope
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone t-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone t-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7565,7 +7565,7 @@ write-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone write-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) write-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone write-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) write-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -7585,28 +7585,28 @@ write-gate::part(body) {
   border-radius: var(--qni-semantic-radius-default);
 }
 
-write-gate[data-grabbed] {
+write-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-write-gate[data-grabbed]:not([data-snapped]) {
+write-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-write-gate[data-grabbed]::part(body) {
+write-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-write-gate[data-grabbed]::part(icon) {
+write-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-write-gate[data-grabbed]::part(outline) {
+write-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -7623,7 +7623,7 @@ quantum-circuit([data-editing]) write-gate:not([data-operation-x='0']):not([data
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone write-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone write-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7645,7 +7645,7 @@ write-gate[data-dark-mode]::part(icon) {
   color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
-circuit-dropzone write-gate[data-snapped]::part(icon) {
+circuit-dropzone write-gate[data-draggable-snapped]::part(icon) {
   transform-origin: center;
   transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-rotate: 90deg;
@@ -7653,7 +7653,7 @@ circuit-dropzone write-gate[data-snapped]::part(icon) {
 }
 
 @media (min-width: 640px) {
-  circuit-dropzone write-gate[data-snapped]::part(icon) {
+  circuit-dropzone write-gate[data-draggable-snapped]::part(icon) {
     --tw-rotate: 0deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
@@ -7667,7 +7667,7 @@ write-gate::part(value) {
   left: 0px;
 }
 
-circuit-dropzone write-gate[data-snapped]::part(value) {
+circuit-dropzone write-gate[data-draggable-snapped]::part(value) {
   transform-origin: center;
   transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-rotate: 90deg;
@@ -7675,7 +7675,7 @@ circuit-dropzone write-gate[data-snapped]::part(value) {
 }
 
 @media (min-width: 640px) {
-  circuit-dropzone write-gate[data-snapped]::part(value) {
+  circuit-dropzone write-gate[data-draggable-snapped]::part(value) {
     --tw-rotate: 0deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
@@ -7736,19 +7736,19 @@ write-gate.qpu-operation-2xl::part(value)::after {
   line-height: 2.5rem;
 }
 
-/* data-grabbed */
+/* data-draggable-grabbed */
 
-write-gate[data-grabbed]::part(icon) {
+write-gate[data-draggable-grabbed]::part(icon) {
   --tw-text-opacity: 1;
   color: rgb(192 132 252 / var(--tw-text-opacity));
 }
 
-write-gate[data-grabbed][data-value='0']::part(value)::after {
+write-gate[data-draggable-grabbed][data-value='0']::part(value)::after {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-write-gate[data-grabbed][data-value='1']::part(value)::after {
+write-gate[data-draggable-grabbed][data-value='1']::part(value)::after {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -7794,7 +7794,7 @@ x-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone x-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) x-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone x-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) x-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -7829,28 +7829,28 @@ x-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-x-gate[data-grabbed] {
+x-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-x-gate[data-grabbed]:not([data-snapped]) {
+x-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-x-gate[data-grabbed]::part(body) {
+x-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-x-gate[data-grabbed]::part(icon) {
+x-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-x-gate[data-grabbed]::part(outline) {
+x-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -7867,7 +7867,7 @@ quantum-circuit([data-editing]) x-gate:not([data-operation-x='0']):not([data-ope
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone x-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone x-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7965,7 +7965,7 @@ y-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone y-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) y-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone y-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) y-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -8000,28 +8000,28 @@ y-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-y-gate[data-grabbed] {
+y-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-y-gate[data-grabbed]:not([data-snapped]) {
+y-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-y-gate[data-grabbed]::part(body) {
+y-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-y-gate[data-grabbed]::part(icon) {
+y-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-y-gate[data-grabbed]::part(outline) {
+y-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -8038,7 +8038,7 @@ quantum-circuit([data-editing]) y-gate:not([data-operation-x='0']):not([data-ope
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone y-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone y-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -8136,7 +8136,7 @@ z-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone z-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) z-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone z-gate[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) z-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -8171,28 +8171,28 @@ z-gate::part(icon) {
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-z-gate[data-grabbed] {
+z-gate[data-draggable-grabbed] {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
-z-gate[data-grabbed]:not([data-snapped]) {
+z-gate[data-draggable-grabbed]:not([data-draggable-snapped]) {
   z-index: 40;
 }
 
-z-gate[data-grabbed]::part(body) {
+z-gate[data-draggable-grabbed]::part(body) {
   background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
-z-gate[data-grabbed]::part(icon) {
+z-gate[data-draggable-grabbed]::part(icon) {
   color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
 
-z-gate[data-grabbed]::part(outline) {
+z-gate[data-draggable-grabbed]::part(outline) {
   display: none;
 }
 
@@ -8209,7 +8209,7 @@ quantum-circuit([data-editing]) z-gate:not([data-operation-x='0']):not([data-ope
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone z-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone z-gate:not([data-draggable-snapped])::part(icon)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -8337,7 +8337,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 
 /* QPU operation outline */
 
-/* data-grabbed */
+/* data-draggable-grabbed */
 
 /* data-disabled */
 

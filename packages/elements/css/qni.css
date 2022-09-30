@@ -99,7 +99,7 @@
   }
 
   .qpu-operation-hoverable {
-    palette-dropzone &[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    palette-dropzone &[data-hoverable]:not([data-draggable-grabbed]):hover::part(outline),
     quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
       @apply block;
       outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
@@ -113,26 +113,26 @@
     }
   }
 
-  /* data-grabbed */
+  /* data-draggable-grabbed */
 
   .qpu-operation-grabbable {
-    &[data-grabbed] {
+    &[data-draggable-grabbed] {
       @apply cursor-grabbing;
     }
 
-    &[data-grabbed]:not([data-snapped]) {
+    &[data-draggable-grabbed]:not([data-draggable-snapped]) {
       @apply z-40;
     }
 
-    &[data-grabbed]::part(body) {
+    &[data-draggable-grabbed]::part(body) {
       background-color: var(--qni-semantic-fill-color-intermediate);
     }
 
-    &[data-grabbed]::part(icon) {
+    &[data-draggable-grabbed]::part(icon) {
       color: var(--qni-semantic-color-icon-inverse);
     }
 
-    &[data-grabbed]::part(outline) {
+    &[data-draggable-grabbed]::part(outline) {
       @apply hidden;
     }
   }
@@ -486,7 +486,7 @@
      * - on palette
      * - while dragging
      */
-    quantum-circuit:not([data-editing]) circuit-dropzone &:not([data-grabbed]):hover::part(resize-handle),
+    quantum-circuit:not([data-editing]) circuit-dropzone &:not([data-draggable-grabbed]):hover::part(resize-handle),
     &[data-resizing]::part(resize-handle) {
       @apply visible;
     }
@@ -515,7 +515,7 @@
     }
 
     /* show trash icon */
-    circuit-dropzone &:not([data-snapped])::part(icon)::before {
+    circuit-dropzone &:not([data-draggable-snapped])::part(icon)::before {
       @apply absolute -top-2.5 -right-2.5;
       @apply h-6 w-6;
       @apply z-10;

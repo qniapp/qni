@@ -109,7 +109,7 @@ export class QuantumSimulatorElement extends HTMLElement {
           if (!isIfable(operation)) continue
           if (operation.if === '') continue
 
-          operation.disabled = !data.flags[operation.if]
+          operation.isDisabled = !data.flags[operation.if]
         }
 
         if (stepIndex === data.step) {

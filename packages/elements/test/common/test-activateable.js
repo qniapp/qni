@@ -15,8 +15,7 @@ export function testActivateable(operationName) {
     it('not active by default', function () {
       const operation = document.querySelector(operationName)
 
-      assert.isFalse(operation.active)
-      assert.isFalse(operation.hasAttribute('data-active'))
+      assert.isFalse(operation.isActive())
     })
 
     it('can be activated', function () {
@@ -24,8 +23,7 @@ export function testActivateable(operationName) {
 
       operation.activate()
 
-      assert.isTrue(operation.active)
-      assert.isTrue(operation.hasAttribute('data-active'))
+      assert.isTrue(operation.isActive())
     })
 
     it('can be deactivated', function () {
@@ -33,8 +31,7 @@ export function testActivateable(operationName) {
 
       operation.deactivate()
 
-      assert.isFalse(operation.active)
-      assert.isFalse(operation.hasAttribute('data-active'))
+      assert.isFalse(operation.isActive())
     })
 
     it('dispatches activateable:active event', async function () {
