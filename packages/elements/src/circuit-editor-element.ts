@@ -428,7 +428,7 @@ export class CircuitEditorElement extends HTMLElement {
     const el = event.target
 
     if (isDraggable(el)) {
-      el.draggable = true
+      el.isDraggable = true
     } else {
       throw new DetailedError('Not a draggable element.', {el})
     }

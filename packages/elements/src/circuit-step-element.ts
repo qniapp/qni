@@ -661,7 +661,7 @@ export class CircuitStepElement extends HTMLElement {
   private updateFreeDropzoneConnections(connectionProps?: ConnectionProps): void {
     const controllableDropzones = this.controllableDropzones(connectionProps)
     const activeControlBits = this.controlGateDropzones
-      .filter(each => isControlGateElement(each.operation) && !each.operation.disabled)
+      .filter(each => isControlGateElement(each.operation) && !each.operation.isDisabled)
       .map(each => this.bit(each))
     const controllableBits = controllableDropzones.map(dz => this.bit(dz))
     const activeOperationBits = activeControlBits.concat(controllableBits)
@@ -1152,7 +1152,7 @@ export class CircuitStepElement extends HTMLElement {
           break
         }
         case SwapGateElement: {
-          const swapGates = (sameOps as SwapGateElement[]).filter(each => !each.disabled)
+          const swapGates = (sameOps as SwapGateElement[]).filter(each => !each.isDisabled)
           if (swapGates.length !== 2) break
 
           const opType = swapGates[0].operationType
@@ -1163,7 +1163,7 @@ export class CircuitStepElement extends HTMLElement {
           break
         }
         case ControlGateElement: {
-          const controlGates = (sameOps as ControlGateElement[]).filter(each => !each.disabled)
+          const controlGates = (sameOps as ControlGateElement[]).filter(each => !each.isDisabled)
           if (controlGates.length < 2) break
           if (this.operations.some(each => isControllable(each) && each.controlBits.length > 0)) break
 

@@ -8,7 +8,7 @@ import {attr} from '@github/catalyst'
 import interact from 'interactjs'
 
 export const isDraggable = (arg: unknown): arg is Draggable =>
-  arg !== undefined && arg !== null && typeof (arg as Draggable).draggable === 'boolean'
+  arg !== undefined && arg !== null && typeof (arg as Draggable).isDraggable === 'boolean'
 
 export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
   arg !== undefined && arg !== null && (arg as Element).tagName === 'CIRCUIT-DROPZONE'
@@ -17,12 +17,13 @@ export const isPaletteDropzoneElement = (arg: unknown): arg is PaletteDropzoneEl
   arg !== undefined && arg !== null && (arg as Element).tagName === 'PALETTE-DROPZONE'
 
 export declare class Draggable {
+  get isGrabbable(): boolean
   get operationX(): number
   set operationX(value: number)
   get operationY(): number
   set operationY(value: number)
-  get draggable(): boolean
-  set draggable(value: boolean)
+  get isDraggable(): boolean
+  set isDraggable(value: boolean)
   get grabbed(): boolean
   set grabbed(value: boolean)
   get dragging(): boolean
@@ -53,6 +54,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
   class DraggableMixinClass extends Base {
     @attr operationX = 0
     @attr operationY = 0
+    @attr _grabbable = false
     @attr grabbed = false
     @attr dragging = false
     @attr snapped = false
@@ -60,6 +62,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     @attr debugDraggable = false
 
     private snappedDropzone!: CircuitDropzoneElement | null | undefined
+
     private draggableMachine = createMachine<DraggableContext, DraggableEvent>(
       {
         id: 'draggable',
@@ -75,6 +78,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             }
           },
           grabbable: {
+            entry: ['setGrabbableAttribute'],
+            exit: ['unsetGrabbableAttribute'],
             on: {
               GRAB: {
                 target: 'grabbed',
@@ -183,6 +188,12 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
               this.snappedDropzone = null
             }
           },
+          setGrabbableAttribute: () => {
+            this._grabbable = true
+          },
+          unsetGrabbableAttribute: () => {
+            this._grabbable = false
+          },
           grab: (_context, event) => {
             Util.need(event.type === 'GRAB', 'event type must be GRAB')
             if (event.type !== 'GRAB') return
@@ -259,16 +270,20 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       }
     })
 
-    get draggable(): boolean {
+    get isDraggable(): boolean {
       return this.draggableService.state !== undefined
     }
 
-    set draggable(value: boolean) {
+    set isDraggable(value: boolean) {
       if (value) {
         this.draggableService.send({type: 'SET_INTERACT'})
       } else {
         this.draggableService.send({type: 'UNSET_INTERACT'})
       }
+    }
+
+    get isGrabbable(): boolean {
+      return this._grabbable
     }
 
     initDraggable(): void {
