@@ -105,7 +105,6 @@ describe('HGateElement', () => {
       const operation = paletteDropzone.operation
 
       expect(operation.isGrabbable).to.be.true
-      expect(operation.isDraggable).to.be.true
     })
 
     it('should become grabbable by calling enableDrag() when it is in <circuit-dropzone>', async function () {
@@ -119,19 +118,16 @@ describe('HGateElement', () => {
       expect(operation!.isGrabbable).to.be.true
     })
 
-    //   it('should reach "idle" given "grabbable" when the "UNSET_INTERACT" event occurs', function () {
-    //     const container = document.createElement('div')
-    //     container.innerHTML = `
-    // <palette-dropzone>
-    //   <h-gate></h-gate>
-    // </palette-dropzone>`
-    //     document.body.append(container)
-    //     const operation = document.querySelector('h-gate')
+    it('should become idle by calling disableDrag()', async function () {
+      const paletteDropzone: PaletteDropzoneElement = await fixture(html`<palette-dropzone>
+        <h-gate></h-gate>
+      </palette-dropzone>`)
+      const operation = paletteDropzone.operation
 
-    //     operation.draggable = false
+      operation.disableDrag()
 
-    //     assert.equal(operation.draggableService.state.value, 'idle')
-    //   })
+      expect(operation.isIdle).to.be.true
+    })
 
     //   it('should reach "grabbed" given "grabbable" when the "GRAB" event occurs', function () {
     //     const container = document.createElement('div')

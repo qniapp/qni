@@ -8,7 +8,7 @@ import {attr} from '@github/catalyst'
 import interact from 'interactjs'
 
 export const isDraggable = (arg: unknown): arg is Draggable =>
-  arg !== undefined && arg !== null && typeof (arg as Draggable).isDraggable === 'boolean'
+  arg !== undefined && arg !== null && typeof (arg as Draggable).enableDrag === 'function'
 
 export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
   arg !== undefined && arg !== null && (arg as Element).tagName === 'CIRCUIT-DROPZONE'
@@ -22,8 +22,9 @@ export declare class Draggable {
   set operationX(value: number)
   get operationY(): number
   set operationY(value: number)
-  get isDraggable(): boolean
+  get isIdle(): boolean
   enableDrag(): void
+  disableDrag(): void
   get grabbed(): boolean
   set grabbed(value: boolean)
   get dragging(): boolean
@@ -270,16 +271,20 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       }
     })
 
-    get isDraggable(): boolean {
-      return this.draggableService.state !== undefined
+    get isIdle(): boolean {
+      return this.draggableService.state.value === 'idle'
+    }
+
+    get isGrabbable(): boolean {
+      return this._grabbable
     }
 
     enableDrag() {
       this.draggableService.send({type: 'SET_INTERACT'})
     }
 
-    get isGrabbable(): boolean {
-      return this._grabbable
+    disableDrag() {
+      this.draggableService.send({type: 'UNSET_INTERACT'})
     }
 
     initDraggable(): void {
