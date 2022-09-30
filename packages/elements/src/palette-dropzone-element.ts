@@ -54,7 +54,7 @@ export class PaletteDropzoneElement extends HTMLElement {
 
   private initOperation(operation: Operation): void {
     if (isDraggable(operation)) {
-      operation.isDraggable = true
+      operation.enableDrag()
       operation.grabbed = false
       operation.snapped = true
     }

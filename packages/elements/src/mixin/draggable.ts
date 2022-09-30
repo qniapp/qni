@@ -23,7 +23,7 @@ export declare class Draggable {
   get operationY(): number
   set operationY(value: number)
   get isDraggable(): boolean
-  set isDraggable(value: boolean)
+  enableDrag(): void
   get grabbed(): boolean
   set grabbed(value: boolean)
   get dragging(): boolean
@@ -274,12 +274,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       return this.draggableService.state !== undefined
     }
 
-    set isDraggable(value: boolean) {
-      if (value) {
-        this.draggableService.send({type: 'SET_INTERACT'})
-      } else {
-        this.draggableService.send({type: 'UNSET_INTERACT'})
-      }
+    enableDrag() {
+      this.draggableService.send({type: 'SET_INTERACT'})
     }
 
     get isGrabbable(): boolean {

@@ -1,6 +1,6 @@
+import {CircuitDropzoneElement, PaletteDropzoneElement} from '../src'
 import {HGateElement, isControllable} from '../dist/index'
 import {expect, fixture, html} from '@open-wc/testing'
-import {PaletteDropzoneElement} from '../src'
 
 describe('HGateElement', () => {
   let instance: HGateElement
@@ -108,19 +108,16 @@ describe('HGateElement', () => {
       expect(operation.isDraggable).to.be.true
     })
 
-    //   it('should reach "grabbable" given "idle" when the "SET_INTERACT" event occurs', function () {
-    //     const container = document.createElement('div')
-    //     container.innerHTML = `
-    // <circuit-dropzone>
-    //   <h-gate></h-gate>
-    // </circuit-dropzone>`
-    //     document.body.append(container)
-    //     const operation = document.querySelector('h-gate')
+    it('should become grabbable by calling enableDrag() when it is in <circuit-dropzone>', async function () {
+      const circuitDropzone: CircuitDropzoneElement = await fixture(html`<circuit-dropzone>
+        <h-gate></h-gate>
+      </circuit-dropzone>`)
+      const operation = circuitDropzone.operation
 
-    //     operation.draggable = true
+      operation!.enableDrag()
 
-    //     assert.equal(operation.draggableService.state.value, 'grabbable')
-    //   })
+      expect(operation!.isGrabbable).to.be.true
+    })
 
     //   it('should reach "idle" given "grabbable" when the "UNSET_INTERACT" event occurs', function () {
     //     const container = document.createElement('div')
