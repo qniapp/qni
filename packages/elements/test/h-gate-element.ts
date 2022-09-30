@@ -140,22 +140,18 @@ describe('HGateElement', () => {
       expect(operation.isGrabbed).to.be.true
     })
 
-    //   it('should reach "dragging (unsnapped)" given "grabbed" when "START_DRAGGING" event occurs', function () {
-    //     const container = document.createElement('div')
-    //     container.innerHTML = `
-    // <palette-dropzone>
-    //   <h-gate></h-gate>
-    // </palette-dropzone>`
-    //     document.body.append(container)
-    //     const operation = document.querySelector('h-gate')
-    //     mousedown(operation)
+    it('should become dragging when a pointermove event occurs', async function () {
+      const paletteDropzone: PaletteDropzoneElement = await fixture(html`<palette-dropzone>
+        <h-gate></h-gate>
+      </palette-dropzone>`)
+      const operation = paletteDropzone.operation
+      mousedown(operation)
 
-    //     move(operation, 1, 1)
+      move(operation, 1, 1)
 
-    //     assert.isTrue(operation.dragging)
-    //     assert.isFalse(operation.snapped)
-    //     assert.deepEqual(operation.draggableService.state.value, {dragging: 'unsnapped'})
-    //   })
+      expect(operation.isDragging).to.be.true
+      expect(operation.isSnapped).to.be.false
+    })
 
     //   it('should reach "dragging (unsnapped)" given "dragging (snapped)" when "UNSNAP" event occurs', async function () {
     //     const container = document.createElement('div')
@@ -300,4 +296,14 @@ function once(element: HTMLElement, eventName: string) {
 
 function mousedown(element: HTMLElement) {
   element.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}))
+}
+
+function move(element: HTMLElement, dx = 1, dy = 1) {
+  element.dispatchEvent(
+    new PointerEvent('pointermove', {
+      clientX: element.getBoundingClientRect().left + dx,
+      clientY: element.getBoundingClientRect().top + dy,
+      bubbles: true
+    })
+  )
 }

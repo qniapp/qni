@@ -24,12 +24,11 @@ export declare class Draggable {
   set operationY(value: number)
   get isIdle(): boolean
   get isGrabbed(): boolean
+  get isDragging(): boolean
+  get isSnapped(): boolean
   enableDrag(): void
   disableDrag(): void
-  get dragging(): boolean
-  set dragging(value: boolean)
-  get snapped(): boolean
-  set snapped(value: boolean)
+  snap(): void
   get bit(): number
   set bit(value: number)
   get dropzone(): PaletteDropzoneElement | CircuitDropzoneElement | null
@@ -56,8 +55,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     @attr operationY = 0
     @attr draggableGrabbable = false
     @attr draggableGrabbed = false
-    @attr dragging = false
-    @attr snapped = false
+    @attr draggableDragging = false
+    @attr draggableSnapped = false
     @attr bit = -1
     @attr debugDraggable = false
 
@@ -202,7 +201,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             emitEvent('draggable:grab', {}, this)
 
             if (isPaletteDropzoneElement(this.dropzone)) {
-              this.snapped = false
+              this.draggableSnapped = false
               this.moveByOffset(event.x, event.y)
               this.classList.remove('qpu-operation-xl')
             }
@@ -216,28 +215,28 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           startDragging: (_context, event) => {
             Util.need(event.type === 'START_DRAGGING', 'event type must be START_DRAGGING')
 
-            this.dragging = true
+            this.draggableDragging = true
           },
           endDragging: (_context, event) => {
             Util.need(event.type === 'END_DRAGGING', 'event type must be END_DRAGGING')
 
             this.draggableGrabbed = false
-            this.dragging = false
+            this.draggableDragging = false
             emitEvent('draggable:end-dragging', {}, this)
           },
           snap: () => {
-            this.snapped = true
+            this.draggableSnapped = true
             this.snappedDropzone = this.dropzone as CircuitDropzoneElement
             emitEvent('draggable:snap-to-dropzone', {}, this)
           },
           unsnap: () => {
-            this.snapped = false
+            this.draggableSnapped = false
             if (this.snappedDropzone) {
               emitEvent('draggable:unsnap', {}, this.snappedDropzone)
             }
           },
           drop: () => {
-            if (!this.snapped) return
+            if (!this.draggableSnapped) return
 
             this.moveTo(0, 0)
             emitEvent('draggable:drop', {}, this)
@@ -255,14 +254,15 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             return isPaletteDropzoneElement(this.dropzone)
           },
           isDroppedOnCircuitDropzone: () => {
-            return this.snapped && isCircuitDropzoneElement(this.dropzone)
+            return this.draggableSnapped && isCircuitDropzoneElement(this.dropzone)
           },
           isTrashed: () => {
-            return !this.snapped
+            return !this.draggableSnapped
           }
         }
       }
     )
+
     public draggableService = interpret(this.draggableMachine).onTransition(state => {
       if (this.debugDraggable) {
         // eslint-disable-next-line no-console
@@ -282,12 +282,24 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       return this.draggableGrabbed
     }
 
+    get isDragging(): boolean {
+      return this.draggableDragging
+    }
+
+    get isSnapped(): boolean {
+      return this.draggableSnapped
+    }
+
     enableDrag() {
       this.draggableService.send({type: 'SET_INTERACT'})
     }
 
     disableDrag() {
       this.draggableService.send({type: 'UNSET_INTERACT'})
+    }
+
+    snap() {
+      this.draggableSnapped = true
     }
 
     initDraggable(): void {
@@ -341,7 +353,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
 
         this.draggableService.send({type: 'SNAP'})
       } else {
-        if (this.snapped) {
+        if (this.draggableSnapped) {
           this.draggableService.send({type: 'UNSNAP'})
         }
       }

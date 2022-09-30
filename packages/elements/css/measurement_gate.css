@@ -13,7 +13,7 @@ measurement-gate {
     color: var(--qni-semantic-color-intermediate);
   }
 
-  circuit-dropzone &[data-snapped]::part(icon) {
+  circuit-dropzone &[data-draggable-snapped]::part(icon) {
     @apply origin-center transform-gpu;
     @apply rotate-90 sm:rotate-0;
   }
@@ -27,7 +27,7 @@ measurement-gate {
     @apply absolute inset-0;
   }
 
-  circuit-dropzone &[data-snapped]::part(value) {
+  circuit-dropzone &[data-draggable-snapped]::part(value) {
     @apply origin-center transform-gpu;
     @apply rotate-90 sm:rotate-0;
   }

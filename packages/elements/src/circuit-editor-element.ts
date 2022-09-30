@@ -218,7 +218,7 @@ export class CircuitEditorElement extends HTMLElement {
           const operation = event.operation
           const snapTarget = this.circuit.snapTargetAt(event.x, event.y)
 
-          operation.snapped = true
+          operation.snap()
 
           if (snapTarget.dropzone === null) {
             const stepIndex = snapTarget.stepIndex
@@ -314,7 +314,7 @@ export class CircuitEditorElement extends HTMLElement {
           if (event.type !== 'END_DRAGGING_OPERATION') return
 
           const operation = event.operation
-          if (operation.snapped) return
+          if (operation.isSnapped) return
 
           if (this.inspectorButton === undefined) return
           if (!this.inspectorButton.isInspectorShown) return

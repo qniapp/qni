@@ -101,7 +101,7 @@ export class CircuitDropzoneElement extends HTMLElement {
         initOperation: () => {
           Util.notNull(this.operation)
 
-          this.operation.snapped = true
+          this.operation.snap()
         },
         snapOperation: () => {
           Util.notNull(this.operation)
@@ -124,7 +124,7 @@ export class CircuitDropzoneElement extends HTMLElement {
           this.append(event.operation)
           this.operationName = event.operation.tagName.toLocaleLowerCase()
           this.occupied = true
-          event.operation.snapped = true
+          event.operation.snap()
         },
         deleteOperation: (_context, event) => {
           if (event.type !== 'DELETE_OPERATION') return
