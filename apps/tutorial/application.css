@@ -2307,6 +2307,126 @@ run-circuit-button.run-circuit-button--mobile::part(ripple) {
   margin-top: 1rem;
 }
 
+anti-control-gate {
+  display: inline-block;
+  position: relative;
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
+anti-control-gate::part(body) {
+  width: 2rem;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
+}
+
+anti-control-gate::part(outline) {
+  position: absolute;
+  display: none;
+  top: calc(-1 * (0.125rem));
+  top: calc(-1 * (0.125rem));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+  right: calc(-1 * (0.125rem));
+  right: calc(-1 * (0.125rem));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+  bottom: calc(-1 * (0.125rem));
+  bottom: calc(-1 * (0.125rem));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+  left: calc(-1 * (0.125rem));
+  left: calc(-1 * (0.125rem));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+  border-radius: 0.375rem;
+  border-radius: 0.375rem;
+  border-radius: var(--qni-semantic-radius-outline);
+}
+
+palette-dropzone anti-control-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) anti-control-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+  display: block;
+  outline: 2px solid #d4d4d8;
+  outline: 2px solid #d4d4d8;
+  outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
+}
+
+anti-control-gate[data-active]::part(outline) {
+  display: block;
+  outline: 2px solid #0ea5e9;
+  outline: 2px solid #0ea5e9;
+  outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
+}
+
+anti-control-gate::part(body) {
+  border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  border-radius: var(--qni-semantic-radius-default);
+}
+
+anti-control-gate[data-grabbed] {
+  cursor: grabbing;
+}
+
+anti-control-gate[data-grabbed]:not([data-snapped]) {
+  z-index: 40;
+}
+
+anti-control-gate[data-grabbed]::part(body) {
+  background-color: #a855f7;
+  background-color: #a855f7;
+  background-color: var(--qni-semantic-fill-color-intermediate);
+}
+
+anti-control-gate[data-grabbed]::part(icon) {
+  color: #fff;
+  color: #fff;
+  color: var(--qni-semantic-color-icon-inverse);
+}
+
+anti-control-gate[data-grabbed]::part(outline) {
+  display: none;
+}
+
+anti-control-gate {
+  touch-action: none;
+}
+
+circuit-editor palette-dropzone anti-control-gate, circuit-editor quantum-circuit:not([data-editing]) anti-control-gate {
+  cursor: grab;
+}
+
+quantum-circuit([data-editing]) anti-control-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
+  --tw-border-opacity: 1;
+}
+
+circuit-dropzone anti-control-gate:not([data-snapped])::part(icon)::before {
+  position: absolute;
+  top: -0.625rem;
+  right: -0.625rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  z-index: 10;
+  content: '';
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+anti-control-gate::part(icon) {
+  color: #10b981;
+  color: #10b981;
+  color: var(--qni-semantic-fill-color-primary);
+}
+
+anti-control-gate[data-disabled]:not([data-grabbed])::part(icon) {
+  color: #71717a;
+  color: #71717a;
+  color: var(--qni-semantic-fill-color-disabled);
+}
+
 bloch-display {
   display: inline-block;
   position: relative;
@@ -2363,7 +2483,6 @@ bloch-display[data-active]::part(outline) {
 }
 
 bloch-display[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -2392,7 +2511,6 @@ bloch-display {
 }
 
 circuit-editor palette-dropzone bloch-display, circuit-editor quantum-circuit:not([data-editing]) bloch-display {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -2488,28 +2606,12 @@ bloch-display[data-size='lg']::part(vector-end-circle),
 }
 
 circle-notation.animate {
-  -webkit-animation: 0.4s ease-out 0s 1 normal forwards running circle-notation-slide-in;
   animation: 0.4s ease-out 0s 1 normal forwards running circle-notation-slide-in;
 }
 
 @media (min-width: 640px) {
   circle-notation.animate {
-    -webkit-animation-name: none;
     animation-name: none
-  }
-}
-
-@-webkit-keyframes circle-notation-slide-in {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(256px);
-  }
-
-  100% {
-    transform: translateY(240px);
   }
 }
 
@@ -2898,7 +3000,6 @@ control-gate::part(body) {
 }
 
 control-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -2927,7 +3028,6 @@ control-gate {
 }
 
 circuit-editor palette-dropzone control-gate, circuit-editor quantum-circuit:not([data-editing]) control-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -3035,7 +3135,6 @@ h-gate::part(icon) {
 }
 
 h-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -3064,7 +3163,6 @@ h-gate {
 }
 
 circuit-editor palette-dropzone h-gate, circuit-editor quantum-circuit:not([data-editing]) h-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -3130,7 +3228,6 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) h-gate[data-if]::b
 }
 
 html[data-grabbing] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -3200,7 +3297,6 @@ measurement-gate::part(body) {
 }
 
 measurement-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -3229,7 +3325,6 @@ measurement-gate {
 }
 
 circuit-editor palette-dropzone measurement-gate, circuit-editor quantum-circuit:not([data-editing]) measurement-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -3458,7 +3553,6 @@ phase-gate::part(icon) {
 }
 
 phase-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -3545,7 +3639,6 @@ phase-gate {
 }
 
 circuit-editor palette-dropzone phase-gate, circuit-editor quantum-circuit:not([data-editing]) phase-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -4887,7 +4980,6 @@ qft-gate::part(resize-handle-icon) {
 }
 
 qft-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -4916,7 +5008,6 @@ qft-gate {
 }
 
 circuit-editor palette-dropzone qft-gate, circuit-editor quantum-circuit:not([data-editing]) qft-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -6261,7 +6352,6 @@ qft-dagger-gate::part(icon) {
 }
 
 qft-dagger-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -6290,7 +6380,6 @@ qft-dagger-gate {
 }
 
 circuit-editor palette-dropzone qft-dagger-gate, circuit-editor quantum-circuit:not([data-editing]) qft-dagger-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -6368,7 +6457,6 @@ quantum-circuit {
 
 quantum-circuit {
   align-items: center;
-  width: -webkit-min-content;
   width: -moz-min-content;
   width: min-content;
 }
@@ -6450,7 +6538,6 @@ rnot-gate::part(icon) {
 }
 
 rnot-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -6479,7 +6566,6 @@ rnot-gate {
 }
 
 circuit-editor palette-dropzone rnot-gate, circuit-editor quantum-circuit:not([data-editing]) rnot-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -6621,7 +6707,6 @@ rx-gate::part(icon) {
 }
 
 rx-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -6708,7 +6793,6 @@ rx-gate {
 }
 
 circuit-editor palette-dropzone rx-gate, circuit-editor quantum-circuit:not([data-editing]) rx-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -6850,7 +6934,6 @@ ry-gate::part(icon) {
 }
 
 ry-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -6937,7 +7020,6 @@ ry-gate {
 }
 
 circuit-editor palette-dropzone ry-gate, circuit-editor quantum-circuit:not([data-editing]) ry-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -7079,7 +7161,6 @@ rz-gate::part(icon) {
 }
 
 rz-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -7166,7 +7247,6 @@ rz-gate {
 }
 
 circuit-editor palette-dropzone rz-gate, circuit-editor quantum-circuit:not([data-editing]) rz-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -7293,7 +7373,6 @@ swap-gate::part(body) {
 }
 
 swap-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -7322,7 +7401,6 @@ swap-gate {
 }
 
 circuit-editor palette-dropzone swap-gate, circuit-editor quantum-circuit:not([data-editing]) swap-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -7430,7 +7508,6 @@ t-gate::part(icon) {
 }
 
 t-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -7459,7 +7536,6 @@ t-gate {
 }
 
 circuit-editor palette-dropzone t-gate, circuit-editor quantum-circuit:not([data-editing]) t-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -7586,7 +7662,6 @@ write-gate::part(body) {
 }
 
 write-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -7615,7 +7690,6 @@ write-gate {
 }
 
 circuit-editor palette-dropzone write-gate, circuit-editor quantum-circuit:not([data-editing]) write-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -7830,7 +7904,6 @@ x-gate::part(icon) {
 }
 
 x-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -7859,7 +7932,6 @@ x-gate {
 }
 
 circuit-editor palette-dropzone x-gate, circuit-editor quantum-circuit:not([data-editing]) x-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -8001,7 +8073,6 @@ y-gate::part(icon) {
 }
 
 y-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -8030,7 +8101,6 @@ y-gate {
 }
 
 circuit-editor palette-dropzone y-gate, circuit-editor quantum-circuit:not([data-editing]) y-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -8172,7 +8242,6 @@ z-gate::part(icon) {
 }
 
 z-gate[data-grabbed] {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
@@ -8201,7 +8270,6 @@ z-gate {
 }
 
 circuit-editor palette-dropzone z-gate, circuit-editor quantum-circuit:not([data-editing]) z-gate {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -8669,7 +8737,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 }
 
 .sticky {
-  position: -webkit-sticky;
   position: sticky;
 }
 
@@ -8963,7 +9030,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 }
 
 .w-min {
-  width: -webkit-min-content;
   width: -moz-min-content;
   width: min-content;
 }

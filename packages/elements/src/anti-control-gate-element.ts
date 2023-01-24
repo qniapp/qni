@@ -9,7 +9,7 @@ import {
 } from './mixin/'
 import {html, render} from '@github/jtml'
 import {SerializedAntiControlGateType} from '@qni/common'
-import antiControlGateIcon from '../icon/control-gate.svg'
+import antiControlGateIcon from '../icon/anti-control-gate.svg'
 import {controller} from '@github/catalyst'
 
 export class AntiControlGateElement extends MenuableMixin(
