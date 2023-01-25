@@ -633,40 +633,68 @@ export class CircuitStepElement extends HTMLElement {
   private updateControlledUConnections(connectionProps?: ConnectionProps): void {
     const controllableDropzones = this.controllableDropzones(connectionProps)
     const controlDropzones = this.controlGateDropzones
+    const antiControlDropzones = this.antiControlGateDropzones
     const controllableOperationNames = [...new Set(controllableDropzones.map(each => each.operationName))]
     const numControlDropzones = this.numControlGateDropzones(connectionProps, controllableOperationNames)
     const allControlBits = controlDropzones.map(dz => this.bit(dz))
-    const activeControlBits =
-      numControlDropzones === null ? allControlBits : allControlBits.slice(0, numControlDropzones)
-    const controllableBits = controllableDropzones.map(dz => this.bit(dz))
-    const activeperationBits = activeControlBits.concat(controllableBits)
+    const allAntiControlBits = antiControlDropzones.map(dz => this.bit(dz))
+    const allControlAndAntiControlBits = allControlBits.concat(allAntiControlBits)
 
+    // すべての • と ◦ のうち、有効なゲートのビット配列
+    const activeControlBits =
+      numControlDropzones === null
+        ? allControlAndAntiControlBits
+        : allControlAndAntiControlBits.slice(0, numControlDropzones)
+    const controllableBits = controllableDropzones.map(dz => this.bit(dz))
+    const activeOperationBits = activeControlBits.concat(controllableBits)
+
+    // コントロールゲートの上下接続をセット
     for (const [i, each] of Object.entries(controlDropzones)) {
       const controlGate = each.operation as ControlGateElement
 
-      each.connectBottom = activeperationBits.some(other => {
+      each.connectBottom = activeOperationBits.some(other => {
         return this.bit(each) < other
       })
-      each.connectTop = activeperationBits.some(other => {
+      each.connectTop = activeOperationBits.some(other => {
         return this.bit(each) > other
       })
 
       if (numControlDropzones === null || (numControlDropzones !== null && parseInt(i) < numControlDropzones)) {
         controlGate.enable()
       } else {
-        each.connectTop = Math.max(...activeperationBits) > this.bit(each)
+        each.connectTop = Math.max(...activeOperationBits) > this.bit(each)
         controlGate.disable()
       }
     }
 
+    // アンチコントロールゲートの上下接続をセット
+    for (const [i, each] of Object.entries(antiControlDropzones)) {
+      const antiControlGate = each.operation as AntiControlGateElement
+
+      each.connectBottom = activeOperationBits.some(other => {
+        return this.bit(each) < other
+      })
+      each.connectTop = activeOperationBits.some(other => {
+        return this.bit(each) > other
+      })
+
+      if (numControlDropzones === null || (numControlDropzones !== null && parseInt(i) < numControlDropzones)) {
+        antiControlGate.enable()
+      } else {
+        each.connectTop = Math.max(...activeOperationBits) > this.bit(each)
+        antiControlGate.disable()
+      }
+    }
+
+    // コントロールされるゲートの上下接続をセット
     for (const each of controllableDropzones) {
       if (!isControllable(each.operation)) throw new Error(`${each.operation} isn't controllable.`)
 
       each.operation.controls = this.controlBits(each, allControlBits, connectionProps)
-      each.connectTop = activeperationBits.some(other => {
+      each.connectTop = activeOperationBits.some(other => {
         return other < this.bit(each)
       })
-      each.connectBottom = activeperationBits.some(other => {
+      each.connectBottom = activeOperationBits.some(other => {
         return other > this.bit(each)
       })
     }
