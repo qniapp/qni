@@ -705,8 +705,11 @@ export class CircuitStepElement extends HTMLElement {
     const activeControlBits = this.controlGateDropzones
       .filter(each => isControlGateElement(each.operation) && !each.operation.disabled)
       .map(each => this.bit(each))
+    const activeAntiControlBits = this.antiControlGateDropzones
+      .filter(each => isAntiControlGateElement(each.operation) && !each.operation.disabled)
+      .map(each => this.bit(each))
     const controllableBits = controllableDropzones.map(dz => this.bit(dz))
-    const activeOperationBits = activeControlBits.concat(controllableBits)
+    const activeOperationBits = activeControlBits.concat(activeAntiControlBits).concat(controllableBits)
 
     const minBit = Math.min(...activeOperationBits)
     const maxBit = Math.max(...activeOperationBits)
