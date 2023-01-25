@@ -57,9 +57,6 @@ export const isOperation = (arg: unknown): arg is Operation =>
   arg instanceof YGateElement ||
   arg instanceof ZGateElement
 
-export const isAntiControlGateElement = (arg: unknown): arg is AntiControlGateElement =>
-  arg !== undefined && arg !== null && arg instanceof AntiControlGateElement
-
 export const isHGateElement = (arg: unknown): arg is HGateElement =>
   arg !== undefined && arg !== null && arg instanceof HGateElement
 
@@ -95,6 +92,9 @@ export const isSwapGateElement = (arg: unknown): arg is SwapGateElement =>
 
 export const isControlGateElement = (arg: unknown): arg is ControlGateElement =>
   arg !== undefined && arg !== null && arg instanceof ControlGateElement
+
+export const isAntiControlGateElement = (arg: unknown): arg is AntiControlGateElement =>
+  arg !== undefined && arg !== null && arg instanceof AntiControlGateElement
 
 export const isBlochDisplayElement = (arg: unknown): arg is BlochDisplayElement =>
   arg !== undefined && arg !== null && arg instanceof BlochDisplayElement

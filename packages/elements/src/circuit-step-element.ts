@@ -23,6 +23,7 @@ import {
 } from '@qni/common'
 import {
   Operation,
+  isAntiControlGateElement,
   isControlGateElement,
   isHGateElement,
   isOperation,
@@ -61,6 +62,7 @@ import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
 import {isControllable} from './mixin/controllable'
 import {isResizeable} from './mixin'
+import {AntiControlGateElement} from './anti-control-gate-element'
 
 export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitStepElement
@@ -479,12 +481,15 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   updateOperationAttributes(connectionProps?: ConnectionProps): void {
+    // それぞれの dropzone の上下接続をいったん無効にする
     for (const each of this.dropzones) {
       each.connectTop = false
       each.connectBottom = false
     }
 
     const controlDropzones = this.controlGateDropzones
+    const antiControlDropzones = this.antiControlGateDropzones
+
     const controllableDropzones = this.controllableDropzones(connectionProps)
     for (const each of controllableDropzones) {
       if (isControllable(each.operation)) each.operation.controls = []
@@ -493,12 +498,21 @@ export class CircuitStepElement extends HTMLElement {
     this.updateSwapConnections(connectionProps)
     this.updatePhasePhaseConnections(connectionProps)
 
-    if (controlDropzones.length === 0) return
+    // コントロールゲートが単独で 1 つだけある場合、ゲートを無効にする
     if (controlDropzones.length === 1 && controllableDropzones.length === 0) {
       const controlGate = controlDropzones[0].operation as ControlGateElement
       controlGate.disable()
       return
     }
+
+    // アンチコントロールゲートが単独で 1 つだけある場合、ゲートを無効にする
+    if (antiControlDropzones.length === 1 && controllableDropzones.length === 0) {
+      const antiControlGate = antiControlDropzones[0].operation as AntiControlGateElement
+      antiControlGate.disable()
+      return
+    }
+
+    if (controlDropzones.length === 0 && antiControlDropzones.length === 0) return
 
     if (controllableDropzones.length === 0) {
       this.updateControlControlConnections(connectionProps)
@@ -761,6 +775,10 @@ export class CircuitStepElement extends HTMLElement {
 
   private get controlGateDropzones(): CircuitDropzoneElement[] {
     return this.occupiedDropzones.filter(each => isControlGateElement(each.operation))
+  }
+
+  private get antiControlGateDropzones(): CircuitDropzoneElement[] {
+    return this.occupiedDropzones.filter(each => isAntiControlGateElement(each.operation))
   }
 
   private numControlGateDropzones(
@@ -1169,6 +1187,11 @@ export class CircuitStepElement extends HTMLElement {
 
           const targets = controlGates.map(each => each.bit)
           serializedStep.push({type: controlGates[0].operationType, targets})
+          break
+        }
+        case AntiControlGateElement: {
+          // アンチコントロールだけで CZ のようなゲート操作をしないので、
+          // とりあえず break しておく
           break
         }
         case BlochDisplayElement: {

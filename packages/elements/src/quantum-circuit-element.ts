@@ -19,6 +19,7 @@ import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
+import {AntiControlGateElement} from './anti-control-gate-element'
 import {ControlGateElement} from './control-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
@@ -1128,6 +1129,12 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           case /^•$/.test(operation): {
             const controlGate = new ControlGateElement()
             operations.push(controlGate)
+            newStep.append(new CircuitDropzoneElement())
+            break
+          }
+          case /^◦$/.test(operation): {
+            const antiControlGate = new AntiControlGateElement()
+            operations.push(antiControlGate)
             newStep.append(new CircuitDropzoneElement())
             break
           }
