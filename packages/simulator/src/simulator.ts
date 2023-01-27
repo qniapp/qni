@@ -60,8 +60,8 @@ export class Simulator {
           break
         case SerializedHGateType:
           if (each.if && !this.flags[each.if]) break
-          if (each.controls && each.controls.length > 0) {
-            this.ch(each.controls, ...each.targets)
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.ch(each.controls || [], each.antiControls || [], ...each.targets)
           } else {
             this.h(...each.targets)
           }
@@ -193,8 +193,17 @@ export class Simulator {
     return this
   }
 
-  ch(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.H, ...targets)
+  ch(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.H, ...targets)
+    this.x(...antiControls)
     return this
   }
 

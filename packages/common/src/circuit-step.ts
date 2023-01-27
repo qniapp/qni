@@ -1,3 +1,4 @@
+import {SerializedAntiControlGate} from './anti-control-gate'
 import {SerializedBlochDisplay} from './bloch-display'
 import {SerializedControlGate} from './control-gate'
 import {SerializedHGate} from './h-gate'
@@ -17,6 +18,7 @@ import {SerializedYGate} from './y-gate'
 import {SerializedZGate} from './z-gate'
 
 export type SerializedCircuitStep = Array<
+  | SerializedAntiControlGate
   | SerializedBlochDisplay
   | SerializedControlGate
   | SerializedHGate

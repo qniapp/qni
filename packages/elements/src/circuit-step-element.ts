@@ -492,7 +492,10 @@ export class CircuitStepElement extends HTMLElement {
 
     const controllableDropzones = this.controllableDropzones(connectionProps)
     for (const each of controllableDropzones) {
-      if (isControllable(each.operation)) each.operation.controls = []
+      if (isControllable(each.operation)) {
+        each.operation.controls = []
+        each.operation.antiControls = []
+      }
     }
 
     this.updateSwapConnections(connectionProps)
@@ -691,6 +694,7 @@ export class CircuitStepElement extends HTMLElement {
       if (!isControllable(each.operation)) throw new Error(`${each.operation} isn't controllable.`)
 
       each.operation.controls = this.controlBits(each, allControlBits, connectionProps)
+      each.operation.antiControls = allAntiControlBits
       each.connectTop = activeOperationBits.some(other => {
         return other < this.bit(each)
       })
@@ -1026,6 +1030,8 @@ export class CircuitStepElement extends HTMLElement {
               const serializedGate: SerializedHGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
               if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
               serializedStep.push(serializedGate)
             }
           }
