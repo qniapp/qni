@@ -1047,6 +1047,8 @@ export class CircuitStepElement extends HTMLElement {
               const serializedGate: SerializedXGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
               if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
               serializedStep.push(serializedGate)
             }
           }

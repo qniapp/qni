@@ -68,8 +68,8 @@ export class Simulator {
           break
         case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
-          if (each.controls && each.controls.length > 0) {
-            this.cnot(each.controls, ...each.targets)
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acnot(each.controls || [], each.antiControls || [], ...each.targets)
           } else {
             this.x(...each.targets)
           }
@@ -214,6 +214,22 @@ export class Simulator {
 
   cnot(controls: number | number[], ...targets: number[]): Simulator {
     this.cu(controls, Matrix.PAULI_X, ...targets)
+
+    return this
+  }
+
+  acnot(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.PAULI_X, ...targets)
+    this.x(...antiControls)
+
     return this
   }
 
