@@ -76,8 +76,8 @@ export class Simulator {
           break
         case SerializedYGateType:
           if (each.if && !this.flags[each.if]) break
-          if (each.controls && each.controls.length > 0) {
-            this.cy(each.controls, ...each.targets)
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acy(each.controls || [], each.antiControls || [], ...each.targets)
           } else {
             this.y(...each.targets)
           }
@@ -240,6 +240,20 @@ export class Simulator {
 
   cy(controls: number | number[], ...targets: number[]): Simulator {
     this.cu(controls, Matrix.PAULI_Y, ...targets)
+    return this
+  }
+
+  acy(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.PAULI_Y, ...targets)
+    this.x(...antiControls)
     return this
   }
 
