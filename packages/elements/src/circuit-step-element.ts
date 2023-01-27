@@ -1152,6 +1152,8 @@ export class CircuitStepElement extends HTMLElement {
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
                 if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
                 serializedStep.push(serializedGate)
               }
             }
@@ -1170,6 +1172,8 @@ export class CircuitStepElement extends HTMLElement {
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
                 if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
                 serializedStep.push(serializedGate)
               }
             }
@@ -1188,6 +1192,8 @@ export class CircuitStepElement extends HTMLElement {
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
                 if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
                 serializedStep.push(serializedGate)
               }
             }

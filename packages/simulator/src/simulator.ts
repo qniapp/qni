@@ -138,8 +138,8 @@ export class Simulator {
         case SerializedRxGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
-          if (each.controls && each.controls.length > 0) {
-            this.crx(each.controls, each.angle, ...each.targets)
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acrx(each.controls || [], each.antiControls || [], each.angle, ...each.targets)
           } else {
             this.rx(each.angle, ...each.targets)
           }
@@ -147,8 +147,8 @@ export class Simulator {
         case SerializedRyGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
-          if (each.controls && each.controls.length > 0) {
-            this.cry(each.controls, each.angle, ...each.targets)
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acry(each.controls || [], each.antiControls || [], each.angle, ...each.targets)
           } else {
             this.ry(each.angle, ...each.targets)
           }
@@ -156,8 +156,8 @@ export class Simulator {
         case SerializedRzGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
-          if (each.controls && each.controls.length > 0) {
-            this.crz(each.controls, each.angle, ...each.targets)
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acrz(each.controls || [], each.antiControls || [], each.angle, ...each.targets)
           } else {
             this.rz(each.angle, ...each.targets)
           }
@@ -372,6 +372,20 @@ export class Simulator {
     return this
   }
 
+  acrx(controls: number | number[], antiControls: number[], theta: string, ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.RX(theta), ...targets)
+    this.x(...antiControls)
+    return this
+  }
+
   crx(controls: number | number[], theta: string, ...targets: number[]): Simulator {
     this.cu(controls, Matrix.RX(theta), ...targets)
     return this
@@ -387,6 +401,20 @@ export class Simulator {
     return this
   }
 
+  acry(controls: number | number[], antiControls: number[], theta: string, ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.RY(theta), ...targets)
+    this.x(...antiControls)
+    return this
+  }
+
   rz(theta: string, ...targets: number[]): Simulator {
     this.u(Matrix.RZ(theta), ...targets)
     return this
@@ -394,6 +422,20 @@ export class Simulator {
 
   crz(controls: number | number[], theta: string, ...targets: number[]): Simulator {
     this.cu(controls, Matrix.RZ(theta), ...targets)
+    return this
+  }
+
+  acrz(controls: number | number[], antiControls: number[], theta: string, ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.RZ(theta), ...targets)
+    this.x(...antiControls)
     return this
   }
 
