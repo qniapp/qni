@@ -129,8 +129,8 @@ export class Simulator {
         }
         case SerializedRnotGateType:
           if (each.if && !this.flags[each.if]) break
-          if (each.controls && each.controls.length > 0) {
-            this.crnot(each.controls, ...each.targets)
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acrnot(each.controls || [], each.antiControls || [], ...each.targets)
           } else {
             this.rnot(...each.targets)
           }
@@ -280,7 +280,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(controls, Matrix.PAULI_Z, ...targets)
+    this.cu(allControls, Matrix.PAULI_Z, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -304,7 +304,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(controls, Matrix.PHASE(phi), ...targets)
+    this.cu(allControls, Matrix.PHASE(phi), ...targets)
     this.x(...antiControls)
     return this
   }
@@ -328,7 +328,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(controls, Matrix.T, ...targets)
+    this.cu(allControls, Matrix.T, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -348,7 +348,21 @@ export class Simulator {
     return this
   }
 
-  crnot(controls: number | number[], ...targets: number[]): Simulator {
+  crnot(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.RNOT, ...targets)
+    this.x(...antiControls)
+    return this
+  }
+
+  acrnot(controls: number | number[], ...targets: number[]): Simulator {
     this.cu(controls, Matrix.RNOT, ...targets)
     return this
   }
