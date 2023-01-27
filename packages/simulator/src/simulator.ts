@@ -102,8 +102,8 @@ export class Simulator {
         }
         case SerializedTGateType: {
           if (each.if && !this.flags[each.if]) break
-          if (each.controls && each.controls.length > 0) {
-            this.ct(each.controls, ...each.targets)
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.act(each.controls || [], each.antiControls || [], ...each.targets)
           } else {
             this.t(...each.targets)
           }
@@ -303,6 +303,20 @@ export class Simulator {
 
   ct(controls: number | number[], ...targets: number[]): Simulator {
     this.cu(controls, Matrix.T, ...targets)
+    return this
+  }
+
+  act(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(controls, Matrix.T, ...targets)
+    this.x(...antiControls)
     return this
   }
 
