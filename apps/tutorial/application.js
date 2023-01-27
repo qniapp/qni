@@ -11803,7 +11803,7 @@ var Et = /* @__PURE__ */ __name(class extends HTMLElement {
           for (let [c, f] of Re(l, (y) => y.if))
             for (let [y, m] of Re(f, (p) => p.controls.toString())) {
               let p = m[0], h = p.operationType, w = m.map((S) => S.bit), b = { type: h, targets: w };
-              c !== "" && (b.if = c), y !== "" && (b.controls = p.controls), e.push(b);
+              c !== "" && (b.if = c), y !== "" && (b.controls = p.controls), p.antiControls.length > 0 && (b.antiControls = p.antiControls), e.push(b);
             }
           break;
         }
@@ -11812,7 +11812,7 @@ var Et = /* @__PURE__ */ __name(class extends HTMLElement {
           for (let [c, f] of Re(l, (y) => y.if))
             for (let [y, m] of Re(f, (p) => p.controls.toString())) {
               let p = m[0], h = p.operationType, w = m.map((S) => S.bit), b = { type: h, targets: w };
-              c !== "" && (b.if = c), y !== "" && (b.controls = p.controls), e.push(b);
+              c !== "" && (b.if = c), y !== "" && (b.controls = p.controls), p.antiControls.length > 0 && (b.antiControls = p.antiControls), e.push(b);
             }
           break;
         }

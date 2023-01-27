@@ -84,8 +84,8 @@ export class Simulator {
           break
         case SerializedZGateType:
           if (each.if && !this.flags[each.if]) break
-          if (each.controls && each.controls.length > 0) {
-            this.cz(each.controls, ...each.targets)
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acz(each.controls || [], each.antiControls || [], ...each.targets)
           } else {
             this.z(...each.targets)
           }
@@ -264,6 +264,20 @@ export class Simulator {
 
   cz(controls: number | number[], ...targets: number[]): Simulator {
     this.cu(controls, Matrix.PAULI_Z, ...targets)
+    return this
+  }
+
+  acz(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(controls, Matrix.PAULI_Z, ...targets)
+    this.x(...antiControls)
     return this
   }
 
