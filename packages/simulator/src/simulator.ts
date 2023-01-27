@@ -92,9 +92,8 @@ export class Simulator {
           break
         case SerializedPhaseGateType: {
           if (!each.angle) break
-
-          if (each.controls && each.controls.length > 0) {
-            this.cphase(each.controls, each.angle, each.targets[0])
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acphase(each.controls || [], each.antiControls || [], each.angle, each.targets[0])
           } else {
             this.cphase(each.targets.slice(1), each.angle, each.targets[0])
           }
@@ -293,6 +292,20 @@ export class Simulator {
 
   cphase(controls: number | number[], phi: string, ...targets: number[]): Simulator {
     this.cu(controls, Matrix.PHASE(phi), ...targets)
+    return this
+  }
+
+  acphase(controls: number | number[], antiControls: number[], phi: string, ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(controls, Matrix.PHASE(phi), ...targets)
+    this.x(...antiControls)
     return this
   }
 

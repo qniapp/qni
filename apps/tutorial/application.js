@@ -11746,7 +11746,7 @@ var Et = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   deleteOperation(e) {
     let t = e.target;
-    console.log("circuit-step: DELETE_OPERATION"), this.circuitStepService.send({ type: "DELETE_OPERATION", dropzone: t });
+    this.circuitStepService.send({ type: "DELETE_OPERATION", dropzone: t });
   }
   resizeOperation(e) {
     let t = e.target;
@@ -11822,7 +11822,7 @@ var Et = /* @__PURE__ */ __name(class extends HTMLElement {
             for (let [y, m] of Re(f, (p) => p.if))
               for (let [p, h] of Re(m, (w) => w.controls.toString())) {
                 let w = h[0], b = w.operationType, S = h.map((M) => M.bit), T = { type: b, targets: S };
-                y !== "" && (T.if = y), c !== "" && (T.angle = c), p !== "" && (T.controls = w.controls), e.push(T);
+                y !== "" && (T.if = y), c !== "" && (T.angle = c), p !== "" && (T.controls = w.controls), w.antiControls.length > 0 && (T.antiControls = w.antiControls), e.push(T);
               }
           break;
         }
