@@ -14,6 +14,7 @@
 @import './run_circuit_button';
 @import './tooltip';
 
+@import './anti_control_gate';
 @import './bloch_display';
 @import './circle_notation';
 @import './circuit_dropzone';

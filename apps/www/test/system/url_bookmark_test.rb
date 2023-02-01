@@ -92,6 +92,8 @@ class UrlBookmarkTest < ApplicationSystemTestCase
   end
 
   test 'bookmark a single measurement gate circuit' do
+    sleep 1
+
     put_operation 'Measure', col: 0, row: 0
 
     assert_equal '/{"cols":[["Measure"]]}', decoded_current_path

@@ -16,6 +16,8 @@ class MeasurementGateTest < ApplicationSystemTestCase
   test 'measurement gate on circuit displays its value' do
     visit circuit_path
 
+    sleep 1
+
     measurement_gate = put_operation('Measure', col: 0, row: 0)
 
     assert_value '0', measurement_gate

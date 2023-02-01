@@ -1,0 +1,18 @@
+anti-control-gate {
+  @apply qpu-operation;
+  @apply qpu-operation-outlineable;
+  @apply qpu-operation-hoverable;
+  @apply qpu-operation-activateable;
+  @apply qpu-operation-rectangular;
+  @apply qpu-operation-grabbable;
+
+  @apply operation-draggable;
+
+  &::part(icon) {
+    color: var(--qni-semantic-fill-color-primary);
+  }
+
+  &[data-disabled]:not([data-grabbed])::part(icon) {
+    color: var(--qni-semantic-fill-color-disabled);
+  }
+}

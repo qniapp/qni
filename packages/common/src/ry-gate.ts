@@ -5,5 +5,6 @@ export type SerializedRyGate = {
   targets: number[]
   angle?: string
   controls?: number[]
+  antiControls?: number[]
   if?: string
 }

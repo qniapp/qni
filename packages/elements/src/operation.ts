@@ -1,3 +1,4 @@
+import {AntiControlGateElement} from './anti-control-gate-element'
 import {BlochDisplayElement} from './bloch-display-element'
 import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
@@ -17,42 +18,44 @@ import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
 
 export type Operation =
+  | AntiControlGateElement
+  | BlochDisplayElement
+  | ControlGateElement
   | HGateElement
-  | XGateElement
-  | YGateElement
-  | ZGateElement
+  | MeasurementGateElement
   | PhaseGateElement
-  | TGateElement
+  | QftDaggerGateElement
+  | QftGateElement
   | RnotGateElement
   | RxGateElement
   | RyGateElement
   | RzGateElement
   | SwapGateElement
-  | ControlGateElement
-  | BlochDisplayElement
+  | TGateElement
   | WriteGateElement
-  | MeasurementGateElement
-  | QftGateElement
-  | QftDaggerGateElement
+  | XGateElement
+  | YGateElement
+  | ZGateElement
 
 export const isOperation = (arg: unknown): arg is Operation =>
+  arg instanceof AntiControlGateElement ||
+  arg instanceof BlochDisplayElement ||
+  arg instanceof ControlGateElement ||
   arg instanceof HGateElement ||
-  arg instanceof XGateElement ||
-  arg instanceof YGateElement ||
-  arg instanceof ZGateElement ||
+  arg instanceof MeasurementGateElement ||
   arg instanceof PhaseGateElement ||
-  arg instanceof TGateElement ||
+  arg instanceof QftDaggerGateElement ||
+  arg instanceof QftGateElement ||
   arg instanceof RnotGateElement ||
   arg instanceof RxGateElement ||
   arg instanceof RyGateElement ||
   arg instanceof RzGateElement ||
   arg instanceof SwapGateElement ||
-  arg instanceof ControlGateElement ||
-  arg instanceof BlochDisplayElement ||
+  arg instanceof TGateElement ||
   arg instanceof WriteGateElement ||
-  arg instanceof MeasurementGateElement ||
-  arg instanceof QftGateElement ||
-  arg instanceof QftDaggerGateElement
+  arg instanceof XGateElement ||
+  arg instanceof YGateElement ||
+  arg instanceof ZGateElement
 
 export const isHGateElement = (arg: unknown): arg is HGateElement =>
   arg !== undefined && arg !== null && arg instanceof HGateElement
@@ -89,6 +92,9 @@ export const isSwapGateElement = (arg: unknown): arg is SwapGateElement =>
 
 export const isControlGateElement = (arg: unknown): arg is ControlGateElement =>
   arg !== undefined && arg !== null && arg instanceof ControlGateElement
+
+export const isAntiControlGateElement = (arg: unknown): arg is AntiControlGateElement =>
+  arg !== undefined && arg !== null && arg instanceof AntiControlGateElement
 
 export const isBlochDisplayElement = (arg: unknown): arg is BlochDisplayElement =>
   arg !== undefined && arg !== null && arg instanceof BlochDisplayElement

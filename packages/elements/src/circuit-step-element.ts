@@ -23,6 +23,7 @@ import {
 } from '@qni/common'
 import {
   Operation,
+  isAntiControlGateElement,
   isControlGateElement,
   isHGateElement,
   isOperation,
@@ -61,6 +62,7 @@ import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
 import {isControllable} from './mixin/controllable'
 import {isResizeable} from './mixin'
+import {AntiControlGateElement} from './anti-control-gate-element'
 
 export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitStepElement
@@ -479,26 +481,41 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   updateOperationAttributes(connectionProps?: ConnectionProps): void {
+    // それぞれの dropzone の上下接続をいったん無効にする
     for (const each of this.dropzones) {
       each.connectTop = false
       each.connectBottom = false
     }
 
     const controlDropzones = this.controlGateDropzones
+    const antiControlDropzones = this.antiControlGateDropzones
+
     const controllableDropzones = this.controllableDropzones(connectionProps)
     for (const each of controllableDropzones) {
-      if (isControllable(each.operation)) each.operation.controls = []
+      if (isControllable(each.operation)) {
+        each.operation.controls = []
+        each.operation.antiControls = []
+      }
     }
 
     this.updateSwapConnections(connectionProps)
     this.updatePhasePhaseConnections(connectionProps)
 
-    if (controlDropzones.length === 0) return
+    // コントロールゲートが単独で 1 つだけある場合、ゲートを無効にする
     if (controlDropzones.length === 1 && controllableDropzones.length === 0) {
       const controlGate = controlDropzones[0].operation as ControlGateElement
       controlGate.disable()
       return
     }
+
+    // アンチコントロールゲートが単独で 1 つだけある場合、ゲートを無効にする
+    if (antiControlDropzones.length === 1 && controllableDropzones.length === 0) {
+      const antiControlGate = antiControlDropzones[0].operation as AntiControlGateElement
+      antiControlGate.disable()
+      return
+    }
+
+    if (controlDropzones.length === 0 && antiControlDropzones.length === 0) return
 
     if (controllableDropzones.length === 0) {
       this.updateControlControlConnections(connectionProps)
@@ -619,40 +636,69 @@ export class CircuitStepElement extends HTMLElement {
   private updateControlledUConnections(connectionProps?: ConnectionProps): void {
     const controllableDropzones = this.controllableDropzones(connectionProps)
     const controlDropzones = this.controlGateDropzones
+    const antiControlDropzones = this.antiControlGateDropzones
     const controllableOperationNames = [...new Set(controllableDropzones.map(each => each.operationName))]
     const numControlDropzones = this.numControlGateDropzones(connectionProps, controllableOperationNames)
     const allControlBits = controlDropzones.map(dz => this.bit(dz))
-    const activeControlBits =
-      numControlDropzones === null ? allControlBits : allControlBits.slice(0, numControlDropzones)
-    const controllableBits = controllableDropzones.map(dz => this.bit(dz))
-    const activeperationBits = activeControlBits.concat(controllableBits)
+    const allAntiControlBits = antiControlDropzones.map(dz => this.bit(dz))
+    const allControlAndAntiControlBits = allControlBits.concat(allAntiControlBits)
 
+    // すべての • と ◦ のうち、有効なゲートのビット配列
+    const activeControlBits =
+      numControlDropzones === null
+        ? allControlAndAntiControlBits
+        : allControlAndAntiControlBits.slice(0, numControlDropzones)
+    const controllableBits = controllableDropzones.map(dz => this.bit(dz))
+    const activeOperationBits = activeControlBits.concat(controllableBits)
+
+    // コントロールゲートの上下接続をセット
     for (const [i, each] of Object.entries(controlDropzones)) {
       const controlGate = each.operation as ControlGateElement
 
-      each.connectBottom = activeperationBits.some(other => {
+      each.connectBottom = activeOperationBits.some(other => {
         return this.bit(each) < other
       })
-      each.connectTop = activeperationBits.some(other => {
+      each.connectTop = activeOperationBits.some(other => {
         return this.bit(each) > other
       })
 
       if (numControlDropzones === null || (numControlDropzones !== null && parseInt(i) < numControlDropzones)) {
         controlGate.enable()
       } else {
-        each.connectTop = Math.max(...activeperationBits) > this.bit(each)
+        each.connectTop = Math.max(...activeOperationBits) > this.bit(each)
         controlGate.disable()
       }
     }
 
+    // アンチコントロールゲートの上下接続をセット
+    for (const [i, each] of Object.entries(antiControlDropzones)) {
+      const antiControlGate = each.operation as AntiControlGateElement
+
+      each.connectBottom = activeOperationBits.some(other => {
+        return this.bit(each) < other
+      })
+      each.connectTop = activeOperationBits.some(other => {
+        return this.bit(each) > other
+      })
+
+      if (numControlDropzones === null || (numControlDropzones !== null && parseInt(i) < numControlDropzones)) {
+        antiControlGate.enable()
+      } else {
+        each.connectTop = Math.max(...activeOperationBits) > this.bit(each)
+        antiControlGate.disable()
+      }
+    }
+
+    // コントロールされるゲートの上下接続をセット
     for (const each of controllableDropzones) {
       if (!isControllable(each.operation)) throw new Error(`${each.operation} isn't controllable.`)
 
       each.operation.controls = this.controlBits(each, allControlBits, connectionProps)
-      each.connectTop = activeperationBits.some(other => {
+      each.operation.antiControls = allAntiControlBits
+      each.connectTop = activeOperationBits.some(other => {
         return other < this.bit(each)
       })
-      each.connectBottom = activeperationBits.some(other => {
+      each.connectBottom = activeOperationBits.some(other => {
         return other > this.bit(each)
       })
     }
@@ -663,8 +709,11 @@ export class CircuitStepElement extends HTMLElement {
     const activeControlBits = this.controlGateDropzones
       .filter(each => isControlGateElement(each.operation) && !each.operation.disabled)
       .map(each => this.bit(each))
+    const activeAntiControlBits = this.antiControlGateDropzones
+      .filter(each => isAntiControlGateElement(each.operation) && !each.operation.disabled)
+      .map(each => this.bit(each))
     const controllableBits = controllableDropzones.map(dz => this.bit(dz))
-    const activeOperationBits = activeControlBits.concat(controllableBits)
+    const activeOperationBits = activeControlBits.concat(activeAntiControlBits).concat(controllableBits)
 
     const minBit = Math.min(...activeOperationBits)
     const maxBit = Math.max(...activeOperationBits)
@@ -761,6 +810,10 @@ export class CircuitStepElement extends HTMLElement {
 
   private get controlGateDropzones(): CircuitDropzoneElement[] {
     return this.occupiedDropzones.filter(each => isControlGateElement(each.operation))
+  }
+
+  private get antiControlGateDropzones(): CircuitDropzoneElement[] {
+    return this.occupiedDropzones.filter(each => isAntiControlGateElement(each.operation))
   }
 
   private numControlGateDropzones(
@@ -919,8 +972,6 @@ export class CircuitStepElement extends HTMLElement {
 
   private deleteOperation(event: Event): void {
     const dropzone = event.target as CircuitDropzoneElement
-
-    console.log(`circuit-step: DELETE_OPERATION`)
     this.circuitStepService.send({type: 'DELETE_OPERATION', dropzone})
   }
 
@@ -977,6 +1028,8 @@ export class CircuitStepElement extends HTMLElement {
               const serializedGate: SerializedHGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
               if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
               serializedStep.push(serializedGate)
             }
           }
@@ -992,6 +1045,8 @@ export class CircuitStepElement extends HTMLElement {
               const serializedGate: SerializedXGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
               if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
               serializedStep.push(serializedGate)
             }
           }
@@ -1007,6 +1062,8 @@ export class CircuitStepElement extends HTMLElement {
               const serializedGate: SerializedYGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
               if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
               serializedStep.push(serializedGate)
             }
           }
@@ -1022,6 +1079,8 @@ export class CircuitStepElement extends HTMLElement {
               const serializedGate: SerializedZGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
               if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
               serializedStep.push(serializedGate)
             }
           }
@@ -1039,6 +1098,8 @@ export class CircuitStepElement extends HTMLElement {
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
                 if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
                 serializedStep.push(serializedGate)
               }
             }
@@ -1055,6 +1116,8 @@ export class CircuitStepElement extends HTMLElement {
               const serializedGate: SerializedTGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
               if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
               serializedStep.push(serializedGate)
             }
           }
@@ -1070,6 +1133,8 @@ export class CircuitStepElement extends HTMLElement {
               const serializedGate: SerializedRnotGate = {type: opType, targets}
               if (ifStr !== '') serializedGate.if = ifStr
               if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
               serializedStep.push(serializedGate)
             }
           }
@@ -1087,6 +1152,8 @@ export class CircuitStepElement extends HTMLElement {
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
                 if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
                 serializedStep.push(serializedGate)
               }
             }
@@ -1105,6 +1172,8 @@ export class CircuitStepElement extends HTMLElement {
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
                 if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
                 serializedStep.push(serializedGate)
               }
             }
@@ -1123,6 +1192,8 @@ export class CircuitStepElement extends HTMLElement {
                 if (ifStr !== '') serializedGate.if = ifStr
                 if (angle !== '') serializedGate.angle = angle
                 if (controlsStr !== '') serializedGate.controls = gate0.controls
+                if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
                 serializedStep.push(serializedGate)
               }
             }
@@ -1169,6 +1240,11 @@ export class CircuitStepElement extends HTMLElement {
 
           const targets = controlGates.map(each => each.bit)
           serializedStep.push({type: controlGates[0].operationType, targets})
+          break
+        }
+        case AntiControlGateElement: {
+          // アンチコントロールだけで CZ のようなゲート操作をしないので、
+          // とりあえず break しておく
           break
         }
         case BlochDisplayElement: {
