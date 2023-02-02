@@ -87,7 +87,6 @@
   "eslintIgnore": [
     "app/assets/builds",
     "app/assets/javascripts/serviceworker-companion.js",
-    "app/assets/javascripts/serviceworker.js",
     "app/javascript/application.js",
     "app/javascript/controllers/",
     "docs",
