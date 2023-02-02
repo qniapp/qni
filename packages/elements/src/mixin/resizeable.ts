@@ -1,4 +1,5 @@
 import {ResizeableSpan, Util, describe, emitEvent} from '@qni/common'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Constructor} from './constructor'

@@ -1,6 +1,7 @@
 import {createMachine, interpret} from 'xstate'
 import tippy, {Instance} from 'tippy.js'
 import {Constructor} from './constructor'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr} from '@github/catalyst'
 import {describe} from '@qni/common'
 

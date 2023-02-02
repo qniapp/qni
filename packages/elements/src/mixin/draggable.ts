@@ -4,6 +4,7 @@ import {CircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
 import {PaletteDropzoneElement} from '../palette-dropzone-element'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr} from '@github/catalyst'
 import interact from 'interactjs'
 
