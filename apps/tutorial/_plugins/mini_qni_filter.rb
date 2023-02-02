@@ -3,6 +3,11 @@
 
 module Jekyll
   module MiniQniFilter
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Style/HashLikeCase
+    # rubocop:disable Style/MultilineBlockChain
+    # rubocop:disable Lint/UriEscapeUnescape
     def mini_qni(json, *gates)
       json.gsub!(/[\r\n]/, ' ')
 
@@ -95,6 +100,11 @@ module Jekyll
         </div>
       HTML
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Style/HashLikeCase
+    # rubocop:enable Style/MultilineBlockChain
+    # rubocop:enable Lint/UriEscapeUnescape
   end
 end
 

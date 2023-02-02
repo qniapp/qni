@@ -7,6 +7,7 @@ module Jekyll
       @op_type = op_type.strip
     end
 
+    # rubocop:disable Layout/LineLength
     def render(_context)
       case @op_type
       when 'h', 'x', 'y', 'z', 'phase', 'measurement', 'control', 'swap'
@@ -17,6 +18,7 @@ module Jekyll
         raise "Unknown operation type: #{@op_type}"
       end
     end
+    # rubocop:enable Layout/LineLength
 
     def tag_name
       case @op_type

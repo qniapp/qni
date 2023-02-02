@@ -2,6 +2,9 @@
 
 module Jekyll
   module QubitCircleFilter
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/PerceivedComplexity
     def qubit_circle(amplitude, ket, size = 'xl', color = '', *contents)
       tw_size = case size
                 when 'xl'
@@ -40,6 +43,9 @@ module Jekyll
         ></qubit-circle>
       HTML
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/PerceivedComplexity
   end
 end
 
