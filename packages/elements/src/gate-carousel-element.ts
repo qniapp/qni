@@ -144,7 +144,7 @@ export class GateCarouselElement extends HTMLElement {
   }
 
   private iconHtml(svg: string): TemplateResult {
-    return html(([svg] as unknown) as TemplateStringsArray)
+    return html([svg] as unknown as TemplateStringsArray)
   }
 
   private dotsHtml(): TemplateResult {

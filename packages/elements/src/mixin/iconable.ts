@@ -13,7 +13,7 @@ export function IconableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
     }
 
     private iconSvg(icon: string): TemplateResult {
-      return html(([icon] as unknown) as TemplateStringsArray)
+      return html([icon] as unknown as TemplateStringsArray)
     }
 
     private get iconStyle(): TemplateResult {

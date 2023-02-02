@@ -314,6 +314,6 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   private get wireSvg(): TemplateResult {
-    return html(([wiresIcon] as unknown) as TemplateStringsArray)
+    return html([wiresIcon] as unknown as TemplateStringsArray)
   }
 }

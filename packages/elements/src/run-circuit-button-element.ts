@@ -144,10 +144,10 @@ export class RunCircuitButtonElement extends HTMLElement {
   }
 
   private get reloadIcon(): TemplateResult {
-    return html(([reloadIcon] as unknown) as TemplateStringsArray)
+    return html([reloadIcon] as unknown as TemplateStringsArray)
   }
 
   private get tailSpinIcon(): TemplateResult {
-    return html(([tailSpinIcon] as unknown) as TemplateStringsArray)
+    return html([tailSpinIcon] as unknown as TemplateStringsArray)
   }
 }
