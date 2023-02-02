@@ -39,10 +39,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: sudo apt-get -y install libpq-dev
-      - uses: ruby/setup-ruby@v1
+      - name: Setup apps/www
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.4
           working-directory: apps/www
+          bundler-cache: true
+      - name: Setup apps/tutorial
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.4
+          working-directory: apps/tutorial
           bundler-cache: true
       - name: Setup DB
         run: |-
