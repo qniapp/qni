@@ -60,7 +60,6 @@
     "@rollup/plugin-typescript": "~8.3",
     "autoprefixer": "^10.4.0",
     "esbuild": "^0.14.29",
-    "eslint-plugin-github": "~4.3",
     "eslint-plugin-prettier": "~4.0",
     "postcss": "^8.3.11",
     "postcss-flexbugs-fixes": "^5.0.2",
