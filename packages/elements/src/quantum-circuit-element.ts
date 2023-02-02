@@ -5,21 +5,22 @@ import {HoverableMixin, isResizeable} from './mixin'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
 import {QftDaggerGateElement, QftDaggerGateElementProps} from './qft-dagger-gate-element'
 import {QftGateElement, QftGateElementProps} from './qft-gate-element'
+import {ResizeableSpan, SerializedCircuitStep, Util, emitEvent} from '@qni/common'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
 import {RzGateElement, RzGateElementProps} from './rz-gate-element'
-import {SerializedCircuitStep, Util, emitEvent, ResizeableSpan} from '@qni/common'
 import {TGateElement, TGateElementProps} from './t-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller, targets} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
+import {AntiControlGateElement} from './anti-control-gate-element'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
-import {AntiControlGateElement} from './anti-control-gate-element'
 import {ControlGateElement} from './control-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
@@ -40,6 +41,8 @@ export type ResizeHandleSnapTarget = {
 type QuantumCircuitContext = Record<string, never>
 type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 
+@controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   @attr minStepCount = 1
   @attr minWireCount = 1
@@ -1501,5 +1504,3 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     }
   }
 }
-
-controller(QuantumCircuitElement)

@@ -2,6 +2,7 @@ import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isIfable, isMenu
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {Config, DetailedError, Util, describe} from '@qni/common'
 import {Operation, isOperation} from './operation'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
@@ -37,6 +38,8 @@ type CircuitEditorEvent =
   | {type: 'SNAP_STEP'; step: CircuitStepElement}
   | {type: 'UNSNAP_STEP'; step: CircuitStepElement}
 
+@controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class CircuitEditorElement extends HTMLElement {
   @attr debug = false
 
@@ -658,5 +661,3 @@ export class CircuitEditorElement extends HTMLElement {
     this.circuitEditorService.send({type: 'MOUSE_LEAVE_CIRCUIT'})
   }
 }
-
-controller(CircuitEditorElement)

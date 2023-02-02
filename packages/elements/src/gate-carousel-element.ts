@@ -1,11 +1,13 @@
 import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller, target, targets} from '@github/catalyst'
 import {Util} from '@qni/common'
 import chevronLeftIcon from '../icon/chevron-left.svg'
 import chevronRightIcon from '../icon/chevron-right.svg'
 
 @controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class GateCarouselElement extends HTMLElement {
   @attr currentGateSetIndex = 0
   @target contentClipper!: HTMLElement

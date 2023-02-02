@@ -1,8 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {controller, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {Util} from '@qni/common'
 
 @controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class ButtonGroupElement extends HTMLElement {
   @targets buttons!: HTMLElement[]
 

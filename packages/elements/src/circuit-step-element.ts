@@ -38,9 +38,11 @@ import {
   isYGateElement,
   isZGateElement
 } from './operation'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller, targets} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
+import {AntiControlGateElement} from './anti-control-gate-element'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
@@ -62,7 +64,6 @@ import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
 import {isControllable} from './mixin/controllable'
 import {isResizeable} from './mixin'
-import {AntiControlGateElement} from './anti-control-gate-element'
 
 export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitStepElement
@@ -151,6 +152,7 @@ type CircuitStepEvent =
   | {type: 'OCCUPY_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSHADOW'}
 
+@controller
 export class CircuitStepElement extends HTMLElement {
   @attr active = false
   @attr breakpoint = false
@@ -1296,5 +1298,3 @@ export class CircuitStepElement extends HTMLElement {
     return `[${jsons.join(',')}]`
   }
 }
-
-controller(CircuitStepElement)

@@ -1,4 +1,5 @@
 import {DetailedError, Util, angleDenominator, describe, radian as radianOf} from '@qni/common'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
@@ -11,6 +12,7 @@ export const isAngleSliderElement = (arg: unknown): arg is AngleSliderElement =>
 type AngleSliderContext = Record<string, never>
 type AngleSliderEvent = {type: 'SET_ANGLE'} | {type: 'SET_DENOMINATOR'} | {type: 'START_MOVE'} | {type: 'END_MOVE'}
 
+@controller
 export class AngleSliderElement extends HTMLElement {
   @attr angle = ''
   @attr radian = 0
@@ -250,5 +252,3 @@ export class AngleSliderElement extends HTMLElement {
     this.style.paddingLeft = `${proportion * 100}%`
   }
 }
-
-controller(AngleSliderElement)

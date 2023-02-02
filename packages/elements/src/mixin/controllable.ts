@@ -1,10 +1,10 @@
 import {Constructor} from './constructor'
 
 export declare class Controllable {
-  set controls(value: number[])
-  set antiControls(value: number[])
   get controls(): number[]
+  set controls(value: number[])
   get antiControls(): number[]
+  set antiControls(value: number[])
   get isControlled(): boolean
   get isAntiControlled(): boolean
 }
@@ -16,14 +16,6 @@ export function ControllableMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase
 ): Constructor<Controllable> & TBase {
   class ControllableMixinClass extends Base {
-    set controls(controls: number[]) {
-      this.setAttribute('data-controls', controls.sort().join())
-    }
-
-    set antiControls(antiControls: number[]) {
-      this.setAttribute('data-anti-controls', antiControls.sort().join())
-    }
-
     get controls(): number[] {
       const dataControls = this.getAttribute('data-controls')
       if (dataControls === null) return []
@@ -35,6 +27,10 @@ export function ControllableMixin<TBase extends Constructor<HTMLElement>>(
         .sort()
     }
 
+    set controls(controls: number[]) {
+      this.setAttribute('data-controls', controls.sort().join())
+    }
+
     get antiControls(): number[] {
       const dataAntiControls = this.getAttribute('data-anti-controls')
       if (dataAntiControls === null) return []
@@ -44,6 +40,10 @@ export function ControllableMixin<TBase extends Constructor<HTMLElement>>(
         .split(',')
         .map(each => parseInt(each))
         .sort()
+    }
+
+    set antiControls(antiControls: number[]) {
+      this.setAttribute('data-anti-controls', antiControls.sort().join())
     }
 
     get isControlled(): boolean {

@@ -11,6 +11,7 @@ import {
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedRnotGateType} from '@qni/common'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {controller} from '@github/catalyst'
 import rnotGateIcon from '../icon/rnot-gate.svg'
 
@@ -19,6 +20,8 @@ export type RnotGateElementProps = {
   disabled?: boolean
 }
 
+@controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class RnotGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
@@ -53,5 +56,3 @@ export class RnotGateElement extends MenuableMixin(
     }
   }
 }
-
-controller(RnotGateElement)

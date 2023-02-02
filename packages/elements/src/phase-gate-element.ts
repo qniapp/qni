@@ -12,6 +12,7 @@ import {
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedPhaseGateType} from '@qni/common'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {controller} from '@github/catalyst'
 import phaseGateIcon from '../icon/phase-gate.svg'
 
@@ -20,6 +21,8 @@ export type PhaseGateElementProps = {
   disabled?: boolean
 }
 
+@controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class PhaseGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
@@ -56,5 +59,3 @@ export class PhaseGateElement extends MenuableMixin(
     }
   }
 }
-
-controller(PhaseGateElement)

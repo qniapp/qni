@@ -1,7 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 
 @controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class CircuitBlockElement extends HTMLElement {
   @attr comment = ''
   @attr finalized = false

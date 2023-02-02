@@ -12,6 +12,7 @@ import {
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedRzGateType} from '@qni/common'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {controller} from '@github/catalyst'
 import rzGateIcon from '../icon/rz-gate.svg'
 
@@ -20,6 +21,8 @@ export type RzGateElementProps = {
   disabled?: boolean
 }
 
+@controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class RzGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
@@ -56,5 +59,3 @@ export class RzGateElement extends MenuableMixin(
     }
   }
 }
-
-controller(RzGateElement)

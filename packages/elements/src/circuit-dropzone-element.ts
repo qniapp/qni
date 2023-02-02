@@ -2,6 +2,7 @@ import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
 import {Util, emitEvent} from '@qni/common'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import interact from 'interactjs'
@@ -20,6 +21,7 @@ type CircuitDropzoneEvent =
   | {type: 'DELETE_OPERATION'; operation: Operation}
   | {type: 'RESIZE_OPERATION'}
 
+@controller
 export class CircuitDropzoneElement extends HTMLElement {
   #eventAbortController: AbortController | null = null
 
@@ -316,5 +318,3 @@ export class CircuitDropzoneElement extends HTMLElement {
     return html(([wiresIcon] as unknown) as TemplateStringsArray)
   }
 }
-
-controller(CircuitDropzoneElement)

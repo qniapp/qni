@@ -5,8 +5,11 @@ import tippy, {Instance as TippyInstance} from 'tippy.js'
 import {Flaggable} from './mixin/flaggable'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {Util} from '@qni/common'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {controller} from '@github/catalyst'
 
+@controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class InspectorButtonElement extends HTMLElement {
   public popup!: TippyInstance
 
@@ -107,5 +110,3 @@ export class InspectorButtonElement extends HTMLElement {
     return content
   }
 }
-
-controller(InspectorButtonElement)

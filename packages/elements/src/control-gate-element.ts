@@ -10,8 +10,11 @@ import {
 import {html, render} from '@github/jtml'
 import {SerializedControlGateType} from '@qni/common'
 import controlGateIcon from '../icon/control-gate.svg'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {controller} from '@github/catalyst'
 
+@controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class ControlGateElement extends MenuableMixin(
   HelpableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
 ) {
@@ -38,5 +41,3 @@ export class ControlGateElement extends MenuableMixin(
     return `"${SerializedControlGateType}"`
   }
 }
-
-controller(ControlGateElement)

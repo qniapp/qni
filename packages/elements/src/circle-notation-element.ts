@@ -1,4 +1,5 @@
 import {Complex, DetailedError, Util} from '@qni/common'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement} from 'tippy.js'
@@ -6,6 +7,7 @@ import fastdom from 'fastdom'
 import {forceSigned} from './util'
 
 @controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class CircleNotationElement extends HTMLElement {
   /** Number of qubits. */
   @attr qubitCount = 0

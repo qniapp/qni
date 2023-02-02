@@ -1,11 +1,12 @@
 import {Complex, DetailedError, Util} from '@qni/common'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
-import {isControllable, isIfable} from './mixin'
 import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {RunCircuitButtonElement} from './run-circuit-button-element'
+import {isIfable} from './mixin'
 
 declare global {
   interface Window {
@@ -23,6 +24,8 @@ type MessageEventData = {
 }
 
 // TODO: QuantumCircuitSimulator にリネーム
+@controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class QuantumSimulatorElement extends HTMLElement {
   @attr updateUrl = false
 
@@ -198,5 +201,3 @@ export class QuantumSimulatorElement extends HTMLElement {
     history.pushState('', '', encodeURIComponent(json))
   }
 }
-
-controller(QuantumSimulatorElement)

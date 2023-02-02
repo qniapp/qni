@@ -1,9 +1,12 @@
 import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, IconableMixin, MenuableMixin} from './mixin/'
 import {SerializedWrite0GateType, SerializedWrite1GateType} from '@qni/common'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import writeGateIcon from '../icon/write-gate.svg'
 
+@controller
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class WriteGateElement extends MenuableMixin(
   HelpableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement)))))
 ) {
@@ -42,5 +45,3 @@ export class WriteGateElement extends MenuableMixin(
     return `"|${this.value}>"`
   }
 }
-
-controller(WriteGateElement)
