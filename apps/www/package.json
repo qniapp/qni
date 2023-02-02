@@ -27,7 +27,7 @@
   "scripts": {
     "clean": "./bin/rails javascript:clobber",
     "dev": "./bin/dev",
-    "lint": "eslint . --ext .js,.ts",
+    "lint": "eslint . --ignore-path .gitignore --debug",
     "typecheck": "tsc --noEmit",
     "build": "yarn build:css && yarn build:js",
     "build:js": "esbuild app/javascript/application.js --bundle --keep-names --sourcemap --minify --outdir=app/assets/builds && esbuild app/assets/javascripts/serviceworker.js --bundle --sourcemap --minify --outdir=app/assets/builds",
@@ -79,18 +79,6 @@
   },
   "files": [
     "dist"
-  ],
-  "eslintIgnore": [
-    "app/assets/builds",
-    "app/assets/javascripts/serviceworker-companion.js",
-    "app/javascript/application.js",
-    "app/javascript/controllers/",
-    "docs",
-    "node_modules",
-    "postcss.config.js",
-    "public/assets/",
-    "rollup.config.js",
-    "tailwind.config.js"
   ],
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
 }

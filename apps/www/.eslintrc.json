@@ -4,6 +4,17 @@
     "i18n-text/no-en": "off",
     "import/named": "off"
   },
+  "ignorePatterns": [
+    "app/assets/builds",
+    "app/assets/javascripts/serviceworker-companion.js",
+    "app/javascript/application.js",
+    "docs/",
+    "postcss.config.js",
+    "storage/",
+    "tailwind.config.js",
+    "tmp/",
+    "vendor"
+  ],
   "overrides": [
     {
       "files": "test/**/*.js",
