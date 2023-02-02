@@ -1,4 +1,5 @@
 import {Constructor} from './constructor'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr} from '@github/catalyst'
 import {emitEvent} from '@qni/common'
 
