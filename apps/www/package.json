@@ -86,9 +86,11 @@
   ],
   "eslintIgnore": [
     "app/assets/builds",
+    "app/assets/javascripts/serviceworker-companion.js",
     "app/javascript/application.js",
     "app/javascript/controllers/",
     "docs",
+    "node_modules",
     "postcss.config.js",
     "public/assets/",
     "rollup.config.js",
