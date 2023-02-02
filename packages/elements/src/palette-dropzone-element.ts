@@ -1,11 +1,9 @@
 import {Operation, isOperation} from './operation'
 import {html, render} from '@github/jtml'
 import {isDraggable, isHelpable, isResizeable} from './mixin'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {controller} from '@github/catalyst'
 
 @controller
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class PaletteDropzoneElement extends HTMLElement {
   #eventAbortController: AbortController | null = null
 

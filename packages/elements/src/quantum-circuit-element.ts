@@ -14,7 +14,6 @@ import {TGateElement, TGateElementProps} from './t-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller, targets} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
@@ -42,7 +41,6 @@ type QuantumCircuitContext = Record<string, never>
 type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 
 @controller
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   @attr minStepCount = 1
   @attr minWireCount = 1

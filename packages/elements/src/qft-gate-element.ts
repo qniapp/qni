@@ -10,7 +10,6 @@ import {
 import {html, render} from '@github/jtml'
 import {SerializedQftGateType} from '@qni/common'
 import chevronSelectorVerticalIcon from '../icon/chevron_selector_vertical.svg'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {controller} from '@github/catalyst'
 import qftGateIcon from '../icon/qft-gate.svg'
 
@@ -19,7 +18,6 @@ export type QftGateElementProps = {
 }
 
 @controller
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class QftGateElement extends MenuableMixin(
   HelpableMixin(ResizeableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
 ) {

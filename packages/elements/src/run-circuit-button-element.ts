@@ -1,5 +1,4 @@
 import {TemplateResult, html, render} from '@github/jtml'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {describe} from '@qni/common'
@@ -10,7 +9,6 @@ type RunCircuitButtonContext = Record<string, never>
 type RunCircuitButtonEvent = {type: 'FINISH'} | {type: 'CLICK'; clientX: number; clientY: number}
 
 @controller
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class RunCircuitButtonElement extends HTMLElement {
   @attr running = false
   @attr debug = false

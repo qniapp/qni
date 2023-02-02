@@ -1,5 +1,4 @@
 import {Constructor} from './constructor'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr} from '@github/catalyst'
 
 export declare class Hoverable {

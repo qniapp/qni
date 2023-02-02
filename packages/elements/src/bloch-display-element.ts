@@ -1,13 +1,11 @@
 import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, MenuableMixin} from './mixin/'
 import {SerializedBlochDisplayType, Util} from '@qni/common'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement} from 'tippy.js'
 import {forceSigned} from './util'
 
 @controller
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class BlochDisplayElement extends MenuableMixin(
   HelpableMixin(DraggableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))
 ) {

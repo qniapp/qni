@@ -12,7 +12,6 @@ import {
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedRyGateType} from '@qni/common'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {controller} from '@github/catalyst'
 import ryGateIcon from '../icon/ry-gate.svg'
 
@@ -22,7 +21,6 @@ export type RyGateElementProps = {
 }
 
 @controller
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class RyGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(

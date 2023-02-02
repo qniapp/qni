@@ -11,7 +11,6 @@ import {
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedZGateType} from '@qni/common'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {controller} from '@github/catalyst'
 import zGateIcon from '../icon/z-gate.svg'
 
@@ -21,7 +20,6 @@ export type ZGateElementProps = {
 }
 
 @controller
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class ZGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(

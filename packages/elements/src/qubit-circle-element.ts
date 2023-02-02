@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement} from 'tippy.js'
@@ -7,7 +6,6 @@ import {Util} from '@qni/common'
 import {forceSigned} from './util'
 
 @controller
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class QubitCircleElement extends HTMLElement {
   @attr ket = 0
   @attr qubitCount = 1

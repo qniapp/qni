@@ -38,7 +38,6 @@ import {
   isYGateElement,
   isZGateElement
 } from './operation'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller, targets} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'

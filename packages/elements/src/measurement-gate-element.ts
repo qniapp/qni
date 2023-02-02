@@ -1,5 +1,4 @@
 import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, IconableMixin, MenuableMixin} from './mixin/'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {FlaggableMixin} from './mixin/flaggable'
@@ -7,7 +6,6 @@ import {SerializedMeasurementGateType} from '@qni/common'
 import measurementGateIcon from '../icon/measurement-gate.svg'
 
 @controller
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class MeasurementGateElement extends MenuableMixin(
   HelpableMixin(FlaggableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
 ) {
