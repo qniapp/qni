@@ -362,8 +362,17 @@ export class Simulator {
     return this
   }
 
-  acrnot(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.RNOT, ...targets)
+  acrnot(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.RNOT, ...targets)
+    this.x(...antiControls)
     return this
   }
 

@@ -10031,7 +10031,7 @@ var xd = u((r) => r != null && r instanceof Jt, "isSwapGateElement");
 var iu = u((r) => r != null && r instanceof Gt, "isControlGateElement");
 var ou = u((r) => r != null && r instanceof wr, "isAntiControlGateElement");
 var Ed = u((r) => r != null && r instanceof nt, "isBlochDisplayElement");
-var KT = u((r) => r != null && r instanceof Lt, "isWriteGateElement");
+var JT = u((r) => r != null && r instanceof Lt, "isWriteGateElement");
 var Sd = u((r) => r != null && r instanceof Ut, "isMeasurementGateElement");
 var Io = Mn(lo(), 1);
 var au = u((r) => r !== null && r instanceof _r, "isAngleSliderElement");
