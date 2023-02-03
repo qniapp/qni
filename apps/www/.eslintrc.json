@@ -1,9 +1,23 @@
 {
   "extends": ["plugin:github/recommended", "plugin:github/browser", "plugin:github/typescript", "prettier"],
   "rules": {
+    "filenames/match-regex": "off",
     "i18n-text/no-en": "off",
     "import/named": "off"
   },
+  "ignorePatterns": [
+    "app/assets/builds",
+    "app/assets/javascripts/serviceworker-companion.js",
+    "app/javascript/application.js",
+    "app/javascript/controllers/index.js",
+    "docs/",
+    "postcss.config.js",
+    "rollup.config.js",
+    "storage/",
+    "tailwind.config.js",
+    "tmp/",
+    "vendor"
+  ],
   "overrides": [
     {
       "files": "test/**/*.js",
@@ -18,7 +32,7 @@
       }
     },
     {
-      "files": "*.js",
+      "files": "app/**/*.js",
       "parser": "espree",
       "parserOptions": {"ecmaVersion": 8}
     }
