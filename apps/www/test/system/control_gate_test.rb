@@ -3,8 +3,15 @@
 require 'application_system_test_case'
 
 class ControlGateTest < ApplicationSystemTestCase
-  test 'apply to |0>' do
+  setup do
     visit circuit_path
+    sleep 1
+  end
+              
+  # 
+  # |0⟩─────●─────
+  #            
+  test 'apply to |0>' do
     put_operation '|0>', col: 0, row: 0
 
     control_gate = put_operation('•', col: 1, row: 0)
@@ -15,8 +22,10 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_phases 0, 0
   end
 
+  # 
+  # |1⟩─────●─────
+  # 
   test 'apply to |1>' do
-    visit circuit_path
     put_operation '|1>', col: 0, row: 0
 
     control_gate = put_operation('•', col: 1, row: 0)
@@ -27,8 +36,13 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_phases 0, 0
   end
 
+  #       ┌───┐
+  # |0⟩───│ H │────●────
+  #       └───┘    │
+  #       ┌───┐    │
+  # |0⟩───│ H │────●────
+  #       └───┘         
   test 'apply CZ to |++>' do
-    visit circuit_path
     put_operation '|0>', col: 0, row: 0
     put_operation '|0>', col: 0, row: 1
     put_operation 'H', col: 1, row: 0
@@ -48,8 +62,16 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_phases 0, 0, 0, 180
   end
 
+  #       ┌───┐
+  # |0⟩───│ H │────●────
+  #       └───┘    │
+  #       ┌───┐    │
+  # |0⟩───│ H │────│────
+  #       └───┘    │
+  #       ┌───┐    │
+  # |0⟩───│ H │────●────
+  #       └───┘
   test 'apply CZ (•1•) to |+++>' do
-    visit circuit_path
     put_operation '|0>', col: 0, row: 0
     put_operation '|0>', col: 0, row: 1
     put_operation '|0>', col: 0, row: 2
@@ -73,8 +95,16 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_phases 0, 0, 0, 0, 0, 180, 0, 180
   end
 
+  #       ┌───┐
+  # |0⟩───│ H │────●────
+  #       └───┘    │
+  #       ┌───┐    │
+  # |0⟩───│ H │────●────
+  #       └───┘    │
+  #       ┌───┐    │
+  # |0⟩───│ H │────●────
+  #       └───┘
   test 'apply CZ (•••) to |+++>' do
-    visit circuit_path
     put_operation '|0>', col: 0, row: 0
     put_operation '|0>', col: 0, row: 1
     put_operation '|0>', col: 0, row: 2
@@ -101,9 +131,6 @@ class ControlGateTest < ApplicationSystemTestCase
   end
 
   test 'hover' do
-    visit circuit_path
-    sleep 1
-
     control_gate = palette('•')
     control_gate.hover
 
@@ -111,9 +138,6 @@ class ControlGateTest < ApplicationSystemTestCase
   end
 
   test 'grab' do
-    visit circuit_path
-    sleep 1
-
     control_gate = palette('•')
     grab control_gate
 
