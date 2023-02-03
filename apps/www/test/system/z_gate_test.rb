@@ -3,8 +3,15 @@
 require 'application_system_test_case'
 
 class ZGateTest < ApplicationSystemTestCase
-  test 'apply to |0>' do
+  setup do
     visit circuit_path
+    sleep 1
+  end
+
+  #       ┌───┐
+  # |0⟩───│ Z │───
+  #       └───┘
+  test 'apply to |0>' do
     put_operation '|0>', col: 0, row: 0
 
     put_operation 'Z', col: 1, row: 0
@@ -14,8 +21,10 @@ class ZGateTest < ApplicationSystemTestCase
     assert_phases 0, 0
   end
 
+  #       ┌───┐
+  # |1⟩───│ Z │───
+  #       └───┘
   test 'apply to |1>' do
-    visit circuit_path
     put_operation '|1>', col: 0, row: 0
 
     put_operation 'Z', col: 1, row: 0
@@ -26,9 +35,6 @@ class ZGateTest < ApplicationSystemTestCase
   end
 
   test 'hover' do
-    visit circuit_path
-    sleep 1
-
     z_gate = palette('Z')
     z_gate.hover
 
@@ -36,9 +42,6 @@ class ZGateTest < ApplicationSystemTestCase
   end
 
   test 'grab' do
-    visit circuit_path
-    sleep 1
-
     z_gate = palette('Z')
     grab z_gate
 

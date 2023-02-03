@@ -3,8 +3,15 @@
 require 'application_system_test_case'
 
 class HGateTest < ApplicationSystemTestCase
-  test 'apply to |0>' do
+  setup do
     visit circuit_path
+    sleep 1
+  end
+
+  #       ┌───┐
+  # |0⟩───│ H │───
+  #       └───┘
+  test 'apply to |0>' do
     put_operation '|0>', col: 0, row: 0
 
     put_operation 'H', col: 1, row: 0
@@ -14,8 +21,10 @@ class HGateTest < ApplicationSystemTestCase
     assert_phases 0, 0
   end
 
+  #       ┌───┐
+  # |1⟩───│ H │───
+  #       └───┘
   test 'apply to |1>' do
-    visit circuit_path
     put_operation '|1>', col: 0, row: 0
 
     put_operation 'H', col: 1, row: 0
@@ -26,9 +35,6 @@ class HGateTest < ApplicationSystemTestCase
   end
 
   test 'hover' do
-    visit circuit_path
-    sleep 1
-
     h_gate = palette('H')
     h_gate.hover
 
@@ -36,9 +42,6 @@ class HGateTest < ApplicationSystemTestCase
   end
 
   test 'grab' do
-    visit circuit_path
-    sleep 1
-
     h_gate = palette('H')
     grab h_gate
 

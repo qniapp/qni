@@ -3,8 +3,15 @@
 require 'application_system_test_case'
 
 class YGateTest < ApplicationSystemTestCase
-  test 'apply to |0>' do
+  setup do
     visit circuit_path
+    sleep 1
+  end
+
+  #       ┌───┐
+  # |0⟩───│ Y │───
+  #       └───┘
+  test 'apply to |0>' do
     put_operation '|0>', col: 0, row: 0
 
     put_operation 'Y', col: 1, row: 0
@@ -14,8 +21,10 @@ class YGateTest < ApplicationSystemTestCase
     assert_phases 0, 90
   end
 
+  #       ┌───┐
+  # |1⟩───│ Y │───
+  #       └───┘
   test 'apply to |1>' do
-    visit circuit_path
     put_operation '|1>', col: 0, row: 0
 
     put_operation 'Y', col: 1, row: 0
@@ -26,9 +35,6 @@ class YGateTest < ApplicationSystemTestCase
   end
 
   test 'hover' do
-    visit circuit_path
-    sleep 1
-
     y_gate = palette('Y')
     y_gate.hover
 
@@ -36,9 +42,6 @@ class YGateTest < ApplicationSystemTestCase
   end
 
   test 'grab' do
-    visit circuit_path
-    sleep 1
-
     y_gate = palette('Y')
     grab y_gate
 
