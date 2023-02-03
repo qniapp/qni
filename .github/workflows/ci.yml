@@ -62,11 +62,10 @@ jobs:
           POSTGRES_PASSWORD: postgres
       - run: lerna bootstrap
       - run: yarn build
-      - name: Debug
-        run: |-
-          ls apps/www
       - name: Lint Codebase
         run: yarn lint
+      - name: Run Typecheck
+        run: yarn typecheck
       - run: yarn test:ci
         env:
           RAILS_ENV: test

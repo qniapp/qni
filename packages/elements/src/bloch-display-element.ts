@@ -2,7 +2,7 @@ import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, Menuab
 import {SerializedBlochDisplayType, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement} from 'tippy.js'
+import tippy, {Instance as TippyInstance} from 'tippy.js'
 import {forceSigned} from './util'
 
 @controller
@@ -19,6 +19,8 @@ export class BlochDisplayElement extends MenuableMixin(
   @attr y = 0
   @attr z = 0
 
+  public popup!: TippyInstance
+
   get operationType(): typeof SerializedBlochDisplayType {
     return SerializedBlochDisplayType
   }
@@ -32,7 +34,7 @@ export class BlochDisplayElement extends MenuableMixin(
 
     if (this.parentElement.tagName === 'PALETTE-DROPZONE') return
 
-    const popupInstance = (this as TippyReferenceElement).popup
+    const popupInstance = this.popup
     if (popupInstance) popupInstance.destroy()
 
     const content = this.blochInspectorPopupContent()
@@ -91,7 +93,7 @@ export class BlochDisplayElement extends MenuableMixin(
   }
 
   disconnectedCallback(): void {
-    const instance = (this as TippyReferenceElement).popup
+    const instance = this.popup
     instance?.destroy()
   }
 
