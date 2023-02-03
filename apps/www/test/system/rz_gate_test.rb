@@ -3,16 +3,22 @@
 require 'application_system_test_case'
 
 class RzGateTest < ApplicationSystemTestCase
-  test 'the default angle' do
+  setup do
     visit circuit_path
+    sleep 1
+  end
 
+  test 'the default angle' do
     rz_gate = put_operation('Rz', col: 0, row: 0)
 
     assert_angle 'π/2', rz_gate
   end
 
+  #        π/2
+  #       ┌───┐
+  # |0⟩───│ Rz│───
+  #       └───┘
   test 'apply to |0>' do
-    visit circuit_path
     put_operation '|0>', col: 0, row: 0
 
     put_operation 'Rz', col: 1, row: 0
@@ -22,8 +28,11 @@ class RzGateTest < ApplicationSystemTestCase
     assert_phases(-45, 0)
   end
 
+  #        π/2
+  #       ┌───┐
+  # |1⟩───│ Rz│───
+  #       └───┘
   test 'apply to |1>' do
-    visit circuit_path
     put_operation '|1>', col: 0, row: 0
 
     put_operation 'Rz', col: 1, row: 0
@@ -34,9 +43,6 @@ class RzGateTest < ApplicationSystemTestCase
   end
 
   test 'hover' do
-    visit circuit_path
-    sleep 1
-
     rz_gate = palette('Rz')
     rz_gate.hover
 
@@ -44,9 +50,6 @@ class RzGateTest < ApplicationSystemTestCase
   end
 
   test 'grab' do
-    visit circuit_path
-    sleep 1
-
     rz_gate = palette('Rz')
     grab rz_gate
 
