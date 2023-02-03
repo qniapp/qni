@@ -3,16 +3,22 @@
 require 'application_system_test_case'
 
 class PhaseGateTest < ApplicationSystemTestCase
-  test 'the default angle' do
+  setup do
     visit circuit_path
+    sleep 1
+  end
 
+  test 'the default angle' do
     phase_gate = put_operation('Phase', col: 0, row: 0)
 
     assert_angle 'π/2', phase_gate
   end
 
+  #        π/2
+  #       ┌───┐
+  # |0⟩───│ P │───
+  #       └───┘
   test 'apply to |0>' do
-    visit circuit_path
     put_operation '|0>', col: 0, row: 0
 
     put_operation 'Phase', col: 1, row: 0
@@ -22,8 +28,11 @@ class PhaseGateTest < ApplicationSystemTestCase
     assert_phases 0, 0
   end
 
+  #        π/2
+  #       ┌───┐
+  # |1⟩───│ P │───
+  #       └───┘
   test 'apply to |1>' do
-    visit circuit_path
     put_operation '|1>', col: 0, row: 0
 
     put_operation 'Phase', col: 1, row: 0
@@ -34,9 +43,6 @@ class PhaseGateTest < ApplicationSystemTestCase
   end
 
   test 'hover' do
-    visit circuit_path
-    sleep 1
-
     phase_gate = palette('Phase')
     phase_gate.hover
 
@@ -44,9 +50,6 @@ class PhaseGateTest < ApplicationSystemTestCase
   end
 
   test 'grab' do
-    visit circuit_path
-    sleep 1
-
     phase_gate = palette('Phase')
     grab phase_gate
 
