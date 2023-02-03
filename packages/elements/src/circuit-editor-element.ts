@@ -1,6 +1,6 @@
 import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isIfable, isMenuable, isResizeable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
-import {Config, DetailedError, Util, describe} from '@qni/common'
+import {Config, DetailedError, Util, describe, isResizeableSpan} from '@qni/common'
 import {Operation, isOperation} from './operation'
 import {attr, controller, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
@@ -256,6 +256,9 @@ export class CircuitEditorElement extends HTMLElement {
           const wireIndex = dropzone.circuitStep.dropzones.indexOf(dropzone)
           const snapTarget = this.circuit.resizeHandleSnapTargetAt(event.x, event.y)
           const span = snapTarget.wireIndex - wireIndex + 1
+          if (!isResizeableSpan(span)) {
+            throw new Error(`Invalid span: ${span}`)
+          }
 
           operation.span = span
         },

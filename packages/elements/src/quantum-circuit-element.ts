@@ -664,7 +664,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Circuit Operation
    */
-  qft(span: number, ...args: number[] | [QftGateElementProps]): QuantumCircuitElement {
+  qft(span: ResizeableSpan, ...args: number[] | [QftGateElementProps]): QuantumCircuitElement {
     let targetBits: number[]
 
     if (typeof args[0] === 'number') {
@@ -688,7 +688,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Circuit Operation
    */
-  qftDagger(span: number, ...args: number[] | [QftDaggerGateElementProps]): QuantumCircuitElement {
+  qftDagger(span: ResizeableSpan, ...args: number[] | [QftDaggerGateElementProps]): QuantumCircuitElement {
     let targetBits: number[]
 
     if (typeof args[0] === 'number') {
