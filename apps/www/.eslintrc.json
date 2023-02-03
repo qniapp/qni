@@ -1,6 +1,7 @@
 {
   "extends": ["plugin:github/recommended", "plugin:github/browser", "plugin:github/typescript", "prettier"],
   "rules": {
+    "filenames/match-regex": "off",
     "i18n-text/no-en": "off",
     "import/named": "off"
   },
@@ -8,8 +9,10 @@
     "app/assets/builds",
     "app/assets/javascripts/serviceworker-companion.js",
     "app/javascript/application.js",
+    "app/javascript/controllers/index.js",
     "docs/",
     "postcss.config.js",
+    "rollup.config.js",
     "storage/",
     "tailwind.config.js",
     "tmp/",
