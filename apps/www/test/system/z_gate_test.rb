@@ -11,7 +11,7 @@ class ZGateTest < ApplicationSystemTestCase
   # ┌───┐
   # │ Z │
   # └───┘
-  test 'default state' do
+  test 'the default state' do
     z_gate = palette('Z')
 
     assert_body_background_color colors_emerald(500), z_gate

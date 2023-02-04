@@ -8,6 +8,43 @@ class TGateTest < ApplicationSystemTestCase
     sleep 1
   end
 
+  # ┌───┐
+  # │ T │
+  # └───┘
+  test 'the default state' do
+    t_gate = palette('T')
+
+    assert_body_background_color colors_emerald(500), t_gate
+    assert_icon_color colors_white, t_gate
+    assert_no_outline t_gate
+  end
+
+  # ╔═══╗
+  # ║ T ║
+  # ╚═══╝
+  test 'hover' do
+    t_gate = palette('T')
+
+    hover t_gate
+
+    assert_body_background_color colors_emerald(500), t_gate
+    assert_icon_color colors_white, t_gate
+    assert_outline t_gate
+  end
+
+  # ┏━━━┓
+  # ┃ T ┃
+  # ┗━━━┛
+  test 'grab' do
+    t_gate = palette('T')
+
+    grab t_gate
+
+    assert_body_background_color colors_purple(500), t_gate
+    assert_icon_color colors_white, t_gate
+    assert_no_outline t_gate
+  end
+
   #       ┌───┐
   # |0⟩───│ T │───
   #       └───┘
@@ -15,6 +52,19 @@ class TGateTest < ApplicationSystemTestCase
     put_operation '|0>', step: 0, bit: 0
 
     put_operation 'T', step: 1, bit: 0
+
+    assert_qubit_circles 2
+    assert_magnitudes 1, 0
+    assert_phases 0, 0
+  end
+
+  #       ┏━━━┓
+  # |0⟩───┃ T ┃───
+  #       ┗━━━┛
+  test 'preview T|0>' do
+    put_operation '|0>', step: 0, bit: 0
+
+    hover_operation 'T', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 1, 0
@@ -34,17 +84,16 @@ class TGateTest < ApplicationSystemTestCase
     assert_phases 0, 45
   end
 
-  test 'hover' do
-    t_gate = palette('T')
-    t_gate.hover
+  #       ┏━━━┓
+  # |1⟩───┃ T ┃───
+  #       ┗━━━┛
+  test 'preview T|1>' do
+    put_operation '|1>', step: 0, bit: 0
 
-    assert_outline t_gate
-  end
+    hover_operation 'T', step: 1, bit: 0
 
-  test 'grab' do
-    t_gate = palette('T')
-    grab t_gate
-
-    assert_no_outline t_gate
+    assert_qubit_circles 2
+    assert_magnitudes 0, 1
+    assert_phases 0, 45
   end
 end

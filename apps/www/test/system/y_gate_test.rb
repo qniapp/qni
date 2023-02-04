@@ -11,7 +11,7 @@ class YGateTest < ApplicationSystemTestCase
   # ┌───┐
   # │ Y │
   # └───┘
-  test 'default state' do
+  test 'the default state' do
     y_gate = palette('Y')
 
     assert_body_background_color colors_emerald(500), y_gate

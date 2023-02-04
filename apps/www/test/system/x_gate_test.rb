@@ -11,7 +11,7 @@ class XGateTest < ApplicationSystemTestCase
   # ┌───┐
   # │ X │
   # └───┘
-  test 'default state' do
+  test 'the default state' do
     x_gate = palette('X')
 
     assert_body_background_color colors_emerald(500), x_gate

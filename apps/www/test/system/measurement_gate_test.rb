@@ -11,7 +11,7 @@ class MeasurementGateTest < ApplicationSystemTestCase
   # ┌───┐
   # │ M │
   # └───┘
-  test 'default state' do
+  test 'the default state' do
     measurement_gate = palette('Measure')
 
     assert_body_background_color colors_transparent, measurement_gate

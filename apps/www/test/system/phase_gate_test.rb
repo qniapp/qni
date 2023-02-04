@@ -17,7 +17,7 @@ class PhaseGateTest < ApplicationSystemTestCase
   # ┌───┐
   # │ P │
   # └───┘
-  test 'default state' do
+  test 'the default state' do
     phase_gate = palette('Phase')
 
     assert_body_background_color colors_emerald(500), phase_gate

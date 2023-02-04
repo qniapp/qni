@@ -11,7 +11,7 @@ class HGateTest < ApplicationSystemTestCase
   # ┌───┐
   # │ H │
   # └───┘
-  test 'default state' do
+  test 'the default state' do
     h_gate = palette('H')
 
     assert_body_background_color colors_emerald(500), h_gate
