@@ -3,9 +3,15 @@
 require 'application_system_test_case'
 
 class BlochDisplayTest < ApplicationSystemTestCase
-  test 'bloch display inspector' do
+  setup do
     visit circuit_path
+    sleep 1
+  end
 
+  # ┌───┐
+  # │ B │
+  # └───┘
+  test 'bloch display inspector' do
     bloch_display = put_operation('Bloch', col: 0, row: 0)
     bloch_display.hover
 
@@ -17,9 +23,6 @@ class BlochDisplayTest < ApplicationSystemTestCase
   end
 
   test 'hover' do
-    visit circuit_path
-    sleep 1
-
     bloch_display = palette('Bloch')
     bloch_display.hover
 
@@ -27,9 +30,6 @@ class BlochDisplayTest < ApplicationSystemTestCase
   end
 
   test 'grab' do
-    visit circuit_path
-    sleep 1
-
     bloch_display = palette('Bloch')
     grab bloch_display
 

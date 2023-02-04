@@ -36,7 +36,19 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     outline_el = shadow_root(qpu_operation).find_element(css: '[part="outline"]')
 
     assert_not_nil outline_el
-    assert !outline_el.displayed?
+    assert_not outline_el.displayed?
+  end
+
+  def assert_body_background_color(color, operation)
+    body_part = shadow_root(operation).find_element(css: '[part="body"]')
+
+    assert_equal color, body_part.css_value('background-color')
+  end
+
+  def assert_icon_color(color, operation)
+    icon_part = shadow_root(operation).find_element(css: '[part="icon"]')
+
+    assert_equal color, icon_part.css_value('color')
   end
 
   def assert_enabled(operation)
@@ -64,20 +76,20 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert_not_nil dropzone['data-connect-top']
   end
 
-  def assert_input_wire_quantum(dropzone)
-    assert_equal '', dropzone['data-input-wire-quantum']
+  def assert_input_wire_quantum(col:, row:)
+    assert_equal '', dropzone(col, row)['data-input-wire-quantum']
   end
 
-  def assert_input_wire_classical(dropzone)
-    assert_nil dropzone['data-input-wire-quantum']
+  def assert_input_wire_classical(col:, row:)
+    assert_nil dropzone(col, row)['data-input-wire-quantum']
   end
 
-  def assert_output_wire_quantum(dropzone)
-    assert_equal '', dropzone['data-output-wire-quantum']
+  def assert_output_wire_quantum(col:, row:)
+    assert_equal '', dropzone(col, row)['data-output-wire-quantum']
   end
 
-  def assert_output_wire_classical(dropzone)
-    assert_nil dropzone['data-output-wire-quantum']
+  def assert_output_wire_classical(col:, row:)
+    assert_nil dropzone(col, row)['data-output-wire-quantum']
   end
 
   def assert_popup(text, element)
@@ -136,6 +148,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     operation
   end
 
+  def hover(operation)
+    operation.hover
+  end
+
   def grab(operation)
     page.driver.browser.action
         .move_to(operation.native, 0, 0)
@@ -144,7 +160,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   # rubocop:disable Metrics/AbcSize
-  def hover_circuit_operation(name, col:, row:)
+  def hover_operation(name, col:, row:)
     dropzone = dropzone(col, row)
 
     page.driver.browser.action
@@ -179,7 +195,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       '•' => 'control-gate',
       'Bloch' => 'bloch-display',
       '|0>' => 'write-gate[data-value="0"]',
+      '|0⟩' => 'write-gate[data-value="0"]',
       '|1>' => 'write-gate[data-value="1"]',
+      '|1⟩' => 'write-gate[data-value="1"]',
       'Measure' => 'measurement-gate'
     }.fetch(name)
   rescue KeyError
@@ -227,6 +245,17 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     host = Capybara.current_session.server.host
     port = Capybara.current_session.server.port
     "http://#{host}:#{port}"
+  end
+
+  def colors_transparent
+    'rgba(0, 0, 0, 0)'
+  end
+
+  def colors_purple(number)
+    {
+      400 => 'rgba(192, 132, 252, 1)',
+      500 => 'rgba(168, 85, 247, 1)'
+    }.fetch(number)
   end
 
   private
