@@ -48,8 +48,8 @@ class HGateTest < ApplicationSystemTestCase
   #       ┌───┐
   # |0⟩───│ H │───
   #       └───┘
-  test 'apply to |0>' do
-    put_operation '|0>', step: 0, bit: 0
+  test 'apply to |0⟩' do
+    put_operation '|0⟩', step: 0, bit: 0
 
     put_operation 'H', step: 1, bit: 0
 
@@ -61,8 +61,8 @@ class HGateTest < ApplicationSystemTestCase
   #       ┏━━━┓
   # |0⟩───┃ H ┃───
   #       ┗━━━┛
-  test 'preview H|0>' do
-    put_operation '|0>', step: 0, bit: 0
+  test 'preview H|0⟩' do
+    put_operation '|0⟩', step: 0, bit: 0
 
     hover_operation 'H', step: 1, bit: 0
 
@@ -74,8 +74,8 @@ class HGateTest < ApplicationSystemTestCase
   #       ┌───┐
   # |1⟩───│ H │───
   #       └───┘
-  test 'apply to |1>' do
-    put_operation '|1>', step: 0, bit: 0
+  test 'apply to |1⟩' do
+    put_operation '|1⟩', step: 0, bit: 0
 
     put_operation 'H', step: 1, bit: 0
 
@@ -87,8 +87,8 @@ class HGateTest < ApplicationSystemTestCase
   #       ┏━━━┓
   # |1⟩───┃ H ┃───
   #       ┗━━━┛
-  test 'preview H|1>' do
-    put_operation '|1>', step: 0, bit: 0
+  test 'preview H|1⟩' do
+    put_operation '|1⟩', step: 0, bit: 0
 
     hover_operation 'H', step: 1, bit: 0
 
