@@ -48,8 +48,8 @@ class YGateTest < ApplicationSystemTestCase
   #       ┌───┐
   # |0⟩───│ Y │───
   #       └───┘
-  test 'apply to |0>' do
-    put_operation '|0>', step: 0, bit: 0
+  test 'apply to |0⟩' do
+    put_operation '|0⟩', step: 0, bit: 0
 
     put_operation 'Y', step: 1, bit: 0
 
@@ -74,8 +74,8 @@ class YGateTest < ApplicationSystemTestCase
   #       ┌───┐
   # |1⟩───│ Y │───
   #       └───┘
-  test 'apply to |1>' do
-    put_operation '|1>', step: 0, bit: 0
+  test 'apply to |1⟩' do
+    put_operation '|1⟩', step: 0, bit: 0
 
     put_operation 'Y', step: 1, bit: 0
 
@@ -87,8 +87,8 @@ class YGateTest < ApplicationSystemTestCase
   #       ┏━━━┓
   # |1⟩───┃ Y ┃───
   #       ┗━━━┛
-  test 'preview Y|1>' do
-    put_operation '|1>', step: 0, bit: 0
+  test 'preview Y|1⟩' do
+    put_operation '|1⟩', step: 0, bit: 0
 
     hover_operation 'Y', step: 1, bit: 0
 
