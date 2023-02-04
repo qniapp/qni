@@ -9,7 +9,7 @@ class RyGateTest < ApplicationSystemTestCase
   end
 
   test 'the default angle' do
-    ry_gate = put_operation('Ry', col: 0, row: 0)
+    ry_gate = put_operation('Ry', step: 0, bit: 0)
 
     assert_angle 'π/2', ry_gate
   end
@@ -19,9 +19,9 @@ class RyGateTest < ApplicationSystemTestCase
   # |0⟩───│ Ry│───
   #       └───┘
   test 'apply to |0>' do
-    put_operation '|0>', col: 0, row: 0
+    put_operation '|0>', step: 0, bit: 0
 
-    put_operation 'Ry', col: 1, row: 0
+    put_operation 'Ry', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
@@ -33,9 +33,9 @@ class RyGateTest < ApplicationSystemTestCase
   # |1⟩───│ Ry│───
   #       └───┘
   test 'apply to |1>' do
-    put_operation '|1>', col: 0, row: 0
+    put_operation '|1>', step: 0, bit: 0
 
-    put_operation 'Ry', col: 1, row: 0
+    put_operation 'Ry', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)

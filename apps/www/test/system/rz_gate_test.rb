@@ -9,7 +9,7 @@ class RzGateTest < ApplicationSystemTestCase
   end
 
   test 'the default angle' do
-    rz_gate = put_operation('Rz', col: 0, row: 0)
+    rz_gate = put_operation('Rz', step: 0, bit: 0)
 
     assert_angle 'π/2', rz_gate
   end
@@ -19,9 +19,9 @@ class RzGateTest < ApplicationSystemTestCase
   # |0⟩───│ Rz│───
   #       └───┘
   test 'apply to |0>' do
-    put_operation '|0>', col: 0, row: 0
+    put_operation '|0>', step: 0, bit: 0
 
-    put_operation 'Rz', col: 1, row: 0
+    put_operation 'Rz', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 1, 0
@@ -33,9 +33,9 @@ class RzGateTest < ApplicationSystemTestCase
   # |1⟩───│ Rz│───
   #       └───┘
   test 'apply to |1>' do
-    put_operation '|1>', col: 0, row: 0
+    put_operation '|1>', step: 0, bit: 0
 
-    put_operation 'Rz', col: 1, row: 0
+    put_operation 'Rz', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 0, 1

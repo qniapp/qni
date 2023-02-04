@@ -49,7 +49,7 @@ class MeasurementGateTest < ApplicationSystemTestCase
   # -│ 0 │=
   #  └───┘
   test 'measurement gate on circuit displays its value' do
-    measurement_gate = put_operation('Measure', col: 0, row: 0)
+    measurement_gate = put_operation('Measure', step: 0, bit: 0)
 
     assert_value '0', measurement_gate
   end
@@ -58,7 +58,7 @@ class MeasurementGateTest < ApplicationSystemTestCase
   # -┃ 0 ┃=
   #  ┗━━━┛
   test 'measurement gate hovering on dropzone displays its value' do
-    measurement_gate = hover_operation('Measure', col: 0, row: 0)
+    measurement_gate = hover_operation('Measure', step: 0, bit: 0)
 
     assert_value '0', measurement_gate
   end
@@ -67,9 +67,9 @@ class MeasurementGateTest < ApplicationSystemTestCase
   # |0⟩---│ 0 │===
   #       └───┘
   test '|0⟩ is measured to be 0' do
-    put_operation '|0⟩', col: 0, row: 0
+    put_operation '|0⟩', step: 0, bit: 0
 
-    measurement_gate = put_operation('Measure', col: 1, row: 0)
+    measurement_gate = put_operation('Measure', step: 1, bit: 0)
 
     assert_value '0', measurement_gate
   end
@@ -78,9 +78,9 @@ class MeasurementGateTest < ApplicationSystemTestCase
   # |1⟩---│ 1 │===
   #       └───┘
   test '|1⟩ is measured to be 1' do
-    put_operation '|1⟩', col: 0, row: 0
+    put_operation '|1⟩', step: 0, bit: 0
 
-    measurement_gate = put_operation('Measure', col: 1, row: 0)
+    measurement_gate = put_operation('Measure', step: 1, bit: 0)
 
     assert_value '1', measurement_gate
   end
@@ -89,23 +89,23 @@ class MeasurementGateTest < ApplicationSystemTestCase
   # |0⟩---│ M │===
   #       └───┘
   test 'input and output wire state changes' do
-    put_operation '|0⟩', col: 0, row: 0
+    put_operation '|0⟩', step: 0, bit: 0
 
-    put_operation 'Measure', col: 1, row: 0
+    put_operation 'Measure', step: 1, bit: 0
 
-    assert_input_wire_quantum col: 1, row: 0
-    assert_output_wire_classical col: 1, row: 0
+    assert_input_wire_quantum step: 1, bit: 0
+    assert_output_wire_classical step: 1, bit: 0
   end
 
   #       ┏━━━┓   
   # |0⟩───┃ M ┃===
   #       ┗━━━┛   
   test 'preview the change in input and output wire states' do
-    put_operation '|0⟩', col: 0, row: 0
+    put_operation '|0⟩', step: 0, bit: 0
 
-    hover_operation 'Measure', col: 1, row: 0
+    hover_operation 'Measure', step: 1, bit: 0
 
-    assert_input_wire_quantum col: 1, row: 0
-    assert_output_wire_classical col: 1, row: 0
+    assert_input_wire_quantum step: 1, bit: 0
+    assert_output_wire_classical step: 1, bit: 0
   end
 end

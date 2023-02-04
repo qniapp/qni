@@ -12,7 +12,7 @@ class BlochDisplayTest < ApplicationSystemTestCase
   # │ B │
   # └───┘
   test 'bloch display inspector' do
-    bloch_display = put_operation('Bloch', col: 0, row: 0)
+    bloch_display = put_operation('Bloch', step: 0, bit: 0)
     bloch_display.hover
 
     assert_popup <<~TEXT.chomp, bloch_display

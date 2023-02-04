@@ -12,9 +12,9 @@ class ControlGateTest < ApplicationSystemTestCase
   # |0⟩─────●─────
   #            
   test 'apply to |0>' do
-    put_operation '|0>', col: 0, row: 0
+    put_operation '|0>', step: 0, bit: 0
 
-    control_gate = put_operation('•', col: 1, row: 0)
+    control_gate = put_operation('•', step: 1, bit: 0)
 
     assert_disabled control_gate
     assert_qubit_circles 2
@@ -26,9 +26,9 @@ class ControlGateTest < ApplicationSystemTestCase
   # |1⟩─────●─────
   # 
   test 'apply to |1>' do
-    put_operation '|1>', col: 0, row: 0
+    put_operation '|1>', step: 0, bit: 0
 
-    control_gate = put_operation('•', col: 1, row: 0)
+    control_gate = put_operation('•', step: 1, bit: 0)
 
     assert_disabled control_gate
     assert_qubit_circles 2
@@ -43,13 +43,13 @@ class ControlGateTest < ApplicationSystemTestCase
   # |0⟩───│ H │────●────
   #       └───┘         
   test 'apply CZ to |++>' do
-    put_operation '|0>', col: 0, row: 0
-    put_operation '|0>', col: 0, row: 1
-    put_operation 'H', col: 1, row: 0
-    put_operation 'H', col: 1, row: 1
+    put_operation '|0>', step: 0, bit: 0
+    put_operation '|0>', step: 0, bit: 1
+    put_operation 'H', step: 1, bit: 0
+    put_operation 'H', step: 1, bit: 1
 
-    control_gate1 = put_operation('•', col: 2, row: 0)
-    control_gate2 = put_operation('•', col: 2, row: 1)
+    control_gate1 = put_operation('•', step: 2, bit: 0)
+    control_gate2 = put_operation('•', step: 2, bit: 1)
 
     assert_enabled control_gate1
     assert_enabled control_gate2
@@ -72,15 +72,15 @@ class ControlGateTest < ApplicationSystemTestCase
   # |0⟩───│ H │────●────
   #       └───┘
   test 'apply CZ (•1•) to |+++>' do
-    put_operation '|0>', col: 0, row: 0
-    put_operation '|0>', col: 0, row: 1
-    put_operation '|0>', col: 0, row: 2
-    put_operation 'H', col: 1, row: 0
-    put_operation 'H', col: 1, row: 1
-    put_operation 'H', col: 1, row: 2
+    put_operation '|0>', step: 0, bit: 0
+    put_operation '|0>', step: 0, bit: 1
+    put_operation '|0>', step: 0, bit: 2
+    put_operation 'H', step: 1, bit: 0
+    put_operation 'H', step: 1, bit: 1
+    put_operation 'H', step: 1, bit: 2
 
-    control_gate1 = put_operation('•', col: 2, row: 0)
-    control_gate2 = put_operation('•', col: 2, row: 2)
+    control_gate1 = put_operation('•', step: 2, bit: 0)
+    control_gate2 = put_operation('•', step: 2, bit: 2)
 
     assert_enabled control_gate1
     assert_enabled control_gate2
@@ -105,16 +105,16 @@ class ControlGateTest < ApplicationSystemTestCase
   # |0⟩───│ H │────●────
   #       └───┘
   test 'apply CZ (•••) to |+++>' do
-    put_operation '|0>', col: 0, row: 0
-    put_operation '|0>', col: 0, row: 1
-    put_operation '|0>', col: 0, row: 2
-    put_operation 'H', col: 1, row: 0
-    put_operation 'H', col: 1, row: 1
-    put_operation 'H', col: 1, row: 2
+    put_operation '|0>', step: 0, bit: 0
+    put_operation '|0>', step: 0, bit: 1
+    put_operation '|0>', step: 0, bit: 2
+    put_operation 'H', step: 1, bit: 0
+    put_operation 'H', step: 1, bit: 1
+    put_operation 'H', step: 1, bit: 2
 
-    control_gate1 = put_operation('•', col: 2, row: 0)
-    control_gate2 = put_operation('•', col: 2, row: 1)
-    control_gate3 = put_operation('•', col: 2, row: 2)
+    control_gate1 = put_operation('•', step: 2, bit: 0)
+    control_gate2 = put_operation('•', step: 2, bit: 1)
+    control_gate3 = put_operation('•', step: 2, bit: 2)
 
     assert_enabled control_gate1
     assert_enabled control_gate2

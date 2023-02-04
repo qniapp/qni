@@ -76,20 +76,20 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert_not_nil dropzone['data-connect-top']
   end
 
-  def assert_input_wire_quantum(col:, row:)
-    assert_equal '', dropzone(col, row)['data-input-wire-quantum']
+  def assert_input_wire_quantum(step:, bit:)
+    assert_equal '', dropzone(step, bit)['data-input-wire-quantum']
   end
 
-  def assert_input_wire_classical(col:, row:)
-    assert_nil dropzone(col, row)['data-input-wire-quantum']
+  def assert_input_wire_classical(step:, bit:)
+    assert_nil dropzone(step, bit)['data-input-wire-quantum']
   end
 
-  def assert_output_wire_quantum(col:, row:)
-    assert_equal '', dropzone(col, row)['data-output-wire-quantum']
+  def assert_output_wire_quantum(step:, bit:)
+    assert_equal '', dropzone(step, bit)['data-output-wire-quantum']
   end
 
-  def assert_output_wire_classical(col:, row:)
-    assert_nil dropzone(col, row)['data-output-wire-quantum']
+  def assert_output_wire_classical(step:, bit:)
+    assert_nil dropzone(step, bit)['data-output-wire-quantum']
   end
 
   def assert_popup(text, element)
@@ -136,14 +136,14 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     element.drag_to(to, html5: false)
   end
 
-  def put_operation(name, col:, row:)
+  def put_operation(name, step:, bit:)
     operation = palette(name)
 
     page.driver.browser.action
         .move_to(operation.native, 0, 0)
         .click_and_hold
         .perform
-    operation.drag_to dropzone(col, row), html5: false
+    operation.drag_to dropzone(step, bit), html5: false
 
     operation
   end
@@ -160,8 +160,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   # rubocop:disable Metrics/AbcSize
-  def hover_operation(name, col:, row:)
-    dropzone = dropzone(col, row)
+  def hover_operation(name, step:, bit:)
+    dropzone = dropzone(step, bit)
 
     page.driver.browser.action
         .move_to(palette(name).native, 0, 0)

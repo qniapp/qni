@@ -9,7 +9,7 @@ class PhaseGateTest < ApplicationSystemTestCase
   end
 
   test 'the default angle' do
-    phase_gate = put_operation('Phase', col: 0, row: 0)
+    phase_gate = put_operation('Phase', step: 0, bit: 0)
 
     assert_angle 'π/2', phase_gate
   end
@@ -19,9 +19,9 @@ class PhaseGateTest < ApplicationSystemTestCase
   # |0⟩───│ P │───
   #       └───┘
   test 'apply to |0>' do
-    put_operation '|0>', col: 0, row: 0
+    put_operation '|0>', step: 0, bit: 0
 
-    put_operation 'Phase', col: 1, row: 0
+    put_operation 'Phase', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 1, 0
@@ -33,9 +33,9 @@ class PhaseGateTest < ApplicationSystemTestCase
   # |1⟩───│ P │───
   #       └───┘
   test 'apply to |1>' do
-    put_operation '|1>', col: 0, row: 0
+    put_operation '|1>', step: 0, bit: 0
 
-    put_operation 'Phase', col: 1, row: 0
+    put_operation 'Phase', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 0, 1

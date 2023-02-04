@@ -5,11 +5,11 @@ require 'application_system_test_case'
 class SwapGateTest < ApplicationSystemTestCase
   test 'apply Swap-Swap to |01>' do
     visit circuit_path
-    put_operation '|0>', col: 0, row: 0
-    put_operation '|1>', col: 0, row: 1
+    put_operation '|0>', step: 0, bit: 0
+    put_operation '|1>', step: 0, bit: 1
 
-    put_operation 'Swap', col: 1, row: 0
-    put_operation 'Swap', col: 1, row: 1
+    put_operation 'Swap', step: 1, bit: 0
+    put_operation 'Swap', step: 1, bit: 1
 
     assert_qubit_circles 4
     assert_magnitudes 0, 1, 0, 0

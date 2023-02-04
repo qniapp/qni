@@ -12,9 +12,9 @@ class YGateTest < ApplicationSystemTestCase
   # |0⟩───│ Y │───
   #       └───┘
   test 'apply to |0>' do
-    put_operation '|0>', col: 0, row: 0
+    put_operation '|0>', step: 0, bit: 0
 
-    put_operation 'Y', col: 1, row: 0
+    put_operation 'Y', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 0, 1
@@ -25,9 +25,9 @@ class YGateTest < ApplicationSystemTestCase
   # |1⟩───│ Y │───
   #       └───┘
   test 'apply to |1>' do
-    put_operation '|1>', col: 0, row: 0
+    put_operation '|1>', step: 0, bit: 0
 
-    put_operation 'Y', col: 1, row: 0
+    put_operation 'Y', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 1, 0

@@ -12,10 +12,10 @@ class WriteGateTest < ApplicationSystemTestCase
   # |0⟩───│ H │───|1⟩
   #       └───┘
   test 'set a qubit state to |1>' do
-    put_operation '|0>', col: 0, row: 0
-    put_operation 'H', col: 1, row: 0
+    put_operation '|0>', step: 0, bit: 0
+    put_operation 'H', step: 1, bit: 0
 
-    put_operation '|1>', col: 2, row: 1
+    put_operation '|1>', step: 2, bit: 1
 
     assert_magnitudes 0, 0, Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
     assert_phases 0, 0, 0, 0
@@ -25,17 +25,17 @@ class WriteGateTest < ApplicationSystemTestCase
   # |0⟩
   #
   test 'input and output wire states change' do
-    put_operation '|0>', col: 0, row: 0
+    put_operation '|0>', step: 0, bit: 0
 
-    assert_input_wire_classical col: 0, row: 0
-    assert_output_wire_quantum col: 0, row: 0
+    assert_input_wire_classical step: 0, bit: 0
+    assert_output_wire_quantum step: 0, bit: 0
   end
 
   test 'preview the change in input and output wire states' do
-    hover_operation '|0>', col: 0, row: 0
+    hover_operation '|0>', step: 0, bit: 0
 
-    assert_input_wire_classical col: 0, row: 0
-    assert_output_wire_quantum col: 0, row: 0
+    assert_input_wire_classical step: 0, bit: 0
+    assert_output_wire_quantum step: 0, bit: 0
   end
 
   test 'hover' do

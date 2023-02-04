@@ -9,7 +9,7 @@ class RxGateTest < ApplicationSystemTestCase
   end
 
   test 'the default angle' do
-    rx_gate = put_operation('Rx', col: 0, row: 0)
+    rx_gate = put_operation('Rx', step: 0, bit: 0)
 
     assert_angle 'π/2', rx_gate
   end
@@ -19,9 +19,9 @@ class RxGateTest < ApplicationSystemTestCase
   # |0⟩───│ Rx│───
   #       └───┘
   test 'apply to |0>' do
-    put_operation '|0>', col: 0, row: 0
+    put_operation '|0>', step: 0, bit: 0
 
-    put_operation 'Rx', col: 1, row: 0
+    put_operation 'Rx', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
@@ -33,9 +33,9 @@ class RxGateTest < ApplicationSystemTestCase
   # |1⟩───│ Rx│───
   #       └───┘
   test 'apply to |1>' do
-    put_operation '|1>', col: 0, row: 0
+    put_operation '|1>', step: 0, bit: 0
 
-    put_operation 'Rx', col: 1, row: 0
+    put_operation 'Rx', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
