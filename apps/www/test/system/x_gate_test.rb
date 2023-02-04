@@ -83,4 +83,17 @@ class XGateTest < ApplicationSystemTestCase
     assert_magnitudes 1, 0
     assert_phases 0, 0
   end
+
+  #       ┏━━━┓
+  # |1⟩───┃ X ┃───
+  #       ┗━━━┛
+  test 'preview X|1⟩' do
+    put_operation '|1⟩', step: 0, bit: 0
+
+    hover_operation 'X', step: 1, bit: 0
+
+    assert_qubit_circles 2
+    assert_magnitudes 1, 0
+    assert_phases 0, 0
+  end
 end
