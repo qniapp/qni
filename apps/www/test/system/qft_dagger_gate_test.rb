@@ -38,13 +38,13 @@ class QftDaggerGateTest < ApplicationSystemTestCase
     qft_dagger_gate = palette('QFT†')
     qft_dagger_gate.hover
 
-    assert_outline(qft_dagger_gate)
+    assert_outline qft_dagger_gate
   end
 
   test 'grab' do
     qft_dagger_gate = palette('QFT†')
     grab qft_dagger_gate
 
-    assert_no_outline(qft_dagger_gate)
+    assert_no_outline qft_dagger_gate
   end
 end

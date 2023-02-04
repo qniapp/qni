@@ -38,13 +38,13 @@ class ZGateTest < ApplicationSystemTestCase
     z_gate = palette('Z')
     z_gate.hover
 
-    assert_outline(z_gate)
+    assert_outline z_gate
   end
 
   test 'grab' do
     z_gate = palette('Z')
     grab z_gate
 
-    assert_no_outline(z_gate)
+    assert_no_outline z_gate
   end
 end

@@ -251,6 +251,16 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     'rgba(0, 0, 0, 0)'
   end
 
+  def colors_white
+    'rgba(255, 255, 255, 1)'
+  end
+
+  def colors_emerald(number)
+    {
+      500 => 'rgba(16, 185, 129, 1)'
+    }.fetch(number)
+  end
+
   def colors_purple(number)
     {
       400 => 'rgba(192, 132, 252, 1)',

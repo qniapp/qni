@@ -134,13 +134,13 @@ class ControlGateTest < ApplicationSystemTestCase
     control_gate = palette('•')
     control_gate.hover
 
-    assert_outline(control_gate)
+    assert_outline control_gate
   end
 
   test 'grab' do
     control_gate = palette('•')
     grab control_gate
 
-    assert_no_outline(control_gate)
+    assert_no_outline control_gate
   end
 end

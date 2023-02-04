@@ -46,13 +46,13 @@ class RxGateTest < ApplicationSystemTestCase
     rx_gate = palette('Rx')
     rx_gate.hover
 
-    assert_outline(rx_gate)
+    assert_outline rx_gate
   end
 
   test 'grab' do
     rx_gate = palette('Rx')
     grab rx_gate
 
-    assert_no_outline(rx_gate)
+    assert_no_outline rx_gate
   end
 end

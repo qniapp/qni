@@ -38,13 +38,13 @@ class QftGateTest < ApplicationSystemTestCase
     qft_gate = palette('QFT')
     qft_gate.hover
 
-    assert_outline(qft_gate)
+    assert_outline qft_gate
   end
 
   test 'grab' do
     qft_gate = palette('QFT')
     grab qft_gate
 
-    assert_no_outline(qft_gate)
+    assert_no_outline qft_gate
   end
 end

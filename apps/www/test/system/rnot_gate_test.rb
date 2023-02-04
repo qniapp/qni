@@ -38,13 +38,13 @@ class RnotGateTest < ApplicationSystemTestCase
     rnot_gate = palette('√X')
     rnot_gate.hover
 
-    assert_outline(rnot_gate)
+    assert_outline rnot_gate
   end
 
   test 'grab' do
     rnot_gate = palette('√X')
     grab rnot_gate
 
-    assert_no_outline(rnot_gate)
+    assert_no_outline rnot_gate
   end
 end

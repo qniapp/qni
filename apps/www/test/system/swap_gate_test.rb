@@ -23,7 +23,7 @@ class SwapGateTest < ApplicationSystemTestCase
     swap_gate = palette('Swap')
     swap_gate.hover
 
-    assert_outline(swap_gate)
+    assert_outline swap_gate
   end
 
   test 'grab' do
@@ -33,6 +33,6 @@ class SwapGateTest < ApplicationSystemTestCase
     swap_gate = palette('Swap')
     grab swap_gate
 
-    assert_no_outline(swap_gate)
+    assert_no_outline swap_gate
   end
 end

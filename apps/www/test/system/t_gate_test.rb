@@ -38,13 +38,13 @@ class TGateTest < ApplicationSystemTestCase
     t_gate = palette('T')
     t_gate.hover
 
-    assert_outline(t_gate)
+    assert_outline t_gate
   end
 
   test 'grab' do
     t_gate = palette('T')
     grab t_gate
 
-    assert_no_outline(t_gate)
+    assert_no_outline t_gate
   end
 end

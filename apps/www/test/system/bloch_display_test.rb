@@ -26,13 +26,13 @@ class BlochDisplayTest < ApplicationSystemTestCase
     bloch_display = palette('Bloch')
     bloch_display.hover
 
-    assert_outline(bloch_display)
+    assert_outline bloch_display
   end
 
   test 'grab' do
     bloch_display = palette('Bloch')
     grab bloch_display
 
-    assert_no_outline(bloch_display)
+    assert_no_outline bloch_display
   end
 end

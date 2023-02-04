@@ -46,13 +46,13 @@ class RyGateTest < ApplicationSystemTestCase
     ry_gate = palette('Ry')
     ry_gate.hover
 
-    assert_outline(ry_gate)
+    assert_outline ry_gate
   end
 
   test 'grab' do
     ry_gate = palette('Ry')
     grab ry_gate
 
-    assert_no_outline(ry_gate)
+    assert_no_outline ry_gate
   end
 end
