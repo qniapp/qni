@@ -90,7 +90,7 @@ class RyGateTest < ApplicationSystemTestCase
 
     assert_qubit_circles 2
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
-    assert_phases(180, 0)
+    assert_phases 180, 0
   end
 
   #        π/2
@@ -104,6 +104,6 @@ class RyGateTest < ApplicationSystemTestCase
 
     assert_qubit_circles 2
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
-    assert_phases(180, 0)
+    assert_phases 180, 0
   end
 end

@@ -81,7 +81,7 @@ class YGateTest < ApplicationSystemTestCase
 
     assert_qubit_circles 2
     assert_magnitudes 1, 0
-    assert_phases(-90, 0)
+    assert_phases -90, 0
   end
 
   #       ┏━━━┓
@@ -94,6 +94,6 @@ class YGateTest < ApplicationSystemTestCase
 
     assert_qubit_circles 2
     assert_magnitudes 1, 0
-    assert_phases(-90, 0)
+    assert_phases -90, 0
   end
 end
