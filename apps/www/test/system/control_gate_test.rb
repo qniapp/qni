@@ -7,7 +7,35 @@ class ControlGateTest < ApplicationSystemTestCase
     visit circuit_path
     sleep 1
   end
-              
+
+  test 'the default state' do
+    control_gate = palette('•')
+
+    assert_body_background_color colors_transparent, control_gate
+    assert_icon_color colors_emerald(500), control_gate
+    assert_no_outline control_gate
+  end
+
+  test 'hover' do
+    control_gate = palette('•')
+
+    hover control_gate
+
+    assert_body_background_color colors_transparent, control_gate
+    assert_icon_color colors_emerald(500), control_gate
+    assert_outline control_gate
+  end
+
+  test 'grab' do
+    control_gate = palette('•')
+
+    grab control_gate
+
+    assert_body_background_color colors_purple(500), control_gate
+    assert_icon_color colors_white, control_gate
+    assert_no_outline control_gate
+  end
+
   # 
   # |0⟩─────●─────
   #            
@@ -128,19 +156,5 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_qubit_circles 8
     assert_magnitudes Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8)
     assert_phases 0, 0, 0, 0, 0, 0, 0, 180
-  end
-
-  test 'hover' do
-    control_gate = palette('•')
-    control_gate.hover
-
-    assert_outline control_gate
-  end
-
-  test 'grab' do
-    control_gate = palette('•')
-    grab control_gate
-
-    assert_no_outline control_gate
   end
 end
