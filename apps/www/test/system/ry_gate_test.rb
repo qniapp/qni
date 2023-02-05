@@ -14,6 +14,43 @@ class RyGateTest < ApplicationSystemTestCase
     assert_angle 'π/2', ry_gate
   end
 
+  # ┌───┐
+  # │ Ry│
+  # └───┘
+  test 'the default state' do
+    ry_gate = palette('Ry')
+
+    assert_body_background_color colors_emerald(500), ry_gate
+    assert_icon_color colors_white, ry_gate
+    assert_no_outline ry_gate
+  end
+
+  # ╔═══╗
+  # ║ Ry║
+  # ╚═══╝
+  test 'hover' do
+    ry_gate = palette('Ry')
+
+    hover ry_gate
+
+    assert_body_background_color colors_emerald(500), ry_gate
+    assert_icon_color colors_white, ry_gate
+    assert_outline ry_gate
+  end
+
+  # ┏━━━┓
+  # ┃ Ry┃
+  # ┗━━━┛
+  test 'grab' do
+    ry_gate = palette('Ry')
+
+    grab ry_gate
+
+    assert_body_background_color colors_purple(500), ry_gate
+    assert_icon_color colors_white, ry_gate
+    assert_no_outline ry_gate
+  end
+
   #        π/2
   #       ┌───┐
   # |0⟩───│ Ry│───
@@ -22,6 +59,20 @@ class RyGateTest < ApplicationSystemTestCase
     put_operation '|0>', step: 0, bit: 0
 
     put_operation 'Ry', step: 1, bit: 0
+
+    assert_qubit_circles 2
+    assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
+    assert_phases 0, 0
+  end
+
+  #        π/2
+  #       ┏━━━┓
+  # |0⟩───┃ Ry┃───
+  #       ┗━━━┛
+  test 'preview Ry|0>' do
+    put_operation '|0>', step: 0, bit: 0
+
+    hover_operation 'Ry', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
@@ -39,20 +90,20 @@ class RyGateTest < ApplicationSystemTestCase
 
     assert_qubit_circles 2
     assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
-    assert_phases 180, 0
+    assert_phases(180, 0)
   end
 
-  test 'hover' do
-    ry_gate = palette('Ry')
-    ry_gate.hover
+  #        π/2
+  #       ┏━━━┓
+  # |1⟩───┃ Ry┃───
+  #       ┗━━━┛
+  test 'preview Ry|1>' do
+    put_operation '|1>', step: 0, bit: 0
 
-    assert_outline ry_gate
-  end
+    hover_operation 'Ry', step: 1, bit: 0
 
-  test 'grab' do
-    ry_gate = palette('Ry')
-    grab ry_gate
-
-    assert_no_outline ry_gate
+    assert_qubit_circles 2
+    assert_magnitudes Math.sqrt(1.0 / 2), Math.sqrt(1.0 / 2)
+    assert_phases(180, 0)
   end
 end
