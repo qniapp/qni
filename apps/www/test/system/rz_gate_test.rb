@@ -3,53 +3,107 @@
 require 'application_system_test_case'
 
 class RzGateTest < ApplicationSystemTestCase
-  test 'the default angle' do
+  setup do
     visit circuit_path
+    sleep 1
+  end
 
-    rz_gate = put_operation('Rz', col: 0, row: 0)
+  test 'the default angle' do
+    rz_gate = put_operation('Rz', step: 0, bit: 0)
 
     assert_angle 'π/2', rz_gate
   end
 
-  test 'apply to |0>' do
-    visit circuit_path
-    put_operation '|0>', col: 0, row: 0
+  # ┌───┐
+  # │ Rz│
+  # └───┘
+  test 'the default state' do
+    rz_gate = palette('Rz')
 
-    put_operation 'Rz', col: 1, row: 0
+    assert_body_background_color colors_emerald(500), rz_gate
+    assert_icon_color colors_white, rz_gate
+    assert_no_outline rz_gate
+  end
+
+  # ╔═══╗
+  # ║ Rz║
+  # ╚═══╝
+  test 'hover' do
+    rz_gate = palette('Rz')
+
+    hover rz_gate
+
+    assert_body_background_color colors_emerald(500), rz_gate
+    assert_icon_color colors_white, rz_gate
+    assert_outline rz_gate
+  end
+
+  # ┏━━━┓
+  # ┃ Rz┃
+  # ┗━━━┛
+  test 'grab' do
+    rz_gate = palette('Rz')
+
+    grab rz_gate
+
+    assert_body_background_color colors_purple(500), rz_gate
+    assert_icon_color colors_white, rz_gate
+    assert_no_outline rz_gate
+  end
+
+  #        π/2
+  #       ┌───┐
+  # |0⟩───│ Rz│───
+  #       └───┘
+  test 'apply to |0>' do
+    put_operation '|0>', step: 0, bit: 0
+
+    put_operation 'Rz', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 1, 0
     assert_phases(-45, 0)
   end
 
-  test 'apply to |1>' do
-    visit circuit_path
-    put_operation '|1>', col: 0, row: 0
+  #        π/2
+  #       ┏━━━┓
+  # |0⟩───┃ Rz┃───
+  #       ┗━━━┛
+  test 'preview Rz|0>' do
+    put_operation '|0>', step: 0, bit: 0
 
-    put_operation 'Rz', col: 1, row: 0
+    hover_operation 'Rz', step: 1, bit: 0
+
+    assert_qubit_circles 2
+    assert_magnitudes 1, 0
+    assert_phases(-45, 0)
+  end
+
+  #        π/2
+  #       ┌───┐
+  # |1⟩───│ Rz│───
+  #       └───┘
+  test 'apply to |1>' do
+    put_operation '|1>', step: 0, bit: 0
+
+    put_operation 'Rz', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 0, 1
     assert_phases 0, 45
   end
 
-  test 'hover' do
-    visit circuit_path
-    sleep 1
+  #        π/2
+  #       ┏━━━┓
+  # |1⟩───┃ Rz┃───
+  #       ┗━━━┛
+  test 'preview Rz|1>' do
+    put_operation '|1>', step: 0, bit: 0
 
-    rz_gate = palette('Rz')
-    rz_gate.hover
+    hover_operation 'Rz', step: 1, bit: 0
 
-    assert_outline(rz_gate)
-  end
-
-  test 'grab' do
-    visit circuit_path
-    sleep 1
-
-    rz_gate = palette('Rz')
-    grab rz_gate
-
-    assert_no_outline(rz_gate)
+    assert_qubit_circles 2
+    assert_magnitudes 0, 1
+    assert_phases 0, 45
   end
 end

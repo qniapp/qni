@@ -3,10 +3,16 @@
 require 'application_system_test_case'
 
 class BlochDisplayTest < ApplicationSystemTestCase
-  test 'bloch display inspector' do
+  setup do
     visit circuit_path
+    sleep 1
+  end
 
-    bloch_display = put_operation('Bloch', col: 0, row: 0)
+  # ┌───┐
+  # │ B │
+  # └───┘
+  test 'bloch display inspector' do
+    bloch_display = put_operation('Bloch', step: 0, bit: 0)
     bloch_display.hover
 
     assert_popup <<~TEXT.chomp, bloch_display
@@ -17,22 +23,16 @@ class BlochDisplayTest < ApplicationSystemTestCase
   end
 
   test 'hover' do
-    visit circuit_path
-    sleep 1
-
     bloch_display = palette('Bloch')
     bloch_display.hover
 
-    assert_outline(bloch_display)
+    assert_outline bloch_display
   end
 
   test 'grab' do
-    visit circuit_path
-    sleep 1
-
     bloch_display = palette('Bloch')
     grab bloch_display
 
-    assert_no_outline(bloch_display)
+    assert_no_outline bloch_display
   end
 end

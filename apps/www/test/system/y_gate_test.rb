@@ -3,45 +3,97 @@
 require 'application_system_test_case'
 
 class YGateTest < ApplicationSystemTestCase
-  test 'apply to |0>' do
+  setup do
     visit circuit_path
-    put_operation '|0>', col: 0, row: 0
+    sleep 1
+  end
 
-    put_operation 'Y', col: 1, row: 0
+  # ┌───┐
+  # │ Y │
+  # └───┘
+  test 'the default state' do
+    y_gate = palette('Y')
+
+    assert_body_background_color colors_emerald(500), y_gate
+    assert_icon_color colors_white, y_gate
+    assert_no_outline y_gate
+  end
+
+  # ╔═══╗
+  # ║ Y ║
+  # ╚═══╝
+  test 'hover' do
+    y_gate = palette('Y')
+
+    hover y_gate
+
+    assert_body_background_color colors_emerald(500), y_gate
+    assert_icon_color colors_white, y_gate
+    assert_outline y_gate
+  end
+
+  # ┏━━━┓
+  # ┃ Y ┃
+  # ┗━━━┛
+  test 'grab' do
+    y_gate = palette('Y')
+
+    grab y_gate
+
+    assert_body_background_color colors_purple(500), y_gate
+    assert_icon_color colors_white, y_gate
+    assert_no_outline y_gate
+  end
+
+  #       ┌───┐
+  # |0⟩───│ Y │───
+  #       └───┘
+  test 'apply to |0⟩' do
+    put_operation '|0⟩', step: 0, bit: 0
+
+    put_operation 'Y', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 0, 1
     assert_phases 0, 90
   end
 
-  test 'apply to |1>' do
-    visit circuit_path
-    put_operation '|1>', col: 0, row: 0
+  #       ┏━━━┓
+  # |0⟩───┃ Y ┃───
+  #       ┗━━━┛
+  test 'preview Y|0⟩' do
+    put_operation '|0⟩', step: 0, bit: 0
 
-    put_operation 'Y', col: 1, row: 0
+    hover_operation 'Y', step: 1, bit: 0
+
+    assert_qubit_circles 2
+    assert_magnitudes 0, 1
+    assert_phases 0, 90
+  end
+
+  #       ┌───┐
+  # |1⟩───│ Y │───
+  #       └───┘
+  test 'apply to |1⟩' do
+    put_operation '|1⟩', step: 0, bit: 0
+
+    put_operation 'Y', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 1, 0
-    assert_phases(-90, 0)
+    assert_phases -90, 0
   end
 
-  test 'hover' do
-    visit circuit_path
-    sleep 1
+  #       ┏━━━┓
+  # |1⟩───┃ Y ┃───
+  #       ┗━━━┛
+  test 'preview Y|1⟩' do
+    put_operation '|1⟩', step: 0, bit: 0
 
-    y_gate = palette('Y')
-    y_gate.hover
+    hover_operation 'Y', step: 1, bit: 0
 
-    assert_outline(y_gate)
-  end
-
-  test 'grab' do
-    visit circuit_path
-    sleep 1
-
-    y_gate = palette('Y')
-    grab y_gate
-
-    assert_no_outline(y_gate)
+    assert_qubit_circles 2
+    assert_magnitudes 1, 0
+    assert_phases -90, 0
   end
 end

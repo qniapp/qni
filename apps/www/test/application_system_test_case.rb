@@ -36,7 +36,19 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     outline_el = shadow_root(qpu_operation).find_element(css: '[part="outline"]')
 
     assert_not_nil outline_el
-    assert !outline_el.displayed?
+    assert_not outline_el.displayed?
+  end
+
+  def assert_body_background_color(color, operation)
+    body_part = shadow_root(operation).find_element(css: '[part="body"]')
+
+    assert_equal color, body_part.css_value('background-color')
+  end
+
+  def assert_icon_color(color, operation)
+    icon_part = shadow_root(operation).find_element(css: '[part="icon"]')
+
+    assert_equal color, icon_part.css_value('color')
   end
 
   def assert_enabled(operation)
@@ -64,20 +76,20 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert_not_nil dropzone['data-connect-top']
   end
 
-  def assert_input_wire_quantum(dropzone)
-    assert_equal '', dropzone['data-input-wire-quantum']
+  def assert_input_wire_quantum(step:, bit:)
+    assert_equal '', dropzone(step, bit)['data-input-wire-quantum']
   end
 
-  def assert_input_wire_classical(dropzone)
-    assert_nil dropzone['data-input-wire-quantum']
+  def assert_input_wire_classical(step:, bit:)
+    assert_nil dropzone(step, bit)['data-input-wire-quantum']
   end
 
-  def assert_output_wire_quantum(dropzone)
-    assert_equal '', dropzone['data-output-wire-quantum']
+  def assert_output_wire_quantum(step:, bit:)
+    assert_equal '', dropzone(step, bit)['data-output-wire-quantum']
   end
 
-  def assert_output_wire_classical(dropzone)
-    assert_nil dropzone['data-output-wire-quantum']
+  def assert_output_wire_classical(step:, bit:)
+    assert_nil dropzone(step, bit)['data-output-wire-quantum']
   end
 
   def assert_popup(text, element)
@@ -124,16 +136,20 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     element.drag_to(to, html5: false)
   end
 
-  def put_operation(name, col:, row:)
+  def put_operation(name, step:, bit:)
     operation = palette(name)
 
     page.driver.browser.action
         .move_to(operation.native, 0, 0)
         .click_and_hold
         .perform
-    operation.drag_to dropzone(col, row), html5: false
+    operation.drag_to dropzone(step, bit), html5: false
 
     operation
+  end
+
+  def hover(operation)
+    operation.hover
   end
 
   def grab(operation)
@@ -144,8 +160,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   # rubocop:disable Metrics/AbcSize
-  def hover_circuit_operation(name, col:, row:)
-    dropzone = dropzone(col, row)
+  def hover_operation(name, step:, bit:)
+    dropzone = dropzone(step, bit)
 
     page.driver.browser.action
         .move_to(palette(name).native, 0, 0)
@@ -179,7 +195,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       '•' => 'control-gate',
       'Bloch' => 'bloch-display',
       '|0>' => 'write-gate[data-value="0"]',
+      '|0⟩' => 'write-gate[data-value="0"]',
       '|1>' => 'write-gate[data-value="1"]',
+      '|1⟩' => 'write-gate[data-value="1"]',
       'Measure' => 'measurement-gate'
     }.fetch(name)
   rescue KeyError
@@ -227,6 +245,27 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     host = Capybara.current_session.server.host
     port = Capybara.current_session.server.port
     "http://#{host}:#{port}"
+  end
+
+  def colors_transparent
+    'rgba(0, 0, 0, 0)'
+  end
+
+  def colors_white
+    'rgba(255, 255, 255, 1)'
+  end
+
+  def colors_emerald(number)
+    {
+      500 => 'rgba(16, 185, 129, 1)'
+    }.fetch(number)
+  end
+
+  def colors_purple(number)
+    {
+      400 => 'rgba(192, 132, 252, 1)',
+      500 => 'rgba(168, 85, 247, 1)'
+    }.fetch(number)
   end
 
   private

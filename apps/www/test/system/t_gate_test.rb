@@ -3,45 +3,97 @@
 require 'application_system_test_case'
 
 class TGateTest < ApplicationSystemTestCase
-  test 'apply to |0>' do
+  setup do
     visit circuit_path
-    put_operation '|0>', col: 0, row: 0
+    sleep 1
+  end
 
-    put_operation 'T', col: 1, row: 0
+  # ┌───┐
+  # │ T │
+  # └───┘
+  test 'the default state' do
+    t_gate = palette('T')
+
+    assert_body_background_color colors_emerald(500), t_gate
+    assert_icon_color colors_white, t_gate
+    assert_no_outline t_gate
+  end
+
+  # ╔═══╗
+  # ║ T ║
+  # ╚═══╝
+  test 'hover' do
+    t_gate = palette('T')
+
+    hover t_gate
+
+    assert_body_background_color colors_emerald(500), t_gate
+    assert_icon_color colors_white, t_gate
+    assert_outline t_gate
+  end
+
+  # ┏━━━┓
+  # ┃ T ┃
+  # ┗━━━┛
+  test 'grab' do
+    t_gate = palette('T')
+
+    grab t_gate
+
+    assert_body_background_color colors_purple(500), t_gate
+    assert_icon_color colors_white, t_gate
+    assert_no_outline t_gate
+  end
+
+  #       ┌───┐
+  # |0⟩───│ T │───
+  #       └───┘
+  test 'apply to |0>' do
+    put_operation '|0>', step: 0, bit: 0
+
+    put_operation 'T', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 1, 0
     assert_phases 0, 0
   end
 
-  test 'apply to |1>' do
-    visit circuit_path
-    put_operation '|1>', col: 0, row: 0
+  #       ┏━━━┓
+  # |0⟩───┃ T ┃───
+  #       ┗━━━┛
+  test 'preview T|0>' do
+    put_operation '|0>', step: 0, bit: 0
 
-    put_operation 'T', col: 1, row: 0
+    hover_operation 'T', step: 1, bit: 0
+
+    assert_qubit_circles 2
+    assert_magnitudes 1, 0
+    assert_phases 0, 0
+  end
+
+  #       ┌───┐
+  # |1⟩───│ T │───
+  #       └───┘
+  test 'apply to |1>' do
+    put_operation '|1>', step: 0, bit: 0
+
+    put_operation 'T', step: 1, bit: 0
 
     assert_qubit_circles 2
     assert_magnitudes 0, 1
     assert_phases 0, 45
   end
 
-  test 'hover' do
-    visit circuit_path
-    sleep 1
+  #       ┏━━━┓
+  # |1⟩───┃ T ┃───
+  #       ┗━━━┛
+  test 'preview T|1>' do
+    put_operation '|1>', step: 0, bit: 0
 
-    t_gate = palette('T')
-    t_gate.hover
+    hover_operation 'T', step: 1, bit: 0
 
-    assert_outline(t_gate)
-  end
-
-  test 'grab' do
-    visit circuit_path
-    sleep 1
-
-    t_gate = palette('T')
-    grab t_gate
-
-    assert_no_outline(t_gate)
+    assert_qubit_circles 2
+    assert_magnitudes 0, 1
+    assert_phases 0, 45
   end
 end
