@@ -51,9 +51,7 @@
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
     "@github/prettier-config": "^0.0.4",
-    "@rollup/plugin-commonjs": "^18",
-    "@rollup/plugin-replace": "^3.0.1",
-    "@web/dev-server-rollup": "^0.3.14",
+    "@web/dev-server-rollup": "~0.3",
     "@web/test-runner": "^0.13.25",
     "postcss-flexbugs-fixes": "^5.0.2",
     "rollup-plugin-postcss": "^4.0.2"
