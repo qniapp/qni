@@ -445,6 +445,7 @@ video {
   --tw-ring-color: #2563eb;
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: /*!*/ /*!*/ 0 0 0 0px #fff, /*!*/ /*!*/ 0 0 0 calc(1px + 0px) #2563eb, var(--tw-shadow);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   border-color: #2563eb;
 }
@@ -487,12 +488,13 @@ select {
   background-image: initial;
   background-position: 0 0;
   background-position: initial;
-  background-repeat: unset;
+  background-repeat: repeat;
+  background-repeat: initial;
   background-size: auto auto;
   background-size: initial;
   padding-right: 0.75rem;
-  -webkit-print-color-adjust: unset;
-          print-color-adjust: unset;
+  -webkit-print-color-adjust: inherit;
+          print-color-adjust: inherit;
 }
 
 [type='checkbox'],[type='radio'] {
@@ -535,6 +537,7 @@ select {
   --tw-ring-color: #2563eb;
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: /*!*/ /*!*/ 0 0 0 2px #fff, /*!*/ /*!*/ 0 0 0 calc(2px + 2px) #2563eb, var(--tw-shadow);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 }
 
@@ -574,12 +577,13 @@ select {
 }
 
 [type='file'] {
-  background: unset;
+  background: transparent none repeat 0 0 / auto auto padding-box border-box scroll;
+  background: initial;
   border-color: inherit;
   border-width: 0;
   border-radius: 0;
   padding: 0;
-  font-size: unset;
+  font-size: inherit;
   line-height: inherit;
 }
 
@@ -1622,6 +1626,7 @@ video {
   --tw-ring-color: #2563eb;
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-empty, ) 0 0 0 0px #fff, var(--tw-empty, ) 0 0 0 calc(1px + 0px) #2563eb, var(--tw-shadow);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   border-color: #2563eb;
 }
@@ -1664,12 +1669,13 @@ select {
   background-image: initial;
   background-position: 0 0;
   background-position: initial;
-  background-repeat: unset;
+  background-repeat: repeat;
+  background-repeat: initial;
   background-size: auto auto;
   background-size: initial;
   padding-right: 0.75rem;
   -webkit-print-color-adjust: unset;
-  print-color-adjust: unset;
+  print-color-adjust: inherit;
 }
 
 [type='checkbox'],[type='radio'] {
@@ -1684,7 +1690,7 @@ select {
   background-origin: border-box;
   -webkit-user-select: none;
   -moz-user-select: none;
-      user-select: none;
+  user-select: none;
   flex-shrink: 0;
   height: 1rem;
   width: 1rem;
@@ -1712,6 +1718,7 @@ select {
   --tw-ring-color: #2563eb;
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-empty, ) 0 0 0 2px #fff, var(--tw-empty, ) 0 0 0 calc(2px + 2px) #2563eb, var(--tw-shadow);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 }
 
@@ -1751,12 +1758,13 @@ select {
 }
 
 [type='file'] {
-  background: unset;
+  background: transparent none repeat 0 0 / auto auto padding-box border-box scroll;
+  background: initial;
   border-color: inherit;
   border-width: 0;
   border-radius: 0;
   padding: 0;
-  font-size: unset;
+  font-size: inherit;
   line-height: inherit;
 }
 
@@ -2192,12 +2200,15 @@ select {
 
 .tippy-box[data-theme~='qni'] {
   --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / 1);
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   border-width: 2px;
   border-style: solid;
   --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / 1);
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
   --tw-text-opacity: 1;
+  color: rgb(55 65 81 / 1);
   color: rgb(55 65 81 / var(--tw-text-opacity));
   font-size: 0.75rem;
   line-height: 1rem;
@@ -2249,8 +2260,10 @@ select {
 .tippy-box[data-theme~='operation-inspector'] {
   border-radius: 1rem;
   --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / 1);
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   --tw-drop-shadow: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
@@ -2260,6 +2273,7 @@ angle-slider {
   margin: 0.5rem;
   border-radius: 0.25rem;
   --tw-bg-opacity: 1;
+  background-color: rgb(212 212 212 / 1);
   background-color: rgb(212 212 212 / var(--tw-bg-opacity));
 }
 
@@ -2271,11 +2285,13 @@ angle-slider::before {
   margin-top: -0.625rem;
   margin-left: -0.75rem;
   --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / 1);
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
   border-radius: 9999px;
   background-clip: padding-box;
   box-sizing: content-box;
   border-width: 4px;
+  border-color: rgb(23 23 23 / 0.1);
   border-color: rgb(23 23 23 / var(--tw-border-opacity));
   --tw-border-opacity: 0.1;
 }
@@ -2286,6 +2302,7 @@ angle-slider:hover::before {
 
 operation-inspector[data-conditional-gate-pane-disabled] #conditional-gate-pane h1 {
   --tw-text-opacity: 1;
+  color: rgb(209 213 219 / 1);
   color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
@@ -2295,6 +2312,7 @@ operation-inspector[data-conditional-gate-pane-disabled] #conditional-gate-pane 
 
 operation-inspector[data-angle-pane-disabled] #angle-pane h1 {
   --tw-text-opacity: 1;
+  color: rgb(209 213 219 / 1);
   color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
@@ -2304,6 +2322,7 @@ operation-inspector[data-angle-pane-disabled] #angle-pane .pane-body {
 
 operation-inspector[data-conditional-flag-pane-disabled] #conditional-flag-pane h1 {
   --tw-text-opacity: 1;
+  color: rgb(209 213 219 / 1);
   color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
@@ -2313,6 +2332,7 @@ operation-inspector[data-conditional-flag-pane-disabled] #conditional-flag-pane 
 
 .operation-menu button:disabled {
   --tw-text-opacity: 1;
+  color: rgb(209 213 219 / 1);
   color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
@@ -2321,7 +2341,6 @@ operation-inspector[data-conditional-flag-pane-disabled] #conditional-flag-pane 
 }
 
 run-circuit-button {
-  background-color: #a855f7;
   background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
@@ -2356,12 +2375,14 @@ run-circuit-button::part(tail-spin-icon) {
   display: none;
   stroke: currentColor;
   --tw-text-opacity: 1;
+  color: rgb(55 65 81 / 1);
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 @media (min-width: 640px) {
   run-circuit-button::part(tail-spin-icon) {
     --tw-text-opacity: 1;
+    color: rgb(255 255 255 / 1);
     color: rgb(255 255 255 / var(--tw-text-opacity));
   }
 }
@@ -2386,6 +2407,7 @@ run-circuit-button.run-circuit-button--mobile::part(ripple) {
 
 .tippy-box[data-theme~='tooltip'] {
   --tw-bg-opacity: 1;
+  background-color: rgb(24 24 27 / 1);
   background-color: rgb(24 24 27 / var(--tw-bg-opacity));
   border-radius: 0.5rem;
 }
@@ -2399,21 +2421,25 @@ run-circuit-button.run-circuit-button--mobile::part(ripple) {
 
 .tippy-box[data-theme~='tooltip'][data-placement^='top'] > .tippy-arrow::before {
   --tw-border-opacity: 1;
+  border-top-color: rgb(24 24 27 / 1);
   border-top-color: rgb(24 24 27 / var(--tw-border-opacity));
 }
 
 .tippy-box[data-theme~='tooltip'][data-placement^='bottom'] > .tippy-arrow::before {
   --tw-border-opacity: 1;
+  border-bottom-color: rgb(24 24 27 / 1);
   border-bottom-color: rgb(24 24 27 / var(--tw-border-opacity));
 }
 
 .tippy-box[data-theme~='tooltip'][data-placement^='left'] > .tippy-arrow::before {
   --tw-border-opacity: 1;
+  border-left-color: rgb(24 24 27 / 1);
   border-left-color: rgb(24 24 27 / var(--tw-border-opacity));
 }
 
 .tippy-box[data-theme~='tooltip'][data-placement^='right'] > .tippy-arrow::before {
   --tw-border-opacity: 1;
+  border-right-color: rgb(24 24 27 / 1);
   border-right-color: rgb(24 24 27 / var(--tw-border-opacity));
 }
 
@@ -2423,6 +2449,7 @@ run-circuit-button.run-circuit-button--mobile::part(ripple) {
   font-size: 1.125rem;
   line-height: 1.75rem;
   --tw-text-opacity: 1;
+  color: rgb(255 255 255 / 1);
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
@@ -2431,6 +2458,7 @@ run-circuit-button.run-circuit-button--mobile::part(ripple) {
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-text-opacity: 1;
+  color: rgb(228 228 231 / 1);
   color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
@@ -2450,18 +2478,14 @@ anti-control-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 anti-control-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -2471,18 +2495,13 @@ anti-control-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -2491,19 +2510,16 @@ palette-dropzone anti-control-gate[data-hoverable]:not([data-grabbed]):hover::pa
     quantum-circuit:not([data-editing]) anti-control-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 anti-control-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 anti-control-gate::part(body) {
-  border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
 }
@@ -2518,12 +2534,10 @@ anti-control-gate[data-grabbed]:not([data-snapped]) {
 
 anti-control-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 anti-control-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -2558,12 +2572,10 @@ circuit-dropzone anti-control-gate:not([data-snapped])::part(body)::before {
 
 anti-control-gate::part(icon) {
   color: #10b981;
-  color: #10b981;
   color: var(--qni-semantic-fill-color-primary);
 }
 
 anti-control-gate[data-disabled]:not([data-grabbed])::part(icon) {
-  color: #71717a;
   color: #71717a;
   color: var(--qni-semantic-fill-color-disabled);
 }
@@ -2572,18 +2584,14 @@ bloch-display {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 bloch-display::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -2593,18 +2601,13 @@ bloch-display::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -2613,13 +2616,11 @@ palette-dropzone bloch-display[data-hoverable]:not([data-grabbed]):hover::part(o
     quantum-circuit:not([data-editing]) bloch-display[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 bloch-display[data-active]::part(outline) {
   display: block;
-  outline: 2px solid #0ea5e9;
   outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
@@ -2634,12 +2635,10 @@ bloch-display[data-grabbed]:not([data-snapped]) {
 
 bloch-display[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 bloch-display[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -2700,23 +2699,28 @@ bloch-display[data-size='xl']::part(perspective) {
 bloch-display::part(sphere-border) {
   border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / 1);
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
+  background-color: rgb(240 253 244 / 1);
   background-color: rgb(240 253 244 / var(--tw-bg-opacity));
 }
 
 bloch-display[data-grabbed]::part(sphere-border) {
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / 1);
   border-color: rgb(168 85 247 / var(--tw-border-opacity));
 }
 
 bloch-display::part(sphere-lines) {
   --tw-text-opacity: 1;
+  color: rgb(156 163 175 / 1);
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 bloch-display::part(vector-line-rect) {
   --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / 1);
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 
@@ -2724,11 +2728,13 @@ bloch-display::part(vector-line-rect) {
 
 bloch-display::part(vector-end-circle) {
   --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / 1);
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 bloch-display[data-d='0']::part(vector-end-circle) {
   --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / 1);
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
@@ -2810,20 +2816,24 @@ circuit-dropzone::part(wires) {
   width: 100%;
   overflow: visible;
   transform-origin: center;
+  transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @media (min-width: 640px) {
   circuit-dropzone::part(wires) {
     --tw-rotate: 0deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(0deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
 
 circuit-step.no-rotation circuit-dropzone::part(wires) {
   --tw-rotate: 0deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(0deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -2834,12 +2844,14 @@ circuit-dropzone[data-shadow]::part(wires) {
 circuit-dropzone::part(connect-top),
   circuit-dropzone::part(connect-bottom) {
   --tw-text-opacity: 1;
+  color: rgb(16 185 129 / 1);
   color: rgb(16 185 129 / var(--tw-text-opacity));
 }
 
 circuit-dropzone::part(wire-input),
   circuit-dropzone::part(wire-output) {
   --tw-text-opacity: 1;
+  color: rgb(229 229 229 / 1);
   color: rgb(229 229 229 / var(--tw-text-opacity));
 }
 
@@ -2873,6 +2885,7 @@ circuit-dropzone[data-connect-bottom]::part(connect-bottom) {
 circuit-dropzone[data-input-wire-quantum]::part(wire-input),
   circuit-dropzone[data-output-wire-quantum]::part(wire-output) {
   --tw-text-opacity: 1;
+  color: rgb(23 23 23 / 1);
   color: rgb(23 23 23 / var(--tw-text-opacity));
 }
 
@@ -2924,10 +2937,14 @@ circuit-step {
 }
 
 circuit-step > :not([hidden]) ~ :not([hidden]) {
+  margin-right: calc(1rem * 1);
   margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - 1));
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
   --tw-space-y-reverse: 0;
+  margin-top: calc(0px * calc(1 - 0));
   margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0px * 0);
   margin-bottom: calc(0px * var(--tw-space-y-reverse));
   --tw-space-x-reverse: 1;
 }
@@ -2935,10 +2952,14 @@ circuit-step > :not([hidden]) ~ :not([hidden]) {
 @media (min-width: 640px) {
   circuit-step > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 0;
+    margin-right: calc(0px * 0);
     margin-right: calc(0px * var(--tw-space-x-reverse));
+    margin-left: calc(0px * calc(1 - 0));
     margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
     --tw-space-y-reverse: 0;
+    margin-top: calc(1rem * calc(1 - 0));
     margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(1rem * 0);
     margin-bottom: calc(1rem * var(--tw-space-y-reverse));
   }
 }
@@ -2966,7 +2987,9 @@ circuit-step.no-rotation {
 
 circuit-step.no-rotation > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
+  margin-right: calc(0px * 0);
   margin-right: calc(0px * var(--tw-space-x-reverse));
+  margin-left: calc(0px * calc(1 - 0));
   margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
 }
 
@@ -3006,7 +3029,6 @@ circuit-step[data-shadow]::after {
 }
 
 circuit-step::after {
-  background-color: #0ea5e9;
   background-color: #0ea5e9;
   background-color: var(--qni-semantic-fill-color-on);
   position: absolute;
@@ -3078,18 +3100,14 @@ control-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 control-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -3099,18 +3117,13 @@ control-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -3119,19 +3132,16 @@ palette-dropzone control-gate[data-hoverable]:not([data-grabbed]):hover::part(ou
     quantum-circuit:not([data-editing]) control-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 control-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 control-gate::part(body) {
-  border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
 }
@@ -3146,12 +3156,10 @@ control-gate[data-grabbed]:not([data-snapped]) {
 
 control-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 control-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -3186,12 +3194,10 @@ circuit-dropzone control-gate:not([data-snapped])::part(body)::before {
 
 control-gate::part(icon) {
   color: #10b981;
-  color: #10b981;
   color: var(--qni-semantic-fill-color-primary);
 }
 
 control-gate[data-disabled]:not([data-grabbed])::part(icon) {
-  color: #71717a;
   color: #71717a;
   color: var(--qni-semantic-fill-color-disabled);
 }
@@ -3200,18 +3206,14 @@ h-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 h-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -3221,18 +3223,13 @@ h-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -3241,34 +3238,28 @@ palette-dropzone h-gate[data-hoverable]:not([data-grabbed]):hover::part(outline)
     quantum-circuit:not([data-editing]) h-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 h-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 h-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 h-gate::part(body) {
   border-radius: 0.25rem;
-  border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 h-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -3283,12 +3274,10 @@ h-gate[data-grabbed]:not([data-snapped]) {
 
 h-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 h-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -3379,18 +3368,14 @@ measurement-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 measurement-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -3400,18 +3385,13 @@ measurement-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -3420,19 +3400,16 @@ palette-dropzone measurement-gate[data-hoverable]:not([data-grabbed]):hover::par
     quantum-circuit:not([data-editing]) measurement-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 measurement-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 measurement-gate::part(body) {
-  border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
 }
@@ -3447,12 +3424,10 @@ measurement-gate[data-grabbed]:not([data-snapped]) {
 
 measurement-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 measurement-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -3525,20 +3500,22 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) measurement-gate[d
 
 measurement-gate::part(icon) {
   color: #a855f7;
-  color: #a855f7;
   color: var(--qni-semantic-color-intermediate);
 }
 
 circuit-dropzone measurement-gate[data-snapped]::part(icon) {
   transform-origin: center;
+  transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @media (min-width: 640px) {
   circuit-dropzone measurement-gate[data-snapped]::part(icon) {
     --tw-rotate: 0deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(0deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
@@ -3546,6 +3523,7 @@ circuit-dropzone measurement-gate[data-snapped]::part(icon) {
 measurement-gate[data-value='0']::part(icon),
   measurement-gate[data-value='1']::part(icon) {
   --tw-text-opacity: 1;
+  color: rgb(228 228 231 / 1);
   color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
@@ -3559,14 +3537,17 @@ measurement-gate::part(value) {
 
 circuit-dropzone measurement-gate[data-snapped]::part(value) {
   transform-origin: center;
+  transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @media (min-width: 640px) {
   circuit-dropzone measurement-gate[data-snapped]::part(value) {
     --tw-rotate: 0deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(0deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
@@ -3584,12 +3565,14 @@ measurement-gate::part(value)::after {
 
 measurement-gate[data-value='0']::part(value)::after {
   --tw-text-opacity: 1;
+  color: rgb(239 68 68 / 1);
   color: rgb(239 68 68 / var(--tw-text-opacity));
   content: '0';
 }
 
 measurement-gate[data-value='1']::part(value)::after {
   --tw-text-opacity: 1;
+  color: rgb(59 130 246 / 1);
   color: rgb(59 130 246 / var(--tw-text-opacity));
   content: '1';
 }
@@ -3598,17 +3581,18 @@ measurement-gate[data-value='1']::part(value)::after {
 
 measurement-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 measurement-gate[data-grabbed]::part(icon) {
   --tw-text-opacity: 1;
+  color: rgb(192 132 252 / 1);
   color: rgb(192 132 252 / var(--tw-text-opacity));
 }
 
 measurement-gate[data-grabbed]::part(value)::after {
   --tw-text-opacity: 1;
+  color: rgb(255 255 255 / 1);
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
@@ -3623,18 +3607,14 @@ phase-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 phase-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -3644,18 +3624,13 @@ phase-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -3664,34 +3639,28 @@ palette-dropzone phase-gate[data-hoverable]:not([data-grabbed]):hover::part(outl
     quantum-circuit:not([data-editing]) phase-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 phase-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 phase-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 phase-gate::part(body) {
   border-radius: 9999px;
-  border-radius: 9999px;
   border-radius: var(--qni-semantic-radius-circular);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 phase-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -3706,12 +3675,10 @@ phase-gate[data-grabbed]:not([data-snapped]) {
 
 phase-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 phase-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -3853,31 +3820,24 @@ qft-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 qft-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
   border-radius: 0.25rem;
-  border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 qft-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -3886,18 +3846,13 @@ qft-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -3906,19 +3861,16 @@ palette-dropzone qft-gate[data-hoverable]:not([data-grabbed]):hover::part(outlin
     quantum-circuit:not([data-editing]) qft-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 qft-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 qft-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
@@ -3937,16 +3889,10 @@ qft-gate[data-span='2'] {
   width: calc(
     2rem * 2 + 1rem
   );
-  width: calc(
-    2rem * 2 + 1rem
-  );
   width: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
 qft-gate[data-span='2']::part(body) {
-  width: calc(
-    2rem * 2 + 1rem
-  );
   width: calc(
     2rem * 2 + 1rem
   );
@@ -3956,11 +3902,7 @@ qft-gate[data-span='2']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='2'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 2 + 1rem
-  );
     height: calc(
     2rem * 2 + 1rem
   );
@@ -3969,11 +3911,7 @@ qft-gate[data-span='2']::part(body) {
 
   qft-gate[data-span='2']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 2 + 1rem
-  );
     height: calc(
     2rem * 2 + 1rem
   );
@@ -3982,11 +3920,7 @@ qft-gate[data-span='2']::part(body) {
 
   qft-gate[data-span='2'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 2 + 1rem
-  );
     height: calc(
     2rem * 2 + 1rem
   );
@@ -3995,11 +3929,7 @@ qft-gate[data-span='2']::part(body) {
 
   qft-gate[data-span='2']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 2 + 1rem
-  );
     height: calc(
     2rem * 2 + 1rem
   );
@@ -4011,16 +3941,10 @@ qft-gate[data-span='3'] {
   width: calc(
     2rem * 3 + 1rem * 2
   );
-  width: calc(
-    2rem * 3 + 1rem * 2
-  );
   width: var(--qni-semantic-size-qpu-operation-3qubit);
 }
 
 qft-gate[data-span='3']::part(body) {
-  width: calc(
-    2rem * 3 + 1rem * 2
-  );
   width: calc(
     2rem * 3 + 1rem * 2
   );
@@ -4030,11 +3954,7 @@ qft-gate[data-span='3']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='3'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 3 + 1rem * 2
-  );
     height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -4043,11 +3963,7 @@ qft-gate[data-span='3']::part(body) {
 
   qft-gate[data-span='3']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 3 + 1rem * 2
-  );
     height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -4056,11 +3972,7 @@ qft-gate[data-span='3']::part(body) {
 
   qft-gate[data-span='3'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 3 + 1rem * 2
-  );
     height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -4069,11 +3981,7 @@ qft-gate[data-span='3']::part(body) {
 
   qft-gate[data-span='3']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 3 + 1rem * 2
-  );
     height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -4085,16 +3993,10 @@ qft-gate[data-span='4'] {
   width: calc(
     2rem * 4 + 1rem * 3
   );
-  width: calc(
-    2rem * 4 + 1rem * 3
-  );
   width: var(--qni-semantic-size-qpu-operation-4qubit);
 }
 
 qft-gate[data-span='4']::part(body) {
-  width: calc(
-    2rem * 4 + 1rem * 3
-  );
   width: calc(
     2rem * 4 + 1rem * 3
   );
@@ -4104,11 +4006,7 @@ qft-gate[data-span='4']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='4'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 4 + 1rem * 3
-  );
     height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -4117,11 +4015,7 @@ qft-gate[data-span='4']::part(body) {
 
   qft-gate[data-span='4']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 4 + 1rem * 3
-  );
     height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -4130,11 +4024,7 @@ qft-gate[data-span='4']::part(body) {
 
   qft-gate[data-span='4'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 4 + 1rem * 3
-  );
     height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -4143,11 +4033,7 @@ qft-gate[data-span='4']::part(body) {
 
   qft-gate[data-span='4']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 4 + 1rem * 3
-  );
     height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -4159,16 +4045,10 @@ qft-gate[data-span='5'] {
   width: calc(
     2rem * 5 + 1rem * 4
   );
-  width: calc(
-    2rem * 5 + 1rem * 4
-  );
   width: var(--qni-semantic-size-qpu-operation-5qubit);
 }
 
 qft-gate[data-span='5']::part(body) {
-  width: calc(
-    2rem * 5 + 1rem * 4
-  );
   width: calc(
     2rem * 5 + 1rem * 4
   );
@@ -4178,11 +4058,7 @@ qft-gate[data-span='5']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='5'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 5 + 1rem * 4
-  );
     height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -4191,11 +4067,7 @@ qft-gate[data-span='5']::part(body) {
 
   qft-gate[data-span='5']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 5 + 1rem * 4
-  );
     height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -4204,11 +4076,7 @@ qft-gate[data-span='5']::part(body) {
 
   qft-gate[data-span='5'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 5 + 1rem * 4
-  );
     height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -4217,11 +4085,7 @@ qft-gate[data-span='5']::part(body) {
 
   qft-gate[data-span='5']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 5 + 1rem * 4
-  );
     height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -4233,16 +4097,10 @@ qft-gate[data-span='6'] {
   width: calc(
     2rem * 6 + 1rem * 5
   );
-  width: calc(
-    2rem * 6 + 1rem * 5
-  );
   width: var(--qni-semantic-size-qpu-operation-6qubit);
 }
 
 qft-gate[data-span='6']::part(body) {
-  width: calc(
-    2rem * 6 + 1rem * 5
-  );
   width: calc(
     2rem * 6 + 1rem * 5
   );
@@ -4252,11 +4110,7 @@ qft-gate[data-span='6']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='6'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 6 + 1rem * 5
-  );
     height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -4265,11 +4119,7 @@ qft-gate[data-span='6']::part(body) {
 
   qft-gate[data-span='6']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 6 + 1rem * 5
-  );
     height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -4278,11 +4128,7 @@ qft-gate[data-span='6']::part(body) {
 
   qft-gate[data-span='6'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 6 + 1rem * 5
-  );
     height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -4291,11 +4137,7 @@ qft-gate[data-span='6']::part(body) {
 
   qft-gate[data-span='6']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 6 + 1rem * 5
-  );
     height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -4307,16 +4149,10 @@ qft-gate[data-span='7'] {
   width: calc(
     2rem * 7 + 1rem * 6
   );
-  width: calc(
-    2rem * 7 + 1rem * 6
-  );
   width: var(--qni-semantic-size-qpu-operation-7qubit);
 }
 
 qft-gate[data-span='7']::part(body) {
-  width: calc(
-    2rem * 7 + 1rem * 6
-  );
   width: calc(
     2rem * 7 + 1rem * 6
   );
@@ -4326,11 +4162,7 @@ qft-gate[data-span='7']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='7'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 7 + 1rem * 6
-  );
     height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -4339,11 +4171,7 @@ qft-gate[data-span='7']::part(body) {
 
   qft-gate[data-span='7']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 7 + 1rem * 6
-  );
     height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -4352,11 +4180,7 @@ qft-gate[data-span='7']::part(body) {
 
   qft-gate[data-span='7'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 7 + 1rem * 6
-  );
     height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -4365,11 +4189,7 @@ qft-gate[data-span='7']::part(body) {
 
   qft-gate[data-span='7']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 7 + 1rem * 6
-  );
     height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -4381,16 +4201,10 @@ qft-gate[data-span='8'] {
   width: calc(
     2rem * 8 + 1rem * 7
   );
-  width: calc(
-    2rem * 8 + 1rem * 7
-  );
   width: var(--qni-semantic-size-qpu-operation-8qubit);
 }
 
 qft-gate[data-span='8']::part(body) {
-  width: calc(
-    2rem * 8 + 1rem * 7
-  );
   width: calc(
     2rem * 8 + 1rem * 7
   );
@@ -4400,11 +4214,7 @@ qft-gate[data-span='8']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='8'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 8 + 1rem * 7
-  );
     height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -4413,11 +4223,7 @@ qft-gate[data-span='8']::part(body) {
 
   qft-gate[data-span='8']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 8 + 1rem * 7
-  );
     height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -4426,11 +4232,7 @@ qft-gate[data-span='8']::part(body) {
 
   qft-gate[data-span='8'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 8 + 1rem * 7
-  );
     height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -4439,11 +4241,7 @@ qft-gate[data-span='8']::part(body) {
 
   qft-gate[data-span='8']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 8 + 1rem * 7
-  );
     height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -4455,16 +4253,10 @@ qft-gate[data-span='9'] {
   width: calc(
     2rem * 9 + 1rem * 8
   );
-  width: calc(
-    2rem * 9 + 1rem * 8
-  );
   width: var(--qni-semantic-size-qpu-operation-9qubit);
 }
 
 qft-gate[data-span='9']::part(body) {
-  width: calc(
-    2rem * 9 + 1rem * 8
-  );
   width: calc(
     2rem * 9 + 1rem * 8
   );
@@ -4474,11 +4266,7 @@ qft-gate[data-span='9']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='9'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 9 + 1rem * 8
-  );
     height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -4487,11 +4275,7 @@ qft-gate[data-span='9']::part(body) {
 
   qft-gate[data-span='9']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 9 + 1rem * 8
-  );
     height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -4500,11 +4284,7 @@ qft-gate[data-span='9']::part(body) {
 
   qft-gate[data-span='9'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 9 + 1rem * 8
-  );
     height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -4513,11 +4293,7 @@ qft-gate[data-span='9']::part(body) {
 
   qft-gate[data-span='9']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 9 + 1rem * 8
-  );
     height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -4529,16 +4305,10 @@ qft-gate[data-span='10'] {
   width: calc(
     2rem * 10 + 1rem * 9
   );
-  width: calc(
-    2rem * 10 + 1rem * 9
-  );
   width: var(--qni-semantic-size-qpu-operation-10qubit);
 }
 
 qft-gate[data-span='10']::part(body) {
-  width: calc(
-    2rem * 10 + 1rem * 9
-  );
   width: calc(
     2rem * 10 + 1rem * 9
   );
@@ -4548,11 +4318,7 @@ qft-gate[data-span='10']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='10'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 10 + 1rem * 9
-  );
     height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -4561,11 +4327,7 @@ qft-gate[data-span='10']::part(body) {
 
   qft-gate[data-span='10']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 10 + 1rem * 9
-  );
     height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -4574,11 +4336,7 @@ qft-gate[data-span='10']::part(body) {
 
   qft-gate[data-span='10'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 10 + 1rem * 9
-  );
     height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -4587,11 +4345,7 @@ qft-gate[data-span='10']::part(body) {
 
   qft-gate[data-span='10']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 10 + 1rem * 9
-  );
     height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -4603,16 +4357,10 @@ qft-gate[data-span='11'] {
   width: calc(
     2rem * 11 + 1rem * 10
   );
-  width: calc(
-    2rem * 11 + 1rem * 10
-  );
   width: var(--qni-semantic-size-qpu-operation-11qubit);
 }
 
 qft-gate[data-span='11']::part(body) {
-  width: calc(
-    2rem * 11 + 1rem * 10
-  );
   width: calc(
     2rem * 11 + 1rem * 10
   );
@@ -4622,11 +4370,7 @@ qft-gate[data-span='11']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='11'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 11 + 1rem * 10
-  );
     height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -4635,11 +4379,7 @@ qft-gate[data-span='11']::part(body) {
 
   qft-gate[data-span='11']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 11 + 1rem * 10
-  );
     height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -4648,11 +4388,7 @@ qft-gate[data-span='11']::part(body) {
 
   qft-gate[data-span='11'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 11 + 1rem * 10
-  );
     height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -4661,11 +4397,7 @@ qft-gate[data-span='11']::part(body) {
 
   qft-gate[data-span='11']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 11 + 1rem * 10
-  );
     height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -4677,16 +4409,10 @@ qft-gate[data-span='12'] {
   width: calc(
     2rem * 12 + 1rem * 11
   );
-  width: calc(
-    2rem * 12 + 1rem * 11
-  );
   width: var(--qni-semantic-size-qpu-operation-12qubit);
 }
 
 qft-gate[data-span='12']::part(body) {
-  width: calc(
-    2rem * 12 + 1rem * 11
-  );
   width: calc(
     2rem * 12 + 1rem * 11
   );
@@ -4696,11 +4422,7 @@ qft-gate[data-span='12']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='12'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 12 + 1rem * 11
-  );
     height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -4709,11 +4431,7 @@ qft-gate[data-span='12']::part(body) {
 
   qft-gate[data-span='12']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 12 + 1rem * 11
-  );
     height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -4722,11 +4440,7 @@ qft-gate[data-span='12']::part(body) {
 
   qft-gate[data-span='12'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 12 + 1rem * 11
-  );
     height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -4735,11 +4449,7 @@ qft-gate[data-span='12']::part(body) {
 
   qft-gate[data-span='12']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 12 + 1rem * 11
-  );
     height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -4751,16 +4461,10 @@ qft-gate[data-span='13'] {
   width: calc(
     2rem * 13 + 1rem * 12
   );
-  width: calc(
-    2rem * 13 + 1rem * 12
-  );
   width: var(--qni-semantic-size-qpu-operation-13qubit);
 }
 
 qft-gate[data-span='13']::part(body) {
-  width: calc(
-    2rem * 13 + 1rem * 12
-  );
   width: calc(
     2rem * 13 + 1rem * 12
   );
@@ -4770,11 +4474,7 @@ qft-gate[data-span='13']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='13'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 13 + 1rem * 12
-  );
     height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -4783,11 +4483,7 @@ qft-gate[data-span='13']::part(body) {
 
   qft-gate[data-span='13']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 13 + 1rem * 12
-  );
     height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -4796,11 +4492,7 @@ qft-gate[data-span='13']::part(body) {
 
   qft-gate[data-span='13'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 13 + 1rem * 12
-  );
     height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -4809,11 +4501,7 @@ qft-gate[data-span='13']::part(body) {
 
   qft-gate[data-span='13']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 13 + 1rem * 12
-  );
     height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -4825,16 +4513,10 @@ qft-gate[data-span='14'] {
   width: calc(
     2rem * 14 + 1rem * 13
   );
-  width: calc(
-    2rem * 14 + 1rem * 13
-  );
   width: var(--qni-semantic-size-qpu-operation-14qubit);
 }
 
 qft-gate[data-span='14']::part(body) {
-  width: calc(
-    2rem * 14 + 1rem * 13
-  );
   width: calc(
     2rem * 14 + 1rem * 13
   );
@@ -4844,11 +4526,7 @@ qft-gate[data-span='14']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='14'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 14 + 1rem * 13
-  );
     height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -4857,11 +4535,7 @@ qft-gate[data-span='14']::part(body) {
 
   qft-gate[data-span='14']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 14 + 1rem * 13
-  );
     height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -4870,11 +4544,7 @@ qft-gate[data-span='14']::part(body) {
 
   qft-gate[data-span='14'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 14 + 1rem * 13
-  );
     height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -4883,11 +4553,7 @@ qft-gate[data-span='14']::part(body) {
 
   qft-gate[data-span='14']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 14 + 1rem * 13
-  );
     height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -4899,16 +4565,10 @@ qft-gate[data-span='15'] {
   width: calc(
     2rem * 15 + 1rem * 14
   );
-  width: calc(
-    2rem * 15 + 1rem * 14
-  );
   width: var(--qni-semantic-size-qpu-operation-15qubit);
 }
 
 qft-gate[data-span='15']::part(body) {
-  width: calc(
-    2rem * 15 + 1rem * 14
-  );
   width: calc(
     2rem * 15 + 1rem * 14
   );
@@ -4918,11 +4578,7 @@ qft-gate[data-span='15']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='15'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 15 + 1rem * 14
-  );
     height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -4931,11 +4587,7 @@ qft-gate[data-span='15']::part(body) {
 
   qft-gate[data-span='15']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 15 + 1rem * 14
-  );
     height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -4944,11 +4596,7 @@ qft-gate[data-span='15']::part(body) {
 
   qft-gate[data-span='15'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 15 + 1rem * 14
-  );
     height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -4957,11 +4605,7 @@ qft-gate[data-span='15']::part(body) {
 
   qft-gate[data-span='15']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 15 + 1rem * 14
-  );
     height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -4973,16 +4617,10 @@ qft-gate[data-span='16'] {
   width: calc(
     2rem * 16 + 1rem * 15
   );
-  width: calc(
-    2rem * 16 + 1rem * 15
-  );
   width: var(--qni-semantic-size-qpu-operation-16qubit);
 }
 
 qft-gate[data-span='16']::part(body) {
-  width: calc(
-    2rem * 16 + 1rem * 15
-  );
   width: calc(
     2rem * 16 + 1rem * 15
   );
@@ -4992,11 +4630,7 @@ qft-gate[data-span='16']::part(body) {
 @media (min-width: 640px) {
   qft-gate[data-span='16'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 16 + 1rem * 15
-  );
     height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -5005,11 +4639,7 @@ qft-gate[data-span='16']::part(body) {
 
   qft-gate[data-span='16']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 16 + 1rem * 15
-  );
     height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -5018,11 +4648,7 @@ qft-gate[data-span='16']::part(body) {
 
   qft-gate[data-span='16'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 16 + 1rem * 15
-  );
     height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -5031,11 +4657,7 @@ qft-gate[data-span='16']::part(body) {
 
   qft-gate[data-span='16']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 16 + 1rem * 15
-  );
     height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -5045,7 +4667,6 @@ qft-gate[data-span='16']::part(body) {
 
 qft-gate[data-resizing]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
   outline: 2px solid #a855f7;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-intermediate);
 }
@@ -5102,12 +4723,14 @@ qft-gate::part(resize-handle-icon) {
   height: 100%;
   width: 100%;
   --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @media (min-width: 640px) {
   qft-gate::part(resize-handle-icon) {
     --tw-rotate: 0deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(0deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
@@ -5122,12 +4745,10 @@ qft-gate[data-grabbed]:not([data-snapped]) {
 
 qft-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 qft-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -5210,18 +4831,14 @@ qft-dagger-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 qft-dagger-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -5231,18 +4848,13 @@ qft-dagger-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -5251,19 +4863,16 @@ palette-dropzone qft-dagger-gate[data-hoverable]:not([data-grabbed]):hover::part
     quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 qft-dagger-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 qft-dagger-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
@@ -5282,16 +4891,10 @@ qft-dagger-gate[data-span='2'] {
   width: calc(
     2rem * 2 + 1rem
   );
-  width: calc(
-    2rem * 2 + 1rem
-  );
   width: var(--qni-semantic-size-qpu-operation-2qubit);
 }
 
 qft-dagger-gate[data-span='2']::part(body) {
-  width: calc(
-    2rem * 2 + 1rem
-  );
   width: calc(
     2rem * 2 + 1rem
   );
@@ -5301,11 +4904,7 @@ qft-dagger-gate[data-span='2']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='2'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 2 + 1rem
-  );
     height: calc(
     2rem * 2 + 1rem
   );
@@ -5314,11 +4913,7 @@ qft-dagger-gate[data-span='2']::part(body) {
 
   qft-dagger-gate[data-span='2']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 2 + 1rem
-  );
     height: calc(
     2rem * 2 + 1rem
   );
@@ -5327,11 +4922,7 @@ qft-dagger-gate[data-span='2']::part(body) {
 
   qft-dagger-gate[data-span='2'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 2 + 1rem
-  );
     height: calc(
     2rem * 2 + 1rem
   );
@@ -5340,11 +4931,7 @@ qft-dagger-gate[data-span='2']::part(body) {
 
   qft-dagger-gate[data-span='2']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 2 + 1rem
-  );
     height: calc(
     2rem * 2 + 1rem
   );
@@ -5356,16 +4943,10 @@ qft-dagger-gate[data-span='3'] {
   width: calc(
     2rem * 3 + 1rem * 2
   );
-  width: calc(
-    2rem * 3 + 1rem * 2
-  );
   width: var(--qni-semantic-size-qpu-operation-3qubit);
 }
 
 qft-dagger-gate[data-span='3']::part(body) {
-  width: calc(
-    2rem * 3 + 1rem * 2
-  );
   width: calc(
     2rem * 3 + 1rem * 2
   );
@@ -5375,11 +4956,7 @@ qft-dagger-gate[data-span='3']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='3'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 3 + 1rem * 2
-  );
     height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -5388,11 +4965,7 @@ qft-dagger-gate[data-span='3']::part(body) {
 
   qft-dagger-gate[data-span='3']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 3 + 1rem * 2
-  );
     height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -5401,11 +4974,7 @@ qft-dagger-gate[data-span='3']::part(body) {
 
   qft-dagger-gate[data-span='3'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 3 + 1rem * 2
-  );
     height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -5414,11 +4983,7 @@ qft-dagger-gate[data-span='3']::part(body) {
 
   qft-dagger-gate[data-span='3']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 3 + 1rem * 2
-  );
     height: calc(
     2rem * 3 + 1rem * 2
   );
@@ -5430,16 +4995,10 @@ qft-dagger-gate[data-span='4'] {
   width: calc(
     2rem * 4 + 1rem * 3
   );
-  width: calc(
-    2rem * 4 + 1rem * 3
-  );
   width: var(--qni-semantic-size-qpu-operation-4qubit);
 }
 
 qft-dagger-gate[data-span='4']::part(body) {
-  width: calc(
-    2rem * 4 + 1rem * 3
-  );
   width: calc(
     2rem * 4 + 1rem * 3
   );
@@ -5449,11 +5008,7 @@ qft-dagger-gate[data-span='4']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='4'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 4 + 1rem * 3
-  );
     height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -5462,11 +5017,7 @@ qft-dagger-gate[data-span='4']::part(body) {
 
   qft-dagger-gate[data-span='4']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 4 + 1rem * 3
-  );
     height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -5475,11 +5026,7 @@ qft-dagger-gate[data-span='4']::part(body) {
 
   qft-dagger-gate[data-span='4'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 4 + 1rem * 3
-  );
     height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -5488,11 +5035,7 @@ qft-dagger-gate[data-span='4']::part(body) {
 
   qft-dagger-gate[data-span='4']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 4 + 1rem * 3
-  );
     height: calc(
     2rem * 4 + 1rem * 3
   );
@@ -5504,16 +5047,10 @@ qft-dagger-gate[data-span='5'] {
   width: calc(
     2rem * 5 + 1rem * 4
   );
-  width: calc(
-    2rem * 5 + 1rem * 4
-  );
   width: var(--qni-semantic-size-qpu-operation-5qubit);
 }
 
 qft-dagger-gate[data-span='5']::part(body) {
-  width: calc(
-    2rem * 5 + 1rem * 4
-  );
   width: calc(
     2rem * 5 + 1rem * 4
   );
@@ -5523,11 +5060,7 @@ qft-dagger-gate[data-span='5']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='5'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 5 + 1rem * 4
-  );
     height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -5536,11 +5069,7 @@ qft-dagger-gate[data-span='5']::part(body) {
 
   qft-dagger-gate[data-span='5']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 5 + 1rem * 4
-  );
     height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -5549,11 +5078,7 @@ qft-dagger-gate[data-span='5']::part(body) {
 
   qft-dagger-gate[data-span='5'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 5 + 1rem * 4
-  );
     height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -5562,11 +5087,7 @@ qft-dagger-gate[data-span='5']::part(body) {
 
   qft-dagger-gate[data-span='5']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 5 + 1rem * 4
-  );
     height: calc(
     2rem * 5 + 1rem * 4
   );
@@ -5578,16 +5099,10 @@ qft-dagger-gate[data-span='6'] {
   width: calc(
     2rem * 6 + 1rem * 5
   );
-  width: calc(
-    2rem * 6 + 1rem * 5
-  );
   width: var(--qni-semantic-size-qpu-operation-6qubit);
 }
 
 qft-dagger-gate[data-span='6']::part(body) {
-  width: calc(
-    2rem * 6 + 1rem * 5
-  );
   width: calc(
     2rem * 6 + 1rem * 5
   );
@@ -5597,11 +5112,7 @@ qft-dagger-gate[data-span='6']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='6'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 6 + 1rem * 5
-  );
     height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -5610,11 +5121,7 @@ qft-dagger-gate[data-span='6']::part(body) {
 
   qft-dagger-gate[data-span='6']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 6 + 1rem * 5
-  );
     height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -5623,11 +5130,7 @@ qft-dagger-gate[data-span='6']::part(body) {
 
   qft-dagger-gate[data-span='6'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 6 + 1rem * 5
-  );
     height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -5636,11 +5139,7 @@ qft-dagger-gate[data-span='6']::part(body) {
 
   qft-dagger-gate[data-span='6']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 6 + 1rem * 5
-  );
     height: calc(
     2rem * 6 + 1rem * 5
   );
@@ -5652,16 +5151,10 @@ qft-dagger-gate[data-span='7'] {
   width: calc(
     2rem * 7 + 1rem * 6
   );
-  width: calc(
-    2rem * 7 + 1rem * 6
-  );
   width: var(--qni-semantic-size-qpu-operation-7qubit);
 }
 
 qft-dagger-gate[data-span='7']::part(body) {
-  width: calc(
-    2rem * 7 + 1rem * 6
-  );
   width: calc(
     2rem * 7 + 1rem * 6
   );
@@ -5671,11 +5164,7 @@ qft-dagger-gate[data-span='7']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='7'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 7 + 1rem * 6
-  );
     height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -5684,11 +5173,7 @@ qft-dagger-gate[data-span='7']::part(body) {
 
   qft-dagger-gate[data-span='7']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 7 + 1rem * 6
-  );
     height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -5697,11 +5182,7 @@ qft-dagger-gate[data-span='7']::part(body) {
 
   qft-dagger-gate[data-span='7'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 7 + 1rem * 6
-  );
     height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -5710,11 +5191,7 @@ qft-dagger-gate[data-span='7']::part(body) {
 
   qft-dagger-gate[data-span='7']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 7 + 1rem * 6
-  );
     height: calc(
     2rem * 7 + 1rem * 6
   );
@@ -5726,16 +5203,10 @@ qft-dagger-gate[data-span='8'] {
   width: calc(
     2rem * 8 + 1rem * 7
   );
-  width: calc(
-    2rem * 8 + 1rem * 7
-  );
   width: var(--qni-semantic-size-qpu-operation-8qubit);
 }
 
 qft-dagger-gate[data-span='8']::part(body) {
-  width: calc(
-    2rem * 8 + 1rem * 7
-  );
   width: calc(
     2rem * 8 + 1rem * 7
   );
@@ -5745,11 +5216,7 @@ qft-dagger-gate[data-span='8']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='8'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 8 + 1rem * 7
-  );
     height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -5758,11 +5225,7 @@ qft-dagger-gate[data-span='8']::part(body) {
 
   qft-dagger-gate[data-span='8']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 8 + 1rem * 7
-  );
     height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -5771,11 +5234,7 @@ qft-dagger-gate[data-span='8']::part(body) {
 
   qft-dagger-gate[data-span='8'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 8 + 1rem * 7
-  );
     height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -5784,11 +5243,7 @@ qft-dagger-gate[data-span='8']::part(body) {
 
   qft-dagger-gate[data-span='8']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 8 + 1rem * 7
-  );
     height: calc(
     2rem * 8 + 1rem * 7
   );
@@ -5800,16 +5255,10 @@ qft-dagger-gate[data-span='9'] {
   width: calc(
     2rem * 9 + 1rem * 8
   );
-  width: calc(
-    2rem * 9 + 1rem * 8
-  );
   width: var(--qni-semantic-size-qpu-operation-9qubit);
 }
 
 qft-dagger-gate[data-span='9']::part(body) {
-  width: calc(
-    2rem * 9 + 1rem * 8
-  );
   width: calc(
     2rem * 9 + 1rem * 8
   );
@@ -5819,11 +5268,7 @@ qft-dagger-gate[data-span='9']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='9'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 9 + 1rem * 8
-  );
     height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -5832,11 +5277,7 @@ qft-dagger-gate[data-span='9']::part(body) {
 
   qft-dagger-gate[data-span='9']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 9 + 1rem * 8
-  );
     height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -5845,11 +5286,7 @@ qft-dagger-gate[data-span='9']::part(body) {
 
   qft-dagger-gate[data-span='9'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 9 + 1rem * 8
-  );
     height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -5858,11 +5295,7 @@ qft-dagger-gate[data-span='9']::part(body) {
 
   qft-dagger-gate[data-span='9']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 9 + 1rem * 8
-  );
     height: calc(
     2rem * 9 + 1rem * 8
   );
@@ -5874,16 +5307,10 @@ qft-dagger-gate[data-span='10'] {
   width: calc(
     2rem * 10 + 1rem * 9
   );
-  width: calc(
-    2rem * 10 + 1rem * 9
-  );
   width: var(--qni-semantic-size-qpu-operation-10qubit);
 }
 
 qft-dagger-gate[data-span='10']::part(body) {
-  width: calc(
-    2rem * 10 + 1rem * 9
-  );
   width: calc(
     2rem * 10 + 1rem * 9
   );
@@ -5893,11 +5320,7 @@ qft-dagger-gate[data-span='10']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='10'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 10 + 1rem * 9
-  );
     height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -5906,11 +5329,7 @@ qft-dagger-gate[data-span='10']::part(body) {
 
   qft-dagger-gate[data-span='10']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 10 + 1rem * 9
-  );
     height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -5919,11 +5338,7 @@ qft-dagger-gate[data-span='10']::part(body) {
 
   qft-dagger-gate[data-span='10'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 10 + 1rem * 9
-  );
     height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -5932,11 +5347,7 @@ qft-dagger-gate[data-span='10']::part(body) {
 
   qft-dagger-gate[data-span='10']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 10 + 1rem * 9
-  );
     height: calc(
     2rem * 10 + 1rem * 9
   );
@@ -5948,16 +5359,10 @@ qft-dagger-gate[data-span='11'] {
   width: calc(
     2rem * 11 + 1rem * 10
   );
-  width: calc(
-    2rem * 11 + 1rem * 10
-  );
   width: var(--qni-semantic-size-qpu-operation-11qubit);
 }
 
 qft-dagger-gate[data-span='11']::part(body) {
-  width: calc(
-    2rem * 11 + 1rem * 10
-  );
   width: calc(
     2rem * 11 + 1rem * 10
   );
@@ -5967,11 +5372,7 @@ qft-dagger-gate[data-span='11']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='11'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 11 + 1rem * 10
-  );
     height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -5980,11 +5381,7 @@ qft-dagger-gate[data-span='11']::part(body) {
 
   qft-dagger-gate[data-span='11']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 11 + 1rem * 10
-  );
     height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -5993,11 +5390,7 @@ qft-dagger-gate[data-span='11']::part(body) {
 
   qft-dagger-gate[data-span='11'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 11 + 1rem * 10
-  );
     height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -6006,11 +5399,7 @@ qft-dagger-gate[data-span='11']::part(body) {
 
   qft-dagger-gate[data-span='11']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 11 + 1rem * 10
-  );
     height: calc(
     2rem * 11 + 1rem * 10
   );
@@ -6022,16 +5411,10 @@ qft-dagger-gate[data-span='12'] {
   width: calc(
     2rem * 12 + 1rem * 11
   );
-  width: calc(
-    2rem * 12 + 1rem * 11
-  );
   width: var(--qni-semantic-size-qpu-operation-12qubit);
 }
 
 qft-dagger-gate[data-span='12']::part(body) {
-  width: calc(
-    2rem * 12 + 1rem * 11
-  );
   width: calc(
     2rem * 12 + 1rem * 11
   );
@@ -6041,11 +5424,7 @@ qft-dagger-gate[data-span='12']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='12'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 12 + 1rem * 11
-  );
     height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -6054,11 +5433,7 @@ qft-dagger-gate[data-span='12']::part(body) {
 
   qft-dagger-gate[data-span='12']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 12 + 1rem * 11
-  );
     height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -6067,11 +5442,7 @@ qft-dagger-gate[data-span='12']::part(body) {
 
   qft-dagger-gate[data-span='12'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 12 + 1rem * 11
-  );
     height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -6080,11 +5451,7 @@ qft-dagger-gate[data-span='12']::part(body) {
 
   qft-dagger-gate[data-span='12']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 12 + 1rem * 11
-  );
     height: calc(
     2rem * 12 + 1rem * 11
   );
@@ -6096,16 +5463,10 @@ qft-dagger-gate[data-span='13'] {
   width: calc(
     2rem * 13 + 1rem * 12
   );
-  width: calc(
-    2rem * 13 + 1rem * 12
-  );
   width: var(--qni-semantic-size-qpu-operation-13qubit);
 }
 
 qft-dagger-gate[data-span='13']::part(body) {
-  width: calc(
-    2rem * 13 + 1rem * 12
-  );
   width: calc(
     2rem * 13 + 1rem * 12
   );
@@ -6115,11 +5476,7 @@ qft-dagger-gate[data-span='13']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='13'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 13 + 1rem * 12
-  );
     height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -6128,11 +5485,7 @@ qft-dagger-gate[data-span='13']::part(body) {
 
   qft-dagger-gate[data-span='13']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 13 + 1rem * 12
-  );
     height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -6141,11 +5494,7 @@ qft-dagger-gate[data-span='13']::part(body) {
 
   qft-dagger-gate[data-span='13'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 13 + 1rem * 12
-  );
     height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -6154,11 +5503,7 @@ qft-dagger-gate[data-span='13']::part(body) {
 
   qft-dagger-gate[data-span='13']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 13 + 1rem * 12
-  );
     height: calc(
     2rem * 13 + 1rem * 12
   );
@@ -6170,16 +5515,10 @@ qft-dagger-gate[data-span='14'] {
   width: calc(
     2rem * 14 + 1rem * 13
   );
-  width: calc(
-    2rem * 14 + 1rem * 13
-  );
   width: var(--qni-semantic-size-qpu-operation-14qubit);
 }
 
 qft-dagger-gate[data-span='14']::part(body) {
-  width: calc(
-    2rem * 14 + 1rem * 13
-  );
   width: calc(
     2rem * 14 + 1rem * 13
   );
@@ -6189,11 +5528,7 @@ qft-dagger-gate[data-span='14']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='14'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 14 + 1rem * 13
-  );
     height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -6202,11 +5537,7 @@ qft-dagger-gate[data-span='14']::part(body) {
 
   qft-dagger-gate[data-span='14']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 14 + 1rem * 13
-  );
     height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -6215,11 +5546,7 @@ qft-dagger-gate[data-span='14']::part(body) {
 
   qft-dagger-gate[data-span='14'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 14 + 1rem * 13
-  );
     height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -6228,11 +5555,7 @@ qft-dagger-gate[data-span='14']::part(body) {
 
   qft-dagger-gate[data-span='14']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 14 + 1rem * 13
-  );
     height: calc(
     2rem * 14 + 1rem * 13
   );
@@ -6244,16 +5567,10 @@ qft-dagger-gate[data-span='15'] {
   width: calc(
     2rem * 15 + 1rem * 14
   );
-  width: calc(
-    2rem * 15 + 1rem * 14
-  );
   width: var(--qni-semantic-size-qpu-operation-15qubit);
 }
 
 qft-dagger-gate[data-span='15']::part(body) {
-  width: calc(
-    2rem * 15 + 1rem * 14
-  );
   width: calc(
     2rem * 15 + 1rem * 14
   );
@@ -6263,11 +5580,7 @@ qft-dagger-gate[data-span='15']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='15'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 15 + 1rem * 14
-  );
     height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -6276,11 +5589,7 @@ qft-dagger-gate[data-span='15']::part(body) {
 
   qft-dagger-gate[data-span='15']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 15 + 1rem * 14
-  );
     height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -6289,11 +5598,7 @@ qft-dagger-gate[data-span='15']::part(body) {
 
   qft-dagger-gate[data-span='15'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 15 + 1rem * 14
-  );
     height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -6302,11 +5607,7 @@ qft-dagger-gate[data-span='15']::part(body) {
 
   qft-dagger-gate[data-span='15']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 15 + 1rem * 14
-  );
     height: calc(
     2rem * 15 + 1rem * 14
   );
@@ -6318,16 +5619,10 @@ qft-dagger-gate[data-span='16'] {
   width: calc(
     2rem * 16 + 1rem * 15
   );
-  width: calc(
-    2rem * 16 + 1rem * 15
-  );
   width: var(--qni-semantic-size-qpu-operation-16qubit);
 }
 
 qft-dagger-gate[data-span='16']::part(body) {
-  width: calc(
-    2rem * 16 + 1rem * 15
-  );
   width: calc(
     2rem * 16 + 1rem * 15
   );
@@ -6337,11 +5632,7 @@ qft-dagger-gate[data-span='16']::part(body) {
 @media (min-width: 640px) {
   qft-dagger-gate[data-span='16'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 16 + 1rem * 15
-  );
     height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -6350,11 +5641,7 @@ qft-dagger-gate[data-span='16']::part(body) {
 
   qft-dagger-gate[data-span='16']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 16 + 1rem * 15
-  );
     height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -6363,11 +5650,7 @@ qft-dagger-gate[data-span='16']::part(body) {
 
   qft-dagger-gate[data-span='16'] {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 16 + 1rem * 15
-  );
     height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -6376,11 +5659,7 @@ qft-dagger-gate[data-span='16']::part(body) {
 
   qft-dagger-gate[data-span='16']::part(body) {
     width: 2rem;
-    width: 2rem;
     width: var(--qni-semantic-size-qpu-operation-1qubit);
-    height: calc(
-    2rem * 16 + 1rem * 15
-  );
     height: calc(
     2rem * 16 + 1rem * 15
   );
@@ -6390,7 +5669,6 @@ qft-dagger-gate[data-span='16']::part(body) {
 
 qft-dagger-gate[data-resizing]::part(outline) {
   display: block;
-  outline: 2px solid #a855f7;
   outline: 2px solid #a855f7;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-intermediate);
 }
@@ -6447,27 +5725,26 @@ qft-dagger-gate::part(resize-handle-icon) {
   height: 100%;
   width: 100%;
   --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @media (min-width: 640px) {
   qft-dagger-gate::part(resize-handle-icon) {
     --tw-rotate: 0deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(0deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
 
 qft-dagger-gate::part(body) {
   border-radius: 0.25rem;
-  border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 qft-dagger-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -6482,12 +5759,10 @@ qft-dagger-gate[data-grabbed]:not([data-snapped]) {
 
 qft-dagger-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 qft-dagger-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -6587,18 +5862,14 @@ rnot-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 rnot-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -6608,18 +5879,13 @@ rnot-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -6628,34 +5894,28 @@ palette-dropzone rnot-gate[data-hoverable]:not([data-grabbed]):hover::part(outli
     quantum-circuit:not([data-editing]) rnot-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 rnot-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 rnot-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 rnot-gate::part(body) {
   border-radius: 0.25rem;
-  border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 rnot-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -6670,12 +5930,10 @@ rnot-gate[data-grabbed]:not([data-snapped]) {
 
 rnot-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 rnot-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -6758,18 +6016,14 @@ rx-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 rx-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -6779,18 +6033,13 @@ rx-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -6799,34 +6048,28 @@ palette-dropzone rx-gate[data-hoverable]:not([data-grabbed]):hover::part(outline
     quantum-circuit:not([data-editing]) rx-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 rx-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 rx-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 rx-gate::part(body) {
   border-radius: 0.25rem;
-  border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 rx-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -6841,12 +6084,10 @@ rx-gate[data-grabbed]:not([data-snapped]) {
 
 rx-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 rx-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -6988,18 +6229,14 @@ ry-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 ry-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -7009,18 +6246,13 @@ ry-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -7029,34 +6261,28 @@ palette-dropzone ry-gate[data-hoverable]:not([data-grabbed]):hover::part(outline
     quantum-circuit:not([data-editing]) ry-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 ry-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 ry-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 ry-gate::part(body) {
   border-radius: 0.25rem;
-  border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 ry-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -7071,12 +6297,10 @@ ry-gate[data-grabbed]:not([data-snapped]) {
 
 ry-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 ry-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -7218,18 +6442,14 @@ rz-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 rz-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -7239,18 +6459,13 @@ rz-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -7259,34 +6474,28 @@ palette-dropzone rz-gate[data-hoverable]:not([data-grabbed]):hover::part(outline
     quantum-circuit:not([data-editing]) rz-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 rz-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 rz-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 rz-gate::part(body) {
   border-radius: 0.25rem;
-  border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 rz-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -7301,12 +6510,10 @@ rz-gate[data-grabbed]:not([data-snapped]) {
 
 rz-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 rz-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -7448,18 +6655,14 @@ spacer-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 spacer-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -7469,18 +6672,13 @@ spacer-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -7489,25 +6687,21 @@ palette-dropzone spacer-gate[data-hoverable]:not([data-grabbed]):hover::part(out
     quantum-circuit:not([data-editing]) spacer-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 spacer-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 spacer-gate[data-disabled]::part(body) {
   background-color: #71717a;
-  background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 spacer-gate::part(body) {
-  border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
 }
@@ -7522,12 +6716,10 @@ spacer-gate[data-grabbed]:not([data-snapped]) {
 
 spacer-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 spacer-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -7562,14 +6754,17 @@ circuit-dropzone spacer-gate:not([data-snapped])::part(body)::before {
 
 spacer-gate::part(icon) {
   --tw-text-opacity: 1;
+  color: rgb(23 23 23 / 1);
   color: rgb(23 23 23 / var(--tw-text-opacity));
   --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @media (min-width: 640px) {
   spacer-gate::part(icon) {
     --tw-rotate: 0deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(0deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
@@ -7578,18 +6773,14 @@ swap-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 swap-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -7599,18 +6790,13 @@ swap-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -7619,19 +6805,16 @@ palette-dropzone swap-gate[data-hoverable]:not([data-grabbed]):hover::part(outli
     quantum-circuit:not([data-editing]) swap-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 swap-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 swap-gate::part(body) {
-  border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
 }
@@ -7646,12 +6829,10 @@ swap-gate[data-grabbed]:not([data-snapped]) {
 
 swap-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 swap-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -7686,12 +6867,10 @@ circuit-dropzone swap-gate:not([data-snapped])::part(body)::before {
 
 swap-gate::part(icon) {
   color: #10b981;
-  color: #10b981;
   color: var(--qni-semantic-fill-color-primary);
 }
 
 swap-gate[data-disabled]:not([data-grabbed])::part(icon) {
-  color: #71717a;
   color: #71717a;
   color: var(--qni-semantic-fill-color-disabled);
 }
@@ -7700,18 +6879,14 @@ t-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 t-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -7721,18 +6896,13 @@ t-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -7741,34 +6911,28 @@ palette-dropzone t-gate[data-hoverable]:not([data-grabbed]):hover::part(outline)
     quantum-circuit:not([data-editing]) t-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 t-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 t-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 t-gate::part(body) {
   border-radius: 0.25rem;
-  border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 t-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -7783,12 +6947,10 @@ t-gate[data-grabbed]:not([data-snapped]) {
 
 t-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 t-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -7871,18 +7033,14 @@ write-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 write-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -7892,18 +7050,13 @@ write-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -7912,19 +7065,16 @@ palette-dropzone write-gate[data-hoverable]:not([data-grabbed]):hover::part(outl
     quantum-circuit:not([data-editing]) write-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 write-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 write-gate::part(body) {
-  border-radius: 0.25rem;
   border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
 }
@@ -7939,12 +7089,10 @@ write-gate[data-grabbed]:not([data-snapped]) {
 
 write-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 write-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -7979,25 +7127,28 @@ circuit-dropzone write-gate:not([data-snapped])::part(body)::before {
 
 write-gate::part(icon) {
   color: #71717a;
-  color: #71717a;
   color: var(--qni-semantic-fill-color-disabled);
 }
 
 write-gate[data-dark-mode]::part(icon) {
   --tw-text-opacity: 1;
+  color: rgb(228 228 231 / 1);
   color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
 circuit-dropzone write-gate[data-snapped]::part(icon) {
   transform-origin: center;
+  transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @media (min-width: 640px) {
   circuit-dropzone write-gate[data-snapped]::part(icon) {
     --tw-rotate: 0deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(0deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
@@ -8012,14 +7163,17 @@ write-gate::part(value) {
 
 circuit-dropzone write-gate[data-snapped]::part(value) {
   transform-origin: center;
+  transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   --tw-rotate: 90deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(90deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 @media (min-width: 640px) {
   circuit-dropzone write-gate[data-snapped]::part(value) {
     --tw-rotate: 0deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(0deg) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
@@ -8037,13 +7191,11 @@ write-gate::part(value)::after {
 
 write-gate[data-value='0']::part(value)::after {
   color: #ef4444;
-  color: #ef4444;
   color: var(--qni-semantic-color-off);
   content: '0';
 }
 
 write-gate[data-value='1']::part(value)::after {
-  color: #0ea5e9;
   color: #0ea5e9;
   color: var(--qni-semantic-color-on);
   content: '1';
@@ -8083,16 +7235,19 @@ write-gate.qpu-operation-2xl::part(value)::after {
 
 write-gate[data-grabbed]::part(icon) {
   --tw-text-opacity: 1;
+  color: rgb(192 132 252 / 1);
   color: rgb(192 132 252 / var(--tw-text-opacity));
 }
 
 write-gate[data-grabbed][data-value='0']::part(value)::after {
   --tw-text-opacity: 1;
+  color: rgb(255 255 255 / 1);
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 write-gate[data-grabbed][data-value='1']::part(value)::after {
   --tw-text-opacity: 1;
+  color: rgb(255 255 255 / 1);
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
@@ -8100,18 +7255,14 @@ x-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 x-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -8121,18 +7272,13 @@ x-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -8141,34 +7287,28 @@ palette-dropzone x-gate[data-hoverable]:not([data-grabbed]):hover::part(outline)
     quantum-circuit:not([data-editing]) x-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 x-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 x-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 x-gate::part(body) {
   border-radius: 9999px;
-  border-radius: 9999px;
   border-radius: var(--qni-semantic-radius-circular);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 x-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -8183,12 +7323,10 @@ x-gate[data-grabbed]:not([data-snapped]) {
 
 x-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 x-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -8271,18 +7409,14 @@ y-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 y-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -8292,18 +7426,13 @@ y-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -8312,34 +7441,28 @@ palette-dropzone y-gate[data-hoverable]:not([data-grabbed]):hover::part(outline)
     quantum-circuit:not([data-editing]) y-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 y-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 y-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 y-gate::part(body) {
   border-radius: 0.25rem;
-  border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 y-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -8354,12 +7477,10 @@ y-gate[data-grabbed]:not([data-snapped]) {
 
 y-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 y-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -8442,18 +7563,14 @@ z-gate {
   display: inline-block;
   position: relative;
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 z-gate::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
   flex-shrink: 0;
@@ -8463,18 +7580,13 @@ z-gate::part(outline) {
   position: absolute;
   display: none;
   top: calc(-1 * (0.125rem));
-  top: calc(-1 * (0.125rem));
   top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  right: calc(-1 * (0.125rem));
   right: calc(-1 * (0.125rem));
   right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   bottom: calc(-1 * (0.125rem));
-  bottom: calc(-1 * (0.125rem));
   bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
   left: calc(-1 * (0.125rem));
-  left: calc(-1 * (0.125rem));
   left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
-  border-radius: 0.375rem;
   border-radius: 0.375rem;
   border-radius: var(--qni-semantic-radius-outline);
 }
@@ -8483,34 +7595,28 @@ palette-dropzone z-gate[data-hoverable]:not([data-grabbed]):hover::part(outline)
     quantum-circuit:not([data-editing]) z-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
-  outline: 2px solid #d4d4d8;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
 }
 
 z-gate[data-active]::part(outline) {
   display: block;
   outline: 2px solid #0ea5e9;
-  outline: 2px solid #0ea5e9;
   outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
 }
 
 z-gate[data-disabled]::part(body) {
-  background-color: #71717a;
   background-color: #71717a;
   background-color: var(--qni-semantic-fill-color-disabled);
 }
 
 z-gate::part(body) {
   border-radius: 0.25rem;
-  border-radius: 0.25rem;
   border-radius: var(--qni-semantic-radius-default);
-  background-color: #10b981;
   background-color: #10b981;
   background-color: var(--qni-semantic-fill-color-primary);
 }
 
 z-gate::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -8525,12 +7631,10 @@ z-gate[data-grabbed]:not([data-snapped]) {
 
 z-gate[data-grabbed]::part(body) {
   background-color: #a855f7;
-  background-color: #a855f7;
   background-color: var(--qni-semantic-fill-color-intermediate);
 }
 
 z-gate[data-grabbed]::part(icon) {
-  color: #fff;
   color: #fff;
   color: var(--qni-semantic-color-icon-inverse);
 }
@@ -8667,7 +7771,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
-  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
@@ -8714,108 +7818,84 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 
 .qpu-operation-xs {
   width: 1rem;
-  width: 1rem;
   width: var(--qni-semantic-size-qpu-operation-xs);
-  height: 1rem;
   height: 1rem;
   height: var(--qni-semantic-size-qpu-operation-xs);
 }
 
 .qpu-operation-xs::part(body) {
   width: 1rem;
-  width: 1rem;
   width: var(--qni-semantic-size-qpu-operation-xs);
-  height: 1rem;
   height: 1rem;
   height: var(--qni-semantic-size-qpu-operation-xs);
 }
 
 .qpu-operation-sm {
   width: 1.5rem;
-  width: 1.5rem;
   width: var(--qni-semantic-size-qpu-operation-sm);
-  height: 1.5rem;
   height: 1.5rem;
   height: var(--qni-semantic-size-qpu-operation-sm);
 }
 
 .qpu-operation-sm::part(body) {
   width: 1.5rem;
-  width: 1.5rem;
   width: var(--qni-semantic-size-qpu-operation-sm);
-  height: 1.5rem;
   height: 1.5rem;
   height: var(--qni-semantic-size-qpu-operation-sm);
 }
 
 .qpu-operation-base {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 .qpu-operation-base::part(body) {
   width: 2rem;
-  width: 2rem;
   width: var(--qni-semantic-size-qpu-operation-base);
-  height: 2rem;
   height: 2rem;
   height: var(--qni-semantic-size-qpu-operation-base);
 }
 
 .qpu-operation-lg {
   width: 2.5rem;
-  width: 2.5rem;
   width: var(--qni-semantic-size-qpu-operation-lg);
-  height: 2.5rem;
   height: 2.5rem;
   height: var(--qni-semantic-size-qpu-operation-lg);
 }
 
 .qpu-operation-lg::part(body) {
   width: 2.5rem;
-  width: 2.5rem;
   width: var(--qni-semantic-size-qpu-operation-lg);
-  height: 2.5rem;
   height: 2.5rem;
   height: var(--qni-semantic-size-qpu-operation-lg);
 }
 
 .qpu-operation-xl {
   width: 3rem;
-  width: 3rem;
   width: var(--qni-semantic-size-qpu-operation-xl);
-  height: 3rem;
   height: 3rem;
   height: var(--qni-semantic-size-qpu-operation-xl);
 }
 
 .qpu-operation-xl::part(body) {
   width: 3rem;
-  width: 3rem;
   width: var(--qni-semantic-size-qpu-operation-xl);
-  height: 3rem;
   height: 3rem;
   height: var(--qni-semantic-size-qpu-operation-xl);
 }
 
 .qpu-operation-2xl {
   width: 4rem;
-  width: 4rem;
   width: var(--qni-semantic-size-qpu-operation-2xl);
-  height: 4rem;
   height: 4rem;
   height: var(--qni-semantic-size-qpu-operation-2xl);
 }
 
 .qpu-operation-2xl::part(body) {
   width: 4rem;
-  width: 4rem;
   width: var(--qni-semantic-size-qpu-operation-2xl);
-  height: 4rem;
   height: 4rem;
   height: var(--qni-semantic-size-qpu-operation-2xl);
 }
@@ -8843,6 +7923,7 @@ body {
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-text-opacity: 1;
+  color: rgb(113 113 122 / 1);
   color: rgb(113 113 122 / var(--tw-text-opacity));
   display: none;
 }
@@ -8931,6 +8012,7 @@ body {
 
 .margin-note__toggle:after {
   --tw-bg-opacity: 1;
+  background-color: rgb(224 242 254 / 1);
   background-color: rgb(224 242 254 / var(--tw-bg-opacity));
 }
 
@@ -8965,6 +8047,7 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 
 .mini-qni {
   --tw-bg-opacity: 1;
+  background-color: rgb(250 250 250 / 1);
   background-color: rgb(250 250 250 / var(--tw-bg-opacity));
   overflow: hidden;
   padding: 2rem;
@@ -8974,16 +8057,19 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   border-bottom-right-radius: 0.375rem;
   border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(14 165 233 / 1);
   border-color: rgb(14 165 233 / var(--tw-border-opacity));
 }
 
 qubit-circle.magnitude-lime::part(magnitude) {
   --tw-bg-opacity: 1;
+  background-color: rgb(132 204 22 / 1);
   background-color: rgb(132 204 22 / var(--tw-bg-opacity));
 }
 
 qubit-circle.magnitude-emerald::part(magnitude) {
   --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / 1);
   background-color: rgb(16 185 129 / var(--tw-bg-opacity));
 }
 
@@ -9477,49 +8563,65 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .space-x-1 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
+  margin-right: calc(0.25rem * 0);
   margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.25rem * calc(1 - 0));
   margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
+  margin-right: calc(0.5rem * 0);
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - 0));
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - 0));
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * 0);
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * 0);
   margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - 0));
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-y-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
+  margin-top: calc(2rem * calc(1 - 0));
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2rem * 0);
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
 }
 
 .space-y-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - 0));
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * 0);
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
 .space-y-1 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - 0));
   margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * 0);
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - 0));
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(1px * 0);
   border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }
 
@@ -9618,21 +8720,25 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .border-gray-200 {
   --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / 1);
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
 .border-neutral-300 {
   --tw-border-opacity: 1;
+  border-color: rgb(212 212 212 / 1);
   border-color: rgb(212 212 212 / var(--tw-border-opacity));
 }
 
 .border-neutral-200 {
   --tw-border-opacity: 1;
+  border-color: rgb(229 229 229 / 1);
   border-color: rgb(229 229 229 / var(--tw-border-opacity));
 }
 
 .border-blue-400 {
   --tw-border-opacity: 1;
+  border-color: rgb(96 165 250 / 1);
   border-color: rgb(96 165 250 / var(--tw-border-opacity));
 }
 
@@ -9650,56 +8756,67 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .border-zinc-200 {
   --tw-border-opacity: 1;
+  border-color: rgb(228 228 231 / 1);
   border-color: rgb(228 228 231 / var(--tw-border-opacity));
 }
 
 .bg-neutral-50 {
   --tw-bg-opacity: 1;
+  background-color: rgb(250 250 250 / 1);
   background-color: rgb(250 250 250 / var(--tw-bg-opacity));
 }
 
 .bg-white {
   --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / 1);
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .bg-emerald-500 {
   --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / 1);
   background-color: rgb(16 185 129 / var(--tw-bg-opacity));
 }
 
 .bg-gray-50 {
   --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / 1);
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
 .bg-blue-50 {
   --tw-bg-opacity: 1;
+  background-color: rgb(239 246 255 / 1);
   background-color: rgb(239 246 255 / var(--tw-bg-opacity));
 }
 
 .bg-blue-100 {
   --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / 1);
   background-color: rgb(219 234 254 / var(--tw-bg-opacity));
 }
 
 .bg-green-100 {
   --tw-bg-opacity: 1;
+  background-color: rgb(220 252 231 / 1);
   background-color: rgb(220 252 231 / var(--tw-bg-opacity));
 }
 
 .bg-gray-600 {
   --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / 1);
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
 }
 
 .bg-neutral-100 {
   --tw-bg-opacity: 1;
+  background-color: rgb(245 245 245 / 1);
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));
 }
 
 .bg-purple-500 {
   --tw-bg-opacity: 1;
+  background-color: rgb(168 85 247 / 1);
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
 }
 
@@ -9709,6 +8826,7 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .bg-sky-500 {
   --tw-bg-opacity: 1;
+  background-color: rgb(14 165 233 / 1);
   background-color: rgb(14 165 233 / var(--tw-bg-opacity));
 }
 
@@ -9939,121 +9057,145 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .text-gray-700 {
   --tw-text-opacity: 1;
+  color: rgb(55 65 81 / 1);
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .text-neutral-700 {
   --tw-text-opacity: 1;
+  color: rgb(64 64 64 / 1);
   color: rgb(64 64 64 / var(--tw-text-opacity));
 }
 
 .text-gray-400 {
   --tw-text-opacity: 1;
+  color: rgb(156 163 175 / 1);
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 .text-neutral-400 {
   --tw-text-opacity: 1;
+  color: rgb(163 163 163 / 1);
   color: rgb(163 163 163 / var(--tw-text-opacity));
 }
 
 .text-white {
   --tw-text-opacity: 1;
+  color: rgb(255 255 255 / 1);
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .text-zinc-300 {
   --tw-text-opacity: 1;
+  color: rgb(212 212 216 / 1);
   color: rgb(212 212 216 / var(--tw-text-opacity));
 }
 
 .text-purple-500 {
   --tw-text-opacity: 1;
+  color: rgb(168 85 247 / 1);
   color: rgb(168 85 247 / var(--tw-text-opacity));
 }
 
 .text-purple-600 {
   --tw-text-opacity: 1;
+  color: rgb(147 51 234 / 1);
   color: rgb(147 51 234 / var(--tw-text-opacity));
 }
 
 .text-slate-700 {
   --tw-text-opacity: 1;
+  color: rgb(51 65 85 / 1);
   color: rgb(51 65 85 / var(--tw-text-opacity));
 }
 
 .text-slate-400 {
   --tw-text-opacity: 1;
+  color: rgb(148 163 184 / 1);
   color: rgb(148 163 184 / var(--tw-text-opacity));
 }
 
 .text-blue-600 {
   --tw-text-opacity: 1;
+  color: rgb(37 99 235 / 1);
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
 .text-gray-900 {
   --tw-text-opacity: 1;
+  color: rgb(17 24 39 / 1);
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
 .text-gray-500 {
   --tw-text-opacity: 1;
+  color: rgb(107 114 128 / 1);
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
 .text-green-800 {
   --tw-text-opacity: 1;
+  color: rgb(22 101 52 / 1);
   color: rgb(22 101 52 / var(--tw-text-opacity));
 }
 
 .text-neutral-900 {
   --tw-text-opacity: 1;
+  color: rgb(23 23 23 / 1);
   color: rgb(23 23 23 / var(--tw-text-opacity));
 }
 
 .text-blue-400 {
   --tw-text-opacity: 1;
+  color: rgb(96 165 250 / 1);
   color: rgb(96 165 250 / var(--tw-text-opacity));
 }
 
 .text-neutral-500 {
   --tw-text-opacity: 1;
+  color: rgb(115 115 115 / 1);
   color: rgb(115 115 115 / var(--tw-text-opacity));
 }
 
 .text-yellow-600 {
   --tw-text-opacity: 1;
+  color: rgb(202 138 4 / 1);
   color: rgb(202 138 4 / var(--tw-text-opacity));
 }
 
 .text-indigo-600 {
   --tw-text-opacity: 1;
+  color: rgb(79 70 229 / 1);
   color: rgb(79 70 229 / var(--tw-text-opacity));
 }
 
 .text-zinc-500 {
   --tw-text-opacity: 1;
+  color: rgb(113 113 122 / 1);
   color: rgb(113 113 122 / var(--tw-text-opacity));
 }
 
 .text-zinc-400 {
   --tw-text-opacity: 1;
+  color: rgb(161 161 170 / 1);
   color: rgb(161 161 170 / var(--tw-text-opacity));
 }
 
 .text-sky-600 {
   --tw-text-opacity: 1;
+  color: rgb(2 132 199 / 1);
   color: rgb(2 132 199 / var(--tw-text-opacity));
 }
 
 .text-zinc-900 {
   --tw-text-opacity: 1;
+  color: rgb(24 24 27 / 1);
   color: rgb(24 24 27 / var(--tw-text-opacity));
 }
 
 .text-zinc-700 {
   --tw-text-opacity: 1;
+  color: rgb(63 63 70 / 1);
   color: rgb(63 63 70 / var(--tw-text-opacity));
 }
 
@@ -10073,85 +9215,100 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
-  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .drop-shadow-xl {
   --tw-drop-shadow: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .drop-shadow-md {
   --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .drop-shadow-lg {
   --tw-drop-shadow: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .drop-shadow-2xl {
   --tw-drop-shadow: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .backdrop-blur {
   --tw-backdrop-blur: blur(8px);
+  -webkit-backdrop-filter: blur(8px) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+          backdrop-filter: blur(8px) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
   -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
           backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
 
 .hover\:bg-gray-200:hover {
   --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / 1);
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-neutral-200:hover {
   --tw-bg-opacity: 1;
+  background-color: rgb(229 229 229 / 1);
   background-color: rgb(229 229 229 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-blue-50:hover {
   --tw-bg-opacity: 1;
+  background-color: rgb(239 246 255 / 1);
   background-color: rgb(239 246 255 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-red-200:hover {
   --tw-bg-opacity: 1;
+  background-color: rgb(254 202 202 / 1);
   background-color: rgb(254 202 202 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-zinc-200:hover {
   --tw-bg-opacity: 1;
+  background-color: rgb(228 228 231 / 1);
   background-color: rgb(228 228 231 / var(--tw-bg-opacity));
 }
 
 .hover\:text-slate-900:hover {
   --tw-text-opacity: 1;
+  color: rgb(15 23 42 / 1);
   color: rgb(15 23 42 / var(--tw-text-opacity));
 }
 
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
+  color: rgb(17 24 39 / 1);
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
 .hover\:text-zinc-500:hover {
   --tw-text-opacity: 1;
+  color: rgb(113 113 122 / 1);
   color: rgb(113 113 122 / var(--tw-text-opacity));
 }
 
 .focus\:border-indigo-500:focus {
   --tw-border-opacity: 1;
+  border-color: rgb(99 102 241 / 1);
   border-color: rgb(99 102 241 / var(--tw-border-opacity));
 }
 
@@ -10163,7 +9320,7 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .focus\:ring-2:focus {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), 0 0 #0000;
+  box-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color), var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color), 0 0 #0000;
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
@@ -10183,32 +9340,38 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .group:hover .group-hover\:bg-green-200 {
   --tw-bg-opacity: 1;
+  background-color: rgb(187 247 208 / 1);
   background-color: rgb(187 247 208 / var(--tw-bg-opacity));
 }
 
 .group:hover .group-hover\:text-slate-600 {
   --tw-text-opacity: 1;
+  color: rgb(71 85 105 / 1);
   color: rgb(71 85 105 / var(--tw-text-opacity));
 }
 
 @media (prefers-color-scheme: dark) {
   .dark\:text-slate-200 {
     --tw-text-opacity: 1;
+    color: rgb(226 232 240 / 1);
     color: rgb(226 232 240 / var(--tw-text-opacity));
   }
 
   .dark\:hover\:text-white:hover {
     --tw-text-opacity: 1;
+    color: rgb(255 255 255 / 1);
     color: rgb(255 255 255 / var(--tw-text-opacity));
   }
 
   .dark\:hover\:text-zinc-300:hover {
     --tw-text-opacity: 1;
+    color: rgb(212 212 216 / 1);
     color: rgb(212 212 216 / var(--tw-text-opacity));
   }
 
   .group:hover .dark\:group-hover\:text-slate-300 {
     --tw-text-opacity: 1;
+    color: rgb(203 213 225 / 1);
     color: rgb(203 213 225 / var(--tw-text-opacity));
   }
 }
@@ -10314,7 +9477,7 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   .md\:shadow-none {
     --tw-shadow: 0 0 #0000;
     --tw-shadow-colored: 0 0 #0000;
-    box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0 #0000;
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
 }
@@ -10342,7 +9505,9 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
   .lg\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
+    margin-top: calc(0px * calc(1 - 0));
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0px * 0);
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
   }
 }

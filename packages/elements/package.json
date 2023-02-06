@@ -55,11 +55,7 @@
     "@rollup/plugin-replace": "^3.0.1",
     "@web/dev-server-rollup": "^0.3.14",
     "@web/test-runner": "^0.13.25",
-    "postcss": "^8.3.11",
     "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-import": "^14.0.2",
-    "postcss-nested": "^5.0.6",
-    "postcss-preset-env": "~7.2",
     "rollup-plugin-postcss": "^4.0.2"
   },
   "eslintIgnore": [

@@ -26,9 +26,6 @@
     "@qni/elements": "^0.0.85",
     "@qni/simulator": "^0.0.85"
   },
-  "devDependencies": {
-    "postcss-import": "^14.0.2"
-  },
   "eslintIgnore": [
     "application.css",
     "application.js",
