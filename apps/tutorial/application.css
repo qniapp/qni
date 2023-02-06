@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.0.22 | MIT License | https://tailwindcss.com
+! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -30,6 +30,7 @@
 2. Prevent adjustments of font size after orientation changes in iOS.
 3. Use a more readable tab size.
 4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
 */
 
 html {
@@ -44,6 +45,8 @@ html {
   /* 3 */
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /* 4 */
+  font-feature-settings: normal;
+  /* 5 */
 }
 
 /*
@@ -187,6 +190,8 @@ textarea {
   /* 1 */
   font-size: 100%;
   /* 1 */
+  font-weight: inherit;
+  /* 1 */
   line-height: inherit;
   /* 1 */
   color: inherit;
@@ -415,9 +420,7 @@ video {
   height: auto;
 }
 
-/*
-Ensure the default browser behavior of the `hidden` attribute.
-*/
+/* Make elements with the HTML hidden attribute stay hidden by default */
 
 [hidden] {
   display: none;
@@ -476,14 +479,18 @@ input::placeholder,textarea::placeholder {
   min-height: 1.5em;
 }
 
+::-webkit-datetime-edit,::-webkit-datetime-edit-year-field,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute-field,::-webkit-datetime-edit-second-field,::-webkit-datetime-edit-millisecond-field,::-webkit-datetime-edit-meridiem-field {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 select {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   background-position: right 0.5rem center;
   background-repeat: no-repeat;
   background-size: 1.5em 1.5em;
   padding-right: 2.5rem;
-  -webkit-print-color-adjust: exact;
-          color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 [multiple] {
@@ -495,8 +502,7 @@ select {
   background-size: auto auto;
   background-size: initial;
   padding-right: 0.75rem;
-  -webkit-print-color-adjust: unset;
-          color-adjust: unset;
+  print-color-adjust: unset;
 }
 
 [type='checkbox'],[type='radio'] {
@@ -504,8 +510,7 @@ select {
      -moz-appearance: none;
           appearance: none;
   padding: 0;
-  -webkit-print-color-adjust: exact;
-          color-adjust: exact;
+  print-color-adjust: exact;
   display: inline-block;
   vertical-align: middle;
   background-origin: border-box;
@@ -589,10 +594,60 @@ select {
 }
 
 [type='file']:focus {
+  outline: 1px solid ButtonText;
   outline: 1px auto -webkit-focus-ring-color;
 }
 
 *, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
   --tw-translate-y: 0;
   --tw-rotate: 0;
@@ -642,6 +697,11 @@ select {
   max-width: 65ch;
 }
 
+.prose :where(p):not(:where([class~="not-prose"] *)) {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
 .prose :where([class~="lead"]):not(:where([class~="not-prose"] *)) {
   color: var(--tw-prose-lead);
   font-size: 1.25em;
@@ -661,8 +721,22 @@ select {
   font-weight: 600;
 }
 
+.prose :where(a strong):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+}
+
+.prose :where(blockquote strong):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+}
+
+.prose :where(thead th strong):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+}
+
 .prose :where(ol):not(:where([class~="not-prose"] *)) {
   list-style-type: decimal;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
   padding-left: 1.625em;
 }
 
@@ -704,6 +778,8 @@ select {
 
 .prose :where(ul):not(:where([class~="not-prose"] *)) {
   list-style-type: disc;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
   padding-left: 1.625em;
 }
 
@@ -754,6 +830,7 @@ select {
 
 .prose :where(h1 strong):not(:where([class~="not-prose"] *)) {
   font-weight: 900;
+  color: inherit;
 }
 
 .prose :where(h2):not(:where([class~="not-prose"] *)) {
@@ -767,6 +844,7 @@ select {
 
 .prose :where(h2 strong):not(:where([class~="not-prose"] *)) {
   font-weight: 800;
+  color: inherit;
 }
 
 .prose :where(h3):not(:where([class~="not-prose"] *)) {
@@ -780,6 +858,7 @@ select {
 
 .prose :where(h3 strong):not(:where([class~="not-prose"] *)) {
   font-weight: 700;
+  color: inherit;
 }
 
 .prose :where(h4):not(:where([class~="not-prose"] *)) {
@@ -792,6 +871,12 @@ select {
 
 .prose :where(h4 strong):not(:where([class~="not-prose"] *)) {
   font-weight: 700;
+  color: inherit;
+}
+
+.prose :where(img):not(:where([class~="not-prose"] *)) {
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 .prose :where(figure > *):not(:where([class~="not-prose"] *)) {
@@ -821,7 +906,33 @@ select {
 }
 
 .prose :where(a code):not(:where([class~="not-prose"] *)) {
-  color: var(--tw-prose-links);
+  color: inherit;
+}
+
+.prose :where(h1 code):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+}
+
+.prose :where(h2 code):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+  font-size: 0.875em;
+}
+
+.prose :where(h3 code):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+  font-size: 0.9em;
+}
+
+.prose :where(h4 code):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+}
+
+.prose :where(blockquote code):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+}
+
+.prose :where(thead th code):not(:where([class~="not-prose"] *)) {
+  color: inherit;
 }
 
 .prose :where(pre):not(:where([class~="not-prose"] *)) {
@@ -895,10 +1006,15 @@ select {
 
 .prose :where(tbody td):not(:where([class~="not-prose"] *)) {
   vertical-align: baseline;
-  padding-top: 0.5714286em;
-  padding-right: 0.5714286em;
-  padding-bottom: 0.5714286em;
-  padding-left: 0.5714286em;
+}
+
+.prose :where(tfoot):not(:where([class~="not-prose"] *)) {
+  border-top-width: 1px;
+  border-top-color: var(--tw-prose-th-borders);
+}
+
+.prose :where(tfoot td):not(:where([class~="not-prose"] *)) {
+  vertical-align: top;
 }
 
 .prose {
@@ -938,16 +1054,6 @@ select {
   line-height: 1.75;
 }
 
-.prose :where(p):not(:where([class~="not-prose"] *)) {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
-}
-
-.prose :where(img):not(:where([class~="not-prose"] *)) {
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
-
 .prose :where(video):not(:where([class~="not-prose"] *)) {
   margin-top: 2em;
   margin-bottom: 2em;
@@ -956,14 +1062,6 @@ select {
 .prose :where(figure):not(:where([class~="not-prose"] *)) {
   margin-top: 2em;
   margin-bottom: 2em;
-}
-
-.prose :where(h2 code):not(:where([class~="not-prose"] *)) {
-  font-size: 0.875em;
-}
-
-.prose :where(h3 code):not(:where([class~="not-prose"] *)) {
-  font-size: 0.9em;
 }
 
 .prose :where(li):not(:where([class~="not-prose"] *)) {
@@ -979,24 +1077,24 @@ select {
   padding-left: 0.375em;
 }
 
-.prose > :where(ul > li p):not(:where([class~="not-prose"] *)) {
+.prose :where(.prose > ul > li p):not(:where([class~="not-prose"] *)) {
   margin-top: 0.75em;
   margin-bottom: 0.75em;
 }
 
-.prose > :where(ul > li > *:first-child):not(:where([class~="not-prose"] *)) {
+.prose :where(.prose > ul > li > *:first-child):not(:where([class~="not-prose"] *)) {
   margin-top: 1.25em;
 }
 
-.prose > :where(ul > li > *:last-child):not(:where([class~="not-prose"] *)) {
+.prose :where(.prose > ul > li > *:last-child):not(:where([class~="not-prose"] *)) {
   margin-bottom: 1.25em;
 }
 
-.prose > :where(ol > li > *:first-child):not(:where([class~="not-prose"] *)) {
+.prose :where(.prose > ol > li > *:first-child):not(:where([class~="not-prose"] *)) {
   margin-top: 1.25em;
 }
 
-.prose > :where(ol > li > *:last-child):not(:where([class~="not-prose"] *)) {
+.prose :where(.prose > ol > li > *:last-child):not(:where([class~="not-prose"] *)) {
   margin-bottom: 1.25em;
 }
 
@@ -1029,19 +1127,26 @@ select {
   padding-right: 0;
 }
 
-.prose :where(tbody td:first-child):not(:where([class~="not-prose"] *)) {
+.prose :where(tbody td, tfoot td):not(:where([class~="not-prose"] *)) {
+  padding-top: 0.5714286em;
+  padding-right: 0.5714286em;
+  padding-bottom: 0.5714286em;
+  padding-left: 0.5714286em;
+}
+
+.prose :where(tbody td:first-child, tfoot td:first-child):not(:where([class~="not-prose"] *)) {
   padding-left: 0;
 }
 
-.prose :where(tbody td:last-child):not(:where([class~="not-prose"] *)) {
+.prose :where(tbody td:last-child, tfoot td:last-child):not(:where([class~="not-prose"] *)) {
   padding-right: 0;
 }
 
-.prose > :where(:first-child):not(:where([class~="not-prose"] *)) {
+.prose :where(.prose > :first-child):not(:where([class~="not-prose"] *)) {
   margin-top: 0;
 }
 
-.prose > :where(:last-child):not(:where([class~="not-prose"] *)) {
+.prose :where(.prose > :last-child):not(:where([class~="not-prose"] *)) {
   margin-bottom: 0;
 }
 
@@ -1081,7 +1186,7 @@ select {
 }
 
 /*
-! tailwindcss v3.0.22 | MIT License | https://tailwindcss.com
+! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -1112,6 +1217,7 @@ select {
 2. Prevent adjustments of font size after orientation changes in iOS.
 3. Use a more readable tab size.
 4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
 */
 
 html {
@@ -1126,6 +1232,8 @@ html {
   /* 3 */
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /* 4 */
+  font-feature-settings: normal;
+  /* 5 */
 }
 
 /*
@@ -1269,6 +1377,8 @@ textarea {
   /* 1 */
   font-size: 100%;
   /* 1 */
+  font-weight: inherit;
+  /* 1 */
   line-height: inherit;
   /* 1 */
   color: inherit;
@@ -1497,9 +1607,7 @@ video {
   height: auto;
 }
 
-/*
-Ensure the default browser behavior of the `hidden` attribute.
-*/
+/* Make elements with the HTML hidden attribute stay hidden by default */
 
 [hidden] {
   display: none;
@@ -1558,14 +1666,18 @@ input::placeholder,textarea::placeholder {
   min-height: 1.5em;
 }
 
+::-webkit-datetime-edit,::-webkit-datetime-edit-year-field,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute-field,::-webkit-datetime-edit-second-field,::-webkit-datetime-edit-millisecond-field,::-webkit-datetime-edit-meridiem-field {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 select {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   background-position: right 0.5rem center;
   background-repeat: no-repeat;
   background-size: 1.5em 1.5em;
   padding-right: 2.5rem;
-  -webkit-print-color-adjust: exact;
-  color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 [multiple] {
@@ -1577,8 +1689,7 @@ select {
   background-size: auto auto;
   background-size: initial;
   padding-right: 0.75rem;
-  -webkit-print-color-adjust: unset;
-  color-adjust: unset;
+  print-color-adjust: unset;
 }
 
 [type='checkbox'],[type='radio'] {
@@ -1586,8 +1697,7 @@ select {
   -moz-appearance: none;
   appearance: none;
   padding: 0;
-  -webkit-print-color-adjust: exact;
-  color-adjust: exact;
+  print-color-adjust: exact;
   display: inline-block;
   vertical-align: middle;
   background-origin: border-box;
@@ -1671,10 +1781,60 @@ select {
 }
 
 [type='file']:focus {
+  outline: 1px solid ButtonText;
   outline: 1px auto -webkit-focus-ring-color;
 }
 
 *, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
   --tw-translate-y: 0;
   --tw-rotate: 0;
@@ -2198,17 +2358,16 @@ run-circuit-button::part(body) {
   border-radius: 9999px;
 }
 
-run-circuit-button::part(reload-icon), run-circuit-button::part(tail-spin-icon) {
+run-circuit-button::part(reload-icon),
+  run-circuit-button::part(tail-spin-icon) {
   height: 1rem;
   width: 1rem;
 }
 
 @media (min-width: 640px) {
-  run-circuit-button::part(reload-icon), run-circuit-button::part(tail-spin-icon) {
+  run-circuit-button::part(reload-icon),
+  run-circuit-button::part(tail-spin-icon) {
     height: 2rem;
-  }
-
-  run-circuit-button::part(reload-icon), run-circuit-button::part(tail-spin-icon) {
     width: 2rem;
   }
 }
@@ -2348,7 +2507,8 @@ anti-control-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone anti-control-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) anti-control-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone anti-control-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) anti-control-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -2396,7 +2556,8 @@ anti-control-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone anti-control-gate, circuit-editor quantum-circuit:not([data-editing]) anti-control-gate {
+circuit-editor palette-dropzone anti-control-gate,
+    circuit-editor quantum-circuit:not([data-editing]) anti-control-gate {
   cursor: grab;
 }
 
@@ -2468,7 +2629,8 @@ bloch-display::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone bloch-display[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) bloch-display[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone bloch-display[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) bloch-display[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -2510,7 +2672,8 @@ bloch-display {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone bloch-display, circuit-editor quantum-circuit:not([data-editing]) bloch-display {
+circuit-editor palette-dropzone bloch-display,
+    circuit-editor quantum-circuit:not([data-editing]) bloch-display {
   cursor: grab;
 }
 
@@ -2638,9 +2801,6 @@ circuit-dropzone {
 @media (min-width: 640px) {
   circuit-dropzone {
     height: 2rem;
-  }
-
-  circuit-dropzone {
     width: 3rem;
   }
 }
@@ -2691,12 +2851,14 @@ circuit-dropzone[data-shadow]::part(wires) {
   display: none;
 }
 
-circuit-dropzone::part(connect-top), circuit-dropzone::part(connect-bottom) {
+circuit-dropzone::part(connect-top),
+  circuit-dropzone::part(connect-bottom) {
   --tw-text-opacity: 1;
   color: rgb(16 185 129 / var(--tw-text-opacity));
 }
 
-circuit-dropzone::part(wire-input), circuit-dropzone::part(wire-output) {
+circuit-dropzone::part(wire-input),
+  circuit-dropzone::part(wire-output) {
   --tw-text-opacity: 1;
   color: rgb(229 229 229 / var(--tw-text-opacity));
 }
@@ -2728,7 +2890,8 @@ circuit-dropzone[data-connect-bottom]::part(connect-bottom) {
   transform: scaleY(1.8);
 }
 
-circuit-dropzone[data-input-wire-quantum]::part(wire-input), circuit-dropzone[data-output-wire-quantum]::part(wire-output) {
+circuit-dropzone[data-input-wire-quantum]::part(wire-input),
+  circuit-dropzone[data-output-wire-quantum]::part(wire-output) {
   --tw-text-opacity: 1;
   color: rgb(23 23 23 / var(--tw-text-opacity));
 }
@@ -2757,7 +2920,8 @@ circuit-dropzone[data-operation-name='write-gate']::part(wire-output),
   }
 }
 
-circuit-dropzone[data-operation-name='spacer-gate']::part(wire-input), circuit-dropzone[data-operation-name='spacer-gate']::part(wire-output) {
+circuit-dropzone[data-operation-name='spacer-gate']::part(wire-input),
+  circuit-dropzone[data-operation-name='spacer-gate']::part(wire-output) {
   display: none;
 }
 
@@ -2793,9 +2957,6 @@ circuit-step > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 0;
     margin-right: calc(0px * var(--tw-space-x-reverse));
     margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
-  }
-
-  circuit-step > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
     margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(1rem * var(--tw-space-y-reverse));
@@ -2813,9 +2974,6 @@ circuit-step {
   circuit-step {
     padding-top: 2rem;
     padding-bottom: 2rem;
-  }
-
-  circuit-step {
     padding-left: 0px;
     padding-right: 0px;
   }
@@ -2843,9 +3001,6 @@ circuit-step[data-shadow] {
 @media (min-width: 640px) {
   circuit-step[data-shadow] {
     height: auto;
-  }
-
-  circuit-step[data-shadow] {
     width: 0px;
   }
 }
@@ -2883,9 +3038,6 @@ circuit-step::after {
 @media (min-width: 640px) {
   circuit-step::after {
     left: auto;
-  }
-
-  circuit-step::after {
     top: 0px;
   }
 }
@@ -2983,7 +3135,8 @@ control-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone control-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) control-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone control-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) control-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3031,7 +3184,8 @@ control-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone control-gate, circuit-editor quantum-circuit:not([data-editing]) control-gate {
+circuit-editor palette-dropzone control-gate,
+    circuit-editor quantum-circuit:not([data-editing]) control-gate {
   cursor: grab;
 }
 
@@ -3103,7 +3257,8 @@ h-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone h-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) h-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone h-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) h-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3166,7 +3321,8 @@ h-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone h-gate, circuit-editor quantum-circuit:not([data-editing]) h-gate {
+circuit-editor palette-dropzone h-gate,
+    circuit-editor quantum-circuit:not([data-editing]) h-gate {
   cursor: grab;
 }
 
@@ -3280,7 +3436,8 @@ measurement-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone measurement-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) measurement-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone measurement-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) measurement-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3328,7 +3485,8 @@ measurement-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone measurement-gate, circuit-editor quantum-circuit:not([data-editing]) measurement-gate {
+circuit-editor palette-dropzone measurement-gate,
+    circuit-editor quantum-circuit:not([data-editing]) measurement-gate {
   cursor: grab;
 }
 
@@ -3405,7 +3563,8 @@ circuit-dropzone measurement-gate[data-snapped]::part(icon) {
   }
 }
 
-measurement-gate[data-value='0']::part(icon), measurement-gate[data-value='1']::part(icon) {
+measurement-gate[data-value='0']::part(icon),
+  measurement-gate[data-value='1']::part(icon) {
   --tw-text-opacity: 1;
   color: rgb(228 228 231 / var(--tw-text-opacity));
 }
@@ -3521,7 +3680,8 @@ phase-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone phase-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) phase-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone phase-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) phase-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -3603,7 +3763,8 @@ phase-gate[data-reduced-angle='']:not([data-angle=''])::before {
   content: attr(data-angle) '';
 }
 
-phase-gate.angle-hidden::before, palette-dropzone phase-gate::before {
+phase-gate.angle-hidden::before,
+    palette-dropzone phase-gate::before {
   display: none !important;
 }
 
@@ -3642,7 +3803,8 @@ phase-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone phase-gate, circuit-editor quantum-circuit:not([data-editing]) phase-gate {
+circuit-editor palette-dropzone phase-gate,
+    circuit-editor quantum-circuit:not([data-editing]) phase-gate {
   cursor: grab;
 }
 
@@ -3760,7 +3922,8 @@ qft-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone qft-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) qft-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone qft-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) qft-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -4938,26 +5101,12 @@ qft-gate::part(resize-handle) {
     width: var(--qni-component-resize-handle-width);
     height: var(--qni-component-resize-handle-height);
     margin-right: 0;
-    margin-top: var(--qni-component-resize-handle-overlap)
-  }
-
-  qft-gate::part(resize-handle) {
-    flex-direction: column;
-  }
-
-  qft-gate::part(resize-handle) {
-    width: var(--qni-component-resize-handle-width);
-    height: var(--qni-component-resize-handle-height);
-    margin-right: 0;
-    margin-top: var(--qni-component-resize-handle-overlap)
-  }
-
-  qft-gate::part(resize-handle) {
-    flex-direction: column;
+    margin-top: var(--qni-component-resize-handle-overlap);
+    flex-direction: column
   }
 }
 
-qft-gate::part(resize-handle):hover, qft-gate[data-resizing]::part(resize-handle) {
+qft-gate::part(resize-handle):hover,qft-gate[data-resizing]::part(resize-handle) {
   background-color: var(--qni-component-resize-handle-fill-color-hovered);
 }
 
@@ -4965,7 +5114,7 @@ qft-gate::part(resize-handle) {
   visibility: hidden;
 }
 
-quantum-circuit:not([data-editing]) circuit-dropzone qft-gate:not([data-grabbed]):hover::part(resize-handle), qft-gate[data-resizing]::part(resize-handle) {
+quantum-circuit:not([data-editing]) circuit-dropzone qft-gate:not([data-grabbed]):hover::part(resize-handle),qft-gate[data-resizing]::part(resize-handle) {
   visibility: visible;
 }
 
@@ -5011,7 +5160,8 @@ qft-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone qft-gate, circuit-editor quantum-circuit:not([data-editing]) qft-gate {
+circuit-editor palette-dropzone qft-gate,
+    circuit-editor quantum-circuit:not([data-editing]) qft-gate {
   cursor: grab;
 }
 
@@ -5117,7 +5267,8 @@ qft-dagger-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone qft-dagger-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone qft-dagger-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) qft-dagger-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6295,26 +6446,12 @@ qft-dagger-gate::part(resize-handle) {
     width: var(--qni-component-resize-handle-width);
     height: var(--qni-component-resize-handle-height);
     margin-right: 0;
-    margin-top: var(--qni-component-resize-handle-overlap)
-  }
-
-  qft-dagger-gate::part(resize-handle) {
-    flex-direction: column;
-  }
-
-  qft-dagger-gate::part(resize-handle) {
-    width: var(--qni-component-resize-handle-width);
-    height: var(--qni-component-resize-handle-height);
-    margin-right: 0;
-    margin-top: var(--qni-component-resize-handle-overlap)
-  }
-
-  qft-dagger-gate::part(resize-handle) {
-    flex-direction: column;
+    margin-top: var(--qni-component-resize-handle-overlap);
+    flex-direction: column
   }
 }
 
-qft-dagger-gate::part(resize-handle):hover, qft-dagger-gate[data-resizing]::part(resize-handle) {
+qft-dagger-gate::part(resize-handle):hover,qft-dagger-gate[data-resizing]::part(resize-handle) {
   background-color: var(--qni-component-resize-handle-fill-color-hovered);
 }
 
@@ -6322,7 +6459,7 @@ qft-dagger-gate::part(resize-handle) {
   visibility: hidden;
 }
 
-quantum-circuit:not([data-editing]) circuit-dropzone qft-dagger-gate:not([data-grabbed]):hover::part(resize-handle), qft-dagger-gate[data-resizing]::part(resize-handle) {
+quantum-circuit:not([data-editing]) circuit-dropzone qft-dagger-gate:not([data-grabbed]):hover::part(resize-handle),qft-dagger-gate[data-resizing]::part(resize-handle) {
   visibility: visible;
 }
 
@@ -6383,7 +6520,8 @@ qft-dagger-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone qft-dagger-gate, circuit-editor quantum-circuit:not([data-editing]) qft-dagger-gate {
+circuit-editor palette-dropzone qft-dagger-gate,
+    circuit-editor quantum-circuit:not([data-editing]) qft-dagger-gate {
   cursor: grab;
 }
 
@@ -6506,7 +6644,8 @@ rnot-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone rnot-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rnot-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone rnot-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) rnot-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6569,7 +6708,8 @@ rnot-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone rnot-gate, circuit-editor quantum-circuit:not([data-editing]) rnot-gate {
+circuit-editor palette-dropzone rnot-gate,
+    circuit-editor quantum-circuit:not([data-editing]) rnot-gate {
   cursor: grab;
 }
 
@@ -6675,7 +6815,8 @@ rx-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone rx-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rx-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone rx-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) rx-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6757,7 +6898,8 @@ rx-gate[data-reduced-angle='']:not([data-angle=''])::before {
   content: attr(data-angle) '';
 }
 
-rx-gate.angle-hidden::before, palette-dropzone rx-gate::before {
+rx-gate.angle-hidden::before,
+    palette-dropzone rx-gate::before {
   display: none !important;
 }
 
@@ -6796,7 +6938,8 @@ rx-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone rx-gate, circuit-editor quantum-circuit:not([data-editing]) rx-gate {
+circuit-editor palette-dropzone rx-gate,
+    circuit-editor quantum-circuit:not([data-editing]) rx-gate {
   cursor: grab;
 }
 
@@ -6902,7 +7045,8 @@ ry-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone ry-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) ry-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone ry-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) ry-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -6984,7 +7128,8 @@ ry-gate[data-reduced-angle='']:not([data-angle=''])::before {
   content: attr(data-angle) '';
 }
 
-ry-gate.angle-hidden::before, palette-dropzone ry-gate::before {
+ry-gate.angle-hidden::before,
+    palette-dropzone ry-gate::before {
   display: none !important;
 }
 
@@ -7023,7 +7168,8 @@ ry-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone ry-gate, circuit-editor quantum-circuit:not([data-editing]) ry-gate {
+circuit-editor palette-dropzone ry-gate,
+    circuit-editor quantum-circuit:not([data-editing]) ry-gate {
   cursor: grab;
 }
 
@@ -7129,7 +7275,8 @@ rz-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone rz-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) rz-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone rz-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) rz-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -7211,7 +7358,8 @@ rz-gate[data-reduced-angle='']:not([data-angle=''])::before {
   content: attr(data-angle) '';
 }
 
-rz-gate.angle-hidden::before, palette-dropzone rz-gate::before {
+rz-gate.angle-hidden::before,
+    palette-dropzone rz-gate::before {
   display: none !important;
 }
 
@@ -7250,7 +7398,8 @@ rz-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone rz-gate, circuit-editor quantum-circuit:not([data-editing]) rz-gate {
+circuit-editor palette-dropzone rz-gate,
+    circuit-editor quantum-circuit:not([data-editing]) rz-gate {
   cursor: grab;
 }
 
@@ -7356,7 +7505,8 @@ spacer-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone spacer-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) spacer-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone spacer-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) spacer-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -7410,7 +7560,8 @@ spacer-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone spacer-gate, circuit-editor quantum-circuit:not([data-editing]) spacer-gate {
+circuit-editor palette-dropzone spacer-gate,
+    circuit-editor quantum-circuit:not([data-editing]) spacer-gate {
   cursor: grab;
 }
 
@@ -7484,7 +7635,8 @@ swap-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone swap-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) swap-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone swap-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) swap-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -7532,7 +7684,8 @@ swap-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone swap-gate, circuit-editor quantum-circuit:not([data-editing]) swap-gate {
+circuit-editor palette-dropzone swap-gate,
+    circuit-editor quantum-circuit:not([data-editing]) swap-gate {
   cursor: grab;
 }
 
@@ -7604,7 +7757,8 @@ t-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone t-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) t-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone t-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) t-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -7667,7 +7821,8 @@ t-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone t-gate, circuit-editor quantum-circuit:not([data-editing]) t-gate {
+circuit-editor palette-dropzone t-gate,
+    circuit-editor quantum-circuit:not([data-editing]) t-gate {
   cursor: grab;
 }
 
@@ -7773,7 +7928,8 @@ write-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone write-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) write-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone write-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) write-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -7821,7 +7977,8 @@ write-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone write-gate, circuit-editor quantum-circuit:not([data-editing]) write-gate {
+circuit-editor palette-dropzone write-gate,
+    circuit-editor quantum-circuit:not([data-editing]) write-gate {
   cursor: grab;
 }
 
@@ -8000,7 +8157,8 @@ x-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone x-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) x-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone x-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) x-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -8063,7 +8221,8 @@ x-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone x-gate, circuit-editor quantum-circuit:not([data-editing]) x-gate {
+circuit-editor palette-dropzone x-gate,
+    circuit-editor quantum-circuit:not([data-editing]) x-gate {
   cursor: grab;
 }
 
@@ -8169,7 +8328,8 @@ y-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone y-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) y-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone y-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) y-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -8232,7 +8392,8 @@ y-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone y-gate, circuit-editor quantum-circuit:not([data-editing]) y-gate {
+circuit-editor palette-dropzone y-gate,
+    circuit-editor quantum-circuit:not([data-editing]) y-gate {
   cursor: grab;
 }
 
@@ -8338,7 +8499,8 @@ z-gate::part(outline) {
   border-radius: var(--qni-semantic-radius-outline);
 }
 
-palette-dropzone z-gate[data-hoverable]:not([data-grabbed]):hover::part(outline), quantum-circuit:not([data-editing]) z-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+palette-dropzone z-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) z-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
   display: block;
   outline: 2px solid #d4d4d8;
   outline: 2px solid #d4d4d8;
@@ -8401,7 +8563,8 @@ z-gate {
   touch-action: none;
 }
 
-circuit-editor palette-dropzone z-gate, circuit-editor quantum-circuit:not([data-editing]) z-gate {
+circuit-editor palette-dropzone z-gate,
+    circuit-editor quantum-circuit:not([data-editing]) z-gate {
   cursor: grab;
 }
 
@@ -8478,6 +8641,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
   position: absolute;
 }
 
+.relative {
+  position: relative;
+}
+
 .inset-0 {
   top: 0px;
   right: 0px;
@@ -8487,6 +8654,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 
 .block {
   display: block;
+}
+
+.flex {
+  display: flex;
 }
 
 .hidden {
@@ -8672,11 +8843,13 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 /* tooltip */
 
 @media (min-width: 768px) {
-  .content-with-margin .mini-qni, .content-with-margin > p, .content-with-margin figure, .content-with-margin orbit-reviewarea, .content-with-margin ul, .content-with-margin footer {
+  .content-with-margin .mini-qni,
+.content-with-margin > p,
+.content-with-margin figure,
+.content-with-margin orbit-reviewarea,
+.content-with-margin ul,
+.content-with-margin footer {
     margin-right: auto;
-  }
-
-  .content-with-margin .mini-qni, .content-with-margin > p, .content-with-margin figure, .content-with-margin orbit-reviewarea, .content-with-margin ul, .content-with-margin footer {
     width: 58.333333%;
   }
 }
@@ -8737,13 +8910,7 @@ body {
 @media (min-width: 640px) {
   .margin-note {
     margin: 0px;
-  }
-
-  .margin-note {
     margin-bottom: 1.25rem;
-  }
-
-  .margin-note {
     padding-left: 3rem;
   }
 }
@@ -8957,6 +9124,14 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-right: 0.5rem;
 }
 
+.-mt-2\.5 {
+  margin-top: -0.625rem;
+}
+
+.-mt-2 {
+  margin-top: -0.5rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -9061,14 +9236,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-top: 0.25rem;
 }
 
-.-mt-2\.5 {
-  margin-top: -0.625rem;
-}
-
-.-mt-2 {
-  margin-top: -0.5rem;
-}
-
 .block {
   display: block;
 }
@@ -9101,6 +9268,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   display: none;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .h-10 {
   height: 2.5rem;
 }
@@ -9125,10 +9296,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   height: 2rem;
 }
 
-.h-12 {
-  height: 3rem;
-}
-
 .h-32 {
   height: 8rem;
 }
@@ -9147,6 +9314,18 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .h-16 {
   height: 4rem;
+}
+
+.w-20 {
+  width: 5rem;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.w-11 {
+  width: 2.75rem;
 }
 
 .w-10 {
@@ -9178,10 +9357,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   width: 2rem;
 }
 
-.w-12 {
-  width: 3rem;
-}
-
 .\!w-full {
   width: 100% !important;
 }
@@ -9208,14 +9383,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .w-5 {
   width: 1.25rem;
-}
-
-.w-20 {
-  width: 5rem;
-}
-
-.w-11 {
-  width: 2.75rem;
 }
 
 .min-w-0 {
@@ -9909,6 +10076,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-zinc-700 {
   --tw-text-opacity: 1;
   color: rgb(63 63 70 / var(--tw-text-opacity));
+}
+
+.underline {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
 }
 
 .no-underline {
