@@ -31,6 +31,7 @@
     "fraction.js": "~4.2"
   },
   "devDependencies": {
+    "@types/qunit": "^2.19.4",
     "karma-esbuild": "~2.2",
     "karma-qunit": "^4.1.2",
     "npm-dts": "~1.3",

@@ -32,5 +32,6 @@
     "application.js.map",
     "serviceworker.js",
     "serviceworker.js.map"
-  ]
+  ],
+  "devDependencies": {}
 }
