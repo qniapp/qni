@@ -46,7 +46,7 @@
     "chai": "^4.3.4",
     "karma-chai": "^0.1.0",
     "karma-mocha": "^2.0.1",
-    "mocha": "^9.1.3"
+    "mocha": "~10.2"
   },
   "eslintIgnore": [
     "dist/",
