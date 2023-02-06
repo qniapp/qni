@@ -42,7 +42,6 @@
     "@size-limit/preset-small-lib": "^7.0.8",
     "@types/qunit": "^2.11.2",
     "chai": "^4.3.4",
-    "eslint-plugin-github": "^4.3.5",
     "karma": "^6.3.9",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",

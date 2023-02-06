@@ -32,8 +32,6 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
-    "eslint-plugin-github": "^4.3.5",
-    "eslint-plugin-prettier": "^4.0.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-esbuild": "^2.2.0",
     "karma-qunit": "^4.1.2",
