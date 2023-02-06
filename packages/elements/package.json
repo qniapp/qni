@@ -41,7 +41,7 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@github/catalyst": "1.3.0",
-    "@github/jtml": "~0.4",
+    "@github/jtml": "~0.5",
     "@qni/common": "^0.0.85",
     "complex.js": "^2.1.1",
     "interactjs": "~1.10",
