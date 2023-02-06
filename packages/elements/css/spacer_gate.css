@@ -10,5 +10,10 @@ spacer-gate {
 
   &::part(icon) {
     @apply text-neutral-900;
+    @apply rotate-90;
+
+    @media screen(sm) {
+      @apply rotate-0;
+    }
   }
 }

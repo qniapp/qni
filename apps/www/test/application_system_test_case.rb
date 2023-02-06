@@ -188,6 +188,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       'Rx' => 'rx-gate',
       'Ry' => 'ry-gate',
       'Rz' => 'rz-gate',
+      '…' => 'spacer-gate',
       'QFT' => 'qft-gate',
       'QFT†' => 'qft-dagger-gate',
       'Swap' => 'swap-gate',
@@ -253,6 +254,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   def colors_white
     'rgba(255, 255, 255, 1)'
+  end
+
+  def colors_neutral(number)
+    {
+      900 => 'rgba(23, 23, 23, 1)'
+    }.fetch(number)
   end
 
   def colors_emerald(number)
