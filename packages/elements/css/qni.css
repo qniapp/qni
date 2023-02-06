@@ -33,6 +33,7 @@
 @import './rx_gate';
 @import './ry_gate';
 @import './rz_gate';
+@import './spacer_gate';
 @import './swap_gate';
 @import './t_gate';
 @import './write_gate';

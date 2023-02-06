@@ -12,6 +12,7 @@ import {
   SerializedRxGate,
   SerializedRyGate,
   SerializedRzGate,
+  SerializedSpacerGate,
   SerializedSwapGate,
   SerializedTGate,
   SerializedXGate,
@@ -55,6 +56,7 @@ import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
+import {SpacerGateElement} from './spacer-gate-element'
 import {SwapGateElement} from './swap-gate-element'
 import {TGateElement} from './t-gate-element'
 import {WriteGateElement} from './write-gate-element'
@@ -1199,6 +1201,14 @@ export class CircuitStepElement extends HTMLElement {
               }
             }
           }
+          break
+        }
+        case SpacerGateElement: {
+          const spacerGates = sameOps as SpacerGateElement[]
+          const opType = spacerGates[0].operationType
+          const targetBits = spacerGates.map(each => each.bit)
+          const serializedGate: SerializedSpacerGate = {type: opType, targets: targetBits}
+          serializedStep.push(serializedGate)
           break
         }
         case QftGateElement: {
