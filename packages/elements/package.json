@@ -64,7 +64,6 @@
     "postcss-preset-env": "~7.2",
     "rollup-plugin-postcss": "^4.0.2",
     "size-limit": "^7.0.8",
-    "typedoc": "~0.23",
     "typescript": "~4.8"
   },
   "eslintIgnore": [
