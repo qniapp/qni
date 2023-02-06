@@ -58,7 +58,6 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "~8.3",
-    "autoprefixer": "^10.4.0",
     "postcss": "^8.3.11",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^14.0.2",

@@ -27,7 +27,6 @@
     "@qni/simulator": "^0.0.85"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
     "postcss-import": "^14.0.2"
   },
   "eslintIgnore": [
