@@ -23,6 +23,7 @@ import {CircuitBlockElement} from './circuit-block-element'
 import {ControlGateElement} from './control-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
+import {SpacerGateElement} from './spacer-gate-element'
 import {SwapGateElement} from './swap-gate-element'
 import {WriteGateElement} from './write-gate-element'
 
@@ -1097,6 +1098,12 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             const rzGate = new RzGateElement()
             rzGate.angle = this.angleParameter(operation.slice(2))
             operations.push(rzGate)
+            newStep.append(new CircuitDropzoneElement())
+            break
+          }
+          case /^…/.test(operation): {
+            const spacerGate = new SpacerGateElement()
+            operations.push(spacerGate)
             newStep.append(new CircuitDropzoneElement())
             break
           }

@@ -461,7 +461,7 @@ export class CircuitEditorElement extends HTMLElement {
 
     this.circuit.hoverable = true
     for (const each of this.circuit.operations) {
-      each.initMenu()
+      if (isMenuable(each)) each.initMenu()
     }
   }
 

@@ -13,6 +13,7 @@ import {
   SerializedRxGateType,
   SerializedRyGateType,
   SerializedRzGateType,
+  SerializedSpacerGateType,
   SerializedSwapGateType,
   SerializedTGateType,
   SerializedWrite0GateType,
@@ -89,6 +90,8 @@ export class Simulator {
           } else {
             this.z(...each.targets)
           }
+          break
+        case SerializedSpacerGateType:
           break
         case SerializedPhaseGateType: {
           if (!each.angle) break

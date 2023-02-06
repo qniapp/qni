@@ -92,4 +92,9 @@ circuit-dropzone {
       transform: scaleX(0.33) translateX(0);
     }
   }
+
+  &[data-operation-name='spacer-gate']::part(wire-input),
+  &[data-operation-name='spacer-gate']::part(wire-output) {
+    @apply hidden;
+  }
 }

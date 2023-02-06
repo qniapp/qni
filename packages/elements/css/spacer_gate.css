@@ -1,0 +1,19 @@
+spacer-gate {
+  @apply qpu-operation;
+  @apply qpu-operation-outlineable;
+  @apply qpu-operation-hoverable;
+  @apply qpu-operation-activateable;
+  @apply qpu-operation-disableable;
+  @apply qpu-operation-rectangular;
+  @apply qpu-operation-grabbable;
+  @apply operation-draggable;
+
+  &::part(icon) {
+    @apply text-neutral-900;
+    @apply rotate-90;
+
+    @media screen(sm) {
+      @apply rotate-0;
+    }
+  }
+}

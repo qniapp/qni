@@ -33,6 +33,7 @@
 @import './rx_gate';
 @import './ry_gate';
 @import './rz_gate';
+@import './spacer_gate';
 @import './swap_gate';
 @import './t_gate';
 @import './write_gate';
@@ -516,7 +517,7 @@
     }
 
     /* show trash icon */
-    circuit-dropzone &:not([data-snapped])::part(icon)::before {
+    circuit-dropzone &:not([data-snapped])::part(body)::before {
       @apply absolute -top-2.5 -right-2.5;
       @apply h-6 w-6;
       @apply z-10;
