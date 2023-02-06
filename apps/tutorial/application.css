@@ -2404,7 +2404,7 @@ quantum-circuit([data-editing]) anti-control-gate:not([data-operation-x='0']):no
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone anti-control-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone anti-control-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -2518,7 +2518,7 @@ quantum-circuit([data-editing]) bloch-display:not([data-operation-x='0']):not([d
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone bloch-display:not([data-snapped])::part(icon)::before {
+circuit-dropzone bloch-display:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -3039,7 +3039,7 @@ quantum-circuit([data-editing]) control-gate:not([data-operation-x='0']):not([da
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone control-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone control-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -3174,7 +3174,7 @@ quantum-circuit([data-editing]) h-gate:not([data-operation-x='0']):not([data-ope
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone h-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone h-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -3336,7 +3336,7 @@ quantum-circuit([data-editing]) measurement-gate:not([data-operation-x='0']):not
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone measurement-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone measurement-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -3650,7 +3650,7 @@ quantum-circuit([data-editing]) phase-gate:not([data-operation-x='0']):not([data
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone phase-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone phase-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -5019,7 +5019,7 @@ quantum-circuit([data-editing]) qft-gate:not([data-operation-x='0']):not([data-o
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone qft-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone qft-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -6391,7 +6391,7 @@ quantum-circuit([data-editing]) qft-dagger-gate:not([data-operation-x='0']):not(
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone qft-dagger-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone qft-dagger-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -6577,7 +6577,7 @@ quantum-circuit([data-editing]) rnot-gate:not([data-operation-x='0']):not([data-
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone rnot-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone rnot-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -6804,7 +6804,7 @@ quantum-circuit([data-editing]) rx-gate:not([data-operation-x='0']):not([data-op
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone rx-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone rx-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7031,7 +7031,7 @@ quantum-circuit([data-editing]) ry-gate:not([data-operation-x='0']):not([data-op
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone ry-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone ry-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7258,7 +7258,7 @@ quantum-circuit([data-editing]) rz-gate:not([data-operation-x='0']):not([data-op
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone rz-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone rz-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7418,7 +7418,7 @@ quantum-circuit([data-editing]) spacer-gate:not([data-operation-x='0']):not([dat
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone spacer-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone spacer-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7540,7 +7540,7 @@ quantum-circuit([data-editing]) swap-gate:not([data-operation-x='0']):not([data-
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone swap-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone swap-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7675,7 +7675,7 @@ quantum-circuit([data-editing]) t-gate:not([data-operation-x='0']):not([data-ope
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone t-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone t-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -7829,7 +7829,7 @@ quantum-circuit([data-editing]) write-gate:not([data-operation-x='0']):not([data
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone write-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone write-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -8071,7 +8071,7 @@ quantum-circuit([data-editing]) x-gate:not([data-operation-x='0']):not([data-ope
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone x-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone x-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -8240,7 +8240,7 @@ quantum-circuit([data-editing]) y-gate:not([data-operation-x='0']):not([data-ope
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone y-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone y-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
@@ -8409,7 +8409,7 @@ quantum-circuit([data-editing]) z-gate:not([data-operation-x='0']):not([data-ope
   --tw-border-opacity: 1;
 }
 
-circuit-dropzone z-gate:not([data-snapped])::part(icon)::before {
+circuit-dropzone z-gate:not([data-snapped])::part(body)::before {
   position: absolute;
   top: -0.625rem;
   right: -0.625rem;
