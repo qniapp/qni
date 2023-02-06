@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "clean": "lerna run clean --stream",
-    "build": "lerna run build --stream",
+    "build": "lerna run build",
     "pretty-quick": "pretty-quick",
     "lint": "lerna run lint",
     "typecheck": "lerna run typecheck",
@@ -57,7 +57,7 @@
     "husky": "^7.0.4",
     "karma": "^6.4.1",
     "karma-chrome-launcher": "^3.1.1",
-    "lerna": "~5.0",
+    "lerna": "~6.4",
     "postcss": "~8.4",
     "postcss-import": "~15.1",
     "postcss-nested": "~6.0",
