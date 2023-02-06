@@ -72,26 +72,26 @@ export class SlideInElement extends HTMLElement {
           [
             {transform: 'translateY(0px)'},
             {transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)`},
-            {transform: `translateY(-${this.offsetHeight + this.marginBottom}px)`}
+            {transform: `translateY(-${this.offsetHeight + this.marginBottom}px)`},
           ],
           {
             duration: this.duration,
             fill: 'forwards',
-            easing: 'ease-out'
-          }
+            easing: 'ease-out',
+          },
         )
       } else if (this.direction === 'down') {
         this.animate(
           [
             {transform: 'translateY(0px)'},
             {transform: `translateY(${this.offsetHeight + this.marginTop + 16}px)`},
-            {transform: `translateY(${this.offsetHeight + this.marginTop}px)`}
+            {transform: `translateY(${this.offsetHeight + this.marginTop}px)`},
           ],
           {
             duration: this.duration,
             fill: 'forwards',
-            easing: 'ease-out'
-          }
+            easing: 'ease-out',
+          },
         )
       }
     } else {
@@ -100,26 +100,26 @@ export class SlideInElement extends HTMLElement {
           [
             {transform: 'translateY(0px)'},
             {transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)`},
-            {transform: `translateY(-${this.offsetHeight + this.marginBottom}px)`}
+            {transform: `translateY(-${this.offsetHeight + this.marginBottom}px)`},
           ],
           {
             duration: this.duration,
             fill: 'forwards',
-            easing: 'ease-out'
-          }
+            easing: 'ease-out',
+          },
         )
       } else if (this.directionDesktop === 'down') {
         this.animate(
           [
             {transform: 'translateY(0px)'},
             {transform: `translateY(${this.offsetHeight + 16}px)`},
-            {transform: `translateY(${this.offsetHeight}px)`}
+            {transform: `translateY(${this.offsetHeight}px)`},
           ],
           {
             duration: this.duration,
             fill: 'forwards',
-            easing: 'ease-out'
-          }
+            easing: 'ease-out',
+          },
         )
       }
     }

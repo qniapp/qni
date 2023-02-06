@@ -24,26 +24,26 @@ export class RunCircuitButtonElement extends HTMLElement {
         unknown: {
           always: [
             {target: 'idle', cond: 'isIdle'},
-            {target: 'running', cond: 'isRunning'}
-          ]
+            {target: 'running', cond: 'isRunning'},
+          ],
         },
         idle: {
           on: {
             CLICK: {
               target: 'running',
-              actions: ['ripple', 'setRunningTrue', 'dispatchClickEvent']
-            }
-          }
+              actions: ['ripple', 'setRunningTrue', 'dispatchClickEvent'],
+            },
+          },
         },
         running: {
           on: {
             FINISH: {
               target: 'idle',
-              actions: ['setRunningFalse']
-            }
-          }
-        }
-      }
+              actions: ['setRunningFalse'],
+            },
+          },
+        },
+      },
     },
     {
       actions: {
@@ -76,13 +76,13 @@ export class RunCircuitButtonElement extends HTMLElement {
         },
         dispatchClickEvent: () => {
           this.dispatchEvent(new Event('run-circuit-button-click', {bubbles: true}))
-        }
+        },
       },
       guards: {
         isIdle: () => !this.running,
-        isRunning: () => this.running
-      }
-    }
+        isRunning: () => this.running,
+      },
+    },
   )
   private runCircuitButtonService = interpret(this.runCircuitButtonMachine).onTransition(state => {
     if (this.debug) {
@@ -135,7 +135,7 @@ export class RunCircuitButtonElement extends HTMLElement {
         </style>
 
         <div id="body" part="body" data-target="run-circuit-button.body">${this.reloadIcon} ${this.tailSpinIcon}</div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

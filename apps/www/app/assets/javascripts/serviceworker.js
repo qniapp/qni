@@ -23,8 +23,8 @@ function runSimulator(e) {
       JSON.stringify(
         e.data,
         ['circuitJson', 'qubitCount', 'stepIndex', 'steps', 'type', 'targets', 'angle', 'invalidateCaches'],
-        2
-      )
+        2,
+      ),
     )
   }
 
@@ -67,7 +67,7 @@ function runSimulator(e) {
         targets,
         blochVectors,
         measuredBits,
-        flags
+        flags,
       }
 
       if (i === stepIndex) {
@@ -79,7 +79,7 @@ function runSimulator(e) {
           amplitudes,
           blochVectors,
           measuredBits,
-          flags
+          flags,
         }
       } else {
         stepResult = {
@@ -88,7 +88,7 @@ function runSimulator(e) {
           amplitudes: [],
           blochVectors,
           measuredBits,
-          flags
+          flags,
         }
       }
     } else {
@@ -100,7 +100,7 @@ function runSimulator(e) {
         amplitudes: [],
         blochVectors: cachedStepResult.blochVectors,
         measuredBits: cachedStepResult.measuredBits,
-        flags: cachedStepResult.flags
+        flags: cachedStepResult.flags,
       }
 
       if (i === stepIndex) {

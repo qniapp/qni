@@ -29,7 +29,7 @@ describe('palette-dropzone element', function () {
     it('creates a new operation when its operation is grabbed', async function () {
       await sendMouse({
         type: 'move',
-        position: xy(operation)
+        position: xy(operation),
       })
       await sendMouse({type: 'down'})
 
@@ -41,7 +41,7 @@ describe('palette-dropzone element', function () {
     it('deletes its operation when the operation is dropped', async function () {
       await sendMouse({
         type: 'move',
-        position: xy(operation)
+        position: xy(operation),
       })
       await sendMouse({type: 'down'})
       await sendMouse({type: 'move', position: [1000, 1000]})

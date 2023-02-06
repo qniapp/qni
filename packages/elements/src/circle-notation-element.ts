@@ -319,14 +319,14 @@ export class CircleNotationElement extends HTMLElement {
     })
     Util.need(
       this.visibleQubitCircleKets.length <= 2 ** this.qubitCount,
-      `visibleQubitCircleKets.length (= ${this.visibleQubitCircleKets.length}) must be <= 2^${this.qubitCount}`
+      `visibleQubitCircleKets.length (= ${this.visibleQubitCircleKets.length}) must be <= 2^${this.qubitCount}`,
     )
 
     this.dispatchEvent(
       new CustomEvent('circle-notation-visibility-change', {
         detail: this.visibleQubitCircleKets,
-        bubbles: true
-      })
+        bubbles: true,
+      }),
     )
   }
 
@@ -456,7 +456,7 @@ export class CircleNotationElement extends HTMLElement {
             style="height: ${this.innerHeight}px; width: ${this.innerWidth}px; position: relative;"
           ></div>
         </div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 
@@ -931,7 +931,7 @@ export class CircleNotationElement extends HTMLElement {
     qubitCircle.setAttribute('data-amplitude-imag', '0')
     qubitCircle.setAttribute(
       'data-action',
-      'mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup'
+      'mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup',
     )
     qubitCircle.style.setProperty('top', `${top}px`)
     qubitCircle.style.setProperty('left', `${left}px`)
@@ -1138,7 +1138,7 @@ export class CircleNotationElement extends HTMLElement {
       allowHTML: true,
       animation: false,
       delay: 0,
-      theme: 'tooltip'
+      theme: 'tooltip',
       // trigger: 'manual', // debug
     })
 

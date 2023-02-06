@@ -32,9 +32,9 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
             on: {
               INIT: {
                 target: 'initialized',
-                actions: ['init']
-              }
-            }
+                actions: ['init'],
+              },
+            },
           },
           initialized: {
             type: 'compound',
@@ -43,32 +43,32 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
               unknown: {
                 always: [
                   {target: 'enabled', cond: 'isEnabled'},
-                  {target: 'disabled', cond: 'isDisabled'}
-                ]
+                  {target: 'disabled', cond: 'isDisabled'},
+                ],
               },
               enabled: {
                 on: {
                   SHOW: {
                     target: 'enabled',
-                    actions: ['show']
+                    actions: ['show'],
                   },
                   DISABLE: {
                     target: 'disabled',
-                    actions: ['disable', 'destroy']
-                  }
-                }
+                    actions: ['disable', 'destroy'],
+                  },
+                },
               },
               disabled: {
                 on: {
                   ENABLE: {
                     target: 'enabled',
-                    actions: ['init', 'enable']
-                  }
-                }
-              }
-            }
-          }
-        }
+                    actions: ['init', 'enable'],
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       {
         guards: {
@@ -77,7 +77,7 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
           },
           isDisabled: () => {
             return !this.help
-          }
+          },
         },
         actions: {
           init: () => {
@@ -94,7 +94,7 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
               // trigger: 'manual', // debug
               onShow(instance: Instance) {
                 instance.setContent(helpContent)
-              }
+              },
             })
 
             this.addEventListener('mouseenter', this.showHelp)
@@ -112,9 +112,9 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
           },
           destroy: () => {
             this.popup?.destroy()
-          }
-        }
-      }
+          },
+        },
+      },
     )
     private helpableService = interpret(this.helpableMachine)
       .onTransition(state => {

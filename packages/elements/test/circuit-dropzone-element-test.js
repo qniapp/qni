@@ -74,7 +74,7 @@ describe('circuit-dropzone element', function () {
       it('should reach "snapped" when hovering an operation over it', async function () {
         await sendMouse({
           type: 'move',
-          position: xy(operation)
+          position: xy(operation),
         })
         await sendMouse({type: 'down'})
         await sendMouse({type: 'move', position: xy(circuitDropzone)})
@@ -106,7 +106,7 @@ describe('circuit-dropzone element', function () {
       it('should reach "empty" when move its operation away', async function () {
         await sendMouse({
           type: 'move',
-          position: xy(operation)
+          position: xy(operation),
         })
         await sendMouse({type: 'down'})
 
@@ -149,7 +149,7 @@ describe('circuit-dropzone element', function () {
 
         await sendMouse({
           type: 'move',
-          position: xy(operation)
+          position: xy(operation),
         })
         await sendMouse({type: 'down'})
         await sendMouse({type: 'move', position: xy(circuitDropzone)})

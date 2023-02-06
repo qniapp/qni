@@ -14,7 +14,7 @@ class Util {
 export default class ShareController extends Controller {
   static values = {
     defaultTitle: String,
-    circuitUrl: String
+    circuitUrl: String,
   }
 
   static targets = ['modal', 'circuitTitleInput', 'urlText']

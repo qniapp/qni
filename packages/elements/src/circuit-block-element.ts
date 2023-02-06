@@ -94,7 +94,7 @@ export class CircuitBlockElement extends HTMLElement {
         <div id="body">
           <slot></slot>
         </div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 }

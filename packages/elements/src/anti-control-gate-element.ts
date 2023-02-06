@@ -5,7 +5,7 @@ import {
   HelpableMixin,
   HoverableMixin,
   IconableMixin,
-  MenuableMixin
+  MenuableMixin,
 } from './mixin/'
 import {html, render} from '@github/jtml'
 import {SerializedAntiControlGateType} from '@qni/common'
@@ -14,7 +14,7 @@ import {controller} from '@github/catalyst'
 
 @controller
 export class AntiControlGateElement extends MenuableMixin(
-  HelpableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
+  HelpableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement)))))),
 ) {
   get operationType(): typeof SerializedAntiControlGateType {
     return SerializedAntiControlGateType
@@ -31,7 +31,7 @@ export class AntiControlGateElement extends MenuableMixin(
     render(
       html`<div part="body">${this.iconHtml(antiControlGateIcon)}</div>
         <div part="outline"></div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

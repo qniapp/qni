@@ -39,7 +39,7 @@ const GENERIC_ARRAY_TYPES = [
   Uint8Array,
   Uint16Array,
   Uint32Array,
-  Uint8ClampedArray
+  Uint8ClampedArray,
 ]
 
 export function equate(subject: unknown, other: unknown): boolean {

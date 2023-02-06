@@ -73,8 +73,8 @@ function isApproximatelyEqualToHelperDestructured(subject: unknown, other: unkno
       isApproximatelyEqualToHelper(
         (subject as Record<string, unknown>)[key],
         (other as Record<string, unknown>)[key],
-        epsilon
-      )
+        epsilon,
+      ),
   )
 }
 

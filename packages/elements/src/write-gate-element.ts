@@ -6,7 +6,7 @@ import writeGateIcon from '../icon/write-gate.svg'
 
 @controller
 export class WriteGateElement extends MenuableMixin(
-  HelpableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement)))))
+  HelpableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))),
 ) {
   @attr value = ''
 
@@ -35,7 +35,7 @@ export class WriteGateElement extends MenuableMixin(
           <div part="value"></div>
         </div>
         <div part="outline"></div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

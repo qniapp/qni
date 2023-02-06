@@ -139,7 +139,7 @@ export class GateCarouselElement extends HTMLElement {
           </div>
         </div>
       `,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 
@@ -195,7 +195,7 @@ export class GateCarouselElement extends HTMLElement {
     Util.need(this.currentGateSetIndex >= 0, 'data-current-gate-set-index must be >= 0')
     Util.need(
       this.currentGateSetIndex < this.gateSets.length,
-      `data-current-gate-set-index must be < ${this.gateSets.length}`
+      `data-current-gate-set-index must be < ${this.gateSets.length}`,
     )
   }
 
@@ -272,13 +272,13 @@ export class GateCarouselElement extends HTMLElement {
           {transform: 'translateY(0px)', offset: 0},
           {transform: 'translateY(0px)', offset: 0.2},
           {transform: 'translateY(-88px)', offset: 0.6},
-          {transform: 'translateY(-72px)', offset: 1}
+          {transform: 'translateY(-72px)', offset: 1},
         ],
         {
           duration,
           fill: 'forwards',
-          easing: 'ease-out'
-        }
+          easing: 'ease-out',
+        },
       )
 
       animation.onfinish = () => {

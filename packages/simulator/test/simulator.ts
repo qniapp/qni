@@ -131,7 +131,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('i')
       assert.approximatelyEquates(
         simulator.h(0).state.matrix,
-        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)))
+        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4))),
       )
     })
 
@@ -143,7 +143,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('(-i)')
       assert.approximatelyEquates(
         simulator.h(0).state.matrix,
-        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)))
+        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4))),
       )
     })
 
@@ -234,28 +234,28 @@ QUnit.module('Simulator', () => {
     QUnit.test("|-i>.rnot(0) should be |-i>.h(0).phase('π/2', 0).h(0)", assert => {
       assert.approximatelyEquates(
         new Simulator('(-i)').rnot(0).state,
-        new Simulator('(-i)').h(0).phase('π/2', 0).h(0).state
+        new Simulator('(-i)').h(0).phase('π/2', 0).h(0).state,
       )
     })
 
     QUnit.test("|00>.rnot(0) should be |00>.h(0).phase('π/2', 0).h(0)", assert => {
       assert.approximatelyEquates(
         new Simulator('00').rnot(0).state,
-        new Simulator('00').h(0).phase('π/2', 0).h(0).state
+        new Simulator('00').h(0).phase('π/2', 0).h(0).state,
       )
     })
 
     QUnit.test("|00>.rnot(1) should be |00>.h(1).phase('π/2', 1).h(1)", assert => {
       assert.approximatelyEquates(
         new Simulator('00').rnot(1).state,
-        new Simulator('00').h(1).phase('π/2', 1).h(1).state
+        new Simulator('00').h(1).phase('π/2', 1).h(1).state,
       )
     })
 
     QUnit.test("|00>.rnot(0, 1) should be |00>.h(0, 1).phase('π/2', 0, 1).h(0, 1)", assert => {
       assert.approximatelyEquates(
         new Simulator('00').rnot(0, 1).state,
-        new Simulator('00').h(0, 1).phase('π/2', 0, 1).h(0, 1).state
+        new Simulator('00').h(0, 1).phase('π/2', 0, 1).h(0, 1).state,
       )
     })
   })
@@ -289,7 +289,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('i')
       assert.approximatelyEquates(
         simulator.qft(1, 0).state.matrix,
-        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)))
+        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4))),
       )
     })
 
@@ -301,7 +301,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('(-i)')
       assert.approximatelyEquates(
         simulator.qft(1, 0).state.matrix,
-        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)))
+        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4))),
       )
     })
 
@@ -350,7 +350,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('i')
       assert.approximatelyEquates(
         simulator.qftDagger(1, 0).state.matrix,
-        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)))
+        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4))),
       )
     })
 
@@ -362,7 +362,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('(-i)')
       assert.approximatelyEquates(
         simulator.qftDagger(1, 0).state.matrix,
-        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)))
+        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4))),
       )
     })
 
@@ -454,7 +454,7 @@ QUnit.module('Simulator', () => {
 
       assert.ok(
         simulator.state.isApproximatelyEqualTo(new StateVector('0'), 0.000001) ||
-          simulator.state.isApproximatelyEqualTo(new StateVector('1'), 0.00001)
+          simulator.state.isApproximatelyEqualTo(new StateVector('1'), 0.00001),
       )
       assert.equates(Object.keys(simulator.measuredBits).length, 1)
       assert.ok(simulator.measuredBits[0] === 0 || simulator.measuredBits[0] === 1)
@@ -466,7 +466,7 @@ QUnit.module('Simulator', () => {
 
       assert.ok(
         simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(1, 0), 0.000001) ||
-          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, -1), 0.000001)
+          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, -1), 0.000001),
       )
     })
 
@@ -476,7 +476,7 @@ QUnit.module('Simulator', () => {
 
       assert.ok(
         simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(1, 0), 0.000001) ||
-          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, Complex.I), 0.000001)
+          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, Complex.I), 0.000001),
       )
     })
 
@@ -486,7 +486,7 @@ QUnit.module('Simulator', () => {
 
       assert.ok(
         simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(1, 0), 0.000001) ||
-          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, new Complex(0, -1)), 0.000001)
+          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, new Complex(0, -1)), 0.000001),
       )
     })
 

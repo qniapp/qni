@@ -5,7 +5,7 @@ QUnit.module('Matrix', () => {
   QUnit.test('isEqualTo', assert => {
     const m = Matrix.fromRows([
       [new Complex(2, 3), new Complex(5, 7)],
-      [new Complex(11, 13), new Complex(17, 19)]
+      [new Complex(11, 13), new Complex(17, 19)],
     ])
     assert.equates(m, m)
     assert.notEquates(m, null)
@@ -15,37 +15,37 @@ QUnit.module('Matrix', () => {
       m,
       Matrix.fromRows([
         [new Complex(2, 3), new Complex(5, 7)],
-        [new Complex(11, 13), new Complex(17, 19)]
-      ])
+        [new Complex(11, 13), new Complex(17, 19)],
+      ]),
     )
     assert.notEquates(m, Matrix.fromRows([[new Complex(2, 3)]]))
     assert.notEquates(
       m,
       Matrix.fromRows([
         [new Complex(-2, 3), new Complex(5, 7)],
-        [new Complex(11, 13), new Complex(17, 19)]
-      ])
+        [new Complex(11, 13), new Complex(17, 19)],
+      ]),
     )
     assert.notEquates(
       m,
       Matrix.fromRows([
         [new Complex(2, 3), new Complex(-5, 7)],
-        [new Complex(11, 13), new Complex(17, 19)]
-      ])
+        [new Complex(11, 13), new Complex(17, 19)],
+      ]),
     )
     assert.notEquates(
       m,
       Matrix.fromRows([
         [new Complex(2, 3), new Complex(5, 7)],
-        [new Complex(-11, 13), new Complex(17, 19)]
-      ])
+        [new Complex(-11, 13), new Complex(17, 19)],
+      ]),
     )
     assert.notEquates(
       m,
       Matrix.fromRows([
         [new Complex(2, 3), new Complex(5, 7)],
-        [new Complex(11, 13), new Complex(-17, 19)]
-      ])
+        [new Complex(11, 13), new Complex(-17, 19)],
+      ]),
     )
 
     const col = Matrix.fromRows([[new Complex(2, 3), new Complex(5, 7)]])
@@ -88,19 +88,19 @@ QUnit.module('Matrix', () => {
 
     assert.equates(
       Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.EXACT),
-      '{{0, 1}, {\u2153+i, 0.3333334333333333i}}'
+      '{{0, 1}, {\u2153+i, 0.3333334333333333i}}',
     )
     assert.equates(
       Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.SIMPLIFIED),
-      '{{0, 1}, {\u2153+i, \u2153i}}'
+      '{{0, 1}, {\u2153+i, \u2153i}}',
     )
     assert.equates(
       Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.MINIFIED),
-      '{{0,1},{\u2153+i,0.3333334333333333i}}'
+      '{{0,1},{\u2153+i,0.3333334333333333i}}',
     )
     assert.equates(
       Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.CONSISTENT),
-      '{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}'
+      '{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}',
     )
   })
 
@@ -126,7 +126,7 @@ QUnit.module('Matrix', () => {
     const m = Matrix.square(1, new Complex(2, 3), -5.5, 0)
     assert.equates(m.rows(), [
       [1, new Complex(2, 3)],
-      [-5.5, 0]
+      [-5.5, 0],
     ])
 
     assert.equates(Matrix.solo(1).rows(), [[1]])
@@ -218,12 +218,12 @@ QUnit.module('Matrix', () => {
       new Complex(0.5, -0.5),
       new Complex(0.5, 0.5),
       new Complex(0.5, 0.5),
-      new Complex(0.5, -0.5)
+      new Complex(0.5, -0.5),
     )
     assert.equates(x.times(x.adjoint()), Matrix.identity(2))
     assert.equates(
       Matrix.PAULI_X.times(Matrix.PAULI_Y).times(Matrix.PAULI_Z).times(new Complex(0, -1)),
-      Matrix.identity(2)
+      Matrix.identity(2),
     )
   })
 
@@ -257,7 +257,7 @@ QUnit.module('Matrix', () => {
     assert.equates(Matrix.solo(2).tensorProduct(Matrix.solo(3)), Matrix.solo(6))
     assert.equates(
       Matrix.solo(new Complex(2, 3)).tensorProduct(Matrix.solo(new Complex(5, 7))),
-      Matrix.solo(new Complex(-11, 29))
+      Matrix.solo(new Complex(-11, 29)),
     )
     assert.equates(Matrix.solo(2).tensorProduct(Matrix.solo(3)), Matrix.solo(6))
     assert.equates(
@@ -268,7 +268,7 @@ QUnit.module('Matrix', () => {
                      0, 0, 0, -1,
                      1, 0, 0, 0,
                      0, -1, 0, 0
-                   )
+                   ),
     )
     assert.equates(
       Matrix.square(2, 3, 5, 7).tensorProduct(Matrix.square(11, 13, 17, 19)),
@@ -278,7 +278,7 @@ QUnit.module('Matrix', () => {
                      34, 38, 51, 57,
                      55, 65, 77, 91,
                      85, 95, 119, 133
-                   )
+                   ),
     )
   })
 

@@ -13,7 +13,7 @@ export const isControllable = (arg: unknown): arg is Controllable =>
   typeof arg === 'object' && arg !== null && typeof (arg as Controllable).controls === 'object'
 
 export function ControllableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase
+  Base: TBase,
 ): Constructor<Controllable> & TBase {
   class ControllableMixinClass extends Base {
     get controls(): number[] {

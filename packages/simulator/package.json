@@ -38,7 +38,6 @@
     "fp-ts": "^2.11.5"
   },
   "devDependencies": {
-    "@github/prettier-config": "^0.0.4",
     "@types/chai": "^4.3.4",
     "@types/karma-chai": "^0.1.3",
     "@types/karma-mocha": "^1.3.1",

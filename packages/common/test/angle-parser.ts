@@ -7,7 +7,7 @@ import {
   isAngleLessThan,
   isValidAngle,
   radian,
-  reduceAngle
+  reduceAngle,
 } from '../src/angle-parser'
 
 QUnit.module('angle-parser', () => {

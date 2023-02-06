@@ -9,7 +9,7 @@ export function emitEvent(type: string, detail = {}, element: Node = document): 
   const event = new CustomEvent(type, {
     bubbles: true,
     cancelable: true,
-    detail
+    detail,
   })
 
   return element.dispatchEvent(event)

@@ -11,7 +11,7 @@ export default class ClipboardController extends Controller {
       duration: [0, 250],
       placement: 'bottom',
       theme: 'qni',
-      trigger: 'manual'
+      trigger: 'manual',
     })
   }
 

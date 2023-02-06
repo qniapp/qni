@@ -17,7 +17,7 @@ QUnit.assert.equates = function (subject: unknown, other: unknown, message = '')
     result: equate(subject, other),
     actual: subject,
     expected: other,
-    message
+    message,
   })
 }
 
@@ -26,7 +26,7 @@ QUnit.assert.notEquates = function (subject: unknown, other: unknown, message = 
     result: !equate(subject, other),
     actual: subject,
     expected: other,
-    message
+    message,
   })
 }
 
@@ -35,7 +35,7 @@ QUnit.assert.approximatelyEquates = function (subject: unknown, other: unknown, 
     result: isApproximatelyEqualToHelper(subject, other, epsilon),
     actual: subject,
     expected: other,
-    message
+    message,
   })
 }
 
@@ -44,7 +44,7 @@ QUnit.assert.notApproximatelyEquates = function (subject: unknown, other: unknow
     result: !isApproximatelyEqualToHelper(subject, other, epsilon),
     actual: subject,
     expected: other,
-    message
+    message,
   })
 }
 
@@ -62,7 +62,7 @@ QUnit.assert.iteratesAs = function <T>(subject: unknown, items: unknown[], messa
     result: equate(actualItems, items),
     actual: actualItems,
     expected: items,
-    message
+    message,
   })
 }
 
@@ -71,6 +71,6 @@ QUnit.assert.lessThan = function (subject: number, other: number, message = '') 
     result: subject < other,
     actual: subject,
     expected: other,
-    message
+    message,
   })
 }

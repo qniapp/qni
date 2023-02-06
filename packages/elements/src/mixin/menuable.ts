@@ -48,7 +48,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
           this.angleTooltip?.hide()
           this.flagTooltip?.hide()
           this.deleteTooltip?.hide()
-        }
+        },
       })
     }
 
@@ -91,7 +91,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         if (this.ifTooltip === undefined) {
           this.ifTooltip = tippy(ifButton, {
             animation: false,
-            content: "Set `if' Conditional"
+            content: "Set `if' Conditional",
           })
           ifButton.addEventListener('mousedown', this.showIfInspector.bind(this))
         }
@@ -106,7 +106,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         if (this.angleTooltip === undefined) {
           this.angleTooltip = tippy(angleButton, {
             animation: false,
-            content: 'Change Angle'
+            content: 'Change Angle',
           })
           angleButton.addEventListener('mousedown', this.showAngleInspector.bind(this))
         }
@@ -121,7 +121,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         if (this.flagTooltip === undefined) {
           this.flagTooltip = tippy(flagButton, {
             animation: false,
-            content: 'Set Condifitonal Flag'
+            content: 'Set Condifitonal Flag',
           })
           flagButton.addEventListener('mousedown', this.showFlagInspector.bind(this))
         }
@@ -134,7 +134,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       if (this.deleteTooltip === undefined) {
         this.deleteTooltip = tippy(deleteMenuItem, {
           animation: false,
-          content: 'Delete'
+          content: 'Delete',
         })
       }
       deleteMenuItem.addEventListener('mousedown', this.destroyMenu.bind(this))

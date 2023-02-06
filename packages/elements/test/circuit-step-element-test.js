@@ -338,7 +338,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'H', targets: [0], if: 'foo'},
-          {type: 'H', targets: [1], if: 'bar'}
+          {type: 'H', targets: [1], if: 'bar'},
         ])
       })
 
@@ -362,7 +362,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'H', targets: [0], controls: [2]},
-          {type: 'H', targets: [1], controls: [2], if: 'foo'}
+          {type: 'H', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -386,7 +386,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'H', targets: [0]},
-          {type: 'H', targets: [1], if: 'foo'}
+          {type: 'H', targets: [1], if: 'foo'},
         ])
       })
     })
@@ -534,7 +534,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'X', targets: [0], if: 'foo'},
-          {type: 'X', targets: [1], if: 'bar'}
+          {type: 'X', targets: [1], if: 'bar'},
         ])
       })
 
@@ -558,7 +558,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'X', targets: [0], controls: [2]},
-          {type: 'X', targets: [1], controls: [2], if: 'foo'}
+          {type: 'X', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -582,7 +582,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'X', targets: [0]},
-          {type: 'X', targets: [1], if: 'foo'}
+          {type: 'X', targets: [1], if: 'foo'},
         ])
       })
     })
@@ -726,7 +726,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Y', targets: [0], if: 'foo'},
-          {type: 'Y', targets: [1], if: 'bar'}
+          {type: 'Y', targets: [1], if: 'bar'},
         ])
       })
 
@@ -750,7 +750,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Y', targets: [0], controls: [2]},
-          {type: 'Y', targets: [1], controls: [2], if: 'foo'}
+          {type: 'Y', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -774,7 +774,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Y', targets: [0]},
-          {type: 'Y', targets: [1], if: 'foo'}
+          {type: 'Y', targets: [1], if: 'foo'},
         ])
       })
     })
@@ -918,7 +918,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Z', targets: [0], if: 'foo'},
-          {type: 'Z', targets: [1], if: 'bar'}
+          {type: 'Z', targets: [1], if: 'bar'},
         ])
       })
 
@@ -942,7 +942,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Z', targets: [0], controls: [2]},
-          {type: 'Z', targets: [1], controls: [2], if: 'foo'}
+          {type: 'Z', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -966,7 +966,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Z', targets: [0]},
-          {type: 'Z', targets: [1], if: 'foo'}
+          {type: 'Z', targets: [1], if: 'foo'},
         ])
       })
     })
@@ -1050,7 +1050,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'P', angle: 'π', targets: [0]},
-          {type: 'P', angle: 'π/2', targets: [1]}
+          {type: 'P', angle: 'π/2', targets: [1]},
         ])
       })
 
@@ -1194,7 +1194,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'P', angle: 'π', targets: [0]},
-          {type: 'P', angle: 'π/2', targets: [1]}
+          {type: 'P', angle: 'π/2', targets: [1]},
         ])
       })
 
@@ -1276,7 +1276,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'P', angle: 'π', targets: [0], if: 'foo'},
-          {type: 'P', angle: 'π/2', targets: [1], if: 'foo'}
+          {type: 'P', angle: 'π/2', targets: [1], if: 'foo'},
         ])
       })
 
@@ -1296,7 +1296,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'P', targets: [0], if: 'foo'},
-          {type: 'P', targets: [1], if: 'bar'}
+          {type: 'P', targets: [1], if: 'bar'},
         ])
       })
 
@@ -1316,7 +1316,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'P', angle: 'π', targets: [0], if: 'foo'},
-          {type: 'P', angle: 'π', targets: [1], if: 'bar'}
+          {type: 'P', angle: 'π', targets: [1], if: 'bar'},
         ])
       })
 
@@ -1340,7 +1340,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'P', targets: [0], controls: [2]},
-          {type: 'P', targets: [1], controls: [2], if: 'foo'}
+          {type: 'P', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -1364,7 +1364,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'P', angle: 'π', targets: [0], controls: [2]},
-          {type: 'P', angle: 'π', targets: [1], controls: [2], if: 'foo'}
+          {type: 'P', angle: 'π', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -1388,7 +1388,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'P', targets: [0]},
-          {type: 'P', targets: [1], if: 'foo'}
+          {type: 'P', targets: [1], if: 'foo'},
         ])
       })
 
@@ -1412,7 +1412,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'P', angle: 'π', targets: [0]},
-          {type: 'P', angle: 'π', targets: [1], if: 'foo'}
+          {type: 'P', angle: 'π', targets: [1], if: 'foo'},
         ])
       })
     })
@@ -1556,7 +1556,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'X^½', targets: [0], if: 'foo'},
-          {type: 'X^½', targets: [1], if: 'bar'}
+          {type: 'X^½', targets: [1], if: 'bar'},
         ])
       })
 
@@ -1580,7 +1580,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'X^½', targets: [0], controls: [2]},
-          {type: 'X^½', targets: [1], controls: [2], if: 'foo'}
+          {type: 'X^½', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -1604,7 +1604,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'X^½', targets: [0]},
-          {type: 'X^½', targets: [1], if: 'foo'}
+          {type: 'X^½', targets: [1], if: 'foo'},
         ])
       })
     })
@@ -1688,7 +1688,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', angle: 'π', targets: [0]},
-          {type: 'Rx', angle: 'π/2', targets: [1]}
+          {type: 'Rx', angle: 'π/2', targets: [1]},
         ])
       })
 
@@ -1832,7 +1832,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', angle: 'π', targets: [0]},
-          {type: 'Rx', angle: 'π/2', targets: [1]}
+          {type: 'Rx', angle: 'π/2', targets: [1]},
         ])
       })
 
@@ -1914,7 +1914,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', angle: 'π', targets: [0], if: 'foo'},
-          {type: 'Rx', angle: 'π/2', targets: [1], if: 'foo'}
+          {type: 'Rx', angle: 'π/2', targets: [1], if: 'foo'},
         ])
       })
 
@@ -1934,7 +1934,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', targets: [0], if: 'foo'},
-          {type: 'Rx', targets: [1], if: 'bar'}
+          {type: 'Rx', targets: [1], if: 'bar'},
         ])
       })
 
@@ -1954,7 +1954,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', angle: 'π', targets: [0], if: 'foo'},
-          {type: 'Rx', angle: 'π', targets: [1], if: 'bar'}
+          {type: 'Rx', angle: 'π', targets: [1], if: 'bar'},
         ])
       })
 
@@ -1978,7 +1978,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', targets: [0], controls: [2]},
-          {type: 'Rx', targets: [1], controls: [2], if: 'foo'}
+          {type: 'Rx', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -2002,7 +2002,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', angle: 'π', targets: [0], controls: [2]},
-          {type: 'Rx', angle: 'π', targets: [1], controls: [2], if: 'foo'}
+          {type: 'Rx', angle: 'π', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -2026,7 +2026,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', targets: [0]},
-          {type: 'Rx', targets: [1], if: 'foo'}
+          {type: 'Rx', targets: [1], if: 'foo'},
         ])
       })
 
@@ -2050,7 +2050,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', angle: 'π', targets: [0]},
-          {type: 'Rx', angle: 'π', targets: [1], if: 'foo'}
+          {type: 'Rx', angle: 'π', targets: [1], if: 'foo'},
         ])
       })
     })
@@ -2134,7 +2134,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', angle: 'π', targets: [0]},
-          {type: 'Ry', angle: 'π/2', targets: [1]}
+          {type: 'Ry', angle: 'π/2', targets: [1]},
         ])
       })
 
@@ -2278,7 +2278,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', angle: 'π', targets: [0]},
-          {type: 'Ry', angle: 'π/2', targets: [1]}
+          {type: 'Ry', angle: 'π/2', targets: [1]},
         ])
       })
 
@@ -2360,7 +2360,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', angle: 'π', targets: [0], if: 'foo'},
-          {type: 'Ry', angle: 'π/2', targets: [1], if: 'foo'}
+          {type: 'Ry', angle: 'π/2', targets: [1], if: 'foo'},
         ])
       })
 
@@ -2380,7 +2380,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', targets: [0], if: 'foo'},
-          {type: 'Ry', targets: [1], if: 'bar'}
+          {type: 'Ry', targets: [1], if: 'bar'},
         ])
       })
 
@@ -2400,7 +2400,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', angle: 'π', targets: [0], if: 'foo'},
-          {type: 'Ry', angle: 'π', targets: [1], if: 'bar'}
+          {type: 'Ry', angle: 'π', targets: [1], if: 'bar'},
         ])
       })
 
@@ -2424,7 +2424,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', targets: [0], controls: [2]},
-          {type: 'Ry', targets: [1], controls: [2], if: 'foo'}
+          {type: 'Ry', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -2448,7 +2448,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', angle: 'π', targets: [0], controls: [2]},
-          {type: 'Ry', angle: 'π', targets: [1], controls: [2], if: 'foo'}
+          {type: 'Ry', angle: 'π', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -2472,7 +2472,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', targets: [0]},
-          {type: 'Ry', targets: [1], if: 'foo'}
+          {type: 'Ry', targets: [1], if: 'foo'},
         ])
       })
 
@@ -2496,7 +2496,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', angle: 'π', targets: [0]},
-          {type: 'Ry', angle: 'π', targets: [1], if: 'foo'}
+          {type: 'Ry', angle: 'π', targets: [1], if: 'foo'},
         ])
       })
     })
@@ -2580,7 +2580,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', angle: 'π', targets: [0]},
-          {type: 'Rz', angle: 'π/2', targets: [1]}
+          {type: 'Rz', angle: 'π/2', targets: [1]},
         ])
       })
 
@@ -2724,7 +2724,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', angle: 'π', targets: [0]},
-          {type: 'Rz', angle: 'π/2', targets: [1]}
+          {type: 'Rz', angle: 'π/2', targets: [1]},
         ])
       })
 
@@ -2806,7 +2806,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', angle: 'π', targets: [0], if: 'foo'},
-          {type: 'Rz', angle: 'π/2', targets: [1], if: 'foo'}
+          {type: 'Rz', angle: 'π/2', targets: [1], if: 'foo'},
         ])
       })
 
@@ -2826,7 +2826,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', targets: [0], if: 'foo'},
-          {type: 'Rz', targets: [1], if: 'bar'}
+          {type: 'Rz', targets: [1], if: 'bar'},
         ])
       })
 
@@ -2846,7 +2846,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', angle: 'π', targets: [0], if: 'foo'},
-          {type: 'Rz', angle: 'π', targets: [1], if: 'bar'}
+          {type: 'Rz', angle: 'π', targets: [1], if: 'bar'},
         ])
       })
 
@@ -2870,7 +2870,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', targets: [0], controls: [2]},
-          {type: 'Rz', targets: [1], controls: [2], if: 'foo'}
+          {type: 'Rz', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -2894,7 +2894,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', angle: 'π', targets: [0], controls: [2]},
-          {type: 'Rz', angle: 'π', targets: [1], controls: [2], if: 'foo'}
+          {type: 'Rz', angle: 'π', targets: [1], controls: [2], if: 'foo'},
         ])
       })
 
@@ -2918,7 +2918,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', targets: [0]},
-          {type: 'Rz', targets: [1], if: 'foo'}
+          {type: 'Rz', targets: [1], if: 'foo'},
         ])
       })
 
@@ -2942,7 +2942,7 @@ describe('circuit-step element', function () {
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', angle: 'π', targets: [0]},
-          {type: 'Rz', angle: 'π', targets: [1], if: 'foo'}
+          {type: 'Rz', angle: 'π', targets: [1], if: 'foo'},
         ])
       })
     })
@@ -3365,7 +3365,7 @@ describe('circuit-step element', function () {
         const step = document.querySelector('circuit-step')
         assert.deepEqual(step.serialize(), [
           {type: 'Measure', targets: [0], flag: 'foo'},
-          {type: 'Measure', targets: [1], flag: 'bar'}
+          {type: 'Measure', targets: [1], flag: 'bar'},
         ])
       })
     })

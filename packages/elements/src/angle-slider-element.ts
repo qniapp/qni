@@ -28,7 +28,7 @@ export class AngleSliderElement extends HTMLElement {
         idle: {
           on: {
             START_MOVE: {
-              target: 'moving'
+              target: 'moving',
             },
             SET_ANGLE: {
               target: 'idle',
@@ -37,28 +37,28 @@ export class AngleSliderElement extends HTMLElement {
                 'updateSnapAngles',
                 'setRadianInAngle',
                 'updateHandlePosition',
-                'dispatchUpdateEvent'
-              ]
+                'dispatchUpdateEvent',
+              ],
             },
             SET_DENOMINATOR: {
               target: 'idle',
-              actions: ['validateDenominator', 'updateSnapAngles', 'setAngleInRadian']
-            }
-          }
+              actions: ['validateDenominator', 'updateSnapAngles', 'setAngleInRadian'],
+            },
+          },
         },
         moving: {
           on: {
             SET_ANGLE: {
               target: 'moving',
-              actions: ['dispatchChangeEvent']
+              actions: ['dispatchChangeEvent'],
             },
             END_MOVE: {
               target: 'idle',
-              actions: ['dispatchUpdateEvent']
-            }
-          }
-        }
-      }
+              actions: ['dispatchUpdateEvent'],
+            },
+          },
+        },
+      },
     },
     {
       actions: {
@@ -95,9 +95,9 @@ export class AngleSliderElement extends HTMLElement {
         },
         dispatchUpdateEvent: () => {
           this.dispatchEvent(new Event('angle-slider-update', {bubbles: true}))
-        }
-      }
-    }
+        },
+      },
+    },
   )
   private angleSliderService = interpret(this.angleSliderMachine)
     .onTransition(state => {
@@ -149,7 +149,7 @@ export class AngleSliderElement extends HTMLElement {
           top: 0px;
         }
       </style>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 
@@ -158,14 +158,14 @@ export class AngleSliderElement extends HTMLElement {
       origin: 'self',
       modifiers: [
         interact.modifiers.restrict({
-          restriction: 'self'
-        })
+          restriction: 'self',
+        }),
       ],
       listeners: {
         start: this.startMove.bind(this),
         move: this.move.bind(this),
-        end: this.endMove.bind(this)
-      }
+        end: this.endMove.bind(this),
+      },
     })
   }
 

@@ -10,7 +10,7 @@ export declare class Activateable {
 }
 
 export function ActivateableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase
+  Base: TBase,
 ): Constructor<Activateable> & TBase {
   class ActivateableMixinClass extends Base {
     @attr active = false

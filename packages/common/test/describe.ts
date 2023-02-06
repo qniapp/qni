@@ -80,7 +80,7 @@ QUnit.module('describe', () => {
     assert.equal(describe(m, 2), 'Map{1: Map{1: !recursion-limit!}}')
     assert.equal(
       describe(m, 10),
-      'Map{1: Map{1: Map{1: Map{1: Map{1: Map{1: Map{1: Map{1: Map{1: Map{1: !recursion-limit!}}}}}}}}}}'
+      'Map{1: Map{1: Map{1: Map{1: Map{1: Map{1: Map{1: Map{1: Map{1: Map{1: !recursion-limit!}}}}}}}}}}',
     )
 
     const s = new Set()
@@ -93,7 +93,7 @@ QUnit.module('describe', () => {
     assert.equal(describe(o, 2), '{"2": {"2": !recursion-limit!}}')
     assert.equal(
       describe(o, 10),
-      '{"2": {"2": {"2": {"2": {"2": {"2": {"2": {"2": {"2": {"2": !recursion-limit!}}}}}}}}}}'
+      '{"2": {"2": {"2": {"2": {"2": {"2": {"2": {"2": {"2": {"2": !recursion-limit!}}}}}}}}}}',
     )
 
     // Default terminates.

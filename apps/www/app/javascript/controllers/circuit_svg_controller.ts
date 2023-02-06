@@ -47,7 +47,7 @@ export default class CircuitSvgController extends Controller {
     const htmlRects = [
       this.relativeBounds(this.element as SVGSVGElement, this.circuitTarget),
       this.relativeBounds(this.element as SVGSVGElement, this.titleTarget),
-      this.relativeBounds(this.element as SVGSVGElement, this.logoTarget)
+      this.relativeBounds(this.element as SVGSVGElement, this.logoTarget),
     ]
 
     const rects = this.generateRandomRects(htmlRects)
@@ -83,7 +83,7 @@ export default class CircuitSvgController extends Controller {
       shape
         .stroke({
           color,
-          width: 16
+          width: 16,
         })
         .fill('transparent')
     }
@@ -103,7 +103,7 @@ export default class CircuitSvgController extends Controller {
       y: number
       width: number
       height: number
-    }>
+    }>,
   ) {
     const rects = [...existing]
     const tries = 250
@@ -118,7 +118,7 @@ export default class CircuitSvgController extends Controller {
         x: this.random(-size, 1200),
         y: this.random(-size, 630),
         width: size,
-        height: size
+        height: size,
       }
 
       if (!rects.some(r => this.detectRectCollision(r, rect))) {
@@ -168,7 +168,7 @@ export default class CircuitSvgController extends Controller {
       width: number
       height: number
     },
-    padding = 32
+    padding = 32,
   ) {
     return (
       rect1.x < rect2.x + rect2.width + padding &&
@@ -180,7 +180,7 @@ export default class CircuitSvgController extends Controller {
 
   private relativeBounds(
     svg: SVGSVGElement,
-    element: HTMLElement
+    element: HTMLElement,
   ): {
     x: number
     y: number
@@ -204,7 +204,7 @@ export default class CircuitSvgController extends Controller {
       x: startPointTransformed.x,
       y: startPointTransformed.y,
       width: endPointTransformed.x - startPointTransformed.x,
-      height: endPointTransformed.y - startPointTransformed.y
+      height: endPointTransformed.y - startPointTransformed.y,
     }
   }
 }

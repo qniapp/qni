@@ -34,8 +34,8 @@ describe('quantum-circuit element', function () {
         assert.deepEqual(circuit.serialize(), [
           [
             {type: 'H', targets: [1, 2], controls: [0]},
-            {type: 'H', targets: [3]}
-          ]
+            {type: 'H', targets: [3]},
+          ],
         ])
       })
     })
@@ -59,8 +59,8 @@ describe('quantum-circuit element', function () {
         assert.deepEqual(circuit.serialize(), [
           [
             {type: 'X', targets: [1, 2], controls: [0]},
-            {type: 'X', targets: [3]}
-          ]
+            {type: 'X', targets: [3]},
+          ],
         ])
       })
     })
@@ -84,8 +84,8 @@ describe('quantum-circuit element', function () {
         assert.deepEqual(circuit.serialize(), [
           [
             {type: 'Y', targets: [1, 2], controls: [0]},
-            {type: 'Y', targets: [3]}
-          ]
+            {type: 'Y', targets: [3]},
+          ],
         ])
       })
     })
@@ -109,8 +109,8 @@ describe('quantum-circuit element', function () {
         assert.deepEqual(circuit.serialize(), [
           [
             {type: 'Z', targets: [1, 2], controls: [0]},
-            {type: 'Z', targets: [3]}
-          ]
+            {type: 'Z', targets: [3]},
+          ],
         ])
       })
     })
@@ -134,8 +134,8 @@ describe('quantum-circuit element', function () {
         assert.deepEqual(circuit.serialize(), [
           [
             {type: 'P', targets: [1, 2], controls: [0]},
-            {type: 'P', targets: [3]}
-          ]
+            {type: 'P', targets: [3]},
+          ],
         ])
       })
     })
@@ -159,8 +159,8 @@ describe('quantum-circuit element', function () {
         assert.deepEqual(circuit.serialize(), [
           [
             {type: 'T', targets: [1, 2], controls: [0]},
-            {type: 'T', targets: [3]}
-          ]
+            {type: 'T', targets: [3]},
+          ],
         ])
       })
     })
@@ -184,8 +184,8 @@ describe('quantum-circuit element', function () {
         assert.deepEqual(circuit.serialize(), [
           [
             {type: 'X^½', targets: [1, 2], controls: [0]},
-            {type: 'X^½', targets: [3]}
-          ]
+            {type: 'X^½', targets: [3]},
+          ],
         ])
       })
     })
@@ -209,8 +209,8 @@ describe('quantum-circuit element', function () {
         assert.deepEqual(circuit.serialize(), [
           [
             {type: 'Rx', targets: [1, 2], controls: [0]},
-            {type: 'Rx', targets: [3]}
-          ]
+            {type: 'Rx', targets: [3]},
+          ],
         ])
       })
     })
@@ -234,8 +234,8 @@ describe('quantum-circuit element', function () {
         assert.deepEqual(circuit.serialize(), [
           [
             {type: 'Ry', targets: [1, 2], controls: [0]},
-            {type: 'Ry', targets: [3]}
-          ]
+            {type: 'Ry', targets: [3]},
+          ],
         ])
       })
     })
@@ -259,8 +259,8 @@ describe('quantum-circuit element', function () {
         assert.deepEqual(circuit.serialize(), [
           [
             {type: 'Rz', targets: [1, 2], controls: [0]},
-            {type: 'Rz', targets: [3]}
-          ]
+            {type: 'Rz', targets: [3]},
+          ],
         ])
       })
     })
@@ -443,8 +443,8 @@ describe('quantum-circuit element', function () {
       assert.deepEqual(circuit.serialize(), [
         [
           {type: 'P', angle: 'π/2', targets: [1, 4]},
-          {type: 'P', angle: 'π', targets: [3]}
-        ]
+          {type: 'P', angle: 'π', targets: [3]},
+        ],
       ])
     })
   })
