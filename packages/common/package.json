@@ -31,7 +31,6 @@
     "fraction.js": "~4.2"
   },
   "devDependencies": {
-    "karma-chrome-launcher": "^3.1.0",
     "karma-esbuild": "~2.2",
     "karma-qunit": "^4.1.2",
     "npm-dts": "~1.3",

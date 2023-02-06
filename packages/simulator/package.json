@@ -41,9 +41,7 @@
     "@github/prettier-config": "^0.0.4",
     "@types/qunit": "^2.11.2",
     "chai": "^4.3.4",
-    "karma": "^6.3.9",
     "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^3.1.0",
     "karma-mocha": "^2.0.1",
     "mocha": "^9.1.3"
   },
