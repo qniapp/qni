@@ -51,7 +51,7 @@
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
     "@web/dev-server-rollup": "~0.3",
-    "@web/test-runner": "^0.13.25",
+    "@web/test-runner": "~0.15",
     "postcss-flexbugs-fixes": "^5.0.2",
     "rollup-plugin-postcss": "^4.0.2"
   },
