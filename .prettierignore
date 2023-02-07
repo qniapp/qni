@@ -1,5 +1,4 @@
 *.rb
-.github/workflows/ci.yml
 apps/tutorial/_includes/navigation.html
 apps/tutorial/_site/
 apps/tutorial/application.css

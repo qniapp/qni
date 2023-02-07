@@ -72,4 +72,4 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
       - name: Check Bundle Size
-          run: yarn size
+        run: yarn size
