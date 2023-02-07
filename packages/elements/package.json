@@ -46,7 +46,7 @@
     "complex.js": "^2.1.1",
     "interactjs": "~1.10",
     "tippy.js": "^6.3.7",
-    "xstate": "~4.32"
+    "xstate": "~4.35"
   },
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
