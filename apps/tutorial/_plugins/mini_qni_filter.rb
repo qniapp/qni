@@ -29,6 +29,8 @@ module Jekyll
           '<phase-gate data-angle="π/2" data-hoverable></phase-gate>'
         when '•'
           '<control-gate data-hoverable></control-gate>'
+        when 'Bloch'
+          '<bloch-display data-hoverable></bloch-display>'
         end
       end.map do |each|
         "<palette-dropzone>#{each}</palette-dropzone>"
