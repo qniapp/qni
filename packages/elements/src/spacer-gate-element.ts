@@ -5,7 +5,7 @@ import {
   HelpableMixin,
   HoverableMixin,
   IconableMixin,
-  MenuableMixin
+  MenuableMixin,
 } from './mixin'
 import {html, render} from '@github/jtml'
 import {SerializedSpacerGateType} from '@qni/common'
@@ -18,7 +18,7 @@ export type SpacerGateElementProps = {
 
 @controller
 export class SpacerGateElement extends MenuableMixin(
-  HelpableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
+  HelpableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement)))))),
 ) {
   get operationType(): typeof SerializedSpacerGateType {
     return SerializedSpacerGateType
@@ -35,7 +35,7 @@ export class SpacerGateElement extends MenuableMixin(
     render(
       html`<div part="body">${this.iconHtml(spacerGateIcon)}</div>
         <div part="outline"></div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

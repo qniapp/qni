@@ -111,15 +111,15 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     states: {
       idle: {
         on: {
-          EDIT: {target: 'editing'}
-        }
+          EDIT: {target: 'editing'},
+        },
       },
       editing: {
         on: {
-          EDIT_DONE: {target: 'idle'}
-        }
-      }
-    }
+          EDIT_DONE: {target: 'idle'},
+        },
+      },
+    },
   })
   private quantumCircuitService = interpret(this.quantumCircuitMachine)
     .onTransition(state => {
@@ -396,7 +396,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       maxControlControlTargetGates: this.controlControlMaxTargetGates,
       // CPHASE
       disablePhasePhase: this.phasePhaseDisabled,
-      maxPhasePhaseTargetGates: this.phasePhaseMaxTargetGates
+      maxPhasePhaseTargetGates: this.phasePhaseMaxTargetGates,
     })
   }
 
@@ -893,7 +893,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       | typeof RzGateElement
       | typeof SwapGateElement,
     control: number | number[],
-    target: number | number[]
+    target: number | number[],
   ): void {
     const controlBits = ([] as number[]).concat(...[control])
     const targetBits = ([] as number[]).concat(...[target])
@@ -1324,7 +1324,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             this.snapTargets[prevI][j] = {
               dropzone: null,
               stepIndex: -1,
-              wireIndex: dropzoneIndex
+              wireIndex: dropzoneIndex,
             }
         }
 
@@ -1361,7 +1361,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           this.snapTargets[nextI][j] = {
             dropzone: null,
             stepIndex,
-            wireIndex: dropzoneIndex
+            wireIndex: dropzoneIndex,
           }
 
         if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
@@ -1369,7 +1369,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           this.snapTargets[i][j] = {
             dropzone,
             stepIndex: null,
-            wireIndex: dropzoneIndex
+            wireIndex: dropzoneIndex,
           }
       }
     }
@@ -1423,7 +1423,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
         this.resizeHandleSnapTargets[i][j] = {
           dropzone: each,
           stepIndex: null,
-          wireIndex
+          wireIndex,
         }
     }
 
@@ -1459,7 +1459,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       this.snapTargets[i][j] = {
         dropzone: each,
         stepIndex: null,
-        wireIndex: parseInt(wireIndex)
+        wireIndex: parseInt(wireIndex),
       }
     }
   }

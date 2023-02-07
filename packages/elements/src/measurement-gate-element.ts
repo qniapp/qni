@@ -7,7 +7,7 @@ import measurementGateIcon from '../icon/measurement-gate.svg'
 
 @controller
 export class MeasurementGateElement extends MenuableMixin(
-  HelpableMixin(FlaggableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
+  HelpableMixin(FlaggableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement)))))),
 ) {
   @attr value = ''
 
@@ -29,7 +29,7 @@ export class MeasurementGateElement extends MenuableMixin(
           <div id="value" part="value"></div>
         </div>
         <div part="outline"></div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

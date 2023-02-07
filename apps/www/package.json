@@ -52,25 +52,13 @@
     "@svgdotjs/svg.filter.js": "^3.0.8",
     "@svgdotjs/svg.js": "^3.1.1",
     "fastdom": "^1.0.10",
-    "puppeteer": "~13.1",
+    "puppeteer": "~19.6",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.0.5",
-    "@rollup/plugin-typescript": "~8.3",
-    "autoprefixer": "^10.4.0",
-    "esbuild": "^0.14.29",
-    "postcss": "^8.3.11",
+    "@types/turbolinks": "^5.2.0",
     "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-import": "^14.0.2",
-    "postcss-nested": "^5.0.6",
-    "postcss-preset-env": "~7.2",
-    "rollup": "~2.70",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-dts": "~4.2",
-    "rollup-plugin-replace": "^2.2.0",
-    "tailwindcss": "^3.0.23",
-    "typescript": "~4.8"
+    "rollup-plugin-replace": "^2.2.0"
   },
   "directories": {
     "doc": "doc",

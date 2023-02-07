@@ -31,7 +31,7 @@ export class PaletteDropzoneElement extends HTMLElement {
         </style>
 
         <slot></slot>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

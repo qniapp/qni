@@ -41,7 +41,7 @@ export class Util {
         [-1, 0],
         [-s, -s],
         [0, -1],
-        [s, -s]
+        [s, -s],
       ]
       return snaps[i & 7]
     }

@@ -6,7 +6,7 @@ import {
   HoverableMixin,
   IconableMixin,
   IfableMixin,
-  MenuableMixin
+  MenuableMixin,
 } from './mixin/'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
@@ -23,9 +23,11 @@ export type YGateElementProps = {
 export class YGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
-      ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
-    )
-  )
+      ControllableMixin(
+        DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))),
+      ),
+    ),
+  ),
 ) {
   get operationType(): typeof SerializedYGateType {
     return SerializedYGateType
@@ -42,7 +44,7 @@ export class YGateElement extends MenuableMixin(
     render(
       html`<div part="body">${this.iconHtml(yGateIcon)}</div>
         <div part="outline"></div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

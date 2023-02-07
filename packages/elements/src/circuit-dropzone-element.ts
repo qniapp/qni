@@ -44,58 +44,58 @@ export class CircuitDropzoneElement extends HTMLElement {
         unknown: {
           always: [
             {target: 'empty', cond: 'isEmpty'},
-            {target: 'occupied', cond: 'isOccupied', actions: ['initOperation']}
-          ]
+            {target: 'occupied', cond: 'isOccupied', actions: ['initOperation']},
+          ],
         },
         empty: {
           on: {
             SNAP_OPERATION: {
               target: 'snapped',
-              actions: ['snapOperation']
+              actions: ['snapOperation'],
             },
             PUT_OPERATION: {
               target: 'occupied',
-              actions: ['putOperation']
+              actions: ['putOperation'],
             },
             // 子要素のゲートをドラッグアンドドロップで消そうとしている場合、
             // UNSNAP_OPERATION イベント後に empty となり、DELETE_OPERATION イベントが飛んでくることがある。
             // このような empty とは別個の状態を CircuitDropzone に作るべき?
             DELETE_OPERATION: {
               target: 'empty',
-              actions: ['deleteOperation', 'dispatchDeleteOperationEvent']
-            }
-          }
+              actions: ['deleteOperation', 'dispatchDeleteOperationEvent'],
+            },
+          },
         },
         snapped: {
           on: {
             UNSNAP_OPERATION: {
               target: 'empty',
-              actions: ['unsnapOperation']
+              actions: ['unsnapOperation'],
             },
             DROP_OPERATION: {
               target: 'occupied',
-              actions: ['dropOperation']
-            }
-          }
+              actions: ['dropOperation'],
+            },
+          },
         },
         occupied: {
           entry: 'dispatchOccupiedEvent',
           on: {
             UNSNAP_OPERATION: {
               target: 'empty',
-              actions: ['unsnapOperation']
+              actions: ['unsnapOperation'],
             },
             DELETE_OPERATION: {
               target: 'empty',
-              actions: ['deleteOperation', 'dispatchDeleteOperationEvent']
+              actions: ['deleteOperation', 'dispatchDeleteOperationEvent'],
             },
             RESIZE_OPERATION: {
               target: 'occupied',
-              actions: ['resizeOperation']
-            }
-          }
-        }
-      }
+              actions: ['resizeOperation'],
+            },
+          },
+        },
+      },
     },
     {
       actions: {
@@ -142,7 +142,7 @@ export class CircuitDropzoneElement extends HTMLElement {
         },
         dispatchDeleteOperationEvent: () => {
           emitEvent('circuit-dropzone:qpu-operation-delete', {}, this)
-        }
+        },
       },
       guards: {
         isEmpty: () => {
@@ -150,9 +150,9 @@ export class CircuitDropzoneElement extends HTMLElement {
         },
         isOccupied: () => {
           return this.operation !== null
-        }
-      }
-    }
+        },
+      },
+    },
   )
   private circuitDropzoneService = interpret(this.circuitDropzoneMachine).onTransition(state => {
     if (this.debug) {
@@ -174,7 +174,7 @@ export class CircuitDropzoneElement extends HTMLElement {
 
     return {
       x: window.pageXOffset + rect.left + this.clientWidth / 2,
-      y: window.pageYOffset + rect.top + this.clientHeight / 2
+      y: window.pageYOffset + rect.top + this.clientHeight / 2,
     }
   }
 
@@ -183,7 +183,7 @@ export class CircuitDropzoneElement extends HTMLElement {
 
     return {
       x: window.pageXOffset + rect.left + this.clientWidth / 2,
-      y: window.pageYOffset + rect.top + this.clientHeight + 4
+      y: window.pageYOffset + rect.top + this.clientHeight + 4,
     }
   }
 
@@ -258,7 +258,7 @@ export class CircuitDropzoneElement extends HTMLElement {
         </style>
 
         <div id="body" part="body"><slot></slot>${this.wireSvg}</div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 
@@ -283,7 +283,7 @@ export class CircuitDropzoneElement extends HTMLElement {
 
     interact(this).dropzone({
       accept: '[data-draggable]',
-      overlap: 'center'
+      overlap: 'center',
     })
   }
 

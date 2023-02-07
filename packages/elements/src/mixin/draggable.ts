@@ -70,40 +70,40 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             on: {
               SET_INTERACT: {
                 target: 'grabbable',
-                actions: ['setInteract']
-              }
-            }
+                actions: ['setInteract'],
+              },
+            },
           },
           grabbable: {
             on: {
               GRAB: {
                 target: 'grabbed',
-                actions: ['grab']
+                actions: ['grab'],
               },
               UNSET_INTERACT: {
-                target: 'idle'
-              }
-            }
+                target: 'idle',
+              },
+            },
           },
           grabbed: {
             on: {
               START_DRAGGING: {
                 target: 'dragging',
-                actions: ['startDragging']
+                actions: ['startDragging'],
               },
               RELEASE: [
                 {
                   target: 'grabbable',
                   actions: ['release'],
-                  cond: 'isOnCircuitDropzone'
+                  cond: 'isOnCircuitDropzone',
                 },
                 {
                   target: 'deleted',
                   actions: ['release'],
-                  cond: 'isOnPaletteDropzone'
-                }
-              ]
-            }
+                  cond: 'isOnPaletteDropzone',
+                },
+              ],
+            },
           },
           dragging: {
             type: 'compound',
@@ -111,46 +111,46 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             on: {
               END_DRAGGING: {
                 target: 'dropped',
-                actions: ['endDragging']
-              }
+                actions: ['endDragging'],
+              },
             },
             states: {
               unknown: {
                 always: [
                   {target: 'snapped', cond: 'isOnCircuitDropzone'},
-                  {target: 'unsnapped', cond: 'isOnPaletteDropzone'}
-                ]
+                  {target: 'unsnapped', cond: 'isOnPaletteDropzone'},
+                ],
               },
               snapped: {
                 entry: ['snap'],
                 on: {
                   UNSNAP: {
-                    target: 'unsnapped'
-                  }
-                }
+                    target: 'unsnapped',
+                  },
+                },
               },
               unsnapped: {
                 entry: ['unsnap'],
                 on: {
                   SNAP: {
-                    target: 'snapped'
-                  }
-                }
-              }
-            }
+                    target: 'snapped',
+                  },
+                },
+              },
+            },
           },
           dropped: {
             entry: ['drop'],
             always: [
               {target: 'grabbable', cond: 'isDroppedOnCircuitDropzone'},
-              {target: 'deleted', cond: 'isTrashed'}
-            ]
+              {target: 'deleted', cond: 'isTrashed'},
+            ],
           },
           deleted: {
             type: 'final',
-            entry: 'delete'
-          }
-        }
+            entry: 'delete',
+          },
+        },
       },
       {
         actions: {
@@ -164,7 +164,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             interactable.styleCursor(false)
 
             interactable.pointerEvents({
-              ignoreFrom: '.resize-handle'
+              ignoreFrom: '.resize-handle',
             })
             interactable.on('down', this.grab.bind(this))
             interactable.on('up', this.release.bind(this))
@@ -173,7 +173,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
               onstart: this.startDragging.bind(this),
               onmove: this.dragMove.bind(this),
               onend: this.endDragging.bind(this),
-              ignoreFrom: '.resize-handle'
+              ignoreFrom: '.resize-handle',
             })
 
             const dropzone = this.dropzone
@@ -234,7 +234,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           delete: () => {
             interact(this).unset()
             emitEvent('draggable:delete', {}, this)
-          }
+          },
         },
         guards: {
           isOnCircuitDropzone: () => {
@@ -248,9 +248,9 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           },
           isTrashed: () => {
             return !this.snapped
-          }
-        }
-      }
+          },
+        },
+      },
     )
     public draggableService = interpret(this.draggableMachine).onTransition(state => {
       if (this.debugDraggable) {
@@ -294,12 +294,12 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         modifiers: [
           interact.modifiers.snap({
             targets: values,
-            range: this.snapRange
-          })
+            range: this.snapRange,
+          }),
         ],
         listeners: {
-          move: this.moveEventListener.bind(this)
-        }
+          move: this.moveEventListener.bind(this),
+        },
       })
     }
 

@@ -55,23 +55,23 @@ export class CircuitEditorElement extends HTMLElement {
           on: {
             DROP_OPERATION: {
               target: 'inspectable',
-              actions: ['initOperationMenu', 'resizeCircuit']
+              actions: ['initOperationMenu', 'resizeCircuit'],
             },
             ACTIVATE_OPERATION: {
               target: 'inspectable',
-              actions: ['maybeUpdateOperationInspector']
+              actions: ['maybeUpdateOperationInspector'],
             },
             DELETE_OPERATION: {
               target: 'inspectable',
-              actions: ['resizeCircuit']
-            }
+              actions: ['resizeCircuit'],
+            },
           },
           states: {
             unknown: {
               always: [
                 {target: 'idle', cond: 'isIdle'},
-                {target: 'editing', cond: 'isEditing'}
-              ]
+                {target: 'editing', cond: 'isEditing'},
+              ],
             },
             idle: {
               on: {
@@ -83,8 +83,8 @@ export class CircuitEditorElement extends HTMLElement {
                     'setOperationActive',
                     'addDocumentCursorGrabbingStyle',
                     'maybeAppendCircuitWire',
-                    'setSnapTargets'
-                  ]
+                    'setSnapTargets',
+                  ],
                 },
                 GRAB_RESIZE_HANDLE: {
                   target: 'editing',
@@ -94,80 +94,80 @@ export class CircuitEditorElement extends HTMLElement {
                     'setOperationActive',
                     'addDocumentCursorResizingStyle',
                     'maybeAppendCircuitWire',
-                    'setResizeHandleSnapTargets'
-                  ]
+                    'setResizeHandleSnapTargets',
+                  ],
                 },
                 CLICK_STEP: {
                   target: 'idle',
-                  actions: ['deactivateAllSteps', 'setBreakpoint']
+                  actions: ['deactivateAllSteps', 'setBreakpoint'],
                 },
                 MOUSE_ENTER_STEP: {
                   target: 'idle',
-                  actions: ['deactivateAllSteps', 'activateStep']
+                  actions: ['deactivateAllSteps', 'activateStep'],
                 },
                 MOUSE_LEAVE_STEP: {
                   target: 'idle',
-                  actions: ['deactivateStep']
+                  actions: ['deactivateStep'],
                 },
                 MOUSE_LEAVE_CIRCUIT: {
                   target: 'idle',
-                  actions: ['deactivateAllSteps']
+                  actions: ['deactivateAllSteps'],
                 },
                 SHOW_OPERATION_MENU: {
                   target: 'idle',
-                  actions: ['showOperationMenu']
+                  actions: ['showOperationMenu'],
                 },
                 SHOW_OPERATION_INSPECTOR_IF: {
                   target: 'idle',
-                  actions: ['showOperationInspectorIf']
+                  actions: ['showOperationInspectorIf'],
                 },
                 SHOW_OPERATION_INSPECTOR_ANGLE: {
                   target: 'idle',
-                  actions: ['showOperationInspectorAngle']
+                  actions: ['showOperationInspectorAngle'],
                 },
                 SHOW_OPERATION_INSPECTOR_FLAG: {
                   target: 'idle',
-                  actions: ['showOperationInspectorFlag']
+                  actions: ['showOperationInspectorFlag'],
                 },
                 SET_OPERATION_IF: {
                   target: 'idle',
-                  actions: ['setOperationIf']
+                  actions: ['setOperationIf'],
                 },
                 SET_OPERATION_ANGLE: {
                   target: 'idle',
-                  actions: ['setOperationAngle']
+                  actions: ['setOperationAngle'],
                 },
                 SET_OPERATION_FLAG: {
                   target: 'idle',
-                  actions: ['setOperationFlag']
-                }
-              }
+                  actions: ['setOperationFlag'],
+                },
+              },
             },
             editing: {
               on: {
                 OPERATION_IN_SNAP_RANGE: {
                   target: 'editing',
-                  actions: ['snapOperationIntoDropzone']
+                  actions: ['snapOperationIntoDropzone'],
                 },
                 RESIZE_HANDLE_IN_SNAP_RANGE: {
                   target: 'editing',
-                  actions: ['snapResizeHandleIntoDropzone']
+                  actions: ['snapResizeHandleIntoDropzone'],
                 },
                 SNAP_STEP: {
                   target: 'editing',
-                  actions: ['deactivateAllSteps', 'activateStep']
+                  actions: ['deactivateAllSteps', 'activateStep'],
                 },
                 UNSNAP_STEP: {
                   target: 'editing',
-                  actions: ['deactivateStep']
+                  actions: ['deactivateStep'],
                 },
                 RELEASE_OPERATION: {
                   target: 'idle',
-                  actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorGrabbingStyle', 'endCircuitEdit']
+                  actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorGrabbingStyle', 'endCircuitEdit'],
                 },
                 END_RESIZE: {
                   target: 'idle',
-                  actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorResizingStyle', 'endCircuitEdit']
+                  actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorResizingStyle', 'endCircuitEdit'],
                 },
                 END_DRAGGING_OPERATION: {
                   target: 'idle',
@@ -175,14 +175,14 @@ export class CircuitEditorElement extends HTMLElement {
                     'maybeRemoveLastEmptyWires',
                     'removeDocumentCursorGrabbingStyle',
                     'endCircuitEdit',
-                    'maybeDisableAllInspectorPanes'
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
+                    'maybeDisableAllInspectorPanes',
+                  ],
+                },
+              },
+            },
+          },
+        },
+      },
     },
     {
       guards: {
@@ -191,7 +191,7 @@ export class CircuitEditorElement extends HTMLElement {
         },
         isEditing: () => {
           return this.circuit.editing
-        }
+        },
       },
       actions: {
         maybeHideOperationMenu: (_context, event) => {
@@ -376,9 +376,9 @@ export class CircuitEditorElement extends HTMLElement {
           if (this.inspectorButton.isInspectorShown) {
             this.inspectorButton.showInspector(operation)
           }
-        }
-      }
-    }
+        },
+      },
+    },
   )
   private circuitEditorService = interpret(this.circuitEditorMachine).onTransition(state => {
     if (this.debug) {
@@ -532,7 +532,7 @@ export class CircuitEditorElement extends HTMLElement {
       type: 'SET_OPERATION_ANGLE',
       operation,
       angle: inspector.angle,
-      reducedAngle: inspector.reduceAngleFraction ? inspector.reducedAngle : ''
+      reducedAngle: inspector.reduceAngleFraction ? inspector.reducedAngle : '',
     })
   }
 

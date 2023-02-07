@@ -230,7 +230,7 @@ function move(operation, dx = 1, dy = 1) {
     new PointerEvent('pointermove', {
       clientX: operation.getBoundingClientRect().left + dx,
       clientY: operation.getBoundingClientRect().top + dy,
-      bubbles: true
-    })
+      bubbles: true,
+    }),
   )
 }

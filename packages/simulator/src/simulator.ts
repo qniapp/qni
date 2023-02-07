@@ -20,7 +20,7 @@ import {
   SerializedWrite1GateType,
   SerializedXGateType,
   SerializedYGateType,
-  SerializedZGateType
+  SerializedZGateType,
 } from '@qni/common'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'

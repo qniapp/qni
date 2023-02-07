@@ -5,7 +5,7 @@ import {
   HelpableMixin,
   HoverableMixin,
   IconableMixin,
-  MenuableMixin
+  MenuableMixin,
 } from './mixin/'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
@@ -16,8 +16,8 @@ import swapGateIcon from '../icon/swap-gate.svg'
 @controller
 export class SwapGateElement extends MenuableMixin(
   HelpableMixin(
-    ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
-  )
+    ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement)))))),
+  ),
 ) {
   get operationType(): typeof SerializedSwapGateType {
     return SerializedSwapGateType
@@ -34,7 +34,7 @@ export class SwapGateElement extends MenuableMixin(
     render(
       html`<div part="body">${this.iconHtml(swapGateIcon)}</div>
         <div part="outline"></div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

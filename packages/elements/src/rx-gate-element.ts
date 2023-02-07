@@ -7,7 +7,7 @@ import {
   HoverableMixin,
   IconableMixin,
   IfableMixin,
-  MenuableMixin
+  MenuableMixin,
 } from './mixin/'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
@@ -25,10 +25,10 @@ export class RxGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
       ControllableMixin(
-        AngleableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
-      )
-    )
-  )
+        AngleableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement)))))),
+      ),
+    ),
+  ),
 ) {
   get operationType(): typeof SerializedRxGateType {
     return SerializedRxGateType
@@ -45,7 +45,7 @@ export class RxGateElement extends MenuableMixin(
     render(
       html`<div part="body">${this.iconHtml(rxGateIcon)}</div>
         <div part="outline"></div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

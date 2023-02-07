@@ -5,7 +5,7 @@ import {
   HoverableMixin,
   IconableMixin,
   MenuableMixin,
-  ResizeableMixin
+  ResizeableMixin,
 } from './mixin'
 import {html, render} from '@github/jtml'
 import {SerializedQftGateType} from '@qni/common'
@@ -19,7 +19,7 @@ export type QftGateElementProps = {
 
 @controller
 export class QftGateElement extends MenuableMixin(
-  HelpableMixin(ResizeableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
+  HelpableMixin(ResizeableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement)))))),
 ) {
   get operationType(): typeof SerializedQftGateType {
     return SerializedQftGateType
@@ -42,7 +42,7 @@ export class QftGateElement extends MenuableMixin(
           </div>
         </div>
         <div part="outline"></div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

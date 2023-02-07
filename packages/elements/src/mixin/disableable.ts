@@ -10,7 +10,7 @@ export declare class Disableable {
 }
 
 export function DisableableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase
+  Base: TBase,
 ): Constructor<Disableable> & TBase {
   class DisableableMixinClass extends Base {
     @attr disabled = false

@@ -115,7 +115,7 @@ export class QubitCircleElement extends HTMLElement {
           <div id="magnitude" part="magnitude"></div>
           <div id="phase"></div>
         </div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
     if (this.magnitude === 0) this.hidePhase = true
   }
@@ -130,7 +130,7 @@ export class QubitCircleElement extends HTMLElement {
       allowHTML: true,
       animation: false,
       delay: 0,
-      theme: 'tooltip'
+      theme: 'tooltip',
       // trigger: 'manual', // debug
     })
 

@@ -34,7 +34,7 @@ export const UNICODE_FRACTIONS = [
   {character: '\u215D', ref: '⅝', expanded: '5/8', value: 5 / 8},
   {character: '\u215E', ref: '⅞', expanded: '7/8', value: 7 / 8},
   {character: '\u2151', ref: '⅑', expanded: '1/9', value: 1 / 9},
-  {character: '\u2152', ref: '⅒', expanded: '1/10', value: 1 / 10}
+  {character: '\u2152', ref: '⅒', expanded: '1/10', value: 1 / 10},
 ]
 
 /**
@@ -149,7 +149,7 @@ export class Format {
     allowAbbreviation: boolean,
     maxAbbreviationError: number,
     fixedDigits: number | undefined,
-    itemSeparator: string
+    itemSeparator: string,
   ) {
     this.allowAbbreviation = allowAbbreviation
     this.maxAbbreviationError = maxAbbreviationError

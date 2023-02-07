@@ -7,7 +7,7 @@ export type CreateArrayWithLengthX<LENGTH extends number, ACC extends unknown[] 
 export type NumericRange<
   START_ARR extends number[],
   END extends number,
-  ACC extends number = never
+  ACC extends number = never,
 > = START_ARR['length'] extends END ? ACC | END : NumericRange<[...START_ARR, 1], END, ACC | START_ARR['length']>
 
 export type ResizeableSpan = NumericRange<CreateArrayWithLengthX<1>, typeof Config.MAX_QUBIT_COUNT>

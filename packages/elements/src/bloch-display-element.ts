@@ -7,7 +7,7 @@ import {forceSigned} from './util'
 
 @controller
 export class BlochDisplayElement extends MenuableMixin(
-  HelpableMixin(DraggableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))
+  HelpableMixin(DraggableMixin(ActivateableMixin(HoverableMixin(HTMLElement)))),
 ) {
   @target body!: HTMLElement
   @target vectorLine!: HTMLElement
@@ -48,7 +48,7 @@ export class BlochDisplayElement extends MenuableMixin(
       // trigger: 'manual', // debug
       onShow(instance: TippyInstance) {
         instance.setContent(content)
-      }
+      },
     })
     this.popup.show()
   }
@@ -77,7 +77,7 @@ export class BlochDisplayElement extends MenuableMixin(
           </section>
         </div>
       `,
-      content
+      content,
     )
 
     return content
@@ -258,7 +258,7 @@ export class BlochDisplayElement extends MenuableMixin(
           </div>
         </div>
         <div part="outline"></div>`,
-      this.shadowRoot!
+      this.shadowRoot!,
     )
   }
 

@@ -198,7 +198,7 @@ QUnit.module('Complex', () => {
       new Complex(1, 1)
         .unit()
         .minus(new Complex(Math.sqrt(0.5), Math.sqrt(0.5)))
-        .norm2() < 0.0000001
+        .norm2() < 0.0000001,
     )
   })
 
@@ -266,12 +266,12 @@ QUnit.module('Complex', () => {
     const s = Math.sqrt(0.5)
     assert.approximatelyEquates(Complex.rootsOfQuadratic(1, 0, new Complex(0, -1)), [
       new Complex(-s, -s),
-      new Complex(s, s)
+      new Complex(s, s),
     ])
     assert.approximatelyEquates(
       Complex.rootsOfQuadratic(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13)),
       [new Complex(-1.06911, 1.85157), new Complex(-1.31551, -1.77465)],
-      0.0001
+      0.0001,
     )
   })
 
@@ -373,11 +373,11 @@ QUnit.module('Complex', () => {
     assert.approximatelyEquates(i.raisedTo(i), Math.exp(-π / 2))
     assert.approximatelyEquates(
       new Complex(1, 1).raisedTo(new Complex(1, 1)),
-      new Complex(0.2739572538301, 0.5837007587586)
+      new Complex(0.2739572538301, 0.5837007587586),
     )
     assert.approximatelyEquates(
       new Complex(2, 3).raisedTo(new Complex(5, 7)),
-      new Complex(0.1525582909989, 0.6079153491494)
+      new Complex(0.1525582909989, 0.6079153491494),
     )
   })
 

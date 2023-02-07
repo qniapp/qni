@@ -46,52 +46,52 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             on: {
               SET_INTERACT: {
                 target: 'resizeHandleGrabbable',
-                actions: ['setInteract']
-              }
-            }
+                actions: ['setInteract'],
+              },
+            },
           },
           resizeHandleGrabbable: {
             on: {
               GRAB_RESIZE_HANDLE: {
                 target: 'resizeHandleGrabbed',
-                actions: ['grabResizeHandle']
+                actions: ['grabResizeHandle'],
               },
               UNSET_INTERACT: {
-                target: 'idle'
-              }
-            }
+                target: 'idle',
+              },
+            },
           },
           resizeHandleGrabbed: {
             on: {
               START_RESIZING: {
                 target: 'resizeStart',
-                actions: ['startResizing']
+                actions: ['startResizing'],
               },
               RELEASE_RESIZE_HANDLE: {
                 target: 'resizeHandleGrabbable',
-                actions: ['releaseResizeHandle']
-              }
-            }
+                actions: ['releaseResizeHandle'],
+              },
+            },
           },
           resizeStart: {
-            always: [{target: 'resizing'}]
+            always: [{target: 'resizing'}],
           },
           resizing: {
             on: {
               RESIZE_HANDLE_SNAP: {
                 target: 'resizing',
-                actions: ['emitResizeEvent']
+                actions: ['emitResizeEvent'],
               },
               END_RESIZING: {
-                target: 'resizeEnd'
-              }
-            }
+                target: 'resizeEnd',
+              },
+            },
           },
           resizeEnd: {
             entry: ['endResizing'],
-            always: [{target: 'resizeHandleGrabbable'}]
-          }
-        }
+            always: [{target: 'resizeHandleGrabbable'}],
+          },
+        },
       },
       {
         actions: {
@@ -110,7 +110,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             interactable.draggable({
               onstart: this.startResizing.bind(this),
               onmove: this.moveResizeHandle.bind(this),
-              onend: this.endResizing.bind(this)
+              onend: this.endResizing.bind(this),
             })
           },
           grabResizeHandle: (_context, event) => {
@@ -139,9 +139,9 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
             this.resizing = false
             this.moveResizeHandleTo(0, 0)
             emitEvent('resizeable:end-resizing', {}, this)
-          }
-        }
-      }
+          },
+        },
+      },
     )
 
     public resizeableService = interpret(this.resizeableMachine).onTransition(state => {
@@ -168,12 +168,12 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
         modifiers: [
           interact.modifiers.snap({
             targets: values,
-            relativePoints: [{x: 0.5, y: 0.5}]
-          })
+            relativePoints: [{x: 0.5, y: 0.5}],
+          }),
         ],
         listeners: {
-          move: this.resizeHandleMoveEventListener.bind(this)
-        }
+          move: this.resizeHandleMoveEventListener.bind(this),
+        },
       })
     }
 

@@ -156,7 +156,7 @@ export class QuantumSimulatorElement extends HTMLElement {
       invalidateCaches,
       steps: serializedSteps,
       targets: this.circleNotation.visibleQubitCircleKets,
-      debug: window.debugServiceworker
+      debug: window.debugServiceworker,
     })
   }
 
@@ -164,7 +164,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     let qubitCount = Math.max(
       ...this.circuit.steps.map(each => {
         return each.maxOccupiedDropzoneBit as number
-      })
+      }),
     )
     if (qubitCount === 0) qubitCount = 1
 

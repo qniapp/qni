@@ -75,7 +75,7 @@ export class InspectorButtonElement extends HTMLElement {
       placement: 'bottom',
       theme: 'operation-inspector',
       trigger: 'manual',
-      hideOnClick: false
+      hideOnClick: false,
     })
   }
 

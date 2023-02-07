@@ -20,7 +20,7 @@ import {
   SerializedZGate,
   Util,
   describe,
-  emitEvent
+  emitEvent,
 } from '@qni/common'
 import {
   Operation,
@@ -37,7 +37,7 @@ import {
   isTGateElement,
   isXGateElement,
   isYGateElement,
-  isZGateElement
+  isZGateElement,
 } from './operation'
 import {attr, controller, targets} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
@@ -125,7 +125,7 @@ type ConnectionProps = {
 
 const groupBy = <K, V>(
   array: readonly V[],
-  getKey: (current: V, index: number, orig: readonly V[]) => K
+  getKey: (current: V, index: number, orig: readonly V[]) => K,
 ): Array<[K, V[]]> =>
   Array.from(
     array.reduce((map, current, index, orig) => {
@@ -137,7 +137,7 @@ const groupBy = <K, V>(
         map.set(key, [current])
       }
       return map
-    }, new Map<K, V[]>())
+    }, new Map<K, V[]>()),
   )
 
 type CircuitStepContext = Record<string, never>
@@ -173,8 +173,8 @@ export class CircuitStepElement extends HTMLElement {
         unknown: {
           always: [
             {target: 'shadow', cond: 'isShadow'},
-            {target: 'visible', cond: 'isVisible'}
-          ]
+            {target: 'visible', cond: 'isVisible'},
+          ],
         },
         shadow: {
           type: 'compound',
@@ -182,63 +182,63 @@ export class CircuitStepElement extends HTMLElement {
           on: {
             SNAP_DROPZONE: {
               target: 'shadow',
-              actions: ['setOperationBit', 'updateResizeableSpanDropzones', 'dispatchSnapEvent']
+              actions: ['setOperationBit', 'updateResizeableSpanDropzones', 'dispatchSnapEvent'],
             },
             UNSNAP_DROPZONE: {
               target: 'shadow',
-              actions: ['updateResizeableSpanDropzones', 'dispatchUnsnapEvent']
+              actions: ['updateResizeableSpanDropzones', 'dispatchUnsnapEvent'],
             },
             UNSHADOW: {
               target: 'visible',
-              actions: ['unshadow']
-            }
+              actions: ['unshadow'],
+            },
           },
           states: {
             unknown: {
               always: [
                 {target: 'inactive', cond: 'isInactive'},
-                {target: 'active', cond: 'isActive'}
-              ]
+                {target: 'active', cond: 'isActive'},
+              ],
             },
             inactive: {
               on: {
                 ACTIVATE: {
-                  target: 'active'
-                }
-              }
+                  target: 'active',
+                },
+              },
             },
             active: {
               on: {
                 DEACTIVATE: {
-                  target: 'inactive'
-                }
-              }
-            }
-          }
+                  target: 'inactive',
+                },
+              },
+            },
+          },
         },
         visible: {
           type: 'parallel',
           on: {
             SNAP_DROPZONE: {
               target: 'visible',
-              actions: ['setOperationBit', 'updateResizeableSpanDropzones', 'dispatchSnapEvent']
+              actions: ['setOperationBit', 'updateResizeableSpanDropzones', 'dispatchSnapEvent'],
             },
             UNSNAP_DROPZONE: {
               target: 'visible',
-              actions: ['updateResizeableSpanDropzones', 'dispatchUnsnapEvent']
+              actions: ['updateResizeableSpanDropzones', 'dispatchUnsnapEvent'],
             },
             OCCUPY_DROPZONE: {
               target: 'visible',
-              actions: ['setOperationBit', 'updateResizeableSpanDropzones']
+              actions: ['setOperationBit', 'updateResizeableSpanDropzones'],
             },
             DELETE_OPERATION: {
               target: 'visible',
-              actions: ['updateResizeableSpanDropzones', 'dispatchDeleteOperationEvent']
+              actions: ['updateResizeableSpanDropzones', 'dispatchDeleteOperationEvent'],
             },
             RESIZE_OPERATION: {
               target: 'visible',
-              actions: ['updateResizeableSpanDropzones', 'dispatchResizeOperationEvent']
-            }
+              actions: ['updateResizeableSpanDropzones', 'dispatchResizeOperationEvent'],
+            },
           },
           states: {
             activatable: {
@@ -248,24 +248,24 @@ export class CircuitStepElement extends HTMLElement {
                 unknown: {
                   always: [
                     {target: 'inactive', cond: 'isInactive'},
-                    {target: 'active', cond: 'isActive'}
-                  ]
+                    {target: 'active', cond: 'isActive'},
+                  ],
                 },
                 inactive: {
                   on: {
                     ACTIVATE: {
-                      target: 'active'
-                    }
-                  }
+                      target: 'active',
+                    },
+                  },
                 },
                 active: {
                   on: {
                     DEACTIVATE: {
-                      target: 'inactive'
-                    }
-                  }
-                }
-              }
+                      target: 'inactive',
+                    },
+                  },
+                },
+              },
             },
             breakpointable: {
               type: 'compound',
@@ -274,28 +274,28 @@ export class CircuitStepElement extends HTMLElement {
                 unknown: {
                   always: [
                     {target: 'breakpointOn', cond: 'isBreakpointOn'},
-                    {target: 'breakpointOff', cond: 'isBreakpointOff'}
-                  ]
+                    {target: 'breakpointOff', cond: 'isBreakpointOff'},
+                  ],
                 },
                 breakpointOn: {
                   on: {
                     UNSET_BREAKPOINT: {
-                      target: 'breakpointOff'
-                    }
-                  }
+                      target: 'breakpointOff',
+                    },
+                  },
                 },
                 breakpointOff: {
                   on: {
                     SET_BREAKPOINT: {
-                      target: 'breakpointOn'
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                      target: 'breakpointOn',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
     {
       actions: {
@@ -359,7 +359,7 @@ export class CircuitStepElement extends HTMLElement {
         },
         unshadow: () => {
           this.shadow = false
-        }
+        },
       },
       guards: {
         isShadow: () => {
@@ -379,9 +379,9 @@ export class CircuitStepElement extends HTMLElement {
         },
         isBreakpointOff: () => {
           return !this.breakpoint
-        }
-      }
-    }
+        },
+      },
+    },
   )
 
   private circuitStepService = interpret(this.circuitStepMachine).onTransition(state => {
@@ -732,7 +732,7 @@ export class CircuitStepElement extends HTMLElement {
   private controlBits(
     dropzone: CircuitDropzoneElement,
     allControlBits: number[],
-    connectionProps?: ConnectionProps
+    connectionProps?: ConnectionProps,
   ): number[] {
     let bits = allControlBits
 
@@ -821,7 +821,7 @@ export class CircuitStepElement extends HTMLElement {
 
   private numControlGateDropzones(
     props: ConnectionProps | undefined,
-    controllableOperationNames: string[]
+    controllableOperationNames: string[],
   ): number | null {
     if (props === undefined) return null
 

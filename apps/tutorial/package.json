@@ -26,16 +26,12 @@
     "@qni/elements": "^0.0.85",
     "@qni/simulator": "^0.0.85"
   },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.2",
-    "autoprefixer": "^10.4.2",
-    "postcss-import": "^14.0.2"
-  },
   "eslintIgnore": [
     "application.css",
     "application.js",
     "application.js.map",
     "serviceworker.js",
     "serviceworker.js.map"
-  ]
+  ],
+  "devDependencies": {}
 }

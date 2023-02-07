@@ -74,7 +74,7 @@ export class Matrix {
   static generate(
     width: number,
     height: number,
-    coefficientRowColGenerator: (row: number, col: number) => number | Complex
+    coefficientRowColGenerator: (row: number, col: number) => number | Complex,
   ): Matrix {
     const buf = new Float64Array(width * height * 2)
     for (let r = 0; r < height; r++) {
@@ -133,7 +133,7 @@ export class Matrix {
       throw new DetailedError('width*height*2 !== buffer.length', {
         width,
         height,
-        len: buffer.length
+        len: buffer.length,
       })
     }
     this.width = width
@@ -260,7 +260,7 @@ export class Matrix {
 
   rows(): Complex[][] {
     return range(0, this.height - 1).map<Complex[]>(row =>
-      range(0, this.width - 1).map<Complex>(col => this.cell(col, row))
+      range(0, this.width - 1).map<Complex>(col => this.cell(col, row)),
     )
   }
 
@@ -270,7 +270,7 @@ export class Matrix {
         col,
         row,
         width: this.width,
-        height: this.height
+        height: this.height,
       })
     }
     const i = (this.width * row + col) * 2
@@ -283,7 +283,7 @@ export class Matrix {
         col,
         row,
         width: this.width,
-        height: this.height
+        height: this.height,
       })
     }
     const i = (this.width * row + col) * 2
