@@ -71,3 +71,5 @@ jobs:
           RAILS_ENV: test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+      - name: Check Bundle Size
+        run: yarn size
