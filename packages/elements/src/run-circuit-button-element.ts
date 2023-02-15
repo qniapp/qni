@@ -1,7 +1,7 @@
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
-import {describe} from '@qni/common'
+import {format as prettyFormat} from 'pretty-format'
 import reloadIcon from '../icon/reload.svg'
 import tailSpinIcon from '../icon/tail-spin.svg'
 
@@ -87,7 +87,7 @@ export class RunCircuitButtonElement extends HTMLElement {
   private runCircuitButtonService = interpret(this.runCircuitButtonMachine).onTransition(state => {
     if (this.debug) {
       // eslint-disable-next-line no-console
-      console.log(`run-circuit-button: ${describe(state.value)}`)
+      console.log(`run-circuit-button: ${prettyFormat(state.value)}`)
     }
   })
 

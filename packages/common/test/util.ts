@@ -1,5 +1,6 @@
 import {ArrayIsh, equate, hasOwnProperty} from '../src/equate'
-import {Complex, describe} from '../src'
+import {Complex} from '../src'
+import {format as prettyFormat} from 'pretty-format'
 
 export function isEqualTo(subject: unknown, other: unknown): boolean {
   return equate(subject, other)
@@ -42,7 +43,7 @@ export function isApproximatelyEqualToHelper(subject: unknown, other: unknown, e
     return true
   }
 
-  fail(`Expected ${describe(subject)} to have an isApproximatelyEqualTo method`)
+  fail(`Expected ${prettyFormat(subject)} to have an isApproximatelyEqualTo method`)
 }
 
 function hasIsApproximatelyEqualTo(object: unknown): object is Complex {

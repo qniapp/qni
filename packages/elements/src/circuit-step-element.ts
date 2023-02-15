@@ -19,7 +19,6 @@ import {
   SerializedYGate,
   SerializedZGate,
   Util,
-  describe,
   emitEvent,
 } from '@qni/common'
 import {
@@ -63,6 +62,7 @@ import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
+import {format as prettyFormat} from 'pretty-format'
 import {isControllable} from './mixin/controllable'
 import {isResizeable} from './mixin'
 
@@ -388,7 +388,7 @@ export class CircuitStepElement extends HTMLElement {
     if (!this.debug) return
 
     // eslint-disable-next-line no-console
-    console.log(`circuit-step: ${describe(state.value)}`)
+    console.log(`circuit-step: ${prettyFormat(state.value)}`)
   })
 
   get maxOccupiedDropzoneBit(): 0 | ResizeableSpan {

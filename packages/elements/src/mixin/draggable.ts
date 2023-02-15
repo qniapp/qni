@@ -1,10 +1,11 @@
-import {Util, describe, emitEvent} from '@qni/common'
+import {Util, emitEvent} from '@qni/common'
 import {createMachine, interpret} from 'xstate'
 import {CircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
 import {PaletteDropzoneElement} from '../palette-dropzone-element'
 import {attr} from '@github/catalyst'
+import {format as prettyFormat} from 'pretty-format'
 import interact from 'interactjs'
 
 export const isDraggable = (arg: unknown): arg is Draggable =>
@@ -255,7 +256,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     public draggableService = interpret(this.draggableMachine).onTransition(state => {
       if (this.debugDraggable) {
         // eslint-disable-next-line no-console
-        console.log(`draggable: ${describe(state.value)}`)
+        console.log(`draggable: ${prettyFormat(state.value)}`)
       }
     })
 

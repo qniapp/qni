@@ -2,7 +2,7 @@ import {createMachine, interpret} from 'xstate'
 import tippy, {Instance} from 'tippy.js'
 import {Constructor} from './constructor'
 import {attr} from '@github/catalyst'
-import {describe} from '@qni/common'
+import {format as prettyFormat} from 'pretty-format'
 
 export declare class Helpable {
   initHelp(): void
@@ -120,7 +120,7 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       .onTransition(state => {
         if (this.debugHelpable) {
           // eslint-disable-next-line no-console
-          console.log(`helpable: ${describe(state.value)}`)
+          console.log(`helpable: ${prettyFormat(state.value)}`)
         }
       })
       .start()

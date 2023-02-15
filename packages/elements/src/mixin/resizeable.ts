@@ -1,8 +1,9 @@
-import {ResizeableSpan, Util, describe, emitEvent} from '@qni/common'
+import {ResizeableSpan, Util, emitEvent} from '@qni/common'
 import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
+import {format as prettyFormat} from 'pretty-format'
 import interact from 'interactjs'
 
 export const isResizeable = (arg: unknown): arg is Resizeable =>
@@ -147,7 +148,7 @@ export function ResizeableMixin<TBase extends Constructor<HTMLElement>>(Base: TB
     public resizeableService = interpret(this.resizeableMachine).onTransition(state => {
       if (this.debugResizeable) {
         // eslint-disable-next-line no-console
-        console.log(`resizeable: ${describe(state.value)}`)
+        console.log(`resizeable: ${prettyFormat(state.value)}`)
       }
     })
 
