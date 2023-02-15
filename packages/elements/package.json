@@ -45,6 +45,7 @@
     "@qni/common": "^0.0.85",
     "complex.js": "^2.1.1",
     "interactjs": "~1.10",
+    "pretty-format": "^29.4.2",
     "tippy.js": "^6.3.7",
     "xstate": "~4.35"
   },
