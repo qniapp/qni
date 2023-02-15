@@ -47,7 +47,7 @@
     "interactjs": "~1.10",
     "pretty-format": "^29.4.2",
     "tippy.js": "^6.3.7",
-    "xstate": "~4.35"
+    "xstate": "~4.36"
   },
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
