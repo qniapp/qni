@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {describe} from './describe'
+import {format as prettyFormat} from 'pretty-format'
 
 let CONSTRUCTOR_CALLS_NESTING = 0
 
@@ -37,12 +37,12 @@ export class DetailedError extends Error {
     try {
       this.details =
         CONSTRUCTOR_CALLS_NESTING === 1
-          ? describe(this.detailsObj)
-          : '(failed to describe detailsObj due to possibly re-entrancy)'
+          ? prettyFormat(this.detailsObj)
+          : '(failed to prettyFormat detailsObj due to possibly re-entrancy)'
     } catch (ex) {
       // eslint-disable-next-line no-console
       console.error(ex)
-      this.details = '(failed to describe detailsObj, see the console for details)'
+      this.details = '(failed to prettyFormat detailsObj, see the console for details)'
     } finally {
       CONSTRUCTOR_CALLS_NESTING--
     }

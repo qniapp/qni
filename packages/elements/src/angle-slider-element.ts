@@ -1,8 +1,9 @@
-import {DetailedError, Util, angleDenominator, describe, radian as radianOf} from '@qni/common'
+import {DetailedError, Util, angleDenominator, radian as radianOf} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {InteractEvent} from '@interactjs/types'
+import {format as prettyFormat} from 'pretty-format'
 import interact from 'interactjs'
 
 export const isAngleSliderElement = (arg: unknown): arg is AngleSliderElement =>
@@ -103,7 +104,7 @@ export class AngleSliderElement extends HTMLElement {
     .onTransition(state => {
       if (this.debug) {
         // eslint-disable-next-line no-console
-        console.log(`circuit-step: ${describe(state.value)}`)
+        console.log(`circuit-step: ${prettyFormat(state.value)}`)
       }
     })
     .start()

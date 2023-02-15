@@ -1,6 +1,6 @@
 import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isIfable, isMenuable, isResizeable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
-import {Config, DetailedError, Util, describe, isResizeableSpan} from '@qni/common'
+import {Config, DetailedError, Util, isResizeableSpan} from '@qni/common'
 import {Operation, isOperation} from './operation'
 import {attr, controller, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
@@ -8,6 +8,7 @@ import {html, render} from '@github/jtml'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
+import {format as prettyFormat} from 'pretty-format'
 import {isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {isFlaggable} from './mixin/flaggable'
 
@@ -383,7 +384,7 @@ export class CircuitEditorElement extends HTMLElement {
   private circuitEditorService = interpret(this.circuitEditorMachine).onTransition(state => {
     if (this.debug) {
       // eslint-disable-next-line no-console
-      console.log(`circuit-editor: ${describe(state.value)}`)
+      console.log(`circuit-editor: ${prettyFormat(state.value)}`)
     }
   })
 
