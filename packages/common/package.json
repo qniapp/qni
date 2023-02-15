@@ -28,8 +28,7 @@
   },
   "prettier": "@github/prettier-config",
   "dependencies": {
-    "fraction.js": "~4.2",
-    "pretty-format": "^29.4.2"
+    "fraction.js": "~4.2"
   },
   "devDependencies": {
     "@types/qunit": "^2.19.4",

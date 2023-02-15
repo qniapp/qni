@@ -74,5 +74,7 @@
     "typescript": "~4.9",
     "typesync": "^0.10.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "pretty-format": "^29.4.2"
+  }
 }
