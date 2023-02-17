@@ -1,7 +1,20 @@
 /* eslint-env qunit */
 
-import {Complex} from '../src/complex'
+import {
+  Complex,
+  consistentComplexFormatPlugin,
+  exactComplexFormatPlugin,
+  isComplex,
+  minifiedComplexFormatPlugin,
+  simplifiedComplexFormatPlugin,
+} from '../src/complex'
 import {Format} from '../src/format'
+
+QUnit.test('isComplex', assert => {
+  assert.true(isComplex(Complex.ZERO))
+  assert.false(isComplex(0))
+  assert.false(isComplex('0'))
+})
 
 QUnit.module('Complex', () => {
   QUnit.test('isEqualTo', assert => {
@@ -80,43 +93,105 @@ QUnit.module('Complex', () => {
     assert.equates(Complex.imagPartOf(new Complex(5, -2)), -2)
   })
 
-  QUnit.test('toString', assert => {
-    assert.equates(Complex.ZERO.toString(), '0')
+  QUnit.module('toStr', () => {
+    // デフォルトのフォーマット (EXACT)
+    QUnit.test('default format', assert => {
+      // 実部のみ
+      assert.equal(Complex.ZERO.toStr(), '0')
+      assert.equal(Complex.ONE.toStr(), '1')
+      assert.equal(new Complex(2, 0).toStr(), '2')
+      assert.equal(new Complex(-1, 0).toStr(), '-1')
 
-    assert.equates(Complex.ONE.toString(), '1')
-    assert.equates(Complex.I.toString(), 'i')
-    assert.equates(new Complex(1, 1).toString(), '1+i')
+      // 虚部のみ
+      assert.equal(Complex.I.toStr(), 'i')
+      assert.equal(new Complex(0, 2).toStr(), '2i')
+      assert.equal(new Complex(0, -1).toStr(), '-i')
 
-    assert.equates(new Complex(-1, 0).toString(), '-1')
-    assert.equates(new Complex(0, -1).toString(), '-i')
-    assert.equates(new Complex(-1, -1).toString(), '-1-i')
+      // 実部と虚部
+      assert.equal(new Complex(1, 1).toStr(), '1+i')
+      assert.equal(new Complex(-1, -1).toStr(), '-1-i')
+      assert.equal(new Complex(2, 2).toStr(), '2+2i')
+      assert.equal(new Complex(2, -3).toStr(), '2-3i')
+      assert.equal(new Complex(Math.sqrt(1 / 2), -1 / 3).toStr(), '√½-⅓i')
+    })
 
-    assert.equates(new Complex(2, 0).toString(), '2')
-    assert.equates(new Complex(0, 2).toString(), '2i')
-    assert.equates(new Complex(2, 2).toString(), '2+2i')
+    QUnit.test('consistent format', assert => {
+      assert.equal(new Complex(2, -3).toStr(consistentComplexFormatPlugin), '+2.00-3.00i')
+      assert.equal(new Complex(-2, -3).toStr(consistentComplexFormatPlugin), '-2.00-3.00i')
+      assert.equal(new Complex(0, -1).toStr(consistentComplexFormatPlugin), '+0.00-1.00i')
+      assert.equal(new Complex(1 / 3, 0).toStr(consistentComplexFormatPlugin), '+0.33+0.00i')
+    })
 
-    assert.equates(new Complex(2, -3).toString(), '2-3i')
-    assert.equates(new Complex(Math.sqrt(1 / 2), -1 / 3).toString(), '√½-⅓i')
+    QUnit.test('exact format', assert => {
+      assert.equal(new Complex(2, -3).toStr(exactComplexFormatPlugin), '2-3i')
+      assert.equal(new Complex(-2, -3).toStr(exactComplexFormatPlugin), '-2-3i')
+      assert.equal(new Complex(0, -1).toStr(exactComplexFormatPlugin), '-i')
+      assert.equal(new Complex(1 / 3, 0).toStr(exactComplexFormatPlugin), '⅓')
+    })
 
-    assert.equates(new Complex(2, -3).toString(Format.CONSISTENT), '+2.00-3.00i')
-    assert.equates(new Complex(2, -3).toString(Format.EXACT), '2-3i')
-    assert.equates(new Complex(2, -3).toString(Format.MINIFIED), '2-3i')
-    assert.equates(new Complex(2, -3).toString(Format.SIMPLIFIED), '2-3i')
+    QUnit.test('minified format', assert => {
+      assert.equal(new Complex(2, -3).toStr(minifiedComplexFormatPlugin), '2-3i')
+      assert.equal(new Complex(-2, -3).toStr(minifiedComplexFormatPlugin), '-2-3i')
+      assert.equal(new Complex(0, -1).toStr(minifiedComplexFormatPlugin), '-i')
+      assert.equal(new Complex(1 / 3, 0).toStr(minifiedComplexFormatPlugin), '⅓')
+    })
 
-    assert.equates(new Complex(-2, -3).toString(Format.CONSISTENT), '-2.00-3.00i')
-    assert.equates(new Complex(-2, -3).toString(Format.EXACT), '-2-3i')
-    assert.equates(new Complex(-2, -3).toString(Format.MINIFIED), '-2-3i')
-    assert.equates(new Complex(-2, -3).toString(Format.SIMPLIFIED), '-2-3i')
+    QUnit.test('simplified format', assert => {
+      assert.equal(new Complex(2, -3).toStr(simplifiedComplexFormatPlugin), '2-3i')
+      assert.equal(new Complex(-2, -3).toStr(simplifiedComplexFormatPlugin), '-2-3i')
+      assert.equal(new Complex(0, -1).toStr(simplifiedComplexFormatPlugin), '-i')
+      assert.equal(new Complex(1 / 3, 0).toStr(simplifiedComplexFormatPlugin), '⅓')
+    })
+  })
 
-    assert.equates(new Complex(0, -1).toString(Format.CONSISTENT), '+0.00-1.00i')
-    assert.equates(new Complex(0, -1).toString(Format.EXACT), '-i')
-    assert.equates(new Complex(0, -1).toString(Format.MINIFIED), '-i')
-    assert.equates(new Complex(0, -1).toString(Format.SIMPLIFIED), '-i')
+  QUnit.module('toString', () => {
+    QUnit.test('default format', assert => {
+      // 実部のみ
+      assert.equal(Complex.ZERO.toString(), '0')
+      assert.equal(Complex.ONE.toString(), '1')
+      assert.equal(new Complex(2, 0).toString(), '2')
+      assert.equal(new Complex(-1, 0).toString(), '-1')
 
-    assert.equates(new Complex(1 / 3, 0).toString(Format.CONSISTENT), '+0.33+0.00i')
-    assert.equates(new Complex(1 / 3, 0).toString(Format.EXACT), '⅓')
-    assert.equates(new Complex(1 / 3, 0).toString(Format.MINIFIED), '⅓')
-    assert.equates(new Complex(1 / 3, 0).toString(Format.SIMPLIFIED), '⅓')
+      // 虚部のみ
+      assert.equal(Complex.I.toString(), 'i')
+      assert.equal(new Complex(0, 2).toString(), '2i')
+      assert.equal(new Complex(0, -1).toString(), '-i')
+
+      // 実部と虚部
+      assert.equal(new Complex(1, 1).toString(), '1+i')
+      assert.equal(new Complex(-1, -1).toString(), '-1-i')
+      assert.equal(new Complex(2, 2).toString(), '2+2i')
+      assert.equal(new Complex(2, -3).toString(), '2-3i')
+      assert.equal(new Complex(Math.sqrt(1 / 2), -1 / 3).toString(), '√½-⅓i')
+    })
+
+    QUnit.test('consistent format', assert => {
+      assert.equal(new Complex(2, -3).toString(Format.CONSISTENT), '+2.00-3.00i')
+      assert.equal(new Complex(-2, -3).toString(Format.CONSISTENT), '-2.00-3.00i')
+      assert.equal(new Complex(0, -1).toString(Format.CONSISTENT), '+0.00-1.00i')
+      assert.equal(new Complex(1 / 3, 0).toString(Format.CONSISTENT), '+0.33+0.00i')
+    })
+
+    QUnit.test('exact format', assert => {
+      assert.equal(new Complex(2, -3).toString(Format.EXACT), '2-3i')
+      assert.equal(new Complex(-2, -3).toString(Format.EXACT), '-2-3i')
+      assert.equal(new Complex(0, -1).toString(Format.EXACT), '-i')
+      assert.equal(new Complex(1 / 3, 0).toString(Format.EXACT), '⅓')
+    })
+
+    QUnit.test('minified format', assert => {
+      assert.equal(new Complex(2, -3).toString(Format.MINIFIED), '2-3i')
+      assert.equal(new Complex(-2, -3).toString(Format.MINIFIED), '-2-3i')
+      assert.equal(new Complex(0, -1).toString(Format.MINIFIED), '-i')
+      assert.equal(new Complex(1 / 3, 0).toString(Format.MINIFIED), '⅓')
+    })
+
+    QUnit.test('simplified format', assert => {
+      assert.equal(new Complex(2, -3).toString(Format.SIMPLIFIED), '2-3i')
+      assert.equal(new Complex(-2, -3).toString(Format.SIMPLIFIED), '-2-3i')
+      assert.equal(new Complex(0, -1).toString(Format.SIMPLIFIED), '-i')
+      assert.equal(new Complex(1 / 3, 0).toString(Format.SIMPLIFIED), '⅓')
+    })
   })
 
   QUnit.test('toString_perturbed', assert => {

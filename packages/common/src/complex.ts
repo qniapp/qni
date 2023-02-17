@@ -15,8 +15,158 @@
  */
 
 import {DetailedError} from './detailed-error'
-import {Format} from './format'
+import {Format, UNICODE_FRACTIONS} from './format'
 import {Util} from './util'
+import {Config, Plugin, format as prettyFormat, Refs, Printer} from 'pretty-format'
+
+type UnicodeFraction = {character: string; ref: string; value: number}
+
+function matchUnicodeFraction(predicate: (arrayItem: UnicodeFraction) => boolean): UnicodeFraction | undefined {
+  for (const each of UNICODE_FRACTIONS) {
+    if (predicate(each)) return each
+  }
+  return undefined
+}
+
+export const isComplex = (arg: unknown): arg is Complex =>
+  typeof arg === 'object' &&
+  arg !== null &&
+  typeof (arg as Complex).real === 'number' &&
+  typeof (arg as Complex).imag === 'number'
+
+function toStringAllowSingleValue(
+  complex: Complex,
+  maxAbbreviationError: number,
+  fixedDigits: number | undefined,
+): string {
+  // 虚部を省略できる場合
+  if (Math.abs(complex.imag) <= maxAbbreviationError) {
+    const fraction = matchUnicodeFraction(e => Math.abs(e.value - complex.real) <= maxAbbreviationError)
+    if (fraction !== undefined) {
+      return fraction.character
+    }
+
+    return prettyFormat(complex.real)
+  }
+
+  // 実部を省略できる場合
+  if (Math.abs(complex.real) <= maxAbbreviationError) {
+    if (Math.abs(complex.imag - 1) <= maxAbbreviationError) {
+      return 'i'
+    }
+    if (Math.abs(complex.imag + 1) <= maxAbbreviationError) {
+      return '-i'
+    }
+
+    return `${prettyFormat(complex.imag)}i`
+  }
+
+  // 実部と虚部がある場合
+  return toStringBothValues(complex, true, 0, fixedDigits)
+}
+
+function toStringBothValues(
+  complex: Complex,
+  allowAbbreviation: boolean,
+  maxAbbreviationError: number,
+  fixedDigits: number | undefined,
+): string {
+  let imagFactor
+  if (allowAbbreviation && Math.abs(Math.abs(complex.imag) - 1) <= maxAbbreviationError) {
+    imagFactor = ''
+  } else {
+    if (complex.imag < 0) {
+      const fraction = matchUnicodeFraction(e => {
+        return Math.abs(e.value + complex.imag) <= maxAbbreviationError
+      })
+      if (fraction !== undefined) {
+        imagFactor = fraction.character
+      }
+    } else {
+      const fraction = matchUnicodeFraction(e => {
+        return Math.abs(e.value - complex.imag) <= maxAbbreviationError
+      })
+      if (fraction !== undefined) {
+        imagFactor = fraction.character
+      }
+    }
+
+    if (!imagFactor) {
+      if (!allowAbbreviation && fixedDigits !== undefined) {
+        imagFactor = Math.abs(complex.imag).toFixed(fixedDigits)
+      } else {
+        imagFactor = prettyFormat(Math.abs(complex.imag))
+      }
+    }
+  }
+
+  const prefix = allowAbbreviation || fixedDigits === undefined || complex.real < 0 ? '' : '+'
+  const separator = complex.imag >= 0 ? '+' : '-'
+  let realString
+
+  if (allowAbbreviation) {
+    realString = abbreviateFloat(complex.real, maxAbbreviationError, fixedDigits)
+  } else if (fixedDigits !== undefined) {
+    realString = complex.real.toFixed(fixedDigits)
+  } else {
+    realString = String(complex.real)
+  }
+
+  return `${prefix + realString + separator + imagFactor}i`
+}
+
+function abbreviateFloat(value: number, epsilon = 0, digits: number | undefined = undefined): string {
+  if (Math.abs(value) < epsilon) return '0'
+  if (value < 0) return `-${abbreviateFloat(-value, epsilon, digits)}`
+
+  const fraction = Format.matchUnicodeFraction(e => Math.abs(e.value - value) <= epsilon)
+  if (fraction !== undefined) {
+    return fraction.character
+  }
+
+  const rootFraction = Format.matchUnicodeFraction(e => Math.abs(Math.sqrt(e.value) - value) <= epsilon)
+  if (rootFraction !== undefined) {
+    return `\u221A${rootFraction.character}`
+  }
+
+  if (value % 1 !== 0 && digits !== undefined) {
+    return value.toFixed(digits)
+  }
+
+  return value.toString()
+}
+
+export const exactComplexFormatPlugin: Plugin = {
+  test: isComplex,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  serialize(val: any, _config: Config, _indentation: string, _depth: number, _refs: Refs, _printer: Printer): string {
+    return toStringAllowSingleValue(val, 0, undefined)
+  },
+}
+
+export const consistentComplexFormatPlugin: Plugin = {
+  test: isComplex,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  serialize(val: any, _config: Config, _indentation: string, _depth: number, _refs: Refs, _printer: Printer): string {
+    return toStringBothValues(val, false, 0, 2)
+  },
+}
+
+export const minifiedComplexFormatPlugin: Plugin = {
+  test: isComplex,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  serialize(val: any, _config: Config, _indentation: string, _depth: number, _refs: Refs, _printer: Printer): string {
+    return toStringAllowSingleValue(val, 0, undefined)
+  },
+}
+
+export const simplifiedComplexFormatPlugin: Plugin = {
+  test: isComplex,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  serialize(val: any, _config: Config, _indentation: string, _depth: number, _refs: Refs, _printer: Printer): string {
+    return toStringAllowSingleValue(val, 0.0005, 3)
+  },
+}
 
 export class Complex {
   static readonly ZERO = new Complex(0, 0)
@@ -164,6 +314,14 @@ export class Complex {
 
   conjugate(): Complex {
     return new Complex(this.real, -this.imag)
+  }
+
+  // TODO: テストが通ったら下の toString() に置き換える
+  toStr(plugin?: Plugin): string {
+    plugin = plugin || exactComplexFormatPlugin
+    return prettyFormat(this, {
+      plugins: [plugin],
+    })
   }
 
   toString(format?: Format): string {
