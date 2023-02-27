@@ -50,7 +50,7 @@
     "@typescript-eslint/eslint-plugin": "~5.51",
     "@typescript-eslint/parser": "~5.51",
     "autoprefixer": "~10.4",
-    "esbuild": "~0.16",
+    "esbuild": "~0.17",
     "eslint": "~8.33",
     "eslint-config-prettier": "~8.6",
     "eslint-plugin-github": "~4.6",
