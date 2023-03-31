@@ -26,8 +26,8 @@
 @import './measurement_gate';
 @import './palette_dropzone';
 @import './phase_gate';
-@import './qft_gate';
 @import './qft_dagger_gate';
+@import './qft_gate';
 @import './quantum_circuit';
 @import './rnot_gate';
 @import './rx_gate';
@@ -35,6 +35,7 @@
 @import './rz_gate';
 @import './spacer_gate';
 @import './swap_gate';
+@import './t_dagger_gate';
 @import './t_gate';
 @import './write_gate';
 @import './x_gate';

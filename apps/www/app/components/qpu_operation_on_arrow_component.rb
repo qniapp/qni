@@ -15,7 +15,7 @@ class QpuOperationOnArrowComponent < ViewComponent::Base
   private
 
   def validate_operation
-    return if %w[h x y z phase t rnot rx ry rz write].include?(@operation.to_s.downcase)
+    return if %w[h x y z phase t t-dagger rnot rx ry rz write].include?(@operation.to_s.downcase)
 
     raise "Unknown QPU operation: #{@operation}"
   end

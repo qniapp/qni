@@ -15,6 +15,7 @@ import {
   SerializedRzGateType,
   SerializedSpacerGateType,
   SerializedSwapGateType,
+  SerializedTDaggerGateType,
   SerializedTGateType,
   SerializedWrite0GateType,
   SerializedWrite1GateType,
@@ -108,6 +109,15 @@ export class Simulator {
             this.act(each.controls || [], each.antiControls || [], ...each.targets)
           } else {
             this.t(...each.targets)
+          }
+          break
+        }
+        case SerializedTDaggerGateType: {
+          if (each.if && !this.flags[each.if]) break
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.actDagger(each.controls || [], each.antiControls || [], ...each.targets)
+          } else {
+            this.tDagger(...each.targets)
           }
           break
         }
@@ -332,6 +342,25 @@ export class Simulator {
 
     this.x(...antiControls)
     this.cu(allControls, Matrix.T, ...targets)
+    this.x(...antiControls)
+    return this
+  }
+
+  tDagger(...targets: number[]): Simulator {
+    this.u(Matrix.TDagger, ...targets)
+    return this
+  }
+
+  actDagger(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.TDagger, ...targets)
     this.x(...antiControls)
     return this
   }

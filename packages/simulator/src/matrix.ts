@@ -3,6 +3,7 @@ import {Eq} from 'fp-ts/number'
 import {isNonEmpty} from 'fp-ts/lib/Array'
 import {range} from 'fp-ts/NonEmptyArray'
 import {uniq} from 'fp-ts/lib/ReadonlyNonEmptyArray'
+import {Plugin} from 'pretty-format'
 
 export class Matrix {
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
@@ -10,6 +11,7 @@ export class Matrix {
   static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
   static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
   static readonly T = Matrix.square(1, 0, 0, Complex.from(Math.E).raisedTo(Complex.I.times(Math.PI / 4)))
+  static readonly TDagger = Matrix.square(1, 0, 0, Complex.from(Math.E).raisedTo(Complex.I.times(Math.PI / -4)))
 
   static PHASE(phi: string): Matrix {
     const φ = radian(phi)

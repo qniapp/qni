@@ -11,6 +11,7 @@ import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
 import {RzGateElement, RzGateElementProps} from './rz-gate-element'
 import {TGateElement, TGateElementProps} from './t-gate-element'
+import {TDaggerGateElement, TDaggerGateElementProps} from './t-dagger-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
@@ -1063,6 +1064,13 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
             const phaseGate = new PhaseGateElement()
             phaseGate.angle = this.angleParameter(operation.slice(1))
             operations.push(phaseGate)
+            newStep.append(new CircuitDropzoneElement())
+            break
+          }
+          case /^T†/.test(operation): {
+            const tDaggerGate = new TDaggerGateElement()
+            tDaggerGate.if = this.ifVariable(operation.slice(1))
+            operations.push(tDaggerGate)
             newStep.append(new CircuitDropzoneElement())
             break
           }
