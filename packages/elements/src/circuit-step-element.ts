@@ -12,10 +12,11 @@ import {
   SerializedRxGate,
   SerializedRyGate,
   SerializedRzGate,
+  SerializedSGate,
   SerializedSpacerGate,
   SerializedSwapGate,
-  SerializedTGate,
   SerializedTDaggerGate,
+  SerializedTGate,
   SerializedXGate,
   SerializedYGate,
   SerializedZGate,
@@ -56,10 +57,11 @@ import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
+import {SGateElement} from './s-gate-element'
 import {SpacerGateElement} from './spacer-gate-element'
 import {SwapGateElement} from './swap-gate-element'
-import {TGateElement} from './t-gate-element'
 import {TDaggerGateElement} from './t-dagger-gate-element'
+import {TGateElement} from './t-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
@@ -1107,6 +1109,23 @@ export class CircuitStepElement extends HTMLElement {
 
                 serializedStep.push(serializedGate)
               }
+            }
+          }
+          break
+        }
+        case SGateElement: {
+          const sGates = sameOps as SGateElement[]
+          for (const [ifStr, sameIfGates] of groupBy(sGates, gate => gate.if)) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              const gate0 = sameControlGates[0]
+              const opType = gate0.operationType
+              const targetBits = sameControlGates.map(each => each.bit)
+              const serializedGate: SerializedSGate = {type: opType, targets: targetBits}
+              if (ifStr !== '') serializedGate.if = ifStr
+              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
+              serializedStep.push(serializedGate)
             }
           }
           break

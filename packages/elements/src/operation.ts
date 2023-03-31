@@ -10,6 +10,7 @@ import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
+import {SGateElement} from './s-gate-element'
 import {SpacerGateElement} from './spacer-gate-element'
 import {SwapGateElement} from './swap-gate-element'
 import {TDaggerGateElement} from './t-dagger-gate-element'
@@ -32,10 +33,11 @@ export type Operation =
   | RxGateElement
   | RyGateElement
   | RzGateElement
+  | SGateElement
   | SpacerGateElement
   | SwapGateElement
-  | TGateElement
   | TDaggerGateElement
+  | TGateElement
   | WriteGateElement
   | XGateElement
   | YGateElement
@@ -54,6 +56,7 @@ export const isOperation = (arg: unknown): arg is Operation =>
   arg instanceof RxGateElement ||
   arg instanceof RyGateElement ||
   arg instanceof RzGateElement ||
+  arg instanceof SGateElement ||
   arg instanceof SpacerGateElement ||
   arg instanceof SwapGateElement ||
   arg instanceof TDaggerGateElement ||
@@ -81,6 +84,9 @@ export const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
 export const isTGateElement = (arg: unknown): arg is TGateElement =>
   arg !== undefined && arg !== null && arg instanceof TGateElement
 
+export const isTDaggerGateElement = (arg: unknown): arg is TDaggerGateElement =>
+  arg !== undefined && arg !== null && arg instanceof TDaggerGateElement
+
 export const isRnotGateElement = (arg: unknown): arg is RnotGateElement =>
   arg !== undefined && arg !== null && arg instanceof RnotGateElement
 
@@ -92,6 +98,9 @@ export const isRyGateElement = (arg: unknown): arg is RyGateElement =>
 
 export const isRzGateElement = (arg: unknown): arg is RzGateElement =>
   arg !== undefined && arg !== null && arg instanceof RzGateElement
+
+export const isSGateElement = (arg: unknown): arg is SGateElement =>
+  arg !== undefined && arg !== null && arg instanceof SGateElement
 
 export const isSpacerGateElement = (arg: unknown): arg is SpacerGateElement =>
   arg !== undefined && arg !== null && arg instanceof SpacerGateElement
