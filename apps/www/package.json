@@ -59,6 +59,7 @@
   "devDependencies": {
     "@types/turbolinks": "^5.2.0",
     "autoprefixer": "^10.4.14",
+    "esbuild": "^0.17.14",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^8.2.0",
     "rollup-plugin-replace": "^2.2.0",
