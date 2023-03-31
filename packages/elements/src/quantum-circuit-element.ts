@@ -570,6 +570,32 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Circuit Operation
    */
+  tDagger(...args: number[] | [TDaggerGateElementProps]): QuantumCircuitElement {
+    let targetBits: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targetBits = args as number[]
+    } else {
+      const props = args[0]
+      targetBits = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const tDagger = new TDaggerGateElement()
+      if (disabled) tDagger.disable()
+      return tDagger
+    }, ...targetBits)
+
+    this.resize()
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
   rnot(...args: number[] | [RnotGateElementProps]): QuantumCircuitElement {
     let targetBits: number[]
     let disabled: boolean | undefined
