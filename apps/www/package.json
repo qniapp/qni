@@ -19,8 +19,7 @@
     "url": "git+https://github.com/yasuhito/qni.git"
   },
   "engines": {
-    "yarn": "1.x",
-    "node": "16.x"
+    "yarn": "1.x"
   },
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -53,7 +52,7 @@
     "@svgdotjs/svg.filter.js": "^3.0.8",
     "@svgdotjs/svg.js": "^3.1.1",
     "fastdom": "^1.0.10",
-    "puppeteer": "~13.1",
+    "puppeteer": "~18",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
