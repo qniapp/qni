@@ -12,6 +12,7 @@ import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
 import {SpacerGateElement} from './spacer-gate-element'
 import {SwapGateElement} from './swap-gate-element'
+import {TDaggerGateElement} from './t-dagger-gate-element'
 import {TGateElement} from './t-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
@@ -34,6 +35,7 @@ export type Operation =
   | SpacerGateElement
   | SwapGateElement
   | TGateElement
+  | TDaggerGateElement
   | WriteGateElement
   | XGateElement
   | YGateElement
@@ -54,6 +56,7 @@ export const isOperation = (arg: unknown): arg is Operation =>
   arg instanceof RzGateElement ||
   arg instanceof SpacerGateElement ||
   arg instanceof SwapGateElement ||
+  arg instanceof TDaggerGateElement ||
   arg instanceof TGateElement ||
   arg instanceof WriteGateElement ||
   arg instanceof XGateElement ||

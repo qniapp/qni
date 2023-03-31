@@ -2,6 +2,7 @@ var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
 // ../../packages/elements/dist/index.js
+<<<<<<< Updated upstream
 var Ov = Object.create;
 var fo = Object.defineProperty;
 var Qc = Object.getOwnPropertyDescriptor;
@@ -46,6 +47,52 @@ var ka = /* @__PURE__ */ __name((t, r, e) => {
 var La = /* @__PURE__ */ __name((t, r, e, n) => (tp(t, r, "write to private field"), n ? n.call(t, e) : r.set(t, e), e), "La");
 var np = Ct((Pl, rp) => {
   (function(t) {
+=======
+var Rv = Object.create;
+var mo = Object.defineProperty;
+var np = Object.getOwnPropertyDescriptor;
+var Dv = Object.getOwnPropertyNames;
+var tp = Object.getOwnPropertySymbols;
+var Nv = Object.getPrototypeOf;
+var ip = Object.prototype.hasOwnProperty;
+var kv = Object.prototype.propertyIsEnumerable;
+var rp = /* @__PURE__ */ __name((e, r, t) => r in e ? mo(e, r, { enumerable: true, configurable: true, writable: true, value: t }) : e[r] = t, "rp");
+var op = /* @__PURE__ */ __name((e, r) => {
+  for (var t in r || (r = {}))
+    ip.call(r, t) && rp(e, t, r[t]);
+  if (tp)
+    for (var t of tp(r))
+      kv.call(r, t) && rp(e, t, r[t]);
+  return e;
+}, "op");
+var c = /* @__PURE__ */ __name((e, r) => mo(e, "name", { value: r, configurable: true }), "c");
+var Tt = /* @__PURE__ */ __name((e, r) => () => (r || e((r = { exports: {} }).exports, r), r.exports), "Tt");
+var Lv = /* @__PURE__ */ __name((e, r, t, n) => {
+  if (r && typeof r == "object" || typeof r == "function")
+    for (let a of Dv(r))
+      !ip.call(e, a) && a !== t && mo(e, a, { get: () => r[a], enumerable: !(n = np(r, a)) || n.enumerable });
+  return e;
+}, "Lv");
+var zt = /* @__PURE__ */ __name((e, r, t) => (t = e != null ? Rv(Nv(e)) : {}, Lv(r || !e || !e.__esModule ? mo(t, "default", { value: e, enumerable: true }) : t, e)), "zt");
+var M = /* @__PURE__ */ __name((e, r, t, n) => {
+  for (var a = n > 1 ? void 0 : n ? np(r, t) : r, s = e.length - 1, p; s >= 0; s--)
+    (p = e[s]) && (a = (n ? p(r, t, a) : p(a)) || a);
+  return n && a && mo(r, t, a), a;
+}, "M");
+var ap = /* @__PURE__ */ __name((e, r, t) => {
+  if (!r.has(e))
+    throw TypeError("Cannot " + t);
+}, "ap");
+var ka = /* @__PURE__ */ __name((e, r, t) => (ap(e, r, "read from private field"), t ? t.call(e) : r.get(e)), "ka");
+var La = /* @__PURE__ */ __name((e, r, t) => {
+  if (r.has(e))
+    throw TypeError("Cannot add the same private member more than once");
+  r instanceof WeakSet ? r.add(e) : r.set(e, t);
+}, "La");
+var Ga = /* @__PURE__ */ __name((e, r, t, n) => (ap(e, r, "write to private field"), n ? n.call(e, t) : r.set(e, t), t), "Ga");
+var lp = Tt((Rl, sp) => {
+  (function(e) {
+>>>>>>> Stashed changes
     "use strict";
     var r = 2e3, e = { s: 1, n: 0, d: 1 };
     function n(w, S) {
@@ -58,6 +105,7 @@ var np = Ct((Pl, rp) => {
     function a(w, S) {
       if (S === 0)
         throw y.DivisionByZero;
+<<<<<<< Updated upstream
       var C = Object.create(y.prototype);
       C.s = w < 0 ? -1 : 1, w = w < 0 ? -w : w;
       var T = h(w, S);
@@ -80,20 +128,52 @@ var np = Ct((Pl, rp) => {
       if (w != null)
         if (S !== void 0) {
           if (C = w, T = S, _ = C * T, C % 1 !== 0 || T % 1 !== 0)
+=======
+      var T = Object.create(y.prototype);
+      T.s = x < 0 ? -1 : 1, x = x < 0 ? -x : x;
+      var C = h(x, S);
+      return T.n = x / C, T.d = S / C, T;
+    }
+    __name(a, "a");
+    c(a, "newFraction");
+    function s(x) {
+      for (var S = {}, T = x, C = 2, _ = 4; _ <= T; ) {
+        for (; T % C === 0; )
+          T /= C, S[C] = (S[C] || 0) + 1;
+        _ += 1 + 2 * C++;
+      }
+      return T !== x ? T > 1 && (S[T] = (S[T] || 0) + 1) : S[x] = (S[x] || 0) + 1, S;
+    }
+    __name(s, "s");
+    c(s, "factorize");
+    var p = c(function(x, S) {
+      var T = 0, C = 1, _ = 1, N = 0, j = 0, $ = 0, A = 1, ee = 1, z = 0, B = 1, J = 1, te = 1, le = 1e7, Y;
+      if (x != null)
+        if (S !== void 0) {
+          if (T = x, C = S, _ = T * C, T % 1 !== 0 || C % 1 !== 0)
+>>>>>>> Stashed changes
             throw y.NonIntegerParameter;
         } else
           switch (typeof w) {
             case "object": {
+<<<<<<< Updated upstream
               if ("d" in w && "n" in w)
                 C = w.n, T = w.d, "s" in w && (C *= w.s);
               else if (0 in w)
                 C = w[0], 1 in w && (T = w[1]);
+=======
+              if ("d" in x && "n" in x)
+                T = x.n, C = x.d, "s" in x && (T *= x.s);
+              else if (0 in x)
+                T = x[0], 1 in x && (C = x[1]);
+>>>>>>> Stashed changes
               else
                 throw y.InvalidParameter;
-              _ = C * T;
+              _ = T * C;
               break;
             }
             case "number": {
+<<<<<<< Updated upstream
               if (w < 0 && (_ = w, w = -w), w % 1 === 0)
                 C = w;
               else if (w > 0) {
@@ -106,27 +186,50 @@ var np = Ct((Pl, rp) => {
                 C *= ee;
               } else
                 (isNaN(w) || isNaN(S)) && (T = C = NaN);
+=======
+              if (x < 0 && (_ = x, x = -x), x % 1 === 0)
+                T = x;
+              else if (x > 0) {
+                for (x >= 1 && (ee = Math.pow(10, Math.floor(1 + Math.log(x) / Math.LN10)), x /= ee); B <= le && te <= le; )
+                  if (Y = (z + J) / (B + te), x === Y) {
+                    B + te <= le ? (T = z + J, C = B + te) : te > B ? (T = J, C = te) : (T = z, C = B);
+                    break;
+                  } else
+                    x > Y ? (z += J, B += te) : (J += z, te += B), B > le ? (T = J, C = te) : (T = z, C = B);
+                T *= ee;
+              } else
+                (isNaN(x) || isNaN(S)) && (C = T = NaN);
+>>>>>>> Stashed changes
               break;
             }
             case "string": {
               if (B = w.match(/\d+|./g), B === null)
                 throw y.InvalidParameter;
               if (B[z] === "-" ? (_ = -1, z++) : B[z] === "+" && z++, B.length === z + 1 ? j = n(B[z++], _) : B[z + 1] === "." || B[z] === "." ? (B[z] !== "." && (N = n(B[z++], _)), z++, (z + 1 === B.length || B[z + 1] === "(" && B[z + 3] === ")" || B[z + 1] === "'" && B[z + 3] === "'") && (j = n(B[z], _), A = Math.pow(10, B[z].length), z++), (B[z] === "(" && B[z + 2] === ")" || B[z] === "'" && B[z + 2] === "'") && ($ = n(B[z + 1], _), ee = Math.pow(10, B[z + 1].length) - 1, z += 3)) : B[z + 1] === "/" || B[z + 1] === ":" ? (j = n(B[z], _), A = n(B[z + 2], 1), z += 3) : B[z + 3] === "/" && B[z + 1] === " " && (N = n(B[z], _), j = n(B[z + 2], _), A = n(B[z + 4], 1), z += 5), B.length <= z) {
-                T = A * ee, _ = C = $ + T * N + ee * j;
+                C = A * ee, _ = T = $ + C * N + ee * j;
                 break;
               }
             }
             default:
               throw y.InvalidParameter;
           }
-      if (T === 0)
+      if (C === 0)
         throw y.DivisionByZero;
+<<<<<<< Updated upstream
       e.s = _ < 0 ? -1 : 1, e.n = Math.abs(C), e.d = Math.abs(T);
     }, "parse");
     function v(w, S, C) {
       for (var T = 1; S > 0; w = w * w % C, S >>= 1)
         S & 1 && (T = T * w % C);
       return T;
+=======
+      t.s = _ < 0 ? -1 : 1, t.n = Math.abs(T), t.d = Math.abs(C);
+    }, "parse");
+    function v(x, S, T) {
+      for (var C = 1; S > 0; x = x * x % T, S >>= 1)
+        S & 1 && (C = C * x % T);
+      return C;
+>>>>>>> Stashed changes
     }
     __name(v, "v");
     c(v, "modpow");
@@ -137,18 +240,24 @@ var np = Ct((Pl, rp) => {
         ;
       if (S === 1)
         return 0;
-      for (var C = 10 % S, T = 1; C !== 1; T++)
-        if (C = C * 10 % S, T > r)
+      for (var T = 10 % S, C = 1; T !== 1; C++)
+        if (T = T * 10 % S, C > r)
           return 0;
-      return T;
+      return C;
     }
     __name(m, "m");
     c(m, "cycleLen");
+<<<<<<< Updated upstream
     function d(w, S, C) {
       for (var T = 1, _ = v(10, C, S), N = 0; N < 300; N++) {
         if (T === _)
+=======
+    function d(x, S, T) {
+      for (var C = 1, _ = v(10, T, S), N = 0; N < 300; N++) {
+        if (C === _)
+>>>>>>> Stashed changes
           return N;
-        T = T * 10 % S, _ = _ * 10 % S;
+        C = C * 10 % S, _ = _ * 10 % S;
       }
       return 0;
     }
@@ -214,13 +323,14 @@ var np = Ct((Pl, rp) => {
         return e.s < 0 ? a(Math.pow(this.s * this.d, e.n), Math.pow(this.n, e.n)) : a(Math.pow(this.s * this.n, e.n), Math.pow(this.d, e.n));
       if (this.s < 0)
         return null;
-      var C = s(this.n), T = s(this.d), _ = 1, N = 1;
-      for (var j in C)
+      var T = s(this.n), C = s(this.d), _ = 1, N = 1;
+      for (var j in T)
         if (j !== "1") {
           if (j === "0") {
             _ = 0;
             break;
           }
+<<<<<<< Updated upstream
           if (C[j] *= e.n, C[j] % e.d === 0)
             C[j] /= e.d;
           else
@@ -231,10 +341,23 @@ var np = Ct((Pl, rp) => {
         if (j !== "1") {
           if (T[j] *= e.n, T[j] % e.d === 0)
             T[j] /= e.d;
+=======
+          if (T[j] *= t.n, T[j] % t.d === 0)
+            T[j] /= t.d;
+>>>>>>> Stashed changes
           else
             return null;
-          N *= Math.pow(j, T[j]);
+          _ *= Math.pow(j, T[j]);
         }
+      for (var j in C)
+        if (j !== "1") {
+          if (C[j] *= t.n, C[j] % t.d === 0)
+            C[j] /= t.d;
+          else
+            return null;
+          N *= Math.pow(j, C[j]);
+        }
+<<<<<<< Updated upstream
       return e.s < 0 ? a(N, _) : a(_, N);
     }, equals: function(w, S) {
       return p(w, S), this.s * this.n * e.d === e.s * e.n * this.d;
@@ -250,6 +373,23 @@ var np = Ct((Pl, rp) => {
         for (var _ = a(C[T - 1], 1), N = T - 2; N >= 0; N--)
           _ = _.inverse().add(C[N]);
         if (_.sub(S).abs().valueOf() < w)
+=======
+      return t.s < 0 ? a(N, _) : a(_, N);
+    }, equals: function(x, S) {
+      return p(x, S), this.s * this.n * t.d === t.s * t.n * this.d;
+    }, compare: function(x, S) {
+      p(x, S);
+      var T = this.s * this.n * t.d - t.s * t.n * this.d;
+      return (0 < T) - (T < 0);
+    }, simplify: function(x) {
+      if (isNaN(this.n) || isNaN(this.d))
+        return this;
+      x = x || 1e-3;
+      for (var S = this.abs(), T = S.toContinued(), C = 1; C < T.length; C++) {
+        for (var _ = a(T[C - 1], 1), N = C - 2; N >= 0; N--)
+          _ = _.inverse().add(T[N]);
+        if (_.sub(S).abs().valueOf() < x)
+>>>>>>> Stashed changes
           return _.mul(this.s);
       }
       return this;
@@ -257,6 +397,7 @@ var np = Ct((Pl, rp) => {
       return p(w, S), !(!(e.n * this.d) || this.n * e.d % (e.n * this.d));
     }, valueOf: function() {
       return this.s * this.n / this.d;
+<<<<<<< Updated upstream
     }, toFraction: function(w) {
       var S, C = "", T = this.n, _ = this.d;
       return this.s < 0 && (C += "-"), _ === 1 ? C += T : (w && (S = Math.floor(T / _)) > 0 && (C += S, C += " ", T %= _), C += T, C += "/", C += _), C;
@@ -278,13 +419,37 @@ var np = Ct((Pl, rp) => {
       w = w || 15;
       var T = m(S, C), _ = d(S, C, T), N = this.s < 0 ? "-" : "";
       if (N += S / C | 0, S %= C, S *= 10, S && (N += "."), T) {
+=======
+    }, toFraction: function(x) {
+      var S, T = "", C = this.n, _ = this.d;
+      return this.s < 0 && (T += "-"), _ === 1 ? T += C : (x && (S = Math.floor(C / _)) > 0 && (T += S, T += " ", C %= _), T += C, T += "/", T += _), T;
+    }, toLatex: function(x) {
+      var S, T = "", C = this.n, _ = this.d;
+      return this.s < 0 && (T += "-"), _ === 1 ? T += C : (x && (S = Math.floor(C / _)) > 0 && (T += S, C %= _), T += "\\frac{", T += C, T += "}{", T += _, T += "}"), T;
+    }, toContinued: function() {
+      var x, S = this.n, T = this.d, C = [];
+      if (isNaN(S) || isNaN(T))
+        return C;
+      do
+        C.push(Math.floor(S / T)), x = S % T, S = T, T = x;
+      while (S !== 1);
+      return C;
+    }, toString: function(x) {
+      var S = this.n, T = this.d;
+      if (isNaN(S) || isNaN(T))
+        return "NaN";
+      x = x || 15;
+      var C = m(S, T), _ = d(S, T, C), N = this.s < 0 ? "-" : "";
+      if (N += S / T | 0, S %= T, S *= 10, S && (N += "."), C) {
+>>>>>>> Stashed changes
         for (var j = _; j--; )
-          N += S / C | 0, S %= C, S *= 10;
+          N += S / T | 0, S %= T, S *= 10;
         N += "(";
-        for (var j = T; j--; )
-          N += S / C | 0, S %= C, S *= 10;
+        for (var j = C; j--; )
+          N += S / T | 0, S %= T, S *= 10;
         N += ")";
       } else
+<<<<<<< Updated upstream
         for (var j = w; S && j--; )
           N += S / C | 0, S %= C, S *= 10;
       return N;
@@ -298,14 +463,34 @@ var sp = Ct((Ky, ap) => {
   var ip = c((t = 0) => (r) => `\x1B[${38 + t};5;${r}m`, "wrapAnsi256"), op = c((t = 0) => (r, e, n) => `\x1B[${38 + t};2;${r};${e};${n}m`, "wrapAnsi16m");
   function _v() {
     let t = /* @__PURE__ */ new Map(), r = { modifier: { reset: [0, 0], bold: [1, 22], dim: [2, 22], italic: [3, 23], underline: [4, 24], overline: [53, 55], inverse: [7, 27], hidden: [8, 28], strikethrough: [9, 29] }, color: { black: [30, 39], red: [31, 39], green: [32, 39], yellow: [33, 39], blue: [34, 39], magenta: [35, 39], cyan: [36, 39], white: [37, 39], blackBright: [90, 39], redBright: [91, 39], greenBright: [92, 39], yellowBright: [93, 39], blueBright: [94, 39], magentaBright: [95, 39], cyanBright: [96, 39], whiteBright: [97, 39] }, bgColor: { bgBlack: [40, 49], bgRed: [41, 49], bgGreen: [42, 49], bgYellow: [43, 49], bgBlue: [44, 49], bgMagenta: [45, 49], bgCyan: [46, 49], bgWhite: [47, 49], bgBlackBright: [100, 49], bgRedBright: [101, 49], bgGreenBright: [102, 49], bgYellowBright: [103, 49], bgBlueBright: [104, 49], bgMagentaBright: [105, 49], bgCyanBright: [106, 49], bgWhiteBright: [107, 49] } };
+=======
+        for (var j = x; S && j--; )
+          N += S / T | 0, S %= T, S *= 10;
+      return N;
+    } }, typeof define == "function" && define.amd ? define([], function() {
+      return y;
+    }) : typeof Rl == "object" ? (Object.defineProperty(y, "__esModule", { value: true }), y.default = y, y.Fraction = y, sp.exports = y) : e.Fraction = y;
+  })(Rl);
+});
+var dp = Tt((l0, pp) => {
+  "use strict";
+  var up = c((e = 0) => (r) => `\x1B[${38 + e};5;${r}m`, "wrapAnsi256"), cp = c((e = 0) => (r, t, n) => `\x1B[${38 + e};2;${r};${t};${n}m`, "wrapAnsi16m");
+  function Gv() {
+    let e = /* @__PURE__ */ new Map(), r = { modifier: { reset: [0, 0], bold: [1, 22], dim: [2, 22], italic: [3, 23], underline: [4, 24], overline: [53, 55], inverse: [7, 27], hidden: [8, 28], strikethrough: [9, 29] }, color: { black: [30, 39], red: [31, 39], green: [32, 39], yellow: [33, 39], blue: [34, 39], magenta: [35, 39], cyan: [36, 39], white: [37, 39], blackBright: [90, 39], redBright: [91, 39], greenBright: [92, 39], yellowBright: [93, 39], blueBright: [94, 39], magentaBright: [95, 39], cyanBright: [96, 39], whiteBright: [97, 39] }, bgColor: { bgBlack: [40, 49], bgRed: [41, 49], bgGreen: [42, 49], bgYellow: [43, 49], bgBlue: [44, 49], bgMagenta: [45, 49], bgCyan: [46, 49], bgWhite: [47, 49], bgBlackBright: [100, 49], bgRedBright: [101, 49], bgGreenBright: [102, 49], bgYellowBright: [103, 49], bgBlueBright: [104, 49], bgMagentaBright: [105, 49], bgCyanBright: [106, 49], bgWhiteBright: [107, 49] } };
+>>>>>>> Stashed changes
     r.color.gray = r.color.blackBright, r.bgColor.bgGray = r.bgColor.bgBlackBright, r.color.grey = r.color.blackBright, r.bgColor.bgGrey = r.bgColor.bgBlackBright;
     for (let [e, n] of Object.entries(r)) {
       for (let [a, s] of Object.entries(n))
         r[a] = { open: `\x1B[${s[0]}m`, close: `\x1B[${s[1]}m` }, n[a] = r[a], t.set(s[0], s[1]);
       Object.defineProperty(r, e, { value: n, enumerable: false });
     }
+<<<<<<< Updated upstream
     return Object.defineProperty(r, "codes", { value: t, enumerable: false }), r.color.close = "\x1B[39m", r.bgColor.close = "\x1B[49m", r.color.ansi256 = ip(), r.color.ansi16m = op(), r.bgColor.ansi256 = ip(10), r.bgColor.ansi16m = op(10), Object.defineProperties(r, { rgbToAnsi256: { value: (e, n, a) => e === n && n === a ? e < 8 ? 16 : e > 248 ? 231 : Math.round((e - 8) / 247 * 24) + 232 : 16 + 36 * Math.round(e / 255 * 5) + 6 * Math.round(n / 255 * 5) + Math.round(a / 255 * 5), enumerable: false }, hexToRgb: { value: (e) => {
       let n = new RegExp("(?<colorString>[a-f\\d]{6}|[a-f\\d]{3})", "i").exec(e.toString(16));
+=======
+    return Object.defineProperty(r, "codes", { value: e, enumerable: false }), r.color.close = "\x1B[39m", r.bgColor.close = "\x1B[49m", r.color.ansi256 = up(), r.color.ansi16m = cp(), r.bgColor.ansi256 = up(10), r.bgColor.ansi16m = cp(10), Object.defineProperties(r, { rgbToAnsi256: { value: (t, n, a) => t === n && n === a ? t < 8 ? 16 : t > 248 ? 231 : Math.round((t - 8) / 247 * 24) + 232 : 16 + 36 * Math.round(t / 255 * 5) + 6 * Math.round(n / 255 * 5) + Math.round(a / 255 * 5), enumerable: false }, hexToRgb: { value: (t) => {
+      let n = new RegExp("(?<colorString>[a-f\\d]{6}|[a-f\\d]{3})", "i").exec(t.toString(16));
+>>>>>>> Stashed changes
       if (!n)
         return [0, 0, 0];
       let { colorString: a } = n.groups;
@@ -314,6 +499,7 @@ var sp = Ct((Ky, ap) => {
       return [s >> 16 & 255, s >> 8 & 255, s & 255];
     }, enumerable: false }, hexToAnsi256: { value: (e) => r.rgbToAnsi256(...r.hexToRgb(e)), enumerable: false } }), r;
   }
+<<<<<<< Updated upstream
   __name(_v, "_v");
   c(_v, "assembleStyles");
   Object.defineProperty(ap, "exports", { enumerable: true, get: _v });
@@ -333,6 +519,27 @@ var ho = Ct((xi) => {
   }, "getKeysOfEnumerableProperties");
   function Rv(t, r, e, n, a, s, p = ": ") {
     let v = "", m = 0, d = t.next();
+=======
+  __name(Gv, "Gv");
+  c(Gv, "assembleStyles");
+  Object.defineProperty(pp, "exports", { enumerable: true, get: Gv });
+});
+var vo = Tt((Si) => {
+  "use strict";
+  Object.defineProperty(Si, "__esModule", { value: true });
+  Si.printIteratorEntries = Bv;
+  Si.printIteratorValues = Hv;
+  Si.printListItems = $v;
+  Si.printObjectProperties = qv;
+  var jv = c((e, r) => {
+    let t = Object.keys(e), n = r !== null ? t.sort(r) : t;
+    return Object.getOwnPropertySymbols && Object.getOwnPropertySymbols(e).forEach((a) => {
+      Object.getOwnPropertyDescriptor(e, a).enumerable && n.push(a);
+    }), n;
+  }, "getKeysOfEnumerableProperties");
+  function Bv(e, r, t, n, a, s, p = ": ") {
+    let v = "", m = 0, d = e.next();
+>>>>>>> Stashed changes
     if (!d.done) {
       v += r.spacingOuter;
       let h = e + r.indent;
@@ -348,10 +555,17 @@ var ho = Ct((xi) => {
     }
     return v;
   }
+<<<<<<< Updated upstream
   __name(Rv, "Rv");
   c(Rv, "printIteratorEntries");
   function Dv(t, r, e, n, a, s) {
     let p = "", v = 0, m = t.next();
+=======
+  __name(Bv, "Bv");
+  c(Bv, "printIteratorEntries");
+  function Hv(e, r, t, n, a, s) {
+    let p = "", v = 0, m = e.next();
+>>>>>>> Stashed changes
     if (!m.done) {
       p += r.spacingOuter;
       let d = e + r.indent;
@@ -366,9 +580,15 @@ var ho = Ct((xi) => {
     }
     return p;
   }
+<<<<<<< Updated upstream
   __name(Dv, "Dv");
   c(Dv, "printIteratorValues");
   function Nv(t, r, e, n, a, s) {
+=======
+  __name(Hv, "Hv");
+  c(Hv, "printIteratorValues");
+  function $v(e, r, t, n, a, s) {
+>>>>>>> Stashed changes
     let p = "";
     if (t.length) {
       p += r.spacingOuter;
@@ -384,10 +604,17 @@ var ho = Ct((xi) => {
     }
     return p;
   }
+<<<<<<< Updated upstream
   __name(Nv, "Nv");
   c(Nv, "printListItems");
   function kv(t, r, e, n, a, s) {
     let p = "", v = zv(t, r.compareKeys);
+=======
+  __name($v, "$v");
+  c($v, "printListItems");
+  function qv(e, r, t, n, a, s) {
+    let p = "", v = jv(e, r.compareKeys);
+>>>>>>> Stashed changes
     if (v.length) {
       p += r.spacingOuter;
       let m = e + r.indent;
@@ -399,6 +626,7 @@ var ho = Ct((xi) => {
     }
     return p;
   }
+<<<<<<< Updated upstream
   __name(kv, "kv");
   c(kv, "printObjectProperties");
 });
@@ -462,10 +690,76 @@ var ja = Ct((Ut) => {
     let v = n + e.indent, m = e.colors;
     return t.map((d) => {
       let h = r[d], y = p(h, e, v, a, s);
+=======
+  __name(qv, "qv");
+  c(qv, "printObjectProperties");
+});
+var vp = Tt((yn) => {
+  "use strict";
+  Object.defineProperty(yn, "__esModule", { value: true });
+  yn.test = yn.serialize = yn.default = void 0;
+  var fp = vo(), Dl = globalThis["jest-symbol-do-not-touch"] || globalThis.Symbol, Fv = typeof Dl == "function" && Dl.for ? Dl.for("jest.asymmetricMatcher") : 1267621, ja = " ", hp = c((e, r, t, n, a, s) => {
+    let p = e.toString();
+    if (p === "ArrayContaining" || p === "ArrayNotContaining")
+      return ++n > r.maxDepth ? `[${p}]` : `${p + ja}[${(0, fp.printListItems)(e.sample, r, t, n, a, s)}]`;
+    if (p === "ObjectContaining" || p === "ObjectNotContaining")
+      return ++n > r.maxDepth ? `[${p}]` : `${p + ja}{${(0, fp.printObjectProperties)(e.sample, r, t, n, a, s)}}`;
+    if (p === "StringMatching" || p === "StringNotMatching" || p === "StringContaining" || p === "StringNotContaining")
+      return p + ja + s(e.sample, r, t, n, a);
+    if (typeof e.toAsymmetricMatcher != "function")
+      throw new Error(`Asymmetric matcher ${e.constructor.name} does not implement toAsymmetricMatcher()`);
+    return e.toAsymmetricMatcher();
+  }, "serialize");
+  yn.serialize = hp;
+  var mp = c((e) => e && e.$$typeof === Fv, "test");
+  yn.test = mp;
+  var Uv = { serialize: hp, test: mp }, Wv = Uv;
+  yn.default = Wv;
+});
+var wp = Tt((xn) => {
+  "use strict";
+  Object.defineProperty(xn, "__esModule", { value: true });
+  xn.test = xn.serialize = xn.default = void 0;
+  var gp = vo(), Vv = " ", bp = ["DOMStringMap", "NamedNodeMap"], Yv = /^(HTML\w*Collection|NodeList)$/, Xv = c((e) => bp.indexOf(e) !== -1 || Yv.test(e), "testName"), yp = c((e) => e && e.constructor && !!e.constructor.name && Xv(e.constructor.name), "test");
+  xn.test = yp;
+  var Zv = c((e) => e.constructor.name === "NamedNodeMap", "isNamedNodeMap"), xp = c((e, r, t, n, a, s) => {
+    let p = e.constructor.name;
+    return ++n > r.maxDepth ? `[${p}]` : (r.min ? "" : p + Vv) + (bp.indexOf(p) !== -1 ? `{${(0, gp.printObjectProperties)(Zv(e) ? Array.from(e).reduce((v, m) => (v[m.name] = m.value, v), {}) : op({}, e), r, t, n, a, s)}}` : `[${(0, gp.printListItems)(Array.from(e), r, t, n, a, s)}]`);
+  }, "serialize");
+  xn.serialize = xp;
+  var Kv = { serialize: xp, test: yp }, Qv = Kv;
+  xn.default = Qv;
+});
+var Ep = Tt((Nl) => {
+  "use strict";
+  Object.defineProperty(Nl, "__esModule", { value: true });
+  Nl.default = Jv;
+  function Jv(e) {
+    return e.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  __name(Jv, "Jv");
+  c(Jv, "escapeHTML");
+});
+var Ba = Tt((Ut) => {
+  "use strict";
+  Object.defineProperty(Ut, "__esModule", { value: true });
+  Ut.printText = Ut.printProps = Ut.printElementAsLeaf = Ut.printElement = Ut.printComment = Ut.printChildren = void 0;
+  var Sp = eg(Ep());
+  function eg(e) {
+    return e && e.__esModule ? e : { default: e };
+  }
+  __name(eg, "eg");
+  c(eg, "_interopRequireDefault");
+  var tg = c((e, r, t, n, a, s, p) => {
+    let v = n + t.indent, m = t.colors;
+    return e.map((d) => {
+      let h = r[d], y = p(h, t, v, a, s);
+>>>>>>> Stashed changes
       return typeof h != "string" && (y.indexOf(`
 `) !== -1 && (y = e.spacingOuter + v + y + e.spacingOuter + n), y = `{${y}}`), `${e.spacingInner + n + m.prop.open + d + m.prop.close}=${m.value.open}${y}${m.value.close}`;
     }).join("");
   }, "printProps");
+<<<<<<< Updated upstream
   Ut.printProps = Yv;
   var Xv = c((t, r, e, n, a, s) => t.map((p) => r.spacingOuter + e + (typeof p == "string" ? yp(p, r) : s(p, r, e, n, a))).join(""), "printChildren");
   Ut.printChildren = Xv;
@@ -480,9 +774,26 @@ var ja = Ct((Ut) => {
   }, "printComment");
   Ut.printComment = Zv;
   var Kv = c((t, r, e, n, a) => {
+=======
+  Ut.printProps = tg;
+  var rg = c((e, r, t, n, a, s) => e.map((p) => r.spacingOuter + t + (typeof p == "string" ? Tp(p, r) : s(p, r, t, n, a))).join(""), "printChildren");
+  Ut.printChildren = rg;
+  var Tp = c((e, r) => {
+    let t = r.colors.content;
+    return t.open + (0, Sp.default)(e) + t.close;
+  }, "printText");
+  Ut.printText = Tp;
+  var ng = c((e, r) => {
+    let t = r.colors.comment;
+    return `${t.open}<!--${(0, Sp.default)(e)}-->${t.close}`;
+  }, "printComment");
+  Ut.printComment = ng;
+  var ig = c((e, r, t, n, a) => {
+>>>>>>> Stashed changes
     let s = n.colors.tag;
     return `${s.open}<${t}${r && s.close + r + n.spacingOuter + a + s.open}${e ? `>${s.close}${e}${n.spacingOuter}${a}${s.open}</${t}` : `${r && !n.min ? "" : " "}/`}>${s.close}`;
   }, "printElement");
+<<<<<<< Updated upstream
   Ut.printElement = Kv;
   var Qv = c((t, r) => {
     let e = r.colors.tag;
@@ -541,6 +852,66 @@ var Pp = Ct((xn) => {
   xn.test = xn.serialize = xn.default = void 0;
   var mo = ho(), sg = "@@__IMMUTABLE_ITERABLE__@@", lg = "@@__IMMUTABLE_LIST__@@", ug = "@@__IMMUTABLE_KEYED__@@", cg = "@@__IMMUTABLE_MAP__@@", Op = "@@__IMMUTABLE_ORDERED__@@", pg = "@@__IMMUTABLE_RECORD__@@", dg = "@@__IMMUTABLE_SEQ__@@", fg = "@@__IMMUTABLE_SET__@@", hg = "@@__IMMUTABLE_STACK__@@", Si = c((t) => `Immutable.${t}`, "getImmutableName"), Ba = c((t) => `[${t}]`, "printAsLeaf"), vo = " ", Mp = "\u2026", mg = c((t, r, e, n, a, s, p) => ++n > r.maxDepth ? Ba(Si(p)) : `${Si(p) + vo}{${(0, mo.printIteratorEntries)(t.entries(), r, e, n, a, s)}}`, "printImmutableEntries");
   function vg(t) {
+=======
+  Ut.printElement = ig;
+  var og = c((e, r) => {
+    let t = r.colors.tag;
+    return `${t.open}<${e}${t.close} \u2026${t.open} />${t.close}`;
+  }, "printElementAsLeaf");
+  Ut.printElementAsLeaf = og;
+});
+var Pp = Tt((wn) => {
+  "use strict";
+  Object.defineProperty(wn, "__esModule", { value: true });
+  wn.test = wn.serialize = wn.default = void 0;
+  var Ti = Ba(), ag = 1, Cp = 3, Op = 8, Mp = 11, sg = /^((HTML|SVG)\w*)?Element$/, lg = c((e) => {
+    try {
+      return typeof e.hasAttribute == "function" && e.hasAttribute("is");
+    } catch (r) {
+      return false;
+    }
+  }, "testHasAttribute"), ug = c((e) => {
+    let r = e.constructor.name, { nodeType: t, tagName: n } = e, a = typeof n == "string" && n.includes("-") || lg(e);
+    return t === ag && (sg.test(r) || a) || t === Cp && r === "Text" || t === Op && r === "Comment" || t === Mp && r === "DocumentFragment";
+  }, "testNode"), Ip = c((e) => {
+    var r;
+    return ((r = e == null ? void 0 : e.constructor) == null ? void 0 : r.name) && ug(e);
+  }, "test");
+  wn.test = Ip;
+  function cg(e) {
+    return e.nodeType === Cp;
+  }
+  __name(cg, "cg");
+  c(cg, "nodeIsText");
+  function pg(e) {
+    return e.nodeType === Op;
+  }
+  __name(pg, "pg");
+  c(pg, "nodeIsComment");
+  function kl(e) {
+    return e.nodeType === Mp;
+  }
+  __name(kl, "kl");
+  c(kl, "nodeIsFragment");
+  var Ap = c((e, r, t, n, a, s) => {
+    if (cg(e))
+      return (0, Ti.printText)(e.data, r);
+    if (pg(e))
+      return (0, Ti.printComment)(e.data, r);
+    let p = kl(e) ? "DocumentFragment" : e.tagName.toLowerCase();
+    return ++n > r.maxDepth ? (0, Ti.printElementAsLeaf)(p, r) : (0, Ti.printElement)(p, (0, Ti.printProps)(kl(e) ? [] : Array.from(e.attributes).map((v) => v.name).sort(), kl(e) ? {} : Array.from(e.attributes).reduce((v, m) => (v[m.name] = m.value, v), {}), r, t + r.indent, n, a, s), (0, Ti.printChildren)(Array.prototype.slice.call(e.childNodes || e.children), r, t + r.indent, n, a, s), r, t);
+  }, "serialize");
+  wn.serialize = Ap;
+  var dg = { serialize: Ap, test: Ip }, fg = dg;
+  wn.default = fg;
+});
+var Np = Tt((En) => {
+  "use strict";
+  Object.defineProperty(En, "__esModule", { value: true });
+  En.test = En.serialize = En.default = void 0;
+  var go = vo(), hg = "@@__IMMUTABLE_ITERABLE__@@", mg = "@@__IMMUTABLE_LIST__@@", vg = "@@__IMMUTABLE_KEYED__@@", gg = "@@__IMMUTABLE_MAP__@@", _p = "@@__IMMUTABLE_ORDERED__@@", bg = "@@__IMMUTABLE_RECORD__@@", yg = "@@__IMMUTABLE_SEQ__@@", xg = "@@__IMMUTABLE_SET__@@", wg = "@@__IMMUTABLE_STACK__@@", Ci = c((e) => `Immutable.${e}`, "getImmutableName"), Ha = c((e) => `[${e}]`, "printAsLeaf"), bo = " ", zp = "\u2026", Eg = c((e, r, t, n, a, s, p) => ++n > r.maxDepth ? Ha(Ci(p)) : `${Ci(p) + bo}{${(0, go.printIteratorEntries)(e.entries(), r, t, n, a, s)}}`, "printImmutableEntries");
+  function Sg(e) {
+>>>>>>> Stashed changes
     let r = 0;
     return { next() {
       if (r < t._keys.length) {
@@ -550,6 +921,7 @@ var Pp = Ct((xn) => {
       return { done: true, value: void 0 };
     } };
   }
+<<<<<<< Updated upstream
   __name(vg, "vg");
   c(vg, "getRecordEntries");
   var gg = c((t, r, e, n, a, s) => {
@@ -590,17 +962,64 @@ var zp = Ct((Ne) => {
                 case Xa:
                 case Fa:
                   return t;
+=======
+  __name(Sg, "Sg");
+  c(Sg, "getRecordEntries");
+  var Tg = c((e, r, t, n, a, s) => {
+    let p = Ci(e._name || "Record");
+    return ++n > r.maxDepth ? Ha(p) : `${p + bo}{${(0, go.printIteratorEntries)(Sg(e), r, t, n, a, s)}}`;
+  }, "printImmutableRecord"), Cg = c((e, r, t, n, a, s) => {
+    let p = Ci("Seq");
+    return ++n > r.maxDepth ? Ha(p) : e[vg] ? `${p + bo}{${e._iter || e._object ? (0, go.printIteratorEntries)(e.entries(), r, t, n, a, s) : zp}}` : `${p + bo}[${e._iter || e._array || e._collection || e._iterable ? (0, go.printIteratorValues)(e.values(), r, t, n, a, s) : zp}]`;
+  }, "printImmutableSeq"), Ll = c((e, r, t, n, a, s, p) => ++n > r.maxDepth ? Ha(Ci(p)) : `${Ci(p) + bo}[${(0, go.printIteratorValues)(e.values(), r, t, n, a, s)}]`, "printImmutableValues"), Rp = c((e, r, t, n, a, s) => e[gg] ? Eg(e, r, t, n, a, s, e[_p] ? "OrderedMap" : "Map") : e[mg] ? Ll(e, r, t, n, a, s, "List") : e[xg] ? Ll(e, r, t, n, a, s, e[_p] ? "OrderedSet" : "Set") : e[wg] ? Ll(e, r, t, n, a, s, "Stack") : e[yg] ? Cg(e, r, t, n, a, s) : Tg(e, r, t, n, a, s), "serialize");
+  En.serialize = Rp;
+  var Dp = c((e) => e && (e[hg] === true || e[bg] === true), "test");
+  En.test = Dp;
+  var Og = { serialize: Rp, test: Dp }, Mg = Og;
+  En.default = Mg;
+});
+var Lp = Tt((Le) => {
+  "use strict";
+  var Gl = Symbol.for("react.element"), jl = Symbol.for("react.portal"), $a = Symbol.for("react.fragment"), qa = Symbol.for("react.strict_mode"), Fa = Symbol.for("react.profiler"), Ua = Symbol.for("react.provider"), Wa = Symbol.for("react.context"), Ig = Symbol.for("react.server_context"), Va = Symbol.for("react.forward_ref"), Ya = Symbol.for("react.suspense"), Xa = Symbol.for("react.suspense_list"), Za = Symbol.for("react.memo"), Ka = Symbol.for("react.lazy"), Ag = Symbol.for("react.offscreen"), kp;
+  kp = Symbol.for("react.module.reference");
+  function mr(e) {
+    if (typeof e == "object" && e !== null) {
+      var r = e.$$typeof;
+      switch (r) {
+        case Gl:
+          switch (e = e.type, e) {
+            case $a:
+            case Fa:
+            case qa:
+            case Ya:
+            case Xa:
+              return e;
+            default:
+              switch (e = e && e.$$typeof, e) {
+                case Ig:
+                case Wa:
+                case Va:
+                case Ka:
+                case Za:
+                case Ua:
+                  return e;
+>>>>>>> Stashed changes
                 default:
                   return r;
               }
           }
+<<<<<<< Updated upstream
         case kl:
+=======
+        case jl:
+>>>>>>> Stashed changes
           return r;
       }
     }
   }
   __name(mr, "mr");
   c(mr, "v");
+<<<<<<< Updated upstream
   Ne.ContextConsumer = Ua;
   Ne.ContextProvider = Fa;
   Ne.Element = Nl;
@@ -614,11 +1033,27 @@ var zp = Ct((Ne) => {
   Ne.Suspense = Va;
   Ne.SuspenseList = Ya;
   Ne.isAsyncMode = function() {
+=======
+  Le.ContextConsumer = Wa;
+  Le.ContextProvider = Ua;
+  Le.Element = Gl;
+  Le.ForwardRef = Va;
+  Le.Fragment = $a;
+  Le.Lazy = Ka;
+  Le.Memo = Za;
+  Le.Portal = jl;
+  Le.Profiler = Fa;
+  Le.StrictMode = qa;
+  Le.Suspense = Ya;
+  Le.SuspenseList = Xa;
+  Le.isAsyncMode = function() {
+>>>>>>> Stashed changes
     return false;
   };
-  Ne.isConcurrentMode = function() {
+  Le.isConcurrentMode = function() {
     return false;
   };
+<<<<<<< Updated upstream
   Ne.isContextConsumer = function(t) {
     return mr(t) === Ua;
   };
@@ -657,9 +1092,50 @@ var zp = Ct((Ne) => {
   };
   Ne.isValidElementType = function(t) {
     return typeof t == "string" || typeof t == "function" || t === Ha || t === qa || t === $a || t === Va || t === Ya || t === Eg || typeof t == "object" && t !== null && (t.$$typeof === Za || t.$$typeof === Xa || t.$$typeof === Fa || t.$$typeof === Ua || t.$$typeof === Wa || t.$$typeof === _p || t.getModuleId !== void 0);
+=======
+  Le.isContextConsumer = function(e) {
+    return mr(e) === Wa;
   };
-  Ne.typeOf = mr;
+  Le.isContextProvider = function(e) {
+    return mr(e) === Ua;
+  };
+  Le.isElement = function(e) {
+    return typeof e == "object" && e !== null && e.$$typeof === Gl;
+  };
+  Le.isForwardRef = function(e) {
+    return mr(e) === Va;
+  };
+  Le.isFragment = function(e) {
+    return mr(e) === $a;
+  };
+  Le.isLazy = function(e) {
+    return mr(e) === Ka;
+  };
+  Le.isMemo = function(e) {
+    return mr(e) === Za;
+  };
+  Le.isPortal = function(e) {
+    return mr(e) === jl;
+>>>>>>> Stashed changes
+  };
+  Le.isProfiler = function(e) {
+    return mr(e) === Fa;
+  };
+  Le.isStrictMode = function(e) {
+    return mr(e) === qa;
+  };
+  Le.isSuspense = function(e) {
+    return mr(e) === Ya;
+  };
+  Le.isSuspenseList = function(e) {
+    return mr(e) === Xa;
+  };
+  Le.isValidElementType = function(e) {
+    return typeof e == "string" || typeof e == "function" || e === $a || e === Fa || e === qa || e === Ya || e === Xa || e === Ag || typeof e == "object" && e !== null && (e.$$typeof === Ka || e.$$typeof === Za || e.$$typeof === Ua || e.$$typeof === Wa || e.$$typeof === Va || e.$$typeof === kp || e.getModuleId !== void 0);
+  };
+  Le.typeOf = mr;
 });
+<<<<<<< Updated upstream
 var Dp = Ct((m0, Rp) => {
   "use strict";
   Rp.exports = zp();
@@ -687,6 +1163,35 @@ var Bp = Ct((En) => {
     var e = kp(r);
     if (e && e.has(t))
       return e.get(t);
+=======
+var jp = Tt((O0, Gp) => {
+  "use strict";
+  Gp.exports = Lp();
+});
+var Up = Tt((Sn) => {
+  "use strict";
+  Object.defineProperty(Sn, "__esModule", { value: true });
+  Sn.test = Sn.serialize = Sn.default = void 0;
+  var Yn = Pg(jp()), Qa = Ba();
+  function Hp(e) {
+    if (typeof WeakMap != "function")
+      return null;
+    var r = /* @__PURE__ */ new WeakMap(), t = /* @__PURE__ */ new WeakMap();
+    return (Hp = c(function(n) {
+      return n ? t : r;
+    }, "_getRequireWildcardCache"))(e);
+  }
+  __name(Hp, "Hp");
+  c(Hp, "_getRequireWildcardCache");
+  function Pg(e, r) {
+    if (!r && e && e.__esModule)
+      return e;
+    if (e === null || typeof e != "object" && typeof e != "function")
+      return { default: e };
+    var t = Hp(r);
+    if (t && t.has(e))
+      return t.get(e);
+>>>>>>> Stashed changes
     var n = {}, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
     for (var s in t)
       if (s !== "default" && Object.prototype.hasOwnProperty.call(t, s)) {
@@ -695,12 +1200,21 @@ var Bp = Ct((En) => {
       }
     return n.default = t, e && e.set(t, n), n;
   }
+<<<<<<< Updated upstream
   __name(Sg, "Sg");
   c(Sg, "_interopRequireWildcard");
   var Lp = c((t, r = []) => (Array.isArray(t) ? t.forEach((e) => {
     Lp(e, r);
   }) : t != null && t !== false && r.push(t), r), "getChildren"), Np = c((t) => {
     let r = t.type;
+=======
+  __name(Pg, "Pg");
+  c(Pg, "_interopRequireWildcard");
+  var $p = c((e, r = []) => (Array.isArray(e) ? e.forEach((t) => {
+    $p(t, r);
+  }) : e != null && e !== false && r.push(e), r), "getChildren"), Bp = c((e) => {
+    let r = e.type;
+>>>>>>> Stashed changes
     if (typeof r == "string")
       return r;
     if (typeof r == "function")
@@ -726,6 +1240,7 @@ var Bp = Ct((En) => {
       }
     }
     return "UNDEFINED";
+<<<<<<< Updated upstream
   }, "getType"), Cg = c((t) => {
     let { props: r } = t;
     return Object.keys(r).filter((e) => e !== "children" && r[e] !== void 0).sort();
@@ -802,17 +1317,102 @@ var Qr = Ct((Kr) => {
     if (t === true || t === false)
       return `${t}`;
     if (t === void 0)
+=======
+  }, "getType"), _g = c((e) => {
+    let { props: r } = e;
+    return Object.keys(r).filter((t) => t !== "children" && r[t] !== void 0).sort();
+  }, "getPropKeys"), qp = c((e, r, t, n, a, s) => ++n > r.maxDepth ? (0, Qa.printElementAsLeaf)(Bp(e), r) : (0, Qa.printElement)(Bp(e), (0, Qa.printProps)(_g(e), e.props, r, t + r.indent, n, a, s), (0, Qa.printChildren)($p(e.props.children), r, t + r.indent, n, a, s), r, t), "serialize");
+  Sn.serialize = qp;
+  var Fp = c((e) => e != null && Yn.isElement(e), "test");
+  Sn.test = Fp;
+  var zg = { serialize: qp, test: Fp }, Rg = zg;
+  Sn.default = Rg;
+});
+var Yp = Tt((Tn) => {
+  "use strict";
+  Object.defineProperty(Tn, "__esModule", { value: true });
+  Tn.test = Tn.serialize = Tn.default = void 0;
+  var Ja = Ba(), Bl = globalThis["jest-symbol-do-not-touch"] || globalThis.Symbol, Dg = typeof Bl == "function" && Bl.for ? Bl.for("react.test.json") : 245830487, Ng = c((e) => {
+    let { props: r } = e;
+    return r ? Object.keys(r).filter((t) => r[t] !== void 0).sort() : [];
+  }, "getPropKeys"), Wp = c((e, r, t, n, a, s) => ++n > r.maxDepth ? (0, Ja.printElementAsLeaf)(e.type, r) : (0, Ja.printElement)(e.type, e.props ? (0, Ja.printProps)(Ng(e), e.props, r, t + r.indent, n, a, s) : "", e.children ? (0, Ja.printChildren)(e.children, r, t + r.indent, n, a, s) : "", r, t), "serialize");
+  Tn.serialize = Wp;
+  var Vp = c((e) => e && e.$$typeof === Dg, "test");
+  Tn.test = Vp;
+  var kg = { serialize: Wp, test: Vp }, Lg = kg;
+  Tn.default = Lg;
+});
+var kr = Tt((Jr) => {
+  "use strict";
+  Object.defineProperty(Jr, "__esModule", { value: true });
+  Jr.default = Jr.DEFAULT_OPTIONS = void 0;
+  Jr.format = ud;
+  Jr.plugins = void 0;
+  var Gg = Xn(dp()), yo = vo(), jg = Xn(vp()), Bg = Xn(wp()), Hg = Xn(Pp()), $g = Xn(Np()), qg = Xn(Up()), Fg = Xn(Yp());
+  function Xn(e) {
+    return e && e.__esModule ? e : { default: e };
+  }
+  __name(Xn, "Xn");
+  c(Xn, "_interopRequireDefault");
+  var ed = Object.prototype.toString, Ug = Date.prototype.toISOString, Wg = Error.prototype.toString, Xp = RegExp.prototype.toString, Hl = c((e) => typeof e.constructor == "function" && e.constructor.name || "Object", "getConstructorName"), Vg = c((e) => typeof window != "undefined" && e === window, "isWindow"), Yg = /^Symbol\((.*)\)(.*)$/, Xg = /\n/gi, xo = /* @__PURE__ */ __name(class extends Error {
+    constructor(r, t) {
+      super(r), this.stack = t, this.name = this.constructor.name;
+    }
+  }, "xo");
+  c(xo, "PrettyFormatPluginError");
+  function Zg(e) {
+    return e === "[object Array]" || e === "[object ArrayBuffer]" || e === "[object DataView]" || e === "[object Float32Array]" || e === "[object Float64Array]" || e === "[object Int8Array]" || e === "[object Int16Array]" || e === "[object Int32Array]" || e === "[object Uint8Array]" || e === "[object Uint8ClampedArray]" || e === "[object Uint16Array]" || e === "[object Uint32Array]";
+  }
+  __name(Zg, "Zg");
+  c(Zg, "isToStringedArrayType");
+  function Kg(e) {
+    return Object.is(e, -0) ? "-0" : String(e);
+  }
+  __name(Kg, "Kg");
+  c(Kg, "printNumber");
+  function Qg(e) {
+    return String(`${e}n`);
+  }
+  __name(Qg, "Qg");
+  c(Qg, "printBigInt");
+  function Zp(e, r) {
+    return r ? `[Function ${e.name || "anonymous"}]` : "[Function]";
+  }
+  __name(Zp, "Zp");
+  c(Zp, "printFunction");
+  function Kp(e) {
+    return String(e).replace(Yg, "Symbol($1)");
+  }
+  __name(Kp, "Kp");
+  c(Kp, "printSymbol");
+  function Qp(e) {
+    return `[${Wg.call(e)}]`;
+  }
+  __name(Qp, "Qp");
+  c(Qp, "printError");
+  function td(e, r, t, n) {
+    if (e === true || e === false)
+      return `${e}`;
+    if (e === void 0)
+>>>>>>> Stashed changes
       return "undefined";
     if (t === null)
       return "null";
     let a = typeof t;
     if (a === "number")
+<<<<<<< Updated upstream
       return Fg(t);
     if (a === "bigint")
       return Ug(t);
+=======
+      return Kg(e);
+    if (a === "bigint")
+      return Qg(e);
+>>>>>>> Stashed changes
     if (a === "string")
       return n ? `"${t.replace(/"|\\/g, "\\$&")}"` : `"${t}"`;
     if (a === "function")
+<<<<<<< Updated upstream
       return Up(t, r);
     if (a === "symbol")
       return Wp(t);
@@ -823,9 +1423,22 @@ var Qr = Ct((Kr) => {
   c(Zp, "printBasicValue");
   function Kp(t, r, e, n, a, s) {
     if (a.indexOf(t) !== -1)
+=======
+      return Zp(e, r);
+    if (a === "symbol")
+      return Kp(e);
+    let s = ed.call(e);
+    return s === "[object WeakMap]" ? "WeakMap {}" : s === "[object WeakSet]" ? "WeakSet {}" : s === "[object Function]" || s === "[object GeneratorFunction]" ? Zp(e, r) : s === "[object Symbol]" ? Kp(e) : s === "[object Date]" ? isNaN(+e) ? "Date { NaN }" : Ug.call(e) : s === "[object Error]" ? Qp(e) : s === "[object RegExp]" ? t ? Xp.call(e).replace(/[\\^$*+?.()|[\]{}]/g, "\\$&") : Xp.call(e) : e instanceof Error ? Qp(e) : null;
+  }
+  __name(td, "td");
+  c(td, "printBasicValue");
+  function rd(e, r, t, n, a, s) {
+    if (a.indexOf(e) !== -1)
+>>>>>>> Stashed changes
       return "[Circular]";
     a = a.slice(), a.push(t);
     let p = ++n > r.maxDepth, v = r.min;
+<<<<<<< Updated upstream
     if (r.callToJSON && !p && t.toJSON && typeof t.toJSON == "function" && !s)
       return Cn(t.toJSON(), r, e, n, a, true);
     let m = Xp.call(t);
@@ -844,23 +1457,55 @@ var Qr = Ct((Kr) => {
       p = Wg(t) ? t.serialize(r, e, n, a, s, Cn) : t.print(r, (v) => Cn(v, e, n, a, s), (v) => {
         let m = n + e.indent;
         return m + v.replace($g, `
+=======
+    if (r.callToJSON && !p && e.toJSON && typeof e.toJSON == "function" && !s)
+      return Cn(e.toJSON(), r, t, n, a, true);
+    let m = ed.call(e);
+    return m === "[object Arguments]" ? p ? "[Arguments]" : `${v ? "" : "Arguments "}[${(0, yo.printListItems)(e, r, t, n, a, Cn)}]` : Zg(m) ? p ? `[${e.constructor.name}]` : `${v || !r.printBasicPrototype && e.constructor.name === "Array" ? "" : `${e.constructor.name} `}[${(0, yo.printListItems)(e, r, t, n, a, Cn)}]` : m === "[object Map]" ? p ? "[Map]" : `Map {${(0, yo.printIteratorEntries)(e.entries(), r, t, n, a, Cn, " => ")}}` : m === "[object Set]" ? p ? "[Set]" : `Set {${(0, yo.printIteratorValues)(e.values(), r, t, n, a, Cn)}}` : p || Vg(e) ? `[${Hl(e)}]` : `${v || !r.printBasicPrototype && Hl(e) === "Object" ? "" : `${Hl(e)} `}{${(0, yo.printObjectProperties)(e, r, t, n, a, Cn)}}`;
+  }
+  __name(rd, "rd");
+  c(rd, "printComplexValue");
+  function Jg(e) {
+    return e.serialize != null;
+  }
+  __name(Jg, "Jg");
+  c(Jg, "isNewPlugin");
+  function nd(e, r, t, n, a, s) {
+    let p;
+    try {
+      p = Jg(e) ? e.serialize(r, t, n, a, s, Cn) : e.print(r, (v) => Cn(v, t, n, a, s), (v) => {
+        let m = n + t.indent;
+        return m + v.replace(Xg, `
+>>>>>>> Stashed changes
 ${m}`);
       }, { edgeSpacing: e.spacingOuter, min: e.min, spacing: e.spacingInner }, e.colors);
     } catch (v) {
+<<<<<<< Updated upstream
       throw new bo(v.message, v.stack);
+=======
+      throw new xo(v.message, v.stack);
+>>>>>>> Stashed changes
     }
     if (typeof p != "string")
       throw new Error(`pretty-format: Plugin must return type "string" but instead returned "${typeof p}".`);
     return p;
   }
+<<<<<<< Updated upstream
   __name(Qp, "Qp");
   c(Qp, "printPlugin");
   function Jp(t, r) {
     for (let e = 0; e < t.length; e++)
+=======
+  __name(nd, "nd");
+  c(nd, "printPlugin");
+  function id(e, r) {
+    for (let t = 0; t < e.length; t++)
+>>>>>>> Stashed changes
       try {
         if (t[e].test(r))
           return t[e];
       } catch (n) {
+<<<<<<< Updated upstream
         throw new bo(n.message, n.stack);
       }
     return null;
@@ -880,6 +1525,27 @@ ${m}`);
   Kr.DEFAULT_OPTIONS = vr;
   function Yg(t) {
     if (Object.keys(t).forEach((r) => {
+=======
+        throw new xo(n.message, n.stack);
+      }
+    return null;
+  }
+  __name(id, "id");
+  c(id, "findPlugin");
+  function Cn(e, r, t, n, a, s) {
+    let p = id(r.plugins, e);
+    if (p !== null)
+      return nd(p, e, r, t, n, a);
+    let v = td(e, r.printFunctionName, r.escapeRegex, r.escapeString);
+    return v !== null ? v : rd(e, r, t, n, a, s);
+  }
+  __name(Cn, "Cn");
+  c(Cn, "printer");
+  var $l = { comment: "gray", content: "reset", prop: "yellow", tag: "cyan", value: "green" }, od = Object.keys($l), eb = c((e) => e, "toOptionsSubtype"), vr = eb({ callToJSON: true, compareKeys: void 0, escapeRegex: false, escapeString: true, highlight: false, indent: 2, maxDepth: 1 / 0, maxWidth: 1 / 0, min: false, plugins: [], printBasicPrototype: true, printFunctionName: true, theme: $l });
+  Jr.DEFAULT_OPTIONS = vr;
+  function tb(e) {
+    if (Object.keys(e).forEach((r) => {
+>>>>>>> Stashed changes
       if (!Object.prototype.hasOwnProperty.call(vr, r))
         throw new Error(`pretty-format: Unknown option "${r}".`);
     }), t.min && t.indent !== void 0 && t.indent !== 0)
@@ -891,15 +1557,23 @@ ${m}`);
         throw new Error(`pretty-format: Option "theme" must be of type "object" but instead received "${typeof t.theme}".`);
     }
   }
+<<<<<<< Updated upstream
   __name(Yg, "Yg");
   c(Yg, "validateOptions");
   var Xg = c((t) => ed.reduce((r, e) => {
     let n = t.theme && t.theme[e] !== void 0 ? t.theme[e] : jl[e], a = n && _g.default[n];
+=======
+  __name(tb, "tb");
+  c(tb, "validateOptions");
+  var rb = c((e) => od.reduce((r, t) => {
+    let n = e.theme && e.theme[t] !== void 0 ? e.theme[t] : $l[t], a = n && Gg.default[n];
+>>>>>>> Stashed changes
     if (a && typeof a.close == "string" && typeof a.open == "string")
       r[e] = a;
     else
       throw new Error(`pretty-format: Option "theme" has a key "${e}" whose value "${n}" is undefined in ansi-styles.`);
     return r;
+<<<<<<< Updated upstream
   }, /* @__PURE__ */ Object.create(null)), "getColorsHighlight"), Zg = c(() => ed.reduce((t, r) => (t[r] = { close: "", open: "" }, t), /* @__PURE__ */ Object.create(null)), "getColorsEmpty"), td = c((t) => {
     var r;
     return (r = t == null ? void 0 : t.printFunctionName) != null ? r : vr.printFunctionName;
@@ -939,6 +1613,47 @@ ${m}`);
 var ko = Ct((nf, Su) => {
   (function(t) {
     typeof nf == "object" && typeof Su != "undefined" ? Su.exports = t() : typeof define == "function" && define.amd ? define([], t) : (typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this).interact = t();
+=======
+  }, /* @__PURE__ */ Object.create(null)), "getColorsHighlight"), nb = c(() => od.reduce((e, r) => (e[r] = { close: "", open: "" }, e), /* @__PURE__ */ Object.create(null)), "getColorsEmpty"), ad = c((e) => {
+    var r;
+    return (r = e == null ? void 0 : e.printFunctionName) != null ? r : vr.printFunctionName;
+  }, "getPrintFunctionName"), sd = c((e) => {
+    var r;
+    return (r = e == null ? void 0 : e.escapeRegex) != null ? r : vr.escapeRegex;
+  }, "getEscapeRegex"), ld = c((e) => {
+    var r;
+    return (r = e == null ? void 0 : e.escapeString) != null ? r : vr.escapeString;
+  }, "getEscapeString"), Jp = c((e) => {
+    var r, t, n, a, s, p, v;
+    return { callToJSON: (r = e == null ? void 0 : e.callToJSON) != null ? r : vr.callToJSON, colors: e != null && e.highlight ? rb(e) : nb(), compareKeys: typeof (e == null ? void 0 : e.compareKeys) == "function" || (e == null ? void 0 : e.compareKeys) === null ? e.compareKeys : vr.compareKeys, escapeRegex: sd(e), escapeString: ld(e), indent: e != null && e.min ? "" : ib((t = e == null ? void 0 : e.indent) != null ? t : vr.indent), maxDepth: (n = e == null ? void 0 : e.maxDepth) != null ? n : vr.maxDepth, maxWidth: (a = e == null ? void 0 : e.maxWidth) != null ? a : vr.maxWidth, min: (s = e == null ? void 0 : e.min) != null ? s : vr.min, plugins: (p = e == null ? void 0 : e.plugins) != null ? p : vr.plugins, printBasicPrototype: (v = e == null ? void 0 : e.printBasicPrototype) != null ? v : true, printFunctionName: ad(e), spacingInner: e != null && e.min ? " " : `
+`, spacingOuter: e != null && e.min ? "" : `
+` };
+  }, "getConfig");
+  function ib(e) {
+    return new Array(e + 1).join(" ");
+  }
+  __name(ib, "ib");
+  c(ib, "createIndent");
+  function ud(e, r) {
+    if (r && (tb(r), r.plugins)) {
+      let n = id(r.plugins, e);
+      if (n !== null)
+        return nd(n, e, Jp(r), "", 0, []);
+    }
+    let t = td(e, ad(r), sd(r), ld(r));
+    return t !== null ? t : rd(e, Jp(r), "", 0, []);
+  }
+  __name(ud, "ud");
+  c(ud, "format");
+  var ob = { AsymmetricMatcher: jg.default, DOMCollection: Bg.default, DOMElement: Hg.default, Immutable: $g.default, ReactElement: qg.default, ReactTestComponent: Fg.default };
+  Jr.plugins = ob;
+  var ab = ud;
+  Jr.default = ab;
+});
+var Lo = Tt((cf, Iu) => {
+  (function(e) {
+    typeof cf == "object" && typeof Iu != "undefined" ? Iu.exports = e() : typeof define == "function" && define.amd ? define([], e) : (typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this).interact = e();
+>>>>>>> Stashed changes
   })(function() {
     var t = {};
     Object.defineProperty(t, "__esModule", { value: true }), t.default = void 0, t.default = function(i) {
@@ -1026,10 +1741,10 @@ var ko = Ct((nf, Su) => {
       return s.default.object(i) ? (this.options.drag.enabled = i.enabled !== false, this.setPerAction("drag", i), this.setOnEvents("drag", i), /^(xy|x|y|start)$/.test(i.lockAxis) && (this.options.drag.lockAxis = i.lockAxis), /^(xy|x|y)$/.test(i.startAxis) && (this.options.drag.startAxis = i.startAxis), this) : s.default.bool(i) ? (this.options.drag.enabled = i, this) : this.options.drag;
     }, beforeMove: y, move: w, defaults: { startAxis: "xy", lockAxis: "xy" }, getCursor: function() {
       return "move";
-    } }, C = S;
-    h.default = C;
-    var T = {};
-    Object.defineProperty(T, "__esModule", { value: true }), T.default = void 0;
+    } }, T = S;
+    h.default = T;
+    var C = {};
+    Object.defineProperty(C, "__esModule", { value: true }), C.default = void 0;
     var _ = { init: function(i) {
       var o = i;
       _.document = o.document, _.DocumentFragment = o.DocumentFragment || N, _.SVGElement = o.SVGElement || N, _.SVGSVGElement = o.SVGSVGElement || N, _.SVGElementInstance = o.SVGElementInstance || N, _.Element = o.Element || N, _.HTMLElement = o.HTMLElement || _.Element, _.Event = o.Event, _.Touch = o.Touch || N, _.PointerEvent = o.PointerEvent || o.MSPointerEvent;
@@ -1039,12 +1754,12 @@ var ko = Ct((nf, Su) => {
     __name(N, "N");
     c(N, "y");
     var j = _;
-    T.default = j;
+    C.default = j;
     var $ = {};
     Object.defineProperty($, "__esModule", { value: true }), $.default = void 0;
     var A = { init: function(i) {
-      var o = T.default.Element, l = i.navigator || {};
-      A.supportsTouch = "ontouchstart" in i || s.default.func(i.DocumentTouch) && T.default.document instanceof i.DocumentTouch, A.supportsPointerEvent = l.pointerEnabled !== false && !!T.default.PointerEvent, A.isIOS = /iP(hone|od|ad)/.test(l.platform), A.isIOS7 = /iP(hone|od|ad)/.test(l.platform) && /OS 7[^\d]/.test(l.appVersion), A.isIe9 = /MSIE 9/.test(l.userAgent), A.isOperaMobile = l.appName === "Opera" && A.supportsTouch && /Presto/.test(l.userAgent), A.prefixedMatchesSelector = "matches" in o.prototype ? "matches" : "webkitMatchesSelector" in o.prototype ? "webkitMatchesSelector" : "mozMatchesSelector" in o.prototype ? "mozMatchesSelector" : "oMatchesSelector" in o.prototype ? "oMatchesSelector" : "msMatchesSelector", A.pEventTypes = A.supportsPointerEvent ? T.default.PointerEvent === i.MSPointerEvent ? { up: "MSPointerUp", down: "MSPointerDown", over: "mouseover", out: "mouseout", move: "MSPointerMove", cancel: "MSPointerCancel" } : { up: "pointerup", down: "pointerdown", over: "pointerover", out: "pointerout", move: "pointermove", cancel: "pointercancel" } : null, A.wheelEvent = T.default.document && "onmousewheel" in T.default.document ? "mousewheel" : "wheel";
+      var o = C.default.Element, l = i.navigator || {};
+      A.supportsTouch = "ontouchstart" in i || s.default.func(i.DocumentTouch) && C.default.document instanceof i.DocumentTouch, A.supportsPointerEvent = l.pointerEnabled !== false && !!C.default.PointerEvent, A.isIOS = /iP(hone|od|ad)/.test(l.platform), A.isIOS7 = /iP(hone|od|ad)/.test(l.platform) && /OS 7[^\d]/.test(l.appVersion), A.isIe9 = /MSIE 9/.test(l.userAgent), A.isOperaMobile = l.appName === "Opera" && A.supportsTouch && /Presto/.test(l.userAgent), A.prefixedMatchesSelector = "matches" in o.prototype ? "matches" : "webkitMatchesSelector" in o.prototype ? "webkitMatchesSelector" : "mozMatchesSelector" in o.prototype ? "mozMatchesSelector" : "oMatchesSelector" in o.prototype ? "oMatchesSelector" : "msMatchesSelector", A.pEventTypes = A.supportsPointerEvent ? C.default.PointerEvent === i.MSPointerEvent ? { up: "MSPointerUp", down: "MSPointerDown", over: "mouseover", out: "mouseout", move: "MSPointerMove", cancel: "MSPointerCancel" } : { up: "pointerup", down: "pointerdown", over: "pointerover", out: "pointerout", move: "pointermove", cancel: "pointercancel" } : null, A.wheelEvent = C.default.document && "onmousewheel" in C.default.document ? "mousewheel" : "wheel";
     }, supportsTouch: null, supportsPointerEvent: null, isIOS7: null, isIOS: null, isIe9: null, isOperaMobile: null, prefixedMatchesSelector: null, pEventTypes: null, wheelEvent: null }, ee = A;
     $.default = ee;
     var z = {};
@@ -1093,8 +1808,13 @@ var ko = Ct((nf, Su) => {
               if (b !== f.ownerDocument)
                 if (E !== b) {
                   l = l.length ? l : le(g);
+<<<<<<< Updated upstream
                   var x = void 0;
                   if (g instanceof T.default.HTMLElement && f instanceof T.default.SVGElement && !(f instanceof T.default.SVGSVGElement)) {
+=======
+                  var w = void 0;
+                  if (g instanceof C.default.HTMLElement && f instanceof C.default.SVGElement && !(f instanceof C.default.SVGSVGElement)) {
+>>>>>>> Stashed changes
                     if (f === b)
                       continue;
                     x = f.ownerSVGElement;
@@ -1140,7 +1860,7 @@ var ko = Ct((nf, Su) => {
       }
       return false;
     }, z.parentNode = B, z.trySelector = function(i) {
-      return !!s.default.string(i) && (T.default.document.querySelector(i), true);
+      return !!s.default.string(i) && (C.default.document.querySelector(i), true);
     };
     var te = c(function(i) {
       return i.parentNode || i.host;
@@ -1158,7 +1878,7 @@ var ko = Ct((nf, Su) => {
     __name(Y, "Y");
     c(Y, "T");
     function ie(i) {
-      var o = i instanceof T.default.SVGElement ? i.getBoundingClientRect() : i.getClientRects()[0];
+      var o = i instanceof C.default.SVGElement ? i.getBoundingClientRect() : i.getClientRects()[0];
       return o && { left: o.left, right: o.right, top: o.top, bottom: o.bottom, width: o.width || o.right - o.left, height: o.height || o.bottom - o.top };
     }
     __name(ie, "ie");
@@ -1210,20 +1930,28 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }, ue.xywhToTlbr = function(i) {
       return !i || "left" in i && "top" in i || ((i = (0, W.default)({}, i)).left = i.x || 0, i.top = i.y || 0, i.right = i.right || i.left + i.width, i.bottom = i.bottom || i.top + i.height), i;
     };
-    var De = {};
-    Object.defineProperty(De, "__esModule", { value: true }), De.default = function(i, o, l) {
+    var ke = {};
+    Object.defineProperty(ke, "__esModule", { value: true }), ke.default = function(i, o, l) {
       var u = i.options[l], f = u && u.origin || i.options.origin, g = (0, ue.resolveRectLike)(f, i, o, [i && o]);
       return (0, ue.rectToXY)(g) || { x: 0, y: 0 };
     };
     var je = {};
-    function it(i) {
+    function ot(i) {
       return i.trim().split(/ +/);
     }
+<<<<<<< Updated upstream
     __name(it, "it");
     c(it, "C"), Object.defineProperty(je, "__esModule", { value: true }), je.default = c(/* @__PURE__ */ __name(function i(o, l, u) {
       if (u = u || {}, s.default.string(o) && o.search(" ") !== -1 && (o = it(o)), s.default.array(o))
         return o.reduce(function(x, O) {
           return (0, W.default)(x, i(O, l, u));
+=======
+    __name(ot, "ot");
+    c(ot, "C"), Object.defineProperty(je, "__esModule", { value: true }), je.default = c(/* @__PURE__ */ __name(function i(o, l, u) {
+      if (u = u || {}, s.default.string(o) && o.search(" ") !== -1 && (o = ot(o)), s.default.array(o))
+        return o.reduce(function(w, O) {
+          return (0, W.default)(w, i(O, l, u));
+>>>>>>> Stashed changes
         }, u);
       if (s.default.object(o) && (l = o, o = ""), s.default.func(l))
         u[o] = u[o] || [], u[o].push(l);
@@ -1234,15 +1962,20 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
       else if (s.default.object(l))
         for (var E in l) {
+<<<<<<< Updated upstream
           var b = it(E).map(function(x) {
             return "".concat(o).concat(x);
+=======
+          var b = ot(E).map(function(w) {
+            return "".concat(o).concat(w);
+>>>>>>> Stashed changes
           });
           i(b, l[E], u);
         }
       return u;
     }, "i"), "t");
-    var Ze = {};
-    Object.defineProperty(Ze, "__esModule", { value: true }), Ze.default = void 0, Ze.default = function(i, o) {
+    var Ke = {};
+    Object.defineProperty(Ke, "__esModule", { value: true }), Ke.default = void 0, Ke.default = function(i, o) {
       return Math.sqrt(i * i + o * o);
     };
     var Ve = {};
@@ -1261,7 +1994,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     };
     var Q = {};
     function ir(i) {
-      return i instanceof T.default.Event || i instanceof T.default.Touch;
+      return i instanceof C.default.Event || i instanceof C.default.Touch;
     }
     __name(ir, "ir");
     c(ir, "B");
@@ -1270,22 +2003,22 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     __name(Ie, "Ie");
     c(Ie, "Y");
-    function Je(i, o) {
+    function et(i, o) {
       return o = o || { x: 0, y: 0 }, $.default.isOperaMobile && ir(i) ? (Ie("screen", i, o), o.x += window.scrollX, o.y += window.scrollY) : Ie("page", i, o), o;
     }
-    __name(Je, "Je");
-    c(Je, "W");
+    __name(et, "et");
+    c(et, "W");
     function cr(i, o) {
       return o = o || {}, $.default.isOperaMobile && ir(i) ? Ie("screen", i, o) : Ie("client", i, o), o;
     }
     __name(cr, "cr");
     c(cr, "L");
-    function Cr(i) {
+    function Tr(i) {
       var o = [];
       return s.default.array(i) ? (o[0] = i[0], o[1] = i[1]) : i.type === "touchend" ? i.touches.length === 1 ? (o[0] = i.touches[0], o[1] = i.changedTouches[0]) : i.touches.length === 0 && (o[0] = i.changedTouches[0], o[1] = i.changedTouches[1]) : (o[0] = i.touches[0], o[1] = i.touches[1]), o;
     }
-    __name(Cr, "Cr");
-    c(Cr, "U");
+    __name(Tr, "Tr");
+    c(Tr, "U");
     function pr(i) {
       for (var o = { pageX: 0, pageY: 0, clientX: 0, clientY: 0, screenX: 0, screenY: 0 }, l = 0; l < i.length; l++) {
         var u = i[l];
@@ -1329,11 +2062,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }, Q.getClientXY = cr, Q.getEventTargets = function(i) {
       var o = s.default.func(i.composedPath) ? i.composedPath() : i.path;
       return [z.getActualElement(o ? o[0] : i.target), z.getActualElement(i.currentTarget)];
-    }, Q.getPageXY = Je, Q.getPointerId = function(i) {
+    }, Q.getPageXY = et, Q.getPointerId = function(i) {
       return s.default.number(i.pointerId) ? i.pointerId : i.identifier;
     }, Q.getPointerType = function(i) {
-      return s.default.string(i.pointerType) ? i.pointerType : s.default.number(i.pointerType) ? [void 0, void 0, "touch", "pen", "mouse"][i.pointerType] : /touch/.test(i.type || "") || i instanceof T.default.Touch ? "touch" : "mouse";
-    }, Q.getTouchPair = Cr, Q.getXY = Ie, Q.isNativePointer = ir, Q.newCoords = function() {
+      return s.default.string(i.pointerType) ? i.pointerType : s.default.number(i.pointerType) ? [void 0, void 0, "touch", "pen", "mouse"][i.pointerType] : /touch/.test(i.type || "") || i instanceof C.default.Touch ? "touch" : "mouse";
+    }, Q.getTouchPair = Tr, Q.getXY = Ie, Q.isNativePointer = ir, Q.newCoords = function() {
       return { page: { x: 0, y: 0 }, client: { x: 0, y: 0 }, timeStamp: 0 };
     }, Q.pointerAverage = pr, Object.defineProperty(Q, "pointerExtend", { enumerable: true, get: function() {
       return Ve.default;
@@ -1344,28 +2077,29 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       i.page.x = o.page.x / l, i.page.y = o.page.y / l, i.client.x = o.client.x / l, i.client.y = o.client.y / l, i.timeStamp = l;
     }, Q.setCoords = function(i, o, l) {
       var u = o.length > 1 ? pr(o) : o[0];
-      Je(u, i.page), cr(u, i.client), i.timeStamp = l;
+      et(u, i.page), cr(u, i.client), i.timeStamp = l;
     }, Q.setZeroCoords = function(i) {
       i.page.x = 0, i.page.y = 0, i.client.x = 0, i.client.y = 0;
     }, Q.touchAngle = function(i, o) {
-      var l = o + "X", u = o + "Y", f = Cr(i), g = f[1][l] - f[0][l], E = f[1][u] - f[0][u];
+      var l = o + "X", u = o + "Y", f = Tr(i), g = f[1][l] - f[0][l], E = f[1][u] - f[0][u];
       return 180 * Math.atan2(E, g) / Math.PI;
     }, Q.touchBBox = function(i) {
       if (!i.length)
         return null;
-      var o = Cr(i), l = Math.min(o[0].pageX, o[1].pageX), u = Math.min(o[0].pageY, o[1].pageY), f = Math.max(o[0].pageX, o[1].pageX), g = Math.max(o[0].pageY, o[1].pageY);
+      var o = Tr(i), l = Math.min(o[0].pageX, o[1].pageX), u = Math.min(o[0].pageY, o[1].pageY), f = Math.max(o[0].pageX, o[1].pageX), g = Math.max(o[0].pageY, o[1].pageY);
       return { x: l, y: u, left: l, top: u, right: f, bottom: g, width: f - l, height: g - u };
     }, Q.touchDistance = function(i, o) {
-      var l = o + "X", u = o + "Y", f = Cr(i), g = f[0][l] - f[1][l], E = f[0][u] - f[1][u];
-      return (0, Ze.default)(g, E);
+      var l = o + "X", u = o + "Y", f = Tr(i), g = f[0][l] - f[1][l], E = f[0][u] - f[1][u];
+      return (0, Ke.default)(g, E);
     };
     var or = {};
-    function zr(i, o) {
+    function Rr(i, o) {
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(zr, "zr");
     c(zr, "q");
     function Fr(i, o, l) {
@@ -1374,11 +2108,25 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Fr, "Fr");
     c(Fr, "G"), Object.defineProperty(or, "__esModule", { value: true }), or.BaseEvent = void 0;
     var Dn = function() {
+=======
+    __name(Rr, "Rr");
+    c(Rr, "q");
+    function Wr(i, o, l) {
+      return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
+    }
+    __name(Wr, "Wr");
+    c(Wr, "G"), Object.defineProperty(or, "__esModule", { value: true }), or.BaseEvent = void 0;
+    var Nn = function() {
+>>>>>>> Stashed changes
       function i(u) {
         (function(f, g) {
           if (!(f instanceof g))
             throw new TypeError("Cannot call a class as a function");
+<<<<<<< Updated upstream
         })(this, i), Fr(this, "immediatePropagationStopped", false), Fr(this, "propagationStopped", false), this._interaction = u;
+=======
+        })(this, i), Wr(this, "immediatePropagationStopped", false), Wr(this, "propagationStopped", false), this._interaction = u;
+>>>>>>> Stashed changes
       }
       __name(i, "i");
       c(i, "t");
@@ -1388,7 +2136,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         this.propagationStopped = true;
       } }, { key: "stopImmediatePropagation", value: function() {
         this.immediatePropagationStopped = this.propagationStopped = true;
-      } }]) && zr(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
+      } }]) && Rr(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
     }();
     or.BaseEvent = Dn, Object.defineProperty(Dn.prototype, "interaction", { get: function() {
       return this._interaction._proxy;
@@ -1419,6 +2167,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     Me.findIndex = kn, Me.find = function(i, o) {
       return i[kn(i, o)];
     };
+<<<<<<< Updated upstream
     var Nt = {};
     function Ur(i) {
       return Ur = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
@@ -1430,29 +2179,56 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Ur, "Ur");
     c(Ur, "Q");
     function ci(i, o) {
+=======
+    var kt = {};
+    function Vr(i) {
+      return Vr = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
+        return typeof o;
+      } : function(o) {
+        return o && typeof Symbol == "function" && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+      }, Vr(i);
+    }
+    __name(Vr, "Vr");
+    c(Vr, "Q");
+    function di(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(ci, "ci");
     c(ci, "tt");
     function dn(i, o) {
       return dn = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(l, u) {
+=======
+    __name(di, "di");
+    c(di, "tt");
+    function fn(i, o) {
+      return fn = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(l, u) {
+>>>>>>> Stashed changes
         return l.__proto__ = u, l;
-      }, dn(i, o);
+      }, fn(i, o);
     }
+<<<<<<< Updated upstream
     __name(dn, "dn");
     c(dn, "et");
     function Tr(i, o) {
       if (o && (Ur(o) === "object" || typeof o == "function"))
+=======
+    __name(fn, "fn");
+    c(fn, "et");
+    function Cr(i, o) {
+      if (o && (Vr(o) === "object" || typeof o == "function"))
+>>>>>>> Stashed changes
         return o;
       if (o !== void 0)
         throw new TypeError("Derived constructors may only return object or undefined");
       return It(i);
     }
-    __name(Tr, "Tr");
-    c(Tr, "nt");
+    __name(Cr, "Cr");
+    c(Cr, "nt");
     function It(i) {
       if (i === void 0)
         throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -1460,13 +2236,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     __name(It, "It");
     c(It, "rt");
-    function Rr(i) {
-      return Rr = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(o) {
+    function Dr(i) {
+      return Dr = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(o) {
         return o.__proto__ || Object.getPrototypeOf(o);
-      }, Rr(i);
+      }, Dr(i);
     }
-    __name(Rr, "Rr");
-    c(Rr, "ot");
+    __name(Dr, "Dr");
+    c(Dr, "ot");
     function qt(i, o, l) {
       return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
     }
@@ -1476,7 +2252,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       (function(b, x) {
         if (typeof x != "function" && x !== null)
           throw new TypeError("Super expression must either be null or a function");
+<<<<<<< Updated upstream
         b.prototype = Object.create(x && x.prototype, { constructor: { value: b, writable: true, configurable: true } }), Object.defineProperty(b, "prototype", { writable: false }), x && dn(b, x);
+=======
+        b.prototype = Object.create(w && w.prototype, { constructor: { value: b, writable: true, configurable: true } }), Object.defineProperty(b, "prototype", { writable: false }), w && fn(b, w);
+>>>>>>> Stashed changes
       })(E, i);
       var o, l, u, f, g = (u = E, f = function() {
         if (typeof Reflect == "undefined" || !Reflect.construct || Reflect.construct.sham)
@@ -1490,6 +2270,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           return false;
         }
       }(), function() {
+<<<<<<< Updated upstream
         var b, x = Rr(u);
         if (f) {
           var O = Rr(this).constructor;
@@ -1497,6 +2278,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         } else
           b = x.apply(this, arguments);
         return Tr(this, b);
+=======
+        var b, w = Dr(u);
+        if (f) {
+          var O = Dr(this).constructor;
+          b = Reflect.construct(w, arguments, O);
+        } else
+          b = w.apply(this, arguments);
+        return Cr(this, b);
+>>>>>>> Stashed changes
       });
       function E(b, x, O) {
         var I;
@@ -1528,17 +2318,29 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         this.immediatePropagationStopped = this.propagationStopped = true;
       } }]) && ci(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), E;
     }(or.BaseEvent);
+<<<<<<< Updated upstream
     Nt.DropEvent = Ln;
     var Wr = {};
     function Gn(i, o) {
+=======
+    kt.DropEvent = Gn;
+    var Yr = {};
+    function jn(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < i.slice().length; l++) {
         var u = i.slice()[l], f = u.dropzone, g = u.element;
         o.dropzone = f, o.target = g, f.fire(o), o.propagationStopped = o.immediatePropagationStopped = false;
       }
     }
+<<<<<<< Updated upstream
     __name(Gn, "Gn");
     c(Gn, "lt");
     function fn(i, o) {
+=======
+    __name(jn, "jn");
+    c(jn, "lt");
+    function hn(i, o) {
+>>>>>>> Stashed changes
       for (var l = function(g, E) {
         for (var b = g.interactables, x = [], O = 0; O < b.list.length; O++) {
           var I = b.list[O];
@@ -1558,9 +2360,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }
       return l;
     }
+<<<<<<< Updated upstream
     __name(fn, "fn");
     c(fn, "ut");
     function jn(i, o, l) {
+=======
+    __name(hn, "hn");
+    c(hn, "ut");
+    function Bn(i, o, l) {
+>>>>>>> Stashed changes
       for (var u = i.dropState, f = i.interactable, g = i.element, E = [], b = 0; b < u.activeDrops.length; b++) {
         var x = u.activeDrops[b], O = x.dropzone, I = x.element, P = x.rect;
         E.push(O.dropCheck(o, l, f, g, I, P) ? I : null);
@@ -1568,18 +2376,31 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var k = z.indexOfDeepestElement(E);
       return u.activeDrops[k] || null;
     }
+<<<<<<< Updated upstream
     __name(jn, "jn");
     c(jn, "ct");
     function Yi(i, o, l) {
+=======
+    __name(Bn, "Bn");
+    c(Bn, "ct");
+    function Zi(i, o, l) {
+>>>>>>> Stashed changes
       var u = i.dropState, f = { enter: null, leave: null, activate: null, deactivate: null, move: null, drop: null };
       return l.type === "dragstart" && (f.activate = new Nt.DropEvent(u, l, "dropactivate"), f.activate.target = null, f.activate.dropzone = null), l.type === "dragend" && (f.deactivate = new Nt.DropEvent(u, l, "dropdeactivate"), f.deactivate.target = null, f.deactivate.dropzone = null), u.rejected || (u.cur.element !== u.prev.element && (u.prev.dropzone && (f.leave = new Nt.DropEvent(u, l, "dragleave"), l.dragLeave = f.leave.target = u.prev.element, l.prevDropzone = f.leave.dropzone = u.prev.dropzone), u.cur.dropzone && (f.enter = new Nt.DropEvent(u, l, "dragenter"), l.dragEnter = u.cur.element, l.dropzone = u.cur.dropzone)), l.type === "dragend" && u.cur.dropzone && (f.drop = new Nt.DropEvent(u, l, "drop"), l.dropzone = u.cur.dropzone, l.relatedTarget = u.cur.element), l.type === "dragmove" && u.cur.dropzone && (f.move = new Nt.DropEvent(u, l, "dropmove"), f.move.dragmove = l, l.dropzone = u.cur.dropzone)), f;
     }
+<<<<<<< Updated upstream
     __name(Yi, "Yi");
     c(Yi, "ft");
     function Xi(i, o) {
+=======
+    __name(Zi, "Zi");
+    c(Zi, "ft");
+    function Ki(i, o) {
+>>>>>>> Stashed changes
       var l = i.dropState, u = l.activeDrops, f = l.cur, g = l.prev;
       o.leave && g.dropzone.fire(o.leave), o.enter && f.dropzone.fire(o.enter), o.move && f.dropzone.fire(o.move), o.drop && f.dropzone.fire(o.drop), o.deactivate && Gn(u, o.deactivate), l.prev.dropzone = f.dropzone, l.prev.element = f.element;
     }
+<<<<<<< Updated upstream
     __name(Xi, "Xi");
     c(Xi, "dt");
     function na(i, o) {
@@ -1594,6 +2415,22 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(na, "na");
     c(na, "pt"), Object.defineProperty(Wr, "__esModule", { value: true }), Wr.default = void 0;
     var ia = { id: "actions/drop", install: function(i) {
+=======
+    __name(Ki, "Ki");
+    c(Ki, "dt");
+    function ia(i, o) {
+      var l = i.interaction, u = i.iEvent, f = i.event;
+      if (u.type === "dragmove" || u.type === "dragend") {
+        var g = l.dropState;
+        o.dynamicDrop && (g.activeDrops = hn(o, l.element));
+        var E = u, b = Bn(l, E, f);
+        g.rejected = g.rejected && !!b && b.dropzone === g.cur.dropzone && b.element === g.cur.element, g.cur.dropzone = b && b.dropzone, g.cur.element = b && b.element, g.events = Zi(l, 0, E);
+      }
+    }
+    __name(ia, "ia");
+    c(ia, "pt"), Object.defineProperty(Yr, "__esModule", { value: true }), Yr.default = void 0;
+    var oa = { id: "actions/drop", install: function(i) {
+>>>>>>> Stashed changes
       var o = i.actions, l = i.interactStatic, u = i.Interactable, f = i.defaults;
       i.usePlugin(h.default), u.prototype.dropzone = function(g) {
         return function(E, b) {
@@ -1608,20 +2445,26 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           }
           return s.default.bool(b) ? (E.options.drop.enabled = b, E) : E.options.drop;
         }(this, g);
+<<<<<<< Updated upstream
       }, u.prototype.dropCheck = function(g, E, b, x, O, I) {
         return function(P, k, G, R, q, X, F) {
+=======
+      }, u.prototype.dropCheck = function(g, E, b, w, O, I) {
+        return function(P, k, G, R, q, Z, F) {
+>>>>>>> Stashed changes
           var ne = false;
-          if (!(F = F || P.getRect(X)))
-            return !!P.options.drop.checker && P.options.drop.checker(k, G, ne, P, X, R, q);
+          if (!(F = F || P.getRect(Z)))
+            return !!P.options.drop.checker && P.options.drop.checker(k, G, ne, P, Z, R, q);
           var oe = P.options.drop.overlap;
           if (oe === "pointer") {
-            var fe = (0, De.default)(R, q, "drag"), Pe = Q.getPageXY(k);
-            Pe.x += fe.x, Pe.y += fe.y;
-            var Fe = Pe.x > F.left && Pe.x < F.right, Se = Pe.y > F.top && Pe.y < F.bottom;
-            ne = Fe && Se;
+            var he = (0, ke.default)(R, q, "drag"), Pe = Q.getPageXY(k);
+            Pe.x += he.x, Pe.y += he.y;
+            var Fe = Pe.x > F.left && Pe.x < F.right, Te = Pe.y > F.top && Pe.y < F.bottom;
+            ne = Fe && Te;
           }
           var He = R.getRect(q);
           if (He && oe === "center") {
+<<<<<<< Updated upstream
             var hr = He.left + He.width / 2, Zr = He.top + He.height / 2;
             ne = hr >= F.left && hr <= F.right && Zr >= F.top && Zr <= F.bottom;
           }
@@ -1630,6 +2473,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }, l.dynamicDrop = function(g) {
         return s.default.bool(g) ? (i.dynamicDrop = g, l) : i.dynamicDrop;
       }, (0, W.default)(o.phaselessTypes, { dragenter: true, dragleave: true, dropactivate: true, dropdeactivate: true, dropmove: true, drop: true }), o.methodDict.drop = "dropzone", i.dynamicDrop = false, f.actions.drop = ia.defaults;
+=======
+            var hr = He.left + He.width / 2, Qr = He.top + He.height / 2;
+            ne = hr >= F.left && hr <= F.right && Qr >= F.top && Qr <= F.bottom;
+          }
+          return He && s.default.number(oe) && (ne = Math.max(0, Math.min(F.right, He.right) - Math.max(F.left, He.left)) * Math.max(0, Math.min(F.bottom, He.bottom) - Math.max(F.top, He.top)) / (He.width * He.height) >= oe), P.options.drop.checker && (ne = P.options.drop.checker(k, G, ne, P, Z, R, q)), ne;
+        }(this, g, E, b, w, O, I);
+      }, l.dynamicDrop = function(g) {
+        return s.default.bool(g) ? (i.dynamicDrop = g, l) : i.dynamicDrop;
+      }, (0, W.default)(o.phaselessTypes, { dragenter: true, dragleave: true, dropactivate: true, dropdeactivate: true, dropmove: true, drop: true }), o.methodDict.drop = "dropzone", i.dynamicDrop = false, f.actions.drop = oa.defaults;
+>>>>>>> Stashed changes
     }, listeners: { "interactions:before-action-start": function(i) {
       var o = i.interaction;
       o.prepared.name === "drag" && (o.dropState = { cur: { dropzone: null, element: null }, prev: { dropzone: null, element: null }, rejected: null, events: null, activeDrops: [] });
@@ -1637,6 +2490,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var l = i.interaction, u = (i.event, i.iEvent);
       if (l.prepared.name === "drag") {
         var f = l.dropState;
+<<<<<<< Updated upstream
         f.activeDrops = null, f.events = null, f.activeDrops = fn(o, l.element), f.events = Yi(l, 0, u), f.events.activate && (Gn(f.activeDrops, f.events.activate), o.fire("actions/drop:start", { interaction: l, dragEvent: u }));
       }
     }, "interactions:action-move": na, "interactions:after-action-move": function(i, o) {
@@ -1646,6 +2500,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       if (i.interaction.prepared.name === "drag") {
         var l = i.interaction, u = i.iEvent;
         na(i, o), Xi(l, l.dropState.events), o.fire("actions/drop:end", { interaction: l, dragEvent: u });
+=======
+        f.activeDrops = null, f.events = null, f.activeDrops = hn(o, l.element), f.events = Zi(l, 0, u), f.events.activate && (jn(f.activeDrops, f.events.activate), o.fire("actions/drop:start", { interaction: l, dragEvent: u }));
+      }
+    }, "interactions:action-move": ia, "interactions:after-action-move": function(i, o) {
+      var l = i.interaction, u = i.iEvent;
+      l.prepared.name === "drag" && (Ki(l, l.dropState.events), o.fire("actions/drop:move", { interaction: l, dragEvent: u }), l.dropState.events = {});
+    }, "interactions:action-end": function(i, o) {
+      if (i.interaction.prepared.name === "drag") {
+        var l = i.interaction, u = i.iEvent;
+        ia(i, o), Ki(l, l.dropState.events), o.fire("actions/drop:end", { interaction: l, dragEvent: u });
+>>>>>>> Stashed changes
       }
     }, "interactions:stop": function(i) {
       var o = i.interaction;
@@ -1653,8 +2518,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         var l = o.dropState;
         l && (l.activeDrops = null, l.events = null, l.cur.dropzone = null, l.cur.element = null, l.prev.dropzone = null, l.prev.element = null, l.rejected = false);
       }
+<<<<<<< Updated upstream
     } }, getActiveDrops: fn, getDrop: jn, getDropEvents: Yi, fireDropEvents: Xi, defaults: { enabled: false, accept: null, overlap: "pointer" } }, Ks = ia;
     Wr.default = Ks;
+=======
+    } }, getActiveDrops: hn, getDrop: Bn, getDropEvents: Zi, fireDropEvents: Ki, defaults: { enabled: false, accept: null, overlap: "pointer" } }, el = oa;
+    Yr.default = el;
+>>>>>>> Stashed changes
     var L = {};
     function re(i) {
       var o = i.interaction, l = i.iEvent, u = i.phase;
@@ -1691,8 +2561,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       return "";
     } }, Ae = ae;
     L.default = Ae;
+<<<<<<< Updated upstream
     var ge = {};
     function xt(i, o, l, u, f, g, E) {
+=======
+    var we = {};
+    function wt(i, o, l, u, f, g, E) {
+>>>>>>> Stashed changes
       if (!o)
         return false;
       if (o === true) {
@@ -1721,8 +2596,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         l.interactable.options.resize.square ? (l.resizeAxes === "y" ? u.delta.x = u.delta.y : u.delta.y = u.delta.x, u.axes = "xy") : (u.axes = l.resizeAxes, l.resizeAxes === "x" ? u.delta.y = 0 : l.resizeAxes === "y" && (u.delta.x = 0));
       }
     }
+<<<<<<< Updated upstream
     __name(kt, "kt");
     c(kt, "_t"), Object.defineProperty(ge, "__esModule", { value: true }), ge.default = void 0;
+=======
+    __name(Lt, "Lt");
+    c(Lt, "_t"), Object.defineProperty(we, "__esModule", { value: true }), we.default = void 0;
+>>>>>>> Stashed changes
     var At = { id: "actions/resize", before: ["actions/drag"], install: function(i) {
       var o = i.actions, l = i.browser, u = i.Interactable, f = i.defaults;
       At.cursors = function(g) {
@@ -1800,6 +2680,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         g = f[E];
       }
       return g;
+<<<<<<< Updated upstream
     }, defaultMargin: null }, oa = At;
     ge.default = oa;
     var dr = {};
@@ -1832,14 +2713,54 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     Pt.default = di;
     var hn = {};
     Object.defineProperty(hn, "__esModule", { value: true }), hn.default = void 0, hn.getContainer = aa, hn.getScroll = Ki, hn.getScrollSize = function(i) {
+=======
+    }, defaultMargin: null }, aa = At;
+    we.default = aa;
+    var dr = {};
+    Object.defineProperty(dr, "__esModule", { value: true }), dr.default = void 0;
+    var Qi = { id: "actions", install: function(i) {
+      i.usePlugin(L.default), i.usePlugin(we.default), i.usePlugin(h.default), i.usePlugin(Yr.default);
+    } };
+    dr.default = Qi;
+    var Pt = {};
+    Object.defineProperty(Pt, "__esModule", { value: true }), Pt.default = void 0;
+    var _t, Xr, fi = 0, hi = { request: function(i) {
+      return _t(i);
+    }, cancel: function(i) {
+      return Xr(i);
+    }, init: function(i) {
+      if (_t = i.requestAnimationFrame, Xr = i.cancelAnimationFrame, !_t)
+        for (var o = ["ms", "moz", "webkit", "o"], l = 0; l < o.length; l++) {
+          var u = o[l];
+          _t = i["".concat(u, "RequestAnimationFrame")], Xr = i["".concat(u, "CancelAnimationFrame")] || i["".concat(u, "CancelRequestAnimationFrame")];
+        }
+      _t = _t && _t.bind(i), Xr = Xr && Xr.bind(i), _t || (_t = c(function(f) {
+        var g = Date.now(), E = Math.max(0, 16 - (g - fi)), b = i.setTimeout(function() {
+          f(g + E);
+        }, E);
+        return fi = g + E, b;
+      }, "jt"), Xr = c(function(f) {
+        return clearTimeout(f);
+      }, "Mt"));
+    } };
+    Pt.default = hi;
+    var mn = {};
+    Object.defineProperty(mn, "__esModule", { value: true }), mn.default = void 0, mn.getContainer = sa, mn.getScroll = Ji, mn.getScrollSize = function(i) {
+>>>>>>> Stashed changes
       return s.default.window(i) && (i = window.document.body), { x: i.scrollWidth, y: i.scrollHeight };
-    }, hn.getScrollSizeDelta = function(i, o) {
+    }, mn.getScrollSizeDelta = function(i, o) {
       var l = i.interaction, u = i.element, f = l && l.interactable.options[l.prepared.name].autoScroll;
       if (!f || !f.enabled)
         return o(), { x: 0, y: 0 };
+<<<<<<< Updated upstream
       var g = aa(f.container, l.interactable, u), E = Ki(g);
       o();
       var b = Ki(g);
+=======
+      var g = sa(f.container, l.interactable, u), E = Ji(g);
+      o();
+      var b = Ji(g);
+>>>>>>> Stashed changes
       return { x: b.x - E.x, y: b.y - E.y };
     };
     var ce = { defaults: { enabled: false, margin: 60, container: null, speed: 300 }, now: Date.now, interaction: null, i: 0, x: 0, y: 0, isScrolling: false, prevTime: 0, margin: 0, speed: 0, start: function(i) {
@@ -1847,6 +2768,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }, stop: function() {
       ce.isScrolling = false, ce.interaction && (ce.interaction.autoScroll = null), Pt.default.cancel(ce.i);
     }, scroll: function() {
+<<<<<<< Updated upstream
       var i = ce.interaction, o = i.interactable, l = i.element, u = i.prepared.name, f = o.options[u].autoScroll, g = aa(f.container, o, l), E = ce.now(), b = (E - ce.prevTime) / 1e3, x = f.speed * b;
       if (x >= 1) {
         var O = { x: ce.x * x, y: ce.y * x };
@@ -1854,6 +2776,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           var I = Ki(g);
           s.default.window(g) ? g.scrollBy(O.x, O.y) : g && (g.scrollLeft += O.x, g.scrollTop += O.y);
           var P = Ki(g), k = { x: P.x - I.x, y: P.y - I.y };
+=======
+      var i = ce.interaction, o = i.interactable, l = i.element, u = i.prepared.name, f = o.options[u].autoScroll, g = sa(f.container, o, l), E = ce.now(), b = (E - ce.prevTime) / 1e3, w = f.speed * b;
+      if (w >= 1) {
+        var O = { x: ce.x * w, y: ce.y * w };
+        if (O.x || O.y) {
+          var I = Ji(g);
+          s.default.window(g) ? g.scrollBy(O.x, O.y) : g && (g.scrollLeft += O.x, g.scrollTop += O.y);
+          var P = Ji(g), k = { x: P.x - I.x, y: P.y - I.y };
+>>>>>>> Stashed changes
           (k.x || k.y) && o.fire({ type: "autoscroll", target: l, interactable: o, delta: k, interaction: i, container: g });
         }
         ce.prevTime = E;
@@ -1868,7 +2799,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         if (o.simulation)
           ce.x = ce.y = 0;
         else {
+<<<<<<< Updated upstream
           var u, f, g, E, b = o.interactable, x = o.element, O = o.prepared.name, I = b.options[O].autoScroll, P = aa(I.container, b, x);
+=======
+          var u, f, g, E, b = o.interactable, w = o.element, O = o.prepared.name, I = b.options[O].autoScroll, P = sa(I.container, b, w);
+>>>>>>> Stashed changes
           if (s.default.window(P))
             E = l.clientX < ce.margin, u = l.clientY < ce.margin, f = l.clientX > P.innerWidth - ce.margin, g = l.clientY > P.innerHeight - ce.margin;
           else {
@@ -1878,6 +2813,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           ce.x = f ? 1 : E ? -1 : 0, ce.y = g ? 1 : u ? -1 : 0, ce.isScrolling || (ce.margin = I.margin, ce.speed = I.speed, ce.start(o));
         }
     } };
+<<<<<<< Updated upstream
     function aa(i, o, l) {
       return (s.default.string(i) ? (0, ue.getStringOptionResult)(i, o, l) : i) || (0, r.getWindow)(l);
     }
@@ -1889,6 +2825,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Ki, "Ki");
     c(Ki, "Ct");
     var Fh = { id: "auto-scroll", install: function(i) {
+=======
+    function sa(i, o, l) {
+      return (s.default.string(i) ? (0, ue.getStringOptionResult)(i, o, l) : i) || (0, r.getWindow)(l);
+    }
+    __name(sa, "sa");
+    c(sa, "zt");
+    function Ji(i) {
+      return s.default.window(i) && (i = window.document.body), { x: i.scrollLeft, y: i.scrollTop };
+    }
+    __name(Ji, "Ji");
+    c(Ji, "Ct");
+    var Kh = { id: "auto-scroll", install: function(i) {
+>>>>>>> Stashed changes
       var o = i.defaults, l = i.actions;
       i.autoScroll = ce, ce.now = function() {
         return i.now();
@@ -1899,8 +2848,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       i.interaction.autoScroll = null, ce.stop(), ce.interaction && (ce.interaction = null);
     }, "interactions:stop": ce.stop, "interactions:action-move": function(i) {
       return ce.onInteractionMove(i);
+<<<<<<< Updated upstream
     } } }, Uh = Fh;
     hn.default = Uh;
+=======
+    } } }, Qh = Kh;
+    mn.default = Qh;
+>>>>>>> Stashed changes
     var ar = {};
     Object.defineProperty(ar, "__esModule", { value: true }), ar.copyAction = function(i, o) {
       return i.name = o.name, i.axis = o.axis, i.edges = o.edges, i;
@@ -1912,6 +2866,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }, ar.sign = function(i) {
       return i >= 0 ? 1 : -1;
     };
+<<<<<<< Updated upstream
     var sa = {};
     function Wh(i) {
       return s.default.bool(i) ? (this.options.styleCursor = i, this) : i === null ? (delete this.options.styleCursor, this) : this.options.styleCursor;
@@ -1924,6 +2879,20 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Vh, "Vh");
     c(Vh, "Wt"), Object.defineProperty(sa, "__esModule", { value: true }), sa.default = void 0;
     var Yh = { id: "auto-start/interactableMethods", install: function(i) {
+=======
+    var la = {};
+    function Jh(i) {
+      return s.default.bool(i) ? (this.options.styleCursor = i, this) : i === null ? (delete this.options.styleCursor, this) : this.options.styleCursor;
+    }
+    __name(Jh, "Jh");
+    c(Jh, "Yt");
+    function em(i) {
+      return s.default.func(i) ? (this.options.actionChecker = i, this) : i === null ? (delete this.options.actionChecker, this) : this.options.actionChecker;
+    }
+    __name(em, "em");
+    c(em, "Wt"), Object.defineProperty(la, "__esModule", { value: true }), la.default = void 0;
+    var tm = { id: "auto-start/interactableMethods", install: function(i) {
+>>>>>>> Stashed changes
       var o = i.Interactable;
       o.prototype.getAction = function(l, u, f, g) {
         var E = function(b, x, O, I, P) {
@@ -1935,6 +2904,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return this._backCompatOption("ignoreFrom", l);
       }, "Interactable.ignoreFrom() has been deprecated. Use Interactble.draggable({ignoreFrom: newValue})."), o.prototype.allowFrom = (0, ar.warnOnce)(function(l) {
         return this._backCompatOption("allowFrom", l);
+<<<<<<< Updated upstream
       }, "Interactable.allowFrom() has been deprecated. Use Interactble.draggable({allowFrom: newValue})."), o.prototype.actionChecker = Vh, o.prototype.styleCursor = Wh;
     } };
     sa.default = Yh;
@@ -1949,29 +2919,59 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         var O = u[b], I = f[b], P = O.getAction(o, l, i, I);
         if (P) {
           var k = rc(P, O, I, g, E);
+=======
+      }, "Interactable.allowFrom() has been deprecated. Use Interactble.draggable({allowFrom: newValue})."), o.prototype.actionChecker = em, o.prototype.styleCursor = Jh;
+    } };
+    la.default = tm;
+    var mi = {};
+    function sc(i, o, l, u, f) {
+      return o.testIgnoreAllow(o.options[i.name], l, u) && o.options[i.name].enabled && ua(o, l, i, f) ? i : null;
+    }
+    __name(sc, "sc");
+    c(sc, "Vt");
+    function rm(i, o, l, u, f, g, E) {
+      for (var b = 0, w = u.length; b < w; b++) {
+        var O = u[b], I = f[b], P = O.getAction(o, l, i, I);
+        if (P) {
+          var k = sc(P, O, I, g, E);
+>>>>>>> Stashed changes
           if (k)
             return { action: k, interactable: O, element: I };
         }
       }
       return { action: null, interactable: null, element: null };
     }
+<<<<<<< Updated upstream
     __name(Xh, "Xh");
     c(Xh, "Nt");
     function nc(i, o, l, u, f) {
+=======
+    __name(rm, "rm");
+    c(rm, "Nt");
+    function lc(i, o, l, u, f) {
+>>>>>>> Stashed changes
       var g = [], E = [], b = u;
       function x(I) {
         g.push(I), E.push(b);
       }
+<<<<<<< Updated upstream
       __name(x, "x");
       for (c(x, "u"); s.default.element(b); ) {
         g = [], E = [], f.interactables.forEachMatch(b, x);
         var O = Xh(i, o, l, g, E, u, f);
+=======
+      __name(w, "w");
+      for (c(w, "u"); s.default.element(b); ) {
+        g = [], E = [], f.interactables.forEachMatch(b, w);
+        var O = rm(i, o, l, g, E, u, f);
+>>>>>>> Stashed changes
         if (O.action && !O.interactable.options[O.action.name].manualStart)
           return O;
         b = z.parentNode(b);
       }
       return { action: null, interactable: null, element: null };
     }
+<<<<<<< Updated upstream
     __name(nc, "nc");
     c(nc, "qt");
     function ic(i, o, l) {
@@ -1982,6 +2982,18 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     c(ic, "Gt");
     function la(i, o, l, u) {
       var f = i.options, g = f[l.name].max, E = f[l.name].maxPerElement, b = u.autoStart.maxInteractions, x = 0, O = 0, I = 0;
+=======
+    __name(lc, "lc");
+    c(lc, "qt");
+    function uc(i, o, l) {
+      var u = o.action, f = o.interactable, g = o.element;
+      u = u || { name: null }, i.interactable = f, i.element = g, (0, ar.copyAction)(i.prepared, u), i.rect = f && u.name ? f.getRect(g) : null, pc(i, l), l.fire("autoStart:prepared", { interaction: i });
+    }
+    __name(uc, "uc");
+    c(uc, "Gt");
+    function ua(i, o, l, u) {
+      var f = i.options, g = f[l.name].max, E = f[l.name].maxPerElement, b = u.autoStart.maxInteractions, w = 0, O = 0, I = 0;
+>>>>>>> Stashed changes
       if (!(g && E && b))
         return false;
       for (var P = 0; P < u.interactions.list.length; P++) {
@@ -1991,6 +3003,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }
       return b > 0;
     }
+<<<<<<< Updated upstream
     __name(la, "la");
     c(la, "$t");
     function oc(i, o) {
@@ -2005,6 +3018,22 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Qs, "Qs");
     c(Qs, "Kt");
     function ac(i, o) {
+=======
+    __name(ua, "ua");
+    c(ua, "$t");
+    function cc(i, o) {
+      return s.default.number(i) ? (o.autoStart.maxInteractions = i, this) : o.autoStart.maxInteractions;
+    }
+    __name(cc, "cc");
+    c(cc, "Ht");
+    function tl(i, o, l) {
+      var u = l.autoStart.cursorElement;
+      u && u !== i && (u.style.cursor = ""), i.ownerDocument.documentElement.style.cursor = o, i.style.cursor = o, l.autoStart.cursorElement = o ? i : null;
+    }
+    __name(tl, "tl");
+    c(tl, "Kt");
+    function pc(i, o) {
+>>>>>>> Stashed changes
       var l = i.interactable, u = i.element, f = i.prepared;
       if (i.pointerType === "mouse" && l && l.options.styleCursor) {
         var g = "";
@@ -2012,6 +3041,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           var E = l.options[f.name].cursorChecker;
           g = s.default.func(E) ? E(f, l, u, i._interacting) : o.actions.map[f.name].getCursor(f);
         }
+<<<<<<< Updated upstream
         Qs(i.element, g || "", o);
       } else
         o.autoStart.cursorElement && Qs(o.autoStart.cursorElement, "", o);
@@ -2030,22 +3060,55 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       (function(l, u) {
         var f = l.interaction, g = l.pointer, E = l.event, b = l.eventTarget;
         f.pointerType !== "mouse" || f.pointerIsDown || f.interacting() || ic(f, nc(f, g, E, b, u), u);
+=======
+        tl(i.element, g || "", o);
+      } else
+        o.autoStart.cursorElement && tl(o.autoStart.cursorElement, "", o);
+    }
+    __name(pc, "pc");
+    c(pc, "Zt"), Object.defineProperty(mi, "__esModule", { value: true }), mi.default = void 0;
+    var nm = { id: "auto-start/base", before: ["actions"], install: function(i) {
+      var o = i.interactStatic, l = i.defaults;
+      i.usePlugin(la.default), l.base.actionChecker = null, l.base.styleCursor = true, (0, W.default)(l.perAction, { manualStart: false, max: 1 / 0, maxPerElement: 1, allowFrom: null, ignoreFrom: null, mouseButtons: 1 }), o.maxInteractions = function(u) {
+        return cc(u, i);
+      }, i.autoStart = { maxInteractions: 1 / 0, withinInteractionLimit: ua, cursorElement: null };
+    }, listeners: { "interactions:down": function(i, o) {
+      var l = i.interaction, u = i.pointer, f = i.event, g = i.eventTarget;
+      l.interacting() || uc(l, lc(l, u, f, g, o), o);
+    }, "interactions:move": function(i, o) {
+      (function(l, u) {
+        var f = l.interaction, g = l.pointer, E = l.event, b = l.eventTarget;
+        f.pointerType !== "mouse" || f.pointerIsDown || f.interacting() || uc(f, lc(f, g, E, b, u), u);
+>>>>>>> Stashed changes
       })(i, o), function(l, u) {
         var f = l.interaction;
         if (f.pointerIsDown && !f.interacting() && f.pointerWasMoved && f.prepared.name) {
           u.fire("autoStart:before-start", l);
           var g = f.interactable, E = f.prepared.name;
+<<<<<<< Updated upstream
           E && g && (g.options[E].manualStart || !la(g, f.element, f.prepared, u) ? f.stop() : (f.start(f.prepared, g, f.element), ac(f, u)));
+=======
+          E && g && (g.options[E].manualStart || !ua(g, f.element, f.prepared, u) ? f.stop() : (f.start(f.prepared, g, f.element), pc(f, u)));
+>>>>>>> Stashed changes
         }
       }(i, o);
     }, "interactions:stop": function(i, o) {
       var l = i.interaction, u = l.interactable;
+<<<<<<< Updated upstream
       u && u.options.styleCursor && Qs(l.element, "", o);
     } }, maxInteractions: oc, withinInteractionLimit: la, validateAction: rc }, Kh = Zh;
     fi.default = Kh;
     var ua = {};
     Object.defineProperty(ua, "__esModule", { value: true }), ua.default = void 0;
     var Qh = { id: "auto-start/dragAxis", listeners: { "autoStart:before-start": function(i, o) {
+=======
+      u && u.options.styleCursor && tl(l.element, "", o);
+    } }, maxInteractions: cc, withinInteractionLimit: ua, validateAction: sc }, im = nm;
+    mi.default = im;
+    var ca = {};
+    Object.defineProperty(ca, "__esModule", { value: true }), ca.default = void 0;
+    var om = { id: "auto-start/dragAxis", listeners: { "autoStart:before-start": function(i, o) {
+>>>>>>> Stashed changes
       var l = i.interaction, u = i.eventTarget, f = i.dx, g = i.dy;
       if (l.prepared.name === "drag") {
         var E = Math.abs(f), b = Math.abs(g), x = l.interactable.options.drag, O = x.startAxis, I = E > b ? "x" : E < b ? "y" : "xy";
@@ -2055,13 +3118,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             if (R !== l.interactable) {
               var q = l.interactable.options.drag;
               if (!q.manualStart && R.testIgnoreAllow(q, P, u)) {
-                var X = R.getAction(l.downPointer, l.downEvent, l, P);
-                if (X && X.name === "drag" && function(F, ne) {
+                var Z = R.getAction(l.downPointer, l.downEvent, l, P);
+                if (Z && Z.name === "drag" && function(F, ne) {
                   if (!ne)
                     return false;
                   var oe = ne.options.drag.startAxis;
                   return F === "xy" || oe === "xy" || oe === F;
+<<<<<<< Updated upstream
                 }(I, R) && fi.default.validateAction(X, R, P, u, o))
+=======
+                }(I, R) && mi.default.validateAction(Z, R, P, u, o))
+>>>>>>> Stashed changes
                   return R;
               }
             }
@@ -2076,24 +3143,40 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
       }
     } } };
+<<<<<<< Updated upstream
     ua.default = Qh;
     var ca = {};
     function Js(i) {
+=======
+    ca.default = om;
+    var pa = {};
+    function rl(i) {
+>>>>>>> Stashed changes
       var o = i.prepared && i.prepared.name;
       if (!o)
         return null;
       var l = i.interactable.options;
       return l[o].hold || l[o].delay;
     }
+<<<<<<< Updated upstream
     __name(Js, "Js");
     c(Js, "re"), Object.defineProperty(ca, "__esModule", { value: true }), ca.default = void 0;
     var Jh = { id: "auto-start/hold", install: function(i) {
+=======
+    __name(rl, "rl");
+    c(rl, "re"), Object.defineProperty(pa, "__esModule", { value: true }), pa.default = void 0;
+    var am = { id: "auto-start/hold", install: function(i) {
+>>>>>>> Stashed changes
       var o = i.defaults;
       i.usePlugin(fi.default), o.perAction.hold = 0, o.perAction.delay = 0;
     }, listeners: { "interactions:new": function(i) {
       i.interaction.autoStartHoldTimer = null;
     }, "autoStart:prepared": function(i) {
+<<<<<<< Updated upstream
       var o = i.interaction, l = Js(o);
+=======
+      var o = i.interaction, l = rl(o);
+>>>>>>> Stashed changes
       l > 0 && (o.autoStartHoldTimer = setTimeout(function() {
         o.start(o.prepared, o.interactable, o.element);
       }, l));
@@ -2102,6 +3185,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       o.autoStartHoldTimer && o.pointerWasMoved && !l && (clearTimeout(o.autoStartHoldTimer), o.autoStartHoldTimer = null);
     }, "autoStart:before-start": function(i) {
       var o = i.interaction;
+<<<<<<< Updated upstream
       Js(o) > 0 && (o.prepared.name = null);
     } }, getHoldDuration: Js }, em = Jh;
     ca.default = em;
@@ -2126,6 +3210,32 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     function sc(i) {
       var o = i.Interactable;
       o.prototype.preventDefault = rm, o.prototype.checkAndPreventDefault = function(l) {
+=======
+      rl(o) > 0 && (o.prepared.name = null);
+    } }, getHoldDuration: rl }, sm = am;
+    pa.default = sm;
+    var da = {};
+    Object.defineProperty(da, "__esModule", { value: true }), da.default = void 0;
+    var lm = { id: "auto-start", install: function(i) {
+      i.usePlugin(mi.default), i.usePlugin(pa.default), i.usePlugin(ca.default);
+    } };
+    da.default = lm;
+    var vi = {};
+    function um(i) {
+      return /^(always|never|auto)$/.test(i) ? (this.options.preventDefault = i, this) : s.default.bool(i) ? (this.options.preventDefault = i ? "always" : "never", this) : this.options.preventDefault;
+    }
+    __name(um, "um");
+    c(um, "ue");
+    function cm(i) {
+      var o = i.interaction, l = i.event;
+      o.interactable && o.interactable.checkAndPreventDefault(l);
+    }
+    __name(cm, "cm");
+    c(cm, "ce");
+    function dc(i) {
+      var o = i.Interactable;
+      o.prototype.preventDefault = um, o.prototype.checkAndPreventDefault = function(l) {
+>>>>>>> Stashed changes
         return function(u, f, g) {
           var E = u.options.preventDefault;
           if (E !== "never")
@@ -2147,6 +3257,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
       } });
     }
+<<<<<<< Updated upstream
     __name(sc, "sc");
     c(sc, "fe"), Object.defineProperty(hi, "__esModule", { value: true }), hi.default = void 0, hi.install = sc;
     var im = { id: "core/interactablePreventDefault", install: sc, listeners: ["down", "move", "up", "cancel"].reduce(function(i, o) {
@@ -2164,6 +3275,25 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     tl.default = om;
     var Bn = {};
     Object.defineProperty(Bn, "__esModule", { value: true }), Bn.default = c(/* @__PURE__ */ __name(function i(o) {
+=======
+    __name(dc, "dc");
+    c(dc, "fe"), Object.defineProperty(vi, "__esModule", { value: true }), vi.default = void 0, vi.install = dc;
+    var pm = { id: "core/interactablePreventDefault", install: dc, listeners: ["down", "move", "up", "cancel"].reduce(function(i, o) {
+      return i["interactions:".concat(o)] = cm, i;
+    }, {}) };
+    vi.default = pm;
+    var nl = {};
+    Object.defineProperty(nl, "__esModule", { value: true }), nl.default = void 0, nl.default = {};
+    var eo, il = {};
+    Object.defineProperty(il, "__esModule", { value: true }), il.default = void 0, function(i) {
+      i.touchAction = "touchAction", i.boxSizing = "boxSizing", i.noListeners = "noListeners";
+    }(eo || (eo = {})), eo.touchAction, eo.boxSizing, eo.noListeners;
+    var dm = { id: "dev-tools", install: function() {
+    } };
+    il.default = dm;
+    var Hn = {};
+    Object.defineProperty(Hn, "__esModule", { value: true }), Hn.default = c(/* @__PURE__ */ __name(function i(o) {
+>>>>>>> Stashed changes
       var l = {};
       for (var u in o) {
         var f = o[u];
@@ -2171,8 +3301,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }
       return l;
     }, "i"), "t");
+<<<<<<< Updated upstream
     var Hn = {};
     function lc(i, o) {
+=======
+    var $n = {};
+    function fc(i, o) {
+>>>>>>> Stashed changes
       return function(l) {
         if (Array.isArray(l))
           return l;
@@ -2198,31 +3333,50 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }(i, o) || function(l, u) {
         if (l) {
           if (typeof l == "string")
+<<<<<<< Updated upstream
             return uc(l, u);
           var f = Object.prototype.toString.call(l).slice(8, -1);
           return f === "Object" && l.constructor && (f = l.constructor.name), f === "Map" || f === "Set" ? Array.from(l) : f === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(f) ? uc(l, u) : void 0;
+=======
+            return hc(l, u);
+          var f = Object.prototype.toString.call(l).slice(8, -1);
+          return f === "Object" && l.constructor && (f = l.constructor.name), f === "Map" || f === "Set" ? Array.from(l) : f === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(f) ? hc(l, u) : void 0;
+>>>>>>> Stashed changes
         }
       }(i, o) || function() {
         throw new TypeError(`Invalid attempt to destructure non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
       }();
     }
+<<<<<<< Updated upstream
     __name(lc, "lc");
     c(lc, "be");
     function uc(i, o) {
+=======
+    __name(fc, "fc");
+    c(fc, "be");
+    function hc(i, o) {
+>>>>>>> Stashed changes
       (o == null || o > i.length) && (o = i.length);
       for (var l = 0, u = Array(o); l < o; l++)
         u[l] = i[l];
       return u;
     }
+<<<<<<< Updated upstream
     __name(uc, "uc");
     c(uc, "xe");
     function am(i, o) {
+=======
+    __name(hc, "hc");
+    c(hc, "xe");
+    function fm(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(am, "am");
     c(am, "we");
     function $n(i, o, l) {
@@ -2231,11 +3385,25 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name($n, "$n");
     c($n, "_e"), Object.defineProperty(Hn, "__esModule", { value: true }), Hn.default = void 0, Hn.getRectOffset = cc;
     var sm = function() {
+=======
+    __name(fm, "fm");
+    c(fm, "we");
+    function qn(i, o, l) {
+      return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
+    }
+    __name(qn, "qn");
+    c(qn, "_e"), Object.defineProperty($n, "__esModule", { value: true }), $n.default = void 0, $n.getRectOffset = mc;
+    var hm = function() {
+>>>>>>> Stashed changes
       function i(u) {
         (function(f, g) {
           if (!(f instanceof g))
             throw new TypeError("Cannot call a class as a function");
+<<<<<<< Updated upstream
         })(this, i), $n(this, "states", []), $n(this, "startOffset", { left: 0, right: 0, top: 0, bottom: 0 }), $n(this, "startDelta", void 0), $n(this, "result", void 0), $n(this, "endResult", void 0), $n(this, "edges", void 0), $n(this, "interaction", void 0), this.interaction = u, this.result = da();
+=======
+        })(this, i), qn(this, "states", []), qn(this, "startOffset", { left: 0, right: 0, top: 0, bottom: 0 }), qn(this, "startDelta", void 0), qn(this, "result", void 0), qn(this, "endResult", void 0), qn(this, "edges", void 0), qn(this, "interaction", void 0), this.interaction = u, this.result = fa();
+>>>>>>> Stashed changes
       }
       __name(i, "i");
       c(i, "t");
@@ -2250,9 +3418,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             return !!k;
           });
         }(E);
+<<<<<<< Updated upstream
         this.prepareStates(b), this.edges = (0, W.default)({}, E.edges), this.startOffset = cc(E.rect, f), this.startDelta = { x: 0, y: 0 };
         var x = this.fillArg({ phase: g, pageCoords: f, preEnd: false });
         return this.result = da(), this.startAll(x), this.result = this.setAll(x);
+=======
+        this.prepareStates(b), this.edges = (0, W.default)({}, E.edges), this.startOffset = mc(E.rect, f), this.startDelta = { x: 0, y: 0 };
+        var w = this.fillArg({ phase: g, pageCoords: f, preEnd: false });
+        return this.result = fa(), this.startAll(w), this.result = this.setAll(w);
+>>>>>>> Stashed changes
       } }, { key: "fillArg", value: function(u) {
         var f = this.interaction;
         return u.interaction = f, u.interactable = f.interactable, u.element = f.element, u.rect = u.rect || f.rect, u.edges = this.edges, u.startOffset = this.startOffset, u;
@@ -2264,26 +3438,35 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       } }, { key: "setAll", value: function(u) {
         var f = u.phase, g = u.preEnd, E = u.skipModifiers, b = u.rect;
         u.coords = (0, W.default)({}, u.pageCoords), u.rect = (0, W.default)({}, b);
+<<<<<<< Updated upstream
         for (var x = E ? this.states.slice(E) : this.states, O = da(u.coords, u.rect), I = 0; I < x.length; I++) {
           var P, k = x[I], G = k.options, R = (0, W.default)({}, u.coords), q = null;
+=======
+        for (var w = E ? this.states.slice(E) : this.states, O = fa(u.coords, u.rect), I = 0; I < w.length; I++) {
+          var P, k = w[I], G = k.options, R = (0, W.default)({}, u.coords), q = null;
+>>>>>>> Stashed changes
           (P = k.methods) != null && P.set && this.shouldDo(G, g, f) && (u.state = k, q = k.methods.set(u), ue.addEdges(this.interaction.edges, u.rect, { x: u.coords.x - R.x, y: u.coords.y - R.y })), O.eventProps.push(q);
         }
         O.delta.x = u.coords.x - u.pageCoords.x, O.delta.y = u.coords.y - u.pageCoords.y, O.rectDelta.left = u.rect.left - b.left, O.rectDelta.right = u.rect.right - b.right, O.rectDelta.top = u.rect.top - b.top, O.rectDelta.bottom = u.rect.bottom - b.bottom;
-        var X = this.result.coords, F = this.result.rect;
-        if (X && F) {
+        var Z = this.result.coords, F = this.result.rect;
+        if (Z && F) {
           var ne = O.rect.left !== F.left || O.rect.right !== F.right || O.rect.top !== F.top || O.rect.bottom !== F.bottom;
-          O.changed = ne || X.x !== O.coords.x || X.y !== O.coords.y;
+          O.changed = ne || Z.x !== O.coords.x || Z.y !== O.coords.y;
         }
         return O;
       } }, { key: "applyToInteraction", value: function(u) {
         var f = this.interaction, g = u.phase, E = f.coords.cur, b = f.coords.start, x = this.result, O = this.startDelta, I = x.delta;
         g === "start" && (0, W.default)(this.startDelta, x.delta);
         for (var P = 0; P < [[b, O], [E, I]].length; P++) {
+<<<<<<< Updated upstream
           var k = lc([[b, O], [E, I]][P], 2), G = k[0], R = k[1];
+=======
+          var k = fc([[b, O], [E, I]][P], 2), G = k[0], R = k[1];
+>>>>>>> Stashed changes
           G.page.x += R.x, G.page.y += R.y, G.client.x += R.x, G.client.y += R.y;
         }
-        var q = this.result.rectDelta, X = u.rect || f.rect;
-        X.left += q.left, X.right += q.right, X.top += q.top, X.bottom += q.bottom, X.width = X.right - X.left, X.height = X.bottom - X.top;
+        var q = this.result.rectDelta, Z = u.rect || f.rect;
+        Z.left += q.left, Z.right += q.right, Z.top += q.top, Z.bottom += q.bottom, Z.width = Z.right - Z.left, Z.height = Z.bottom - Z.top;
       } }, { key: "setAndApply", value: function(u) {
         var f = this.interaction, g = u.phase, E = u.preEnd, b = u.skipModifiers, x = this.setAll(this.fillArg({ preEnd: E, phase: g, pageCoords: u.modifiedCoords || f.coords.cur.page }));
         if (this.result = x, !x.changed && (!b || b < this.states.length) && f.interacting())
@@ -2327,9 +3510,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       } }, { key: "restoreInteractionCoords", value: function(u) {
         var f = u.interaction, g = f.coords, E = f.rect, b = f.modification;
         if (b.result) {
+<<<<<<< Updated upstream
           for (var x = b.startDelta, O = b.result, I = O.delta, P = O.rectDelta, k = [[g.start, x], [g.cur, I]], G = 0; G < k.length; G++) {
             var R = lc(k[G], 2), q = R[0], X = R[1];
             q.page.x -= X.x, q.page.y -= X.y, q.client.x -= X.x, q.client.y -= X.y;
+=======
+          for (var w = b.startDelta, O = b.result, I = O.delta, P = O.rectDelta, k = [[g.start, w], [g.cur, I]], G = 0; G < k.length; G++) {
+            var R = fc(k[G], 2), q = R[0], Z = R[1];
+            q.page.x -= Z.x, q.page.y -= Z.y, q.client.x -= Z.x, q.client.y -= Z.y;
+>>>>>>> Stashed changes
           }
           E.left -= P.left, E.right -= P.right, E.top -= P.top, E.bottom -= P.bottom;
         }
@@ -2337,6 +3526,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return !(!u || u.enabled === false || E && !u.endOnly || u.endOnly && !f || g === "start" && !u.setStart);
       } }, { key: "copyFrom", value: function(u) {
         this.startOffset = u.startOffset, this.startDelta = u.startDelta, this.edges = u.edges, this.states = u.states.map(function(f) {
+<<<<<<< Updated upstream
           return (0, Bn.default)(f);
         }), this.result = da((0, W.default)({}, u.result.coords), (0, W.default)({}, u.result.rect));
       } }, { key: "destroy", value: function() {
@@ -2361,6 +3551,32 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     __name(fa, "fa");
     c(fa, "Te"), Object.defineProperty(Et, "__esModule", { value: true }), Et.addEventModifiers = fa, Et.default = void 0, Et.makeModifier = function(i, o) {
+=======
+          return (0, Hn.default)(f);
+        }), this.result = fa((0, W.default)({}, u.result.coords), (0, W.default)({}, u.result.rect));
+      } }, { key: "destroy", value: function() {
+        for (var u in this)
+          this[u] = null;
+      } }]) && fm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
+    }();
+    function fa(i, o) {
+      return { rect: o, coords: i, delta: { x: 0, y: 0 }, rectDelta: { left: 0, right: 0, top: 0, bottom: 0 }, eventProps: [], changed: true };
+    }
+    __name(fa, "fa");
+    c(fa, "Oe");
+    function mc(i, o) {
+      return i ? { left: o.x - i.left, top: o.y - i.top, right: i.right - o.x, bottom: i.bottom - o.y } : { left: 0, top: 0, right: 0, bottom: 0 };
+    }
+    __name(mc, "mc");
+    c(mc, "Ee"), $n.default = hm;
+    var Et = {};
+    function ha(i) {
+      var o = i.iEvent, l = i.interaction.modification.result;
+      l && (o.modifiers = l.eventProps);
+    }
+    __name(ha, "ha");
+    c(ha, "Te"), Object.defineProperty(Et, "__esModule", { value: true }), Et.addEventModifiers = ha, Et.default = void 0, Et.makeModifier = function(i, o) {
+>>>>>>> Stashed changes
       var l = i.defaults, u = { start: i.start, set: i.set, beforeEnd: i.beforeEnd, stop: i.stop }, f = c(function(g) {
         var E = g || {};
         for (var b in E.enabled = E.enabled !== false, l)
@@ -2374,7 +3590,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }, "o");
       return o && typeof o == "string" && (f._defaults = l, f._methods = u), f;
     };
+<<<<<<< Updated upstream
     var lm = { id: "modifiers/base", before: ["actions"], install: function(i) {
+=======
+    var mm = { id: "modifiers/base", before: ["actions"], install: function(i) {
+>>>>>>> Stashed changes
       i.defaults.perAction.modifiers = [];
     }, listeners: { "interactions:new": function(i) {
       var o = i.interaction;
@@ -2386,12 +3606,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       return i.interaction.modification.setAndApply(i);
     }, "interactions:before-action-end": function(i) {
       return i.interaction.modification.beforeEnd(i);
+<<<<<<< Updated upstream
     }, "interactions:action-start": fa, "interactions:action-move": fa, "interactions:action-end": fa, "interactions:after-action-start": function(i) {
+=======
+    }, "interactions:action-start": ha, "interactions:action-move": ha, "interactions:action-end": ha, "interactions:after-action-start": function(i) {
+>>>>>>> Stashed changes
       return i.interaction.modification.restoreInteractionCoords(i);
     }, "interactions:after-action-move": function(i) {
       return i.interaction.modification.restoreInteractionCoords(i);
     }, "interactions:stop": function(i) {
       return i.interaction.modification.stop(i);
+<<<<<<< Updated upstream
     } } }, um = lm;
     Et.default = um;
     var Ji = {};
@@ -2407,11 +3632,29 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(rl, "rl");
     c(rl, "De");
     function cm(i, o) {
+=======
+    } } }, vm = mm;
+    Et.default = vm;
+    var to = {};
+    Object.defineProperty(to, "__esModule", { value: true }), to.defaults = void 0, to.defaults = { base: { preventDefault: "auto", deltaSource: "page" }, perAction: { enabled: false, origin: { x: 0, y: 0 } }, actions: {} };
+    var ro = {};
+    function ol(i) {
+      return ol = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
+        return typeof o;
+      } : function(o) {
+        return o && typeof Symbol == "function" && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+      }, ol(i);
+    }
+    __name(ol, "ol");
+    c(ol, "De");
+    function gm(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(cm, "cm");
     c(cm, "Ae");
     function nl(i, o) {
@@ -2423,13 +3666,31 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     c(nl, "ze");
     function pm(i, o) {
       if (o && (rl(o) === "object" || typeof o == "function"))
+=======
+    __name(gm, "gm");
+    c(gm, "Ae");
+    function al(i, o) {
+      return al = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(l, u) {
+        return l.__proto__ = u, l;
+      }, al(i, o);
+    }
+    __name(al, "al");
+    c(al, "ze");
+    function bm(i, o) {
+      if (o && (ol(o) === "object" || typeof o == "function"))
+>>>>>>> Stashed changes
         return o;
       if (o !== void 0)
         throw new TypeError("Derived constructors may only return object or undefined");
       return Be(i);
     }
+<<<<<<< Updated upstream
     __name(pm, "pm");
     c(pm, "Ce");
+=======
+    __name(bm, "bm");
+    c(bm, "Ce");
+>>>>>>> Stashed changes
     function Be(i) {
       if (i === void 0)
         throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -2437,6 +3698,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     __name(Be, "Be");
     c(Be, "Re");
+<<<<<<< Updated upstream
     function ha(i) {
       return ha = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(o) {
         return o.__proto__ || Object.getPrototypeOf(o);
@@ -2444,16 +3706,34 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     __name(ha, "ha");
     c(ha, "Fe");
+=======
+    function ma(i) {
+      return ma = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(o) {
+        return o.__proto__ || Object.getPrototypeOf(o);
+      }, ma(i);
+    }
+    __name(ma, "ma");
+    c(ma, "Fe");
+>>>>>>> Stashed changes
     function We(i, o, l) {
       return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
     }
     __name(We, "We");
+<<<<<<< Updated upstream
     c(We, "Xe"), Object.defineProperty(eo, "__esModule", { value: true }), eo.InteractEvent = void 0;
     var pc = function(i) {
       (function(b, x) {
         if (typeof x != "function" && x !== null)
           throw new TypeError("Super expression must either be null or a function");
         b.prototype = Object.create(x && x.prototype, { constructor: { value: b, writable: true, configurable: true } }), Object.defineProperty(b, "prototype", { writable: false }), x && nl(b, x);
+=======
+    c(We, "Xe"), Object.defineProperty(ro, "__esModule", { value: true }), ro.InteractEvent = void 0;
+    var vc = function(i) {
+      (function(b, w) {
+        if (typeof w != "function" && w !== null)
+          throw new TypeError("Super expression must either be null or a function");
+        b.prototype = Object.create(w && w.prototype, { constructor: { value: b, writable: true, configurable: true } }), Object.defineProperty(b, "prototype", { writable: false }), w && al(b, w);
+>>>>>>> Stashed changes
       })(E, i);
       var o, l, u, f, g = (u = E, f = function() {
         if (typeof Reflect == "undefined" || !Reflect.construct || Reflect.construct.sham)
@@ -2467,6 +3747,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           return false;
         }
       }(), function() {
+<<<<<<< Updated upstream
         var b, x = ha(u);
         if (f) {
           var O = ha(this).constructor;
@@ -2474,15 +3755,29 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         } else
           b = x.apply(this, arguments);
         return pm(this, b);
+=======
+        var b, w = ma(u);
+        if (f) {
+          var O = ma(this).constructor;
+          b = Reflect.construct(w, arguments, O);
+        } else
+          b = w.apply(this, arguments);
+        return bm(this, b);
+>>>>>>> Stashed changes
       });
       function E(b, x, O, I, P, k, G) {
         var R;
-        (function(Fe, Se) {
-          if (!(Fe instanceof Se))
+        (function(Fe, Te) {
+          if (!(Fe instanceof Te))
             throw new TypeError("Cannot call a class as a function");
         })(this, E), We(Be(R = g.call(this, b)), "relatedTarget", null), We(Be(R), "screenX", void 0), We(Be(R), "screenY", void 0), We(Be(R), "button", void 0), We(Be(R), "buttons", void 0), We(Be(R), "ctrlKey", void 0), We(Be(R), "shiftKey", void 0), We(Be(R), "altKey", void 0), We(Be(R), "metaKey", void 0), We(Be(R), "page", void 0), We(Be(R), "client", void 0), We(Be(R), "delta", void 0), We(Be(R), "rect", void 0), We(Be(R), "x0", void 0), We(Be(R), "y0", void 0), We(Be(R), "t0", void 0), We(Be(R), "dt", void 0), We(Be(R), "duration", void 0), We(Be(R), "clientX0", void 0), We(Be(R), "clientY0", void 0), We(Be(R), "velocity", void 0), We(Be(R), "speed", void 0), We(Be(R), "swipe", void 0), We(Be(R), "axes", void 0), We(Be(R), "preEnd", void 0), P = P || b.element;
+<<<<<<< Updated upstream
         var q = b.interactable, X = (q && q.options || Ji.defaults).deltaSource, F = (0, De.default)(q, P, O), ne = I === "start", oe = I === "end", fe = ne ? Be(R) : b.prevEvent, Pe = ne ? b.coords.start : oe ? { page: fe.page, client: fe.client, timeStamp: b.coords.cur.timeStamp } : b.coords.cur;
         return R.page = (0, W.default)({}, Pe.page), R.client = (0, W.default)({}, Pe.client), R.rect = (0, W.default)({}, b.rect), R.timeStamp = Pe.timeStamp, oe || (R.page.x -= F.x, R.page.y -= F.y, R.client.x -= F.x, R.client.y -= F.y), R.ctrlKey = x.ctrlKey, R.altKey = x.altKey, R.shiftKey = x.shiftKey, R.metaKey = x.metaKey, R.button = x.button, R.buttons = x.buttons, R.target = P, R.currentTarget = P, R.preEnd = k, R.type = G || O + (I || ""), R.interactable = q, R.t0 = ne ? b.pointers[b.pointers.length - 1].downTime : fe.t0, R.x0 = b.coords.start.page.x - F.x, R.y0 = b.coords.start.page.y - F.y, R.clientX0 = b.coords.start.client.x - F.x, R.clientY0 = b.coords.start.client.y - F.y, R.delta = ne || oe ? { x: 0, y: 0 } : { x: R[X].x - fe[X].x, y: R[X].y - fe[X].y }, R.dt = b.coords.delta.timeStamp, R.duration = R.timeStamp - R.t0, R.velocity = (0, W.default)({}, b.coords.velocity[X]), R.speed = (0, Ze.default)(R.velocity.x, R.velocity.y), R.swipe = oe || I === "inertiastart" ? R.getSwipe() : null, R;
+=======
+        var q = b.interactable, Z = (q && q.options || to.defaults).deltaSource, F = (0, ke.default)(q, P, O), ne = I === "start", oe = I === "end", he = ne ? Be(R) : b.prevEvent, Pe = ne ? b.coords.start : oe ? { page: he.page, client: he.client, timeStamp: b.coords.cur.timeStamp } : b.coords.cur;
+        return R.page = (0, W.default)({}, Pe.page), R.client = (0, W.default)({}, Pe.client), R.rect = (0, W.default)({}, b.rect), R.timeStamp = Pe.timeStamp, oe || (R.page.x -= F.x, R.page.y -= F.y, R.client.x -= F.x, R.client.y -= F.y), R.ctrlKey = w.ctrlKey, R.altKey = w.altKey, R.shiftKey = w.shiftKey, R.metaKey = w.metaKey, R.button = w.button, R.buttons = w.buttons, R.target = P, R.currentTarget = P, R.preEnd = k, R.type = G || O + (I || ""), R.interactable = q, R.t0 = ne ? b.pointers[b.pointers.length - 1].downTime : he.t0, R.x0 = b.coords.start.page.x - F.x, R.y0 = b.coords.start.page.y - F.y, R.clientX0 = b.coords.start.client.x - F.x, R.clientY0 = b.coords.start.client.y - F.y, R.delta = ne || oe ? { x: 0, y: 0 } : { x: R[Z].x - he[Z].x, y: R[Z].y - he[Z].y }, R.dt = b.coords.delta.timeStamp, R.duration = R.timeStamp - R.t0, R.velocity = (0, W.default)({}, b.coords.velocity[Z]), R.speed = (0, Ke.default)(R.velocity.x, R.velocity.y), R.swipe = oe || I === "inertiastart" ? R.getSwipe() : null, R;
+>>>>>>> Stashed changes
       }
       __name(E, "E");
       return c(E, "a"), o = E, (l = [{ key: "getSwipe", value: function() {
@@ -2498,9 +3793,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         this.immediatePropagationStopped = this.propagationStopped = true;
       } }, { key: "stopPropagation", value: function() {
         this.propagationStopped = true;
+<<<<<<< Updated upstream
       } }]) && cm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), E;
     }(or.BaseEvent);
     eo.InteractEvent = pc, Object.defineProperties(pc.prototype, { pageX: { get: function() {
+=======
+      } }]) && gm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), E;
+    }(or.BaseEvent);
+    ro.InteractEvent = vc, Object.defineProperties(vc.prototype, { pageX: { get: function() {
+>>>>>>> Stashed changes
       return this.page.x;
     }, set: function(i) {
       this.page.x = i;
@@ -2533,13 +3834,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }, set: function(i) {
       this.velocity.y = i;
     } } });
+<<<<<<< Updated upstream
     var to = {};
     function dc(i, o) {
+=======
+    var no = {};
+    function gc(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(dc, "dc");
     c(dc, "We");
     function dm(i, o, l) {
@@ -2561,11 +3868,35 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     to.PointerInfo = fm;
     var ma, va, Ft = {};
     function hm(i, o) {
+=======
+    __name(gc, "gc");
+    c(gc, "We");
+    function ym(i, o, l) {
+      return o && gc(i.prototype, o), l && gc(i, l), Object.defineProperty(i, "prototype", { writable: false }), i;
+    }
+    __name(ym, "ym");
+    c(ym, "Le");
+    function io(i, o, l) {
+      return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
+    }
+    __name(io, "io");
+    c(io, "Ue"), Object.defineProperty(no, "__esModule", { value: true }), no.PointerInfo = void 0;
+    var xm = ym(c(/* @__PURE__ */ __name(function i(o, l, u, f, g) {
+      (function(E, b) {
+        if (!(E instanceof b))
+          throw new TypeError("Cannot call a class as a function");
+      })(this, i), io(this, "id", void 0), io(this, "pointer", void 0), io(this, "event", void 0), io(this, "downTime", void 0), io(this, "downTarget", void 0), this.id = o, this.pointer = l, this.event = u, this.downTime = f, this.downTarget = g;
+    }, "i"), "t"));
+    no.PointerInfo = xm;
+    var va, ga, Ft = {};
+    function wm(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(hm, "hm");
     c(hm, "$e");
     function Xe(i, o, l) {
@@ -2580,14 +3911,34 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       i.start = "", i.move = "", i.end = "", i.stop = "", i.interacting = "";
     }(va || (Ft._ProxyMethods = va = {}));
     var mm = 0, fc = function() {
+=======
+    __name(wm, "wm");
+    c(wm, "$e");
+    function Ze(i, o, l) {
+      return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
+    }
+    __name(Ze, "Ze");
+    c(Ze, "He"), Object.defineProperty(Ft, "__esModule", { value: true }), Ft.Interaction = void 0, Object.defineProperty(Ft, "PointerInfo", { enumerable: true, get: function() {
+      return no.PointerInfo;
+    } }), Ft.default = Ft._ProxyValues = Ft._ProxyMethods = void 0, Ft._ProxyValues = va, function(i) {
+      i.interactable = "", i.element = "", i.prepared = "", i.pointerIsDown = "", i.pointerWasMoved = "", i._proxy = "";
+    }(va || (Ft._ProxyValues = va = {})), Ft._ProxyMethods = ga, function(i) {
+      i.start = "", i.move = "", i.end = "", i.stop = "", i.interacting = "";
+    }(ga || (Ft._ProxyMethods = ga = {}));
+    var Em = 0, bc = function() {
+>>>>>>> Stashed changes
       function i(u) {
         var f = this, g = u.pointerType, E = u.scopeFire;
         (function(k, G) {
           if (!(k instanceof G))
             throw new TypeError("Cannot call a class as a function");
-        })(this, i), Xe(this, "interactable", null), Xe(this, "element", null), Xe(this, "rect", null), Xe(this, "_rects", void 0), Xe(this, "edges", null), Xe(this, "_scopeFire", void 0), Xe(this, "prepared", { name: null, axis: null, edges: null }), Xe(this, "pointerType", void 0), Xe(this, "pointers", []), Xe(this, "downEvent", null), Xe(this, "downPointer", {}), Xe(this, "_latestPointer", { pointer: null, event: null, eventTarget: null }), Xe(this, "prevEvent", null), Xe(this, "pointerIsDown", false), Xe(this, "pointerWasMoved", false), Xe(this, "_interacting", false), Xe(this, "_ending", false), Xe(this, "_stopped", true), Xe(this, "_proxy", null), Xe(this, "simulation", null), Xe(this, "doMove", (0, ar.warnOnce)(function(k) {
+        })(this, i), Ze(this, "interactable", null), Ze(this, "element", null), Ze(this, "rect", null), Ze(this, "_rects", void 0), Ze(this, "edges", null), Ze(this, "_scopeFire", void 0), Ze(this, "prepared", { name: null, axis: null, edges: null }), Ze(this, "pointerType", void 0), Ze(this, "pointers", []), Ze(this, "downEvent", null), Ze(this, "downPointer", {}), Ze(this, "_latestPointer", { pointer: null, event: null, eventTarget: null }), Ze(this, "prevEvent", null), Ze(this, "pointerIsDown", false), Ze(this, "pointerWasMoved", false), Ze(this, "_interacting", false), Ze(this, "_ending", false), Ze(this, "_stopped", true), Ze(this, "_proxy", null), Ze(this, "simulation", null), Ze(this, "doMove", (0, ar.warnOnce)(function(k) {
           this.move(k);
+<<<<<<< Updated upstream
         }, "The interaction.doMove() method has been renamed to interaction.move()")), Xe(this, "coords", { start: Q.newCoords(), prev: Q.newCoords(), cur: Q.newCoords(), delta: Q.newCoords(), velocity: Q.newCoords() }), Xe(this, "_id", mm++), this._scopeFire = E, this.pointerType = g;
+=======
+        }, "The interaction.doMove() method has been renamed to interaction.move()")), Ze(this, "coords", { start: Q.newCoords(), prev: Q.newCoords(), cur: Q.newCoords(), delta: Q.newCoords(), velocity: Q.newCoords() }), Ze(this, "_id", Em++), this._scopeFire = E, this.pointerType = g;
+>>>>>>> Stashed changes
         var b = this;
         this._proxy = {};
         var x = c(function(k) {
@@ -2595,14 +3946,23 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             return b[k];
           } });
         }, "a");
+<<<<<<< Updated upstream
         for (var O in ma)
           x(O);
+=======
+        for (var O in va)
+          w(O);
+>>>>>>> Stashed changes
         var I = c(function(k) {
           Object.defineProperty(f._proxy, k, { value: function() {
             return b[k].apply(b, arguments);
           } });
         }, "l");
+<<<<<<< Updated upstream
         for (var P in va)
+=======
+        for (var P in ga)
+>>>>>>> Stashed changes
           I(P);
         this._scopeFire("interactions:new", { interaction: this });
       }
@@ -2618,10 +3978,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return !(this.interacting() || !this.pointerIsDown || this.pointers.length < (u.name === "gesture" ? 2 : 1) || !f.options[u.name].enabled) && ((0, ar.copyAction)(this.prepared, u), this.interactable = f, this.element = g, this.rect = f.getRect(g), this.edges = this.prepared.edges ? (0, W.default)({}, this.prepared.edges) : { left: true, right: true, top: true, bottom: true }, this._stopped = false, this._interacting = this._doPhase({ interaction: this, event: this.downEvent, phase: "start" }) && !this._stopped, this._interacting);
       } }, { key: "pointerMove", value: function(u, f, g) {
         this.simulation || this.modification && this.modification.endResult || this.updatePointer(u, f, g, false);
+<<<<<<< Updated upstream
         var E, b, x = this.coords.cur.page.x === this.coords.prev.page.x && this.coords.cur.page.y === this.coords.prev.page.y && this.coords.cur.client.x === this.coords.prev.client.x && this.coords.cur.client.y === this.coords.prev.client.y;
         this.pointerIsDown && !this.pointerWasMoved && (E = this.coords.cur.client.x - this.coords.start.client.x, b = this.coords.cur.client.y - this.coords.start.client.y, this.pointerWasMoved = (0, Ze.default)(E, b) > this.pointerMoveTolerance);
         var O = this.getPointerIndex(u), I = { pointer: u, pointerIndex: O, pointerInfo: this.pointers[O], event: f, type: "move", eventTarget: g, dx: E, dy: b, duplicate: x, interaction: this };
         x || Q.setCoordVelocity(this.coords.velocity, this.coords.delta), this._scopeFire("interactions:move", I), x || this.simulation || (this.interacting() && (I.type = null, this.move(I)), this.pointerWasMoved && Q.copyCoords(this.coords.prev, this.coords.cur));
+=======
+        var E, b, w = this.coords.cur.page.x === this.coords.prev.page.x && this.coords.cur.page.y === this.coords.prev.page.y && this.coords.cur.client.x === this.coords.prev.client.x && this.coords.cur.client.y === this.coords.prev.client.y;
+        this.pointerIsDown && !this.pointerWasMoved && (E = this.coords.cur.client.x - this.coords.start.client.x, b = this.coords.cur.client.y - this.coords.start.client.y, this.pointerWasMoved = (0, Ke.default)(E, b) > this.pointerMoveTolerance);
+        var O = this.getPointerIndex(u), I = { pointer: u, pointerIndex: O, pointerInfo: this.pointers[O], event: f, type: "move", eventTarget: g, dx: E, dy: b, duplicate: w, interaction: this };
+        w || Q.setCoordVelocity(this.coords.velocity, this.coords.delta), this._scopeFire("interactions:move", I), w || this.simulation || (this.interacting() && (I.type = null, this.move(I)), this.pointerWasMoved && Q.copyCoords(this.coords.prev, this.coords.cur));
+>>>>>>> Stashed changes
       } }, { key: "move", value: function(u) {
         u && u.event || Q.setZeroCoords(this.coords.delta), (u = (0, W.default)({ pointer: this._latestPointer.pointer, event: this._latestPointer.event, eventTarget: this._latestPointer.eventTarget, interaction: this }, u || {})).phase = "move", this._doPhase(u);
       } }, { key: "pointerUp", value: function(u, f, g, E) {
@@ -2648,8 +4015,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       } }, { key: "getPointerInfo", value: function(u) {
         return this.pointers[this.getPointerIndex(u)];
       } }, { key: "updatePointer", value: function(u, f, g, E) {
+<<<<<<< Updated upstream
         var b = Q.getPointerId(u), x = this.getPointerIndex(u), O = this.pointers[x];
         return E = E !== false && (E || /(down|start)$/i.test(f.type)), O ? O.pointer = u : (O = new to.PointerInfo(b, u, f, null, null), x = this.pointers.length, this.pointers.push(O)), Q.setCoords(this.coords.cur, this.pointers.map(function(I) {
+=======
+        var b = Q.getPointerId(u), w = this.getPointerIndex(u), O = this.pointers[w];
+        return E = E !== false && (E || /(down|start)$/i.test(f.type)), O ? O.pointer = u : (O = new no.PointerInfo(b, u, f, null, null), w = this.pointers.length, this.pointers.push(O)), Q.setCoords(this.coords.cur, this.pointers.map(function(I) {
+>>>>>>> Stashed changes
           return I.pointer;
         }), this._now()), Q.setCoordDeltas(this.coords.delta, this.coords.prev, this.coords.cur), E && (this.pointerIsDown = true, O.downTime = this.coords.cur.timeStamp, O.downTarget = g, Q.pointerExtend(this.downPointer, u), this.interacting() || (Q.copyCoords(this.coords.start, this.coords.cur), Q.copyCoords(this.coords.prev, this.coords.cur), this.downEvent = f, this.pointerWasMoved = false)), this._updateLatestPointer(u, f, g), this._scopeFire("interactions:update-pointer", { pointer: u, event: f, eventTarget: g, down: E, pointerInfo: O, pointerIndex: x, interaction: this }), x;
       } }, { key: "removePointer", value: function(u, f) {
@@ -2663,7 +4035,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       } }, { key: "destroy", value: function() {
         this._latestPointer.pointer = null, this._latestPointer.event = null, this._latestPointer.eventTarget = null;
       } }, { key: "_createPreparedEvent", value: function(u, f, g, E) {
+<<<<<<< Updated upstream
         return new eo.InteractEvent(this, u, this.prepared.name, f, this.element, g, E);
+=======
+        return new ro.InteractEvent(this, u, this.prepared.name, f, this.element, g, E);
+>>>>>>> Stashed changes
       } }, { key: "_fireEvent", value: function(u) {
         var f;
         (f = this.interactable) == null || f.fire(u), (!this.prevEvent || u.timeStamp >= this.prevEvent.timeStamp) && (this.prevEvent = u);
@@ -2675,6 +4051,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return this._scopeFire("interactions:action-".concat(g), u), g === "start" && (this.prevEvent = O), this._fireEvent(O), this._scopeFire("interactions:after-action-".concat(g), u), true;
       } }, { key: "_now", value: function() {
         return Date.now();
+<<<<<<< Updated upstream
       } }], l && hm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
     }();
     Ft.Interaction = fc;
@@ -2692,11 +4069,31 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(mc, "mc");
     c(mc, "en");
     function il(i) {
+=======
+      } }], l && wm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
+    }();
+    Ft.Interaction = bc;
+    var Sm = bc;
+    Ft.default = Sm;
+    var Fn = {};
+    function yc(i) {
+      i.pointerIsDown && (ll(i.coords.cur, i.offset.total), i.offset.pending.x = 0, i.offset.pending.y = 0);
+    }
+    __name(yc, "yc");
+    c(yc, "tn");
+    function xc(i) {
+      sl(i.interaction);
+    }
+    __name(xc, "xc");
+    c(xc, "en");
+    function sl(i) {
+>>>>>>> Stashed changes
       if (!function(l) {
         return !(!l.offset.pending.x && !l.offset.pending.y);
       }(i))
         return false;
       var o = i.offset.pending;
+<<<<<<< Updated upstream
       return ol(i.coords.cur, o), ol(i.coords.delta, o), ue.addEdges(i.edges, i.rect, o), o.x = 0, o.y = 0, true;
     }
     __name(il, "il");
@@ -2722,27 +4119,71 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }, "interactions:before-action-start": mc, "interactions:before-action-move": mc, "interactions:before-action-end": function(i) {
       var o = i.interaction;
       if (il(o))
+=======
+      return ll(i.coords.cur, o), ll(i.coords.delta, o), ue.addEdges(i.edges, i.rect, o), o.x = 0, o.y = 0, true;
+    }
+    __name(sl, "sl");
+    c(sl, "nn");
+    function Tm(i) {
+      var o = i.x, l = i.y;
+      this.offset.pending.x += o, this.offset.pending.y += l, this.offset.total.x += o, this.offset.total.y += l;
+    }
+    __name(Tm, "Tm");
+    c(Tm, "rn");
+    function ll(i, o) {
+      var l = i.page, u = i.client, f = o.x, g = o.y;
+      l.x += f, l.y += g, u.x += f, u.y += g;
+    }
+    __name(ll, "ll");
+    c(ll, "on"), Object.defineProperty(Fn, "__esModule", { value: true }), Fn.addTotal = yc, Fn.applyPending = sl, Fn.default = void 0, Ft._ProxyMethods.offsetBy = "";
+    var Cm = { id: "offset", before: ["modifiers", "pointer-events", "actions", "inertia"], install: function(i) {
+      i.Interaction.prototype.offsetBy = Tm;
+    }, listeners: { "interactions:new": function(i) {
+      i.interaction.offset = { total: { x: 0, y: 0 }, pending: { x: 0, y: 0 } };
+    }, "interactions:update-pointer": function(i) {
+      return yc(i.interaction);
+    }, "interactions:before-action-start": xc, "interactions:before-action-move": xc, "interactions:before-action-end": function(i) {
+      var o = i.interaction;
+      if (sl(o))
+>>>>>>> Stashed changes
         return o.move({ offset: true }), o.end(), false;
     }, "interactions:stop": function(i) {
       var o = i.interaction;
       o.offset.total.x = 0, o.offset.total.y = 0, o.offset.pending.x = 0, o.offset.pending.y = 0;
+<<<<<<< Updated upstream
     } } }, ym = bm;
     qn.default = ym;
     var mi = {};
     function wm(i, o) {
+=======
+    } } }, Om = Cm;
+    Fn.default = Om;
+    var gi = {};
+    function Mm(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(wm, "wm");
     c(wm, "un");
+=======
+    __name(Mm, "Mm");
+    c(Mm, "un");
+>>>>>>> Stashed changes
     function bt(i, o, l) {
       return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
     }
     __name(bt, "bt");
+<<<<<<< Updated upstream
     c(bt, "cn"), Object.defineProperty(mi, "__esModule", { value: true }), mi.default = mi.InertiaState = void 0;
     var vc = function() {
+=======
+    c(bt, "cn"), Object.defineProperty(gi, "__esModule", { value: true }), gi.default = gi.InertiaState = void 0;
+    var wc = function() {
+>>>>>>> Stashed changes
       function i(u) {
         (function(f, g) {
           if (!(f instanceof g))
@@ -2753,11 +4194,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       c(i, "t");
       var o, l;
       return o = i, (l = [{ key: "start", value: function(u) {
+<<<<<<< Updated upstream
         var f = this.interaction, g = ga(f);
         if (!g || !g.enabled)
           return false;
         var E = f.coords.velocity.client, b = (0, Ze.default)(E.x, E.y), x = this.modification || (this.modification = new Hn.default(f));
         if (x.copyFrom(f.modification), this.t0 = f._now(), this.allowResume = g.allowResume, this.v0 = b, this.currentOffset = { x: 0, y: 0 }, this.startCoords = f.coords.cur.page, this.modifierArg = x.fillArg({ pageCoords: this.startCoords, preEnd: true, phase: "inertiastart" }), this.t0 - f.coords.cur.timeStamp < 50 && b > g.minSpeed && b > g.endSpeed)
+=======
+        var f = this.interaction, g = ba(f);
+        if (!g || !g.enabled)
+          return false;
+        var E = f.coords.velocity.client, b = (0, Ke.default)(E.x, E.y), w = this.modification || (this.modification = new $n.default(f));
+        if (w.copyFrom(f.modification), this.t0 = f._now(), this.allowResume = g.allowResume, this.v0 = b, this.currentOffset = { x: 0, y: 0 }, this.startCoords = f.coords.cur.page, this.modifierArg = w.fillArg({ pageCoords: this.startCoords, preEnd: true, phase: "inertiastart" }), this.t0 - f.coords.cur.timeStamp < 50 && b > g.minSpeed && b > g.endSpeed)
+>>>>>>> Stashed changes
           this.startInertia();
         else {
           if (x.result = x.setAll(this.modifierArg), !x.result.changed)
@@ -2766,7 +4215,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
         return f.modification.result.rect = null, f.offsetBy(this.targetOffset), f._doPhase({ interaction: f, event: u, phase: "inertiastart" }), f.offsetBy({ x: -this.targetOffset.x, y: -this.targetOffset.y }), f.modification.result.rect = null, this.active = true, f.simulation = this, true;
       } }, { key: "startInertia", value: function() {
+<<<<<<< Updated upstream
         var u = this, f = this.interaction.coords.velocity.client, g = ga(this.interaction), E = g.resistance, b = -Math.log(g.endSpeed / this.v0) / E;
+=======
+        var u = this, f = this.interaction.coords.velocity.client, g = ba(this.interaction), E = g.resistance, b = -Math.log(g.endSpeed / this.v0) / E;
+>>>>>>> Stashed changes
         this.targetOffset = { x: (f.x - b) / E, y: (f.y - b) / E }, this.te = b, this.lambda_v0 = E / this.v0, this.one_ve_v0 = 1 - g.endSpeed / this.v0;
         var x = this.modification, O = this.modifierArg;
         O.pageCoords = { x: this.startCoords.x + this.targetOffset.x, y: this.startCoords.y + this.targetOffset.y }, x.result = x.setAll(O), x.result.changed && (this.isModified = true, this.modifiedOffset = { x: this.targetOffset.x + x.result.delta.x, y: this.targetOffset.y + x.result.delta.y }), this.onNextFrame(function() {
@@ -2783,10 +4236,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           f.active && u();
         });
       } }, { key: "inertiaTick", value: function() {
+<<<<<<< Updated upstream
         var u, f, g, E, b, x = this, O = this.interaction, I = ga(O).resistance, P = (O._now() - this.t0) / 1e3;
         if (P < this.te) {
           var k, G = 1 - (Math.exp(-I * P) - this.lambda_v0) / this.one_ve_v0;
           this.isModified ? (u = this.targetOffset.x, f = this.targetOffset.y, g = this.modifiedOffset.x, E = this.modifiedOffset.y, k = { x: gc(b = G, 0, u, g), y: gc(b, 0, f, E) }) : k = { x: this.targetOffset.x * G, y: this.targetOffset.y * G };
+=======
+        var u, f, g, E, b, w = this, O = this.interaction, I = ba(O).resistance, P = (O._now() - this.t0) / 1e3;
+        if (P < this.te) {
+          var k, G = 1 - (Math.exp(-I * P) - this.lambda_v0) / this.one_ve_v0;
+          this.isModified ? (u = this.targetOffset.x, f = this.targetOffset.y, g = this.modifiedOffset.x, E = this.modifiedOffset.y, k = { x: Ec(b = G, 0, u, g), y: Ec(b, 0, f, E) }) : k = { x: this.targetOffset.x * G, y: this.targetOffset.y * G };
+>>>>>>> Stashed changes
           var R = { x: k.x - this.currentOffset.x, y: k.y - this.currentOffset.y };
           this.currentOffset.x += R.x, this.currentOffset.y += R.y, O.offsetBy(R), O.move(), this.onNextFrame(function() {
             return x.inertiaTick();
@@ -2794,10 +4254,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         } else
           O.offsetBy({ x: this.modifiedOffset.x - this.currentOffset.x, y: this.modifiedOffset.y - this.currentOffset.y }), this.end();
       } }, { key: "smoothEndTick", value: function() {
+<<<<<<< Updated upstream
         var u = this, f = this.interaction, g = f._now() - this.t0, E = ga(f).smoothEndDuration;
         if (g < E) {
           var b = { x: bc(g, 0, this.targetOffset.x, E), y: bc(g, 0, this.targetOffset.y, E) }, x = { x: b.x - this.currentOffset.x, y: b.y - this.currentOffset.y };
           this.currentOffset.x += x.x, this.currentOffset.y += x.y, f.offsetBy(x), f.move({ skipModifiers: this.modifierCount }), this.onNextFrame(function() {
+=======
+        var u = this, f = this.interaction, g = f._now() - this.t0, E = ba(f).smoothEndDuration;
+        if (g < E) {
+          var b = { x: Sc(g, 0, this.targetOffset.x, E), y: Sc(g, 0, this.targetOffset.y, E) }, w = { x: b.x - this.currentOffset.x, y: b.y - this.currentOffset.y };
+          this.currentOffset.x += w.x, this.currentOffset.y += w.y, f.offsetBy(w), f.move({ skipModifiers: this.modifierCount }), this.onNextFrame(function() {
+>>>>>>> Stashed changes
             return u.smoothEndTick();
           });
         } else
@@ -2809,6 +4276,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         this.interaction.move(), this.interaction.end(), this.stop();
       } }, { key: "stop", value: function() {
         this.active = this.smoothEnd = false, this.interaction.simulation = null, Pt.default.cancel(this.timeout);
+<<<<<<< Updated upstream
       } }]) && wm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
     }();
     function ga(i) {
@@ -2818,11 +4286,26 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(ga, "ga");
     c(ga, "dn"), mi.InertiaState = vc;
     var xm = { id: "inertia", before: ["modifiers", "actions"], install: function(i) {
+=======
+      } }]) && Mm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
+    }();
+    function ba(i) {
+      var o = i.interactable, l = i.prepared;
+      return o && o.options && l.name && o.options[l.name].inertia;
+    }
+    __name(ba, "ba");
+    c(ba, "dn"), gi.InertiaState = wc;
+    var Im = { id: "inertia", before: ["modifiers", "actions"], install: function(i) {
+>>>>>>> Stashed changes
       var o = i.defaults;
       i.usePlugin(qn.default), i.usePlugin(Et.default), i.actions.phases.inertiastart = true, i.actions.phases.resume = true, o.perAction.inertia = { enabled: false, resistance: 10, minSpeed: 100, endSpeed: 10, allowResume: true, smoothEndDuration: 300 };
     }, listeners: { "interactions:new": function(i) {
       var o = i.interaction;
+<<<<<<< Updated upstream
       o.inertia = new vc(o);
+=======
+      o.inertia = new wc(o);
+>>>>>>> Stashed changes
     }, "interactions:before-action-end": function(i) {
       var o = i.interaction, l = i.event;
       return (!o._interacting || o.simulation || !o.inertia.start(l)) && null;
@@ -2849,6 +4332,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }, "interactions:after-action-resume": function(i) {
       return i.interaction.modification.restoreInteractionCoords(i);
     } } };
+<<<<<<< Updated upstream
     function gc(i, o, l, u) {
       var f = 1 - i;
       return f * f * o + 2 * f * i * l + i * i * u;
@@ -2864,11 +4348,29 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     mi.default = Em;
     var no = {};
     function Sm(i, o) {
+=======
+    function Ec(i, o, l, u) {
+      var f = 1 - i;
+      return f * f * o + 2 * f * i * l + i * i * u;
+    }
+    __name(Ec, "Ec");
+    c(Ec, "vn");
+    function Sc(i, o, l, u) {
+      return -l * (i /= u) * (i - 2) + o;
+    }
+    __name(Sc, "Sc");
+    c(Sc, "hn");
+    var Am = Im;
+    gi.default = Am;
+    var oo = {};
+    function Pm(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(Sm, "Sm");
     c(Sm, "mn");
     function io(i, o, l) {
@@ -2877,6 +4379,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(io, "io");
     c(io, "bn");
     function yc(i, o) {
+=======
+    __name(Pm, "Pm");
+    c(Pm, "mn");
+    function ao(i, o, l) {
+      return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
+    }
+    __name(ao, "ao");
+    c(ao, "bn");
+    function Tc(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         if (i.immediatePropagationStopped)
@@ -2884,21 +4396,35 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         u(i);
       }
     }
+<<<<<<< Updated upstream
     __name(yc, "yc");
     c(yc, "xn"), Object.defineProperty(no, "__esModule", { value: true }), no.Eventable = void 0;
     var Cm = function() {
+=======
+    __name(Tc, "Tc");
+    c(Tc, "xn"), Object.defineProperty(oo, "__esModule", { value: true }), oo.Eventable = void 0;
+    var _m = function() {
+>>>>>>> Stashed changes
       function i(u) {
         (function(f, g) {
           if (!(f instanceof g))
             throw new TypeError("Cannot call a class as a function");
+<<<<<<< Updated upstream
         })(this, i), io(this, "options", void 0), io(this, "types", {}), io(this, "propagationStopped", false), io(this, "immediatePropagationStopped", false), io(this, "global", void 0), this.options = (0, W.default)({}, u || {});
+=======
+        })(this, i), ao(this, "options", void 0), ao(this, "types", {}), ao(this, "propagationStopped", false), ao(this, "immediatePropagationStopped", false), ao(this, "global", void 0), this.options = (0, W.default)({}, u || {});
+>>>>>>> Stashed changes
       }
       __name(i, "i");
       c(i, "t");
       var o, l;
       return o = i, (l = [{ key: "fire", value: function(u) {
         var f, g = this.global;
+<<<<<<< Updated upstream
         (f = this.types[u.type]) && yc(u, f), !u.propagationStopped && g && (f = g[u.type]) && yc(u, f);
+=======
+        (f = this.types[u.type]) && Tc(u, f), !u.propagationStopped && g && (f = g[u.type]) && Tc(u, f);
+>>>>>>> Stashed changes
       } }, { key: "on", value: function(u, f) {
         var g = (0, je.default)(u, f);
         for (u in g)
@@ -2915,11 +4441,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
       } }, { key: "getRect", value: function(u) {
         return null;
+<<<<<<< Updated upstream
       } }]) && Sm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
     }();
     no.Eventable = Cm;
     var oo = {};
     Object.defineProperty(oo, "__esModule", { value: true }), oo.default = function(i, o) {
+=======
+      } }]) && Pm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
+    }();
+    oo.Eventable = _m;
+    var so = {};
+    Object.defineProperty(so, "__esModule", { value: true }), so.default = function(i, o) {
+>>>>>>> Stashed changes
       if (o.phaselessTypes[i])
         return true;
       for (var l in o.map)
@@ -2927,8 +4461,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           return true;
       return false;
     };
+<<<<<<< Updated upstream
     var al = {};
     Object.defineProperty(al, "__esModule", { value: true }), al.createInteractStatic = function(i) {
+=======
+    var ul = {};
+    Object.defineProperty(ul, "__esModule", { value: true }), ul.createInteractStatic = function(i) {
+>>>>>>> Stashed changes
       var o = c(/* @__PURE__ */ __name(function l(u, f) {
         var g = i.interactables.get(u, f);
         return g || ((g = i.interactables.new(u, f)).events.global = l.globalEvents), g;
@@ -2950,7 +4489,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             this.on(b, l[b], u);
           return this;
         }
+<<<<<<< Updated upstream
         return (0, oo.default)(l, this.scope.actions) ? this.globalEvents[l] ? this.globalEvents[l].push(u) : this.globalEvents[l] = [u] : this.scope.events.add(this.scope.document, l, u, { options: f }), this;
+=======
+        return (0, so.default)(l, this.scope.actions) ? this.globalEvents[l] ? this.globalEvents[l].push(u) : this.globalEvents[l] = [u] : this.scope.events.add(this.scope.document, l, u, { options: f }), this;
+>>>>>>> Stashed changes
       }, "The interact.on() method is being deprecated"), o.off = (0, ar.warnOnce)(function(l, u, f) {
         if (s.default.string(l) && l.search(" ") !== -1 && (l = l.trim().split(/ +/)), s.default.array(l)) {
           for (var g = 0; g < l.length; g++) {
@@ -2964,8 +4507,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             this.off(b, l[b], u);
           return this;
         }
+<<<<<<< Updated upstream
         var x;
         return (0, oo.default)(l, this.scope.actions) ? l in this.globalEvents && (x = this.globalEvents[l].indexOf(u)) !== -1 && this.globalEvents[l].splice(x, 1) : this.scope.events.remove(this.scope.document, l, u, f), this;
+=======
+        var w;
+        return (0, so.default)(l, this.scope.actions) ? l in this.globalEvents && (w = this.globalEvents[l].indexOf(u)) !== -1 && this.globalEvents[l].splice(w, 1) : this.scope.events.remove(this.scope.document, l, u, f), this;
+>>>>>>> Stashed changes
       }, "The interact.off() method is being deprecated"), o.debug = function() {
         return this.scope;
       }, o.supportsTouch = function() {
@@ -2984,13 +4532,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         this.scope.removeDocument(l);
       }, o;
     };
+<<<<<<< Updated upstream
     var ba = {};
     function Tm(i, o) {
+=======
+    var ya = {};
+    function zm(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(Tm, "Tm");
     c(Tm, "En");
     function Yr(i, o, l) {
@@ -2999,11 +4553,25 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Yr, "Yr");
     c(Yr, "Sn"), Object.defineProperty(ba, "__esModule", { value: true }), ba.Interactable = void 0;
     var Om = function() {
+=======
+    __name(zm, "zm");
+    c(zm, "En");
+    function Zr(i, o, l) {
+      return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
+    }
+    __name(Zr, "Zr");
+    c(Zr, "Sn"), Object.defineProperty(ya, "__esModule", { value: true }), ya.Interactable = void 0;
+    var Rm = function() {
+>>>>>>> Stashed changes
       function i(u, f, g, E) {
         (function(b, x) {
           if (!(b instanceof x))
             throw new TypeError("Cannot call a class as a function");
+<<<<<<< Updated upstream
         })(this, i), Yr(this, "options", void 0), Yr(this, "_actions", void 0), Yr(this, "target", void 0), Yr(this, "events", new no.Eventable()), Yr(this, "_context", void 0), Yr(this, "_win", void 0), Yr(this, "_doc", void 0), Yr(this, "_scopeEvents", void 0), Yr(this, "_rectChecker", void 0), this._actions = f.actions, this.target = u, this._context = f.context || g, this._win = (0, r.getWindow)((0, z.trySelector)(u) ? this._context : u), this._doc = this._win.document, this._scopeEvents = E, this.set(f);
+=======
+        })(this, i), Zr(this, "options", void 0), Zr(this, "_actions", void 0), Zr(this, "target", void 0), Zr(this, "events", new oo.Eventable()), Zr(this, "_context", void 0), Zr(this, "_win", void 0), Zr(this, "_doc", void 0), Zr(this, "_scopeEvents", void 0), Zr(this, "_rectChecker", void 0), this._actions = f.actions, this.target = u, this._context = f.context || g, this._win = (0, r.getWindow)((0, z.trySelector)(u) ? this._context : u), this._doc = this._win.document, this._scopeEvents = E, this.set(f);
+>>>>>>> Stashed changes
       }
       __name(i, "i");
       c(i, "t");
@@ -3056,9 +4624,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         var b = u === "on" ? "add" : "remove", x = (0, je.default)(f, g);
         for (var O in x) {
           O === "wheel" && (O = $.default.wheelEvent);
+<<<<<<< Updated upstream
           for (var I = 0; I < x[O].length; I++) {
             var P = x[O][I];
             (0, oo.default)(O, this._actions) ? this.events[u](O, P) : s.default.string(this.target) ? this._scopeEvents["".concat(b, "Delegate")](this.target, this._context, O, P, E) : this._scopeEvents[b](this.target, O, P, E);
+=======
+          for (var I = 0; I < w[O].length; I++) {
+            var P = w[O][I];
+            (0, so.default)(O, this._actions) ? this.events[u](O, P) : s.default.string(this.target) ? this._scopeEvents["".concat(b, "Delegate")](this.target, this._context, O, P, E) : this._scopeEvents[b](this.target, O, P, E);
+>>>>>>> Stashed changes
           }
         }
         return this;
@@ -3086,16 +4660,25 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             }
         else
           this._scopeEvents.remove(this.target, "all");
+<<<<<<< Updated upstream
       } }]) && Tm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
     }();
     ba.Interactable = Om;
     var ya = {};
     function Mm(i, o) {
+=======
+      } }]) && zm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
+    }();
+    ya.Interactable = Rm;
+    var xa = {};
+    function Dm(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(Mm, "Mm");
     c(Mm, "Mn");
     function sl(i, o, l) {
@@ -3104,14 +4687,30 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(sl, "sl");
     c(sl, "kn"), Object.defineProperty(ya, "__esModule", { value: true }), ya.InteractableSet = void 0;
     var Im = function() {
+=======
+    __name(Dm, "Dm");
+    c(Dm, "Mn");
+    function cl(i, o, l) {
+      return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
+    }
+    __name(cl, "cl");
+    c(cl, "kn"), Object.defineProperty(xa, "__esModule", { value: true }), xa.InteractableSet = void 0;
+    var Nm = function() {
+>>>>>>> Stashed changes
       function i(u) {
         var f = this;
         (function(g, E) {
           if (!(g instanceof E))
             throw new TypeError("Cannot call a class as a function");
+<<<<<<< Updated upstream
         })(this, i), sl(this, "list", []), sl(this, "selectorMap", {}), sl(this, "scope", void 0), this.scope = u, u.addListeners({ "interactable:unset": function(g) {
           var E = g.interactable, b = E.target, x = E._context, O = s.default.string(b) ? f.selectorMap[b] : b[f.scope.id], I = Me.findIndex(O, function(P) {
             return P.context === x;
+=======
+        })(this, i), cl(this, "list", []), cl(this, "selectorMap", {}), cl(this, "scope", void 0), this.scope = u, u.addListeners({ "interactable:unset": function(g) {
+          var E = g.interactable, b = E.target, w = E._context, O = s.default.string(b) ? f.selectorMap[b] : b[f.scope.id], I = Me.findIndex(O, function(P) {
+            return P.context === w;
+>>>>>>> Stashed changes
           });
           O[I] && (O[I].context = null, O[I].interactable = null), O.splice(I, 1);
         } });
@@ -3137,16 +4736,25 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           if ((s.default.string(E.target) ? s.default.element(u) && z.matchesSelector(u, E.target) : u === E.target) && E.inContext(u) && (b = f(E)), b !== void 0)
             return b;
         }
+<<<<<<< Updated upstream
       } }]) && Mm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
     }();
     ya.InteractableSet = Im;
     var wa = {};
     function Am(i, o) {
+=======
+      } }]) && Dm(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
+    }();
+    xa.InteractableSet = Nm;
+    var wa = {};
+    function km(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(Am, "Am");
     c(Am, "An");
     function ll(i, o, l) {
@@ -3155,6 +4763,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(ll, "ll");
     c(ll, "zn");
     function ul(i, o) {
+=======
+    __name(km, "km");
+    c(km, "An");
+    function pl(i, o, l) {
+      return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
+    }
+    __name(pl, "pl");
+    c(pl, "zn");
+    function dl(i, o) {
+>>>>>>> Stashed changes
       return function(l) {
         if (Array.isArray(l))
           return l;
@@ -3180,31 +4798,53 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }(i, o) || function(l, u) {
         if (l) {
           if (typeof l == "string")
+<<<<<<< Updated upstream
             return wc(l, u);
           var f = Object.prototype.toString.call(l).slice(8, -1);
           return f === "Object" && l.constructor && (f = l.constructor.name), f === "Map" || f === "Set" ? Array.from(l) : f === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(f) ? wc(l, u) : void 0;
+=======
+            return Cc(l, u);
+          var f = Object.prototype.toString.call(l).slice(8, -1);
+          return f === "Object" && l.constructor && (f = l.constructor.name), f === "Map" || f === "Set" ? Array.from(l) : f === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(f) ? Cc(l, u) : void 0;
+>>>>>>> Stashed changes
         }
       }(i, o) || function() {
         throw new TypeError(`Invalid attempt to destructure non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
       }();
     }
+<<<<<<< Updated upstream
     __name(ul, "ul");
     c(ul, "Cn");
     function wc(i, o) {
+=======
+    __name(dl, "dl");
+    c(dl, "Cn");
+    function Cc(i, o) {
+>>>>>>> Stashed changes
       (o == null || o > i.length) && (o = i.length);
       for (var l = 0, u = Array(o); l < o; l++)
         u[l] = i[l];
       return u;
     }
+<<<<<<< Updated upstream
     __name(wc, "wc");
     c(wc, "Rn"), Object.defineProperty(wa, "__esModule", { value: true }), wa.default = void 0;
     var Pm = function() {
+=======
+    __name(Cc, "Cc");
+    c(Cc, "Rn"), Object.defineProperty(wa, "__esModule", { value: true }), wa.default = void 0;
+    var Lm = function() {
+>>>>>>> Stashed changes
       function i(u) {
         (function(f, g) {
           if (!(f instanceof g))
             throw new TypeError("Cannot call a class as a function");
+<<<<<<< Updated upstream
         })(this, i), ll(this, "currentTarget", void 0), ll(this, "originalEvent", void 0), ll(this, "type", void 0), this.originalEvent = u, (0, Ve.default)(this, u);
+=======
+        })(this, i), pl(this, "currentTarget", void 0), pl(this, "originalEvent", void 0), pl(this, "type", void 0), this.originalEvent = u, (0, Ve.default)(this, u);
+>>>>>>> Stashed changes
       }
       __name(i, "i");
       c(i, "t");
@@ -3215,14 +4855,21 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         this.originalEvent.stopPropagation();
       } }, { key: "stopImmediatePropagation", value: function() {
         this.originalEvent.stopImmediatePropagation();
+<<<<<<< Updated upstream
       } }]) && Am(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
     }();
     function ao(i) {
+=======
+      } }]) && km(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), i;
+    }();
+    function lo(i) {
+>>>>>>> Stashed changes
       if (!s.default.object(i))
         return { capture: !!i, passive: false };
       var o = (0, W.default)({}, i);
       return o.capture = !!i.capture, o.passive = !!i.passive, o;
     }
+<<<<<<< Updated upstream
     __name(ao, "ao");
     c(ao, "Xn");
     var _m = { id: "events", install: function(i) {
@@ -3233,22 +4880,45 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           for (var X = 0; X < f.length; X++) {
             var F = f[X];
             E(F, k, x), E(F, k, O, true);
+=======
+    __name(lo, "lo");
+    c(lo, "Xn");
+    var Gm = { id: "events", install: function(i) {
+      var o, l = [], u = {}, f = [], g = { add: E, remove: b, addDelegate: function(I, P, k, G, R) {
+        var q = lo(R);
+        if (!u[k]) {
+          u[k] = [];
+          for (var Z = 0; Z < f.length; Z++) {
+            var F = f[Z];
+            E(F, k, w), E(F, k, O, true);
+>>>>>>> Stashed changes
           }
         }
-        var ne = u[k], oe = Me.find(ne, function(fe) {
-          return fe.selector === I && fe.context === P;
+        var ne = u[k], oe = Me.find(ne, function(he) {
+          return he.selector === I && he.context === P;
         });
         oe || (oe = { selector: I, context: P, listeners: [] }, ne.push(oe)), oe.listeners.push([G, q]);
       }, removeDelegate: function(I, P, k, G, R) {
+<<<<<<< Updated upstream
         var q, X = ao(R), F = u[k], ne = false;
+=======
+        var q, Z = lo(R), F = u[k], ne = false;
+>>>>>>> Stashed changes
         if (F)
           for (q = F.length - 1; q >= 0; q--) {
             var oe = F[q];
             if (oe.selector === I && oe.context === P) {
+<<<<<<< Updated upstream
               for (var fe = oe.listeners, Pe = fe.length - 1; Pe >= 0; Pe--) {
                 var Fe = ul(fe[Pe], 2), Se = Fe[0], He = Fe[1], hr = He.capture, Zr = He.passive;
                 if (Se === G && hr === X.capture && Zr === X.passive) {
                   fe.splice(Pe, 1), fe.length || (F.splice(q, 1), b(P, k, x), b(P, k, O, true)), ne = true;
+=======
+              for (var he = oe.listeners, Pe = he.length - 1; Pe >= 0; Pe--) {
+                var Fe = dl(he[Pe], 2), Te = Fe[0], He = Fe[1], hr = He.capture, Qr = He.passive;
+                if (Te === G && hr === Z.capture && Qr === Z.passive) {
+                  he.splice(Pe, 1), he.length || (F.splice(q, 1), b(P, k, w), b(P, k, O, true)), ne = true;
+>>>>>>> Stashed changes
                   break;
                 }
               }
@@ -3258,53 +4928,72 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           }
       }, delegateListener: x, delegateUseCapture: O, delegatedEvents: u, documents: f, targets: l, supportsOptions: false, supportsPassive: false };
       function E(I, P, k, G) {
+<<<<<<< Updated upstream
         var R = ao(G), q = Me.find(l, function(X) {
           return X.eventTarget === I;
+=======
+        var R = lo(G), q = Me.find(l, function(Z) {
+          return Z.eventTarget === I;
+>>>>>>> Stashed changes
         });
         q || (q = { eventTarget: I, events: {} }, l.push(q)), q.events[P] || (q.events[P] = []), I.addEventListener && !Me.contains(q.events[P], k) && (I.addEventListener(P, k, g.supportsOptions ? R : R.capture), q.events[P].push(k));
       }
       __name(E, "E");
       c(E, "s");
       function b(I, P, k, G) {
+<<<<<<< Updated upstream
         var R = ao(G), q = Me.findIndex(l, function(Pe) {
+=======
+        var R = lo(G), q = Me.findIndex(l, function(Pe) {
+>>>>>>> Stashed changes
           return Pe.eventTarget === I;
-        }), X = l[q];
-        if (X && X.events)
+        }), Z = l[q];
+        if (Z && Z.events)
           if (P !== "all") {
-            var F = false, ne = X.events[P];
+            var F = false, ne = Z.events[P];
             if (ne) {
               if (k === "all") {
                 for (var oe = ne.length - 1; oe >= 0; oe--)
                   b(I, P, ne[oe], R);
                 return;
               }
-              for (var fe = 0; fe < ne.length; fe++)
-                if (ne[fe] === k) {
-                  I.removeEventListener(P, k, g.supportsOptions ? R : R.capture), ne.splice(fe, 1), ne.length === 0 && (delete X.events[P], F = true);
+              for (var he = 0; he < ne.length; he++)
+                if (ne[he] === k) {
+                  I.removeEventListener(P, k, g.supportsOptions ? R : R.capture), ne.splice(he, 1), ne.length === 0 && (delete Z.events[P], F = true);
                   break;
                 }
             }
-            F && !Object.keys(X.events).length && l.splice(q, 1);
+            F && !Object.keys(Z.events).length && l.splice(q, 1);
           } else
-            for (P in X.events)
-              X.events.hasOwnProperty(P) && b(I, P, "all");
+            for (P in Z.events)
+              Z.events.hasOwnProperty(P) && b(I, P, "all");
       }
       __name(b, "b");
       c(b, "l");
+<<<<<<< Updated upstream
       function x(I, P) {
         for (var k = ao(P), G = new Pm(I), R = u[I.type], q = ul(Q.getEventTargets(I), 1)[0], X = q; s.default.element(X); ) {
+=======
+      function w(I, P) {
+        for (var k = lo(P), G = new Lm(I), R = u[I.type], q = dl(Q.getEventTargets(I), 1)[0], Z = q; s.default.element(Z); ) {
+>>>>>>> Stashed changes
           for (var F = 0; F < R.length; F++) {
-            var ne = R[F], oe = ne.selector, fe = ne.context;
-            if (z.matchesSelector(X, oe) && z.nodeContains(fe, q) && z.nodeContains(fe, X)) {
+            var ne = R[F], oe = ne.selector, he = ne.context;
+            if (z.matchesSelector(Z, oe) && z.nodeContains(he, q) && z.nodeContains(he, Z)) {
               var Pe = ne.listeners;
-              G.currentTarget = X;
+              G.currentTarget = Z;
               for (var Fe = 0; Fe < Pe.length; Fe++) {
+<<<<<<< Updated upstream
                 var Se = ul(Pe[Fe], 2), He = Se[0], hr = Se[1], Zr = hr.capture, Al = hr.passive;
                 Zr === k.capture && Al === k.passive && He(G);
+=======
+                var Te = dl(Pe[Fe], 2), He = Te[0], hr = Te[1], Qr = hr.capture, zl = hr.passive;
+                Qr === k.capture && zl === k.passive && He(G);
+>>>>>>> Stashed changes
               }
             }
           }
-          X = z.parentNode(X);
+          Z = z.parentNode(Z);
         }
       }
       __name(x, "x");
@@ -3319,6 +5008,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return g.supportsPassive = true;
       } }), i.events = g, g;
     } };
+<<<<<<< Updated upstream
     wa.default = _m;
     var xa = {};
     Object.defineProperty(xa, "__esModule", { value: true }), xa.default = void 0;
@@ -3327,6 +5017,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         var l;
         l = Ea.methodOrder[o];
         var u = Ea[l](i);
+=======
+    wa.default = Gm;
+    var Ea = {};
+    Object.defineProperty(Ea, "__esModule", { value: true }), Ea.default = void 0;
+    var Sa = { methodOrder: ["simulationResume", "mouseOrPen", "hasPointer", "idle"], search: function(i) {
+      for (var o = 0; o < Sa.methodOrder.length; o++) {
+        var l;
+        l = Sa.methodOrder[o];
+        var u = Sa[l](i);
+>>>>>>> Stashed changes
         if (u)
           return u;
       }
@@ -3352,7 +5052,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       for (var E = 0; E < g.interactions.list.length; E++) {
         var b = g.interactions.list[E];
         if (b.pointerType === u) {
+<<<<<<< Updated upstream
           if (b.simulation && !xc(b, l))
+=======
+          if (b.simulation && !Oc(b, l))
+>>>>>>> Stashed changes
             continue;
           if (b.interacting())
             return b;
@@ -3370,7 +5074,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }, hasPointer: function(i) {
       for (var o = i.pointerId, l = i.scope, u = 0; u < l.interactions.list.length; u++) {
         var f = l.interactions.list[u];
+<<<<<<< Updated upstream
         if (xc(f, o))
+=======
+        if (Oc(f, o))
+>>>>>>> Stashed changes
           return f;
       }
       return null;
@@ -3388,11 +5096,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }
       return null;
     } };
+<<<<<<< Updated upstream
     function xc(i, o) {
+=======
+    function Oc(i, o) {
+>>>>>>> Stashed changes
       return i.pointers.some(function(l) {
         return l.id === o;
       });
     }
+<<<<<<< Updated upstream
     __name(xc, "xc");
     c(xc, "Ln");
     var zm = Ea;
@@ -3408,6 +5121,23 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(cl, "cl");
     c(cl, "Nn");
     function Ec(i, o) {
+=======
+    __name(Oc, "Oc");
+    c(Oc, "Ln");
+    var jm = Sa;
+    Ea.default = jm;
+    var Ta = {};
+    function fl(i) {
+      return fl = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
+        return typeof o;
+      } : function(o) {
+        return o && typeof Symbol == "function" && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+      }, fl(i);
+    }
+    __name(fl, "fl");
+    c(fl, "Nn");
+    function Mc(i, o) {
+>>>>>>> Stashed changes
       return function(l) {
         if (Array.isArray(l))
           return l;
@@ -3433,23 +5163,36 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }(i, o) || function(l, u) {
         if (l) {
           if (typeof l == "string")
+<<<<<<< Updated upstream
             return Sc(l, u);
           var f = Object.prototype.toString.call(l).slice(8, -1);
           return f === "Object" && l.constructor && (f = l.constructor.name), f === "Map" || f === "Set" ? Array.from(l) : f === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(f) ? Sc(l, u) : void 0;
+=======
+            return Ic(l, u);
+          var f = Object.prototype.toString.call(l).slice(8, -1);
+          return f === "Object" && l.constructor && (f = l.constructor.name), f === "Map" || f === "Set" ? Array.from(l) : f === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(f) ? Ic(l, u) : void 0;
+>>>>>>> Stashed changes
         }
       }(i, o) || function() {
         throw new TypeError(`Invalid attempt to destructure non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
       }();
     }
+<<<<<<< Updated upstream
     __name(Ec, "Ec");
     c(Ec, "qn");
     function Sc(i, o) {
+=======
+    __name(Mc, "Mc");
+    c(Mc, "qn");
+    function Ic(i, o) {
+>>>>>>> Stashed changes
       (o == null || o > i.length) && (o = i.length);
       for (var l = 0, u = Array(o); l < o; l++)
         u[l] = i[l];
       return u;
     }
+<<<<<<< Updated upstream
     __name(Sc, "Sc");
     c(Sc, "Gn");
     function Rm(i, o) {
@@ -3459,11 +5202,23 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Rm, "Rm");
     c(Rm, "$n");
     function Dm(i, o) {
+=======
+    __name(Ic, "Ic");
+    c(Ic, "Gn");
+    function Bm(i, o) {
+      if (!(i instanceof o))
+        throw new TypeError("Cannot call a class as a function");
+    }
+    __name(Bm, "Bm");
+    c(Bm, "$n");
+    function Hm(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(Dm, "Dm");
     c(Dm, "Hn");
     function pl(i, o) {
@@ -3475,6 +5230,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     c(pl, "Kn");
     function Nm(i, o) {
       if (o && (cl(o) === "object" || typeof o == "function"))
+=======
+    __name(Hm, "Hm");
+    c(Hm, "Hn");
+    function hl(i, o) {
+      return hl = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(l, u) {
+        return l.__proto__ = u, l;
+      }, hl(i, o);
+    }
+    __name(hl, "hl");
+    c(hl, "Kn");
+    function $m(i, o) {
+      if (o && (fl(o) === "object" || typeof o == "function"))
+>>>>>>> Stashed changes
         return o;
       if (o !== void 0)
         throw new TypeError("Derived constructors may only return object or undefined");
@@ -3484,14 +5252,20 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return l;
       }(i);
     }
+<<<<<<< Updated upstream
     __name(Nm, "Nm");
     c(Nm, "Zn");
+=======
+    __name($m, "$m");
+    c($m, "Zn");
+>>>>>>> Stashed changes
     function Ca(i) {
       return Ca = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(o) {
         return o.__proto__ || Object.getPrototypeOf(o);
       }, Ca(i);
     }
     __name(Ca, "Ca");
+<<<<<<< Updated upstream
     c(Ca, "Jn"), Object.defineProperty(Sa, "__esModule", { value: true }), Sa.default = void 0;
     var dl = ["pointerDown", "pointerMove", "pointerUp", "updatePointer", "removePointer", "windowBlur"];
     function Cc(i, o) {
@@ -3502,6 +5276,18 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           for (var O = 0; O < l.changedTouches.length; O++) {
             var I = l.changedTouches[O], P = { pointer: I, pointerId: Q.getPointerId(I), pointerType: f, eventType: l.type, eventTarget: E, curEventTarget: b, scope: o }, k = Tc(P);
             x.push([P.pointer, P.eventTarget, P.curEventTarget, k]);
+=======
+    c(Ca, "Jn"), Object.defineProperty(Ta, "__esModule", { value: true }), Ta.default = void 0;
+    var ml = ["pointerDown", "pointerMove", "pointerUp", "updatePointer", "removePointer", "windowBlur"];
+    function Ac(i, o) {
+      return function(l) {
+        var u = o.interactions.list, f = Q.getPointerType(l), g = Mc(Q.getEventTargets(l), 2), E = g[0], b = g[1], w = [];
+        if (/^touch/.test(l.type)) {
+          o.prevTouchTime = o.now();
+          for (var O = 0; O < l.changedTouches.length; O++) {
+            var I = l.changedTouches[O], P = { pointer: I, pointerId: Q.getPointerId(I), pointerType: f, eventType: l.type, eventTarget: E, curEventTarget: b, scope: o }, k = Pc(P);
+            w.push([P.pointer, P.eventTarget, P.curEventTarget, k]);
+>>>>>>> Stashed changes
           }
         } else {
           var G = false;
@@ -3511,6 +5297,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             G = G || o.now() - o.prevTouchTime < 500 || l.timeStamp === 0;
           }
           if (!G) {
+<<<<<<< Updated upstream
             var q = { pointer: l, pointerId: Q.getPointerId(l), pointerType: f, eventType: l.type, curEventTarget: b, eventTarget: E, scope: o }, X = Tc(q);
             x.push([q.pointer, q.eventTarget, q.curEventTarget, X]);
           }
@@ -3530,6 +5317,27 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Tc, "Tc");
     c(Tc, "er");
     function fl(i, o) {
+=======
+            var q = { pointer: l, pointerId: Q.getPointerId(l), pointerType: f, eventType: l.type, curEventTarget: b, eventTarget: E, scope: o }, Z = Pc(q);
+            w.push([q.pointer, q.eventTarget, q.curEventTarget, Z]);
+          }
+        }
+        for (var F = 0; F < w.length; F++) {
+          var ne = Mc(w[F], 4), oe = ne[0], he = ne[1], Pe = ne[2];
+          ne[3][i](oe, l, he, Pe);
+        }
+      };
+    }
+    __name(Ac, "Ac");
+    c(Ac, "tr");
+    function Pc(i) {
+      var o = i.pointerType, l = i.scope, u = { interaction: Ea.default.search(i), searchDetails: i };
+      return l.fire("interactions:find", u), u.interaction || l.interactions.new({ pointerType: o });
+    }
+    __name(Pc, "Pc");
+    c(Pc, "er");
+    function vl(i, o) {
+>>>>>>> Stashed changes
       var l = i.doc, u = i.scope, f = i.options, g = u.interactions.docEvents, E = u.events, b = E[o];
       for (var x in u.browser.isIOS && !f.events && (f.events = { passive: false }), E.delegatedEvents)
         b(l, x, E.delegateListener), b(l, x, E.delegateUseCapture, true);
@@ -3538,12 +5346,21 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         b(l, P.type, P.listener, O);
       }
     }
+<<<<<<< Updated upstream
     __name(fl, "fl");
     c(fl, "nr");
     var km = { id: "core/interactions", install: function(i) {
       for (var o = {}, l = 0; l < dl.length; l++) {
         var u = dl[l];
         o[u] = Cc(u, i);
+=======
+    __name(vl, "vl");
+    c(vl, "nr");
+    var qm = { id: "core/interactions", install: function(i) {
+      for (var o = {}, l = 0; l < ml.length; l++) {
+        var u = ml[l];
+        o[u] = Ac(u, i);
+>>>>>>> Stashed changes
       }
       var f, g = $.default.pEventTypes;
       function E() {
@@ -3561,14 +5378,24 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
       }
       __name(E, "E");
+<<<<<<< Updated upstream
       c(E, "a"), (f = T.default.PointerEvent ? [{ type: g.down, listener: E }, { type: g.down, listener: o.pointerDown }, { type: g.move, listener: o.pointerMove }, { type: g.up, listener: o.pointerUp }, { type: g.cancel, listener: o.pointerUp }] : [{ type: "mousedown", listener: o.pointerDown }, { type: "mousemove", listener: o.pointerMove }, { type: "mouseup", listener: o.pointerUp }, { type: "touchstart", listener: E }, { type: "touchstart", listener: o.pointerDown }, { type: "touchmove", listener: o.pointerMove }, { type: "touchend", listener: o.pointerUp }, { type: "touchcancel", listener: o.pointerUp }]).push({ type: "blur", listener: function(b) {
         for (var x = 0; x < i.interactions.list.length; x++)
           i.interactions.list[x].documentBlur(b);
+=======
+      c(E, "a"), (f = C.default.PointerEvent ? [{ type: g.down, listener: E }, { type: g.down, listener: o.pointerDown }, { type: g.move, listener: o.pointerMove }, { type: g.up, listener: o.pointerUp }, { type: g.cancel, listener: o.pointerUp }] : [{ type: "mousedown", listener: o.pointerDown }, { type: "mousemove", listener: o.pointerMove }, { type: "mouseup", listener: o.pointerUp }, { type: "touchstart", listener: E }, { type: "touchstart", listener: o.pointerDown }, { type: "touchmove", listener: o.pointerMove }, { type: "touchend", listener: o.pointerUp }, { type: "touchcancel", listener: o.pointerUp }]).push({ type: "blur", listener: function(b) {
+        for (var w = 0; w < i.interactions.list.length; w++)
+          i.interactions.list[w].documentBlur(b);
+>>>>>>> Stashed changes
       } }), i.prevTouchTime = 0, i.Interaction = function(b) {
         (function(R, q) {
           if (typeof q != "function" && q !== null)
             throw new TypeError("Super expression must either be null or a function");
+<<<<<<< Updated upstream
           R.prototype = Object.create(q && q.prototype, { constructor: { value: R, writable: true, configurable: true } }), Object.defineProperty(R, "prototype", { writable: false }), q && pl(R, q);
+=======
+          R.prototype = Object.create(q && q.prototype, { constructor: { value: R, writable: true, configurable: true } }), Object.defineProperty(R, "prototype", { writable: false }), q && hl(R, q);
+>>>>>>> Stashed changes
         })(G, b);
         var x, O, I, P, k = (I = G, P = function() {
           if (typeof Reflect == "undefined" || !Reflect.construct || Reflect.construct.sham)
@@ -3584,6 +5411,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }(), function() {
           var R, q = Ca(I);
           if (P) {
+<<<<<<< Updated upstream
             var X = Ca(this).constructor;
             R = Reflect.construct(q, arguments, X);
           } else
@@ -3592,6 +5420,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         });
         function G() {
           return Rm(this, G), k.apply(this, arguments);
+=======
+            var Z = Ca(this).constructor;
+            R = Reflect.construct(q, arguments, Z);
+          } else
+            R = q.apply(this, arguments);
+          return $m(this, R);
+        });
+        function G() {
+          return Bm(this, G), k.apply(this, arguments);
+>>>>>>> Stashed changes
         }
         __name(G, "G");
         return c(G, "s"), x = G, (O = [{ key: "pointerMoveTolerance", get: function() {
@@ -3600,7 +5438,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           i.interactions.pointerMoveTolerance = R;
         } }, { key: "_now", value: function() {
           return i.now();
+<<<<<<< Updated upstream
         } }]) && Dm(x.prototype, O), Object.defineProperty(x, "prototype", { writable: false }), G;
+=======
+        } }]) && Hm(w.prototype, O), Object.defineProperty(w, "prototype", { writable: false }), G;
+>>>>>>> Stashed changes
       }(Ft.default), i.interactions = { list: [], new: function(b) {
         b.scopeFire = function(O, I) {
           return i.fire(O, I);
@@ -3609,14 +5451,21 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return i.interactions.list.push(x), x;
       }, listeners: o, docEvents: f, pointerMoveTolerance: 1 }, i.usePlugin(hi.default);
     }, listeners: { "scope:add-document": function(i) {
+<<<<<<< Updated upstream
       return fl(i, "add");
     }, "scope:remove-document": function(i) {
       return fl(i, "remove");
+=======
+      return vl(i, "add");
+    }, "scope:remove-document": function(i) {
+      return vl(i, "remove");
+>>>>>>> Stashed changes
     }, "interactable:unset": function(i, o) {
       for (var l = i.interactable, u = o.interactions.list.length - 1; u >= 0; u--) {
         var f = o.interactions.list[u];
         f.interactable === l && (f.stop(), o.fire("interactions:destroy", { interaction: f }), f.destroy(), o.interactions.list.length > 2 && o.interactions.list.splice(u, 1));
       }
+<<<<<<< Updated upstream
     } }, onDocSignal: fl, doOnInteractions: Cc, methodNames: dl }, Lm = km;
     Sa.default = Lm;
     var so = {};
@@ -3632,10 +5481,28 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     function lo() {
       return lo = typeof Reflect != "undefined" && Reflect.get ? Reflect.get.bind() : function(i, o, l) {
         var u = Gm(i, o);
+=======
+    } }, onDocSignal: vl, doOnInteractions: Ac, methodNames: ml }, Fm = qm;
+    Ta.default = Fm;
+    var uo = {};
+    function gl(i) {
+      return gl = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
+        return typeof o;
+      } : function(o) {
+        return o && typeof Symbol == "function" && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+      }, gl(i);
+    }
+    __name(gl, "gl");
+    c(gl, "ar");
+    function co() {
+      return co = typeof Reflect != "undefined" && Reflect.get ? Reflect.get.bind() : function(i, o, l) {
+        var u = Um(i, o);
+>>>>>>> Stashed changes
         if (u) {
           var f = Object.getOwnPropertyDescriptor(u, o);
           return f.get ? f.get.call(arguments.length < 3 ? i : l) : f.value;
         }
+<<<<<<< Updated upstream
       }, lo.apply(this, arguments);
     }
     __name(lo, "lo");
@@ -3656,6 +5523,28 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     c(ml, "ur");
     function jm(i, o) {
       if (o && (hl(o) === "object" || typeof o == "function"))
+=======
+      }, co.apply(this, arguments);
+    }
+    __name(co, "co");
+    c(co, "sr");
+    function Um(i, o) {
+      for (; !Object.prototype.hasOwnProperty.call(i, o) && (i = vn(i)) !== null; )
+        ;
+      return i;
+    }
+    __name(Um, "Um");
+    c(Um, "lr");
+    function bl(i, o) {
+      return bl = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(l, u) {
+        return l.__proto__ = u, l;
+      }, bl(i, o);
+    }
+    __name(bl, "bl");
+    c(bl, "ur");
+    function Wm(i, o) {
+      if (o && (gl(o) === "object" || typeof o == "function"))
+>>>>>>> Stashed changes
         return o;
       if (o !== void 0)
         throw new TypeError("Derived constructors may only return object or undefined");
@@ -3665,13 +5554,21 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return l;
       }(i);
     }
+<<<<<<< Updated upstream
     __name(jm, "jm");
     c(jm, "cr");
     function mn(i) {
       return mn = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(o) {
+=======
+    __name(Wm, "Wm");
+    c(Wm, "cr");
+    function vn(i) {
+      return vn = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(o) {
+>>>>>>> Stashed changes
         return o.__proto__ || Object.getPrototypeOf(o);
-      }, mn(i);
+      }, vn(i);
     }
+<<<<<<< Updated upstream
     __name(mn, "mn");
     c(mn, "fr");
     function Oc(i, o) {
@@ -3681,11 +5578,23 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Oc, "Oc");
     c(Oc, "dr");
     function Mc(i, o) {
+=======
+    __name(vn, "vn");
+    c(vn, "fr");
+    function _c(i, o) {
+      if (!(i instanceof o))
+        throw new TypeError("Cannot call a class as a function");
+    }
+    __name(_c, "_c");
+    c(_c, "dr");
+    function zc(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(Mc, "Mc");
     c(Mc, "pr");
     function Ic(i, o, l) {
@@ -3693,15 +5602,32 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     __name(Ic, "Ic");
     c(Ic, "vr");
+=======
+    __name(zc, "zc");
+    c(zc, "pr");
+    function Rc(i, o, l) {
+      return o && zc(i.prototype, o), l && zc(i, l), Object.defineProperty(i, "prototype", { writable: false }), i;
+    }
+    __name(Rc, "Rc");
+    c(Rc, "vr");
+>>>>>>> Stashed changes
     function St(i, o, l) {
       return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
     }
     __name(St, "St");
+<<<<<<< Updated upstream
     c(St, "hr"), Object.defineProperty(so, "__esModule", { value: true }), so.Scope = void 0, so.initScope = Ac;
     var Bm = function() {
       function i() {
         var o = this;
         Oc(this, i), St(this, "id", "__interact_scope_".concat(Math.floor(100 * Math.random()))), St(this, "isInitialized", false), St(this, "listenerMaps", []), St(this, "browser", $.default), St(this, "defaults", (0, Bn.default)(Ji.defaults)), St(this, "Eventable", no.Eventable), St(this, "actions", { map: {}, phases: { start: true, move: true, end: true }, methodDict: {}, phaselessTypes: {} }), St(this, "interactStatic", (0, al.createInteractStatic)(this)), St(this, "InteractEvent", eo.InteractEvent), St(this, "Interactable", void 0), St(this, "interactables", new ya.InteractableSet(this)), St(this, "_win", void 0), St(this, "document", void 0), St(this, "window", void 0), St(this, "documents", []), St(this, "_plugins", { list: [], map: {} }), St(this, "onWindowUnload", function(u) {
+=======
+    c(St, "hr"), Object.defineProperty(uo, "__esModule", { value: true }), uo.Scope = void 0, uo.initScope = Dc;
+    var Vm = function() {
+      function i() {
+        var o = this;
+        _c(this, i), St(this, "id", "__interact_scope_".concat(Math.floor(100 * Math.random()))), St(this, "isInitialized", false), St(this, "listenerMaps", []), St(this, "browser", $.default), St(this, "defaults", (0, Hn.default)(to.defaults)), St(this, "Eventable", oo.Eventable), St(this, "actions", { map: {}, phases: { start: true, move: true, end: true }, methodDict: {}, phaselessTypes: {} }), St(this, "interactStatic", (0, ul.createInteractStatic)(this)), St(this, "InteractEvent", ro.InteractEvent), St(this, "Interactable", void 0), St(this, "interactables", new xa.InteractableSet(this)), St(this, "_win", void 0), St(this, "document", void 0), St(this, "window", void 0), St(this, "documents", []), St(this, "_plugins", { list: [], map: {} }), St(this, "onWindowUnload", function(u) {
+>>>>>>> Stashed changes
           return o.removeDocument(u.target);
         });
         var l = this;
@@ -3709,7 +5635,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           (function(x, O) {
             if (typeof O != "function" && O !== null)
               throw new TypeError("Super expression must either be null or a function");
+<<<<<<< Updated upstream
             x.prototype = Object.create(O && O.prototype, { constructor: { value: x, writable: true, configurable: true } }), Object.defineProperty(x, "prototype", { writable: false }), O && ml(x, O);
+=======
+            w.prototype = Object.create(O && O.prototype, { constructor: { value: w, writable: true, configurable: true } }), Object.defineProperty(w, "prototype", { writable: false }), O && bl(w, O);
+>>>>>>> Stashed changes
           })(b, u);
           var f, g, E = (f = b, g = function() {
             if (typeof Reflect == "undefined" || !Reflect.construct || Reflect.construct.sham)
@@ -3723,6 +5653,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
               return false;
             }
           }(), function() {
+<<<<<<< Updated upstream
             var x, O = mn(f);
             if (g) {
               var I = mn(this).constructor;
@@ -3748,6 +5679,33 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }
       __name(i, "i");
       return c(i, "t"), Ic(i, [{ key: "addListeners", value: function(o, l) {
+=======
+            var w, O = vn(f);
+            if (g) {
+              var I = vn(this).constructor;
+              w = Reflect.construct(O, arguments, I);
+            } else
+              w = O.apply(this, arguments);
+            return Wm(this, w);
+          });
+          function b() {
+            return _c(this, b), E.apply(this, arguments);
+          }
+          __name(b, "b");
+          return c(b, "i"), Rc(b, [{ key: "_defaults", get: function() {
+            return l.defaults;
+          } }, { key: "set", value: function(w) {
+            return co(vn(b.prototype), "set", this).call(this, w), l.fire("interactable:set", { options: w, interactable: this }), this;
+          } }, { key: "unset", value: function() {
+            co(vn(b.prototype), "unset", this).call(this);
+            var w = l.interactables.list.indexOf(this);
+            w < 0 || (co(vn(b.prototype), "unset", this).call(this), l.interactables.list.splice(w, 1), l.fire("interactable:unset", { interactable: this }));
+          } }]), b;
+        }(ya.Interactable);
+      }
+      __name(i, "i");
+      return c(i, "t"), Rc(i, [{ key: "addListeners", value: function(o, l) {
+>>>>>>> Stashed changes
         this.listenerMaps.push({ id: l, map: o });
       } }, { key: "fire", value: function(o, l) {
         for (var u = 0; u < this.listenerMaps.length; u++) {
@@ -3756,7 +5714,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             return false;
         }
       } }, { key: "init", value: function(o) {
+<<<<<<< Updated upstream
         return this.isInitialized ? this : Ac(this, o);
+=======
+        return this.isInitialized ? this : Dc(this, o);
+>>>>>>> Stashed changes
       } }, { key: "pluginIsInstalled", value: function(o) {
         return this._plugins.map[o.id] || this._plugins.list.indexOf(o) !== -1;
       } }, { key: "usePlugin", value: function(o, l) {
@@ -3765,11 +5727,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         if (this.pluginIsInstalled(o))
           return this;
         if (o.id && (this._plugins.map[o.id] = o), this._plugins.list.push(o), o.install && o.install(this, l), o.listeners && o.before) {
+<<<<<<< Updated upstream
           for (var u = 0, f = this.listenerMaps.length, g = o.before.reduce(function(b, x) {
             return b[x] = true, b[Pc(x)] = true, b;
           }, {}); u < f; u++) {
             var E = this.listenerMaps[u].id;
             if (g[E] || g[Pc(E)])
+=======
+          for (var u = 0, f = this.listenerMaps.length, g = o.before.reduce(function(b, w) {
+            return b[w] = true, b[Nc(w)] = true, b;
+          }, {}); u < f; u++) {
+            var E = this.listenerMaps[u].id;
+            if (g[E] || g[Nc(E)])
+>>>>>>> Stashed changes
               break;
           }
           this.listenerMaps.splice(u, 0, { id: o.id, map: o.listeners });
@@ -3796,6 +5766,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return (this.window.Date || Date).now();
       } }]), i;
     }();
+<<<<<<< Updated upstream
     function Ac(i, o) {
       return i.isInitialized = true, s.default.window(o) && r.init(o), T.default.init(o), $.default.init(o), Pt.default.init(o), i.window = o, i.document = o.document, i.usePlugin(Sa.default), i.usePlugin(wa.default), i;
     }
@@ -3821,11 +5792,42 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     var Ta = {};
     Object.defineProperty(Ta, "__esModule", { value: true }), Ta.default = void 0, Ta.default = function() {
     };
+=======
+    function Dc(i, o) {
+      return i.isInitialized = true, s.default.window(o) && r.init(o), C.default.init(o), $.default.init(o), Pt.default.init(o), i.window = o, i.document = o.document, i.usePlugin(Ta.default), i.usePlugin(wa.default), i;
+    }
+    __name(Dc, "Dc");
+    c(Dc, "yr");
+    function Nc(i) {
+      return i && i.replace(/\/.*$/, "");
+    }
+    __name(Nc, "Nc");
+    c(Nc, "mr"), uo.Scope = Vm;
+    var yl = {}, ct = {};
+    Object.defineProperty(ct, "__esModule", { value: true });
+    var Ym = {};
+    ct.default = void 0, Object.keys(yl).forEach(function(i) {
+      i !== "default" && i !== "__esModule" && (Object.prototype.hasOwnProperty.call(Ym, i) || i in ct && ct[i] === yl[i] || Object.defineProperty(ct, i, { enumerable: true, get: function() {
+        return yl[i];
+      } }));
+    });
+    var kc = new uo.Scope(), Xm = kc.interactStatic;
+    ct.default = Xm;
+    var Zm = typeof globalThis != "undefined" ? globalThis : typeof window != "undefined" ? window : void 0;
+    kc.init(Zm);
+>>>>>>> Stashed changes
     var Oa = {};
     Object.defineProperty(Oa, "__esModule", { value: true }), Oa.default = void 0, Oa.default = function() {
     };
     var Ma = {};
+<<<<<<< Updated upstream
     function zc(i, o) {
+=======
+    Object.defineProperty(Ma, "__esModule", { value: true }), Ma.default = void 0, Ma.default = function() {
+    };
+    var Ia = {};
+    function Lc(i, o) {
+>>>>>>> Stashed changes
       return function(l) {
         if (Array.isArray(l))
           return l;
@@ -3851,23 +5853,36 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }(i, o) || function(l, u) {
         if (l) {
           if (typeof l == "string")
+<<<<<<< Updated upstream
             return Rc(l, u);
           var f = Object.prototype.toString.call(l).slice(8, -1);
           return f === "Object" && l.constructor && (f = l.constructor.name), f === "Map" || f === "Set" ? Array.from(l) : f === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(f) ? Rc(l, u) : void 0;
+=======
+            return Gc(l, u);
+          var f = Object.prototype.toString.call(l).slice(8, -1);
+          return f === "Object" && l.constructor && (f = l.constructor.name), f === "Map" || f === "Set" ? Array.from(l) : f === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(f) ? Gc(l, u) : void 0;
+>>>>>>> Stashed changes
         }
       }(i, o) || function() {
         throw new TypeError(`Invalid attempt to destructure non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
       }();
     }
+<<<<<<< Updated upstream
     __name(zc, "zc");
     c(zc, "jr");
     function Rc(i, o) {
+=======
+    __name(Lc, "Lc");
+    c(Lc, "jr");
+    function Gc(i, o) {
+>>>>>>> Stashed changes
       (o == null || o > i.length) && (o = i.length);
       for (var l = 0, u = Array(o); l < o; l++)
         u[l] = i[l];
       return u;
     }
+<<<<<<< Updated upstream
     __name(Rc, "Rc");
     c(Rc, "Mr"), Object.defineProperty(Ma, "__esModule", { value: true }), Ma.default = void 0, Ma.default = function(i) {
       var o = [["x", "y"], ["left", "top"], ["right", "bottom"], ["width", "height"]].filter(function(u) {
@@ -3877,11 +5892,23 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         for (var g = i.range, E = i.limits, b = E === void 0 ? { left: -1 / 0, right: 1 / 0, top: -1 / 0, bottom: 1 / 0 } : E, x = i.offset, O = x === void 0 ? { x: 0, y: 0 } : x, I = { range: g, grid: i, x: null, y: null }, P = 0; P < o.length; P++) {
           var k = zc(o[P], 2), G = k[0], R = k[1], q = Math.round((u - O.x) / i[G]), X = Math.round((f - O.y) / i[R]);
           I[G] = Math.max(b.left, Math.min(b.right, q * i[G] + O.x)), I[R] = Math.max(b.top, Math.min(b.bottom, X * i[R] + O.y));
+=======
+    __name(Gc, "Gc");
+    c(Gc, "Mr"), Object.defineProperty(Ia, "__esModule", { value: true }), Ia.default = void 0, Ia.default = function(i) {
+      var o = [["x", "y"], ["left", "top"], ["right", "bottom"], ["width", "height"]].filter(function(u) {
+        var f = Lc(u, 2), g = f[0], E = f[1];
+        return g in i || E in i;
+      }), l = c(function(u, f) {
+        for (var g = i.range, E = i.limits, b = E === void 0 ? { left: -1 / 0, right: 1 / 0, top: -1 / 0, bottom: 1 / 0 } : E, w = i.offset, O = w === void 0 ? { x: 0, y: 0 } : w, I = { range: g, grid: i, x: null, y: null }, P = 0; P < o.length; P++) {
+          var k = Lc(o[P], 2), G = k[0], R = k[1], q = Math.round((u - O.x) / i[G]), Z = Math.round((f - O.y) / i[R]);
+          I[G] = Math.max(b.left, Math.min(b.right, q * i[G] + O.x)), I[R] = Math.max(b.top, Math.min(b.bottom, Z * i[R] + O.y));
+>>>>>>> Stashed changes
         }
         return I;
       }, "n");
       return l.grid = i, l.coordFields = o, l;
     };
+<<<<<<< Updated upstream
     var uo = {};
     Object.defineProperty(uo, "__esModule", { value: true }), Object.defineProperty(uo, "edgeTarget", { enumerable: true, get: function() {
       return Ta.default;
@@ -3899,6 +5926,25 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     Ia.default = Um;
     var vi = {};
     function Dc(i, o) {
+=======
+    var po = {};
+    Object.defineProperty(po, "__esModule", { value: true }), Object.defineProperty(po, "edgeTarget", { enumerable: true, get: function() {
+      return Oa.default;
+    } }), Object.defineProperty(po, "elements", { enumerable: true, get: function() {
+      return Ma.default;
+    } }), Object.defineProperty(po, "grid", { enumerable: true, get: function() {
+      return Ia.default;
+    } });
+    var Aa = {};
+    Object.defineProperty(Aa, "__esModule", { value: true }), Aa.default = void 0;
+    var Km = { id: "snappers", install: function(i) {
+      var o = i.interactStatic;
+      o.snappers = (0, W.default)(o.snappers || {}, po), o.createSnapGrid = o.snappers.grid;
+    } }, Qm = Km;
+    Aa.default = Qm;
+    var bi = {};
+    function jc(i, o) {
+>>>>>>> Stashed changes
       var l = Object.keys(i);
       if (Object.getOwnPropertySymbols) {
         var u = Object.getOwnPropertySymbols(i);
@@ -3908,6 +5954,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }
       return l;
     }
+<<<<<<< Updated upstream
     __name(Dc, "Dc");
     c(Dc, "Cr");
     function gl(i) {
@@ -3916,11 +5963,22 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         o % 2 ? Dc(Object(l), true).forEach(function(u) {
           Wm(i, u, l[u]);
         }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(i, Object.getOwnPropertyDescriptors(l)) : Dc(Object(l)).forEach(function(u) {
+=======
+    __name(jc, "jc");
+    c(jc, "Cr");
+    function xl(i) {
+      for (var o = 1; o < arguments.length; o++) {
+        var l = arguments[o] != null ? arguments[o] : {};
+        o % 2 ? jc(Object(l), true).forEach(function(u) {
+          Jm(i, u, l[u]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(i, Object.getOwnPropertyDescriptors(l)) : jc(Object(l)).forEach(function(u) {
+>>>>>>> Stashed changes
           Object.defineProperty(i, u, Object.getOwnPropertyDescriptor(l, u));
         });
       }
       return i;
     }
+<<<<<<< Updated upstream
     __name(gl, "gl");
     c(gl, "Rr");
     function Wm(i, o, l) {
@@ -3930,6 +5988,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     c(Wm, "Fr"), Object.defineProperty(vi, "__esModule", { value: true }), vi.default = vi.aspectRatio = void 0;
     var Nc = { start: function(i) {
       var o = i.state, l = i.rect, u = i.edges, f = i.pageCoords, g = o.options.ratio, E = o.options, b = E.equalDelta, x = E.modifiers;
+=======
+    __name(xl, "xl");
+    c(xl, "Rr");
+    function Jm(i, o, l) {
+      return o in i ? Object.defineProperty(i, o, { value: l, enumerable: true, configurable: true, writable: true }) : i[o] = l, i;
+    }
+    __name(Jm, "Jm");
+    c(Jm, "Fr"), Object.defineProperty(bi, "__esModule", { value: true }), bi.default = bi.aspectRatio = void 0;
+    var Bc = { start: function(i) {
+      var o = i.state, l = i.rect, u = i.edges, f = i.pageCoords, g = o.options.ratio, E = o.options, b = E.equalDelta, w = E.modifiers;
+>>>>>>> Stashed changes
       g === "preserve" && (g = l.width / l.height), o.startCoords = (0, W.default)({}, f), o.startRect = (0, W.default)({}, l), o.ratio = g, o.equalDelta = b;
       var O = o.linkedEdges = { top: u.top || u.left && !u.bottom, left: u.left || u.top && !u.right, bottom: u.bottom || u.right && !u.top, right: u.right || u.bottom && !u.left };
       if (o.xIsPrimaryAxis = !(!u.left && !u.right), o.equalDelta) {
@@ -3937,16 +6006,26 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         o.edgeSign = { x: I, y: I };
       } else
         o.edgeSign = { x: O.left ? -1 : 1, y: O.top ? -1 : 1 };
+<<<<<<< Updated upstream
       if ((0, W.default)(i.edges, O), x && x.length) {
         var P = new Hn.default(i.interaction);
         P.copyFrom(i.interaction.modification), P.prepareStates(x), o.subModification = P, P.startAll(gl({}, i));
       }
     }, set: function(i) {
       var o = i.state, l = i.rect, u = i.coords, f = (0, W.default)({}, u), g = o.equalDelta ? Vm : Ym;
+=======
+      if ((0, W.default)(i.edges, O), w && w.length) {
+        var P = new $n.default(i.interaction);
+        P.copyFrom(i.interaction.modification), P.prepareStates(w), o.subModification = P, P.startAll(xl({}, i));
+      }
+    }, set: function(i) {
+      var o = i.state, l = i.rect, u = i.coords, f = (0, W.default)({}, u), g = o.equalDelta ? ev : tv;
+>>>>>>> Stashed changes
       if (g(o, o.xIsPrimaryAxis, u, l), !o.subModification)
         return null;
       var E = (0, W.default)({}, l);
       (0, ue.addEdges)(o.linkedEdges, E, { x: u.x - f.x, y: u.y - f.y });
+<<<<<<< Updated upstream
       var b = o.subModification.setAll(gl(gl({}, i), {}, { rect: E, edges: o.linkedEdges, pageCoords: u, prevCoords: u, prevRect: E })), x = b.delta;
       return b.changed && (g(o, Math.abs(x.x) > Math.abs(x.y), b.coords, b.rect), (0, W.default)(u, b.coords)), b.eventProps;
     }, defaults: { ratio: "preserve", equalDelta: false, modifiers: [], enabled: false } };
@@ -3957,6 +6036,18 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Vm, "Vm");
     c(Vm, "Br");
     function Ym(i, o, l, u) {
+=======
+      var b = o.subModification.setAll(xl(xl({}, i), {}, { rect: E, edges: o.linkedEdges, pageCoords: u, prevCoords: u, prevRect: E })), w = b.delta;
+      return b.changed && (g(o, Math.abs(w.x) > Math.abs(w.y), b.coords, b.rect), (0, W.default)(u, b.coords)), b.eventProps;
+    }, defaults: { ratio: "preserve", equalDelta: false, modifiers: [], enabled: false } };
+    function ev(i, o, l) {
+      var u = i.startCoords, f = i.edgeSign;
+      o ? l.y = u.y + (l.x - u.x) * f.y : l.x = u.x + (l.y - u.y) * f.x;
+    }
+    __name(ev, "ev");
+    c(ev, "Br");
+    function tv(i, o, l, u) {
+>>>>>>> Stashed changes
       var f = i.startRect, g = i.startCoords, E = i.ratio, b = i.edgeSign;
       if (o) {
         var x = u.width / E;
@@ -3966,6 +6057,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         l.x = g.x + (O - f.width) * b.x;
       }
     }
+<<<<<<< Updated upstream
     __name(Ym, "Ym");
     c(Ym, "Yr"), vi.aspectRatio = Nc;
     var Xm = (0, Et.makeModifier)(Nc, "aspectRatio");
@@ -3991,6 +6083,33 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var o = i.rect, l = i.startOffset, u = i.state, f = i.interaction, g = i.pageCoords, E = u.options, b = E.elementRect, x = (0, W.default)({ left: 0, top: 0, right: 0, bottom: 0 }, E.offset || {});
       if (o && b) {
         var O = yl(E.restriction, f, g);
+=======
+    __name(tv, "tv");
+    c(tv, "Yr"), bi.aspectRatio = Bc;
+    var rv = (0, Et.makeModifier)(Bc, "aspectRatio");
+    bi.default = rv;
+    var Un = {};
+    Object.defineProperty(Un, "__esModule", { value: true }), Un.default = void 0;
+    var Hc = c(function() {
+    }, "Ur");
+    Hc._defaults = {};
+    var nv = Hc;
+    Un.default = nv;
+    var wl = {};
+    Object.defineProperty(wl, "__esModule", { value: true }), Object.defineProperty(wl, "default", { enumerable: true, get: function() {
+      return Un.default;
+    } });
+    var Gt = {};
+    function El(i, o, l) {
+      return s.default.func(i) ? ue.resolveRectLike(i, o.interactable, o.element, [l.x, l.y, o]) : ue.resolveRectLike(i, o.interactable, o.element);
+    }
+    __name(El, "El");
+    c(El, "Gr"), Object.defineProperty(Gt, "__esModule", { value: true }), Gt.default = void 0, Gt.getRestrictionRect = El, Gt.restrict = void 0;
+    var $c = { start: function(i) {
+      var o = i.rect, l = i.startOffset, u = i.state, f = i.interaction, g = i.pageCoords, E = u.options, b = E.elementRect, w = (0, W.default)({ left: 0, top: 0, right: 0, bottom: 0 }, E.offset || {});
+      if (o && b) {
+        var O = El(E.restriction, f, g);
+>>>>>>> Stashed changes
         if (O) {
           var I = O.right - O.left - o.width, P = O.bottom - O.top - o.height;
           I < 0 && (x.left += I, x.right += I), P < 0 && (x.top += P, x.bottom += P);
@@ -3999,12 +6118,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }
       u.offset = x;
     }, set: function(i) {
+<<<<<<< Updated upstream
       var o = i.coords, l = i.interaction, u = i.state, f = u.options, g = u.offset, E = yl(f.restriction, l, o);
+=======
+      var o = i.coords, l = i.interaction, u = i.state, f = u.options, g = u.offset, E = El(f.restriction, l, o);
+>>>>>>> Stashed changes
       if (E) {
         var b = ue.xywhToTlbr(E);
         o.x = Math.max(Math.min(b.right - g.right, o.x), b.left + g.left), o.y = Math.max(Math.min(b.bottom - g.bottom, o.y), b.top + g.top);
       }
     }, defaults: { restriction: null, elementRect: null, offset: null, endOnly: false, enabled: false } };
+<<<<<<< Updated upstream
     Lt.restrict = Lc;
     var Km = (0, Et.makeModifier)(Lc, "restrict");
     Lt.default = Km;
@@ -4012,15 +6136,30 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     Object.defineProperty(Dr, "__esModule", { value: true }), Dr.restrictEdges = Dr.default = void 0;
     var Gc = { top: 1 / 0, left: 1 / 0, bottom: -1 / 0, right: -1 / 0 }, jc = { top: -1 / 0, left: -1 / 0, bottom: 1 / 0, right: 1 / 0 };
     function Bc(i, o) {
+=======
+    Gt.restrict = $c;
+    var iv = (0, Et.makeModifier)($c, "restrict");
+    Gt.default = iv;
+    var Nr = {};
+    Object.defineProperty(Nr, "__esModule", { value: true }), Nr.restrictEdges = Nr.default = void 0;
+    var qc = { top: 1 / 0, left: 1 / 0, bottom: -1 / 0, right: -1 / 0 }, Fc = { top: -1 / 0, left: -1 / 0, bottom: 1 / 0, right: 1 / 0 };
+    function Uc(i, o) {
+>>>>>>> Stashed changes
       for (var l = ["top", "left", "bottom", "right"], u = 0; u < l.length; u++) {
         var f = l[u];
         f in i || (i[f] = o[f]);
       }
       return i;
     }
+<<<<<<< Updated upstream
     __name(Bc, "Bc");
     c(Bc, "Qr");
     var Hc = { noInner: Gc, noOuter: jc, start: function(i) {
+=======
+    __name(Uc, "Uc");
+    c(Uc, "Qr");
+    var Wc = { noInner: qc, noOuter: Fc, start: function(i) {
+>>>>>>> Stashed changes
       var o, l = i.interaction, u = i.startOffset, f = i.state, g = f.options;
       if (g) {
         var E = (0, Lt.getRestrictionRect)(g.offset, l, l.coords.start.page);
@@ -4030,6 +6169,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }, set: function(i) {
       var o = i.coords, l = i.edges, u = i.interaction, f = i.state, g = f.offset, E = f.options;
       if (l) {
+<<<<<<< Updated upstream
         var b = (0, W.default)({}, o), x = (0, Lt.getRestrictionRect)(E.inner, u, b) || {}, O = (0, Lt.getRestrictionRect)(E.outer, u, b) || {};
         Bc(x, Gc), Bc(O, jc), l.top ? o.y = Math.min(Math.max(O.top + g.top, b.y), x.top + g.top) : l.bottom && (o.y = Math.max(Math.min(O.bottom + g.bottom, b.y), x.bottom + g.bottom)), l.left ? o.x = Math.min(Math.max(O.left + g.left, b.x), x.left + g.left) : l.right && (o.x = Math.max(Math.min(O.right + g.right, b.x), x.right + g.right));
       }
@@ -4068,8 +6208,48 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     Object.defineProperty(vn, "__esModule", { value: true }), vn.snap = vn.default = void 0;
     var Fc = { start: function(i) {
       var o, l = i.interaction, u = i.interactable, f = i.element, g = i.rect, E = i.state, b = i.startOffset, x = E.options, O = x.offsetWithOrigin ? function(k) {
+=======
+        var b = (0, W.default)({}, o), w = (0, Gt.getRestrictionRect)(E.inner, u, b) || {}, O = (0, Gt.getRestrictionRect)(E.outer, u, b) || {};
+        Uc(w, qc), Uc(O, Fc), l.top ? o.y = Math.min(Math.max(O.top + g.top, b.y), w.top + g.top) : l.bottom && (o.y = Math.max(Math.min(O.bottom + g.bottom, b.y), w.bottom + g.bottom)), l.left ? o.x = Math.min(Math.max(O.left + g.left, b.x), w.left + g.left) : l.right && (o.x = Math.max(Math.min(O.right + g.right, b.x), w.right + g.right));
+      }
+    }, defaults: { inner: null, outer: null, offset: null, endOnly: false, enabled: false } };
+    Nr.restrictEdges = Wc;
+    var ov = (0, Et.makeModifier)(Wc, "restrictEdges");
+    Nr.default = ov;
+    var yi = {};
+    Object.defineProperty(yi, "__esModule", { value: true }), yi.restrictRect = yi.default = void 0;
+    var av = (0, W.default)({ get elementRect() {
+      return { top: 0, left: 0, bottom: 1, right: 1 };
+    }, set elementRect(i) {
+    } }, Gt.restrict.defaults), Vc = { start: Gt.restrict.start, set: Gt.restrict.set, defaults: av };
+    yi.restrictRect = Vc;
+    var sv = (0, Et.makeModifier)(Vc, "restrictRect");
+    yi.default = sv;
+    var xi = {};
+    Object.defineProperty(xi, "__esModule", { value: true }), xi.restrictSize = xi.default = void 0;
+    var lv = { width: -1 / 0, height: -1 / 0 }, uv = { width: 1 / 0, height: 1 / 0 }, Yc = { start: function(i) {
+      return Nr.restrictEdges.start(i);
+    }, set: function(i) {
+      var o = i.interaction, l = i.state, u = i.rect, f = i.edges, g = l.options;
+      if (f) {
+        var E = ue.tlbrToXywh((0, Gt.getRestrictionRect)(g.min, o, i.coords)) || lv, b = ue.tlbrToXywh((0, Gt.getRestrictionRect)(g.max, o, i.coords)) || uv;
+        l.options = { endOnly: g.endOnly, inner: (0, W.default)({}, Nr.restrictEdges.noInner), outer: (0, W.default)({}, Nr.restrictEdges.noOuter) }, f.top ? (l.options.inner.top = u.bottom - E.height, l.options.outer.top = u.bottom - b.height) : f.bottom && (l.options.inner.bottom = u.top + E.height, l.options.outer.bottom = u.top + b.height), f.left ? (l.options.inner.left = u.right - E.width, l.options.outer.left = u.right - b.width) : f.right && (l.options.inner.right = u.left + E.width, l.options.outer.right = u.left + b.width), Nr.restrictEdges.set(i), l.options = g;
+      }
+    }, defaults: { min: null, max: null, endOnly: false, enabled: false } };
+    xi.restrictSize = Yc;
+    var cv = (0, Et.makeModifier)(Yc, "restrictSize");
+    xi.default = cv;
+    var Sl = {};
+    Object.defineProperty(Sl, "__esModule", { value: true }), Object.defineProperty(Sl, "default", { enumerable: true, get: function() {
+      return Un.default;
+    } });
+    var gn = {};
+    Object.defineProperty(gn, "__esModule", { value: true }), gn.snap = gn.default = void 0;
+    var Xc = { start: function(i) {
+      var o, l = i.interaction, u = i.interactable, f = i.element, g = i.rect, E = i.state, b = i.startOffset, w = E.options, O = w.offsetWithOrigin ? function(k) {
+>>>>>>> Stashed changes
         var G = k.interaction.element;
-        return (0, ue.rectToXY)((0, ue.resolveRectLike)(k.state.options.origin, null, null, [G])) || (0, De.default)(k.interactable, G, k.interaction.prepared.name);
+        return (0, ue.rectToXY)((0, ue.resolveRectLike)(k.state.options.origin, null, null, [G])) || (0, ke.default)(k.interactable, G, k.interaction.prepared.name);
       }(i) : { x: 0, y: 0 };
       if (x.offset === "startCoords")
         o = { x: l.coords.start.page.x, y: l.coords.start.page.y };
@@ -4082,6 +6262,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return { index: G, relativePoint: k, x: b.left - g.width * k.x + o.x, y: b.top - g.height * k.y + o.y };
       }) : [{ index: 0, relativePoint: null, x: o.x, y: o.y }];
     }, set: function(i) {
+<<<<<<< Updated upstream
       var o = i.interaction, l = i.coords, u = i.state, f = u.options, g = u.offsets, E = (0, De.default)(o.interactable, o.element, o.prepared.name), b = (0, W.default)({}, l), x = [];
       f.offsetWithOrigin || (b.x -= E.x, b.y -= E.y);
       for (var O = 0; O < g.length; O++)
@@ -4100,18 +6281,44 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     vn.default = iv;
     var Xr = {};
     function Uc(i, o) {
+=======
+      var o = i.interaction, l = i.coords, u = i.state, f = u.options, g = u.offsets, E = (0, ke.default)(o.interactable, o.element, o.prepared.name), b = (0, W.default)({}, l), w = [];
+      f.offsetWithOrigin || (b.x -= E.x, b.y -= E.y);
+      for (var O = 0; O < g.length; O++)
+        for (var I = g[O], P = b.x - I.x, k = b.y - I.y, G = 0, R = f.targets.length; G < R; G++) {
+          var q, Z = f.targets[G];
+          (q = s.default.func(Z) ? Z(P, k, o._proxy, I, G) : Z) && w.push({ x: (s.default.number(q.x) ? q.x : P) + I.x, y: (s.default.number(q.y) ? q.y : k) + I.y, range: s.default.number(q.range) ? q.range : f.range, source: Z, index: G, offset: I });
+        }
+      for (var F = { target: null, inRange: false, distance: 0, range: 0, delta: { x: 0, y: 0 } }, ne = 0; ne < w.length; ne++) {
+        var oe = w[ne], he = oe.range, Pe = oe.x - b.x, Fe = oe.y - b.y, Te = (0, Ke.default)(Pe, Fe), He = Te <= he;
+        he === 1 / 0 && F.inRange && F.range !== 1 / 0 && (He = false), F.target && !(He ? F.inRange && he !== 1 / 0 ? Te / he < F.distance / F.range : he === 1 / 0 && F.range !== 1 / 0 || Te < F.distance : !F.inRange && Te < F.distance) || (F.target = oe, F.distance = Te, F.range = he, F.inRange = He, F.delta.x = Pe, F.delta.y = Fe);
+      }
+      return F.inRange && (l.x = F.target.x, l.y = F.target.y), u.closest = F, F;
+    }, defaults: { range: 1 / 0, targets: null, offset: null, offsetWithOrigin: true, origin: null, relativePoints: null, endOnly: false, enabled: false } };
+    gn.snap = Xc;
+    var pv = (0, Et.makeModifier)(Xc, "snap");
+    gn.default = pv;
+    var Kr = {};
+    function Zc(i, o) {
+>>>>>>> Stashed changes
       (o == null || o > i.length) && (o = i.length);
       for (var l = 0, u = Array(o); l < o; l++)
         u[l] = i[l];
       return u;
     }
+<<<<<<< Updated upstream
     __name(Uc, "Uc");
     c(Uc, "yo"), Object.defineProperty(Xr, "__esModule", { value: true }), Xr.snapSize = Xr.default = void 0;
     var Wc = { start: function(i) {
+=======
+    __name(Zc, "Zc");
+    c(Zc, "yo"), Object.defineProperty(Kr, "__esModule", { value: true }), Kr.snapSize = Kr.default = void 0;
+    var Kc = { start: function(i) {
+>>>>>>> Stashed changes
       var o = i.state, l = i.edges, u = o.options;
       if (!l)
         return null;
-      i.state = { options: { targets: null, relativePoints: [{ x: l.left ? 0 : 1, y: l.top ? 0 : 1 }], offset: u.offset || "self", origin: { x: 0, y: 0 }, range: u.range } }, o.targetFields = o.targetFields || [["width", "height"], ["x", "y"]], vn.snap.start(i), o.offsets = i.state.offsets, i.state = o;
+      i.state = { options: { targets: null, relativePoints: [{ x: l.left ? 0 : 1, y: l.top ? 0 : 1 }], offset: u.offset || "self", origin: { x: 0, y: 0 }, range: u.range } }, o.targetFields = o.targetFields || [["width", "height"], ["x", "y"]], gn.snap.start(i), o.offsets = i.state.offsets, i.state = o;
     }, set: function(i) {
       var o, l, u = i.interaction, f = i.state, g = i.coords, E = f.options, b = f.offsets, x = { x: g.x - b[0].x, y: g.y - b[0].y };
       f.options = (0, W.default)({}, E), f.options.targets = [];
@@ -4125,15 +6332,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             }(o) || function(F, ne) {
               var oe = F == null ? null : typeof Symbol != "undefined" && F[Symbol.iterator] || F["@@iterator"];
               if (oe != null) {
-                var fe, Pe, Fe = [], Se = true, He = false;
+                var he, Pe, Fe = [], Te = true, He = false;
                 try {
-                  for (oe = oe.call(F); !(Se = (fe = oe.next()).done) && (Fe.push(fe.value), !ne || Fe.length !== ne); Se = true)
+                  for (oe = oe.call(F); !(Te = (he = oe.next()).done) && (Fe.push(he.value), !ne || Fe.length !== ne); Te = true)
                     ;
                 } catch (hr) {
                   He = true, Pe = hr;
                 } finally {
                   try {
-                    Se || oe.return == null || oe.return();
+                    Te || oe.return == null || oe.return();
                   } finally {
                     if (He)
                       throw Pe;
@@ -4144,9 +6351,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             }(o, l) || function(F, ne) {
               if (F) {
                 if (typeof F == "string")
+<<<<<<< Updated upstream
                   return Uc(F, ne);
                 var oe = Object.prototype.toString.call(F).slice(8, -1);
                 return oe === "Object" && F.constructor && (oe = F.constructor.name), oe === "Map" || oe === "Set" ? Array.from(F) : oe === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(oe) ? Uc(F, ne) : void 0;
+=======
+                  return Zc(F, ne);
+                var oe = Object.prototype.toString.call(F).slice(8, -1);
+                return oe === "Object" && F.constructor && (oe = F.constructor.name), oe === "Map" || oe === "Set" ? Array.from(F) : oe === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(oe) ? Zc(F, ne) : void 0;
+>>>>>>> Stashed changes
               }
             }(o, l) || function() {
               throw new TypeError(`Invalid attempt to destructure non-iterable instance.
@@ -4160,9 +6373,10 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           f.options.targets.push(P);
         }
       }
-      var X = vn.snap.set(i);
-      return f.options = E, X;
+      var Z = gn.snap.set(i);
+      return f.options = E, Z;
     }, defaults: { range: 1 / 0, targets: null, offset: null, endOnly: false, enabled: false } };
+<<<<<<< Updated upstream
     Xr.snapSize = Wc;
     var ov = (0, Et.makeModifier)(Wc, "snapSize");
     Xr.default = ov;
@@ -4178,11 +6392,29 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     var xl = {};
     Object.defineProperty(xl, "__esModule", { value: true }), Object.defineProperty(xl, "default", { enumerable: true, get: function() {
       return Fn.default;
+=======
+    Kr.snapSize = Kc;
+    var dv = (0, Et.makeModifier)(Kc, "snapSize");
+    Kr.default = dv;
+    var wi = {};
+    Object.defineProperty(wi, "__esModule", { value: true }), wi.snapEdges = wi.default = void 0;
+    var Qc = { start: function(i) {
+      var o = i.edges;
+      return o ? (i.state.targetFields = i.state.targetFields || [[o.left ? "left" : "right", o.top ? "top" : "bottom"]], Kr.snapSize.start(i)) : null;
+    }, set: Kr.snapSize.set, defaults: (0, W.default)((0, Hn.default)(Kr.snapSize.defaults), { targets: null, range: null, offset: { x: 0, y: 0 } }) };
+    wi.snapEdges = Qc;
+    var fv = (0, Et.makeModifier)(Qc, "snapEdges");
+    wi.default = fv;
+    var Tl = {};
+    Object.defineProperty(Tl, "__esModule", { value: true }), Object.defineProperty(Tl, "default", { enumerable: true, get: function() {
+      return Un.default;
+>>>>>>> Stashed changes
     } });
     var El = {};
     Object.defineProperty(El, "__esModule", { value: true }), Object.defineProperty(El, "default", { enumerable: true, get: function() {
       return Fn.default;
     } });
+<<<<<<< Updated upstream
     var wi = {};
     Object.defineProperty(wi, "__esModule", { value: true }), wi.default = void 0;
     var sv = { aspectRatio: vi.default, restrictEdges: Dr.default, restrict: Lt.default, restrictRect: gi.default, restrictSize: bi.default, snapEdges: yi.default, snap: vn.default, snapSize: Xr.default, spring: xl.default, avoid: bl.default, transform: El.default, rubberband: wl.default };
@@ -4208,11 +6440,39 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(Sl, "Sl");
     c(Sl, "Io");
     function cv(i, o) {
+=======
+    var Ei = {};
+    Object.defineProperty(Ei, "__esModule", { value: true }), Ei.default = void 0;
+    var hv = { aspectRatio: bi.default, restrictEdges: Nr.default, restrict: Gt.default, restrictRect: yi.default, restrictSize: xi.default, snapEdges: wi.default, snap: gn.default, snapSize: Kr.default, spring: Tl.default, avoid: wl.default, transform: Cl.default, rubberband: Sl.default };
+    Ei.default = hv;
+    var Pa = {};
+    Object.defineProperty(Pa, "__esModule", { value: true }), Pa.default = void 0;
+    var mv = { id: "modifiers", install: function(i) {
+      var o = i.interactStatic;
+      for (var l in i.usePlugin(Et.default), i.usePlugin(Aa.default), o.modifiers = Ei.default, Ei.default) {
+        var u = Ei.default[l], f = u._defaults, g = u._methods;
+        f._methods = g, i.defaults.perAction[l] = f;
+      }
+    } }, vv = mv;
+    Pa.default = vv;
+    var Wn = {};
+    function Ol(i) {
+      return Ol = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
+        return typeof o;
+      } : function(o) {
+        return o && typeof Symbol == "function" && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+      }, Ol(i);
+    }
+    __name(Ol, "Ol");
+    c(Ol, "Io");
+    function gv(i, o) {
+>>>>>>> Stashed changes
       for (var l = 0; l < o.length; l++) {
         var u = o[l];
         u.enumerable = u.enumerable || false, u.configurable = true, "value" in u && (u.writable = true), Object.defineProperty(i, u.key, u);
       }
     }
+<<<<<<< Updated upstream
     __name(cv, "cv");
     c(cv, "Do");
     function Cl(i, o) {
@@ -4232,10 +6492,32 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     __name(pv, "pv");
     c(pv, "zo");
     function Tl(i) {
+=======
+    __name(gv, "gv");
+    c(gv, "Do");
+    function Ml(i, o) {
+      return Ml = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(l, u) {
+        return l.__proto__ = u, l;
+      }, Ml(i, o);
+    }
+    __name(Ml, "Ml");
+    c(Ml, "Ao");
+    function bv(i, o) {
+      if (o && (Ol(o) === "object" || typeof o == "function"))
+        return o;
+      if (o !== void 0)
+        throw new TypeError("Derived constructors may only return object or undefined");
+      return Il(i);
+    }
+    __name(bv, "bv");
+    c(bv, "zo");
+    function Il(i) {
+>>>>>>> Stashed changes
       if (i === void 0)
         throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
       return i;
     }
+<<<<<<< Updated upstream
     __name(Tl, "Tl");
     c(Tl, "Co");
     function Pa(i) {
@@ -4250,6 +6532,22 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         if (typeof x != "function" && x !== null)
           throw new TypeError("Super expression must either be null or a function");
         b.prototype = Object.create(x && x.prototype, { constructor: { value: b, writable: true, configurable: true } }), Object.defineProperty(b, "prototype", { writable: false }), x && Cl(b, x);
+=======
+    __name(Il, "Il");
+    c(Il, "Co");
+    function _a(i) {
+      return _a = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(o) {
+        return o.__proto__ || Object.getPrototypeOf(o);
+      }, _a(i);
+    }
+    __name(_a, "_a");
+    c(_a, "Ro"), Object.defineProperty(Wn, "__esModule", { value: true }), Wn.default = Wn.PointerEvent = void 0;
+    var yv = function(i) {
+      (function(b, w) {
+        if (typeof w != "function" && w !== null)
+          throw new TypeError("Super expression must either be null or a function");
+        b.prototype = Object.create(w && w.prototype, { constructor: { value: b, writable: true, configurable: true } }), Object.defineProperty(b, "prototype", { writable: false }), w && Ml(b, w);
+>>>>>>> Stashed changes
       })(E, i);
       var o, l, u, f, g = (u = E, f = function() {
         if (typeof Reflect == "undefined" || !Reflect.construct || Reflect.construct.sham)
@@ -4263,6 +6561,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           return false;
         }
       }(), function() {
+<<<<<<< Updated upstream
         var b, x = Pa(u);
         if (f) {
           var O = Pa(this).constructor;
@@ -4270,14 +6569,28 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         } else
           b = x.apply(this, arguments);
         return pv(this, b);
+=======
+        var b, w = _a(u);
+        if (f) {
+          var O = _a(this).constructor;
+          b = Reflect.construct(w, arguments, O);
+        } else
+          b = w.apply(this, arguments);
+        return bv(this, b);
+>>>>>>> Stashed changes
       });
       function E(b, x, O, I, P, k) {
         var G;
-        if (function(X, F) {
-          if (!(X instanceof F))
+        if (function(Z, F) {
+          if (!(Z instanceof F))
             throw new TypeError("Cannot call a class as a function");
+<<<<<<< Updated upstream
         }(this, E), G = g.call(this, P), Q.pointerExtend(Tl(G), O), O !== x && Q.pointerExtend(Tl(G), x), G.timeStamp = k, G.originalEvent = O, G.type = b, G.pointerId = Q.getPointerId(x), G.pointerType = Q.getPointerType(x), G.target = I, G.currentTarget = null, b === "tap") {
           var R = P.getPointerIndex(x);
+=======
+        }(this, E), G = g.call(this, P), Q.pointerExtend(Il(G), O), O !== w && Q.pointerExtend(Il(G), w), G.timeStamp = k, G.originalEvent = O, G.type = b, G.pointerId = Q.getPointerId(w), G.pointerType = Q.getPointerType(w), G.target = I, G.currentTarget = null, b === "tap") {
+          var R = P.getPointerIndex(w);
+>>>>>>> Stashed changes
           G.dt = G.timeStamp - P.pointers[R].downTime;
           var q = G.timeStamp - P.tapTime;
           G.double = !!P.prevTap && P.prevTap.type !== "doubletap" && P.prevTap.target === G.target && q < 500;
@@ -4294,6 +6607,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return this.pageX += x, this.pageY += O, this.clientX += x, this.clientY += O, this;
       } }, { key: "preventDefault", value: function() {
         this.originalEvent.preventDefault();
+<<<<<<< Updated upstream
       } }]) && cv(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), E;
     }(or.BaseEvent);
     Un.PointerEvent = Un.default = dv;
@@ -4301,6 +6615,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     Object.defineProperty(co, "__esModule", { value: true }), co.default = void 0;
     var _a = { id: "pointer-events/base", before: ["inertia", "modifiers", "auto-start", "actions"], install: function(i) {
       i.pointerEvents = _a, i.defaults.actions.pointerEvents = _a.defaults, (0, W.default)(i.actions.phaselessTypes, _a.types);
+=======
+      } }]) && gv(o.prototype, l), Object.defineProperty(o, "prototype", { writable: false }), E;
+    }(or.BaseEvent);
+    Wn.PointerEvent = Wn.default = yv;
+    var fo = {};
+    Object.defineProperty(fo, "__esModule", { value: true }), fo.default = void 0;
+    var za = { id: "pointer-events/base", before: ["inertia", "modifiers", "auto-start", "actions"], install: function(i) {
+      i.pointerEvents = za, i.defaults.actions.pointerEvents = za.defaults, (0, W.default)(i.actions.phaselessTypes, za.types);
+>>>>>>> Stashed changes
     }, listeners: { "interactions:new": function(i) {
       var o = i.interaction;
       o.prevTap = null, o.tapTime = 0;
@@ -4309,7 +6632,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       !o && l.hold || (l.hold = { duration: 1 / 0, timeout: null });
     }, "interactions:move": function(i, o) {
       var l = i.interaction, u = i.pointer, f = i.event, g = i.eventTarget;
+<<<<<<< Updated upstream
       i.duplicate || l.pointerIsDown && !l.pointerWasMoved || (l.pointerIsDown && Ol(i), gn({ interaction: l, pointer: u, event: f, eventTarget: g, type: "move" }, o));
+=======
+      i.duplicate || l.pointerIsDown && !l.pointerWasMoved || (l.pointerIsDown && Al(i), bn({ interaction: l, pointer: u, event: f, eventTarget: g, type: "move" }, o));
+>>>>>>> Stashed changes
     }, "interactions:down": function(i, o) {
       (function(l, u) {
         for (var f = l.interaction, g = l.pointer, E = l.event, b = l.eventTarget, x = l.pointerIndex, O = f.pointers[x].hold, I = z.getPath(b), P = { interaction: f, pointer: g, event: E, eventTarget: b, type: "hold", targets: [], path: I, node: null }, k = 0; k < I.length; k++) {
@@ -4318,44 +6645,68 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
         if (P.targets.length) {
           for (var R = 1 / 0, q = 0; q < P.targets.length; q++) {
-            var X = P.targets[q].eventable.options.holdDuration;
-            X < R && (R = X);
+            var Z = P.targets[q].eventable.options.holdDuration;
+            Z < R && (R = Z);
           }
           O.duration = R, O.timeout = setTimeout(function() {
-            gn({ interaction: f, eventTarget: b, pointer: g, event: E, type: "hold" }, u);
+            bn({ interaction: f, eventTarget: b, pointer: g, event: E, type: "hold" }, u);
           }, R);
         }
-      })(i, o), gn(i, o);
+      })(i, o), bn(i, o);
     }, "interactions:up": function(i, o) {
+<<<<<<< Updated upstream
       Ol(i), gn(i, o), function(l, u) {
+=======
+      Al(i), bn(i, o), function(l, u) {
+>>>>>>> Stashed changes
         var f = l.interaction, g = l.pointer, E = l.event, b = l.eventTarget;
-        f.pointerWasMoved || gn({ interaction: f, eventTarget: b, pointer: g, event: E, type: "tap" }, u);
+        f.pointerWasMoved || bn({ interaction: f, eventTarget: b, pointer: g, event: E, type: "tap" }, u);
       }(i, o);
     }, "interactions:cancel": function(i, o) {
+<<<<<<< Updated upstream
       Ol(i), gn(i, o);
     } }, PointerEvent: Un.PointerEvent, fire: gn, collectEventTargets: Yc, defaults: { holdDuration: 600, ignoreFrom: null, allowFrom: null, origin: { x: 0, y: 0 } }, types: { down: true, move: true, up: true, cancel: true, tap: true, doubletap: true, hold: true } };
     function gn(i, o) {
       var l = i.interaction, u = i.pointer, f = i.event, g = i.eventTarget, E = i.type, b = i.targets, x = b === void 0 ? Yc(i, o) : b, O = new Un.PointerEvent(E, u, f, g, l, o.now());
+=======
+      Al(i), bn(i, o);
+    } }, PointerEvent: Wn.PointerEvent, fire: bn, collectEventTargets: Jc, defaults: { holdDuration: 600, ignoreFrom: null, allowFrom: null, origin: { x: 0, y: 0 } }, types: { down: true, move: true, up: true, cancel: true, tap: true, doubletap: true, hold: true } };
+    function bn(i, o) {
+      var l = i.interaction, u = i.pointer, f = i.event, g = i.eventTarget, E = i.type, b = i.targets, w = b === void 0 ? Jc(i, o) : b, O = new Wn.PointerEvent(E, u, f, g, l, o.now());
+>>>>>>> Stashed changes
       o.fire("pointerEvents:new", { pointerEvent: O });
       for (var I = { interaction: l, pointer: u, event: f, eventTarget: g, targets: x, type: E, pointerEvent: O }, P = 0; P < x.length; P++) {
         var k = x[P];
         for (var G in k.props || {})
           O[G] = k.props[G];
+<<<<<<< Updated upstream
         var R = (0, De.default)(k.eventable, k.node);
         if (O._subtractOrigin(R), O.eventable = k.eventable, O.currentTarget = k.node, k.eventable.fire(O), O._addOrigin(R), O.immediatePropagationStopped || O.propagationStopped && P + 1 < x.length && x[P + 1].node !== O.currentTarget)
+=======
+        var R = (0, ke.default)(k.eventable, k.node);
+        if (O._subtractOrigin(R), O.eventable = k.eventable, O.currentTarget = k.node, k.eventable.fire(O), O._addOrigin(R), O.immediatePropagationStopped || O.propagationStopped && P + 1 < w.length && w[P + 1].node !== O.currentTarget)
+>>>>>>> Stashed changes
           break;
       }
       if (o.fire("pointerEvents:fired", I), E === "tap") {
-        var q = O.double ? gn({ interaction: l, pointer: u, event: f, eventTarget: g, type: "doubletap" }, o) : O;
+        var q = O.double ? bn({ interaction: l, pointer: u, event: f, eventTarget: g, type: "doubletap" }, o) : O;
         l.prevTap = q, l.tapTime = q.timeStamp;
       }
       return O;
     }
+<<<<<<< Updated upstream
     __name(gn, "gn");
     c(gn, "Yo");
     function Yc(i, o) {
       var l = i.interaction, u = i.pointer, f = i.event, g = i.eventTarget, E = i.type, b = l.getPointerIndex(u), x = l.pointers[b];
       if (E === "tap" && (l.pointerWasMoved || !x || x.downTarget !== g))
+=======
+    __name(bn, "bn");
+    c(bn, "Yo");
+    function Jc(i, o) {
+      var l = i.interaction, u = i.pointer, f = i.event, g = i.eventTarget, E = i.type, b = l.getPointerIndex(u), w = l.pointers[b];
+      if (E === "tap" && (l.pointerWasMoved || !w || w.downTarget !== g))
+>>>>>>> Stashed changes
         return [];
       for (var O = z.getPath(g), I = { interaction: l, pointer: u, event: f, eventTarget: g, type: E, path: O, targets: [], node: null }, P = 0; P < O.length; P++) {
         var k = O[P];
@@ -4366,6 +6717,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         return G.eventable.options.holdDuration === ((R = l.pointers[b]) == null ? void 0 : R.hold.duration);
       })), I.targets;
     }
+<<<<<<< Updated upstream
     __name(Yc, "Yc");
     c(Yc, "Wo");
     function Ol(i) {
@@ -4389,6 +6741,31 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       o.defaults.holdRepeatInterval = 0, o.types.holdrepeat = i.actions.phaselessTypes.holdrepeat = true;
     }, listeners: ["move", "up", "cancel", "endall"].reduce(function(i, o) {
       return i["pointerEvents:".concat(o)] = hv, i;
+=======
+    __name(Jc, "Jc");
+    c(Jc, "Wo");
+    function Al(i) {
+      var o = i.interaction, l = i.pointerIndex, u = o.pointers[l].hold;
+      u && u.timeout && (clearTimeout(u.timeout), u.timeout = null);
+    }
+    __name(Al, "Al");
+    c(Al, "Lo");
+    var xv = za;
+    fo.default = xv;
+    var Ra = {};
+    function wv(i) {
+      var o = i.interaction;
+      o.holdIntervalHandle && (clearInterval(o.holdIntervalHandle), o.holdIntervalHandle = null);
+    }
+    __name(wv, "wv");
+    c(wv, "No"), Object.defineProperty(Ra, "__esModule", { value: true }), Ra.default = void 0;
+    var Ev = { id: "pointer-events/holdRepeat", install: function(i) {
+      i.usePlugin(fo.default);
+      var o = i.pointerEvents;
+      o.defaults.holdRepeatInterval = 0, o.types.holdrepeat = i.actions.phaselessTypes.holdrepeat = true;
+    }, listeners: ["move", "up", "cancel", "endall"].reduce(function(i, o) {
+      return i["pointerEvents:".concat(o)] = wv, i;
+>>>>>>> Stashed changes
     }, { "pointerEvents:new": function(i) {
       var o = i.pointerEvent;
       o.type === "hold" && (o.count = (o.count || 0) + 1);
@@ -4400,6 +6777,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           o.pointerEvents.fire({ interaction: l, eventTarget: f, type: "hold", pointer: u, event: u }, o);
         }, E));
       }
+<<<<<<< Updated upstream
     } }) }, vv = mv;
     za.default = vv;
     var Ra = {};
@@ -4411,6 +6789,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     var bv = { id: "pointer-events/interactableTargets", install: function(i) {
       var o = i.Interactable;
       o.prototype.pointerEvents = gv;
+=======
+    } }) }, Sv = Ev;
+    Ra.default = Sv;
+    var Da = {};
+    function Tv(i) {
+      return (0, W.default)(this.events.options, i), this;
+    }
+    __name(Tv, "Tv");
+    c(Tv, "Ho"), Object.defineProperty(Da, "__esModule", { value: true }), Da.default = void 0;
+    var Cv = { id: "pointer-events/interactableTargets", install: function(i) {
+      var o = i.Interactable;
+      o.prototype.pointerEvents = Tv;
+>>>>>>> Stashed changes
       var l = o.prototype._backCompatOption;
       o.prototype._backCompatOption = function(u, f) {
         var g = l.call(this, u, f);
@@ -4430,6 +6821,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }, "interactable:set": function(i, o) {
       var l = i.interactable, u = i.options;
       (0, W.default)(l.events.options, o.pointerEvents.defaults), (0, W.default)(l.events.options, u.pointerEvents || {});
+<<<<<<< Updated upstream
     } } }, yv = bv;
     Ra.default = yv;
     var Da = {};
@@ -4440,6 +6832,18 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     Da.default = xv;
     var po = {};
     function Xc(i) {
+=======
+    } } }, Ov = Cv;
+    Da.default = Ov;
+    var Na = {};
+    Object.defineProperty(Na, "__esModule", { value: true }), Na.default = void 0;
+    var Mv = { id: "pointer-events", install: function(i) {
+      i.usePlugin(fo), i.usePlugin(Ra.default), i.usePlugin(Da.default);
+    } }, Iv = Mv;
+    Na.default = Iv;
+    var ho = {};
+    function ep(i) {
+>>>>>>> Stashed changes
       var o = i.Interactable;
       i.actions.phases.reflow = true, o.prototype.reflow = function(l) {
         return function(u, f, g) {
@@ -4455,6 +6859,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
                 G._reflowResolve = ne;
               }));
             else {
+<<<<<<< Updated upstream
               var q = (0, ue.tlbrToXywh)(k), X = { page: { x: q.x, y: q.y }, client: { x: q.x, y: q.y }, timeStamp: g.now() }, F = Q.coordsToEvent(X);
               R = function(ne, oe, fe, Pe, Fe) {
                 var Se = ne.interactions.new({ pointerType: "reflow" }), He = { interaction: Se, event: Fe, pointer: Fe, eventTarget: fe, phase: "reflow" };
@@ -4463,6 +6868,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
                   Se._reflowResolve = Al;
                 }) : void 0;
                 return Se._reflowPromise = Zr, Se.start(Pe, oe, fe), Se._interacting ? (Se.move(He), Se.end(Fe)) : (Se.stop(), Se._reflowResolve()), Se.removePointer(Fe, Fe), Zr;
+=======
+              var q = (0, ue.tlbrToXywh)(k), Z = { page: { x: q.x, y: q.y }, client: { x: q.x, y: q.y }, timeStamp: g.now() }, F = Q.coordsToEvent(Z);
+              R = function(ne, oe, he, Pe, Fe) {
+                var Te = ne.interactions.new({ pointerType: "reflow" }), He = { interaction: Te, event: Fe, pointer: Fe, eventTarget: he, phase: "reflow" };
+                Te.interactable = oe, Te.element = he, Te.prevEvent = Fe, Te.updatePointer(Fe, Fe, he, true), Q.setZeroCoords(Te.coords.delta), (0, ar.copyAction)(Te.prepared, Pe), Te._doPhase(He);
+                var hr = ne.window.Promise, Qr = hr ? new hr(function(zl) {
+                  Te._reflowResolve = zl;
+                }) : void 0;
+                return Te._reflowPromise = Qr, Te.start(Pe, oe, he), Te._interacting ? (Te.move(He), Te.end(Fe)) : (Te.stop(), Te._reflowResolve()), Te.removePointer(Fe, Fe), Qr;
+>>>>>>> Stashed changes
               }(g, u, P, f, F);
             }
             x && x.push(R);
@@ -4474,6 +6889,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }(this, l, i);
       };
     }
+<<<<<<< Updated upstream
     __name(Xc, "Xc");
     c(Xc, "ni"), Object.defineProperty(po, "__esModule", { value: true }), po.default = void 0, po.install = Xc;
     var Ev = { id: "reflow", install: Xc, listeners: { "interactions:stop": function(i, o) {
@@ -4501,15 +6917,51 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     var Wn = { exports: {} };
     function Il(i) {
       return Il = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
+=======
+    __name(ep, "ep");
+    c(ep, "ni"), Object.defineProperty(ho, "__esModule", { value: true }), ho.default = void 0, ho.install = ep;
+    var Av = { id: "reflow", install: ep, listeners: { "interactions:stop": function(i, o) {
+      var l = i.interaction;
+      l.pointerType === "reflow" && (l._reflowResolve && l._reflowResolve(), Me.remove(o.interactions.list, l));
+    } } }, Pv = Av;
+    ho.default = Pv;
+    var fr = { exports: {} };
+    function Pl(i) {
+      return Pl = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
+>>>>>>> Stashed changes
         return typeof o;
       } : function(o) {
         return o && typeof Symbol == "function" && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
       }, Il(i);
     }
+<<<<<<< Updated upstream
     __name(Il, "Il");
     c(Il, "ui"), Object.defineProperty(Wn.exports, "__esModule", { value: true }), Wn.exports.default = void 0;
     var Tv = fr.default;
     if (Wn.exports.default = Tv, Il(Wn) === "object" && Wn)
+=======
+    __name(Pl, "Pl");
+    c(Pl, "ai"), Object.defineProperty(fr.exports, "__esModule", { value: true }), fr.exports.default = void 0, ct.default.use(vi.default), ct.default.use(Fn.default), ct.default.use(Na.default), ct.default.use(gi.default), ct.default.use(Pa.default), ct.default.use(da.default), ct.default.use(dr.default), ct.default.use(mn.default), ct.default.use(ho.default);
+    var _v = ct.default;
+    if (fr.exports.default = _v, Pl(fr) === "object" && fr)
+      try {
+        fr.exports = ct.default;
+      } catch (i) {
+      }
+    ct.default.default = ct.default, fr = fr.exports;
+    var Vn = { exports: {} };
+    function _l(i) {
+      return _l = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
+        return typeof o;
+      } : function(o) {
+        return o && typeof Symbol == "function" && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+      }, _l(i);
+    }
+    __name(_l, "_l");
+    c(_l, "ui"), Object.defineProperty(Vn.exports, "__esModule", { value: true }), Vn.exports.default = void 0;
+    var zv = fr.default;
+    if (Vn.exports.default = zv, _l(Vn) === "object" && Vn)
+>>>>>>> Stashed changes
       try {
         Wn.exports = fr.default;
       } catch (i) {
@@ -4517,8 +6969,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     return fr.default.default = fr.default, Wn.exports;
   });
 });
+<<<<<<< Updated upstream
 var zh = Ct((_h, ec) => {
   (function(t) {
+=======
+var jh = Tt((Gh, oc) => {
+  (function(e) {
+>>>>>>> Stashed changes
     "use strict";
     var r = /* @__PURE__ */ __name(function() {
     }, "r"), e = t.requestAnimationFrame || t.webkitRequestAnimationFrame || t.mozRequestAnimationFrame || t.msRequestAnimationFrame || function(d) {
@@ -4585,11 +7042,19 @@ var zh = Ct((_h, ec) => {
     var m = t.fastdom = t.fastdom || new n();
     typeof define == "function" ? define(function() {
       return m;
+<<<<<<< Updated upstream
     }) : typeof ec == "object" && (ec.exports = m);
   })(typeof window != "undefined" ? window : _h);
 });
 var kh = Ct((tc, Nh) => {
   (function(t) {
+=======
+    }) : typeof oc == "object" && (oc.exports = m);
+  })(typeof window != "undefined" ? window : Gh);
+});
+var qh = Tt((ac, $h) => {
+  (function(e) {
+>>>>>>> Stashed changes
     "use strict";
     var r = Math.cosh || function(d) {
       return Math.abs(d) < 1e-9 ? 1 - d : (Math.exp(d) + Math.exp(-d)) * 0.5;
@@ -4637,14 +7102,23 @@ var kh = Ct((tc, Nh) => {
             break;
           case "string":
             y.im = y.re = 0;
+<<<<<<< Updated upstream
             var w = d.match(/\d+\.?\d*e[+-]?\d+|\d+\.?\d*|\.\d+|./g), S = 1, C = 0;
             w === null && s();
             for (var T = 0; T < w.length; T++) {
               var _ = w[T];
               _ === " " || _ === "	" || _ === `
 ` || (_ === "+" ? S++ : _ === "-" ? C++ : _ === "i" || _ === "I" ? (S + C === 0 && s(), w[T + 1] !== " " && !isNaN(w[T + 1]) ? (y.im += parseFloat((C % 2 ? "-" : "") + w[T + 1]), T++) : y.im += parseFloat((C % 2 ? "-" : "") + "1"), S = C = 0) : ((S + C === 0 || isNaN(_)) && s(), w[T + 1] === "i" || w[T + 1] === "I" ? (y.im += parseFloat((C % 2 ? "-" : "") + _), T++) : y.re += parseFloat((C % 2 ? "-" : "") + _), S = C = 0));
+=======
+            var x = d.match(/\d+\.?\d*e[+-]?\d+|\d+\.?\d*|\.\d+|./g), S = 1, T = 0;
+            x === null && s();
+            for (var C = 0; C < x.length; C++) {
+              var _ = x[C];
+              _ === " " || _ === "	" || _ === `
+` || (_ === "+" ? S++ : _ === "-" ? T++ : _ === "i" || _ === "I" ? (S + T === 0 && s(), x[C + 1] !== " " && !isNaN(x[C + 1]) ? (y.im += parseFloat((T % 2 ? "-" : "") + x[C + 1]), C++) : y.im += parseFloat((T % 2 ? "-" : "") + "1"), S = T = 0) : ((S + T === 0 || isNaN(_)) && s(), x[C + 1] === "i" || x[C + 1] === "I" ? (y.im += parseFloat((T % 2 ? "-" : "") + _), C++) : y.re += parseFloat((T % 2 ? "-" : "") + _), S = T = 0));
+>>>>>>> Stashed changes
             }
-            S + C > 0 && s();
+            S + T > 0 && s();
             break;
           case "number":
             y.im = 0, y.re = d;
@@ -4682,8 +7156,13 @@ var kh = Ct((tc, Nh) => {
       if (this.isZero() || y.isInfinite())
         return m.ZERO;
       d = this.re, h = this.im;
+<<<<<<< Updated upstream
       var w = y.re, S = y.im, C, T;
       return S === 0 ? new m(d / w, h / w) : Math.abs(w) < Math.abs(S) ? (T = w / S, C = w * T + S, new m((d * T + h) / C, (h * T - d) / C)) : (T = S / w, C = S * T + w, new m((d + h * T) / C, (h - d * T) / C));
+=======
+      var x = y.re, S = y.im, T, C;
+      return S === 0 ? new m(d / x, h / x) : Math.abs(x) < Math.abs(S) ? (C = x / S, T = x * C + S, new m((d * C + h) / T, (h * C - d) / T)) : (C = S / x, T = S * C + x, new m((d + h * C) / T, (h - d * C) / T));
+>>>>>>> Stashed changes
     }, pow: function(d, h) {
       var y = new m(d, h);
       if (d = this.re, h = this.im, y.isZero())
@@ -4815,8 +7294,13 @@ var kh = Ct((tc, Nh) => {
       }
       return d;
     }, atanh: function() {
+<<<<<<< Updated upstream
       var d = this.re, h = this.im, y = d > 1 && h === 0, w = 1 - d, S = 1 + d, C = w * w + h * h, T = C !== 0 ? new m((S * w - h * h) / C, (h * w + S * h) / C) : new m(d !== -1 ? d / 0 : 0, h !== 0 ? h / 0 : 0), _ = T.re;
       return T.re = p(T.re, T.im) / 2, T.im = Math.atan2(T.im, _) / 2, y && (T.im = -T.im), T;
+=======
+      var d = this.re, h = this.im, y = d > 1 && h === 0, x = 1 - d, S = 1 + d, T = x * x + h * h, C = T !== 0 ? new m((S * x - h * h) / T, (h * x + S * h) / T) : new m(d !== -1 ? d / 0 : 0, h !== 0 ? h / 0 : 0), _ = C.re;
+      return C.re = p(C.re, C.im) / 2, C.im = Math.atan2(C.im, _) / 2, y && (C.im = -C.im), C;
+>>>>>>> Stashed changes
     }, acoth: function() {
       var d = this.re, h = this.im;
       if (d === 0 && h === 0)
@@ -4874,6 +7358,7 @@ var kh = Ct((tc, Nh) => {
       return !(this.isNaN() || this.isFinite());
     } }, m.ZERO = new m(0, 0), m.ONE = new m(1, 0), m.I = new m(0, 1), m.PI = new m(Math.PI, 0), m.E = new m(Math.E, 0), m.INFINITY = new m(1 / 0, 1 / 0), m.NAN = new m(NaN, NaN), m.EPSILON = 1e-15, typeof define == "function" && define.amd ? define([], function() {
       return m;
+<<<<<<< Updated upstream
     }) : typeof tc == "object" ? (Object.defineProperty(m, "__esModule", { value: true }), m.default = m, m.Complex = m, Nh.exports = m) : t.Complex = m;
   })(tc);
 });
@@ -4887,6 +7372,22 @@ __name(od, "od");
 c(od, "q");
 function wo(t) {
   let r = Mn(t).split("/");
+=======
+    }) : typeof ac == "object" ? (Object.defineProperty(m, "__esModule", { value: true }), m.default = m, m.Complex = m, $h.exports = m) : e.Complex = m;
+  })(ac);
+});
+var Mn = zt(lp());
+var md = zt(kr());
+var es = zt(kr());
+function cd(e) {
+  let r = In(e);
+  return new Mn.default(r).valueOf() * Math.PI;
+}
+__name(cd, "cd");
+c(cd, "L");
+function wo(e) {
+  let r = In(e).split("/");
+>>>>>>> Stashed changes
   if (r.length === 1)
     return 1;
   if (r.length === 2)
@@ -4894,6 +7395,7 @@ function wo(t) {
   throw new Error(`Failed to parse angle '${t}'`);
 }
 __name(wo, "wo");
+<<<<<<< Updated upstream
 c(wo, "O");
 function ad(t, r) {
   return new On.default(Mn(t)).valueOf() < new On.default(Mn(r)).valueOf();
@@ -4949,6 +7451,63 @@ var pt = c(class extends Error {
   }
 }, "c");
 var eb = [{ character: "\xBD", ref: "\xBD", expanded: "1/2", value: 0.5 }, { character: "\xBC", ref: "\xBC", expanded: "1/4", value: 0.25 }, { character: "\xBE", ref: "\xBE", expanded: "3/4", value: 0.75 }, { character: "\u2153", ref: "\u2153", expanded: "1/3", value: 0.3333333333333333 }, { character: "\u2154", ref: "\u2154", expanded: "2/3", value: 0.6666666666666666 }, { character: "\u2155", ref: "\u2155", expanded: "1/5", value: 0.2 }, { character: "\u2156", ref: "\u2156", expanded: "2/5", value: 0.4 }, { character: "\u2157", ref: "\u2157", expanded: "3/5", value: 0.6 }, { character: "\u2158", ref: "\u2158", expanded: "4/5", value: 0.8 }, { character: "\u2159", ref: "\u2159", expanded: "1/6", value: 0.16666666666666666 }, { character: "\u215A", ref: "\u215A", expanded: "5/6", value: 0.8333333333333334 }, { character: "\u2150", ref: "\u2150", expanded: "1/7", value: 0.14285714285714285 }, { character: "\u215B", ref: "\u215B", expanded: "1/8", value: 0.125 }, { character: "\u215C", ref: "\u215C", expanded: "3/8", value: 0.375 }, { character: "\u215D", ref: "\u215D", expanded: "5/8", value: 0.625 }, { character: "\u215E", ref: "\u215E", expanded: "7/8", value: 0.875 }, { character: "\u2151", ref: "\u2151", expanded: "1/9", value: 0.1111111111111111 }, { character: "\u2152", ref: "\u2152", expanded: "1/10", value: 0.1 }];
+=======
+c(wo, "Z");
+function pd(e, r) {
+  return new Mn.default(In(e)).valueOf() < new Mn.default(In(r)).valueOf();
+}
+__name(pd, "pd");
+c(pd, "W");
+function dd(e, r) {
+  return new Mn.default(In(e)).valueOf() > new Mn.default(In(r)).valueOf();
+}
+__name(dd, "dd");
+c(dd, "H");
+function fd(e) {
+  if (e === "0")
+    return true;
+  if (!/π/.test(e))
+    return false;
+  try {
+    let r = In(e);
+    return new Mn.default(r).valueOf(), true;
+  } catch (r) {
+    return false;
+  }
+}
+__name(fd, "fd");
+c(fd, "K");
+function In(e) {
+  return e.replace(/(\d+)π/g, "$1").replace(/π/g, "1");
+}
+__name(In, "In");
+c(In, "f");
+function hd(e) {
+  try {
+    let r = In(e), t = new Mn.default(r).toFraction().split("/"), n;
+    return t[0] === "0" ? n = "0" : t[0] === "1" ? n = "\u03C0" : t[0] === "-1" ? n = "-\u03C0" : n = `${t[0]}\u03C0`, t.length === 1 ? n : `${n}/${t[1]}`;
+  } catch (r) {
+    throw new Error(`Failed to parse angle '${e}'`);
+  }
+}
+__name(hd, "hd");
+c(hd, "Y");
+var ql = 0;
+var pt = c(class extends Error {
+  constructor(e, r) {
+    super(e), this.detailsObj = r, this.name = "Error", this.message = e, this.stack = new Error().stack, this.stack !== void 0 && (this.stack = this.stack.replace(/^Error\n\s+at new DetailedError (\S+)\s?\n\s+at /, `
+    `)), ql++;
+    try {
+      this.details = ql === 1 ? (0, md.format)(this.detailsObj) : "(failed to prettyFormat detailsObj due to possibly re-entrancy)";
+    } catch (t) {
+      console.error(t), this.details = "(failed to prettyFormat detailsObj, see the console for details)";
+    } finally {
+      ql--;
+    }
+  }
+}, "m");
+var vd = [{ character: "\xBD", ref: "\xBD", expanded: "1/2", value: 0.5 }, { character: "\xBC", ref: "\xBC", expanded: "1/4", value: 0.25 }, { character: "\xBE", ref: "\xBE", expanded: "3/4", value: 0.75 }, { character: "\u2153", ref: "\u2153", expanded: "1/3", value: 0.3333333333333333 }, { character: "\u2154", ref: "\u2154", expanded: "2/3", value: 0.6666666666666666 }, { character: "\u2155", ref: "\u2155", expanded: "1/5", value: 0.2 }, { character: "\u2156", ref: "\u2156", expanded: "2/5", value: 0.4 }, { character: "\u2157", ref: "\u2157", expanded: "3/5", value: 0.6 }, { character: "\u2158", ref: "\u2158", expanded: "4/5", value: 0.8 }, { character: "\u2159", ref: "\u2159", expanded: "1/6", value: 0.16666666666666666 }, { character: "\u215A", ref: "\u215A", expanded: "5/6", value: 0.8333333333333334 }, { character: "\u2150", ref: "\u2150", expanded: "1/7", value: 0.14285714285714285 }, { character: "\u215B", ref: "\u215B", expanded: "1/8", value: 0.125 }, { character: "\u215C", ref: "\u215C", expanded: "3/8", value: 0.375 }, { character: "\u215D", ref: "\u215D", expanded: "5/8", value: 0.625 }, { character: "\u215E", ref: "\u215E", expanded: "7/8", value: 0.875 }, { character: "\u2151", ref: "\u2151", expanded: "1/9", value: 0.1111111111111111 }, { character: "\u2152", ref: "\u2152", expanded: "1/10", value: 0.1 }];
+>>>>>>> Stashed changes
 var sr = c(class {
   static parseFloat(t) {
     if (t.length === 0)
@@ -4977,9 +7536,15 @@ var sr = c(class {
     let a = sr.matchUnicodeFraction((s) => Math.abs(Math.sqrt(s.value) - t) <= r);
     return a !== void 0 ? Math.sqrt(a.value) : t;
   }
+<<<<<<< Updated upstream
   static matchUnicodeFraction(t) {
     for (let r of eb)
       if (t(r))
+=======
+  static matchUnicodeFraction(e) {
+    for (let r of vd)
+      if (e(r))
+>>>>>>> Stashed changes
         return r;
   }
   constructor(t, r, e, n) {
@@ -5000,8 +7565,13 @@ var sr = c(class {
     return a !== void 0 ? `\u221A${a.character}` : t % 1 !== 0 && e !== void 0 ? t.toFixed(e) : t.toString();
   }
 }, "s");
+<<<<<<< Updated upstream
 var yo = sr;
 yo.CONSISTENT = new sr(false, 0, 2, ", "), yo.EXACT = new sr(true, 0, void 0, ", "), yo.MINIFIED = new sr(true, 0, void 0, ","), yo.SIMPLIFIED = new sr(true, 5e-4, 3, ", ");
+=======
+var Zn = sr;
+Zn.CONSISTENT = new sr(false, 0, 2, ", "), Zn.EXACT = new sr(true, 0, void 0, ", "), Zn.MINIFIED = new sr(true, 0, void 0, ","), Zn.SIMPLIFIED = new sr(true, 5e-4, 3, ", ");
+>>>>>>> Stashed changes
 var H = c(class {
   static need(t, r, e) {
     if (t !== true) {
@@ -5024,6 +7594,7 @@ Args: ${n}`;
     }
     return [Math.cos(t), Math.sin(t)];
   }
+<<<<<<< Updated upstream
 }, "m");
 var he = c(class {
   static from(t) {
@@ -5048,14 +7619,97 @@ var he = c(class {
     if (t instanceof he)
       return t.imag;
     if (typeof t == "number")
+=======
+}, "d");
+function Fl(e) {
+  for (let r of vd)
+    if (e(r))
+      return r;
+}
+__name(Fl, "Fl");
+c(Fl, "z");
+var sb = c((e) => typeof e == "object" && e !== null && typeof e.real == "number" && typeof e.imag == "number", "b");
+function lb(e, r, t, n) {
+  if (Math.abs(e.imag) <= t) {
+    let a = Fl((s) => Math.abs(s.value - e.real) <= t);
+    return a !== void 0 ? a.character : (0, es.format)(e.real);
+  }
+  return Math.abs(e.real) <= t ? Math.abs(e.imag - 1) <= t ? "i" : Math.abs(e.imag + 1) <= t ? "-i" : r ? `${Ul(e.imag, t, n)}i` : n !== void 0 ? `${e.imag.toFixed(n)}i` : `${String(e.imag)}i` : ub(e, true, 0, n);
+}
+__name(lb, "lb");
+c(lb, "G");
+function ub(e, r, t, n) {
+  let a;
+  if (r && Math.abs(Math.abs(e.imag) - 1) <= t)
+    a = "";
+  else {
+    if (e.imag < 0) {
+      let m = Fl((d) => Math.abs(d.value + e.imag) <= t);
+      m !== void 0 && (a = m.character);
+    } else {
+      let m = Fl((d) => Math.abs(d.value - e.imag) <= t);
+      m !== void 0 && (a = m.character);
+    }
+    a || (!r && n !== void 0 ? a = Math.abs(e.imag).toFixed(n) : a = (0, es.format)(Math.abs(e.imag)));
+  }
+  let s = r || n === void 0 || e.real < 0 ? "" : "+", p = e.imag >= 0 ? "+" : "-", v;
+  return r ? v = Ul(e.real, t, n) : n !== void 0 ? v = e.real.toFixed(n) : v = String(e.real), `${s + v + p + a}i`;
+}
+__name(ub, "ub");
+c(ub, "F");
+function Ul(e, r = 0, t = void 0) {
+  if (Math.abs(e) < r)
+    return "0";
+  if (e < 0)
+    return `-${Ul(-e, r, t)}`;
+  let n = Zn.matchUnicodeFraction((s) => Math.abs(s.value - e) <= r);
+  if (n !== void 0)
+    return n.character;
+  let a = Zn.matchUnicodeFraction((s) => Math.abs(Math.sqrt(s.value) - e) <= r);
+  return a !== void 0 ? `\u221A${a.character}` : e % 1 !== 0 && t !== void 0 ? e.toFixed(t) : e.toString();
+}
+__name(Ul, "Ul");
+c(Ul, "M");
+var cb = { test: sb, serialize(e, r, t, n, a, s) {
+  return lb(e, true, 0, void 0);
+} };
+var me = c(class {
+  static from(e) {
+    if (e instanceof me)
+      return e;
+    if (typeof e == "number")
+      return new me(e, 0);
+    throw new pt("Unrecognized value type.", { v: e });
+  }
+  static polar(e, r) {
+    let [t, n] = H.snappedCosSin(r);
+    return new me(e * t, e * n);
+  }
+  static realPartOf(e) {
+    if (e instanceof me)
+      return e.real;
+    if (typeof e == "number")
+      return e;
+    throw new pt("Unrecognized value type.", { v: e });
+  }
+  static imagPartOf(e) {
+    if (e instanceof me)
+      return e.imag;
+    if (typeof e == "number")
+>>>>>>> Stashed changes
       return 0;
     throw new pt("Unrecognized value type.", { v: t });
   }
   constructor(t, r) {
     this.real = t, this.imag = r;
   }
+<<<<<<< Updated upstream
   static rootsOfQuadratic(t, r, e) {
     if (t = he.from(t), r = he.from(r), e = he.from(e), t.isEqualTo(0)) {
+=======
+  static rootsOfQuadratic(e, r, t) {
+    if (e = me.from(e), r = me.from(r), t = me.from(t), e.isEqualTo(0)) {
+>>>>>>> Stashed changes
       if (!r.isEqualTo(0))
         return [e.times(-1).dividedBy(r)];
       if (!e.isEqualTo(0))
@@ -5065,6 +7719,7 @@ var he = c(class {
     let n = r.times(r).minus(t.times(e).times(4)).sqrts(), a = r.times(-1), s = t.times(2);
     return n.map((p) => a.minus(p).dividedBy(s));
   }
+<<<<<<< Updated upstream
   isEqualTo(t) {
     return t instanceof he ? this.real === t.real && this.imag === t.imag : typeof t == "number" ? this.real === t && this.imag === 0 : false;
   }
@@ -5072,6 +7727,15 @@ var he = c(class {
     if (t instanceof he || typeof t == "number") {
       let e = this.minus(he.from(t));
       return Math.abs(e.real) <= r && Math.abs(e.imag) <= r && e.abs() <= r;
+=======
+  isEqualTo(e) {
+    return e instanceof me ? this.real === e.real && this.imag === e.imag : typeof e == "number" ? this.real === e && this.imag === 0 : false;
+  }
+  isApproximatelyEqualTo(e, r) {
+    if (e instanceof me || typeof e == "number") {
+      let t = this.minus(me.from(e));
+      return Math.abs(t.real) <= r && Math.abs(t.imag) <= r && t.abs() <= r;
+>>>>>>> Stashed changes
     }
     return false;
   }
@@ -5082,6 +7746,7 @@ var he = c(class {
     return Math.sqrt(this.norm2());
   }
   unit() {
+<<<<<<< Updated upstream
     let t = this.norm2();
     return t < 1e-5 ? he.polar(1, this.phase()) : this.dividedBy(Math.sqrt(t));
   }
@@ -5111,40 +7776,94 @@ var he = c(class {
     if (r === 0 && t < 0)
       return [new he(0, e), new he(0, -e)];
     let n = this.phase() / 2, a = he.polar(e, n);
+=======
+    let e = this.norm2();
+    return e < 1e-5 ? me.polar(1, this.phase()) : this.dividedBy(Math.sqrt(e));
+  }
+  plus(e) {
+    let r = me.from(e);
+    return new me(this.real + r.real, this.imag + r.imag);
+  }
+  minus(e) {
+    let r = me.from(e);
+    return new me(this.real - r.real, this.imag - r.imag);
+  }
+  times(e) {
+    let r = me.from(e);
+    return new me(this.real * r.real - this.imag * r.imag, this.real * r.imag + this.imag * r.real);
+  }
+  dividedBy(e) {
+    let r = me.from(e), t = r.norm2();
+    if (t === 0)
+      throw new Error("Division by Zero");
+    let n = this.times(r.conjugate());
+    return new me(n.real / t, n.imag / t);
+  }
+  sqrts() {
+    let [e, r] = [this.real, this.imag], t = Math.sqrt(Math.sqrt(e * e + r * r));
+    if (t === 0)
+      return [me.ZERO];
+    if (r === 0 && e < 0)
+      return [new me(0, t), new me(0, -t)];
+    let n = this.phase() / 2, a = me.polar(t, n);
+>>>>>>> Stashed changes
     return [a, a.times(-1)];
   }
   conjugate() {
-    return new he(this.real, -this.imag);
+    return new me(this.real, -this.imag);
   }
+<<<<<<< Updated upstream
   toString(t) {
     return t = t || yo.EXACT, t.allowAbbreviation ? this.toStringAllowSingleValue(t) : this.toStringBothValues(t);
+=======
+  toStr(e) {
+    return e = e || cb, (0, es.format)(this, { plugins: [e] });
+  }
+  toString(e) {
+    return e = e || Zn.EXACT, e.allowAbbreviation ? this.toStringAllowSingleValue(e) : this.toStringBothValues(e);
+>>>>>>> Stashed changes
   }
   neg() {
-    return new he(-this.real, -this.imag);
+    return new me(-this.real, -this.imag);
   }
+<<<<<<< Updated upstream
   raisedTo(t) {
     return t === 0.5 && this.imag === 0 && this.real >= 0 ? new he(Math.sqrt(this.real), 0) : he.ZERO.isEqualTo(t) ? he.ONE : this.isEqualTo(he.ZERO) ? he.ZERO : this.ln().times(he.from(t)).exp();
+=======
+  raisedTo(e) {
+    return e === 0.5 && this.imag === 0 && this.real >= 0 ? new me(Math.sqrt(this.real), 0) : me.ZERO.isEqualTo(e) ? me.ONE : this.isEqualTo(me.ZERO) ? me.ZERO : this.ln().times(me.from(e)).exp();
+>>>>>>> Stashed changes
   }
   exp() {
-    return he.polar(Math.exp(this.real), this.imag);
+    return me.polar(Math.exp(this.real), this.imag);
   }
   cos() {
+<<<<<<< Updated upstream
     let t = this.times(he.I);
     return t.exp().plus(t.neg().exp()).times(0.5);
   }
   sin() {
     let t = this.times(he.I);
     return t.exp().minus(t.neg().exp()).dividedBy(new he(0, 2));
+=======
+    let e = this.times(me.I);
+    return e.exp().plus(e.neg().exp()).times(0.5);
+  }
+  sin() {
+    let e = this.times(me.I);
+    return e.exp().minus(e.neg().exp()).dividedBy(new me(0, 2));
+>>>>>>> Stashed changes
   }
   tan() {
     return this.sin().dividedBy(this.cos());
   }
   ln() {
-    return new he(Math.log(this.abs()), this.phase());
+    return new me(Math.log(this.abs()), this.phase());
   }
   phase() {
     return Math.atan2(this.imag, this.real);
   }
+<<<<<<< Updated upstream
   toStringAllowSingleValue(t) {
     return Math.abs(this.imag) <= t.maxAbbreviationError ? t.formatFloat(this.real) : Math.abs(this.real) <= t.maxAbbreviationError ? Math.abs(this.imag - 1) <= t.maxAbbreviationError ? "i" : Math.abs(this.imag + 1) <= t.maxAbbreviationError ? "-i" : `${t.formatFloat(this.imag)}i` : this.toStringBothValues(t);
   }
@@ -5205,11 +7924,75 @@ function Ql(t = document) {
       else if (s.type === "childList" && s.addedNodes.length)
         for (let p of s.addedNodes)
           p instanceof Element && Jl(p);
+=======
+  toStringAllowSingleValue(e) {
+    return Math.abs(this.imag) <= e.maxAbbreviationError ? e.formatFloat(this.real) : Math.abs(this.real) <= e.maxAbbreviationError ? Math.abs(this.imag - 1) <= e.maxAbbreviationError ? "i" : Math.abs(this.imag + 1) <= e.maxAbbreviationError ? "-i" : `${e.formatFloat(this.imag)}i` : this.toStringBothValues(e);
+  }
+  toStringBothValues(e) {
+    let r = this.imag >= 0 ? "+" : "-", t = e.allowAbbreviation && Math.abs(Math.abs(this.imag) - 1) <= e.maxAbbreviationError ? "" : e.formatFloat(Math.abs(this.imag));
+    return `${(e.allowAbbreviation || e.fixedDigits === void 0 || this.real < 0 ? "" : "+") + e.formatFloat(this.real) + r + t}i`;
+  }
+}, "a");
+var On = me;
+On.ZERO = new me(0, 0), On.ONE = new me(1, 0), On.I = new me(0, 1);
+var Eo = { MAX_QUBIT_COUNT: 16 };
+function pe(e, r = {}, t = document) {
+  let n = new CustomEvent(e, { bubbles: true, cancelable: true, detail: r });
+  return t.dispatchEvent(n);
+}
+__name(pe, "pe");
+c(pe, "ye");
+var gd = c((e) => typeof e == "number" && 1 <= e && e <= Eo.MAX_QUBIT_COUNT, "xe");
+var Wl = "\u25E6";
+var Vl = "Bloch";
+var Yl = "\u2022";
+var ts = "H";
+var rs = "Measure";
+var ns = "P";
+var Xl = "QFT\u2020";
+var Zl = "QFT";
+var is = "X^\xBD";
+var os = "Rx";
+var as = "Ry";
+var ss = "Rz";
+var Kl = "\u2026";
+var Ql = "Swap";
+var ls = "T";
+var us = "T\u2020";
+var bd = "|0>";
+var yd = "|1>";
+var cs = "X";
+var ps = "Y";
+var ds = "Z";
+var Jl = /* @__PURE__ */ new WeakSet();
+function tu(e) {
+  Jl.add(e), e.shadowRoot && ru(e.shadowRoot), iu(e), nu(e.ownerDocument);
+}
+__name(tu, "tu");
+c(tu, "bind");
+function ru(e) {
+  iu(e), nu(e);
+}
+__name(ru, "ru");
+c(ru, "bindShadow");
+var fs = /* @__PURE__ */ new WeakMap();
+function nu(e = document) {
+  if (fs.has(e))
+    return fs.get(e);
+  let r = false, t = new MutationObserver((a) => {
+    for (let s of a)
+      if (s.type === "attributes" && s.target instanceof Element)
+        eu(s.target);
+      else if (s.type === "childList" && s.addedNodes.length)
+        for (let p of s.addedNodes)
+          p instanceof Element && iu(p);
+>>>>>>> Stashed changes
   });
   e.observe(t, { childList: true, subtree: true, attributeFilter: ["data-action"] });
   let n = { get closed() {
     return r;
   }, unsubscribe() {
+<<<<<<< Updated upstream
     r = true, cs.delete(t), e.disconnect();
   } };
   return cs.set(t, n), n;
@@ -5231,11 +8014,35 @@ function tb(t) {
       Yl.has(n) && typeof n[e.method] == "function" && n[e.method](t);
       let a = r.getRootNode();
       if (a instanceof ShadowRoot && Yl.has(a.host) && a.host.matches(e.tag)) {
+=======
+    r = true, fs.delete(e), t.disconnect();
+  } };
+  return fs.set(e, n), n;
+}
+__name(nu, "nu");
+c(nu, "listenForBind");
+function iu(e) {
+  for (let r of e.querySelectorAll("[data-action]"))
+    eu(r);
+  e instanceof Element && e.hasAttribute("data-action") && eu(e);
+}
+__name(iu, "iu");
+c(iu, "bindElements");
+function pb(e) {
+  let r = e.currentTarget;
+  for (let t of xd(r))
+    if (e.type === t.type) {
+      let n = r.closest(t.tag);
+      Jl.has(n) && typeof n[t.method] == "function" && n[t.method](e);
+      let a = r.getRootNode();
+      if (a instanceof ShadowRoot && Jl.has(a.host) && a.host.matches(t.tag)) {
+>>>>>>> Stashed changes
         let s = a.host;
         typeof s[e.method] == "function" && s[e.method](t);
       }
     }
 }
+<<<<<<< Updated upstream
 __name(tb, "tb");
 c(tb, "handleEvent");
 function* hd(t) {
@@ -5263,12 +8070,42 @@ function tu(t, r) {
   if (t.shadowRoot) {
     for (let n of t.shadowRoot.querySelectorAll(`[data-target~="${e}.${r}"]`))
       if (!n.closest(e))
+=======
+__name(pb, "pb");
+c(pb, "handleEvent");
+function* xd(e) {
+  for (let r of (e.getAttribute("data-action") || "").trim().split(/\s+/)) {
+    let t = r.lastIndexOf(":"), n = Math.max(0, r.lastIndexOf("#")) || r.length;
+    yield { type: r.slice(0, t), tag: r.slice(t + 1, n), method: r.slice(n + 1) || "handleEvent" };
+  }
+}
+__name(xd, "xd");
+c(xd, "bindings");
+function eu(e) {
+  for (let r of xd(e))
+    e.addEventListener(r.type, pb);
+}
+__name(eu, "eu");
+c(eu, "bindActions");
+function ou(e) {
+  let r = e.name.replace(/([A-Z]($|[a-z]))/g, "-$1").replace(/(^-|-Element$)/g, "").toLowerCase();
+  window.customElements.get(r) || (window[e.name] = e, window.customElements.define(r, e));
+}
+__name(ou, "ou");
+c(ou, "register");
+function au(e, r) {
+  let t = e.tagName.toLowerCase();
+  if (e.shadowRoot) {
+    for (let n of e.shadowRoot.querySelectorAll(`[data-target~="${t}.${r}"]`))
+      if (!n.closest(t))
+>>>>>>> Stashed changes
         return n;
   }
   for (let n of t.querySelectorAll(`[data-target~="${e}.${r}"]`))
     if (n.closest(e) === t)
       return n;
 }
+<<<<<<< Updated upstream
 __name(tu, "tu");
 c(tu, "findTarget");
 function ru(t, r) {
@@ -5285,17 +8122,42 @@ c(ru, "findTargets");
 function Oe(t, r) {
   return Object.defineProperty(t, r, { configurable: true, get() {
     return tu(this, r);
+=======
+__name(au, "au");
+c(au, "findTarget");
+function su(e, r) {
+  let t = e.tagName.toLowerCase(), n = [];
+  if (e.shadowRoot)
+    for (let a of e.shadowRoot.querySelectorAll(`[data-targets~="${t}.${r}"]`))
+      a.closest(t) || n.push(a);
+  for (let a of e.querySelectorAll(`[data-targets~="${t}.${r}"]`))
+    a.closest(t) === e && n.push(a);
+  return n;
+}
+__name(su, "su");
+c(su, "findTargets");
+function Oe(e, r) {
+  return Object.defineProperty(e, r, { configurable: true, get() {
+    return au(this, r);
+>>>>>>> Stashed changes
   } });
 }
 __name(Oe, "Oe");
 c(Oe, "target");
+<<<<<<< Updated upstream
 function dt(t, r) {
   return Object.defineProperty(t, r, { configurable: true, get() {
     return ru(this, r);
+=======
+function dt(e, r) {
+  return Object.defineProperty(e, r, { configurable: true, get() {
+    return su(this, r);
+>>>>>>> Stashed changes
   } });
 }
 __name(dt, "dt");
 c(dt, "targets");
+<<<<<<< Updated upstream
 function nu(t) {
   for (let r of t.querySelectorAll("template[data-shadowroot]"))
     r.parentElement === t && t.attachShadow({ mode: r.getAttribute("data-shadowroot") === "closed" ? "closed" : "open" }).append(r.content.cloneNode(true));
@@ -5312,6 +8174,24 @@ function iu(t, r) {
   r || (r = md(Object.getPrototypeOf(t)));
   for (let e of r) {
     let n = t[e], a = vd(e), s = { configurable: true, get() {
+=======
+function lu(e) {
+  for (let r of e.querySelectorAll("template[data-shadowroot]"))
+    r.parentElement === e && e.attachShadow({ mode: r.getAttribute("data-shadowroot") === "closed" ? "closed" : "open" }).append(r.content.cloneNode(true));
+}
+__name(lu, "lu");
+c(lu, "autoShadowRoot");
+var hs = /* @__PURE__ */ new WeakMap();
+function D(e, r) {
+  hs.has(e) || hs.set(e, []), hs.get(e).push(r);
+}
+__name(D, "D");
+c(D, "attr");
+function uu(e, r) {
+  r || (r = wd(Object.getPrototypeOf(e)));
+  for (let t of r) {
+    let n = e[t], a = Ed(t), s = { configurable: true, get() {
+>>>>>>> Stashed changes
       return this.getAttribute(a) || "";
     }, set(p) {
       this.setAttribute(a, p || "");
@@ -5327,18 +8207,28 @@ function iu(t, r) {
     } }), Object.defineProperty(t, e, s), e in t && !t.hasAttribute(a) && s.set.call(t, n);
   }
 }
+<<<<<<< Updated upstream
 __name(iu, "iu");
 c(iu, "initializeAttrs");
 function md(t) {
   let r = /* @__PURE__ */ new Set(), e = t;
   for (; e && e !== HTMLElement; ) {
     let n = ps.get(e) || [];
+=======
+__name(uu, "uu");
+c(uu, "initializeAttrs");
+function wd(e) {
+  let r = /* @__PURE__ */ new Set(), t = e;
+  for (; t && t !== HTMLElement; ) {
+    let n = hs.get(t) || [];
+>>>>>>> Stashed changes
     for (let a of n)
       r.add(a);
     e = Object.getPrototypeOf(e);
   }
   return r;
 }
+<<<<<<< Updated upstream
 __name(md, "md");
 c(md, "getAttrNames");
 function vd(t) {
@@ -5377,6 +8267,46 @@ __name(K, "K");
 c(K, "controller");
 function be(t) {
   class r extends t {
+=======
+__name(wd, "wd");
+c(wd, "getAttrNames");
+function Ed(e) {
+  return `data-${e.replace(/([A-Z]($|[a-z]))/g, "-$1")}`.replace(/--/g, "-").toLowerCase();
+}
+__name(Ed, "Ed");
+c(Ed, "attrToAttributeName");
+function cu(e) {
+  let r = e.observedAttributes || [];
+  Object.defineProperty(e, "observedAttributes", { configurable: true, get() {
+    return [...wd(e.prototype)].map(Ed).concat(r);
+  }, set(t) {
+    r = t;
+  } });
+}
+__name(cu, "cu");
+c(cu, "defineObservedAttributes");
+var db = /* @__PURE__ */ new WeakSet();
+function Sd(e, r) {
+  e.toggleAttribute("data-catalyst", true), customElements.upgrade(e), db.add(e), lu(e), uu(e), tu(e), r && r.call(e), e.shadowRoot && ru(e.shadowRoot);
+}
+__name(Sd, "Sd");
+c(Sd, "initializeInstance");
+function Td(e) {
+  cu(e), ou(e);
+}
+__name(Td, "Td");
+c(Td, "initializeClass");
+function K(e) {
+  let r = e.prototype.connectedCallback;
+  e.prototype.connectedCallback = function() {
+    Sd(this, r);
+  }, Td(e);
+}
+__name(K, "K");
+c(K, "controller");
+function ve(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     constructor() {
       super(...arguments);
       this.active = false;
@@ -5391,11 +8321,19 @@ function be(t) {
   __name(r, "r");
   return c(r, "ActivateableMixinClass"), M([D], r.prototype, "active", 2), r;
 }
+<<<<<<< Updated upstream
 __name(be, "be");
 c(be, "ActivateableMixin");
 var Xn = c((t) => typeof t == "object" && t !== null && typeof t.angle == "string" && typeof t.reducedAngle == "string", "isAngleable");
 function In(t) {
   class r extends t {
+=======
+__name(ve, "ve");
+c(ve, "ActivateableMixin");
+var Kn = c((e) => typeof e == "object" && e !== null && typeof e.angle == "string" && typeof e.reducedAngle == "string", "isAngleable");
+function An(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     constructor() {
       super(...arguments);
       this.angle = "";
@@ -5405,11 +8343,19 @@ function In(t) {
   __name(r, "r");
   return c(r, "AngleableMixinClass"), M([D], r.prototype, "angle", 2), M([D], r.prototype, "reducedAngle", 2), r;
 }
+<<<<<<< Updated upstream
 __name(In, "In");
 c(In, "AngleableMixin");
 var Eo = c((t) => typeof t == "object" && t !== null && typeof t.controls == "object", "isControllable");
 function Ke(t) {
   class r extends t {
+=======
+__name(An, "An");
+c(An, "AngleableMixin");
+var So = c((e) => typeof e == "object" && e !== null && typeof e.controls == "object", "isControllable");
+function Ye(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     get controls() {
       let n = this.getAttribute("data-controls");
       return n === null ? [] : n === "" ? [] : n.split(",").map((a) => parseInt(a)).sort();
@@ -5434,10 +8380,17 @@ function Ke(t) {
   __name(r, "r");
   return c(r, "ControllableMixinClass"), r;
 }
+<<<<<<< Updated upstream
 __name(Ke, "Ke");
 c(Ke, "ControllableMixin");
 function Le(t) {
   class r extends t {
+=======
+__name(Ye, "Ye");
+c(Ye, "ControllableMixin");
+function Ne(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     constructor() {
       super(...arguments);
       this.disabled = false;
@@ -5455,8 +8408,8 @@ function Le(t) {
   __name(r, "r");
   return c(r, "DisableableMixinClass"), M([D], r.prototype, "disabled", 2), r;
 }
-__name(Le, "Le");
-c(Le, "DisableableMixin");
+__name(Ne, "Ne");
+c(Ne, "DisableableMixin");
 var V = c(function() {
   return V = Object.assign || c(function(r) {
     for (var e, n = 1, a = arguments.length; n < a; n++) {
@@ -5467,6 +8420,7 @@ var V = c(function() {
     return r;
   }, "__assign"), V.apply(this, arguments);
 }, "__assign");
+<<<<<<< Updated upstream
 function Ci(t, r) {
   var e = {};
   for (var n in t)
@@ -5483,11 +8437,30 @@ function me(t) {
   if (e)
     return e.call(t);
   if (t && typeof t.length == "number")
+=======
+function Oi(e, r) {
+  var t = {};
+  for (var n in e)
+    Object.prototype.hasOwnProperty.call(e, n) && r.indexOf(n) < 0 && (t[n] = e[n]);
+  if (e != null && typeof Object.getOwnPropertySymbols == "function")
+    for (var a = 0, n = Object.getOwnPropertySymbols(e); a < n.length; a++)
+      r.indexOf(n[a]) < 0 && Object.prototype.propertyIsEnumerable.call(e, n[a]) && (t[n[a]] = e[n[a]]);
+  return t;
+}
+__name(Oi, "Oi");
+c(Oi, "__rest");
+function ge(e) {
+  var r = typeof Symbol == "function" && Symbol.iterator, t = r && e[r], n = 0;
+  if (t)
+    return t.call(e);
+  if (e && typeof e.length == "number")
+>>>>>>> Stashed changes
     return { next: function() {
       return t && n >= t.length && (t = void 0), { value: t && t[n++], done: !t };
     } };
   throw new TypeError(r ? "Object is not iterable." : "Symbol.iterator is not defined.");
 }
+<<<<<<< Updated upstream
 __name(me, "me");
 c(me, "__values");
 function ye(t, r) {
@@ -5495,6 +8468,15 @@ function ye(t, r) {
   if (!e)
     return t;
   var n = e.call(t), a, s = [], p;
+=======
+__name(ge, "ge");
+c(ge, "__values");
+function Ee(e, r) {
+  var t = typeof Symbol == "function" && e[Symbol.iterator];
+  if (!t)
+    return e;
+  var n = t.call(e), a, s = [], p;
+>>>>>>> Stashed changes
   try {
     for (; (r === void 0 || r-- > 0) && !(a = n.next()).done; )
       s.push(a.value);
@@ -5510,10 +8492,17 @@ function ye(t, r) {
   }
   return s;
 }
+<<<<<<< Updated upstream
 __name(ye, "ye");
 c(ye, "__read");
 function _e(t, r, e) {
   if (e || arguments.length === 2)
+=======
+__name(Ee, "Ee");
+c(Ee, "__read");
+function _e(e, r, t) {
+  if (t || arguments.length === 2)
+>>>>>>> Stashed changes
     for (var n = 0, a = r.length, s; n < a; n++)
       (s || !(n in r)) && (s || (s = Array.prototype.slice.call(r, 0, n)), s[n] = r[n]);
   return t.concat(s || Array.prototype.slice.call(r));
@@ -5528,6 +8517,7 @@ var Or;
 (function(t) {
   t.Parent = "#_parent", t.Internal = "#_internal";
 })(Or || (Or = {}));
+<<<<<<< Updated upstream
 var So = ze.Start;
 var Ti = ze.Stop;
 var Jr = ze.Raise;
@@ -5562,12 +8552,49 @@ function Mo(t, r, e) {
 __name(Mo, "Mo");
 c(Mo, "matchesState");
 function gs(t) {
+=======
+var To = ze.Start;
+var Mi = ze.Stop;
+var en = ze.Raise;
+var tn = ze.Send;
+var ms = ze.Cancel;
+var Cd = ze.NullEvent;
+var pu = ze.Assign;
+var _x = ze.After;
+var zx = ze.DoneState;
+var vs = ze.Log;
+var Od = ze.Init;
+var Co = ze.Invoke;
+var Rx = ze.ErrorExecution;
+var du = ze.ErrorPlatform;
+var fu = ze.ErrorCustom;
+var Oo = ze.Update;
+var Md = ze.Choose;
+var Id = ze.Pure;
+var gs = ".";
+var hu = {};
+var bs = "xstate.guard";
+var Ad = "";
+var Ge = true;
+var ys;
+function Io(e, r, t) {
+  t === void 0 && (t = gs);
+  var n = Ii(e, t), a = Ii(r, t);
+  return Ce(a) ? Ce(n) ? a === n : false : Ce(n) ? n in a : Object.keys(n).every(function(s) {
+    return s in a ? Io(n[s], a[s]) : false;
+  });
+}
+__name(Io, "Io");
+c(Io, "matchesState");
+function xs(e) {
+>>>>>>> Stashed changes
   try {
     return Ce(t) || typeof t == "number" ? "".concat(t) : t.type;
   } catch (r) {
     throw new Error("Events must be strings or objects with a string event.type property.");
   }
 }
+<<<<<<< Updated upstream
 __name(gs, "gs");
 c(gs, "getEventType");
 function bs(t, r) {
@@ -5607,11 +8634,53 @@ __name(Oo, "Oo");
 c(Oo, "pathToStateValue");
 function Mi(t, r) {
   for (var e = {}, n = Object.keys(t), a = 0; a < n.length; a++) {
+=======
+__name(xs, "xs");
+c(xs, "getEventType");
+function ws(e, r) {
+  try {
+    return rn(e) ? e : e.toString().split(r);
+  } catch (t) {
+    throw new Error("'".concat(e, "' is not a valid state path."));
+  }
+}
+__name(ws, "ws");
+c(ws, "toStatePath");
+function fb(e) {
+  return typeof e == "object" && "value" in e && "context" in e && "event" in e && "_event" in e;
+}
+__name(fb, "fb");
+c(fb, "isStateLike");
+function Ii(e, r) {
+  if (fb(e))
+    return e.value;
+  if (rn(e))
+    return Mo(e);
+  if (typeof e != "string")
+    return e;
+  var t = ws(e, r);
+  return Mo(t);
+}
+__name(Ii, "Ii");
+c(Ii, "toStateValue");
+function Mo(e) {
+  if (e.length === 1)
+    return e[0];
+  for (var r = {}, t = r, n = 0; n < e.length - 1; n++)
+    n === e.length - 2 ? t[e[n]] = e[n + 1] : (t[e[n]] = {}, t = t[e[n]]);
+  return r;
+}
+__name(Mo, "Mo");
+c(Mo, "pathToStateValue");
+function Ai(e, r) {
+  for (var t = {}, n = Object.keys(e), a = 0; a < n.length; a++) {
+>>>>>>> Stashed changes
     var s = n[a];
     e[s] = r(t[s], s, t, a);
   }
   return e;
 }
+<<<<<<< Updated upstream
 __name(Mi, "Mi");
 c(Mi, "mapValues");
 function cu(t, r, e) {
@@ -5620,6 +8689,16 @@ function cu(t, r, e) {
     for (var p = me(Object.keys(t)), v = p.next(); !v.done; v = p.next()) {
       var m = v.value, d = t[m];
       e(d) && (s[m] = r(d, m, t));
+=======
+__name(Ai, "Ai");
+c(Ai, "mapValues");
+function mu(e, r, t) {
+  var n, a, s = {};
+  try {
+    for (var p = ge(Object.keys(e)), v = p.next(); !v.done; v = p.next()) {
+      var m = v.value, d = e[m];
+      t(d) && (s[m] = r(d, m, e));
+>>>>>>> Stashed changes
     }
   } catch (h) {
     n = { error: h };
@@ -5633,13 +8712,23 @@ function cu(t, r, e) {
   }
   return s;
 }
+<<<<<<< Updated upstream
 __name(cu, "cu");
 c(cu, "mapFilterValues");
 var Cd = c(function(t) {
+=======
+__name(mu, "mu");
+c(mu, "mapFilterValues");
+var Pd = c(function(e) {
+>>>>>>> Stashed changes
   return function(r) {
     var e, n, a = r;
     try {
+<<<<<<< Updated upstream
       for (var s = me(t), p = s.next(); !p.done; p = s.next()) {
+=======
+      for (var s = ge(e), p = s.next(); !p.done; p = s.next()) {
+>>>>>>> Stashed changes
         var v = p.value;
         a = a[v];
       }
@@ -5656,11 +8745,19 @@ var Cd = c(function(t) {
     return a;
   };
 }, "path");
+<<<<<<< Updated upstream
 function Td(t, r) {
   return function(e) {
     var n, a, s = e;
     try {
       for (var p = me(t), v = p.next(); !v.done; v = p.next()) {
+=======
+function _d(e, r) {
+  return function(t) {
+    var n, a, s = t;
+    try {
+      for (var p = ge(e), v = p.next(); !v.done; v = p.next()) {
+>>>>>>> Stashed changes
         var m = v.value;
         s = s[r][m];
       }
@@ -5677,6 +8774,7 @@ function Td(t, r) {
     return s;
   };
 }
+<<<<<<< Updated upstream
 __name(Td, "Td");
 c(Td, "nestedPath");
 function Io(t) {
@@ -5688,10 +8786,24 @@ function Io(t) {
     var n = t[e];
     return typeof n != "string" && (!n || !Object.keys(n).length) ? [[e]] : Io(t[e]).map(function(a) {
       return [e].concat(a);
+=======
+__name(_d, "_d");
+c(_d, "nestedPath");
+function Ao(e) {
+  if (!e)
+    return [[]];
+  if (Ce(e))
+    return [[e]];
+  var r = $e(Object.keys(e).map(function(t) {
+    var n = e[t];
+    return typeof n != "string" && (!n || !Object.keys(n).length) ? [[t]] : Ao(e[t]).map(function(a) {
+      return [t].concat(a);
+>>>>>>> Stashed changes
     });
   }));
   return r;
 }
+<<<<<<< Updated upstream
 __name(Io, "Io");
 c(Io, "toStatePaths");
 function $e(t) {
@@ -5707,6 +8819,23 @@ __name(Od, "Od");
 c(Od, "toArrayStrict");
 function lr(t) {
   return t === void 0 ? [] : Od(t);
+=======
+__name(Ao, "Ao");
+c(Ao, "toStatePaths");
+function $e(e) {
+  var r;
+  return (r = []).concat.apply(r, _e([], Ee(e), false));
+}
+__name($e, "$e");
+c($e, "flatten");
+function zd(e) {
+  return rn(e) ? e : [e];
+}
+__name(zd, "zd");
+c(zd, "toArrayStrict");
+function lr(e) {
+  return e === void 0 ? [] : zd(e);
+>>>>>>> Stashed changes
 }
 __name(lr, "lr");
 c(lr, "toArray");
@@ -5716,9 +8845,15 @@ function Zn(t, r, e) {
     return t(r, e.data);
   var s = {};
   try {
+<<<<<<< Updated upstream
     for (var p = me(Object.keys(t)), v = p.next(); !v.done; v = p.next()) {
       var m = v.value, d = t[m];
       Re(d) ? s[m] = d(r, e.data) : s[m] = d;
+=======
+    for (var p = ge(Object.keys(e)), v = p.next(); !v.done; v = p.next()) {
+      var m = v.value, d = e[m];
+      Re(d) ? s[m] = d(r, t.data) : s[m] = d;
+>>>>>>> Stashed changes
     }
   } catch (h) {
     n = { error: h };
@@ -5732,6 +8867,7 @@ function Zn(t, r, e) {
   }
   return s;
 }
+<<<<<<< Updated upstream
 __name(Zn, "Zn");
 c(Zn, "mapContext");
 function Md(t) {
@@ -5753,6 +8889,29 @@ function Ad(t, r) {
   var e, n, a = ye([[], []], 2), s = a[0], p = a[1];
   try {
     for (var v = me(t), m = v.next(); !m.done; m = v.next()) {
+=======
+__name(Qn, "Qn");
+c(Qn, "mapContext");
+function Rd(e) {
+  return /^(done|error)\./.test(e);
+}
+__name(Rd, "Rd");
+c(Rd, "isBuiltInEvent");
+function vu(e) {
+  return !!(e instanceof Promise || e !== null && (Re(e) || typeof e == "object") && Re(e.then));
+}
+__name(vu, "vu");
+c(vu, "isPromiseLike");
+function Dd(e) {
+  return e !== null && typeof e == "object" && "transition" in e && typeof e.transition == "function";
+}
+__name(Dd, "Dd");
+c(Dd, "isBehavior");
+function Nd(e, r) {
+  var t, n, a = Ee([[], []], 2), s = a[0], p = a[1];
+  try {
+    for (var v = ge(e), m = v.next(); !m.done; m = v.next()) {
+>>>>>>> Stashed changes
       var d = m.value;
       r(d) ? s.push(d) : p.push(d);
     }
@@ -5768,6 +8927,7 @@ function Ad(t, r) {
   }
   return [s, p];
 }
+<<<<<<< Updated upstream
 __name(Ad, "Ad");
 c(Ad, "partition");
 function Pd(t, r) {
@@ -5789,14 +8949,43 @@ c(_d, "updateHistoryValue");
 function du(t, r, e, n) {
   Ge || et(!!t, "Attempting to update undefined context");
   var a = t && e.reduce(function(s, p) {
+=======
+__name(Nd, "Nd");
+c(Nd, "partition");
+function kd(e, r) {
+  return Ai(e.states, function(t, n) {
+    if (t) {
+      var a = (Ce(r) ? void 0 : r[n]) || (t ? t.current : void 0);
+      if (a)
+        return { current: a, states: kd(t, a) };
+    }
+  });
+}
+__name(kd, "kd");
+c(kd, "updateHistoryStates");
+function Ld(e, r) {
+  return { current: r, states: kd(e, r) };
+}
+__name(Ld, "Ld");
+c(Ld, "updateHistoryValue");
+function gu(e, r, t, n) {
+  Ge || tt(!!e, "Attempting to update undefined context");
+  var a = e && t.reduce(function(s, p) {
+>>>>>>> Stashed changes
     var v, m, d = p.assignment, h = { state: n, action: p, _event: r }, y = {};
     if (Re(d))
       y = d(s, r.data, h);
     else
       try {
+<<<<<<< Updated upstream
         for (var w = me(Object.keys(d)), S = w.next(); !S.done; S = w.next()) {
           var C = S.value, T = d[C];
           y[C] = Re(T) ? T(s, r.data, h) : T;
+=======
+        for (var x = ge(Object.keys(d)), S = x.next(); !S.done; S = x.next()) {
+          var T = S.value, C = d[T];
+          y[T] = Re(C) ? C(s, r.data, h) : C;
+>>>>>>> Stashed changes
         }
       } catch (_) {
         v = { error: _ };
@@ -5812,6 +9001,7 @@ function du(t, r, e, n) {
   }, t);
   return a;
 }
+<<<<<<< Updated upstream
 __name(du, "du");
 c(du, "updateContext");
 var et = c(function() {
@@ -5819,10 +9009,20 @@ var et = c(function() {
 Ge || (et = c(function(t, r) {
   var e = t instanceof Error ? t : void 0;
   if (!(!e && t) && console !== void 0) {
+=======
+__name(gu, "gu");
+c(gu, "updateContext");
+var tt = c(function() {
+}, "warn");
+Ge || (tt = c(function(e, r) {
+  var t = e instanceof Error ? e : void 0;
+  if (!(!t && e) && console !== void 0) {
+>>>>>>> Stashed changes
     var n = ["Warning: ".concat(r)];
     e && n.push(e), console.warn.apply(console, n);
   }
 }, "warn"));
+<<<<<<< Updated upstream
 function tn(t) {
   return Array.isArray(t);
 }
@@ -5830,6 +9030,15 @@ __name(tn, "tn");
 c(tn, "isArray");
 function Re(t) {
   return typeof t == "function";
+=======
+function rn(e) {
+  return Array.isArray(e);
+}
+__name(rn, "rn");
+c(rn, "isArray");
+function Re(e) {
+  return typeof e == "function";
+>>>>>>> Stashed changes
 }
 __name(Re, "Re");
 c(Re, "isFunction");
@@ -5838,6 +9047,7 @@ function Ce(t) {
 }
 __name(Ce, "Ce");
 c(Ce, "isString");
+<<<<<<< Updated upstream
 function ys(t, r) {
   if (t)
     return Ce(t) ? { type: ms, name: t, predicate: r ? r[t] : void 0 } : Re(t) ? { type: ms, name: t.name, predicate: t } : t;
@@ -5845,12 +9055,22 @@ function ys(t, r) {
 __name(ys, "ys");
 c(ys, "toGuard");
 function zd(t) {
+=======
+function Es(e, r) {
+  if (e)
+    return Ce(e) ? { type: bs, name: e, predicate: r ? r[e] : void 0 } : Re(e) ? { type: bs, name: e.name, predicate: e } : e;
+}
+__name(Es, "Es");
+c(Es, "toGuard");
+function Gd(e) {
+>>>>>>> Stashed changes
   try {
     return "subscribe" in t && Re(t.subscribe);
   } catch (r) {
     return false;
   }
 }
+<<<<<<< Updated upstream
 __name(zd, "zd");
 c(zd, "isObservable");
 var Nr = function() {
@@ -5887,9 +9107,48 @@ c(ot, "toSCXMLEvent");
 function Kn(t, r) {
   var e = Od(r).map(function(n) {
     return typeof n == "undefined" || typeof n == "string" || kr(n) ? { target: n, event: t } : V(V({}, n), { event: t });
+=======
+__name(Gd, "Gd");
+c(Gd, "isObservable");
+var Lr = function() {
+  return typeof Symbol == "function" && Symbol.observable || "@@observable";
+}();
+var Bx = (ys = {}, ys[Lr] = function() {
+  return this;
+}, ys[Symbol.observable] = function() {
+  return this;
+}, ys);
+function Gr(e) {
+  return !!e && "__xstatenode" in e;
+}
+__name(Gr, "Gr");
+c(Gr, "isMachine");
+function jd(e) {
+  return !!e && typeof e.send == "function";
+}
+__name(jd, "jd");
+c(jd, "isActor");
+function Po(e, r) {
+  return Ce(e) || typeof e == "number" ? V({ type: e }, r) : e;
+}
+__name(Po, "Po");
+c(Po, "toEventObject");
+function at(e, r) {
+  if (!Ce(e) && "$$type" in e && e.$$type === "scxml")
+    return e;
+  var t = Po(e);
+  return V({ name: t.type, data: t, $$type: "scxml", type: "external" }, r);
+}
+__name(at, "at");
+c(at, "toSCXMLEvent");
+function Jn(e, r) {
+  var t = zd(r).map(function(n) {
+    return typeof n == "undefined" || typeof n == "string" || Gr(n) ? { target: n, event: e } : V(V({}, n), { event: e });
+>>>>>>> Stashed changes
   });
   return e;
 }
+<<<<<<< Updated upstream
 __name(Kn, "Kn");
 c(Kn, "toTransitionConfigArray");
 function Dd(t) {
@@ -5899,6 +9158,17 @@ function Dd(t) {
 __name(Dd, "Dd");
 c(Dd, "normalizeTarget");
 function Nd(t, r, e) {
+=======
+__name(Jn, "Jn");
+c(Jn, "toTransitionConfigArray");
+function Bd(e) {
+  if (!(e === void 0 || e === Ad))
+    return lr(e);
+}
+__name(Bd, "Bd");
+c(Bd, "normalizeTarget");
+function Hd(e, r, t) {
+>>>>>>> Stashed changes
   if (!Ge) {
     var n = t.stack ? " Stacktrace was '".concat(t.stack, "'") : "";
     if (t === r)
@@ -5909,12 +9179,21 @@ function Nd(t, r, e) {
     }
   }
 }
+<<<<<<< Updated upstream
 __name(Nd, "Nd");
 c(Nd, "reportUnhandledExceptionOnInvocation");
 function ws(t, r, e, n, a) {
   var s = t.options.guards, p = { state: a, cond: r, _event: n };
   if (r.type === ms)
     return ((s == null ? void 0 : s[r.name]) || r.predicate)(e, n.data, p);
+=======
+__name(Hd, "Hd");
+c(Hd, "reportUnhandledExceptionOnInvocation");
+function Ss(e, r, t, n, a) {
+  var s = e.options.guards, p = { state: a, cond: r, _event: n };
+  if (r.type === bs)
+    return ((s == null ? void 0 : s[r.name]) || r.predicate)(t, n.data, p);
+>>>>>>> Stashed changes
   var v = s == null ? void 0 : s[r.type];
   if (!v)
     throw new Error("Guard '".concat(r.type, "' is not implemented on machine '").concat(t.id, "'."));
@@ -5943,6 +9222,7 @@ var rn = ot({ type: wd });
 function Es(t, r) {
   return r && r[t] || void 0;
 }
+<<<<<<< Updated upstream
 __name(Es, "Es");
 c(Es, "getActionFunction");
 function Pi(t, r) {
@@ -5952,6 +9232,40 @@ function Pi(t, r) {
     Re(n) ? e = { type: t, exec: n } : n ? e = n : e = { type: t, exec: void 0 };
   } else if (Re(t))
     e = { type: t.name || t.toString(), exec: t };
+=======
+__name(Ss, "Ss");
+c(Ss, "evaluateGuard");
+function Ts(e) {
+  return typeof e == "string" ? { type: e } : e;
+}
+__name(Ts, "Ts");
+c(Ts, "toInvokeSource");
+function Pi(e, r, t) {
+  var n = c(function() {
+  }, "noop"), a = typeof e == "object", s = a ? e : null;
+  return { next: ((a ? e.next : e) || n).bind(s), error: ((a ? e.error : r) || n).bind(s), complete: ((a ? e.complete : t) || n).bind(s) };
+}
+__name(Pi, "Pi");
+c(Pi, "toObserver");
+function _o(e, r) {
+  return "".concat(e, ":invocation[").concat(r, "]");
+}
+__name(_o, "_o");
+c(_o, "createInvokeId");
+var nn = at({ type: Od });
+function Cs(e, r) {
+  return r && r[e] || void 0;
+}
+__name(Cs, "Cs");
+c(Cs, "getActionFunction");
+function zi(e, r) {
+  var t;
+  if (Ce(e) || typeof e == "number") {
+    var n = Cs(e, r);
+    Re(n) ? t = { type: e, exec: n } : n ? t = n : t = { type: e, exec: void 0 };
+  } else if (Re(e))
+    t = { type: e.name || e.toString(), exec: e };
+>>>>>>> Stashed changes
   else {
     var n = Es(t.type, r);
     if (Re(n))
@@ -5964,6 +9278,7 @@ function Pi(t, r) {
   }
   return e;
 }
+<<<<<<< Updated upstream
 __name(Pi, "Pi");
 c(Pi, "toActionObject");
 var Lr = c(function(t, r) {
@@ -6000,11 +9315,50 @@ function ob(t, r, e, n) {
   if (Ce(t.delay)) {
     var v = n && n[t.delay];
     p = Re(v) ? v(r, e.data, a) : v;
+=======
+__name(zi, "zi");
+c(zi, "toActionObject");
+var jr = c(function(e, r) {
+  if (!e)
+    return [];
+  var t = rn(e) ? e : [e];
+  return t.map(function(n) {
+    return zi(n, r);
+  });
+}, "toActionObjects");
+function Os(e) {
+  var r = zi(e);
+  return V(V({ id: Ce(e) ? e : r.id }, r), { type: r.type });
+}
+__name(Os, "Os");
+c(Os, "toActivityDefinition");
+function $d(e) {
+  return Ce(e) ? { type: en, event: e } : bu(e, { to: Or.Internal });
+}
+__name($d, "$d");
+c($d, "raise");
+function hb(e) {
+  return { type: en, _event: at(e.event) };
+}
+__name(hb, "hb");
+c(hb, "resolveRaise");
+function bu(e, r) {
+  return { to: r ? r.to : void 0, type: tn, event: Re(e) ? e : Po(e), delay: r ? r.delay : void 0, id: r && r.id !== void 0 ? r.id : Re(e) ? e.name : xs(e) };
+}
+__name(bu, "bu");
+c(bu, "send");
+function mb(e, r, t, n) {
+  var a = { _event: t }, s = at(Re(e.event) ? e.event(r, t.data, a) : e.event), p;
+  if (Ce(e.delay)) {
+    var v = n && n[e.delay];
+    p = Re(v) ? v(r, t.data, a) : v;
+>>>>>>> Stashed changes
   } else
     p = Re(t.delay) ? t.delay(r, e.data, a) : t.delay;
   var m = Re(t.to) ? t.to(r, e.data, a) : t.to;
   return V(V({}, t), { to: m, _event: s, event: s.data, delay: p });
 }
+<<<<<<< Updated upstream
 __name(ob, "ob");
 c(ob, "resolveSend");
 var ab = c(function(t, r, e) {
@@ -6039,26 +9393,77 @@ __name(Bd, "Bd");
 c(Bd, "after");
 function _o(t, r) {
   var e = "".concat(ze.DoneState, ".").concat(t), n = { type: e, data: r };
+=======
+__name(mb, "mb");
+c(mb, "resolveSend");
+var vb = c(function(e, r, t) {
+  return V(V({}, e), { value: Ce(e.expr) ? e.expr : e.expr(r, t.data, { _event: t }) });
+}, "resolveLog");
+var qd = c(function(e) {
+  return { type: ms, sendId: e };
+}, "cancel");
+function Fd(e) {
+  var r = Os(e);
+  return { type: ze.Start, activity: r, exec: void 0 };
+}
+__name(Fd, "Fd");
+c(Fd, "start");
+function Ud(e) {
+  var r = Re(e) ? e : Os(e);
+  return { type: ze.Stop, activity: r, exec: void 0 };
+}
+__name(Ud, "Ud");
+c(Ud, "stop");
+function gb(e, r, t) {
+  var n = Re(e.activity) ? e.activity(r, t.data) : e.activity, a = typeof n == "string" ? { id: n } : n, s = { type: ze.Stop, activity: a };
+  return s;
+}
+__name(gb, "gb");
+c(gb, "resolveStop");
+function Wd(e, r) {
+  var t = r ? "#".concat(r) : "";
+  return "".concat(ze.After, "(").concat(e, ")").concat(t);
+}
+__name(Wd, "Wd");
+c(Wd, "after");
+function zo(e, r) {
+  var t = "".concat(ze.DoneState, ".").concat(e), n = { type: t, data: r };
+>>>>>>> Stashed changes
   return n.toString = function() {
     return e;
   }, n;
 }
+<<<<<<< Updated upstream
 __name(_o, "_o");
 c(_o, "done");
 function _i(t, r) {
   var e = "".concat(ze.DoneInvoke, ".").concat(t), n = { type: e, data: r };
+=======
+__name(zo, "zo");
+c(zo, "done");
+function Ri(e, r) {
+  var t = "".concat(ze.DoneInvoke, ".").concat(e), n = { type: t, data: r };
+>>>>>>> Stashed changes
   return n.toString = function() {
     return e;
   }, n;
 }
+<<<<<<< Updated upstream
 __name(_i, "_i");
 c(_i, "doneInvoke");
 function Qn(t, r) {
   var e = "".concat(ze.ErrorPlatform, ".").concat(t), n = { type: e, data: r };
+=======
+__name(Ri, "Ri");
+c(Ri, "doneInvoke");
+function ei(e, r) {
+  var t = "".concat(ze.ErrorPlatform, ".").concat(e), n = { type: t, data: r };
+>>>>>>> Stashed changes
   return n.toString = function() {
     return e;
   }, n;
 }
+<<<<<<< Updated upstream
 __name(Qn, "Qn");
 c(Qn, "error");
 var lb = c(function(t) {
@@ -6067,6 +9472,16 @@ var lb = c(function(t) {
     for (var a = me(t), s = a.next(); !s.done; s = a.next())
       for (var p = s.value, v = 0; v < p.actions.length; ) {
         if (p.actions[v].type === au) {
+=======
+__name(ei, "ei");
+c(ei, "error");
+var bb = c(function(e) {
+  var r, t, n = [];
+  try {
+    for (var a = ge(e), s = a.next(); !s.done; s = a.next())
+      for (var p = s.value, v = 0; v < p.actions.length; ) {
+        if (p.actions[v].type === pu) {
+>>>>>>> Stashed changes
           n.push(p.actions[v]), p.actions.splice(v, 1);
           continue;
         }
@@ -6084,6 +9499,7 @@ var lb = c(function(t) {
   }
   return n;
 }, "pluckAssigns");
+<<<<<<< Updated upstream
 function Ai(t, r, e, n, a, s, p) {
   p === void 0 && (p = false);
   var v = p ? [] : lb(a), m = v.length ? du(e, n, v, r) : e, d = p ? [e] : void 0, h = [];
@@ -6126,6 +9542,50 @@ function Ai(t, r, e, n, a, s, p) {
       }
       default:
         var Y = Pi(T, t.options.actions), ie = Y.exec;
+=======
+function _i(e, r, t, n, a, s, p) {
+  p === void 0 && (p = false);
+  var v = p ? [] : bb(a), m = v.length ? gu(t, n, v, r) : t, d = p ? [t] : void 0, h = [];
+  function y(T, C) {
+    var _;
+    switch (C.type) {
+      case en:
+        return hb(C);
+      case tn:
+        var N = mb(C, m, n, e.options.delays);
+        return Ge || tt(!Ce(C.delay) || typeof N.delay == "number", "No delay reference for delay expression '".concat(C.delay, "' was found on machine '").concat(e.id, "'")), s && N.to !== Or.Internal && (T === "entry" ? h.push(N) : s == null || s(N, m, n)), N;
+      case vs: {
+        var j = vb(C, m, n);
+        return s == null || s(j, m, n), j;
+      }
+      case Md: {
+        var $ = C, A = (_ = $.conds.find(function(ue) {
+          var Ue = Es(ue.cond, e.options.guards);
+          return !Ue || Ss(e, Ue, m, n, s ? void 0 : r);
+        })) === null || _ === void 0 ? void 0 : _.actions;
+        if (!A)
+          return [];
+        var ee = Ee(_i(e, r, m, n, [{ type: T, actions: jr(lr(A), e.options.actions) }], s, p), 2), z = ee[0], B = ee[1];
+        return m = B, d == null || d.push(m), z;
+      }
+      case Id: {
+        var A = C.get(m, n.data);
+        if (!A)
+          return [];
+        var J = Ee(_i(e, r, m, n, [{ type: T, actions: jr(lr(A), e.options.actions) }], s, p), 2), te = J[0], le = J[1];
+        return m = le, d == null || d.push(m), te;
+      }
+      case Mi: {
+        var j = gb(C, m, n);
+        return s == null || s(j, t, n), j;
+      }
+      case pu: {
+        m = gu(m, n, [C], s ? void 0 : r), d == null || d.push(m);
+        break;
+      }
+      default:
+        var Y = zi(C, e.options.actions), ie = Y.exec;
+>>>>>>> Stashed changes
         if (s)
           s(Y, m, n);
         else if (ie && d) {
@@ -6133,7 +9593,7 @@ function Ai(t, r, e, n, a, s, p) {
           Y = V(V({}, Y), { exec: function(ue) {
             for (var Ue = [], qe = 1; qe < arguments.length; qe++)
               Ue[qe - 1] = arguments[qe];
-            ie.apply(void 0, _e([d[W]], ye(Ue), false));
+            ie.apply(void 0, _e([d[W]], Ee(Ue), false));
           } });
         }
         return Y;
@@ -6141,21 +9601,26 @@ function Ai(t, r, e, n, a, s, p) {
   }
   __name(y, "y");
   c(y, "handleAction");
+<<<<<<< Updated upstream
   function w(C) {
     var T, _, N = [];
+=======
+  function x(T) {
+    var C, _, N = [];
+>>>>>>> Stashed changes
     try {
-      for (var j = me(C.actions), $ = j.next(); !$.done; $ = j.next()) {
-        var A = $.value, ee = y(C.type, A);
+      for (var j = ge(T.actions), $ = j.next(); !$.done; $ = j.next()) {
+        var A = $.value, ee = y(T.type, A);
         ee && (N = N.concat(ee));
       }
     } catch (z) {
-      T = { error: z };
+      C = { error: z };
     } finally {
       try {
         $ && !$.done && (_ = j.return) && _.call(j);
       } finally {
-        if (T)
-          throw T.error;
+        if (C)
+          throw C.error;
       }
     }
     return h.forEach(function(z) {
@@ -6167,6 +9632,7 @@ function Ai(t, r, e, n, a, s, p) {
   var S = $e(a.map(w));
   return [S, m];
 }
+<<<<<<< Updated upstream
 __name(Ai, "Ai");
 c(Ai, "resolveActions");
 var Hd = [];
@@ -6176,6 +9642,17 @@ var An = c(function(t, r) {
   return Hd.pop(), e;
 }, "provide");
 function $d(t) {
+=======
+__name(_i, "_i");
+c(_i, "resolveActions");
+var Vd = [];
+var Pn = c(function(e, r) {
+  Vd.push(e);
+  var t = r(e);
+  return Vd.pop(), t;
+}, "provide");
+function Yd(e) {
+>>>>>>> Stashed changes
   var r;
   return r = { id: t, send: function() {
   }, subscribe: function() {
@@ -6183,6 +9660,7 @@ function $d(t) {
     } };
   }, getSnapshot: function() {
   }, toJSON: function() {
+<<<<<<< Updated upstream
     return { id: t };
   } }, r[Nr] = function() {
     return this;
@@ -6201,6 +9679,26 @@ function hu(t, r, e) {
   if (n.deferred = true, kr(t)) {
     var a = n.state = An(void 0, function() {
       return (e ? t.withContext(e) : t).initialState;
+=======
+    return { id: e };
+  } }, r[Lr] = function() {
+    return this;
+  }, r;
+}
+__name(Yd, "Yd");
+c(Yd, "createNullActor");
+function Xd(e, r, t, n) {
+  var a, s = Ts(e.src), p = (a = r == null ? void 0 : r.options.services) === null || a === void 0 ? void 0 : a[s.type], v = e.data ? Qn(e.data, t, n) : void 0, m = p ? yu(p, e.id, v) : Yd(e.id);
+  return m.meta = e, m;
+}
+__name(Xd, "Xd");
+c(Xd, "createInvocableActor");
+function yu(e, r, t) {
+  var n = Yd(r);
+  if (n.deferred = true, Gr(e)) {
+    var a = n.state = Pn(void 0, function() {
+      return (t ? e.withContext(t) : e).initialState;
+>>>>>>> Stashed changes
     });
     n.getSnapshot = function() {
       return a;
@@ -6208,15 +9706,22 @@ function hu(t, r, e) {
   }
   return n;
 }
+<<<<<<< Updated upstream
 __name(hu, "hu");
 c(hu, "createDeferredActor");
 function ub(t) {
+=======
+__name(yu, "yu");
+c(yu, "createDeferredActor");
+function yb(e) {
+>>>>>>> Stashed changes
   try {
     return typeof t.send == "function";
   } catch (r) {
     return false;
   }
 }
+<<<<<<< Updated upstream
 __name(ub, "ub");
 c(ub, "isActor");
 function Fd(t) {
@@ -6225,15 +9730,30 @@ function Fd(t) {
 __name(Fd, "Fd");
 c(Fd, "isSpawnedActor");
 function Ud(t) {
+=======
+__name(yb, "yb");
+c(yb, "isActor");
+function Zd(e) {
+  return yb(e) && "id" in e;
+}
+__name(Zd, "Zd");
+c(Zd, "isSpawnedActor");
+function Kd(e) {
+>>>>>>> Stashed changes
   var r;
   return V((r = { subscribe: function() {
     return { unsubscribe: function() {
     } };
   }, id: "anonymous", getSnapshot: function() {
+<<<<<<< Updated upstream
   } }, r[Nr] = function() {
+=======
+  } }, r[Lr] = function() {
+>>>>>>> Stashed changes
     return this;
   }, r), t);
 }
+<<<<<<< Updated upstream
 __name(Ud, "Ud");
 c(Ud, "toActorRef");
 var zo = c(function(t) {
@@ -6265,16 +9785,50 @@ function Ri(t, r) {
     for (var S = me(w), C = S.next(); !C.done; C = S.next())
       for (var T = C.value, _ = T.parent; _ && !w.has(_); )
         w.add(_), _ = _.parent;
+=======
+__name(Kd, "Kd");
+c(Kd, "toActorRef");
+var Ro = c(function(e) {
+  return e.type === "atomic" || e.type === "final";
+}, "isLeafNode");
+function wu(e) {
+  return Object.keys(e.states).map(function(r) {
+    return e.states[r];
+  });
+}
+__name(wu, "wu");
+c(wu, "getAllChildren");
+function Di(e) {
+  return wu(e).filter(function(r) {
+    return r.type !== "history";
+  });
+}
+__name(Di, "Di");
+c(Di, "getChildren");
+function Eu(e) {
+  var r = [e];
+  return Ro(e) ? r : r.concat($e(Di(e).map(Eu)));
+}
+__name(Eu, "Eu");
+c(Eu, "getAllStateNodes");
+function Ni(e, r) {
+  var t, n, a, s, p, v, m, d, h = new Set(e), y = xu(h), x = new Set(r);
+  try {
+    for (var S = ge(x), T = S.next(); !T.done; T = S.next())
+      for (var C = T.value, _ = C.parent; _ && !x.has(_); )
+        x.add(_), _ = _.parent;
+>>>>>>> Stashed changes
   } catch (te) {
     e = { error: te };
   } finally {
     try {
-      C && !C.done && (n = S.return) && n.call(S);
+      T && !T.done && (n = S.return) && n.call(S);
     } finally {
       if (e)
         throw e.error;
     }
   }
+<<<<<<< Updated upstream
   var N = mu(w);
   try {
     for (var j = me(w), $ = j.next(); !$.done; $ = j.next()) {
@@ -6284,10 +9838,25 @@ function Ri(t, r) {
           return w.add(le);
         }) : T.initialStateNodes.forEach(function(le) {
           return w.add(le);
+=======
+  var N = xu(x);
+  try {
+    for (var j = ge(x), $ = j.next(); !$.done; $ = j.next()) {
+      var C = $.value;
+      if (C.type === "compound" && (!N.get(C) || !N.get(C).length))
+        y.get(C) ? y.get(C).forEach(function(le) {
+          return x.add(le);
+        }) : C.initialStateNodes.forEach(function(le) {
+          return x.add(le);
+>>>>>>> Stashed changes
         });
-      else if (T.type === "parallel")
+      else if (C.type === "parallel")
         try {
+<<<<<<< Updated upstream
           for (var A = (p = void 0, me(zi(T))), ee = A.next(); !ee.done; ee = A.next()) {
+=======
+          for (var A = (p = void 0, ge(Di(C))), ee = A.next(); !ee.done; ee = A.next()) {
+>>>>>>> Stashed changes
             var z = ee.value;
             w.has(z) || (w.add(z), y.get(z) ? y.get(z).forEach(function(le) {
               return w.add(le);
@@ -6317,9 +9886,15 @@ function Ri(t, r) {
     }
   }
   try {
+<<<<<<< Updated upstream
     for (var B = me(w), J = B.next(); !J.done; J = B.next())
       for (var T = J.value, _ = T.parent; _ && !w.has(_); )
         w.add(_), _ = _.parent;
+=======
+    for (var B = ge(x), J = B.next(); !J.done; J = B.next())
+      for (var C = J.value, _ = C.parent; _ && !x.has(_); )
+        x.add(_), _ = _.parent;
+>>>>>>> Stashed changes
   } catch (te) {
     m = { error: te };
   } finally {
@@ -6332,21 +9907,34 @@ function Ri(t, r) {
   }
   return w;
 }
+<<<<<<< Updated upstream
 __name(Ri, "Ri");
 c(Ri, "getConfiguration");
 function Wd(t, r) {
   var e = r.get(t);
   if (!e)
+=======
+__name(Ni, "Ni");
+c(Ni, "getConfiguration");
+function Qd(e, r) {
+  var t = r.get(e);
+  if (!t)
+>>>>>>> Stashed changes
     return {};
   if (t.type === "compound") {
     var n = e[0];
     if (n) {
+<<<<<<< Updated upstream
       if (zo(n))
+=======
+      if (Ro(n))
+>>>>>>> Stashed changes
         return n.key;
     } else
       return {};
   }
   var a = {};
+<<<<<<< Updated upstream
   return e.forEach(function(s) {
     a[s.key] = Wd(s, r);
   }), a;
@@ -6357,6 +9945,18 @@ function mu(t) {
   var r, e, n = /* @__PURE__ */ new Map();
   try {
     for (var a = me(t), s = a.next(); !s.done; s = a.next()) {
+=======
+  return t.forEach(function(s) {
+    a[s.key] = Qd(s, r);
+  }), a;
+}
+__name(Qd, "Qd");
+c(Qd, "getValueFromAdj");
+function xu(e) {
+  var r, t, n = /* @__PURE__ */ new Map();
+  try {
+    for (var a = ge(e), s = a.next(); !s.done; s = a.next()) {
+>>>>>>> Stashed changes
       var p = s.value;
       n.has(p) || n.set(p, []), p.parent && (n.has(p.parent) || n.set(p.parent, []), n.get(p.parent).push(p));
     }
@@ -6372,6 +9972,7 @@ function mu(t) {
   }
   return n;
 }
+<<<<<<< Updated upstream
 __name(mu, "mu");
 c(mu, "getAdjList");
 function Vd(t, r) {
@@ -6419,9 +10020,59 @@ __name(bu, "bu");
 c(bu, "getTagsFromConfiguration");
 function yu(t, r) {
   if (t === r)
+=======
+__name(xu, "xu");
+c(xu, "getAdjList");
+function Jd(e, r) {
+  var t = Ni([e], r);
+  return Qd(e, xu(t));
+}
+__name(Jd, "Jd");
+c(Jd, "getValue");
+function ki(e, r) {
+  return Array.isArray(e) ? e.some(function(t) {
+    return t === r;
+  }) : e instanceof Set ? e.has(r) : false;
+}
+__name(ki, "ki");
+c(ki, "has");
+function ef(e) {
+  return _e([], Ee(new Set($e(_e([], Ee(e.map(function(r) {
+    return r.ownEvents;
+  })), false)))), false);
+}
+__name(ef, "ef");
+c(ef, "nextEvents");
+function Do(e, r) {
+  return r.type === "compound" ? Di(r).some(function(t) {
+    return t.type === "final" && ki(e, t);
+  }) : r.type === "parallel" ? Di(r).every(function(t) {
+    return Do(e, t);
+  }) : false;
+}
+__name(Do, "Do");
+c(Do, "isInFinalState");
+function tf(e) {
+  return e === void 0 && (e = []), e.reduce(function(r, t) {
+    return t.meta !== void 0 && (r[t.id] = t.meta), r;
+  }, {});
+}
+__name(tf, "tf");
+c(tf, "getMeta");
+function Su(e) {
+  return new Set($e(e.map(function(r) {
+    return r.tags;
+  })));
+}
+__name(Su, "Su");
+c(Su, "getTagsFromConfiguration");
+function Tu(e, r) {
+  if (e === r)
+>>>>>>> Stashed changes
     return true;
   if (t === void 0 || r === void 0)
     return false;
+<<<<<<< Updated upstream
   if (Ce(t) || Ce(r))
     return t === r;
   var e = Object.keys(t), n = Object.keys(r);
@@ -6465,6 +10116,51 @@ var gr = function() {
         return r;
       var n = rn;
       return new t({ value: r.value, context: e, _event: n, _sessionid: null, historyValue: r.historyValue, history: r.history, activities: r.activities, configuration: r.configuration, transitions: [], children: {} });
+=======
+  if (Ce(e) || Ce(r))
+    return e === r;
+  var t = Object.keys(e), n = Object.keys(r);
+  return t.length === n.length && t.every(function(a) {
+    return Tu(e[a], r[a]);
+  });
+}
+__name(Tu, "Tu");
+c(Tu, "stateValuesEqual");
+function rf(e) {
+  return typeof e != "object" || e === null ? false : "value" in e && "_event" in e;
+}
+__name(rf, "rf");
+c(rf, "isStateConfig");
+function nf(e, r) {
+  var t = e.exec, n = V(V({}, e), { exec: t !== void 0 ? function() {
+    return t(r.context, r.event, { action: e, state: r, _event: r._event });
+  } : void 0 });
+  return n;
+}
+__name(nf, "nf");
+c(nf, "bindActionToState");
+var gr = function() {
+  function e(r) {
+    var t = this, n;
+    this.actions = [], this.activities = hu, this.meta = {}, this.events = [], this.value = r.value, this.context = r.context, this._event = r._event, this._sessionid = r._sessionid, this.event = this._event.data, this.historyValue = r.historyValue, this.history = r.history, this.actions = r.actions || [], this.activities = r.activities || hu, this.meta = tf(r.configuration), this.events = r.events || [], this.matches = this.matches.bind(this), this.toStrings = this.toStrings.bind(this), this.configuration = r.configuration, this.transitions = r.transitions, this.children = r.children, this.done = !!r.done, this.tags = (n = Array.isArray(r.tags) ? new Set(r.tags) : r.tags) !== null && n !== void 0 ? n : /* @__PURE__ */ new Set(), this.machine = r.machine, Object.defineProperty(this, "nextEvents", { get: function() {
+      return ef(t.configuration);
+    } });
+  }
+  __name(e, "e");
+  return c(e, "State"), e.from = function(r, t) {
+    if (r instanceof e)
+      return r.context !== t ? new e({ value: r.value, context: t, _event: r._event, _sessionid: null, historyValue: r.historyValue, history: r.history, actions: [], activities: r.activities, meta: {}, events: [], configuration: [], transitions: [], children: {} }) : r;
+    var n = nn;
+    return new e({ value: r, context: t, _event: n, _sessionid: null, historyValue: void 0, history: void 0, actions: [], activities: void 0, meta: void 0, events: [], configuration: [], transitions: [], children: {} });
+  }, e.create = function(r) {
+    return new e(r);
+  }, e.inert = function(r, t) {
+    if (r instanceof e) {
+      if (!r.actions.length)
+        return r;
+      var n = nn;
+      return new e({ value: r.value, context: t, _event: n, _sessionid: null, historyValue: r.historyValue, history: r.history, activities: r.activities, configuration: r.configuration, transitions: [], children: {} });
+>>>>>>> Stashed changes
     }
     return t.from(r, e);
   }, t.prototype.toStrings = function(r, e) {
@@ -6472,9 +10168,15 @@ var gr = function() {
     if (r === void 0 && (r = this.value), e === void 0 && (e = "."), Ce(r))
       return [r];
     var a = Object.keys(r);
+<<<<<<< Updated upstream
     return a.concat.apply(a, _e([], ye(a.map(function(s) {
       return n.toStrings(r[s], e).map(function(p) {
         return s + e + p;
+=======
+    return a.concat.apply(a, _e([], Ee(a.map(function(s) {
+      return n.toStrings(r[s], t).map(function(p) {
+        return s + t + p;
+>>>>>>> Stashed changes
       });
     })), false));
   }, t.prototype.toJSON = function() {
@@ -6482,6 +10184,7 @@ var gr = function() {
     r.configuration, r.transitions;
     var e = r.tags;
     r.machine;
+<<<<<<< Updated upstream
     var n = Ci(r, ["configuration", "transitions", "tags", "machine"]);
     return V(V({}, n), { tags: Array.from(e) });
   }, t.prototype.matches = function(r) {
@@ -6492,15 +10195,34 @@ var gr = function() {
     var e;
     Ge && et(!!this.machine, "state.can(...) used outside of a machine-created State object; this will always return false.");
     var n = (e = this.machine) === null || e === void 0 ? void 0 : e.getTransitionData(this, r);
+=======
+    var n = Oi(r, ["configuration", "transitions", "tags", "machine"]);
+    return V(V({}, n), { tags: Array.from(t) });
+  }, e.prototype.matches = function(r) {
+    return Io(r, this.value);
+  }, e.prototype.hasTag = function(r) {
+    return this.tags.has(r);
+  }, e.prototype.can = function(r) {
+    var t;
+    Ge && tt(!!this.machine, "state.can(...) used outside of a machine-created State object; this will always return false.");
+    var n = (t = this.machine) === null || t === void 0 ? void 0 : t.getTransitionData(this, r);
+>>>>>>> Stashed changes
     return !!(n != null && n.transitions.length) && n.transitions.some(function(a) {
       return a.target !== void 0 || a.actions.length;
     });
   }, t;
 }();
+<<<<<<< Updated upstream
 var cb = { deferEvents: false };
 var wu = function() {
   function t(r) {
     this.processingEvent = false, this.queue = [], this.initialized = false, this.options = V(V({}, cb), r);
+=======
+var xb = { deferEvents: false };
+var Cu = function() {
+  function e(r) {
+    this.processingEvent = false, this.queue = [], this.initialized = false, this.options = V(V({}, xb), r);
+>>>>>>> Stashed changes
   }
   __name(t, "t");
   return c(t, "Scheduler"), t.prototype.initialize = function(r) {
@@ -6536,6 +10258,7 @@ var wu = function() {
     }
   }, t;
 }();
+<<<<<<< Updated upstream
 var xu = /* @__PURE__ */ new Map();
 var pb = 0;
 var Ni = { bookId: function() {
@@ -6548,6 +10271,20 @@ var Ni = { bookId: function() {
   xu.delete(t);
 } };
 function Cs() {
+=======
+var Ou = /* @__PURE__ */ new Map();
+var wb = 0;
+var Li = { bookId: function() {
+  return "x:".concat(wb++);
+}, register: function(e, r) {
+  return Ou.set(e, r), e;
+}, get: function(e) {
+  return Ou.get(e);
+}, free: function(e) {
+  Ou.delete(e);
+} };
+function Ms() {
+>>>>>>> Stashed changes
   if (typeof globalThis != "undefined")
     return globalThis;
   if (typeof self != "undefined")
@@ -6558,6 +10295,7 @@ function Cs() {
     return global;
   Ge || console.warn("XState could not find a global object in this environment. Please let the maintainers know and raise an issue here: https://github.com/statelyai/xstate/issues");
 }
+<<<<<<< Updated upstream
 __name(Cs, "Cs");
 c(Cs, "getGlobal");
 function db() {
@@ -6576,6 +10314,26 @@ function Qd(t) {
 __name(Qd, "Qd");
 c(Qd, "registerService");
 function Jd(t, r) {
+=======
+__name(Ms, "Ms");
+c(Ms, "getGlobal");
+function Eb() {
+  var e = Ms();
+  if (e && "__xstate__" in e)
+    return e.__xstate__;
+}
+__name(Eb, "Eb");
+c(Eb, "getDevTools");
+function of(e) {
+  if (Ms()) {
+    var r = Eb();
+    r && r.register(e);
+  }
+}
+__name(of, "of");
+c(of, "registerService");
+function af(e, r) {
+>>>>>>> Stashed changes
   r === void 0 && (r = {});
   var e = t.initialState, n = /* @__PURE__ */ new Set(), a = [], s = false, p = c(function() {
     if (!s) {
@@ -6587,36 +10345,65 @@ function Jd(t, r) {
       }
       s = false;
     }
+<<<<<<< Updated upstream
   }, "flush"), v = Ud({ id: r.id, send: function(d) {
+=======
+  }, "flush"), v = Kd({ id: r.id, send: function(d) {
+>>>>>>> Stashed changes
     a.push(d), p();
   }, getSnapshot: function() {
     return e;
   }, subscribe: function(d, h, y) {
+<<<<<<< Updated upstream
     var w = Ii(d, h, y);
     return n.add(w), w.next(e), { unsubscribe: function() {
       n.delete(w);
+=======
+    var x = Pi(d, h, y);
+    return n.add(x), x.next(t), { unsubscribe: function() {
+      n.delete(x);
+>>>>>>> Stashed changes
     } };
   } }), m = { parent: r.parent, self: v, id: r.id || "anonymous", observers: n };
   return e = t.start ? t.start(m) : e, v;
 }
+<<<<<<< Updated upstream
 __name(Jd, "Jd");
 c(Jd, "spawnBehavior");
 var fb = { sync: false, autoForward: false };
+=======
+__name(af, "af");
+c(af, "spawnBehavior");
+var Sb = { sync: false, autoForward: false };
+>>>>>>> Stashed changes
 var ft;
 (function(t) {
   t[t.NotStarted = 0] = "NotStarted", t[t.Running = 1] = "Running", t[t.Stopped = 2] = "Stopped";
 })(ft || (ft = {}));
+<<<<<<< Updated upstream
 var ef = function() {
   function t(r, e) {
     e === void 0 && (e = t.defaultOptions);
+=======
+var sf = function() {
+  function e(r, t) {
+    t === void 0 && (t = e.defaultOptions);
+>>>>>>> Stashed changes
     var n = this;
     this.machine = r, this.delayedEventsMap = {}, this.listeners = /* @__PURE__ */ new Set(), this.contextListeners = /* @__PURE__ */ new Set(), this.stopListeners = /* @__PURE__ */ new Set(), this.doneListeners = /* @__PURE__ */ new Set(), this.eventListeners = /* @__PURE__ */ new Set(), this.sendListeners = /* @__PURE__ */ new Set(), this.initialized = false, this.status = ft.NotStarted, this.children = /* @__PURE__ */ new Map(), this.forwardTo = /* @__PURE__ */ new Set(), this._outgoingQueue = [], this.init = this.start, this.send = function(h, y) {
-      if (tn(h))
+      if (rn(h))
         return n.batch(h), n.state;
+<<<<<<< Updated upstream
       var w = ot(Ao(h, y));
       if (n.status === ft.Stopped)
         return Ge || et(false, 'Event "'.concat(w.name, '" was sent to stopped service "').concat(n.machine.id, `". This service has already reached its final state, and will not transition.
 Event: `).concat(JSON.stringify(w.data))), n.state;
+=======
+      var x = at(Po(h, y));
+      if (n.status === ft.Stopped)
+        return Ge || tt(false, 'Event "'.concat(x.name, '" was sent to stopped service "').concat(n.machine.id, `". This service has already reached its final state, and will not transition.
+Event: `).concat(JSON.stringify(x.data))), n.state;
+>>>>>>> Stashed changes
       if (n.status !== ft.Running && !n.options.deferEvents)
         throw new Error('Event "'.concat(w.name, '" was sent to uninitialized service "').concat(n.machine.id, `". Make sure .start() is called for this service, or set { deferEvents: true } in the service options.
 Event: `).concat(JSON.stringify(w.data)));
@@ -6625,14 +10412,21 @@ Event: `).concat(JSON.stringify(w.data)));
         var S = n._nextState(w);
         n.update(S, w);
       }), n._state;
+<<<<<<< Updated upstream
     }, this.sendTo = function(h, y, w) {
       var S = n.parent && (y === Or.Parent || n.parent.id === y), C = S ? n.parent : Ce(y) ? n.children.get(y) || Ni.get(y) : Rd(y) ? y : void 0;
       if (!C) {
+=======
+    }, this.sendTo = function(h, y, x) {
+      var S = n.parent && (y === Or.Parent || n.parent.id === y), T = S ? n.parent : Ce(y) ? n.children.get(y) || Li.get(y) : jd(y) ? y : void 0;
+      if (!T) {
+>>>>>>> Stashed changes
         if (!S)
           throw new Error("Unable to send event to child '".concat(y, "' from service '").concat(n.id, "'."));
-        Ge || et(false, "Service '".concat(n.id, "' has no parent: unable to send event ").concat(h.type));
+        Ge || tt(false, "Service '".concat(n.id, "' has no parent: unable to send event ").concat(h.type));
         return;
       }
+<<<<<<< Updated upstream
       if ("machine" in C) {
         if (n.status !== ft.Stopped || n.parent !== C || n.state.done) {
           var T = V(V({}, h), { name: h.name === lu ? "".concat(Qn(n.id)) : h.name, origin: n.sessionId });
@@ -6646,19 +10440,40 @@ Event: `).concat(JSON.stringify(w.data)));
       if (T)
         try {
           return T(y, w.data, n.machine.config.predictableActionArguments ? { action: h, _event: w } : { action: h, state: n.state, _event: w });
+=======
+      if ("machine" in T) {
+        if (n.status !== ft.Stopped || n.parent !== T || n.state.done) {
+          var C = V(V({}, h), { name: h.name === fu ? "".concat(ei(n.id)) : h.name, origin: n.sessionId });
+          !x && n.machine.config.predictableActionArguments ? n._outgoingQueue.push([T, C]) : T.send(C);
+        }
+      } else
+        !x && n.machine.config.predictableActionArguments ? n._outgoingQueue.push([T, h.data]) : T.send(h.data);
+    }, this._exec = function(h, y, x, S) {
+      S === void 0 && (S = n.machine.options.actions);
+      var T = h.exec || Cs(h.type, S), C = Re(T) ? T : T ? T.exec : h.exec;
+      if (C)
+        try {
+          return C(y, x.data, n.machine.config.predictableActionArguments ? { action: h, _event: x } : { action: h, state: n.state, _event: x });
+>>>>>>> Stashed changes
         } catch (ie) {
           throw n.parent && n.parent.send({ type: "xstate.error", data: ie }), ie;
         }
       switch (h.type) {
-        case en:
+        case tn:
           var _ = h;
           if (typeof _.delay == "number") {
             n.defer(_);
             return;
           } else
+<<<<<<< Updated upstream
             _.to ? n.sendTo(_._event, _.to, w === rn) : n.send(_._event);
           break;
         case ds:
+=======
+            _.to ? n.sendTo(_._event, _.to, x === nn) : n.send(_._event);
+          break;
+        case ms:
+>>>>>>> Stashed changes
           n.cancel(h.sendId);
           break;
         case So: {
@@ -6668,11 +10483,16 @@ Event: `).concat(JSON.stringify(w.data)));
           if (!n.machine.config.predictableActionArguments && !n.state.activities[N.id || N.type])
             break;
           if (N.type === ze.Invoke) {
+<<<<<<< Updated upstream
             var j = xs(N.src), $ = n.machine.options.services ? n.machine.options.services[j.type] : void 0, A = N.id, ee = N.data;
             Ge || et(!("forward" in N), "`forward` property is deprecated (found in invocation of '".concat(N.src, "' in in machine '").concat(n.machine.id, "'). ") + "Please use `autoForward` instead.");
+=======
+            var j = Ts(N.src), $ = n.machine.options.services ? n.machine.options.services[j.type] : void 0, A = N.id, ee = N.data;
+            Ge || tt(!("forward" in N), "`forward` property is deprecated (found in invocation of '".concat(N.src, "' in in machine '").concat(n.machine.id, "'). ") + "Please use `autoForward` instead.");
+>>>>>>> Stashed changes
             var z = "autoForward" in N ? N.autoForward : !!N.forward;
             if (!$) {
-              Ge || et(false, "No service found for invocation '".concat(N.src, "' in machine '").concat(n.machine.id, "'."));
+              Ge || tt(false, "No service found for invocation '".concat(N.src, "' in machine '").concat(n.machine.id, "'."));
               return;
             }
             var B = ee ? Zn(ee, y, w) : void 0;
@@ -6682,26 +10502,43 @@ Event: `).concat(JSON.stringify(w.data)));
             if (!J)
               return;
             var te = void 0;
+<<<<<<< Updated upstream
             kr(J) && (J = B ? J.withContext(B) : J, te = { autoForward: z }), n.spawn(J, A, te);
+=======
+            Gr(J) && (J = B ? J.withContext(B) : J, te = { autoForward: z }), n.spawn(J, A, te);
+>>>>>>> Stashed changes
           } else
             n.spawnActivity(N);
           break;
         }
+<<<<<<< Updated upstream
         case Ti: {
           n.stopChild(h.activity.id);
           break;
         }
         case fs:
+=======
+        case Mi: {
+          n.stopChild(h.activity.id);
+          break;
+        }
+        case vs:
+>>>>>>> Stashed changes
           var le = h.label, Y = h.value;
           le ? n.logger(le, Y) : n.logger(Y);
           break;
         default:
-          Ge || et(false, "No implementation found for action type '".concat(h.type, "'"));
+          Ge || tt(false, "No implementation found for action type '".concat(h.type, "'"));
           break;
       }
     };
+<<<<<<< Updated upstream
     var a = V(V({}, t.defaultOptions), e), s = a.clock, p = a.logger, v = a.parent, m = a.id, d = m !== void 0 ? m : r.id;
     this.id = d, this.logger = p, this.clock = s, this.parent = v, this.options = a, this.scheduler = new wu({ deferEvents: this.options.deferEvents }), this.sessionId = Ni.bookId();
+=======
+    var a = V(V({}, e.defaultOptions), t), s = a.clock, p = a.logger, v = a.parent, m = a.id, d = m !== void 0 ? m : r.id;
+    this.id = d, this.logger = p, this.clock = s, this.parent = v, this.options = a, this.scheduler = new Cu({ deferEvents: this.options.deferEvents }), this.sessionId = Li.bookId();
+>>>>>>> Stashed changes
   }
   __name(t, "t");
   return c(t, "Interpreter"), Object.defineProperty(t.prototype, "initialState", { get: function() {
@@ -6709,12 +10546,18 @@ Event: `).concat(JSON.stringify(w.data)));
     return this._initialState ? this._initialState : An(this, function() {
       return r._initialState = r.machine.initialState, r._initialState;
     });
+<<<<<<< Updated upstream
   }, enumerable: false, configurable: true }), Object.defineProperty(t.prototype, "state", { get: function() {
     return Ge || et(this.status !== ft.NotStarted, "Attempted to read state from uninitialized service '".concat(this.id, "'. Make sure the service is started first.")), this._state;
   }, enumerable: false, configurable: true }), t.prototype.execute = function(r, e) {
+=======
+  }, enumerable: false, configurable: true }), Object.defineProperty(e.prototype, "state", { get: function() {
+    return Ge || tt(this.status !== ft.NotStarted, "Attempted to read state from uninitialized service '".concat(this.id, "'. Make sure the service is started first.")), this._state;
+  }, enumerable: false, configurable: true }), e.prototype.execute = function(r, t) {
+>>>>>>> Stashed changes
     var n, a;
     try {
-      for (var s = me(r.actions), p = s.next(); !p.done; p = s.next()) {
+      for (var s = ge(r.actions), p = s.next(); !p.done; p = s.next()) {
         var v = p.value;
         this.exec(v, r, e);
       }
@@ -6730,7 +10573,11 @@ Event: `).concat(JSON.stringify(w.data)));
     }
   }, t.prototype.update = function(r, e) {
     var n, a, s, p, v, m, d, h, y = this;
+<<<<<<< Updated upstream
     if (r._sessionid = this.sessionId, this._state = r, (!this.machine.config.predictableActionArguments || e === rn) && this.options.execute)
+=======
+    if (r._sessionid = this.sessionId, this._state = r, (!this.machine.config.predictableActionArguments || t === nn) && this.options.execute)
+>>>>>>> Stashed changes
       this.execute(this.state);
     else
       for (var w = void 0; w = this._outgoingQueue.shift(); )
@@ -6739,24 +10586,24 @@ Event: `).concat(JSON.stringify(w.data)));
       y.state.children[te.id] = te;
     }), this.devTools && this.devTools.send(e.data, r), r.event)
       try {
-        for (var S = me(this.eventListeners), C = S.next(); !C.done; C = S.next()) {
-          var T = C.value;
-          T(r.event);
+        for (var S = ge(this.eventListeners), T = S.next(); !T.done; T = S.next()) {
+          var C = T.value;
+          C(r.event);
         }
       } catch (te) {
         n = { error: te };
       } finally {
         try {
-          C && !C.done && (a = S.return) && a.call(S);
+          T && !T.done && (a = S.return) && a.call(S);
         } finally {
           if (n)
             throw n.error;
         }
       }
     try {
-      for (var _ = me(this.listeners), N = _.next(); !N.done; N = _.next()) {
-        var T = N.value;
-        T(r, r.event);
+      for (var _ = ge(this.listeners), N = _.next(); !N.done; N = _.next()) {
+        var C = N.value;
+        C(r, r.event);
       }
     } catch (te) {
       s = { error: te };
@@ -6769,7 +10616,7 @@ Event: `).concat(JSON.stringify(w.data)));
       }
     }
     try {
-      for (var j = me(this.contextListeners), $ = j.next(); !$.done; $ = j.next()) {
+      for (var j = ge(this.contextListeners), $ = j.next(); !$.done; $ = j.next()) {
         var A = $.value;
         A(this.state.context, this.state.history ? this.state.history.context : void 0);
       }
@@ -6788,9 +10635,15 @@ Event: `).concat(JSON.stringify(w.data)));
         return te.type === "final" && te.parent === y.machine;
       }), z = ee && ee.doneData ? Zn(ee.doneData, r.context, e) : void 0;
       try {
+<<<<<<< Updated upstream
         for (var B = me(this.doneListeners), J = B.next(); !J.done; J = B.next()) {
           var T = J.value;
           T(_i(this.id, z));
+=======
+        for (var B = ge(this.doneListeners), J = B.next(); !J.done; J = B.next()) {
+          var C = J.value;
+          C(Ri(this.id, z));
+>>>>>>> Stashed changes
         }
       } catch (te) {
         d = { error: te };
@@ -6802,12 +10655,21 @@ Event: `).concat(JSON.stringify(w.data)));
             throw d.error;
         }
       }
+<<<<<<< Updated upstream
       this._stop(), this._stopChildren(), Ni.free(this.sessionId);
+=======
+      this._stop(), this._stopChildren(), Li.free(this.sessionId);
+>>>>>>> Stashed changes
     }
   }, t.prototype.onTransition = function(r) {
     return this.listeners.add(r), this.status === ft.Running && r(this.state, this.state.event), this;
+<<<<<<< Updated upstream
   }, t.prototype.subscribe = function(r, e, n) {
     var a = this, s = Ii(r, e, n);
+=======
+  }, e.prototype.subscribe = function(r, t, n) {
+    var a = this, s = Pi(r, t, n);
+>>>>>>> Stashed changes
     this.listeners.add(s.next), this.status !== ft.NotStarted && s.next(this.state);
     var p = c(function() {
       a.doneListeners.delete(p), a.stopListeners.delete(p), s.complete();
@@ -6831,12 +10693,21 @@ Event: `).concat(JSON.stringify(w.data)));
     var e = this;
     if (this.status === ft.Running)
       return this;
+<<<<<<< Updated upstream
     this.machine._init(), Ni.register(this.sessionId, this), this.initialized = true, this.status = ft.Running;
     var n = r === void 0 ? this.initialState : An(this, function() {
       return Zd(r) ? e.machine.resolveState(r) : e.machine.resolveState(gr.from(r, e.machine.context));
     });
     return this.options.devTools && this.attachDev(), this.scheduler.initialize(function() {
       e.update(n, rn);
+=======
+    this.machine._init(), Li.register(this.sessionId, this), this.initialized = true, this.status = ft.Running;
+    var n = r === void 0 ? this.initialState : Pn(this, function() {
+      return rf(r) ? t.machine.resolveState(r) : t.machine.resolveState(gr.from(r, t.machine.context));
+    });
+    return this.options.devTools && this.attachDev(), this.scheduler.initialize(function() {
+      t.update(n, nn);
+>>>>>>> Stashed changes
     }), this;
   }, t.prototype._stopChildren = function() {
     this.children.forEach(function(r) {
@@ -6845,8 +10716,13 @@ Event: `).concat(JSON.stringify(w.data)));
   }, t.prototype._stop = function() {
     var r, e, n, a, s, p, v, m, d, h;
     try {
+<<<<<<< Updated upstream
       for (var y = me(this.listeners), w = y.next(); !w.done; w = y.next()) {
         var S = w.value;
+=======
+      for (var y = ge(this.listeners), x = y.next(); !x.done; x = y.next()) {
+        var S = x.value;
+>>>>>>> Stashed changes
         this.listeners.delete(S);
       }
     } catch (B) {
@@ -6860,22 +10736,22 @@ Event: `).concat(JSON.stringify(w.data)));
       }
     }
     try {
-      for (var C = me(this.stopListeners), T = C.next(); !T.done; T = C.next()) {
-        var S = T.value;
+      for (var T = ge(this.stopListeners), C = T.next(); !C.done; C = T.next()) {
+        var S = C.value;
         S(), this.stopListeners.delete(S);
       }
     } catch (B) {
       n = { error: B };
     } finally {
       try {
-        T && !T.done && (a = C.return) && a.call(C);
+        C && !C.done && (a = T.return) && a.call(T);
       } finally {
         if (n)
           throw n.error;
       }
     }
     try {
-      for (var _ = me(this.contextListeners), N = _.next(); !N.done; N = _.next()) {
+      for (var _ = ge(this.contextListeners), N = _.next(); !N.done; N = _.next()) {
         var S = N.value;
         this.contextListeners.delete(S);
       }
@@ -6890,7 +10766,7 @@ Event: `).concat(JSON.stringify(w.data)));
       }
     }
     try {
-      for (var j = me(this.doneListeners), $ = j.next(); !$.done; $ = j.next()) {
+      for (var j = ge(this.doneListeners), $ = j.next(); !$.done; $ = j.next()) {
         var S = $.value;
         this.doneListeners.delete(S);
       }
@@ -6908,7 +10784,7 @@ Event: `).concat(JSON.stringify(w.data)));
       return this;
     this.initialized = false, this.status = ft.Stopped, this._initialState = void 0;
     try {
-      for (var A = me(Object.keys(this.delayedEventsMap)), ee = A.next(); !ee.done; ee = A.next()) {
+      for (var A = ge(Object.keys(this.delayedEventsMap)), ee = A.next(); !ee.done; ee = A.next()) {
         var z = ee.value;
         this.clock.clearTimeout(this.delayedEventsMap[z]);
       }
@@ -6922,6 +10798,7 @@ Event: `).concat(JSON.stringify(w.data)));
           throw d.error;
       }
     }
+<<<<<<< Updated upstream
     this.scheduler.clear(), this.scheduler = new wu({ deferEvents: this.options.deferEvents });
   }, t.prototype.stop = function() {
     var r = this, e = this.scheduler;
@@ -6937,17 +10814,35 @@ Event: `).concat(JSON.stringify(w.data)));
         return d.changed = true, d;
       });
       r.update(a, n), r._stopChildren(), Ni.free(r.sessionId);
+=======
+    this.scheduler.clear(), this.scheduler = new Cu({ deferEvents: this.options.deferEvents });
+  }, e.prototype.stop = function() {
+    var r = this, t = this.scheduler;
+    return this._stop(), t.schedule(function() {
+      var n = at({ type: "xstate.stop" }), a = Pn(r, function() {
+        var s = $e(_e([], Ee(r.state.configuration), false).sort(function(h, y) {
+          return y.order - h.order;
+        }).map(function(h) {
+          return jr(h.onExit, r.machine.options.actions);
+        })), p = Ee(_i(r.machine, r.state, r.state.context, n, [{ type: "exit", actions: s }], r.machine.config.predictableActionArguments ? r._exec : void 0, r.machine.config.predictableActionArguments || r.machine.config.preserveActionOrder), 2), v = p[0], m = p[1], d = new gr({ value: r.state.value, context: m, _event: n, _sessionid: r.sessionId, historyValue: void 0, history: r.state, actions: v.filter(function(h) {
+          return h.type !== en && (h.type !== tn || !!h.to && h.to !== Or.Internal);
+        }), activities: {}, events: [], configuration: [], transitions: [], children: {}, done: r.state.done, tags: r.state.tags, machine: r.machine });
+        return d.changed = true, d;
+      });
+      r.update(a, n), r._stopChildren(), Li.free(r.sessionId);
+>>>>>>> Stashed changes
     }), this;
   }, t.prototype.batch = function(r) {
     var e = this;
     if (this.status === ft.NotStarted && this.options.deferEvents)
-      Ge || et(false, "".concat(r.length, ' event(s) were sent to uninitialized service "').concat(this.machine.id, `" and are deferred. Make sure .start() is called for this service.
+      Ge || tt(false, "".concat(r.length, ' event(s) were sent to uninitialized service "').concat(this.machine.id, `" and are deferred. Make sure .start() is called for this service.
 Event: `).concat(JSON.stringify(event)));
     else if (this.status !== ft.Running)
       throw new Error("".concat(r.length, ' event(s) were sent to uninitialized service "').concat(this.machine.id, '". Make sure .start() is called for this service, or set { deferEvents: true } in the service options.'));
     if (r.length) {
       var n = !!this.machine.config.predictableActionArguments && this._exec;
       this.scheduler.schedule(function() {
+<<<<<<< Updated upstream
         var a, s, p = e.state, v = false, m = [], d = c(function(S) {
           var C = ot(S);
           e.forward(C), p = An(e, function() {
@@ -6960,6 +10855,20 @@ Event: `).concat(JSON.stringify(event)));
           for (var h = me(r), y = h.next(); !y.done; y = h.next()) {
             var w = y.value;
             d(w);
+=======
+        var a, s, p = t.state, v = false, m = [], d = c(function(S) {
+          var T = at(S);
+          t.forward(T), p = Pn(t, function() {
+            return t.machine.transition(p, T, void 0, n || void 0);
+          }), m.push.apply(m, _e([], Ee(t.machine.config.predictableActionArguments ? p.actions : p.actions.map(function(C) {
+            return nf(C, p);
+          })), false)), v = v || !!p.changed;
+        }, "_loop_1");
+        try {
+          for (var h = ge(r), y = h.next(); !y.done; y = h.next()) {
+            var x = y.value;
+            d(x);
+>>>>>>> Stashed changes
           }
         } catch (S) {
           a = { error: S };
@@ -6971,17 +10880,28 @@ Event: `).concat(JSON.stringify(event)));
               throw a.error;
           }
         }
+<<<<<<< Updated upstream
         p.changed = v, p.actions = m, e.update(p, ot(r[r.length - 1]));
+=======
+        p.changed = v, p.actions = m, t.update(p, at(r[r.length - 1]));
+>>>>>>> Stashed changes
       });
     }
   }, t.prototype.sender = function(r) {
     return this.send.bind(this, r);
   }, t.prototype._nextState = function(r, e) {
     var n = this;
+<<<<<<< Updated upstream
     e === void 0 && (e = !!this.machine.config.predictableActionArguments && this._exec);
     var a = ot(r);
     if (a.name.indexOf(su) === 0 && !this.state.nextEvents.some(function(p) {
       return p.indexOf(su) === 0;
+=======
+    t === void 0 && (t = !!this.machine.config.predictableActionArguments && this._exec);
+    var a = at(r);
+    if (a.name.indexOf(du) === 0 && !this.state.nextEvents.some(function(p) {
+      return p.indexOf(du) === 0;
+>>>>>>> Stashed changes
     }))
       throw a.data.data;
     var s = An(this, function() {
@@ -6993,7 +10913,7 @@ Event: `).concat(JSON.stringify(event)));
   }, t.prototype.forward = function(r) {
     var e, n;
     try {
-      for (var a = me(this.forwardTo), s = a.next(); !s.done; s = a.next()) {
+      for (var a = ge(this.forwardTo), s = a.next(); !s.done; s = a.next()) {
         var p = s.value, v = this.children.get(p);
         if (!v)
           throw new Error("Unable to forward event '".concat(r, "' from interpreter '").concat(this.id, "' to nonexistant child '").concat(p, "'."));
@@ -7026,6 +10946,7 @@ Event: `).concat(JSON.stringify(event)));
     e && (this.removeChild(r), Re(e.stop) && e.stop());
   }, t.prototype.spawn = function(r, e, n) {
     if (this.status !== ft.Running)
+<<<<<<< Updated upstream
       return hu(r, e);
     if (pu(r))
       return this.spawnPromise(Promise.resolve(r), e);
@@ -7046,11 +10967,34 @@ Event: `).concat(JSON.stringify(event)));
     var a = new t(r, V(V({}, this.options), { parent: this, id: e.id || r.id })), s = V(V({}, fb), e);
     s.sync && a.onTransition(function(v) {
       n.send(To, { state: v, id: a.id });
+=======
+      return yu(r, t);
+    if (vu(r))
+      return this.spawnPromise(Promise.resolve(r), t);
+    if (Re(r))
+      return this.spawnCallback(r, t);
+    if (Zd(r))
+      return this.spawnActor(r, t);
+    if (Gd(r))
+      return this.spawnObservable(r, t);
+    if (Gr(r))
+      return this.spawnMachine(r, V(V({}, n), { id: t }));
+    if (Dd(r))
+      return this.spawnBehavior(r, t);
+    throw new Error('Unable to spawn entity "'.concat(t, '" of type "').concat(typeof r, '".'));
+  }, e.prototype.spawnMachine = function(r, t) {
+    var n = this;
+    t === void 0 && (t = {});
+    var a = new e(r, V(V({}, this.options), { parent: this, id: t.id || r.id })), s = V(V({}, Sb), t);
+    s.sync && a.onTransition(function(v) {
+      n.send(Oo, { state: v, id: a.id });
+>>>>>>> Stashed changes
     });
     var p = a;
     return this.children.set(a.id, p), s.autoForward && this.forwardTo.add(a.id), a.onDone(function(v) {
-      n.removeChild(a.id), n.send(ot(v, { origin: a.id }));
+      n.removeChild(a.id), n.send(at(v, { origin: a.id }));
     }).start(), p;
+<<<<<<< Updated upstream
   }, t.prototype.spawnBehavior = function(r, e) {
     var n = Jd(r, { id: e, parent: this });
     return this.children.set(e, n), n;
@@ -7058,20 +11002,39 @@ Event: `).concat(JSON.stringify(event)));
     var n, a = this, s = false, p;
     r.then(function(m) {
       s || (p = m, a.removeChild(e), a.send(ot(_i(e, m), { origin: e })));
+=======
+  }, e.prototype.spawnBehavior = function(r, t) {
+    var n = af(r, { id: t, parent: this });
+    return this.children.set(t, n), n;
+  }, e.prototype.spawnPromise = function(r, t) {
+    var n, a = this, s = false, p;
+    r.then(function(m) {
+      s || (p = m, a.removeChild(t), a.send(at(Ri(t, m), { origin: t })));
+>>>>>>> Stashed changes
     }, function(m) {
       if (!s) {
         a.removeChild(e);
         var d = Qn(e, m);
         try {
+<<<<<<< Updated upstream
           a.send(ot(d, { origin: e }));
         } catch (h) {
           Nd(m, h, e), a.devTools && a.devTools.send(d, a.state), a.machine.strict && a.stop();
+=======
+          a.send(at(d, { origin: t }));
+        } catch (h) {
+          Hd(m, h, t), a.devTools && a.devTools.send(d, a.state), a.machine.strict && a.stop();
+>>>>>>> Stashed changes
         }
       }
     });
     var v = (n = { id: e, send: function() {
     }, subscribe: function(m, d, h) {
+<<<<<<< Updated upstream
       var y = Ii(m, d, h), w = false;
+=======
+      var y = Pi(m, d, h), x = false;
+>>>>>>> Stashed changes
       return r.then(function(S) {
         w || (y.next(S), !w && y.complete());
       }, function(S) {
@@ -7085,6 +11048,7 @@ Event: `).concat(JSON.stringify(event)));
       return { id: e };
     }, getSnapshot: function() {
       return p;
+<<<<<<< Updated upstream
     } }, n[Nr] = function() {
       return this;
     }, n);
@@ -7094,6 +11058,17 @@ Event: `).concat(JSON.stringify(event)));
       m = w, v.forEach(function(S) {
         return S(w);
       }), !s && a.send(ot(w, { origin: e }));
+=======
+    } }, n[Lr] = function() {
+      return this;
+    }, n);
+    return this.children.set(t, v), v;
+  }, e.prototype.spawnCallback = function(r, t) {
+    var n, a = this, s = false, p = /* @__PURE__ */ new Set(), v = /* @__PURE__ */ new Set(), m, d = c(function(x) {
+      m = x, v.forEach(function(S) {
+        return S(x);
+      }), !s && a.send(at(x, { origin: t }));
+>>>>>>> Stashed changes
     }, "receive"), h;
     try {
       h = r(d, function(w) {
@@ -7102,14 +11077,25 @@ Event: `).concat(JSON.stringify(event)));
     } catch (w) {
       this.send(Qn(e, w));
     }
+<<<<<<< Updated upstream
     if (pu(h))
       return this.spawnPromise(h, e);
     var y = (n = { id: e, send: function(w) {
+=======
+    if (vu(h))
+      return this.spawnPromise(h, t);
+    var y = (n = { id: t, send: function(x) {
+>>>>>>> Stashed changes
       return p.forEach(function(S) {
         return S(w);
       });
+<<<<<<< Updated upstream
     }, subscribe: function(w) {
       var S = Ii(w);
+=======
+    }, subscribe: function(x) {
+      var S = Pi(x);
+>>>>>>> Stashed changes
       return v.add(S.next), { unsubscribe: function() {
         v.delete(S.next);
       } };
@@ -7119,18 +11105,31 @@ Event: `).concat(JSON.stringify(event)));
       return { id: e };
     }, getSnapshot: function() {
       return m;
+<<<<<<< Updated upstream
     } }, n[Nr] = function() {
+=======
+    } }, n[Lr] = function() {
+>>>>>>> Stashed changes
       return this;
     }, n);
     return this.children.set(e, y), y;
   }, t.prototype.spawnObservable = function(r, e) {
     var n, a = this, s, p = r.subscribe(function(m) {
+<<<<<<< Updated upstream
       s = m, a.send(ot(m, { origin: e }));
     }, function(m) {
       a.removeChild(e), a.send(ot(Qn(e, m), { origin: e }));
     }, function() {
       a.removeChild(e), a.send(ot(_i(e), { origin: e }));
     }), v = (n = { id: e, send: function() {
+=======
+      s = m, a.send(at(m, { origin: t }));
+    }, function(m) {
+      a.removeChild(t), a.send(at(ei(t, m), { origin: t }));
+    }, function() {
+      a.removeChild(t), a.send(at(Ri(t), { origin: t }));
+    }), v = (n = { id: t, send: function() {
+>>>>>>> Stashed changes
     }, subscribe: function(m, d, h) {
       return r.subscribe(m, d, h);
     }, stop: function() {
@@ -7138,6 +11137,7 @@ Event: `).concat(JSON.stringify(event)));
     }, getSnapshot: function() {
       return s;
     }, toJSON: function() {
+<<<<<<< Updated upstream
       return { id: e };
     } }, n[Nr] = function() {
       return this;
@@ -7149,6 +11149,19 @@ Event: `).concat(JSON.stringify(event)));
     var e = this.machine.options && this.machine.options.activities ? this.machine.options.activities[r.type] : void 0;
     if (!e) {
       Ge || et(false, "No implementation found for activity '".concat(r.type, "'"));
+=======
+      return { id: t };
+    } }, n[Lr] = function() {
+      return this;
+    }, n);
+    return this.children.set(t, v), v;
+  }, e.prototype.spawnActor = function(r, t) {
+    return this.children.set(t, r), r;
+  }, e.prototype.spawnActivity = function(r) {
+    var t = this.machine.options && this.machine.options.activities ? this.machine.options.activities[r.type] : void 0;
+    if (!t) {
+      Ge || tt(false, "No implementation found for activity '".concat(r.type, "'"));
+>>>>>>> Stashed changes
       return;
     }
     var n = e(this.state.context, r);
@@ -7162,11 +11175,19 @@ Event: `).concat(JSON.stringify(event)));
     }, stop: e || void 0, getSnapshot: function() {
     }, toJSON: function() {
       return { id: r };
+<<<<<<< Updated upstream
     } }, n[Nr] = function() {
       return this;
     }, n));
   }, t.prototype.attachDev = function() {
     var r = Cs();
+=======
+    } }, n[Lr] = function() {
+      return this;
+    }, n));
+  }, e.prototype.attachDev = function() {
+    var r = Ms();
+>>>>>>> Stashed changes
     if (this.options.devTools && r) {
       if (r.__REDUX_DEVTOOLS_EXTENSION__) {
         var e = typeof this.options.devTools == "object" ? this.options.devTools : void 0;
@@ -7174,11 +11195,19 @@ Event: `).concat(JSON.stringify(event)));
           return { value: n.value, context: n.context, actions: n.actions };
         } }, e), { features: V({ jump: false, skip: false }, e ? e.features : void 0) }), this.machine), this.devTools.init(this.state);
       }
+<<<<<<< Updated upstream
       Qd(this);
+=======
+      of(this);
+>>>>>>> Stashed changes
     }
   }, t.prototype.toJSON = function() {
     return { id: this.id };
+<<<<<<< Updated upstream
   }, t.prototype[Nr] = function() {
+=======
+  }, e.prototype[Lr] = function() {
+>>>>>>> Stashed changes
     return this;
   }, t.prototype.getSnapshot = function() {
     return this.status === ft.NotStarted ? this.initialState : this._state;
@@ -7186,6 +11215,7 @@ Event: `).concat(JSON.stringify(event)));
     return setTimeout(r, e);
   }, clearTimeout: function(r) {
     return clearTimeout(r);
+<<<<<<< Updated upstream
   } }, logger: console.log.bind(console), devTools: false }, t.interpret = at, t;
 }();
 function at(t, r) {
@@ -7197,12 +11227,26 @@ c(at, "interpret");
 function hb(t) {
   if (typeof t == "string") {
     var r = { type: t };
+=======
+  } }, logger: console.log.bind(console), devTools: false }, e.interpret = st, e;
+}();
+function st(e, r) {
+  var t = new sf(e, r);
+  return t;
+}
+__name(st, "st");
+c(st, "interpret");
+function Tb(e) {
+  if (typeof e == "string") {
+    var r = { type: e };
+>>>>>>> Stashed changes
     return r.toString = function() {
       return t;
     }, r;
   }
   return t;
 }
+<<<<<<< Updated upstream
 __name(hb, "hb");
 c(hb, "toInvokeSource");
 function Do(t) {
@@ -7238,17 +11282,60 @@ var tf = function() {
       var y, w = new t(d, {}, void 0, { parent: s, key: h });
       return Object.assign(s.idMap, V((y = {}, y[w.id] = w, y), w.idMap)), w;
     }) : ki;
+=======
+__name(Tb, "Tb");
+c(Tb, "toInvokeSource");
+function No(e) {
+  return V(V({ type: Co }, e), { toJSON: function() {
+    e.onDone, e.onError;
+    var r = Oi(e, ["onDone", "onError"]);
+    return V(V({}, r), { type: Co, src: Tb(e.src) });
+  } });
+}
+__name(No, "No");
+c(No, "toInvokeDefinition");
+var Bi = "";
+var Mu = "#";
+var ko = "*";
+var Gi = {};
+var ji = c(function(e) {
+  return e[0] === Mu;
+}, "isStateId");
+var Cb = c(function() {
+  return { actions: {}, guards: {}, services: {}, activities: {}, delays: {} };
+}, "createDefaultOptions");
+var Ob = c(function(e, r, t) {
+  var n = t.slice(0, -1).some(function(s) {
+    return !("cond" in s) && !("in" in s) && (Ce(s.target) || Gr(s.target));
+  }), a = r === Bi ? "the transient event" : "event '".concat(r, "'");
+  tt(!n, "One or more transitions for ".concat(a, " on state '").concat(e.id, "' are unreachable. ") + "Make sure that the default transition is the last one defined.");
+}, "validateArrayifiedTransitions");
+var lf = function() {
+  function e(r, t, n, a) {
+    n === void 0 && (n = "context" in r ? r.context : void 0);
+    var s = this, p;
+    this.config = r, this._context = n, this.order = -1, this.__xstatenode = true, this.__cache = { events: void 0, relativeValue: /* @__PURE__ */ new Map(), initialStateValue: void 0, initialState: void 0, on: void 0, transitions: void 0, candidates: {}, delayedTransitions: void 0 }, this.idMap = {}, this.tags = [], this.options = Object.assign(Cb(), t), this.parent = a == null ? void 0 : a.parent, this.key = this.config.key || (a == null ? void 0 : a.key) || this.config.id || "(machine)", this.machine = this.parent ? this.parent.machine : this, this.path = this.parent ? this.parent.path.concat(this.key) : [], this.delimiter = this.config.delimiter || (this.parent ? this.parent.delimiter : gs), this.id = this.config.id || _e([this.machine.key], Ee(this.path), false).join(this.delimiter), this.version = this.parent ? this.parent.version : this.config.version, this.type = this.config.type || (this.config.parallel ? "parallel" : this.config.states && Object.keys(this.config.states).length ? "compound" : this.config.history ? "history" : "atomic"), this.schema = this.parent ? this.machine.schema : (p = this.config.schema) !== null && p !== void 0 ? p : {}, this.description = this.config.description, Ge || tt(!("parallel" in this.config), 'The "parallel" property is deprecated and will be removed in version 4.1. '.concat(this.config.parallel ? "Replace with `type: 'parallel'`" : "Use `type: '".concat(this.type, "'`"), " in the config for state node '").concat(this.id, "' instead.")), this.initial = this.config.initial, this.states = this.config.states ? Ai(this.config.states, function(d, h) {
+      var y, x = new e(d, {}, void 0, { parent: s, key: h });
+      return Object.assign(s.idMap, V((y = {}, y[x.id] = x, y), x.idMap)), x;
+    }) : Gi;
+>>>>>>> Stashed changes
     var v = 0;
     function m(d) {
       var h, y;
       d.order = v++;
       try {
+<<<<<<< Updated upstream
         for (var w = me(vu(d)), S = w.next(); !S.done; S = w.next()) {
           var C = S.value;
           m(C);
+=======
+        for (var x = ge(wu(d)), S = x.next(); !S.done; S = x.next()) {
+          var T = S.value;
+          m(T);
+>>>>>>> Stashed changes
         }
-      } catch (T) {
-        h = { error: T };
+      } catch (C) {
+        h = { error: C };
       } finally {
         try {
           S && !S.done && (y = w.return) && y.call(w);
@@ -7261,6 +11348,7 @@ var tf = function() {
     __name(m, "m");
     c(m, "dfs"), m(this), this.history = this.config.history === true ? "shallow" : this.config.history || false, this._transient = !!this.config.always || (this.config.on ? Array.isArray(this.config.on) ? this.config.on.some(function(d) {
       var h = d.event;
+<<<<<<< Updated upstream
       return h === Gi;
     }) : Gi in this.config.on : false), this.strict = !!this.config.strict, this.onEntry = lr(this.config.entry || this.config.onEntry).map(function(d) {
       return Pi(d);
@@ -7288,6 +11376,35 @@ var tf = function() {
   __name(t, "t");
   return c(t, "StateNode"), t.prototype._init = function() {
     this.__cache.transitions || gu(this).forEach(function(r) {
+=======
+      return h === Bi;
+    }) : Bi in this.config.on : false), this.strict = !!this.config.strict, this.onEntry = lr(this.config.entry || this.config.onEntry).map(function(d) {
+      return zi(d);
+    }), this.onExit = lr(this.config.exit || this.config.onExit).map(function(d) {
+      return zi(d);
+    }), this.meta = this.config.meta, this.doneData = this.type === "final" ? this.config.data : void 0, this.invoke = lr(this.config.invoke).map(function(d, h) {
+      var y, x;
+      if (Gr(d)) {
+        var S = _o(s.id, h);
+        return s.machine.options.services = V((y = {}, y[S] = d, y), s.machine.options.services), No({ src: S, id: S });
+      } else if (Ce(d.src)) {
+        var S = d.id || _o(s.id, h);
+        return No(V(V({}, d), { id: S, src: d.src }));
+      } else if (Gr(d.src) || Re(d.src)) {
+        var S = d.id || _o(s.id, h);
+        return s.machine.options.services = V((x = {}, x[S] = d.src, x), s.machine.options.services), No(V(V({ id: S }, d), { src: S }));
+      } else {
+        var T = d.src;
+        return No(V(V({ id: _o(s.id, h) }, d), { src: T }));
+      }
+    }), this.activities = lr(this.config.activities).concat(this.invoke).map(function(d) {
+      return Os(d);
+    }), this.transition = this.transition.bind(this), this.tags = lr(this.config.tags);
+  }
+  __name(e, "e");
+  return c(e, "StateNode"), e.prototype._init = function() {
+    this.__cache.transitions || Eu(this).forEach(function(r) {
+>>>>>>> Stashed changes
       return r.on;
     });
   }, t.prototype.withConfig = function(r, e) {
@@ -7297,8 +11414,13 @@ var tf = function() {
     return new t(this.config, this.options, r);
   }, Object.defineProperty(t.prototype, "context", { get: function() {
     return Re(this._context) ? this._context() : this._context;
+<<<<<<< Updated upstream
   }, enumerable: false, configurable: true }), Object.defineProperty(t.prototype, "definition", { get: function() {
     return { id: this.id, key: this.key, version: this.version, context: this.context, type: this.type, initial: this.initial, history: this.history, states: Mi(this.states, function(r) {
+=======
+  }, enumerable: false, configurable: true }), Object.defineProperty(e.prototype, "definition", { get: function() {
+    return { id: this.id, key: this.key, version: this.version, context: this.context, type: this.type, initial: this.initial, history: this.history, states: Ai(this.states, function(r) {
+>>>>>>> Stashed changes
       return r.definition;
     }), on: this.on, transitions: this.transitions, entry: this.onEntry, exit: this.onExit, activities: this.activities || [], meta: this.meta, order: this.order || -1, data: this.doneData, invoke: this.invoke, description: this.description, tags: this.tags };
   }, enumerable: false, configurable: true }), t.prototype.toJSON = function() {
@@ -7317,9 +11439,15 @@ var tf = function() {
   }, enumerable: false, configurable: true }), t.prototype.getCandidates = function(r) {
     if (this.__cache.candidates[r])
       return this.__cache.candidates[r];
+<<<<<<< Updated upstream
     var e = r === Gi, n = this.transitions.filter(function(a) {
       var s = a.eventType === r;
       return e ? s : s || a.eventType === No;
+=======
+    var t = r === Bi, n = this.transitions.filter(function(a) {
+      var s = a.eventType === r;
+      return t ? s : s || a.eventType === ko;
+>>>>>>> Stashed changes
     });
     return this.__cache.candidates[r] = n, n;
   }, t.prototype.getDelayedTransitions = function() {
@@ -7327,9 +11455,15 @@ var tf = function() {
     if (!e)
       return [];
     var n = c(function(s, p) {
+<<<<<<< Updated upstream
       var v = Re(s) ? "".concat(r.id, ":delay[").concat(p, "]") : s, m = Bd(v, r.id);
       return r.onEntry.push(fu(m, { delay: s })), r.onExit.push(Ld(m)), m;
     }, "mutateEntryExit"), a = tn(e) ? e.map(function(s, p) {
+=======
+      var v = Re(s) ? "".concat(r.id, ":delay[").concat(p, "]") : s, m = Wd(v, r.id);
+      return r.onEntry.push(bu(m, { delay: s })), r.onExit.push(qd(m)), m;
+    }, "mutateEntryExit"), a = rn(t) ? t.map(function(s, p) {
+>>>>>>> Stashed changes
       var v = n(s.delay, p);
       return V(V({}, s), { event: v });
     }) : $e(Object.keys(e).map(function(s, p) {
@@ -7346,15 +11480,20 @@ var tf = function() {
     var e, n = this;
     if (!r)
       return [];
+<<<<<<< Updated upstream
     var a = r instanceof gr ? r.value : Oi(r, this.delimiter);
+=======
+    var a = r instanceof gr ? r.value : Ii(r, this.delimiter);
+>>>>>>> Stashed changes
     if (Ce(a)) {
       var s = this.getStateNode(a).initial;
       return s !== void 0 ? this.getStateNodes((e = {}, e[a] = s, e)) : [this, this.states[a]];
     }
     var p = Object.keys(a), v = [this];
-    return v.push.apply(v, _e([], ye($e(p.map(function(m) {
+    return v.push.apply(v, _e([], Ee($e(p.map(function(m) {
       return n.getStateNode(m).getStateNodes(a[m]);
     }))), false)), v;
+<<<<<<< Updated upstream
   }, t.prototype.handles = function(r) {
     var e = gs(r);
     return this.events.includes(e);
@@ -7368,9 +11507,24 @@ var tf = function() {
     var a = Object.keys(r), s = this.getStateNode(a[0]), p = s._transition(r[a[0]], e, n);
     return !p || !p.transitions.length ? this.next(e, n) : p;
   }, t.prototype.transitionParallelNode = function(r, e, n) {
+=======
+  }, e.prototype.handles = function(r) {
+    var t = xs(r);
+    return this.events.includes(t);
+  }, e.prototype.resolveState = function(r) {
+    var t = r instanceof gr ? r : gr.create(r), n = Array.from(Ni([], this.getStateNodes(t.value)));
+    return new gr(V(V({}, t), { value: this.resolve(t.value), configuration: n, done: Do(n, this), tags: Su(n), machine: this.machine }));
+  }, e.prototype.transitionLeafNode = function(r, t, n) {
+    var a = this.getStateNode(r), s = a.next(t, n);
+    return !s || !s.transitions.length ? this.next(t, n) : s;
+  }, e.prototype.transitionCompoundNode = function(r, t, n) {
+    var a = Object.keys(r), s = this.getStateNode(a[0]), p = s._transition(r[a[0]], t, n);
+    return !p || !p.transitions.length ? this.next(t, n) : p;
+  }, e.prototype.transitionParallelNode = function(r, t, n) {
+>>>>>>> Stashed changes
     var a, s, p = {};
     try {
-      for (var v = me(Object.keys(r)), m = v.next(); !m.done; m = v.next()) {
+      for (var v = ge(Object.keys(r)), m = v.next(); !m.done; m = v.next()) {
         var d = m.value, h = r[d];
         if (h) {
           var y = this.getStateNode(d), w = y._transition(h, e, n);
@@ -7389,21 +11543,27 @@ var tf = function() {
     }
     var S = Object.keys(p).map(function(N) {
       return p[N];
-    }), C = $e(S.map(function(N) {
+    }), T = $e(S.map(function(N) {
       return N.transitions;
-    })), T = S.some(function(N) {
+    })), C = S.some(function(N) {
       return N.transitions.length > 0;
     });
+<<<<<<< Updated upstream
     if (!T)
       return this.next(e, n);
+=======
+    if (!C)
+      return this.next(t, n);
+>>>>>>> Stashed changes
     var _ = $e(Object.keys(p).map(function(N) {
       return p[N].configuration;
     }));
-    return { transitions: C, exitSet: $e(S.map(function(N) {
+    return { transitions: T, exitSet: $e(S.map(function(N) {
       return N.exitSet;
     })), configuration: _, source: e, actions: $e(Object.keys(p).map(function(N) {
       return p[N].actions;
     })) };
+<<<<<<< Updated upstream
   }, t.prototype._transition = function(r, e, n) {
     return Ce(r) ? this.transitionLeafNode(r, e, n) : Object.keys(r).length === 1 ? this.transitionCompoundNode(r, e, n) : this.transitionParallelNode(r, e, n);
   }, t.prototype.getTransitionData = function(r, e) {
@@ -7415,12 +11575,29 @@ var tf = function() {
         var w = y.value, S = w.cond, C = w.in, T = r.context, _ = C ? Ce(C) && Li(C) ? r.matches(Oi(this.getStateNodeById(C).path, this.delimiter)) : Mo(Oi(C, this.delimiter), Cd(this.path.slice(0, -2))(r.value)) : true, N = false;
         try {
           N = !S || ws(this.machine, S, T, e, r);
+=======
+  }, e.prototype._transition = function(r, t, n) {
+    return Ce(r) ? this.transitionLeafNode(r, t, n) : Object.keys(r).length === 1 ? this.transitionCompoundNode(r, t, n) : this.transitionParallelNode(r, t, n);
+  }, e.prototype.getTransitionData = function(r, t) {
+    return this._transition(r.value, r, at(t));
+  }, e.prototype.next = function(r, t) {
+    var n, a, s = this, p = t.name, v = [], m = [], d;
+    try {
+      for (var h = ge(this.getCandidates(p)), y = h.next(); !y.done; y = h.next()) {
+        var x = y.value, S = x.cond, T = x.in, C = r.context, _ = T ? Ce(T) && ji(T) ? r.matches(Ii(this.getStateNodeById(T).path, this.delimiter)) : Io(Ii(T, this.delimiter), Pd(this.path.slice(0, -2))(r.value)) : true, N = false;
+        try {
+          N = !S || Ss(this.machine, S, C, t, r);
+>>>>>>> Stashed changes
         } catch (A) {
           throw new Error("Unable to evaluate guard '".concat(S.name || S.type, "' in transition for event '").concat(p, "' in state node '").concat(this.id, `':
 `).concat(A.message));
         }
         if (N && _) {
+<<<<<<< Updated upstream
           w.target !== void 0 && (m = w.target), v.push.apply(v, _e([], ye(w.actions), false)), d = w;
+=======
+          x.target !== void 0 && (m = x.target), v.push.apply(v, _e([], Ee(x.actions), false)), d = x;
+>>>>>>> Stashed changes
           break;
         }
       }
@@ -7447,32 +11624,48 @@ var tf = function() {
   }, t.prototype.getPotentiallyReenteringNodes = function(r) {
     if (this.order < r.order)
       return [this];
+<<<<<<< Updated upstream
     for (var e = [], n = this, a = r; n && n !== a; )
       e.push(n), n = n.parent;
     return n !== a ? [] : (e.push(a), e);
   }, t.prototype.getActions = function(r, e, n, a, s, p, v) {
     var m, d, h, y, w = this, S = p ? Ri([], this.getStateNodes(p.value)) : [], C = /* @__PURE__ */ new Set();
+=======
+    for (var t = [], n = this, a = r; n && n !== a; )
+      t.push(n), n = n.parent;
+    return n !== a ? [] : (t.push(a), t);
+  }, e.prototype.getActions = function(r, t, n, a, s, p, v) {
+    var m, d, h, y, x = this, S = p ? Ni([], this.getStateNodes(p.value)) : [], T = /* @__PURE__ */ new Set();
+>>>>>>> Stashed changes
     try {
-      for (var T = me(Array.from(r).sort(function(Y, ie) {
+      for (var C = ge(Array.from(r).sort(function(Y, ie) {
         return Y.order - ie.order;
-      })), _ = T.next(); !_.done; _ = T.next()) {
+      })), _ = C.next(); !_.done; _ = C.next()) {
         var N = _.value;
+<<<<<<< Updated upstream
         (!Di(S, N) || Di(n.exitSet, N) || N.parent && C.has(N.parent)) && C.add(N);
+=======
+        (!ki(S, N) || ki(n.exitSet, N) || N.parent && T.has(N.parent)) && T.add(N);
+>>>>>>> Stashed changes
       }
     } catch (Y) {
       m = { error: Y };
     } finally {
       try {
-        _ && !_.done && (d = T.return) && d.call(T);
+        _ && !_.done && (d = C.return) && d.call(C);
       } finally {
         if (m)
           throw m.error;
       }
     }
     try {
-      for (var j = me(S), $ = j.next(); !$.done; $ = j.next()) {
+      for (var j = ge(S), $ = j.next(); !$.done; $ = j.next()) {
         var N = $.value;
+<<<<<<< Updated upstream
         (!Di(r, N) || Di(n.exitSet, N.parent)) && n.exitSet.push(N);
+=======
+        (!ki(r, N) || ki(n.exitSet, N.parent)) && n.exitSet.push(N);
+>>>>>>> Stashed changes
       }
     } catch (Y) {
       h = { error: Y };
@@ -7487,7 +11680,7 @@ var tf = function() {
     n.exitSet.sort(function(Y, ie) {
       return ie.order - Y.order;
     });
-    var A = Array.from(C).sort(function(Y, ie) {
+    var A = Array.from(T).sort(function(Y, ie) {
       return Y.order - ie.order;
     }), ee = new Set(n.exitSet), z = $e(A.map(function(Y) {
       var ie = [];
@@ -7496,6 +11689,7 @@ var tf = function() {
       var W = Y.parent;
       if (!W.parent)
         return ie;
+<<<<<<< Updated upstream
       ie.push(_o(Y.id, Y.doneData), _o(W.id, Y.doneData ? Zn(Y.doneData, a, s) : void 0));
       var ue = W.parent;
       return ue.type === "parallel" && zi(ue).every(function(Ue) {
@@ -7513,17 +11707,37 @@ var tf = function() {
     }), te = J.concat({ type: "transition", actions: Lr(n.actions, this.machine.options.actions) }).concat(B);
     if (e) {
       var le = Lr($e(_e([], ye(r), false).sort(function(Y, ie) {
+=======
+      ie.push(zo(Y.id, Y.doneData), zo(W.id, Y.doneData ? Qn(Y.doneData, a, s) : void 0));
+      var ue = W.parent;
+      return ue.type === "parallel" && Di(ue).every(function(Ue) {
+        return Do(n.configuration, Ue);
+      }) && ie.push(zo(ue.id)), ie;
+    })), B = A.map(function(Y) {
+      var ie = Y.onEntry, W = Y.activities.map(function(ue) {
+        return Fd(ue);
+      });
+      return { type: "entry", actions: jr(v ? _e(_e([], Ee(ie), false), Ee(W), false) : _e(_e([], Ee(W), false), Ee(ie), false), x.machine.options.actions) };
+    }).concat({ type: "state_done", actions: z.map($d) }), J = Array.from(ee).map(function(Y) {
+      return { type: "exit", actions: jr(_e(_e([], Ee(Y.onExit), false), Ee(Y.activities.map(function(ie) {
+        return Ud(ie);
+      })), false), x.machine.options.actions) };
+    }), te = J.concat({ type: "transition", actions: jr(n.actions, this.machine.options.actions) }).concat(B);
+    if (t) {
+      var le = jr($e(_e([], Ee(r), false).sort(function(Y, ie) {
+>>>>>>> Stashed changes
         return ie.order - Y.order;
       }).map(function(Y) {
         return Y.onExit;
       })), this.machine.options.actions).filter(function(Y) {
-        return Y.type !== Jr && (Y.type !== en || !!Y.to && Y.to !== Or.Internal);
+        return Y.type !== en && (Y.type !== tn || !!Y.to && Y.to !== Or.Internal);
       });
       return te.concat({ type: "stop", actions: le });
     }
     return te;
   }, t.prototype.transition = function(r, e, n, a) {
     r === void 0 && (r = this.initialState);
+<<<<<<< Updated upstream
     var s = ot(e), p;
     if (r instanceof gr)
       p = n === void 0 ? r : this.resolveState(gr.from(r, n));
@@ -7544,13 +11758,39 @@ var tf = function() {
     var p, v, m, d, h = this;
     s === void 0 && (s = rn);
     var y = r.configuration, w = !e || r.transitions.length > 0, S = w ? r.configuration : e ? e.configuration : [], C = Ro(S, this), T = w ? Vd(this.machine, y) : void 0, _ = e ? e.historyValue ? e.historyValue : r.source ? this.machine.historyValue(e.value) : void 0 : void 0, N = this.getActions(new Set(S), C, r, n, s, e, a), j = e ? V({}, e.activities) : {};
+=======
+    var s = at(t), p;
+    if (r instanceof gr)
+      p = n === void 0 ? r : this.resolveState(gr.from(r, n));
+    else {
+      var v = Ce(r) ? this.resolve(Mo(this.getResolvedPath(r))) : this.resolve(r), m = n != null ? n : this.machine.context;
+      p = this.resolveState(gr.from(v, m));
+    }
+    if (!Ge && s.name === ko)
+      throw new Error("An event cannot have the wildcard type ('".concat(ko, "')"));
+    if (this.strict && !this.events.includes(s.name) && !Rd(s.name))
+      throw new Error("Machine '".concat(this.id, "' does not accept event '").concat(s.name, "'"));
+    var d = this._transition(p.value, p, s) || { transitions: [], configuration: [], exitSet: [], source: p, actions: [] }, h = Ni([], this.getStateNodes(p.value)), y = d.configuration.length ? Ni(h, d.configuration) : h;
+    return d.configuration = _e([], Ee(y), false), this.resolveTransition(d, p, p.context, a, s);
+  }, e.prototype.resolveRaisedTransition = function(r, t, n, a) {
+    var s, p = r.actions;
+    return r = this.transition(r, t, void 0, a), r._event = n, r.event = n.data, (s = r.actions).unshift.apply(s, _e([], Ee(p), false)), r;
+  }, e.prototype.resolveTransition = function(r, t, n, a, s) {
+    var p, v, m, d, h = this;
+    s === void 0 && (s = nn);
+    var y = r.configuration, x = !t || r.transitions.length > 0, S = x ? r.configuration : t ? t.configuration : [], T = Do(S, this), C = x ? Jd(this.machine, y) : void 0, _ = t ? t.historyValue ? t.historyValue : r.source ? this.machine.historyValue(t.value) : void 0 : void 0, N = this.getActions(new Set(S), T, r, n, s, t, a), j = t ? V({}, t.activities) : {};
+>>>>>>> Stashed changes
     try {
-      for (var $ = me(N), A = $.next(); !A.done; A = $.next()) {
+      for (var $ = ge(N), A = $.next(); !A.done; A = $.next()) {
         var ee = A.value;
         try {
-          for (var z = (m = void 0, me(ee.actions)), B = z.next(); !B.done; B = z.next()) {
+          for (var z = (m = void 0, ge(ee.actions)), B = z.next(); !B.done; B = z.next()) {
             var J = B.value;
+<<<<<<< Updated upstream
             J.type === So ? j[J.activity.id || J.activity.type] = J : J.type === Ti && (j[J.activity.id || J.activity.type] = false);
+=======
+            J.type === To ? j[J.activity.id || J.activity.type] = J : J.type === Mi && (j[J.activity.id || J.activity.type] = false);
+>>>>>>> Stashed changes
           }
         } catch (Ie) {
           m = { error: Ie };
@@ -7573,6 +11813,7 @@ var tf = function() {
           throw p.error;
       }
     }
+<<<<<<< Updated upstream
     var te = ye(Ai(this, e, n, s, N, a, this.machine.config.predictableActionArguments || this.machine.config.preserveActionOrder), 2), le = te[0], Y = te[1], ie = ye(Ad(le, function(Ie) {
       return Ie.type === Jr || Ie.type === en && Ie.to === Or.Internal;
     }), 2), W = ie[0], ue = ie[1], Ue = le.filter(function(Ie) {
@@ -7599,29 +11840,74 @@ var tf = function() {
     return Ve.changed = ir, Ve.history = it, Ve;
   }, t.prototype.getStateNode = function(r) {
     if (Li(r))
+=======
+    var te = Ee(_i(this, t, n, s, N, a, this.machine.config.predictableActionArguments || this.machine.config.preserveActionOrder), 2), le = te[0], Y = te[1], ie = Ee(Nd(le, function(Ie) {
+      return Ie.type === en || Ie.type === tn && Ie.to === Or.Internal;
+    }), 2), W = ie[0], ue = ie[1], Ue = le.filter(function(Ie) {
+      var et;
+      return Ie.type === To && ((et = Ie.activity) === null || et === void 0 ? void 0 : et.type) === Co;
+    }), qe = Ue.reduce(function(Ie, et) {
+      return Ie[et.activity.id] = Xd(et.activity, h.machine, Y, s), Ie;
+    }, t ? V({}, t.children) : {}), ke = new gr({ value: C || t.value, context: Y, _event: s, _sessionid: t ? t._sessionid : null, historyValue: C ? _ ? Ld(_, C) : void 0 : t ? t.historyValue : void 0, history: !C || r.source ? t : void 0, actions: C ? ue : [], activities: C ? j : t ? t.activities : {}, events: [], configuration: S, transitions: r.transitions, children: qe, done: T, tags: Su(S), machine: this }), je = n !== Y;
+    ke.changed = s.name === Oo || je;
+    var ot = ke.history;
+    ot && delete ot.history;
+    var Ke = !T && (this._transient || y.some(function(Ie) {
+      return Ie._transient;
+    }));
+    if (!x && (!Ke || s.name === Bi))
+      return ke;
+    var Ve = ke;
+    if (!T)
+      for (Ke && (Ve = this.resolveRaisedTransition(Ve, { type: Cd }, s, a)); W.length; ) {
+        var Q = W.shift();
+        Ve = this.resolveRaisedTransition(Ve, Q._event, s, a);
+      }
+    var ir = Ve.changed || (ot ? !!Ve.actions.length || je || typeof ot.value != typeof Ve.value || !Tu(Ve.value, ot.value) : void 0);
+    return Ve.changed = ir, Ve.history = ot, Ve;
+  }, e.prototype.getStateNode = function(r) {
+    if (ji(r))
+>>>>>>> Stashed changes
       return this.machine.getStateNodeById(r);
     if (!this.states)
       throw new Error("Unable to retrieve child state '".concat(r, "' from '").concat(this.id, "'; no child states exist."));
     var e = this.states[r];
     if (!e)
       throw new Error("Child state '".concat(r, "' does not exist on '").concat(this.id, "'"));
+<<<<<<< Updated upstream
     return e;
   }, t.prototype.getStateNodeById = function(r) {
     var e = Li(r) ? r.slice(Eu.length) : r;
     if (e === this.id)
+=======
+    return t;
+  }, e.prototype.getStateNodeById = function(r) {
+    var t = ji(r) ? r.slice(Mu.length) : r;
+    if (t === this.id)
+>>>>>>> Stashed changes
       return this;
     var n = this.machine.idMap[e];
     if (!n)
       throw new Error("Child state node '#".concat(e, "' does not exist on machine '").concat(this.id, "'"));
     return n;
+<<<<<<< Updated upstream
   }, t.prototype.getStateNodeByPath = function(r) {
     if (typeof r == "string" && Li(r))
+=======
+  }, e.prototype.getStateNodeByPath = function(r) {
+    if (typeof r == "string" && ji(r))
+>>>>>>> Stashed changes
       try {
         return this.getStateNodeById(r.slice(1));
       } catch (s) {
       }
+<<<<<<< Updated upstream
     for (var e = bs(r, this.delimiter).slice(), n = this; e.length; ) {
       var a = e.shift();
+=======
+    for (var t = ws(r, this.delimiter).slice(), n = this; t.length; ) {
+      var a = t.shift();
+>>>>>>> Stashed changes
       if (!a.length)
         break;
       n = n.getStateNode(a);
@@ -7630,17 +11916,26 @@ var tf = function() {
   }, t.prototype.resolve = function(r) {
     var e, n = this;
     if (!r)
+<<<<<<< Updated upstream
       return this.initialStateValue || ki;
     switch (this.type) {
       case "parallel":
         return Mi(this.initialStateValue, function(s, p) {
           return s ? n.getStateNode(p).resolve(r[p] || s) : ki;
+=======
+      return this.initialStateValue || Gi;
+    switch (this.type) {
+      case "parallel":
+        return Ai(this.initialStateValue, function(s, p) {
+          return s ? n.getStateNode(p).resolve(r[p] || s) : Gi;
+>>>>>>> Stashed changes
         });
       case "compound":
         if (Ce(r)) {
           var a = this.getStateNode(r);
           return a.type === "parallel" || a.type === "compound" ? (e = {}, e[r] = a.initialStateValue, e) : r;
         }
+<<<<<<< Updated upstream
         return Object.keys(r).length ? Mi(r, function(s, p) {
           return s ? n.getStateNode(p).resolve(s) : ki;
         }) : this.initialStateValue || {};
@@ -7651,25 +11946,51 @@ var tf = function() {
     if (Li(r)) {
       var e = this.machine.idMap[r.slice(Eu.length)];
       if (!e)
+=======
+        return Object.keys(r).length ? Ai(r, function(s, p) {
+          return s ? n.getStateNode(p).resolve(s) : Gi;
+        }) : this.initialStateValue || {};
+      default:
+        return r || Gi;
+    }
+  }, e.prototype.getResolvedPath = function(r) {
+    if (ji(r)) {
+      var t = this.machine.idMap[r.slice(Mu.length)];
+      if (!t)
+>>>>>>> Stashed changes
         throw new Error("Unable to find state node '".concat(r, "'"));
       return e.path;
     }
+<<<<<<< Updated upstream
     return bs(r, this.delimiter);
   }, Object.defineProperty(t.prototype, "initialStateValue", { get: function() {
+=======
+    return ws(r, this.delimiter);
+  }, Object.defineProperty(e.prototype, "initialStateValue", { get: function() {
+>>>>>>> Stashed changes
     var r;
     if (this.__cache.initialStateValue)
       return this.__cache.initialStateValue;
     var e;
     if (this.type === "parallel")
+<<<<<<< Updated upstream
       e = cu(this.states, function(n) {
         return n.initialStateValue || ki;
+=======
+      t = mu(this.states, function(n) {
+        return n.initialStateValue || Gi;
+>>>>>>> Stashed changes
       }, function(n) {
         return n.type !== "history";
       });
     else if (this.initial !== void 0) {
       if (!this.states[this.initial])
         throw new Error("Initial state '".concat(this.initial, "' not found on '").concat(this.key, "'"));
+<<<<<<< Updated upstream
       e = zo(this.states[this.initial]) ? this.initial : (r = {}, r[this.initial] = this.states[this.initial].initialStateValue, r);
+=======
+      t = Ro(this.states[this.initial]) ? this.initial : (r = {}, r[this.initial] = this.states[this.initial].initialStateValue, r);
+>>>>>>> Stashed changes
     } else
       e = {};
     return this.__cache.initialStateValue = e, this.__cache.initialStateValue;
@@ -7685,26 +12006,44 @@ var tf = function() {
   }, enumerable: false, configurable: true }), Object.defineProperty(t.prototype, "target", { get: function() {
     var r;
     if (this.type === "history") {
+<<<<<<< Updated upstream
       var e = this.config;
       Ce(e.target) ? r = Li(e.target) ? Oo(this.machine.getStateNodeById(e.target).path.slice(this.path.length - 1)) : e.target : r = e.target;
+=======
+      var t = this.config;
+      Ce(t.target) ? r = ji(t.target) ? Mo(this.machine.getStateNodeById(t.target).path.slice(this.path.length - 1)) : t.target : r = t.target;
+>>>>>>> Stashed changes
     }
     return r;
   }, enumerable: false, configurable: true }), t.prototype.getRelativeStateNodes = function(r, e, n) {
     return n === void 0 && (n = true), n ? r.type === "history" ? r.resolveHistory(e) : r.initialStateNodes : [r];
   }, Object.defineProperty(t.prototype, "initialStateNodes", { get: function() {
     var r = this;
+<<<<<<< Updated upstream
     if (zo(this))
       return [this];
     if (this.type === "compound" && !this.initial)
       return Ge || et(false, "Compound state node '".concat(this.id, "' has no initial state.")), [this];
     var e = Io(this.initialStateValue);
     return $e(e.map(function(n) {
+=======
+    if (Ro(this))
+      return [this];
+    if (this.type === "compound" && !this.initial)
+      return Ge || tt(false, "Compound state node '".concat(this.id, "' has no initial state.")), [this];
+    var t = Ao(this.initialStateValue);
+    return $e(t.map(function(n) {
+>>>>>>> Stashed changes
       return r.getFromRelativePath(n);
     }));
   }, enumerable: false, configurable: true }), t.prototype.getFromRelativePath = function(r) {
     if (!r.length)
       return [this];
+<<<<<<< Updated upstream
     var e = ye(r), n = e[0], a = e.slice(1);
+=======
+    var t = Ee(r), n = t[0], a = t.slice(1);
+>>>>>>> Stashed changes
     if (!this.states)
       throw new Error("Cannot retrieve subPath '".concat(n, "' from node with no states"));
     var s = this.getStateNode(n);
@@ -7715,7 +12054,11 @@ var tf = function() {
     return this.states[n].getFromRelativePath(a);
   }, t.prototype.historyValue = function(r) {
     if (Object.keys(this.states).length)
+<<<<<<< Updated upstream
       return { current: r || this.initialStateValue, states: cu(this.states, function(e, n) {
+=======
+      return { current: r || this.initialStateValue, states: mu(this.states, function(t, n) {
+>>>>>>> Stashed changes
         if (!r)
           return e.historyValue();
         var a = Ce(r) ? void 0 : r[n];
@@ -7730,6 +12073,7 @@ var tf = function() {
     var n = this.parent;
     if (!r) {
       var a = this.target;
+<<<<<<< Updated upstream
       return a ? $e(Io(a).map(function(p) {
         return n.getFromRelativePath(p);
       })) : n.initialStateNodes;
@@ -7737,6 +12081,15 @@ var tf = function() {
     var s = Td(n.path, "states")(r).current;
     return Ce(s) ? [n.getStateNode(s)] : $e(Io(s).map(function(p) {
       return e.history === "deep" ? n.getFromRelativePath(p) : [n.states[p[0]]];
+=======
+      return a ? $e(Ao(a).map(function(p) {
+        return n.getFromRelativePath(p);
+      })) : n.initialStateNodes;
+    }
+    var s = _d(n.path, "states")(r).current;
+    return Ce(s) ? [n.getStateNode(s)] : $e(Ao(s).map(function(p) {
+      return t.history === "deep" ? n.getFromRelativePath(p) : [n.states[p[0]]];
+>>>>>>> Stashed changes
     }));
   }, Object.defineProperty(t.prototype, "stateIds", { get: function() {
     var r = this, e = $e(Object.keys(this.states).map(function(n) {
@@ -7750,16 +12103,21 @@ var tf = function() {
     var s = this.states, p = new Set(this.ownEvents);
     if (s)
       try {
-        for (var v = me(Object.keys(s)), m = v.next(); !m.done; m = v.next()) {
+        for (var v = ge(Object.keys(s)), m = v.next(); !m.done; m = v.next()) {
           var d = m.value, h = s[d];
           if (h.states)
             try {
+<<<<<<< Updated upstream
               for (var y = (n = void 0, me(h.events)), w = y.next(); !w.done; w = y.next()) {
                 var S = w.value;
+=======
+              for (var y = (n = void 0, ge(h.events)), x = y.next(); !x.done; x = y.next()) {
+                var S = x.value;
+>>>>>>> Stashed changes
                 p.add("".concat(S));
               }
-            } catch (C) {
-              n = { error: C };
+            } catch (T) {
+              n = { error: T };
             } finally {
               try {
                 w && !w.done && (a = y.return) && a.call(y);
@@ -7769,8 +12127,8 @@ var tf = function() {
               }
             }
         }
-      } catch (C) {
-        r = { error: C };
+      } catch (T) {
+        r = { error: T };
       } finally {
         try {
           m && !m.done && (e = v.return) && e.call(v);
@@ -7808,10 +12166,17 @@ var tf = function() {
         else
           return e.getStateNodeByPath(s);
       });
+<<<<<<< Updated upstream
   }, t.prototype.formatTransition = function(r) {
     var e = this, n = Dd(r.target), a = "internal" in r ? r.internal : n ? n.some(function(m) {
       return Ce(m) && m[0] === e.delimiter;
     }) : true, s = this.machine.options.guards, p = this.resolveTarget(n), v = V(V({}, r), { actions: Lr(lr(r.actions)), cond: ys(r.cond, s), target: p, source: this, internal: a, eventType: r.event, toJSON: function() {
+=======
+  }, e.prototype.formatTransition = function(r) {
+    var t = this, n = Bd(r.target), a = "internal" in r ? r.internal : n ? n.some(function(m) {
+      return Ce(m) && m[0] === t.delimiter;
+    }) : true, s = this.machine.options.guards, p = this.resolveTarget(n), v = V(V({}, r), { actions: jr(lr(r.actions)), cond: Es(r.cond, s), target: p, source: this, internal: a, eventType: r.event, toJSON: function() {
+>>>>>>> Stashed changes
       return V(V({}, v), { target: v.target ? v.target.map(function(m) {
         return "#".concat(m.id);
       }) : void 0, source: "#".concat(e.id) });
@@ -7824,6 +12189,7 @@ var tf = function() {
     else if (Array.isArray(this.config.on))
       a = this.config.on;
     else {
+<<<<<<< Updated upstream
       var s = this.config.on, p = No, v = s[p], m = v === void 0 ? [] : v, d = Ci(s, [typeof p == "symbol" ? p : p + ""]);
       a = $e(Object.keys(d).map(function(j) {
         !Ge && j === Gi && et(false, "Empty string transition configs (e.g., `{ on: { '': ... }}`) for transient transitions are deprecated. Specify the transition in the `{ always: ... }` property instead. " + 'Please check the `on` configuration for "#'.concat(n.id, '".'));
@@ -7837,25 +12203,45 @@ var tf = function() {
       var $ = [];
       return j.onDone && $.push.apply($, _e([], ye(Kn(String(_i(j.id)), j.onDone)), false)), j.onError && $.push.apply($, _e([], ye(Kn(String(Qn(j.id)), j.onError)), false)), $;
     })), S = this.after, C = $e(_e(_e(_e(_e([], ye(y), false), ye(w), false), ye(a), false), ye(h), false).map(function(j) {
+=======
+      var s = this.config.on, p = ko, v = s[p], m = v === void 0 ? [] : v, d = Oi(s, [typeof p == "symbol" ? p : p + ""]);
+      a = $e(Object.keys(d).map(function(j) {
+        !Ge && j === Bi && tt(false, "Empty string transition configs (e.g., `{ on: { '': ... }}`) for transient transitions are deprecated. Specify the transition in the `{ always: ... }` property instead. " + 'Please check the `on` configuration for "#'.concat(n.id, '".'));
+        var $ = Jn(j, d[j]);
+        return Ge || Ob(n, j, $), $;
+      }).concat(Jn(ko, m)));
+    }
+    var h = this.config.always ? Jn("", this.config.always) : [], y = this.config.onDone ? Jn(String(zo(this.id)), this.config.onDone) : [];
+    Ge || tt(!(this.config.onDone && !this.parent), 'Root nodes cannot have an ".onDone" transition. Please check the config of "'.concat(this.id, '".'));
+    var x = $e(this.invoke.map(function(j) {
+      var $ = [];
+      return j.onDone && $.push.apply($, _e([], Ee(Jn(String(Ri(j.id)), j.onDone)), false)), j.onError && $.push.apply($, _e([], Ee(Jn(String(ei(j.id)), j.onError)), false)), $;
+    })), S = this.after, T = $e(_e(_e(_e(_e([], Ee(y), false), Ee(x), false), Ee(a), false), Ee(h), false).map(function(j) {
+>>>>>>> Stashed changes
       return lr(j).map(function($) {
         return n.formatTransition($);
       });
     }));
     try {
-      for (var T = me(S), _ = T.next(); !_.done; _ = T.next()) {
+      for (var C = ge(S), _ = C.next(); !_.done; _ = C.next()) {
         var N = _.value;
-        C.push(N);
+        T.push(N);
       }
     } catch (j) {
       r = { error: j };
     } finally {
       try {
+<<<<<<< Updated upstream
         _ && !_.done && (e = T.return) && e.call(T);
+=======
+        _ && !_.done && (t = C.return) && t.call(C);
+>>>>>>> Stashed changes
       } finally {
         if (r)
           throw r.error;
       }
     }
+<<<<<<< Updated upstream
     return C;
   }, t;
 }();
@@ -7872,6 +12258,24 @@ var Ts = c((t) => t != null && t.tagName === "CIRCUIT-DROPZONE", "isCircuitDropz
 var Cu = c((t) => t != null && t.tagName === "PALETTE-DROPZONE", "isPaletteDropzoneElement");
 function we(t) {
   class r extends t {
+=======
+    return T;
+  }, e;
+}();
+var uf = false;
+function ht(e, r) {
+  return !Ge && !("predictableActionArguments" in e) && !uf && (uf = true, console.warn("It is highly recommended to set `predictableActionArguments` to `true` when using `createMachine`. https://xstate.js.org/docs/guides/actions.html")), new lf(e, r);
+}
+__name(ht, "ht");
+c(ht, "createMachine");
+var pf = zt(kr(), 1);
+var Go = zt(Lo(), 1);
+var As = c((e) => e != null && typeof e.draggable == "boolean", "isDraggable");
+var Is = c((e) => e != null && e.tagName === "CIRCUIT-DROPZONE", "isCircuitDropzoneElement");
+var Au = c((e) => e != null && e.tagName === "PALETTE-DROPZONE", "isPaletteDropzoneElement");
+function be(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     constructor() {
       super(...arguments);
       this.operationX = 0;
@@ -7885,12 +12289,21 @@ function we(t) {
         pe("draggable:init", {}, this);
       }, setInteract: (a, s) => {
         H.need(s.type === "SET_INTERACT", "event type must be SET_INTERACT");
+<<<<<<< Updated upstream
         let p = (0, Lo.default)(this);
         p.styleCursor(false), p.pointerEvents({ ignoreFrom: ".resize-handle" }), p.on("down", this.grab.bind(this)), p.on("up", this.release.bind(this)), p.draggable({ onstart: this.startDragging.bind(this), onmove: this.dragMove.bind(this), onend: this.endDragging.bind(this), ignoreFrom: ".resize-handle" });
         let v = this.dropzone;
         Ts(v) ? this.snappedDropzone = v : this.snappedDropzone = null;
       }, grab: (a, s) => {
         H.need(s.type === "GRAB", "event type must be GRAB"), s.type === "GRAB" && (this.grabbed = true, pe("draggable:grab", {}, this), Cu(this.dropzone) && (this.snapped = false, this.moveByOffset(s.x, s.y), this.classList.remove("qpu-operation-xl")));
+=======
+        let p = (0, Go.default)(this);
+        p.styleCursor(false), p.pointerEvents({ ignoreFrom: ".resize-handle" }), p.on("down", this.grab.bind(this)), p.on("up", this.release.bind(this)), p.draggable({ onstart: this.startDragging.bind(this), onmove: this.dragMove.bind(this), onend: this.endDragging.bind(this), ignoreFrom: ".resize-handle" });
+        let v = this.dropzone;
+        Is(v) ? this.snappedDropzone = v : this.snappedDropzone = null;
+      }, grab: (a, s) => {
+        H.need(s.type === "GRAB", "event type must be GRAB"), s.type === "GRAB" && (this.grabbed = true, pe("draggable:grab", {}, this), Au(this.dropzone) && (this.snapped = false, this.moveByOffset(s.x, s.y), this.classList.remove("qpu-operation-xl")));
+>>>>>>> Stashed changes
       }, release: (a, s) => {
         H.need(s.type === "RELEASE", "event type must be RELEASE"), this.grabbed = false, pe("draggable:release", {}, this);
       }, startDragging: (a, s) => {
@@ -7904,10 +12317,17 @@ function we(t) {
       }, drop: () => {
         this.snapped && (this.moveTo(0, 0), pe("draggable:drop", {}, this));
       }, delete: () => {
+<<<<<<< Updated upstream
         (0, Lo.default)(this).unset(), pe("draggable:delete", {}, this);
       } }, guards: { isOnCircuitDropzone: () => Ts(this.dropzone), isOnPaletteDropzone: () => Cu(this.dropzone), isDroppedOnCircuitDropzone: () => this.snapped && Ts(this.dropzone), isTrashed: () => !this.snapped } });
       this.draggableService = at(this.draggableMachine).onTransition((a) => {
         this.debugDraggable && console.log(`draggable: ${(0, of.format)(a.value)}`);
+=======
+        (0, Go.default)(this).unset(), pe("draggable:delete", {}, this);
+      } }, guards: { isOnCircuitDropzone: () => Is(this.dropzone), isOnPaletteDropzone: () => Au(this.dropzone), isDroppedOnCircuitDropzone: () => this.snapped && Is(this.dropzone), isTrashed: () => !this.snapped } });
+      this.draggableService = st(this.draggableMachine).onTransition((a) => {
+        this.debugDraggable && console.log(`draggable: ${(0, pf.format)(a.value)}`);
+>>>>>>> Stashed changes
       });
     }
     get draggable() {
@@ -7921,10 +12341,17 @@ function we(t) {
     }
     get dropzone() {
       let a = this.parentElement;
+<<<<<<< Updated upstream
       return H.notNull(a), !Cu(a) && !Ts(a) ? null : a;
     }
     set snapTargets(a) {
       (0, Lo.default)(this).draggable({ modifiers: [Lo.default.modifiers.snap({ targets: a, range: this.snapRange })], listeners: { move: this.moveEventListener.bind(this) } });
+=======
+      return H.notNull(a), !Au(a) && !Is(a) ? null : a;
+    }
+    set snapTargets(a) {
+      (0, Go.default)(this).draggable({ modifiers: [Go.default.modifiers.snap({ targets: a, range: this.snapRange })], listeners: { move: this.moveEventListener.bind(this) } });
+>>>>>>> Stashed changes
     }
     get snapRange() {
       return 32;
@@ -7967,11 +12394,19 @@ function we(t) {
   __name(r, "r");
   return c(r, "DraggableMixinClass"), M([D], r.prototype, "operationX", 2), M([D], r.prototype, "operationY", 2), M([D], r.prototype, "grabbed", 2), M([D], r.prototype, "dragging", 2), M([D], r.prototype, "snapped", 2), M([D], r.prototype, "bit", 2), M([D], r.prototype, "debugDraggable", 2), r;
 }
+<<<<<<< Updated upstream
 __name(we, "we");
 c(we, "DraggableMixin");
 var Jn = c((t) => typeof t == "object" && t !== null && typeof t.flag == "string", "isFlaggable");
 function af(t) {
   class r extends t {
+=======
+__name(be, "be");
+c(be, "DraggableMixin");
+var ti = c((e) => typeof e == "object" && e !== null && typeof e.flag == "string", "isFlaggable");
+function df(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     constructor() {
       super(...arguments);
       this.flag = "";
@@ -7980,6 +12415,7 @@ function af(t) {
   __name(r, "r");
   return c(r, "FlaggableMixinClass"), M([D], r.prototype, "flag", 2), r;
 }
+<<<<<<< Updated upstream
 __name(af, "af");
 c(af, "FlaggableMixin");
 var Qe = "top";
@@ -8017,6 +12453,45 @@ __name(yt, "yt");
 c(yt, "getNodeName");
 function rt(t) {
   if (t == null)
+=======
+__name(df, "df");
+c(df, "FlaggableMixin");
+var Qe = "top";
+var mt = "bottom";
+var lt = "right";
+var rt = "left";
+var Ps = "auto";
+var _n = [Qe, mt, lt, rt];
+var on = "start";
+var ri = "end";
+var ff = "clippingParents";
+var _s = "viewport";
+var Hi = "popper";
+var hf = "reference";
+var Pu = _n.reduce(function(e, r) {
+  return e.concat([r + "-" + on, r + "-" + ri]);
+}, []);
+var zs = [].concat(_n, [Ps]).reduce(function(e, r) {
+  return e.concat([r, r + "-" + on, r + "-" + ri]);
+}, []);
+var Mb = "beforeRead";
+var Ib = "read";
+var Ab = "afterRead";
+var Pb = "beforeMain";
+var _b = "main";
+var zb = "afterMain";
+var Rb = "beforeWrite";
+var Db = "write";
+var Nb = "afterWrite";
+var mf = [Mb, Ib, Ab, Pb, _b, zb, Rb, Db, Nb];
+function yt(e) {
+  return e ? (e.nodeName || "").toLowerCase() : null;
+}
+__name(yt, "yt");
+c(yt, "getNodeName");
+function nt(e) {
+  if (e == null)
+>>>>>>> Stashed changes
     return window;
   if (t.toString() !== "[object Window]") {
     var r = t.ownerDocument;
@@ -8024,6 +12499,7 @@ function rt(t) {
   }
   return t;
 }
+<<<<<<< Updated upstream
 __name(rt, "rt");
 c(rt, "getWindow");
 function Gr(t) {
@@ -8050,17 +12526,53 @@ function Ob(t) {
   var r = t.state;
   Object.keys(r.elements).forEach(function(e) {
     var n = r.styles[e] || {}, a = r.attributes[e] || {}, s = r.elements[e];
+=======
+__name(nt, "nt");
+c(nt, "getWindow");
+function Br(e) {
+  var r = nt(e).Element;
+  return e instanceof r || e instanceof Element;
+}
+__name(Br, "Br");
+c(Br, "isElement");
+function vt(e) {
+  var r = nt(e).HTMLElement;
+  return e instanceof r || e instanceof HTMLElement;
+}
+__name(vt, "vt");
+c(vt, "isHTMLElement");
+function Rs(e) {
+  if (typeof ShadowRoot == "undefined")
+    return false;
+  var r = nt(e).ShadowRoot;
+  return e instanceof r || e instanceof ShadowRoot;
+}
+__name(Rs, "Rs");
+c(Rs, "isShadowRoot");
+function kb(e) {
+  var r = e.state;
+  Object.keys(r.elements).forEach(function(t) {
+    var n = r.styles[t] || {}, a = r.attributes[t] || {}, s = r.elements[t];
+>>>>>>> Stashed changes
     !vt(s) || !yt(s) || (Object.assign(s.style, n), Object.keys(a).forEach(function(p) {
       var v = a[p];
       v === false ? s.removeAttribute(p) : s.setAttribute(p, v === true ? "" : v);
     }));
   });
 }
+<<<<<<< Updated upstream
 __name(Ob, "Ob");
 c(Ob, "applyStyles");
 function Mb(t) {
   var r = t.state, e = { popper: { position: r.options.strategy, left: "0", top: "0", margin: "0" }, arrow: { position: "absolute" }, reference: {} };
   return Object.assign(r.elements.popper.style, e.popper), r.styles = e, r.elements.arrow && Object.assign(r.elements.arrow.style, e.arrow), function() {
+=======
+__name(kb, "kb");
+c(kb, "applyStyles");
+function Lb(e) {
+  var r = e.state, t = { popper: { position: r.options.strategy, left: "0", top: "0", margin: "0" }, arrow: { position: "absolute" }, reference: {} };
+  return Object.assign(r.elements.popper.style, t.popper), r.styles = t, r.elements.arrow && Object.assign(r.elements.arrow.style, t.arrow), function() {
+>>>>>>> Stashed changes
     Object.keys(r.elements).forEach(function(n) {
       var a = r.elements[n], s = r.attributes[n] || {}, p = Object.keys(r.styles.hasOwnProperty(n) ? r.styles[n] : e[n]), v = p.reduce(function(m, d) {
         return m[d] = "", m;
@@ -8071,15 +12583,24 @@ function Mb(t) {
     });
   };
 }
+<<<<<<< Updated upstream
 __name(Mb, "Mb");
 c(Mb, "effect");
 var Go = { name: "applyStyles", enabled: true, phase: "write", fn: Ob, effect: Mb, requires: ["computeStyles"] };
 function wt(t) {
   return t.split("-")[0];
+=======
+__name(Lb, "Lb");
+c(Lb, "effect");
+var jo = { name: "applyStyles", enabled: true, phase: "write", fn: kb, effect: Lb, requires: ["computeStyles"] };
+function xt(e) {
+  return e.split("-")[0];
+>>>>>>> Stashed changes
 }
 __name(wt, "wt");
 c(wt, "getBasePlacement");
 var Mr = Math.max;
+<<<<<<< Updated upstream
 var ti = Math.min;
 var on = Math.round;
 function br(t, r) {
@@ -8088,6 +12609,16 @@ function br(t, r) {
   if (vt(t) && r) {
     var s = t.offsetHeight, p = t.offsetWidth;
     p > 0 && (n = on(e.width) / p || 1), s > 0 && (a = on(e.height) / s || 1);
+=======
+var ni = Math.min;
+var an = Math.round;
+function br(e, r) {
+  r === void 0 && (r = false);
+  var t = e.getBoundingClientRect(), n = 1, a = 1;
+  if (vt(e) && r) {
+    var s = e.offsetHeight, p = e.offsetWidth;
+    p > 0 && (n = an(t.width) / p || 1), s > 0 && (a = an(t.height) / s || 1);
+>>>>>>> Stashed changes
   }
   return { width: e.width / n, height: e.height / a, top: e.top / a, right: e.right / n, bottom: e.bottom / a, left: e.left / n, x: e.left / n, y: e.top / a };
 }
@@ -8097,6 +12628,7 @@ function ri(t) {
   var r = br(t), e = t.offsetWidth, n = t.offsetHeight;
   return Math.abs(r.width - e) <= 1 && (e = r.width), Math.abs(r.height - n) <= 1 && (n = r.height), { x: t.offsetLeft, y: t.offsetTop, width: e, height: n };
 }
+<<<<<<< Updated upstream
 __name(ri, "ri");
 c(ri, "getLayoutRect");
 function jo(t, r) {
@@ -8104,6 +12636,15 @@ function jo(t, r) {
   if (t.contains(r))
     return true;
   if (e && Ps(e)) {
+=======
+__name(ii, "ii");
+c(ii, "getLayoutRect");
+function Bo(e, r) {
+  var t = r.getRootNode && r.getRootNode();
+  if (e.contains(r))
+    return true;
+  if (t && Rs(t)) {
+>>>>>>> Stashed changes
     var n = r;
     do {
       if (n && t.isSameNode(n))
@@ -8113,6 +12654,7 @@ function jo(t, r) {
   }
   return false;
 }
+<<<<<<< Updated upstream
 __name(jo, "jo");
 c(jo, "contains");
 function jt(t) {
@@ -8148,6 +12690,43 @@ function Ib(t) {
       return null;
   }
   for (var a = an(t); vt(a) && ["html", "body"].indexOf(yt(a)) < 0; ) {
+=======
+__name(Bo, "Bo");
+c(Bo, "contains");
+function jt(e) {
+  return nt(e).getComputedStyle(e);
+}
+__name(jt, "jt");
+c(jt, "getComputedStyle");
+function _u(e) {
+  return ["table", "td", "th"].indexOf(yt(e)) >= 0;
+}
+__name(_u, "_u");
+c(_u, "isTableElement");
+function Ct(e) {
+  return ((Br(e) ? e.ownerDocument : e.document) || window.document).documentElement;
+}
+__name(Ct, "Ct");
+c(Ct, "getDocumentElement");
+function sn(e) {
+  return yt(e) === "html" ? e : e.assignedSlot || e.parentNode || (Rs(e) ? e.host : null) || Ct(e);
+}
+__name(sn, "sn");
+c(sn, "getParentNode");
+function vf(e) {
+  return !vt(e) || jt(e).position === "fixed" ? null : e.offsetParent;
+}
+__name(vf, "vf");
+c(vf, "getTrueOffsetParent");
+function Gb(e) {
+  var r = navigator.userAgent.toLowerCase().indexOf("firefox") !== -1, t = navigator.userAgent.indexOf("Trident") !== -1;
+  if (t && vt(e)) {
+    var n = jt(e);
+    if (n.position === "fixed")
+      return null;
+  }
+  for (var a = sn(e); vt(a) && ["html", "body"].indexOf(yt(a)) < 0; ) {
+>>>>>>> Stashed changes
     var s = jt(a);
     if (s.transform !== "none" || s.perspective !== "none" || s.contain === "paint" || ["transform", "perspective"].indexOf(s.willChange) !== -1 || r && s.willChange === "filter" || r && s.filter && s.filter !== "none")
       return a;
@@ -8155,12 +12734,21 @@ function Ib(t) {
   }
   return null;
 }
+<<<<<<< Updated upstream
 __name(Ib, "Ib");
 c(Ib, "getContainingBlock");
 function Ir(t) {
   for (var r = rt(t), e = cf(t); e && Ou(e) && jt(e).position === "static"; )
     e = cf(e);
   return e && (yt(e) === "html" || yt(e) === "body" && jt(e).position === "static") ? r : e || Ib(t) || r;
+=======
+__name(Gb, "Gb");
+c(Gb, "getContainingBlock");
+function Ir(e) {
+  for (var r = nt(e), t = vf(e); t && _u(t) && jt(t).position === "static"; )
+    t = vf(t);
+  return t && (yt(t) === "html" || yt(t) === "body" && jt(t).position === "static") ? r : t || Gb(e) || r;
+>>>>>>> Stashed changes
 }
 __name(Ir, "Ir");
 c(Ir, "getOffsetParent");
@@ -8172,6 +12760,7 @@ c(ni, "getMainAxisFromPlacement");
 function ii(t, r, e) {
   return Mr(t, ti(r, e));
 }
+<<<<<<< Updated upstream
 __name(ii, "ii");
 c(ii, "within");
 function pf(t, r, e) {
@@ -8235,23 +12824,99 @@ function ff(t) {
   if (d) {
     var z = Ir(e), B = "clientHeight", J = "clientWidth";
     if (z === rt(e) && (z = Tt(e), jt(z).position !== "static" && v === "absolute" && (B = "scrollHeight", J = "scrollWidth")), z = z, a === Qe || (a === tt || a === st) && s === ei) {
+=======
+__name(ai, "ai");
+c(ai, "within");
+function gf(e, r, t) {
+  var n = ai(e, r, t);
+  return n > t ? t : n;
+}
+__name(gf, "gf");
+c(gf, "withinMaxClamp");
+function Ho() {
+  return { top: 0, right: 0, bottom: 0, left: 0 };
+}
+__name(Ho, "Ho");
+c(Ho, "getFreshSideObject");
+function $o(e) {
+  return Object.assign({}, Ho(), e);
+}
+__name($o, "$o");
+c($o, "mergePaddingObject");
+function qo(e, r) {
+  return r.reduce(function(t, n) {
+    return t[n] = e, t;
+  }, {});
+}
+__name(qo, "qo");
+c(qo, "expandToHashMap");
+var jb = c(function(r, t) {
+  return r = typeof r == "function" ? r(Object.assign({}, t.rects, { placement: t.placement })) : r, $o(typeof r != "number" ? r : qo(r, _n));
+}, "toPaddingObject");
+function Bb(e) {
+  var r, t = e.state, n = e.name, a = e.options, s = t.elements.arrow, p = t.modifiersData.popperOffsets, v = xt(t.placement), m = oi(v), d = [rt, lt].indexOf(v) >= 0, h = d ? "height" : "width";
+  if (!(!s || !p)) {
+    var y = jb(a.padding, t), x = ii(s), S = m === "y" ? Qe : rt, T = m === "y" ? mt : lt, C = t.rects.reference[h] + t.rects.reference[m] - p[m] - t.rects.popper[h], _ = p[m] - t.rects.reference[m], N = Ir(s), j = N ? m === "y" ? N.clientHeight || 0 : N.clientWidth || 0 : 0, $ = C / 2 - _ / 2, A = y[S], ee = j - x[h] - y[T], z = j / 2 - x[h] / 2 + $, B = ai(A, z, ee), J = m;
+    t.modifiersData[n] = (r = {}, r[J] = B, r.centerOffset = B - z, r);
+  }
+}
+__name(Bb, "Bb");
+c(Bb, "arrow");
+function Hb(e) {
+  var r = e.state, t = e.options, n = t.element, a = n === void 0 ? "[data-popper-arrow]" : n;
+  a != null && (typeof a == "string" && (a = r.elements.popper.querySelector(a), !a) || Bo(r.elements.popper, a) && (r.elements.arrow = a));
+}
+__name(Hb, "Hb");
+c(Hb, "effect");
+var bf = { name: "arrow", enabled: true, phase: "main", fn: Bb, effect: Hb, requires: ["popperOffsets"], requiresIfExists: ["preventOverflow"] };
+function yr(e) {
+  return e.split("-")[1];
+}
+__name(yr, "yr");
+c(yr, "getVariation");
+var $b = { top: "auto", right: "auto", bottom: "auto", left: "auto" };
+function qb(e) {
+  var r = e.x, t = e.y, n = window, a = n.devicePixelRatio || 1;
+  return { x: an(r * a) / a || 0, y: an(t * a) / a || 0 };
+}
+__name(qb, "qb");
+c(qb, "roundOffsetsByDPR");
+function yf(e) {
+  var r, t = e.popper, n = e.popperRect, a = e.placement, s = e.variation, p = e.offsets, v = e.position, m = e.gpuAcceleration, d = e.adaptive, h = e.roundOffsets, y = e.isFixed, x = p.x, S = x === void 0 ? 0 : x, T = p.y, C = T === void 0 ? 0 : T, _ = typeof h == "function" ? h({ x: S, y: C }) : { x: S, y: C };
+  S = _.x, C = _.y;
+  var N = p.hasOwnProperty("x"), j = p.hasOwnProperty("y"), $ = rt, A = Qe, ee = window;
+  if (d) {
+    var z = Ir(t), B = "clientHeight", J = "clientWidth";
+    if (z === nt(t) && (z = Ct(t), jt(z).position !== "static" && v === "absolute" && (B = "scrollHeight", J = "scrollWidth")), z = z, a === Qe || (a === rt || a === lt) && s === ri) {
+>>>>>>> Stashed changes
       A = mt;
       var te = y && ee.visualViewport ? ee.visualViewport.height : z[B];
-      T -= te - n.height, T *= m ? 1 : -1;
+      C -= te - n.height, C *= m ? 1 : -1;
     }
+<<<<<<< Updated upstream
     if (a === tt || (a === Qe || a === mt) && s === ei) {
       $ = st;
+=======
+    if (a === rt || (a === Qe || a === mt) && s === ri) {
+      $ = lt;
+>>>>>>> Stashed changes
       var le = y && ee.visualViewport ? ee.visualViewport.width : z[J];
       S -= le - n.width, S *= m ? 1 : -1;
     }
   }
+<<<<<<< Updated upstream
   var Y = Object.assign({ position: v }, d && zb), ie = h === true ? Rb({ x: S, y: T }) : { x: S, y: T };
   if (S = ie.x, T = ie.y, m) {
+=======
+  var Y = Object.assign({ position: v }, d && $b), ie = h === true ? qb({ x: S, y: C }) : { x: S, y: C };
+  if (S = ie.x, C = ie.y, m) {
+>>>>>>> Stashed changes
     var W;
-    return Object.assign({}, Y, (W = {}, W[A] = j ? "0" : "", W[$] = N ? "0" : "", W.transform = (ee.devicePixelRatio || 1) <= 1 ? "translate(" + S + "px, " + T + "px)" : "translate3d(" + S + "px, " + T + "px, 0)", W));
+    return Object.assign({}, Y, (W = {}, W[A] = j ? "0" : "", W[$] = N ? "0" : "", W.transform = (ee.devicePixelRatio || 1) <= 1 ? "translate(" + S + "px, " + C + "px)" : "translate3d(" + S + "px, " + C + "px, 0)", W));
   }
-  return Object.assign({}, Y, (r = {}, r[A] = j ? T + "px" : "", r[$] = N ? S + "px" : "", r.transform = "", r));
+  return Object.assign({}, Y, (r = {}, r[A] = j ? C + "px" : "", r[$] = N ? S + "px" : "", r.transform = "", r));
 }
+<<<<<<< Updated upstream
 __name(ff, "ff");
 c(ff, "mapToStyles");
 function Db(t) {
@@ -8372,6 +13037,128 @@ __name(Au, "Au");
 c(Au, "getClippingRect");
 function qo(t) {
   var r = t.reference, e = t.element, n = t.placement, a = n ? wt(n) : null, s = n ? yr(n) : null, p = r.x + r.width / 2 - e.width / 2, v = r.y + r.height / 2 - e.height / 2, m;
+=======
+__name(yf, "yf");
+c(yf, "mapToStyles");
+function Fb(e) {
+  var r = e.state, t = e.options, n = t.gpuAcceleration, a = n === void 0 ? true : n, s = t.adaptive, p = s === void 0 ? true : s, v = t.roundOffsets, m = v === void 0 ? true : v;
+  if (false)
+    var d;
+  var h = { placement: xt(r.placement), variation: yr(r.placement), popper: r.elements.popper, popperRect: r.rects.popper, gpuAcceleration: a, isFixed: r.options.strategy === "fixed" };
+  r.modifiersData.popperOffsets != null && (r.styles.popper = Object.assign({}, r.styles.popper, yf(Object.assign({}, h, { offsets: r.modifiersData.popperOffsets, position: r.options.strategy, adaptive: p, roundOffsets: m })))), r.modifiersData.arrow != null && (r.styles.arrow = Object.assign({}, r.styles.arrow, yf(Object.assign({}, h, { offsets: r.modifiersData.arrow, position: "absolute", adaptive: false, roundOffsets: m })))), r.attributes.popper = Object.assign({}, r.attributes.popper, { "data-popper-placement": r.placement });
+}
+__name(Fb, "Fb");
+c(Fb, "computeStyles");
+var xf = { name: "computeStyles", enabled: true, phase: "beforeWrite", fn: Fb, data: {} };
+var Ds = { passive: true };
+function Ub(e) {
+  var r = e.state, t = e.instance, n = e.options, a = n.scroll, s = a === void 0 ? true : a, p = n.resize, v = p === void 0 ? true : p, m = nt(r.elements.popper), d = [].concat(r.scrollParents.reference, r.scrollParents.popper);
+  return s && d.forEach(function(h) {
+    h.addEventListener("scroll", t.update, Ds);
+  }), v && m.addEventListener("resize", t.update, Ds), function() {
+    s && d.forEach(function(h) {
+      h.removeEventListener("scroll", t.update, Ds);
+    }), v && m.removeEventListener("resize", t.update, Ds);
+  };
+}
+__name(Ub, "Ub");
+c(Ub, "effect");
+var wf = { name: "eventListeners", enabled: true, phase: "write", fn: c(function() {
+}, "fn"), effect: Ub, data: {} };
+var Wb = { left: "right", right: "left", bottom: "top", top: "bottom" };
+function $i(e) {
+  return e.replace(/left|right|bottom|top/g, function(r) {
+    return Wb[r];
+  });
+}
+__name($i, "$i");
+c($i, "getOppositePlacement");
+var Vb = { start: "end", end: "start" };
+function Ns(e) {
+  return e.replace(/start|end/g, function(r) {
+    return Vb[r];
+  });
+}
+__name(Ns, "Ns");
+c(Ns, "getOppositeVariationPlacement");
+function si(e) {
+  var r = nt(e), t = r.pageXOffset, n = r.pageYOffset;
+  return { scrollLeft: t, scrollTop: n };
+}
+__name(si, "si");
+c(si, "getWindowScroll");
+function li(e) {
+  return br(Ct(e)).left + si(e).scrollLeft;
+}
+__name(li, "li");
+c(li, "getWindowScrollBarX");
+function zu(e) {
+  var r = nt(e), t = Ct(e), n = r.visualViewport, a = t.clientWidth, s = t.clientHeight, p = 0, v = 0;
+  return n && (a = n.width, s = n.height, /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || (p = n.offsetLeft, v = n.offsetTop)), { width: a, height: s, x: p + li(e), y: v };
+}
+__name(zu, "zu");
+c(zu, "getViewportRect");
+function Ru(e) {
+  var r, t = Ct(e), n = si(e), a = (r = e.ownerDocument) == null ? void 0 : r.body, s = Mr(t.scrollWidth, t.clientWidth, a ? a.scrollWidth : 0, a ? a.clientWidth : 0), p = Mr(t.scrollHeight, t.clientHeight, a ? a.scrollHeight : 0, a ? a.clientHeight : 0), v = -n.scrollLeft + li(e), m = -n.scrollTop;
+  return jt(a || t).direction === "rtl" && (v += Mr(t.clientWidth, a ? a.clientWidth : 0) - s), { width: s, height: p, x: v, y: m };
+}
+__name(Ru, "Ru");
+c(Ru, "getDocumentRect");
+function ui(e) {
+  var r = jt(e), t = r.overflow, n = r.overflowX, a = r.overflowY;
+  return /auto|scroll|overlay|hidden/.test(t + a + n);
+}
+__name(ui, "ui");
+c(ui, "isScrollParent");
+function ks(e) {
+  return ["html", "body", "#document"].indexOf(yt(e)) >= 0 ? e.ownerDocument.body : vt(e) && ui(e) ? e : ks(sn(e));
+}
+__name(ks, "ks");
+c(ks, "getScrollParent");
+function zn(e, r) {
+  var t;
+  r === void 0 && (r = []);
+  var n = ks(e), a = n === ((t = e.ownerDocument) == null ? void 0 : t.body), s = nt(n), p = a ? [s].concat(s.visualViewport || [], ui(n) ? n : []) : n, v = r.concat(p);
+  return a ? v : v.concat(zn(sn(p)));
+}
+__name(zn, "zn");
+c(zn, "listScrollParents");
+function qi(e) {
+  return Object.assign({}, e, { left: e.x, top: e.y, right: e.x + e.width, bottom: e.y + e.height });
+}
+__name(qi, "qi");
+c(qi, "rectToClientRect");
+function Yb(e) {
+  var r = br(e);
+  return r.top = r.top + e.clientTop, r.left = r.left + e.clientLeft, r.bottom = r.top + e.clientHeight, r.right = r.left + e.clientWidth, r.width = e.clientWidth, r.height = e.clientHeight, r.x = r.left, r.y = r.top, r;
+}
+__name(Yb, "Yb");
+c(Yb, "getInnerBoundingClientRect");
+function Ef(e, r) {
+  return r === _s ? qi(zu(e)) : Br(r) ? Yb(r) : qi(Ru(Ct(e)));
+}
+__name(Ef, "Ef");
+c(Ef, "getClientRectFromMixedType");
+function Xb(e) {
+  var r = zn(sn(e)), t = ["absolute", "fixed"].indexOf(jt(e).position) >= 0, n = t && vt(e) ? Ir(e) : e;
+  return Br(n) ? r.filter(function(a) {
+    return Br(a) && Bo(a, n) && yt(a) !== "body";
+  }) : [];
+}
+__name(Xb, "Xb");
+c(Xb, "getClippingParents");
+function Du(e, r, t) {
+  var n = r === "clippingParents" ? Xb(e) : [].concat(r), a = [].concat(n, [t]), s = a[0], p = a.reduce(function(v, m) {
+    var d = Ef(e, m);
+    return v.top = Mr(d.top, v.top), v.right = ni(d.right, v.right), v.bottom = ni(d.bottom, v.bottom), v.left = Mr(d.left, v.left), v;
+  }, Ef(e, s));
+  return p.width = p.right - p.left, p.height = p.bottom - p.top, p.x = p.left, p.y = p.top, p;
+}
+__name(Du, "Du");
+c(Du, "getClippingRect");
+function Fo(e) {
+  var r = e.reference, t = e.element, n = e.placement, a = n ? xt(n) : null, s = n ? yr(n) : null, p = r.x + r.width / 2 - t.width / 2, v = r.y + r.height / 2 - t.height / 2, m;
+>>>>>>> Stashed changes
   switch (a) {
     case Qe:
       m = { x: p, y: r.y - e.height };
@@ -8379,11 +13166,16 @@ function qo(t) {
     case mt:
       m = { x: p, y: r.y + r.height };
       break;
-    case st:
+    case lt:
       m = { x: r.x + r.width, y: v };
       break;
+<<<<<<< Updated upstream
     case tt:
       m = { x: r.x - e.width, y: v };
+=======
+    case rt:
+      m = { x: r.x - t.width, y: v };
+>>>>>>> Stashed changes
       break;
     default:
       m = { x: r.x, y: r.y };
@@ -8392,8 +13184,13 @@ function qo(t) {
   if (d != null) {
     var h = d === "y" ? "height" : "width";
     switch (s) {
+<<<<<<< Updated upstream
       case nn:
         m[d] = m[d] - (r[h] / 2 - e[h] / 2);
+=======
+      case on:
+        m[d] = m[d] - (r[h] / 2 - t[h] / 2);
+>>>>>>> Stashed changes
         break;
       case ei:
         m[d] = m[d] + (r[h] / 2 - e[h] / 2);
@@ -8403,15 +13200,24 @@ function qo(t) {
   }
   return m;
 }
+<<<<<<< Updated upstream
 __name(qo, "qo");
 c(qo, "computeOffsets");
 function Ar(t, r) {
   r === void 0 && (r = {});
   var e = r, n = e.placement, a = n === void 0 ? t.placement : n, s = e.boundary, p = s === void 0 ? sf : s, v = e.rootBoundary, m = v === void 0 ? Is : v, d = e.elementContext, h = d === void 0 ? ji : d, y = e.altBoundary, w = y === void 0 ? false : y, S = e.padding, C = S === void 0 ? 0 : S, T = Ho(typeof C != "number" ? C : $o(C, Pn)), _ = h === ji ? lf : ji, N = t.rects.popper, j = t.elements[w ? _ : h], $ = Au(Gr(j) ? j : j.contextElement || Tt(t.elements.popper), p, m), A = br(t.elements.reference), ee = qo({ reference: A, element: N, strategy: "absolute", placement: a }), z = Hi(Object.assign({}, N, ee)), B = h === ji ? z : A, J = { top: $.top - B.top + T.top, bottom: B.bottom - $.bottom + T.bottom, left: $.left - B.left + T.left, right: B.right - $.right + T.right }, te = t.modifiersData.offset;
   if (h === ji && te) {
+=======
+__name(Fo, "Fo");
+c(Fo, "computeOffsets");
+function Ar(e, r) {
+  r === void 0 && (r = {});
+  var t = r, n = t.placement, a = n === void 0 ? e.placement : n, s = t.boundary, p = s === void 0 ? ff : s, v = t.rootBoundary, m = v === void 0 ? _s : v, d = t.elementContext, h = d === void 0 ? Hi : d, y = t.altBoundary, x = y === void 0 ? false : y, S = t.padding, T = S === void 0 ? 0 : S, C = $o(typeof T != "number" ? T : qo(T, _n)), _ = h === Hi ? hf : Hi, N = e.rects.popper, j = e.elements[x ? _ : h], $ = Du(Br(j) ? j : j.contextElement || Ct(e.elements.popper), p, m), A = br(e.elements.reference), ee = Fo({ reference: A, element: N, strategy: "absolute", placement: a }), z = qi(Object.assign({}, N, ee)), B = h === Hi ? z : A, J = { top: $.top - B.top + C.top, bottom: B.bottom - $.bottom + C.bottom, left: $.left - B.left + C.left, right: B.right - $.right + C.right }, te = e.modifiersData.offset;
+  if (h === Hi && te) {
+>>>>>>> Stashed changes
     var le = te[a];
     Object.keys(J).forEach(function(Y) {
-      var ie = [st, mt].indexOf(Y) >= 0 ? 1 : -1, W = [Qe, mt].indexOf(Y) >= 0 ? "y" : "x";
+      var ie = [lt, mt].indexOf(Y) >= 0 ? 1 : -1, W = [Qe, mt].indexOf(Y) >= 0 ? "y" : "x";
       J[Y] += le[W] * ie;
     });
   }
@@ -8419,6 +13225,7 @@ function Ar(t, r) {
 }
 __name(Ar, "Ar");
 c(Ar, "detectOverflow");
+<<<<<<< Updated upstream
 function Pu(t, r) {
   r === void 0 && (r = {});
   var e = r, n = e.placement, a = e.boundary, s = e.rootBoundary, p = e.padding, v = e.flipVariations, m = e.allowedAutoPlacements, d = m === void 0 ? As : m, h = yr(n), y = h ? v ? Tu : Tu.filter(function(C) {
@@ -8429,11 +13236,24 @@ function Pu(t, r) {
   w.length === 0 && (w = y);
   var S = w.reduce(function(C, T) {
     return C[T] = Ar(t, { placement: T, boundary: a, rootBoundary: s, padding: p })[wt(T)], C;
+=======
+function Nu(e, r) {
+  r === void 0 && (r = {});
+  var t = r, n = t.placement, a = t.boundary, s = t.rootBoundary, p = t.padding, v = t.flipVariations, m = t.allowedAutoPlacements, d = m === void 0 ? zs : m, h = yr(n), y = h ? v ? Pu : Pu.filter(function(T) {
+    return yr(T) === h;
+  }) : _n, x = y.filter(function(T) {
+    return d.indexOf(T) >= 0;
+  });
+  x.length === 0 && (x = y);
+  var S = x.reduce(function(T, C) {
+    return T[C] = Ar(e, { placement: C, boundary: a, rootBoundary: s, padding: p })[xt(C)], T;
+>>>>>>> Stashed changes
   }, {});
-  return Object.keys(S).sort(function(C, T) {
-    return S[C] - S[T];
+  return Object.keys(S).sort(function(T, C) {
+    return S[T] - S[C];
   });
 }
+<<<<<<< Updated upstream
 __name(Pu, "Pu");
 c(Pu, "computeAutoPlacement");
 function Bb(t) {
@@ -8454,25 +13274,47 @@ function Hb(t) {
       ee[Ue] > z[Ue] && (De = Bi(De));
       var je = Bi(De), it = [];
       if (s && it.push(qe[ie] <= 0), v && it.push(qe[De] <= 0, qe[je] <= 0), it.every(function(Ie) {
+=======
+__name(Nu, "Nu");
+c(Nu, "computeAutoPlacement");
+function Zb(e) {
+  if (xt(e) === Ps)
+    return [];
+  var r = $i(e);
+  return [Ns(e), r, Ns(r)];
+}
+__name(Zb, "Zb");
+c(Zb, "getExpandedFallbackPlacements");
+function Kb(e) {
+  var r = e.state, t = e.options, n = e.name;
+  if (!r.modifiersData[n]._skip) {
+    for (var a = t.mainAxis, s = a === void 0 ? true : a, p = t.altAxis, v = p === void 0 ? true : p, m = t.fallbackPlacements, d = t.padding, h = t.boundary, y = t.rootBoundary, x = t.altBoundary, S = t.flipVariations, T = S === void 0 ? true : S, C = t.allowedAutoPlacements, _ = r.options.placement, N = xt(_), j = N === _, $ = m || (j || !T ? [$i(_)] : Zb(_)), A = [_].concat($).reduce(function(Ie, et) {
+      return Ie.concat(xt(et) === Ps ? Nu(r, { placement: et, boundary: h, rootBoundary: y, padding: d, flipVariations: T, allowedAutoPlacements: C }) : et);
+    }, []), ee = r.rects.reference, z = r.rects.popper, B = /* @__PURE__ */ new Map(), J = true, te = A[0], le = 0; le < A.length; le++) {
+      var Y = A[le], ie = xt(Y), W = yr(Y) === on, ue = [Qe, mt].indexOf(ie) >= 0, Ue = ue ? "width" : "height", qe = Ar(r, { placement: Y, boundary: h, rootBoundary: y, altBoundary: x, padding: d }), ke = ue ? W ? lt : rt : W ? mt : Qe;
+      ee[Ue] > z[Ue] && (ke = $i(ke));
+      var je = $i(ke), ot = [];
+      if (s && ot.push(qe[ie] <= 0), v && ot.push(qe[ke] <= 0, qe[je] <= 0), ot.every(function(Ie) {
+>>>>>>> Stashed changes
         return Ie;
       })) {
         te = Y, J = false;
         break;
       }
-      B.set(Y, it);
+      B.set(Y, ot);
     }
     if (J)
-      for (var Ze = C ? 3 : 1, Ve = c(function(Je) {
-        var cr = A.find(function(Cr) {
-          var pr = B.get(Cr);
+      for (var Ke = T ? 3 : 1, Ve = c(function(et) {
+        var cr = A.find(function(Tr) {
+          var pr = B.get(Tr);
           if (pr)
-            return pr.slice(0, Je).every(function(or) {
+            return pr.slice(0, et).every(function(or) {
               return or;
             });
         });
         if (cr)
           return te = cr, "break";
-      }, "_loop"), Q = Ze; Q > 0; Q--) {
+      }, "_loop"), Q = Ke; Q > 0; Q--) {
         var ir = Ve(Q);
         if (ir === "break")
           break;
@@ -8480,6 +13322,7 @@ function Hb(t) {
     r.placement !== te && (r.modifiersData[n]._skip = true, r.placement = te, r.reset = true);
   }
 }
+<<<<<<< Updated upstream
 __name(Hb, "Hb");
 c(Hb, "flip");
 var gf = { name: "flip", enabled: true, phase: "main", fn: Hb, requiresIfExists: ["offset"], data: { _skip: false } };
@@ -8539,10 +13382,72 @@ function Wb(t) {
     if (v) {
       var Ur, ci = A === "x" ? Qe : tt, dn = A === "x" ? mt : st, Tr = z[ee], It = ee === "y" ? "height" : "width", Rr = Tr + _[ci], qt = Tr - _[dn], Ln = [Qe, tt].indexOf(N) !== -1, Wr = (Ur = Y == null ? void 0 : Y[ee]) != null ? Ur : 0, Gn = Ln ? Rr : Tr - B[It] - J[It] - Wr + le.altAxis, fn = Ln ? Tr + B[It] + J[It] - Wr - le.altAxis : qt, jn = S && Ln ? pf(Gn, Tr, fn) : ii(S ? Gn : Rr, Tr, S ? fn : qt);
       z[ee] = jn, ie[ee] = jn - Tr;
+=======
+__name(Kb, "Kb");
+c(Kb, "flip");
+var Sf = { name: "flip", enabled: true, phase: "main", fn: Kb, requiresIfExists: ["offset"], data: { _skip: false } };
+function Tf(e, r, t) {
+  return t === void 0 && (t = { x: 0, y: 0 }), { top: e.top - r.height - t.y, right: e.right - r.width + t.x, bottom: e.bottom - r.height + t.y, left: e.left - r.width - t.x };
+}
+__name(Tf, "Tf");
+c(Tf, "getSideOffsets");
+function Cf(e) {
+  return [Qe, lt, mt, rt].some(function(r) {
+    return e[r] >= 0;
+  });
+}
+__name(Cf, "Cf");
+c(Cf, "isAnySideFullyClipped");
+function Qb(e) {
+  var r = e.state, t = e.name, n = r.rects.reference, a = r.rects.popper, s = r.modifiersData.preventOverflow, p = Ar(r, { elementContext: "reference" }), v = Ar(r, { altBoundary: true }), m = Tf(p, n), d = Tf(v, a, s), h = Cf(m), y = Cf(d);
+  r.modifiersData[t] = { referenceClippingOffsets: m, popperEscapeOffsets: d, isReferenceHidden: h, hasPopperEscaped: y }, r.attributes.popper = Object.assign({}, r.attributes.popper, { "data-popper-reference-hidden": h, "data-popper-escaped": y });
+}
+__name(Qb, "Qb");
+c(Qb, "hide");
+var Of = { name: "hide", enabled: true, phase: "main", requiresIfExists: ["preventOverflow"], fn: Qb };
+function Jb(e, r, t) {
+  var n = xt(e), a = [rt, Qe].indexOf(n) >= 0 ? -1 : 1, s = typeof t == "function" ? t(Object.assign({}, r, { placement: e })) : t, p = s[0], v = s[1];
+  return p = p || 0, v = (v || 0) * a, [rt, lt].indexOf(n) >= 0 ? { x: v, y: p } : { x: p, y: v };
+}
+__name(Jb, "Jb");
+c(Jb, "distanceAndSkiddingToXY");
+function ey(e) {
+  var r = e.state, t = e.options, n = e.name, a = t.offset, s = a === void 0 ? [0, 0] : a, p = zs.reduce(function(h, y) {
+    return h[y] = Jb(y, r.rects, s), h;
+  }, {}), v = p[r.placement], m = v.x, d = v.y;
+  r.modifiersData.popperOffsets != null && (r.modifiersData.popperOffsets.x += m, r.modifiersData.popperOffsets.y += d), r.modifiersData[n] = p;
+}
+__name(ey, "ey");
+c(ey, "offset");
+var Mf = { name: "offset", enabled: true, phase: "main", requires: ["popperOffsets"], fn: ey };
+function ty(e) {
+  var r = e.state, t = e.name;
+  r.modifiersData[t] = Fo({ reference: r.rects.reference, element: r.rects.popper, strategy: "absolute", placement: r.placement });
+}
+__name(ty, "ty");
+c(ty, "popperOffsets");
+var If = { name: "popperOffsets", enabled: true, phase: "read", fn: ty, data: {} };
+function ku(e) {
+  return e === "x" ? "y" : "x";
+}
+__name(ku, "ku");
+c(ku, "getAltAxis");
+function ry(e) {
+  var r = e.state, t = e.options, n = e.name, a = t.mainAxis, s = a === void 0 ? true : a, p = t.altAxis, v = p === void 0 ? false : p, m = t.boundary, d = t.rootBoundary, h = t.altBoundary, y = t.padding, x = t.tether, S = x === void 0 ? true : x, T = t.tetherOffset, C = T === void 0 ? 0 : T, _ = Ar(r, { boundary: m, rootBoundary: d, padding: y, altBoundary: h }), N = xt(r.placement), j = yr(r.placement), $ = !j, A = oi(N), ee = ku(A), z = r.modifiersData.popperOffsets, B = r.rects.reference, J = r.rects.popper, te = typeof C == "function" ? C(Object.assign({}, r.rects, { placement: r.placement })) : C, le = typeof te == "number" ? { mainAxis: te, altAxis: te } : Object.assign({ mainAxis: 0, altAxis: 0 }, te), Y = r.modifiersData.offset ? r.modifiersData.offset[r.placement] : null, ie = { x: 0, y: 0 };
+  if (z) {
+    if (s) {
+      var W, ue = A === "y" ? Qe : rt, Ue = A === "y" ? mt : lt, qe = A === "y" ? "height" : "width", ke = z[A], je = ke + _[ue], ot = ke - _[Ue], Ke = S ? -J[qe] / 2 : 0, Ve = j === on ? B[qe] : J[qe], Q = j === on ? -J[qe] : -B[qe], ir = r.elements.arrow, Ie = S && ir ? ii(ir) : { width: 0, height: 0 }, et = r.modifiersData["arrow#persistent"] ? r.modifiersData["arrow#persistent"].padding : Ho(), cr = et[ue], Tr = et[Ue], pr = ai(0, B[qe], Ie[qe]), or = $ ? B[qe] / 2 - Ke - pr - cr - le.mainAxis : Ve - pr - cr - le.mainAxis, Rr = $ ? -B[qe] / 2 + Ke + pr + Tr + le.mainAxis : Q + pr + Tr + le.mainAxis, Wr = r.elements.arrow && Ir(r.elements.arrow), Nn = Wr ? A === "y" ? Wr.clientTop || 0 : Wr.clientLeft || 0 : 0, Me = (W = Y == null ? void 0 : Y[A]) != null ? W : 0, kn = ke + or - Me - Nn, Ln = ke + Rr - Me, kt = ai(S ? ni(je, kn) : je, ke, S ? Mr(ot, Ln) : ot);
+      z[A] = kt, ie[A] = kt - ke;
+    }
+    if (v) {
+      var Vr, di = A === "x" ? Qe : rt, fn = A === "x" ? mt : lt, Cr = z[ee], It = ee === "y" ? "height" : "width", Dr = Cr + _[di], qt = Cr - _[fn], Gn = [Qe, rt].indexOf(N) !== -1, Yr = (Vr = Y == null ? void 0 : Y[ee]) != null ? Vr : 0, jn = Gn ? Dr : Cr - B[It] - J[It] - Yr + le.altAxis, hn = Gn ? Cr + B[It] + J[It] - Yr - le.altAxis : qt, Bn = S && Gn ? gf(jn, Cr, hn) : ai(S ? jn : Dr, Cr, S ? hn : qt);
+      z[ee] = Bn, ie[ee] = Bn - Cr;
+>>>>>>> Stashed changes
     }
     r.modifiersData[n] = ie;
   }
 }
+<<<<<<< Updated upstream
 __name(Wb, "Wb");
 c(Wb, "preventOverflow");
 var Sf = { name: "preventOverflow", enabled: true, phase: "main", fn: Wb, requiresIfExists: ["offset"] };
@@ -8572,6 +13477,37 @@ c(Du, "getCompositeRect");
 function Yb(t) {
   var r = /* @__PURE__ */ new Map(), e = /* @__PURE__ */ new Set(), n = [];
   t.forEach(function(s) {
+=======
+__name(ry, "ry");
+c(ry, "preventOverflow");
+var Af = { name: "preventOverflow", enabled: true, phase: "main", fn: ry, requiresIfExists: ["offset"] };
+function Lu(e) {
+  return { scrollLeft: e.scrollLeft, scrollTop: e.scrollTop };
+}
+__name(Lu, "Lu");
+c(Lu, "getHTMLElementScroll");
+function Gu(e) {
+  return e === nt(e) || !vt(e) ? si(e) : Lu(e);
+}
+__name(Gu, "Gu");
+c(Gu, "getNodeScroll");
+function ny(e) {
+  var r = e.getBoundingClientRect(), t = an(r.width) / e.offsetWidth || 1, n = an(r.height) / e.offsetHeight || 1;
+  return t !== 1 || n !== 1;
+}
+__name(ny, "ny");
+c(ny, "isElementScaled");
+function ju(e, r, t) {
+  t === void 0 && (t = false);
+  var n = vt(r), a = vt(r) && ny(r), s = Ct(r), p = br(e, a), v = { scrollLeft: 0, scrollTop: 0 }, m = { x: 0, y: 0 };
+  return (n || !n && !t) && ((yt(r) !== "body" || ui(s)) && (v = Gu(r)), vt(r) ? (m = br(r, true), m.x += r.clientLeft, m.y += r.clientTop) : s && (m.x = li(s))), { x: p.left + v.scrollLeft - m.x, y: p.top + v.scrollTop - m.y, width: p.width, height: p.height };
+}
+__name(ju, "ju");
+c(ju, "getCompositeRect");
+function iy(e) {
+  var r = /* @__PURE__ */ new Map(), t = /* @__PURE__ */ new Set(), n = [];
+  e.forEach(function(s) {
+>>>>>>> Stashed changes
     r.set(s.name, s);
   });
   function a(s) {
@@ -8589,19 +13525,34 @@ function Yb(t) {
     e.has(s.name) || a(s);
   }), n;
 }
+<<<<<<< Updated upstream
 __name(Yb, "Yb");
 c(Yb, "order");
 function Nu(t) {
   var r = Yb(t);
   return uf.reduce(function(e, n) {
     return e.concat(r.filter(function(a) {
+=======
+__name(iy, "iy");
+c(iy, "order");
+function Bu(e) {
+  var r = iy(e);
+  return mf.reduce(function(t, n) {
+    return t.concat(r.filter(function(a) {
+>>>>>>> Stashed changes
       return a.phase === n;
     }));
   }, []);
 }
+<<<<<<< Updated upstream
 __name(Nu, "Nu");
 c(Nu, "orderModifiers");
 function ku(t) {
+=======
+__name(Bu, "Bu");
+c(Bu, "orderModifiers");
+function Hu(e) {
+>>>>>>> Stashed changes
   var r;
   return function() {
     return r || (r = new Promise(function(e) {
@@ -8611,27 +13562,46 @@ function ku(t) {
     })), r;
   };
 }
+<<<<<<< Updated upstream
 __name(ku, "ku");
 c(ku, "debounce");
 function Lu(t) {
   var r = t.reduce(function(e, n) {
     var a = e[n.name];
     return e[n.name] = a ? Object.assign({}, a, n, { options: Object.assign({}, a.options, n.options), data: Object.assign({}, a.data, n.data) }) : n, e;
+=======
+__name(Hu, "Hu");
+c(Hu, "debounce");
+function $u(e) {
+  var r = e.reduce(function(t, n) {
+    var a = t[n.name];
+    return t[n.name] = a ? Object.assign({}, a, n, { options: Object.assign({}, a.options, n.options), data: Object.assign({}, a.data, n.data) }) : n, t;
+>>>>>>> Stashed changes
   }, {});
   return Object.keys(r).map(function(e) {
     return r[e];
   });
 }
+<<<<<<< Updated upstream
 __name(Lu, "Lu");
 c(Lu, "mergeByName");
 var Cf = { placement: "bottom", modifiers: [], strategy: "absolute" };
 function Tf() {
   for (var t = arguments.length, r = new Array(t), e = 0; e < t; e++)
     r[e] = arguments[e];
+=======
+__name($u, "$u");
+c($u, "mergeByName");
+var Pf = { placement: "bottom", modifiers: [], strategy: "absolute" };
+function _f() {
+  for (var e = arguments.length, r = new Array(e), t = 0; t < e; t++)
+    r[t] = arguments[t];
+>>>>>>> Stashed changes
   return !r.some(function(n) {
     return !(n && typeof n.getBoundingClientRect == "function");
   });
 }
+<<<<<<< Updated upstream
 __name(Tf, "Tf");
 c(Tf, "areValidElements");
 function Of(t) {
@@ -8643,6 +13613,19 @@ function Of(t) {
       var j = typeof N == "function" ? N(h.options) : N;
       T(), h.options = Object.assign({}, s, h.options, j), h.scrollParents = { reference: Gr(v) ? _n(v) : v.contextElement ? _n(v.contextElement) : [], popper: _n(m) };
       var $ = Nu(Lu([].concat(n, h.options.modifiers)));
+=======
+__name(_f, "_f");
+c(_f, "areValidElements");
+function zf(e) {
+  e === void 0 && (e = {});
+  var r = e, t = r.defaultModifiers, n = t === void 0 ? [] : t, a = r.defaultOptions, s = a === void 0 ? Pf : a;
+  return c(function(v, m, d) {
+    d === void 0 && (d = s);
+    var h = { placement: "bottom", orderedModifiers: [], options: Object.assign({}, Pf, s), modifiersData: {}, elements: { reference: v, popper: m }, attributes: {}, styles: {} }, y = [], x = false, S = { state: h, setOptions: c(function(N) {
+      var j = typeof N == "function" ? N(h.options) : N;
+      C(), h.options = Object.assign({}, s, h.options, j), h.scrollParents = { reference: Br(v) ? zn(v) : v.contextElement ? zn(v.contextElement) : [], popper: zn(m) };
+      var $ = Bu($u([].concat(n, h.options.modifiers)));
+>>>>>>> Stashed changes
       if (h.orderedModifiers = $.filter(function(Y) {
         return Y.enabled;
       }), false) {
@@ -8651,12 +13634,17 @@ function Of(t) {
           var ee;
         var z, B, J, te, le;
       }
-      return C(), S.update();
+      return T(), S.update();
     }, "setOptions"), forceUpdate: c(function() {
       if (!w) {
         var N = h.elements, j = N.reference, $ = N.popper;
+<<<<<<< Updated upstream
         if (Tf(j, $)) {
           h.rects = { reference: Du(j, Ir($), h.options.strategy === "fixed"), popper: ri($) }, h.reset = false, h.placement = h.options.placement, h.orderedModifiers.forEach(function(Y) {
+=======
+        if (_f(j, $)) {
+          h.rects = { reference: ju(j, Ir($), h.options.strategy === "fixed"), popper: ii($) }, h.reset = false, h.placement = h.options.placement, h.orderedModifiers.forEach(function(Y) {
+>>>>>>> Stashed changes
             return h.modifiersData[Y.name] = Object.assign({}, Y.data);
           });
           for (var A = 0, ee = 0; ee < h.orderedModifiers.length; ee++) {
@@ -8669,19 +13657,29 @@ function Of(t) {
           }
         }
       }
+<<<<<<< Updated upstream
     }, "forceUpdate"), update: ku(function() {
+=======
+    }, "forceUpdate"), update: Hu(function() {
+>>>>>>> Stashed changes
       return new Promise(function(_) {
         S.forceUpdate(), _(h);
       });
     }), destroy: c(function() {
+<<<<<<< Updated upstream
       T(), w = true;
     }, "destroy") };
     if (!Tf(v, m))
+=======
+      C(), x = true;
+    }, "destroy") };
+    if (!_f(v, m))
+>>>>>>> Stashed changes
       return S;
     S.setOptions(d).then(function(_) {
       !w && d.onFirstUpdate && d.onFirstUpdate(_);
     });
-    function C() {
+    function T() {
       h.orderedModifiers.forEach(function(_) {
         var N = _.name, j = _.options, $ = j === void 0 ? {} : j, A = _.effect;
         if (typeof A == "function") {
@@ -8691,17 +13689,18 @@ function Of(t) {
         }
       });
     }
-    __name(C, "C");
-    c(C, "runModifierEffects");
-    function T() {
+    __name(T, "T");
+    c(T, "runModifierEffects");
+    function C() {
       y.forEach(function(_) {
         return _();
       }), y = [];
     }
-    __name(T, "T");
-    return c(T, "cleanupModifierEffects"), S;
+    __name(C, "C");
+    return c(C, "cleanupModifierEffects"), S;
   }, "createPopper");
 }
+<<<<<<< Updated upstream
 __name(Of, "Of");
 c(Of, "popperGenerator");
 var Xb = [mf, Ef, hf, Go, xf, gf, Sf, df, wf];
@@ -8719,9 +13718,29 @@ function ju(t, r, e) {
   if (Array.isArray(t)) {
     var n = t[r];
     return n == null ? Array.isArray(e) ? e[r] : e : n;
+=======
+__name(zf, "zf");
+c(zf, "popperGenerator");
+var oy = [wf, If, xf, jo, Mf, Sf, Af, bf, Of];
+var qu = zf({ defaultModifiers: oy });
+var ay = "tippy-box";
+var $f = "tippy-content";
+var sy = "tippy-backdrop";
+var qf = "tippy-arrow";
+var Ff = "tippy-svg-arrow";
+var ci = { passive: true, capture: true };
+var Uf = c(function() {
+  return document.body;
+}, "TIPPY_DEFAULT_APPEND_TO");
+function Fu(e, r, t) {
+  if (Array.isArray(e)) {
+    var n = e[r];
+    return n == null ? Array.isArray(t) ? t[r] : t : n;
+>>>>>>> Stashed changes
   }
   return t;
 }
+<<<<<<< Updated upstream
 __name(ju, "ju");
 c(ju, "getValueAtIndexOrReturn");
 function Uu(t, r) {
@@ -8736,6 +13755,22 @@ function Bf(t, r) {
 __name(Bf, "Bf");
 c(Bf, "invokeWithArgsOrReturn");
 function Mf(t, r) {
+=======
+__name(Fu, "Fu");
+c(Fu, "getValueAtIndexOrReturn");
+function Zu(e, r) {
+  var t = {}.toString.call(e);
+  return t.indexOf("[object") === 0 && t.indexOf(r + "]") > -1;
+}
+__name(Zu, "Zu");
+c(Zu, "isType");
+function Wf(e, r) {
+  return typeof e == "function" ? e.apply(void 0, r) : e;
+}
+__name(Wf, "Wf");
+c(Wf, "invokeWithArgsOrReturn");
+function Rf(e, r) {
+>>>>>>> Stashed changes
   if (r === 0)
     return t;
   var e;
@@ -8745,6 +13780,7 @@ function Mf(t, r) {
     }, r);
   };
 }
+<<<<<<< Updated upstream
 __name(Mf, "Mf");
 c(Mf, "debounce");
 function Qb(t) {
@@ -8851,15 +13887,130 @@ function ay(t, r) {
 __name(ay, "ay");
 c(ay, "isCursorOutsideInteractiveBorder");
 function Hu(t, r, e) {
+=======
+__name(Rf, "Rf");
+c(Rf, "debounce");
+function ly(e) {
+  return e.split(/\s+/).filter(Boolean);
+}
+__name(ly, "ly");
+c(ly, "splitBySpaces");
+function Fi(e) {
+  return [].concat(e);
+}
+__name(Fi, "Fi");
+c(Fi, "normalizeToArray");
+function Df(e, r) {
+  e.indexOf(r) === -1 && e.push(r);
+}
+__name(Df, "Df");
+c(Df, "pushIfUnique");
+function uy(e) {
+  return e.filter(function(r, t) {
+    return e.indexOf(r) === t;
+  });
+}
+__name(uy, "uy");
+c(uy, "unique");
+function cy(e) {
+  return e.split("-")[0];
+}
+__name(cy, "cy");
+c(cy, "getBasePlacement");
+function Gs(e) {
+  return [].slice.call(e);
+}
+__name(Gs, "Gs");
+c(Gs, "arrayFrom");
+function Nf(e) {
+  return Object.keys(e).reduce(function(r, t) {
+    return e[t] !== void 0 && (r[t] = e[t]), r;
+  }, {});
+}
+__name(Nf, "Nf");
+c(Nf, "removeUndefinedProps");
+function Uo() {
+  return document.createElement("div");
+}
+__name(Uo, "Uo");
+c(Uo, "div");
+function js(e) {
+  return ["Element", "Fragment"].some(function(r) {
+    return Zu(e, r);
+  });
+}
+__name(js, "js");
+c(js, "isElement");
+function py(e) {
+  return Zu(e, "NodeList");
+}
+__name(py, "py");
+c(py, "isNodeList");
+function dy(e) {
+  return Zu(e, "MouseEvent");
+}
+__name(dy, "dy");
+c(dy, "isMouseEvent");
+function fy(e) {
+  return !!(e && e._tippy && e._tippy.reference === e);
+}
+__name(fy, "fy");
+c(fy, "isReferenceElement");
+function hy(e) {
+  return js(e) ? [e] : py(e) ? Gs(e) : Array.isArray(e) ? e : Gs(document.querySelectorAll(e));
+}
+__name(hy, "hy");
+c(hy, "getArrayOfElements");
+function Uu(e, r) {
+  e.forEach(function(t) {
+    t && (t.style.transitionDuration = r + "ms");
+  });
+}
+__name(Uu, "Uu");
+c(Uu, "setTransitionDuration");
+function kf(e, r) {
+  e.forEach(function(t) {
+    t && t.setAttribute("data-state", r);
+  });
+}
+__name(kf, "kf");
+c(kf, "setVisibilityState");
+function my(e) {
+  var r, t = Fi(e), n = t[0];
+  return n != null && (r = n.ownerDocument) != null && r.body ? n.ownerDocument : document;
+}
+__name(my, "my");
+c(my, "getOwnerDocument");
+function vy(e, r) {
+  var t = r.clientX, n = r.clientY;
+  return e.every(function(a) {
+    var s = a.popperRect, p = a.popperState, v = a.props, m = v.interactiveBorder, d = cy(p.placement), h = p.modifiersData.offset;
+    if (!h)
+      return true;
+    var y = d === "bottom" ? h.top.y : 0, x = d === "top" ? h.bottom.y : 0, S = d === "right" ? h.left.x : 0, T = d === "left" ? h.right.x : 0, C = s.top - n + y > m, _ = n - s.bottom - x > m, N = s.left - t + S > m, j = t - s.right - T > m;
+    return C || _ || N || j;
+  });
+}
+__name(vy, "vy");
+c(vy, "isCursorOutsideInteractiveBorder");
+function Wu(e, r, t) {
+>>>>>>> Stashed changes
   var n = r + "EventListener";
   ["transitionend", "webkitTransitionEnd"].forEach(function(a) {
     t[n](a, e);
   });
 }
+<<<<<<< Updated upstream
 __name(Hu, "Hu");
 c(Hu, "updateTransitionEndListener");
 function _f(t, r) {
   for (var e = r; e; ) {
+=======
+__name(Wu, "Wu");
+c(Wu, "updateTransitionEndListener");
+function Lf(e, r) {
+  for (var t = r; t; ) {
+>>>>>>> Stashed changes
     var n;
     if (t.contains(e))
       return true;
@@ -8867,6 +14018,7 @@ function _f(t, r) {
   }
   return false;
 }
+<<<<<<< Updated upstream
 __name(_f, "_f");
 c(_f, "actualContains");
 var jr = { isTouch: false };
@@ -8901,6 +14053,42 @@ var py = cy ? !!window.msCrypto : false;
 var dy = { animateFill: false, followCursor: false, inlinePositioning: false, sticky: false };
 var fy = { allowHTML: false, animation: "fade", arrow: true, content: "", inertia: false, maxWidth: 350, role: "tooltip", theme: "", zIndex: 9999 };
 var Pr = Object.assign({ appendTo: jf, aria: { content: "auto", expanded: "auto" }, delay: 0, duration: [300, 250], getReferenceClientRect: null, hideOnClick: true, ignoreAttributes: false, interactive: false, interactiveBorder: 2, interactiveDebounce: 0, moveTransition: "", offset: [0, 10], onAfterUpdate: c(function() {
+=======
+__name(Lf, "Lf");
+c(Lf, "actualContains");
+var Hr = { isTouch: false };
+var Gf = 0;
+function gy() {
+  Hr.isTouch || (Hr.isTouch = true, window.performance && document.addEventListener("mousemove", Vf));
+}
+__name(gy, "gy");
+c(gy, "onDocumentTouchStart");
+function Vf() {
+  var e = performance.now();
+  e - Gf < 20 && (Hr.isTouch = false, document.removeEventListener("mousemove", Vf)), Gf = e;
+}
+__name(Vf, "Vf");
+c(Vf, "onDocumentMouseMove");
+function by() {
+  var e = document.activeElement;
+  if (fy(e)) {
+    var r = e._tippy;
+    e.blur && !r.state.isVisible && e.blur();
+  }
+}
+__name(by, "by");
+c(by, "onWindowBlur");
+function yy() {
+  document.addEventListener("touchstart", gy, ci), window.addEventListener("blur", by);
+}
+__name(yy, "yy");
+c(yy, "bindGlobalEventListeners");
+var xy = typeof window != "undefined" && typeof document != "undefined";
+var wy = xy ? !!window.msCrypto : false;
+var Ey = { animateFill: false, followCursor: false, inlinePositioning: false, sticky: false };
+var Sy = { allowHTML: false, animation: "fade", arrow: true, content: "", inertia: false, maxWidth: 350, role: "tooltip", theme: "", zIndex: 9999 };
+var Pr = Object.assign({ appendTo: Uf, aria: { content: "auto", expanded: "auto" }, delay: 0, duration: [300, 250], getReferenceClientRect: null, hideOnClick: true, ignoreAttributes: false, interactive: false, interactiveBorder: 2, interactiveDebounce: 0, moveTransition: "", offset: [0, 10], onAfterUpdate: c(function() {
+>>>>>>> Stashed changes
 }, "onAfterUpdate"), onBeforeUpdate: c(function() {
 }, "onBeforeUpdate"), onCreate: c(function() {
 }, "onCreate"), onDestroy: c(function() {
@@ -8912,6 +14100,7 @@ var Pr = Object.assign({ appendTo: jf, aria: { content: "auto", expanded: "auto"
 }, "onShown"), onTrigger: c(function() {
 }, "onTrigger"), onUntrigger: c(function() {
 }, "onUntrigger"), onClickOutside: c(function() {
+<<<<<<< Updated upstream
 }, "onClickOutside"), placement: "top", plugins: [], popperOptions: {}, render: null, showOnCreate: false, touch: true, trigger: "mouseenter focus", triggerTarget: null }, dy, fy);
 var hy = Object.keys(Pr);
 var my = c(function(r) {
@@ -8922,6 +14111,18 @@ var my = c(function(r) {
 }, "setDefaultProps");
 function $f(t) {
   var r = t.plugins || [], e = r.reduce(function(n, a) {
+=======
+}, "onClickOutside"), placement: "top", plugins: [], popperOptions: {}, render: null, showOnCreate: false, touch: true, trigger: "mouseenter focus", triggerTarget: null }, Ey, Sy);
+var Ty = Object.keys(Pr);
+var Cy = c(function(r) {
+  var t = Object.keys(r);
+  t.forEach(function(n) {
+    Pr[n] = r[n];
+  });
+}, "setDefaultProps");
+function Yf(e) {
+  var r = e.plugins || [], t = r.reduce(function(n, a) {
+>>>>>>> Stashed changes
     var s = a.name, p = a.defaultValue;
     if (s) {
       var v;
@@ -8931,11 +14132,19 @@ function $f(t) {
   }, {});
   return Object.assign({}, t, e);
 }
+<<<<<<< Updated upstream
 __name($f, "$f");
 c($f, "getExtendedPassedProps");
 function vy(t, r) {
   var e = r ? Object.keys($f(Object.assign({}, Pr, { plugins: r }))) : hy, n = e.reduce(function(a, s) {
     var p = (t.getAttribute("data-tippy-" + s) || "").trim();
+=======
+__name(Yf, "Yf");
+c(Yf, "getExtendedPassedProps");
+function Oy(e, r) {
+  var t = r ? Object.keys(Yf(Object.assign({}, Pr, { plugins: r }))) : Ty, n = t.reduce(function(a, s) {
+    var p = (e.getAttribute("data-tippy-" + s) || "").trim();
+>>>>>>> Stashed changes
     if (!p)
       return a;
     if (s === "content")
@@ -8950,6 +14159,7 @@ function vy(t, r) {
   }, {});
   return n;
 }
+<<<<<<< Updated upstream
 __name(vy, "vy");
 c(vy, "getDataAttributeProps");
 function Rf(t, r) {
@@ -8997,10 +14207,60 @@ function qf(t) {
   function a(s, p) {
     var v = Fu(r), m = v.box, d = v.content, h = v.arrow;
     p.theme ? m.setAttribute("data-theme", p.theme) : m.removeAttribute("data-theme"), typeof p.animation == "string" ? m.setAttribute("data-animation", p.animation) : m.removeAttribute("data-animation"), p.inertia ? m.setAttribute("data-inertia", "") : m.removeAttribute("data-inertia"), m.style.maxWidth = typeof p.maxWidth == "number" ? p.maxWidth + "px" : p.maxWidth, p.role ? m.setAttribute("role", p.role) : m.removeAttribute("role"), (s.content !== p.content || s.allowHTML !== p.allowHTML) && Nf(d, t.props), p.arrow ? h ? s.arrow !== p.arrow && (m.removeChild(h), m.appendChild(Df(p.arrow))) : m.appendChild(Df(p.arrow)) : h && m.removeChild(h);
+=======
+__name(Oy, "Oy");
+c(Oy, "getDataAttributeProps");
+function jf(e, r) {
+  var t = Object.assign({}, r, { content: Wf(r.content, [e]) }, r.ignoreAttributes ? {} : Oy(e, r.plugins));
+  return t.aria = Object.assign({}, Pr.aria, t.aria), t.aria = { expanded: t.aria.expanded === "auto" ? r.interactive : t.aria.expanded, content: t.aria.content === "auto" ? r.interactive ? null : "describedby" : t.aria.content }, t;
+}
+__name(jf, "jf");
+c(jf, "evaluateProps");
+var My = c(function() {
+  return "innerHTML";
+}, "innerHTML");
+function Yu(e, r) {
+  e[My()] = r;
+}
+__name(Yu, "Yu");
+c(Yu, "dangerouslySetInnerHTML");
+function Bf(e) {
+  var r = Uo();
+  return e === true ? r.className = qf : (r.className = Ff, js(e) ? r.appendChild(e) : Yu(r, e)), r;
+}
+__name(Bf, "Bf");
+c(Bf, "createArrowElement");
+function Hf(e, r) {
+  js(r.content) ? (Yu(e, ""), e.appendChild(r.content)) : typeof r.content != "function" && (r.allowHTML ? Yu(e, r.content) : e.textContent = r.content);
+}
+__name(Hf, "Hf");
+c(Hf, "setContent");
+function Xu(e) {
+  var r = e.firstElementChild, t = Gs(r.children);
+  return { box: r, content: t.find(function(n) {
+    return n.classList.contains($f);
+  }), arrow: t.find(function(n) {
+    return n.classList.contains(qf) || n.classList.contains(Ff);
+  }), backdrop: t.find(function(n) {
+    return n.classList.contains(sy);
+  }) };
+}
+__name(Xu, "Xu");
+c(Xu, "getChildren");
+function Xf(e) {
+  var r = Uo(), t = Uo();
+  t.className = ay, t.setAttribute("data-state", "hidden"), t.setAttribute("tabindex", "-1");
+  var n = Uo();
+  n.className = $f, n.setAttribute("data-state", "hidden"), Hf(n, e.props), r.appendChild(t), t.appendChild(n), a(e.props, e.props);
+  function a(s, p) {
+    var v = Xu(r), m = v.box, d = v.content, h = v.arrow;
+    p.theme ? m.setAttribute("data-theme", p.theme) : m.removeAttribute("data-theme"), typeof p.animation == "string" ? m.setAttribute("data-animation", p.animation) : m.removeAttribute("data-animation"), p.inertia ? m.setAttribute("data-inertia", "") : m.removeAttribute("data-inertia"), m.style.maxWidth = typeof p.maxWidth == "number" ? p.maxWidth + "px" : p.maxWidth, p.role ? m.setAttribute("role", p.role) : m.removeAttribute("role"), (s.content !== p.content || s.allowHTML !== p.allowHTML) && Hf(d, e.props), p.arrow ? h ? s.arrow !== p.arrow && (m.removeChild(h), m.appendChild(Bf(p.arrow))) : m.appendChild(Bf(p.arrow)) : h && m.removeChild(h);
+>>>>>>> Stashed changes
   }
   __name(a, "a");
   return c(a, "onUpdate"), { popper: r, onUpdate: a };
 }
+<<<<<<< Updated upstream
 __name(qf, "qf");
 c(qf, "render");
 qf.$$tippy = true;
@@ -9010,16 +14270,32 @@ var $u = [];
 function yy(t, r) {
   var e = Rf(t, Object.assign({}, Pr, $f(Af(r)))), n, a, s, p = false, v = false, m = false, d = false, h, y, w, S = [], C = Mf(Nn, e.interactiveDebounce), T, _ = by++, N = null, j = Jb(e.plugins), $ = { isEnabled: true, isVisible: false, isDestroyed: false, isMounted: false, isShown: false }, A = { id: _, reference: t, popper: Fo(), popperInstance: N, props: e, state: $, plugins: j, clearDelayTimeouts: Gn, setProps: fn, setContent: jn, show: Yi, hide: Xi, hideWithInteractivity: na, enable: Ln, disable: Wr, unmount: ia, destroy: Ks };
   if (!e.render)
+=======
+__name(Xf, "Xf");
+c(Xf, "render");
+Xf.$$tippy = true;
+var Iy = 1;
+var Ls = [];
+var Vu = [];
+function Ay(e, r) {
+  var t = jf(e, Object.assign({}, Pr, Yf(Nf(r)))), n, a, s, p = false, v = false, m = false, d = false, h, y, x, S = [], T = Rf(kn, t.interactiveDebounce), C, _ = Iy++, N = null, j = uy(t.plugins), $ = { isEnabled: true, isVisible: false, isDestroyed: false, isMounted: false, isShown: false }, A = { id: _, reference: e, popper: Uo(), popperInstance: N, props: t, state: $, plugins: j, clearDelayTimeouts: jn, setProps: hn, setContent: Bn, show: Zi, hide: Ki, hideWithInteractivity: ia, enable: Gn, disable: Yr, unmount: oa, destroy: el };
+  if (!t.render)
+>>>>>>> Stashed changes
     return A;
   var ee = e.render(A), z = ee.popper, B = ee.onUpdate;
   z.setAttribute("data-tippy-root", ""), z.id = "tippy-" + A.id, A.popper = z, t._tippy = A, z._tippy = A;
   var J = j.map(function(L) {
     return L.fn(A);
+<<<<<<< Updated upstream
   }), te = t.hasAttribute("aria-expanded");
   return Fr(), Ze(), De(), je("onCreate", [A]), e.showOnCreate && Rr(), z.addEventListener("mouseenter", function() {
+=======
+  }), te = e.hasAttribute("aria-expanded");
+  return Wr(), Ke(), ke(), je("onCreate", [A]), t.showOnCreate && Dr(), z.addEventListener("mouseenter", function() {
+>>>>>>> Stashed changes
     A.props.interactive && A.state.isVisible && A.clearDelayTimeouts();
   }), z.addEventListener("mouseleave", function() {
-    A.props.interactive && A.props.trigger.indexOf("mouseenter") >= 0 && ue().addEventListener("mousemove", C);
+    A.props.interactive && A.props.trigger.indexOf("mouseenter") >= 0 && ue().addEventListener("mousemove", T);
   }), A;
   function le() {
     var L = A.props.touch;
@@ -9039,34 +14315,50 @@ function yy(t, r) {
   __name(ie, "ie");
   c(ie, "getIsDefaultRenderFn");
   function W() {
+<<<<<<< Updated upstream
     return T || t;
+=======
+    return C || e;
+>>>>>>> Stashed changes
   }
   __name(W, "W");
   c(W, "getCurrentTarget");
   function ue() {
     var L = W().parentNode;
+<<<<<<< Updated upstream
     return L ? oy(L) : document;
+=======
+    return L ? my(L) : document;
+>>>>>>> Stashed changes
   }
   __name(ue, "ue");
   c(ue, "getDocument");
   function Ue() {
+<<<<<<< Updated upstream
     return Fu(z);
+=======
+    return Xu(z);
+>>>>>>> Stashed changes
   }
   __name(Ue, "Ue");
   c(Ue, "getDefaultTemplateChildren");
   function qe(L) {
+<<<<<<< Updated upstream
     return A.state.isMounted && !A.state.isVisible || jr.isTouch || h && h.type === "focus" ? 0 : ju(A.props.delay, L ? 0 : 1, Pr.delay);
+=======
+    return A.state.isMounted && !A.state.isVisible || Hr.isTouch || h && h.type === "focus" ? 0 : Fu(A.props.delay, L ? 0 : 1, Pr.delay);
+>>>>>>> Stashed changes
   }
   __name(qe, "qe");
   c(qe, "getDelay");
-  function De(L) {
+  function ke(L) {
     L === void 0 && (L = false), z.style.pointerEvents = A.props.interactive && !L ? "" : "none", z.style.zIndex = "" + A.props.zIndex;
   }
-  __name(De, "De");
-  c(De, "handleStyles");
+  __name(ke, "ke");
+  c(ke, "handleStyles");
   function je(L, re, ae) {
-    if (ae === void 0 && (ae = true), J.forEach(function(ge) {
-      ge[L] && ge[L].apply(ge, re);
+    if (ae === void 0 && (ae = true), J.forEach(function(we) {
+      we[L] && we[L].apply(we, re);
     }), ae) {
       var Ae;
       (Ae = A.props)[L].apply(Ae, re);
@@ -9074,9 +14366,10 @@ function yy(t, r) {
   }
   __name(je, "je");
   c(je, "invokeHook");
-  function it() {
+  function ot() {
     var L = A.props.aria;
     if (L.content) {
+<<<<<<< Updated upstream
       var re = "aria-" + L.content, ae = z.id, Ae = $i(A.props.triggerTarget || t);
       Ae.forEach(function(ge) {
         var xt = ge.getAttribute(re);
@@ -9085,30 +14378,50 @@ function yy(t, r) {
         else {
           var kt = xt && xt.replace(ae, "").trim();
           kt ? ge.setAttribute(re, kt) : ge.removeAttribute(re);
+=======
+      var re = "aria-" + L.content, ae = z.id, Ae = Fi(A.props.triggerTarget || e);
+      Ae.forEach(function(we) {
+        var wt = we.getAttribute(re);
+        if (A.state.isVisible)
+          we.setAttribute(re, wt ? wt + " " + ae : ae);
+        else {
+          var Lt = wt && wt.replace(ae, "").trim();
+          Lt ? we.setAttribute(re, Lt) : we.removeAttribute(re);
+>>>>>>> Stashed changes
         }
       });
     }
   }
-  __name(it, "it");
-  c(it, "handleAriaContentAttribute");
-  function Ze() {
+  __name(ot, "ot");
+  c(ot, "handleAriaContentAttribute");
+  function Ke() {
     if (!(te || !A.props.aria.expanded)) {
+<<<<<<< Updated upstream
       var L = $i(A.props.triggerTarget || t);
+=======
+      var L = Fi(A.props.triggerTarget || e);
+>>>>>>> Stashed changes
       L.forEach(function(re) {
         A.props.interactive ? re.setAttribute("aria-expanded", A.state.isVisible && re === W() ? "true" : "false") : re.removeAttribute("aria-expanded");
       });
     }
   }
-  __name(Ze, "Ze");
-  c(Ze, "handleAriaExpandedAttribute");
+  __name(Ke, "Ke");
+  c(Ke, "handleAriaExpandedAttribute");
   function Ve() {
+<<<<<<< Updated upstream
     ue().removeEventListener("mousemove", C), Ds = Ds.filter(function(L) {
       return L !== C;
+=======
+    ue().removeEventListener("mousemove", T), Ls = Ls.filter(function(L) {
+      return L !== T;
+>>>>>>> Stashed changes
     });
   }
   __name(Ve, "Ve");
   c(Ve, "cleanupInteractiveMouseListeners");
   function Q(L) {
+<<<<<<< Updated upstream
     if (!(jr.isTouch && (m || L.type === "mousedown"))) {
       var re = L.composedPath && L.composedPath()[0] || L.target;
       if (!(A.props.interactive && _f(z, re))) {
@@ -9116,6 +14429,15 @@ function yy(t, r) {
           return _f(ae, re);
         })) {
           if (jr.isTouch || A.state.isVisible && A.props.trigger.indexOf("click") >= 0)
+=======
+    if (!(Hr.isTouch && (m || L.type === "mousedown"))) {
+      var re = L.composedPath && L.composedPath()[0] || L.target;
+      if (!(A.props.interactive && Lf(z, re))) {
+        if (Fi(A.props.triggerTarget || e).some(function(ae) {
+          return Lf(ae, re);
+        })) {
+          if (Hr.isTouch || A.state.isVisible && A.props.trigger.indexOf("click") >= 0)
+>>>>>>> Stashed changes
             return;
         } else
           je("onClickOutside", [A, L]);
@@ -9137,25 +14459,25 @@ function yy(t, r) {
   }
   __name(Ie, "Ie");
   c(Ie, "onTouchStart");
-  function Je() {
+  function et() {
     var L = ue();
     L.addEventListener("mousedown", Q, true), L.addEventListener("touchend", Q, li), L.addEventListener("touchstart", Ie, li), L.addEventListener("touchmove", ir, li);
   }
-  __name(Je, "Je");
-  c(Je, "addDocumentPress");
+  __name(et, "et");
+  c(et, "addDocumentPress");
   function cr() {
     var L = ue();
     L.removeEventListener("mousedown", Q, true), L.removeEventListener("touchend", Q, li), L.removeEventListener("touchstart", Ie, li), L.removeEventListener("touchmove", ir, li);
   }
   __name(cr, "cr");
   c(cr, "removeDocumentPress");
-  function Cr(L, re) {
+  function Tr(L, re) {
     or(L, function() {
       !A.state.isVisible && z.parentNode && z.parentNode.contains(z) && re();
     });
   }
-  __name(Cr, "Cr");
-  c(Cr, "onTransitionedOut");
+  __name(Tr, "Tr");
+  c(Tr, "onTransitionedOut");
   function pr(L, re) {
     or(L, re);
   }
@@ -9163,18 +14485,28 @@ function yy(t, r) {
   c(pr, "onTransitionedIn");
   function or(L, re) {
     var ae = Ue().box;
+<<<<<<< Updated upstream
     function Ae(ge) {
       ge.target === ae && (Hu(ae, "remove", Ae), re());
+=======
+    function Ae(we) {
+      we.target === ae && (Wu(ae, "remove", Ae), re());
+>>>>>>> Stashed changes
     }
     __name(Ae, "Ae");
     if (c(Ae, "listener"), L === 0)
       return re();
+<<<<<<< Updated upstream
     Hu(ae, "remove", y), Hu(ae, "add", Ae), y = Ae;
+=======
+    Wu(ae, "remove", y), Wu(ae, "add", Ae), y = Ae;
+>>>>>>> Stashed changes
   }
   __name(or, "or");
   c(or, "onTransitionEnd");
-  function zr(L, re, ae) {
+  function Rr(L, re, ae) {
     ae === void 0 && (ae = false);
+<<<<<<< Updated upstream
     var Ae = $i(A.props.triggerTarget || t);
     Ae.forEach(function(ge) {
       ge.addEventListener(L, re, ae), S.push({ node: ge, eventType: L, handler: re, options: ae });
@@ -9184,9 +14516,21 @@ function yy(t, r) {
   c(zr, "on");
   function Fr() {
     Y() && (zr("touchstart", Me, { passive: true }), zr("touchend", kn, { passive: true })), Qb(A.props.trigger).forEach(function(L) {
+=======
+    var Ae = Fi(A.props.triggerTarget || e);
+    Ae.forEach(function(we) {
+      we.addEventListener(L, re, ae), S.push({ node: we, eventType: L, handler: re, options: ae });
+    });
+  }
+  __name(Rr, "Rr");
+  c(Rr, "on");
+  function Wr() {
+    Y() && (Rr("touchstart", Me, { passive: true }), Rr("touchend", Ln, { passive: true })), ly(A.props.trigger).forEach(function(L) {
+>>>>>>> Stashed changes
       if (L !== "manual")
-        switch (zr(L, Me), L) {
+        switch (Rr(L, Me), L) {
           case "mouseenter":
+<<<<<<< Updated upstream
             zr("mouseleave", kn);
             break;
           case "focus":
@@ -9194,27 +14538,50 @@ function yy(t, r) {
             break;
           case "focusin":
             zr("focusout", Nt);
+=======
+            Rr("mouseleave", Ln);
+            break;
+          case "focus":
+            Rr(wy ? "focusout" : "blur", kt);
+            break;
+          case "focusin":
+            Rr("focusout", kt);
+>>>>>>> Stashed changes
             break;
         }
     });
   }
+<<<<<<< Updated upstream
   __name(Fr, "Fr");
   c(Fr, "addListeners");
   function Dn() {
+=======
+  __name(Wr, "Wr");
+  c(Wr, "addListeners");
+  function Nn() {
+>>>>>>> Stashed changes
     S.forEach(function(L) {
-      var re = L.node, ae = L.eventType, Ae = L.handler, ge = L.options;
-      re.removeEventListener(ae, Ae, ge);
+      var re = L.node, ae = L.eventType, Ae = L.handler, we = L.options;
+      re.removeEventListener(ae, Ae, we);
     }), S = [];
   }
   __name(Dn, "Dn");
   c(Dn, "removeListeners");
   function Me(L) {
     var re, ae = false;
+<<<<<<< Updated upstream
     if (!(!A.state.isEnabled || Ur(L) || v)) {
       var Ae = ((re = h) == null ? void 0 : re.type) === "focus";
       h = L, T = L.currentTarget, Ze(), !A.state.isVisible && ry(L) && Ds.forEach(function(ge) {
         return ge(L);
       }), L.type === "click" && (A.props.trigger.indexOf("mouseenter") < 0 || p) && A.props.hideOnClick !== false && A.state.isVisible ? ae = true : Rr(L), L.type === "click" && (p = !ae), ae && !Ae && qt(L);
+=======
+    if (!(!A.state.isEnabled || Vr(L) || v)) {
+      var Ae = ((re = h) == null ? void 0 : re.type) === "focus";
+      h = L, C = L.currentTarget, Ke(), !A.state.isVisible && dy(L) && Ls.forEach(function(we) {
+        return we(L);
+      }), L.type === "click" && (A.props.trigger.indexOf("mouseenter") < 0 || p) && A.props.hideOnClick !== false && A.state.isVisible ? ae = true : Dr(L), L.type === "click" && (p = !ae), ae && !Ae && qt(L);
+>>>>>>> Stashed changes
     }
   }
   __name(Me, "Me");
@@ -9222,6 +14589,7 @@ function yy(t, r) {
   function Nn(L) {
     var re = L.target, ae = W().contains(re) || z.contains(re);
     if (!(L.type === "mousemove" && ae)) {
+<<<<<<< Updated upstream
       var Ae = It().concat(z).map(function(ge) {
         var xt, kt = ge._tippy, At = (xt = kt.popperInstance) == null ? void 0 : xt.state;
         return At ? { popperRect: ge.getBoundingClientRect(), popperState: At, props: e } : null;
@@ -9233,6 +14601,19 @@ function yy(t, r) {
   c(Nn, "onMouseMove");
   function kn(L) {
     var re = Ur(L) || A.props.trigger.indexOf("click") >= 0 && p;
+=======
+      var Ae = It().concat(z).map(function(we) {
+        var wt, Lt = we._tippy, At = (wt = Lt.popperInstance) == null ? void 0 : wt.state;
+        return At ? { popperRect: we.getBoundingClientRect(), popperState: At, props: t } : null;
+      }).filter(Boolean);
+      vy(Ae, L) && (Ve(), qt(L));
+    }
+  }
+  __name(kn, "kn");
+  c(kn, "onMouseMove");
+  function Ln(L) {
+    var re = Vr(L) || A.props.trigger.indexOf("click") >= 0 && p;
+>>>>>>> Stashed changes
     if (!re) {
       if (A.props.interactive) {
         A.hideWithInteractivity(L);
@@ -9246,6 +14627,7 @@ function yy(t, r) {
   function Nt(L) {
     A.props.trigger.indexOf("focusin") < 0 && L.target !== W() || A.props.interactive && L.relatedTarget && z.contains(L.relatedTarget) || qt(L);
   }
+<<<<<<< Updated upstream
   __name(Nt, "Nt");
   c(Nt, "onBlurOrFocusOut");
   function Ur(L) {
@@ -9269,17 +14651,47 @@ function yy(t, r) {
   __name(ci, "ci");
   c(ci, "createPopperInstance");
   function dn() {
+=======
+  __name(kt, "kt");
+  c(kt, "onBlurOrFocusOut");
+  function Vr(L) {
+    return Hr.isTouch ? Y() !== L.type.indexOf("touch") >= 0 : false;
+  }
+  __name(Vr, "Vr");
+  c(Vr, "isEventListenerStopped");
+  function di() {
+    fn();
+    var L = A.props, re = L.popperOptions, ae = L.placement, Ae = L.offset, we = L.getReferenceClientRect, wt = L.moveTransition, Lt = ie() ? Xu(z).arrow : null, At = we ? { getBoundingClientRect: we, contextElement: we.contextElement || W() } : e, aa = { name: "$$tippy", enabled: true, phase: "beforeWrite", requires: ["computeStyles"], fn: c(function(Pt) {
+      var _t = Pt.state;
+      if (ie()) {
+        var Xr = Ue(), fi = Xr.box;
+        ["placement", "reference-hidden", "escaped"].forEach(function(hi) {
+          hi === "placement" ? fi.setAttribute("data-placement", _t.placement) : _t.attributes.popper["data-popper-" + hi] ? fi.setAttribute("data-" + hi, "") : fi.removeAttribute("data-" + hi);
+        }), _t.attributes.popper = {};
+      }
+    }, "fn") }, dr = [{ name: "offset", options: { offset: Ae } }, { name: "preventOverflow", options: { padding: { top: 2, bottom: 2, left: 5, right: 5 } } }, { name: "flip", options: { padding: 5 } }, { name: "computeStyles", options: { adaptive: !wt } }, aa];
+    ie() && Lt && dr.push({ name: "arrow", options: { element: Lt, padding: 3 } }), dr.push.apply(dr, (re == null ? void 0 : re.modifiers) || []), A.popperInstance = qu(At, z, Object.assign({}, re, { placement: ae, onFirstUpdate: x, modifiers: dr }));
+  }
+  __name(di, "di");
+  c(di, "createPopperInstance");
+  function fn() {
+>>>>>>> Stashed changes
     A.popperInstance && (A.popperInstance.destroy(), A.popperInstance = null);
   }
-  __name(dn, "dn");
-  c(dn, "destroyPopperInstance");
-  function Tr() {
+  __name(fn, "fn");
+  c(fn, "destroyPopperInstance");
+  function Cr() {
     var L = A.props.appendTo, re, ae = W();
+<<<<<<< Updated upstream
     A.props.interactive && L === jf || L === "parent" ? re = ae.parentNode : re = Bf(L, [ae]), re.contains(z) || re.appendChild(z), A.state.isMounted = true, ci();
+=======
+    A.props.interactive && L === Uf || L === "parent" ? re = ae.parentNode : re = Wf(L, [ae]), re.contains(z) || re.appendChild(z), A.state.isMounted = true, di();
+>>>>>>> Stashed changes
   }
-  __name(Tr, "Tr");
-  c(Tr, "mount");
+  __name(Cr, "Cr");
+  c(Cr, "mount");
   function It() {
+<<<<<<< Updated upstream
     return Ns(z.querySelectorAll("[data-tippy-root]"));
   }
   __name(It, "It");
@@ -9288,11 +14700,21 @@ function yy(t, r) {
     A.clearDelayTimeouts(), L && je("onTrigger", [A, L]), Je();
     var re = qe(true), ae = le(), Ae = ae[0], ge = ae[1];
     jr.isTouch && Ae === "hold" && ge && (re = ge), re ? n = setTimeout(function() {
+=======
+    return Gs(z.querySelectorAll("[data-tippy-root]"));
+  }
+  __name(It, "It");
+  c(It, "getNestedPopperTree");
+  function Dr(L) {
+    A.clearDelayTimeouts(), L && je("onTrigger", [A, L]), et();
+    var re = qe(true), ae = le(), Ae = ae[0], we = ae[1];
+    Hr.isTouch && Ae === "hold" && we && (re = we), re ? n = setTimeout(function() {
+>>>>>>> Stashed changes
       A.show();
     }, re) : A.show();
   }
-  __name(Rr, "Rr");
-  c(Rr, "scheduleShow");
+  __name(Dr, "Dr");
+  c(Dr, "scheduleShow");
   function qt(L) {
     if (A.clearDelayTimeouts(), je("onUntrigger", [A, L]), !A.state.isVisible) {
       cr();
@@ -9312,6 +14734,7 @@ function yy(t, r) {
   function Ln() {
     A.state.isEnabled = true;
   }
+<<<<<<< Updated upstream
   __name(Ln, "Ln");
   c(Ln, "enable");
   function Wr() {
@@ -9331,10 +14754,32 @@ function yy(t, r) {
       A.props = ae, Fr(), re.interactiveDebounce !== ae.interactiveDebounce && (Ve(), C = Mf(Nn, ae.interactiveDebounce)), re.triggerTarget && !ae.triggerTarget ? $i(re.triggerTarget).forEach(function(Ae) {
         Ae.removeAttribute("aria-expanded");
       }) : ae.triggerTarget && t.removeAttribute("aria-expanded"), Ze(), De(), B && B(re, ae), A.popperInstance && (ci(), It().forEach(function(Ae) {
+=======
+  __name(Gn, "Gn");
+  c(Gn, "enable");
+  function Yr() {
+    A.hide(), A.state.isEnabled = false;
+  }
+  __name(Yr, "Yr");
+  c(Yr, "disable");
+  function jn() {
+    clearTimeout(n), clearTimeout(a), cancelAnimationFrame(s);
+  }
+  __name(jn, "jn");
+  c(jn, "clearDelayTimeouts");
+  function hn(L) {
+    if (!A.state.isDestroyed) {
+      je("onBeforeUpdate", [A, L]), Nn();
+      var re = A.props, ae = jf(e, Object.assign({}, re, Nf(L), { ignoreAttributes: true }));
+      A.props = ae, Wr(), re.interactiveDebounce !== ae.interactiveDebounce && (Ve(), T = Rf(kn, ae.interactiveDebounce)), re.triggerTarget && !ae.triggerTarget ? Fi(re.triggerTarget).forEach(function(Ae) {
+        Ae.removeAttribute("aria-expanded");
+      }) : ae.triggerTarget && e.removeAttribute("aria-expanded"), Ke(), ke(), B && B(re, ae), A.popperInstance && (di(), It().forEach(function(Ae) {
+>>>>>>> Stashed changes
         requestAnimationFrame(Ae._tippy.popperInstance.forceUpdate);
       })), je("onAfterUpdate", [A, L]);
     }
   }
+<<<<<<< Updated upstream
   __name(fn, "fn");
   c(fn, "setProps");
   function jn(L) {
@@ -9348,21 +14793,56 @@ function yy(t, r) {
       if (A.state.isVisible = true, ie() && (z.style.visibility = "visible"), De(), Je(), A.state.isMounted || (z.style.transition = "none"), ie()) {
         var xt = Ue(), kt = xt.box, At = xt.content;
         Bu([kt, At], 0);
+=======
+  __name(hn, "hn");
+  c(hn, "setProps");
+  function Bn(L) {
+    A.setProps({ content: L });
+  }
+  __name(Bn, "Bn");
+  c(Bn, "setContent");
+  function Zi() {
+    var L = A.state.isVisible, re = A.state.isDestroyed, ae = !A.state.isEnabled, Ae = Hr.isTouch && !A.props.touch, we = Fu(A.props.duration, 0, Pr.duration);
+    if (!(L || re || ae || Ae) && !W().hasAttribute("disabled") && (je("onShow", [A], false), A.props.onShow(A) !== false)) {
+      if (A.state.isVisible = true, ie() && (z.style.visibility = "visible"), ke(), et(), A.state.isMounted || (z.style.transition = "none"), ie()) {
+        var wt = Ue(), Lt = wt.box, At = wt.content;
+        Uu([Lt, At], 0);
+>>>>>>> Stashed changes
       }
       w = c(function() {
         var dr;
         if (!(!A.state.isVisible || d)) {
           if (d = true, z.offsetHeight, z.style.transition = A.props.moveTransition, ie() && A.props.animation) {
+<<<<<<< Updated upstream
             var Zi = Ue(), Pt = Zi.box, _t = Zi.content;
             Bu([Pt, _t], ge), Pf([Pt, _t], "visible");
           }
           it(), Ze(), If($u, A), (dr = A.popperInstance) == null || dr.forceUpdate(), je("onMount", [A]), A.props.animation && ie() && pr(ge, function() {
+=======
+            var Qi = Ue(), Pt = Qi.box, _t = Qi.content;
+            Uu([Pt, _t], we), kf([Pt, _t], "visible");
+          }
+          ot(), Ke(), Df(Vu, A), (dr = A.popperInstance) == null || dr.forceUpdate(), je("onMount", [A]), A.props.animation && ie() && pr(we, function() {
+>>>>>>> Stashed changes
             A.state.isShown = true, je("onShown", [A]);
           });
         }
-      }, "onFirstUpdate"), Tr();
+      }, "onFirstUpdate"), Cr();
     }
   }
+  __name(Zi, "Zi");
+  c(Zi, "show");
+  function Ki() {
+    var L = !A.state.isVisible, re = A.state.isDestroyed, ae = !A.state.isEnabled, Ae = Fu(A.props.duration, 1, Pr.duration);
+    if (!(L || re || ae) && (je("onHide", [A], false), A.props.onHide(A) !== false)) {
+      if (A.state.isVisible = false, A.state.isShown = false, d = false, p = false, ie() && (z.style.visibility = "hidden"), Ve(), cr(), ke(true), ie()) {
+        var we = Ue(), wt = we.box, Lt = we.content;
+        A.props.animation && (Uu([wt, Lt], Ae), kf([wt, Lt], "hidden"));
+      }
+      ot(), Ke(), A.props.animation ? ie() && Tr(Ae, A.unmount) : A.unmount();
+    }
+  }
+<<<<<<< Updated upstream
   __name(Yi, "Yi");
   c(Yi, "show");
   function Xi() {
@@ -9427,6 +14907,60 @@ var Ff = Gt(Qr(), 1);
 var Wu = c((t) => typeof t == "object" && t !== null && typeof t.initHelp == "function", "isHelpable");
 function xe(t) {
   class r extends t {
+=======
+  __name(Ki, "Ki");
+  c(Ki, "hide");
+  function ia(L) {
+    ue().addEventListener("mousemove", T), Df(Ls, T), T(L);
+  }
+  __name(ia, "ia");
+  c(ia, "hideWithInteractivity");
+  function oa() {
+    A.state.isVisible && A.hide(), A.state.isMounted && (fn(), It().forEach(function(L) {
+      L._tippy.unmount();
+    }), z.parentNode && z.parentNode.removeChild(z), Vu = Vu.filter(function(L) {
+      return L !== A;
+    }), A.state.isMounted = false, je("onHidden", [A]));
+  }
+  __name(oa, "oa");
+  c(oa, "unmount");
+  function el() {
+    A.state.isDestroyed || (A.clearDelayTimeouts(), A.unmount(), Nn(), delete e._tippy, A.state.isDestroyed = true, je("onDestroy", [A]));
+  }
+  __name(el, "el");
+  c(el, "destroy");
+}
+__name(Ay, "Ay");
+c(Ay, "createTippy");
+function Wo(e, r) {
+  r === void 0 && (r = {});
+  var t = Pr.plugins.concat(r.plugins || []);
+  yy();
+  var n = Object.assign({}, r, { plugins: t }), a = hy(e);
+  if (false)
+    var s, p;
+  var v = a.reduce(function(m, d) {
+    var h = d && Ay(d, n);
+    return h && m.push(h), m;
+  }, []);
+  return js(e) ? v[0] : v;
+}
+__name(Wo, "Wo");
+c(Wo, "tippy");
+Wo.defaultProps = Pr;
+Wo.setDefaultProps = Cy;
+Wo.currentInput = Hr;
+var l1 = Object.assign({}, jo, { effect: c(function(r) {
+  var t = r.state, n = { popper: { position: t.options.strategy, left: "0", top: "0", margin: "0" }, arrow: { position: "absolute" }, reference: {} };
+  Object.assign(t.elements.popper.style, n.popper), t.styles = n, t.elements.arrow && Object.assign(t.elements.arrow.style, n.arrow);
+}, "effect") });
+Wo.setDefaultProps({ render: Xf });
+var Rt = Wo;
+var Zf = zt(kr(), 1);
+var Ku = c((e) => typeof e == "object" && e !== null && typeof e.initHelp == "function", "isHelpable");
+function ye(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     constructor() {
       super(...arguments);
       this.help = true;
@@ -9448,8 +14982,13 @@ function xe(t) {
         var a;
         (a = this.popup) == null || a.destroy();
       } } });
+<<<<<<< Updated upstream
       this.helpableService = at(this.helpableMachine).onTransition((a) => {
         this.debugHelpable && console.log(`helpable: ${(0, Ff.format)(a.value)}`);
+=======
+      this.helpableService = st(this.helpableMachine).onTransition((a) => {
+        this.debugHelpable && console.log(`helpable: ${(0, Zf.format)(a.value)}`);
+>>>>>>> Stashed changes
       }).start();
     }
     initHelp() {
@@ -9471,10 +15010,17 @@ function xe(t) {
   __name(r, "r");
   return c(r, "HelpableMixinClass"), M([D], r.prototype, "help", 2), M([D], r.prototype, "helpId", 2), M([D], r.prototype, "debugHelpable", 2), r;
 }
+<<<<<<< Updated upstream
 __name(xe, "xe");
 c(xe, "HelpableMixin");
 function ve(t) {
   class r extends t {
+=======
+__name(ye, "ye");
+c(ye, "HelpableMixin");
+function fe(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     constructor() {
       super(...arguments);
       this.hoverable = false;
@@ -9483,6 +15029,7 @@ function ve(t) {
   __name(r, "r");
   return c(r, "HoverableMixinClass"), M([D], r.prototype, "hoverable", 2), r;
 }
+<<<<<<< Updated upstream
 __name(ve, "ve");
 c(ve, "HoverableMixin");
 var Ls = /* @__PURE__ */ new Map();
@@ -9490,10 +15037,20 @@ function Gs(t) {
   if (Ls.has(t))
     return Ls.get(t);
   let r = t.length, e = 0, n = 0, a = 0, s = [];
+=======
+__name(fe, "fe");
+c(fe, "HoverableMixin");
+var Bs = /* @__PURE__ */ new Map();
+function Hs(e) {
+  if (Bs.has(e))
+    return Bs.get(e);
+  let r = e.length, t = 0, n = 0, a = 0, s = [];
+>>>>>>> Stashed changes
   for (let p = 0; p < r; p += 1) {
     let v = t[p], m = t[p + 1], d = t[p - 1];
     v === "{" && m === "{" && d !== "\\" ? (a += 1, a === 1 && (n = p), p += 1) : v === "}" && m === "}" && d !== "\\" && a && (a -= 1, a === 0 && (n > e && (s.push(Object.freeze({ type: "string", start: e, end: n, value: t.slice(e, n) })), e = n), s.push(Object.freeze({ type: "part", start: n, end: p + 2, value: t.slice(e + 2, p).trim() })), p += 1, e = p + 1));
   }
+<<<<<<< Updated upstream
   return e < r && s.push(Object.freeze({ type: "string", start: e, end: r, value: t.slice(e, r) })), Ls.set(t, Object.freeze(s)), Ls.get(t);
 }
 __name(Gs, "Gs");
@@ -9503,6 +15060,17 @@ var Uf = /* @__PURE__ */ new WeakMap();
 var Br = /* @__PURE__ */ __name(class {
   constructor(r, e) {
     this.expression = e, ui.set(this, r), r.updateParent("");
+=======
+  return t < r && s.push(Object.freeze({ type: "string", start: t, end: r, value: e.slice(t, r) })), Bs.set(e, Object.freeze(s)), Bs.get(e);
+}
+__name(Hs, "Hs");
+c(Hs, "parse");
+var pi = /* @__PURE__ */ new WeakMap();
+var Kf = /* @__PURE__ */ new WeakMap();
+var $r = /* @__PURE__ */ __name(class {
+  constructor(r, t) {
+    this.expression = t, pi.set(this, r), r.updateParent("");
+>>>>>>> Stashed changes
   }
   get attributeName() {
     return ui.get(this).attr.name;
@@ -9511,10 +15079,17 @@ var Br = /* @__PURE__ */ __name(class {
     return ui.get(this).attr.namespaceURI;
   }
   get value() {
+<<<<<<< Updated upstream
     return Uf.get(this);
   }
   set value(r) {
     Uf.set(this, r || ""), ui.get(this).updateParent(r);
+=======
+    return Kf.get(this);
+  }
+  set value(r) {
+    Kf.set(this, r || ""), pi.get(this).updateParent(r);
+>>>>>>> Stashed changes
   }
   get element() {
     return ui.get(this).element;
@@ -9525,11 +15100,19 @@ var Br = /* @__PURE__ */ __name(class {
   set booleanValue(r) {
     ui.get(this).booleanValue = r;
   }
+<<<<<<< Updated upstream
 }, "Br");
 c(Br, "AttributeTemplatePart");
 var qi = /* @__PURE__ */ __name(class {
   constructor(r, e) {
     this.element = r, this.attr = e, this.partList = [];
+=======
+}, "$r");
+c($r, "AttributeTemplatePart");
+var Ui = /* @__PURE__ */ __name(class {
+  constructor(r, t) {
+    this.element = r, this.attr = t, this.partList = [];
+>>>>>>> Stashed changes
   }
   get booleanValue() {
     return this.element.hasAttributeNS(this.attr.namespaceURI, this.attr.name);
@@ -9550,12 +15133,21 @@ var qi = /* @__PURE__ */ __name(class {
       this.element.setAttributeNS(this.attr.namespaceURI, this.attr.name, e);
     }
   }
+<<<<<<< Updated upstream
 }, "qi");
 c(qi, "AttributeValueSetter");
 var zn = /* @__PURE__ */ new WeakMap();
 var Rt = /* @__PURE__ */ __name(class {
   constructor(r, e) {
     this.expression = e, zn.set(this, [r]), r.textContent = "";
+=======
+}, "Ui");
+c(Ui, "AttributeValueSetter");
+var Rn = /* @__PURE__ */ new WeakMap();
+var Dt = /* @__PURE__ */ __name(class {
+  constructor(r, t) {
+    this.expression = t, Rn.set(this, [r]), r.textContent = "";
+>>>>>>> Stashed changes
   }
   get value() {
     return zn.get(this).map((r) => r.textContent).join("");
@@ -9576,10 +15168,17 @@ var Rt = /* @__PURE__ */ __name(class {
       n.remove();
     zn.set(this, e);
   }
+<<<<<<< Updated upstream
 }, "Rt");
 c(Rt, "NodeTemplatePart");
 function Wo(t) {
   return { processCallback(r, e, n) {
+=======
+}, "Dt");
+c(Dt, "NodeTemplatePart");
+function Vo(e) {
+  return { processCallback(r, t, n) {
+>>>>>>> Stashed changes
     var a;
     if (!(typeof n != "object" || !n)) {
       for (let s of e)
@@ -9590,6 +15189,7 @@ function Wo(t) {
     }
   } };
 }
+<<<<<<< Updated upstream
 __name(Wo, "Wo");
 c(Wo, "createProcessor");
 function Vo(t, r) {
@@ -9619,12 +15219,48 @@ function* xy(t) {
               s.append(p.value);
             else {
               let v = new Br(s, p.value);
+=======
+__name(Vo, "Vo");
+c(Vo, "createProcessor");
+function Yo(e, r) {
+  e.value = String(r);
+}
+__name(Yo, "Yo");
+c(Yo, "processPropertyIdentity");
+function $s(e, r) {
+  return typeof r == "boolean" && e instanceof $r && typeof e.element[e.attributeName] == "boolean" ? (e.booleanValue = r, true) : false;
+}
+__name($s, "$s");
+c($s, "processBooleanAttribute");
+var Qu = Vo(Yo);
+var Py = Vo((e, r) => {
+  $s(e, r) || Yo(e, r);
+});
+function* _y(e) {
+  let r = e.ownerDocument.createTreeWalker(e, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, null, false), t;
+  for (; t = r.nextNode(); )
+    if (t instanceof Element && t.hasAttributes())
+      for (let n = 0; n < t.attributes.length; n += 1) {
+        let a = t.attributes.item(n);
+        if (a && a.value.includes("{{")) {
+          let s = new Ui(t, a);
+          for (let p of Hs(a.value))
+            if (p.type === "string")
+              s.append(p.value);
+            else {
+              let v = new $r(s, p.value);
+>>>>>>> Stashed changes
               s.append(v), yield v;
             }
         }
       }
+<<<<<<< Updated upstream
     else if (e instanceof Text && e.textContent && e.textContent.includes("{{")) {
       let n = Gs(e.textContent);
+=======
+    else if (t instanceof Text && t.textContent && t.textContent.includes("{{")) {
+      let n = Hs(t.textContent);
+>>>>>>> Stashed changes
       for (let a = 0; a < n.length; a += 1) {
         let s = n[a];
         s.end < e.textContent.length && e.splitText(s.end), s.type === "part" && (yield new Rt(e, s.value));
@@ -9632,6 +15268,7 @@ function* xy(t) {
       }
     }
 }
+<<<<<<< Updated upstream
 __name(xy, "xy");
 c(xy, "collectParts");
 var Bs = /* @__PURE__ */ new WeakMap();
@@ -9652,11 +15289,34 @@ var Vf = /* @__PURE__ */ new WeakMap();
 var Dt = /* @__PURE__ */ __name(class {
   constructor(r, e, n) {
     this.strings = r, this.values = e, this.processor = n;
+=======
+__name(_y, "_y");
+c(_y, "collectParts");
+var qs = /* @__PURE__ */ new WeakMap();
+var Fs = /* @__PURE__ */ new WeakMap();
+var ln = /* @__PURE__ */ __name(class extends DocumentFragment {
+  constructor(r, t, n = Qu) {
+    var a, s;
+    super(), Object.getPrototypeOf(this) !== ln.prototype && Object.setPrototypeOf(this, ln.prototype), this.appendChild(r.content.cloneNode(true)), Fs.set(this, Array.from(_y(this))), qs.set(this, n), (s = (a = qs.get(this)).createCallback) === null || s === void 0 || s.call(a, this, Fs.get(this), t), qs.get(this).processCallback(this, Fs.get(this), t);
+  }
+  update(r) {
+    qs.get(this).processCallback(this, Fs.get(this), r);
+  }
+}, "ln");
+c(ln, "TemplateInstance");
+var Ju = /* @__PURE__ */ new WeakMap();
+var Qf = /* @__PURE__ */ new WeakMap();
+var Jf = /* @__PURE__ */ new WeakMap();
+var Nt = /* @__PURE__ */ __name(class {
+  constructor(r, t, n) {
+    this.strings = r, this.values = t, this.processor = n;
+>>>>>>> Stashed changes
   }
   static setCSPTrustedTypesPolicy(r) {
     Dt.cspTrustedTypesPolicy = r;
   }
   get template() {
+<<<<<<< Updated upstream
     var r, e;
     if (Yu.has(this.strings))
       return Yu.get(this.strings);
@@ -9729,6 +15389,80 @@ __name(Ey, "Ey");
 c(Ey, "isIterable");
 function Qf(t, r) {
   if (!Ey(r))
+=======
+    var r, t;
+    if (Ju.has(this.strings))
+      return Ju.get(this.strings);
+    {
+      let n = document.createElement("template"), a = this.strings.length - 1, s = this.strings.reduce((v, m, d) => v + m + (d < a ? `{{ ${d} }}` : ""), ""), p = (t = (r = Nt.cspTrustedTypesPolicy) === null || r === void 0 ? void 0 : r.createHTML(s)) !== null && t !== void 0 ? t : s;
+      return n.innerHTML = p, Ju.set(this.strings, n), n;
+    }
+  }
+  renderInto(r) {
+    let t = this.template;
+    if (Qf.get(r) !== t) {
+      Qf.set(r, t);
+      let n = new ln(t, this.values, this.processor);
+      Jf.set(r, n), r instanceof Dt ? r.replace(...n.children) : r.appendChild(n);
+      return;
+    }
+    Jf.get(r).update(this.values);
+  }
+}, "Nt");
+c(Nt, "TemplateResult");
+Nt.cspTrustedTypesPolicy = null;
+function X(e, r) {
+  e.renderInto(r);
+}
+__name(X, "X");
+c(X, "render");
+var eh = /* @__PURE__ */ new WeakSet();
+function th(e) {
+  return eh.has(e);
+}
+__name(th, "th");
+c(th, "isDirective");
+function rh(e, r) {
+  return th(r) ? (r(e), true) : false;
+}
+__name(rh, "rh");
+c(rh, "processDirective");
+function Xo(e) {
+  return (...r) => {
+    let t = e(...r);
+    return eh.add(t), t;
+  };
+}
+__name(Xo, "Xo");
+c(Xo, "directive");
+var Zo = /* @__PURE__ */ new WeakMap();
+var Wi = /* @__PURE__ */ __name(class {
+  constructor(r, t) {
+    this.element = r, this.type = t, this.element.addEventListener(this.type, this), Zo.get(this.element).set(this.type, this);
+  }
+  set(r) {
+    typeof r == "function" ? this.handleEvent = r.bind(this.element) : typeof r == "object" && typeof r.handleEvent == "function" ? this.handleEvent = r.handleEvent.bind(r) : (this.element.removeEventListener(this.type, this), Zo.get(this.element).delete(this.type));
+  }
+  static for(r) {
+    Zo.has(r.element) || Zo.set(r.element, /* @__PURE__ */ new Map());
+    let t = r.attributeName.slice(2), n = Zo.get(r.element);
+    return n.has(t) ? n.get(t) : new Wi(r.element, t);
+  }
+}, "Wi");
+c(Wi, "EventHandler");
+function nh(e, r) {
+  return e instanceof $r && e.attributeName.startsWith("on") ? (Wi.for(e).set(r), e.element.removeAttributeNS(e.attributeNamespace, e.attributeName), true) : false;
+}
+__name(nh, "nh");
+c(nh, "processEvent");
+function zy(e) {
+  return typeof e == "object" && Symbol.iterator in e;
+}
+__name(zy, "zy");
+c(zy, "isIterable");
+function ih(e, r) {
+  if (!zy(r))
+>>>>>>> Stashed changes
     return false;
   if (t instanceof Rt) {
     let e = [];
@@ -9742,6 +15476,7 @@ function Qf(t, r) {
   } else
     return t.value = Array.from(r).join(" "), true;
 }
+<<<<<<< Updated upstream
 __name(Qf, "Qf");
 c(Qf, "processIterable");
 function Jf(t, r) {
@@ -9777,14 +15512,56 @@ var Sy = Yo((...t) => (r) => {
 var Cy = Yo((t) => (r) => {
   var e, n;
   if (!(r instanceof Rt))
+=======
+__name(ih, "ih");
+c(ih, "processIterable");
+function oh(e, r) {
+  return r instanceof DocumentFragment && e instanceof Dt ? (r.childNodes.length && e.replace(...r.childNodes), true) : false;
+}
+__name(oh, "oh");
+c(oh, "processDocumentFragment");
+function ah(e, r) {
+  return r instanceof Nt && e instanceof Dt ? (r.renderInto(e), true) : false;
+}
+__name(ah, "ah");
+c(ah, "processSubTemplate");
+function Us(e, r) {
+  rh(e, r) || $s(e, r) || nh(e, r) || ah(e, r) || oh(e, r) || ih(e, r) || Yo(e, r);
+}
+__name(Us, "Us");
+c(Us, "processPart");
+var ec = Vo(Us);
+function U(e, ...r) {
+  return new Nt(e, r, ec);
+}
+__name(U, "U");
+c(U, "html");
+var tc = /* @__PURE__ */ new WeakMap();
+var Ry = Xo((...e) => (r) => {
+  tc.has(r) || tc.set(r, { i: e.length });
+  let t = tc.get(r);
+  for (let n = 0; n < e.length; n += 1)
+    e[n] instanceof Promise ? Promise.resolve(e[n]).then((a) => {
+      n < t.i && (t.i = n, Us(r, a));
+    }) : n <= t.i && (t.i = n, Us(r, e[n]));
+});
+var Dy = Xo((e) => (r) => {
+  var t, n;
+  if (!(r instanceof Dt))
+>>>>>>> Stashed changes
     return;
   let a = document.createElement("template"), s = (n = (e = Dt.cspTrustedTypesPolicy) === null || e === void 0 ? void 0 : e.createHTML(t)) !== null && n !== void 0 ? n : t;
   a.innerHTML = s;
   let p = document.importNode(a.content, true);
   r.replace(...p.childNodes);
 });
+<<<<<<< Updated upstream
 function Te(t) {
   class r extends t {
+=======
+function Se(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     iconHtml(n) {
       return U`${this.iconStyle}
         <div id="icon" part="icon">${this.iconSvg(n)}</div>`;
@@ -9815,11 +15592,19 @@ function Te(t) {
   __name(r, "r");
   return c(r, "IconableMixinClass"), r;
 }
+<<<<<<< Updated upstream
 __name(Te, "Te");
 c(Te, "IconableMixin");
 var ln = c((t) => typeof t == "object" && t !== null && typeof t.if == "string", "isIfable");
 function lt(t) {
   class r extends t {
+=======
+__name(Se, "Se");
+c(Se, "IconableMixin");
+var un = c((e) => typeof e == "object" && e !== null && typeof e.if == "string", "isIfable");
+function Je(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     constructor() {
       super(...arguments);
       this.if = "";
@@ -9828,11 +15613,19 @@ function lt(t) {
   __name(r, "r");
   return c(r, "IfableMixinClass"), M([D], r.prototype, "if", 2), r;
 }
+<<<<<<< Updated upstream
 __name(lt, "lt");
 c(lt, "IfableMixin");
 var qs = c((t) => typeof t == "object" && t !== null && typeof t.initMenu == "function", "isMenuable");
 function Ee(t) {
   class r extends t {
+=======
+__name(Je, "Je");
+c(Je, "IfableMixin");
+var Ws = c((e) => typeof e == "object" && e !== null && typeof e.initMenu == "function", "isMenuable");
+function xe(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     initMenu() {
       this.menu || this.menuContent !== null && (this.addEventListener("click", this.dispatchShowMenuEvent), this.menu = zt(this, { allowHTML: true, animation: false, arrow: false, content: this.menuContent, interactive: true, appendTo: document.body, offset: [0, 16], placement: "top", theme: "operation-menu", trigger: "manual", onShow: this.initMenuItems.bind(this), onHide: () => {
         var a, s, p, v;
@@ -9856,10 +15649,10 @@ function Ee(t) {
       if (a === null || a.content === void 0)
         return null;
       let s = a.content.cloneNode(true), p = document.createDocumentFragment();
-      return Z(U`${s}`, p), p;
+      return X(U`${s}`, p), p;
     }
     initMenuItems(a) {
-      if (ln(a.reference)) {
+      if (un(a.reference)) {
         let p = a.popper.querySelector("button[data-operation-menu-if]");
         H.notNull(p), p.disabled = false, this.ifTooltip = p._tippy, this.ifTooltip === void 0 && (this.ifTooltip = zt(p, { animation: false, content: "Set `if' Conditional" }), p.addEventListener("mousedown", this.showIfInspector.bind(this)));
       }
@@ -9890,6 +15683,7 @@ function Ee(t) {
   __name(r, "r");
   return c(r, "MenuableMixinClass"), r;
 }
+<<<<<<< Updated upstream
 __name(Ee, "Ee");
 c(Ee, "MenuableMixin");
 var th = Gt(Qr(), 1);
@@ -9897,6 +15691,15 @@ var Fs = Gt(ko(), 1);
 var ur = c((t) => t != null && typeof t.resizeable == "boolean", "isResizeable");
 function Us(t) {
   class r extends t {
+=======
+__name(xe, "xe");
+c(xe, "MenuableMixin");
+var sh = zt(kr(), 1);
+var Vs = zt(Lo(), 1);
+var ur = c((e) => e != null && typeof e.resizeable == "boolean", "isResizeable");
+function Ys(e) {
+  class r extends e {
+>>>>>>> Stashed changes
     constructor() {
       super(...arguments);
       this.span = 1;
@@ -9908,7 +15711,11 @@ function Us(t) {
         pe("resizeable:init", {}, this);
       }, setInteract: (a, s) => {
         H.need(s.type === "SET_INTERACT", "event type must be SET_INTERACT"), H.notNull(this.resizeHandle);
+<<<<<<< Updated upstream
         let p = (0, Fs.default)(this.resizeHandle);
+=======
+        let p = (0, Vs.default)(this.resizeHandle);
+>>>>>>> Stashed changes
         p.styleCursor(false), p.on("down", this.grabResizeHandle.bind(this)), p.on("up", this.releaseResizeHandle.bind(this)), p.draggable({ onstart: this.startResizing.bind(this), onmove: this.moveResizeHandle.bind(this), onend: this.endResizing.bind(this) });
       }, grabResizeHandle: (a, s) => {
         H.need(s.type === "GRAB_RESIZE_HANDLE", "event type must be GRAB_RESIZE_HANDLE"), this.resizing = true, pe("resizeable:grab-resize-handle", {}, this);
@@ -9921,8 +15728,13 @@ function Us(t) {
       }, endResizing: () => {
         this.resizing = false, this.moveResizeHandleTo(0, 0), pe("resizeable:end-resizing", {}, this);
       } } });
+<<<<<<< Updated upstream
       this.resizeableService = at(this.resizeableMachine).onTransition((a) => {
         this.debugResizeable && console.log(`resizeable: ${(0, th.format)(a.value)}`);
+=======
+      this.resizeableService = st(this.resizeableMachine).onTransition((a) => {
+        this.debugResizeable && console.log(`resizeable: ${(0, sh.format)(a.value)}`);
+>>>>>>> Stashed changes
       });
     }
     get resizeable() {
@@ -9932,7 +15744,11 @@ function Us(t) {
       a ? this.resizeableService.send({ type: "SET_INTERACT" }) : this.resizeableService.send({ type: "UNSET_INTERACT" });
     }
     set resizeHandleSnapTargets(a) {
+<<<<<<< Updated upstream
       (0, Fs.default)(this.resizeHandle).draggable({ modifiers: [Fs.default.modifiers.snap({ targets: a, relativePoints: [{ x: 0.5, y: 0.5 }] })], listeners: { move: this.resizeHandleMoveEventListener.bind(this) } });
+=======
+      (0, Vs.default)(this.resizeHandle).draggable({ modifiers: [Vs.default.modifiers.snap({ targets: a, relativePoints: [{ x: 0.5, y: 0.5 }] })], listeners: { move: this.resizeHandleMoveEventListener.bind(this) } });
+>>>>>>> Stashed changes
     }
     initResizeable() {
       this.resizeableService.state === void 0 && this.resizeableService.start();
@@ -9971,6 +15787,7 @@ function Us(t) {
   __name(r, "r");
   return c(r, "ResizeableMixinClass"), M([D], r.prototype, "span", 2), M([D], r.prototype, "resizeHandleX", 2), M([D], r.prototype, "resizeHandleY", 2), M([D], r.prototype, "debugResizeable", 2), M([D], r.prototype, "resizing", 2), M([Oe], r.prototype, "resizeHandle", 2), r;
 }
+<<<<<<< Updated upstream
 __name(Us, "Us");
 c(Us, "ResizeableMixin");
 var rh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9980,11 +15797,23 @@ var rh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 var wr = /* @__PURE__ */ __name(class extends Ee(xe(we(Le(Te(be(ve(HTMLElement))))))) {
   get operationType() {
     return Hl;
+=======
+__name(Ys, "Ys");
+c(Ys, "ResizeableMixin");
+var lh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M31 24C31 27.866 27.866 31 24 31C20.134 31 17 27.866 17 24C17 20.134 20.134 17 24 17C27.866 17 31 20.134 31 24Z" stroke="currentColor" stroke-width="3"/>
+</svg>
+`;
+var xr = /* @__PURE__ */ __name(class extends xe(ye(be(Ne(Se(ve(fe(HTMLElement))))))) {
+  get operationType() {
+    return Wl;
+>>>>>>> Stashed changes
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
+<<<<<<< Updated upstream
     Z(U`<div part="body">${this.iconHtml(rh)}</div>
         <div part="outline"></div>`, this.shadowRoot);
   }
@@ -10004,6 +15833,27 @@ function Ot(t, r = 4) {
 __name(Ot, "Ot");
 c(Ot, "forceSigned");
 var nt = /* @__PURE__ */ __name(class extends Ee(xe(we(be(ve(HTMLElement))))) {
+=======
+    X(U`<div part="body">${this.iconHtml(lh)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return `"${Wl}"`;
+  }
+}, "xr");
+c(xr, "AntiControlGateElement"), xr = M([K], xr);
+function uh(e) {
+  return /^-?\d+$/.test(e);
+}
+__name(uh, "uh");
+c(uh, "isNumeric");
+function Ot(e, r = 4) {
+  return (e >= 0 ? "+" : "") + e.toFixed(r);
+}
+__name(Ot, "Ot");
+c(Ot, "forceSigned");
+var it = /* @__PURE__ */ __name(class extends xe(ye(be(ve(fe(HTMLElement))))) {
+>>>>>>> Stashed changes
   constructor() {
     super(...arguments);
     this.x = 0;
@@ -10011,7 +15861,11 @@ var nt = /* @__PURE__ */ __name(class extends Ee(xe(we(be(ve(HTMLElement))))) {
     this.z = 0;
   }
   get operationType() {
+<<<<<<< Updated upstream
     return $l;
+=======
+    return Vl;
+>>>>>>> Stashed changes
   }
   showPopup() {
     this.showInspector();
@@ -10027,8 +15881,13 @@ var nt = /* @__PURE__ */ __name(class extends Ee(xe(we(be(ve(HTMLElement))))) {
     } }), this.popup.show();
   }
   blochInspectorPopupContent() {
+<<<<<<< Updated upstream
     let e = document.createDocumentFragment();
     return Z(U`
+=======
+    let t = document.createDocumentFragment();
+    return X(U`
+>>>>>>> Stashed changes
         <header>
           <h1>Local State</h1>
         </header>
@@ -10067,7 +15926,7 @@ var nt = /* @__PURE__ */ __name(class extends Ee(xe(we(be(ve(HTMLElement))))) {
         style="transform: rotate${s}(${a}deg)"
         data-targets="bloch-display.vectorEndCircles"
       ></div>`, "vectorEndCircle");
-    Z(U`<style>
+    X(U`<style>
           #background {
             border-radius: 9999px;
             background-color: #ffffff;
@@ -10196,7 +16055,11 @@ var nt = /* @__PURE__ */ __name(class extends Ee(xe(we(be(ve(HTMLElement))))) {
         <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
+<<<<<<< Updated upstream
     return `"${$l}"`;
+=======
+    return `"${Vl}"`;
+>>>>>>> Stashed changes
   }
   updateBlochVector() {
     var n;
@@ -10233,6 +16096,7 @@ var nt = /* @__PURE__ */ __name(class extends Ee(xe(we(be(ve(HTMLElement))))) {
   thetaRadian() {
     return 180 * Math.max(0, Math.PI / 2 - Math.atan2(this.z, Math.sqrt(this.y * this.y + this.x * this.x))) / Math.PI;
   }
+<<<<<<< Updated upstream
 }, "nt");
 c(nt, "BlochDisplayElement"), M([Oe], nt.prototype, "body", 2), M([Oe], nt.prototype, "vectorLine", 2), M([Oe], nt.prototype, "vectorEnd", 2), M([Oe], nt.prototype, "vector", 2), M([dt], nt.prototype, "vectorEndCircles", 2), M([D], nt.prototype, "x", 2), M([D], nt.prototype, "y", 2), M([D], nt.prototype, "z", 2), nt = M([K], nt);
 var ih = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10242,11 +16106,23 @@ var ih = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 var Bt = /* @__PURE__ */ __name(class extends Ee(xe(we(Le(Te(be(ve(HTMLElement))))))) {
   get operationType() {
     return ql;
+=======
+}, "it");
+c(it, "BlochDisplayElement"), M([Oe], it.prototype, "body", 2), M([Oe], it.prototype, "vectorLine", 2), M([Oe], it.prototype, "vectorEnd", 2), M([Oe], it.prototype, "vector", 2), M([dt], it.prototype, "vectorEndCircles", 2), M([D], it.prototype, "x", 2), M([D], it.prototype, "y", 2), M([D], it.prototype, "z", 2), it = M([K], it);
+var ch = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16C19.5817 16 16 19.5817 16 24C16 28.4183 19.5817 32 24 32Z" fill="currentColor"/>
+</svg>
+`;
+var Bt = /* @__PURE__ */ __name(class extends xe(ye(be(Ne(Se(ve(fe(HTMLElement))))))) {
+  get operationType() {
+    return Yl;
+>>>>>>> Stashed changes
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
+<<<<<<< Updated upstream
     Z(U`<div part="body">${this.iconHtml(ih)}</div>
         <div part="outline"></div>`, this.shadowRoot);
   }
@@ -10309,6 +16185,21 @@ var sh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 </svg>
 `;
 var Yt = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(In(we(Le(Te(be(ve(HTMLElement)))))))))) {
+=======
+    X(U`<div part="body">${this.iconHtml(ch)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return `"${Yl}"`;
+  }
+}, "Bt");
+c(Bt, "ControlGateElement"), Bt = M([K], Bt);
+var ph = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M17 13V35M17 24H31M31 13V35" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var Wt = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(be(Ne(Se(ve(fe(HTMLElement))))))))) {
+>>>>>>> Stashed changes
   get operationType() {
     return ts;
   }
@@ -10316,6 +16207,7 @@ var Yt = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(In(we(Le(Te(be(ve(HTML
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
+<<<<<<< Updated upstream
     Z(U`<div part="body">${this.iconHtml(sh)}</div>
         <div part="outline"></div>`, this.shadowRoot);
   }
@@ -10325,6 +16217,66 @@ var Yt = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(In(we(Le(Te(be(ve(HTML
 }, "Yt");
 c(Yt, "PhaseGateElement"), Yt = M([K], Yt);
 var Ws = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+=======
+    X(U`<div part="body">${this.iconHtml(ph)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.if !== "" ? `"${ts}<${this.if}"` : `"${ts}"`;
+  }
+}, "Wt");
+c(Wt, "HGateElement"), Wt = M([K], Wt);
+var dh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 36C4 30.6957 6.10714 25.6086 9.85786 21.8579C13.6086 18.1071 18.6957 16 24 16C29.3043 16 34.3914 18.1071 38.1421 21.8579C41.8929 25.6086 44 30.6957 44 36" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  <path d="M24.625 33.5L37.75 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  <path d="M24.625 35.375C25.6605 35.375 26.5 34.5355 26.5 33.5C26.5 32.4645 25.6605 31.625 24.625 31.625C23.5895 31.625 22.75 32.4645 22.75 33.5C22.75 34.5355 23.5895 35.375 24.625 35.375Z" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var Vt = /* @__PURE__ */ __name(class extends xe(ye(df(be(Se(ve(fe(HTMLElement))))))) {
+  constructor() {
+    super(...arguments);
+    this.value = "";
+  }
+  get operationType() {
+    return rs;
+  }
+  connectedCallback() {
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
+  }
+  update() {
+    X(U`<div part="body">
+          ${this.iconHtml(dh)}
+          <div id="value" part="value"></div>
+        </div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.flag === "" ? `"${rs}"` : `"${rs}>${this.flag}"`;
+  }
+}, "Vt");
+c(Vt, "MeasurementGateElement"), M([D], Vt.prototype, "value", 2), Vt = M([K], Vt);
+var fh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M18.2857 36L29.7143 12M16 24.5714C16 25.622 16.2069 26.6623 16.609 27.6329C17.011 28.6035 17.6003 29.4854 18.3431 30.2283C19.086 30.9712 19.9679 31.5604 20.9385 31.9625C21.9091 32.3645 22.9494 32.5714 24 32.5714C25.0506 32.5714 26.0909 32.3645 27.0615 31.9625C28.0321 31.5604 28.914 30.9712 29.6569 30.2283C30.3997 29.4854 30.989 28.6035 31.391 27.6329C31.7931 26.6623 32 25.622 32 24.5714C32 23.5209 31.7931 22.4806 31.391 21.51C30.989 20.5394 30.3997 19.6574 29.6569 18.9146C28.914 18.1717 28.0321 17.5824 27.0615 17.1804C26.0909 16.7784 25.0506 16.5714 24 16.5714C22.9494 16.5714 21.9091 16.7784 20.9385 17.1804C19.9679 17.5824 19.086 18.1717 18.3431 18.9146C17.6003 19.6574 17.011 20.5394 16.609 21.51C16.2069 22.4806 16 23.5209 16 24.5714Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var Yt = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(An(be(Ne(Se(ve(fe(HTMLElement)))))))))) {
+  get operationType() {
+    return ns;
+  }
+  connectedCallback() {
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
+  }
+  update() {
+    X(U`<div part="body">${this.iconHtml(fh)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.angle === "" ? `"${ns}"` : `"${ns}(${this.angle.replace("/", "_")})"`;
+  }
+}, "Yt");
+c(Yt, "PhaseGateElement"), Yt = M([K], Yt);
+var Xs = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+>>>>>>> Stashed changes
   <path
     d="M7 15L12 20L17 15M7 9L12 4L17 9"
     stroke="currentColor"
@@ -10334,7 +16286,11 @@ var Ws = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="htt
   />
 </svg>
 `;
+<<<<<<< Updated upstream
 var lh = `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+=======
+var hh = `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+>>>>>>> Stashed changes
   <line x1="26.2" y1="7.47778" x2="29.2" y2="7.47778" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
   <line x1="27.7" y1="6" x2="27.7" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
   <line x1="20.0973" y1="12" x2="25.0353" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
@@ -10346,28 +16302,49 @@ var lh = `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="htt
   <line x1="1" y1="-1" x2="3.34292" y2="-1" transform="matrix(0.570556 0.821259 -0.805999 0.591917 5.9646 18.5332)" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
+<<<<<<< Updated upstream
 var xr = /* @__PURE__ */ __name(class extends Ee(xe(Us(we(Te(be(ve(HTMLElement))))))) {
   get operationType() {
     return Fl;
+=======
+var wr = /* @__PURE__ */ __name(class extends xe(ye(Ys(be(Se(ve(fe(HTMLElement))))))) {
+  get operationType() {
+    return Xl;
+>>>>>>> Stashed changes
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable(), this.initResizeable());
   }
   update() {
+<<<<<<< Updated upstream
     Z(U`<div part="layout">
           <div part="body">${this.iconHtml(lh)}</div>
           <div class="resize-handle" part="resize-handle" data-target="qft-dagger-gate.resizeHandle">
             <div part="resize-handle-icon">${this.iconHtml(Ws)}</div>
+=======
+    X(U`<div part="layout">
+          <div part="body">${this.iconHtml(hh)}</div>
+          <div class="resize-handle" part="resize-handle" data-target="qft-dagger-gate.resizeHandle">
+            <div part="resize-handle-icon">${this.iconHtml(Xs)}</div>
+>>>>>>> Stashed changes
           </div>
         </div>
         <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
+<<<<<<< Updated upstream
     return `"${Fl}${this.span}"`;
   }
 }, "xr");
 c(xr, "QftDaggerGateElement"), xr = M([K], xr);
 var uh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+=======
+    return `"${Xl}${this.span}"`;
+  }
+}, "wr");
+c(wr, "QftDaggerGateElement"), wr = M([K], wr);
+var mh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+>>>>>>> Stashed changes
   <line x1="32" y1="17" x2="42" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
   <line x1="37" y1="18" x2="37" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
   <line x1="21" y1="17" x2="21" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
@@ -10377,28 +16354,49 @@ var uh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M17 23.5C17 27.229 14.408 30 11.5 30C8.59199 30 6 27.229 6 23.5C6 19.771 8.59199 17 11.5 17C14.408 17 17 19.771 17 23.5Z" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
+<<<<<<< Updated upstream
 var Er = /* @__PURE__ */ __name(class extends Ee(xe(Us(we(Te(be(ve(HTMLElement))))))) {
   get operationType() {
     return Ul;
+=======
+var Er = /* @__PURE__ */ __name(class extends xe(ye(Ys(be(Se(ve(fe(HTMLElement))))))) {
+  get operationType() {
+    return Zl;
+>>>>>>> Stashed changes
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable(), this.initResizeable());
   }
   update() {
+<<<<<<< Updated upstream
     Z(U`<div part="layout">
           <div part="body">${this.iconHtml(uh)}</div>
           <div class="resize-handle" part="resize-handle" data-target="qft-gate.resizeHandle">
             <div part="resize-handle-icon">${this.iconHtml(Ws)}</div>
+=======
+    X(U`<div part="layout">
+          <div part="body">${this.iconHtml(mh)}</div>
+          <div class="resize-handle" part="resize-handle" data-target="qft-gate.resizeHandle">
+            <div part="resize-handle-icon">${this.iconHtml(Xs)}</div>
+>>>>>>> Stashed changes
           </div>
         </div>
         <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
+<<<<<<< Updated upstream
     return `"${Ul}${this.span}"`;
   }
 }, "Er");
 c(Er, "QftGateElement"), Er = M([K], Er);
 var ch = `<svg
+=======
+    return `"${Zl}${this.span}"`;
+  }
+}, "Er");
+c(Er, "QftGateElement"), Er = M([K], Er);
+var vh = `<svg
+>>>>>>> Stashed changes
   width="48"
   height="48"
   viewBox="0 0 48 48"
@@ -10412,6 +16410,7 @@ var ch = `<svg
   <path d="M24 32L34 18M34 32L24 18" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
+<<<<<<< Updated upstream
 var Xt = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(we(Le(Te(be(ve(HTMLElement))))))))) {
   get operationType() {
     return rs;
@@ -10457,6 +16456,9 @@ var dh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 </svg>
 `;
 var Kt = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(In(we(Le(Te(be(ve(HTMLElement)))))))))) {
+=======
+var Xt = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(be(Ne(Se(ve(fe(HTMLElement))))))))) {
+>>>>>>> Stashed changes
   get operationType() {
     return is;
   }
@@ -10464,6 +16466,7 @@ var Kt = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(In(we(Le(Te(be(ve(HTML
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
+<<<<<<< Updated upstream
     Z(U`<div part="body">${this.iconHtml(dh)}</div>
         <div part="outline"></div>`, this.shadowRoot);
   }
@@ -10508,11 +16511,15 @@ var Sr = /* @__PURE__ */ __name(class extends Ee(xe(we(Le(Te(be(ve(HTMLElement))
   }
   update() {
     Z(U`<div part="body">${this.iconHtml(hh)}</div>
+=======
+    X(U`<div part="body">${this.iconHtml(vh)}</div>
+>>>>>>> Stashed changes
         <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return `"${Wl}"`;
   }
+<<<<<<< Updated upstream
 }, "Sr");
 c(Sr, "SpacerGateElement"), Sr = M([K], Sr);
 var mh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10520,6 +16527,17 @@ var mh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 </svg>
 `;
 var Jt = /* @__PURE__ */ __name(class extends Ee(xe(Ke(we(Le(Te(be(ve(HTMLElement)))))))) {
+=======
+}, "Xt");
+c(Xt, "RnotGateElement"), Xt = M([K], Xt);
+var gh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.3214 35V24M18 24.5L21.7303 35M12.3214 24V13C21 13 22 15.5 22 18.5C22 21.5 21 24 12.3214 24Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  <path d="M34.6093 13.0016L24.7475 35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  <path d="M24.8187 13.0016L34.6093 35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var Zt = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(An(be(Ne(Se(ve(fe(HTMLElement)))))))))) {
+>>>>>>> Stashed changes
   get operationType() {
     return Vl;
   }
@@ -10527,12 +16545,13 @@ var Jt = /* @__PURE__ */ __name(class extends Ee(xe(Ke(we(Le(Te(be(ve(HTMLElemen
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(mh)}</div>
+    X(U`<div part="body">${this.iconHtml(gh)}</div>
         <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
     return `"${Vl}"`;
   }
+<<<<<<< Updated upstream
 }, "Jt");
 c(Jt, "SwapGateElement"), Jt = M([K], Jt);
 var vh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10540,6 +16559,17 @@ var vh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 </svg>
 `;
 var er = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(we(Le(Te(be(ve(HTMLElement))))))))) {
+=======
+}, "Zt");
+c(Zt, "RxGateElement"), Zt = M([K], Zt);
+var bh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.3214 35V24M18 24.5L21.7303 35M12.3214 24V13C21 13 22 15.5 22 18.5C22 21.5 21 24 12.3214 24Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  <path d="M34.6093 13.0016L29.5 23.5V35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  <path d="M24.5 13L29.5 23.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var Kt = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(An(be(Ne(Se(ve(fe(HTMLElement)))))))))) {
+>>>>>>> Stashed changes
   get operationType() {
     return as;
   }
@@ -10547,10 +16577,11 @@ var er = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(we(Le(Te(be(ve(HTMLEle
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
-    Z(U`<div part="body">${this.iconHtml(vh)}</div>
+    X(U`<div part="body">${this.iconHtml(bh)}</div>
         <div part="outline"></div>`, this.shadowRoot);
   }
   toJson() {
+<<<<<<< Updated upstream
     return this.if !== "" ? `"${as}<${this.if}"` : `"${as}"`;
   }
 }, "er");
@@ -10560,6 +16591,121 @@ var gh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 </svg>
 `;
 var Ht = /* @__PURE__ */ __name(class extends Ee(xe(we(Te(be(ve(HTMLElement)))))) {
+=======
+    return this.angle === "" ? `"${as}"` : `"${as}(${this.angle.replace("/", "_")})"`;
+  }
+}, "Kt");
+c(Kt, "RyGateElement"), Kt = M([K], Kt);
+var yh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.3214 35V24M18 24.5L21.7303 35M12.3214 24V13C21 13 22 15.5 22 18.5C22 21.5 21 24 12.3214 24Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  <path d="M24.5 13H34.5L24.5 35H34.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var Qt = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(An(be(Ne(Se(ve(fe(HTMLElement)))))))))) {
+  get operationType() {
+    return ss;
+  }
+  connectedCallback() {
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
+  }
+  update() {
+    X(U`<div part="body">${this.iconHtml(yh)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.angle === "" ? `"${ss}"` : `"${ss}(${this.angle.replace("/", "_")})"`;
+  }
+}, "Qt");
+c(Qt, "RzGateElement"), Qt = M([K], Qt);
+var xh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M33 21H39V27H33V21Z" fill="currentColor"/>
+  <path d="M21 21H27V27H21V21Z" fill="currentColor"/>
+  <path d="M9 21H15V27H9V21Z" fill="currentColor"/>
+</svg>
+`;
+var Sr = /* @__PURE__ */ __name(class extends xe(ye(be(Ne(Se(ve(fe(HTMLElement))))))) {
+  get operationType() {
+    return Kl;
+  }
+  connectedCallback() {
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
+  }
+  update() {
+    X(U`<div part="body">${this.iconHtml(xh)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return `"${Kl}"`;
+  }
+}, "Sr");
+c(Sr, "SpacerGateElement"), Sr = M([K], Sr);
+var wh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 36L36 12M12 12L36 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var Jt = /* @__PURE__ */ __name(class extends xe(ye(Ye(be(Ne(Se(ve(fe(HTMLElement)))))))) {
+  get operationType() {
+    return Ql;
+  }
+  connectedCallback() {
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
+  }
+  update() {
+    X(U`<div part="body">${this.iconHtml(wh)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return `"${Ql}"`;
+  }
+}, "Jt");
+c(Jt, "SwapGateElement"), Jt = M([K], Jt);
+var Eh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 13H33M24 13V35" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  <path d="M37 10H43M40 6V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var _r = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(be(Ne(Se(ve(fe(HTMLElement))))))))) {
+  get operationType() {
+    return us;
+  }
+  connectedCallback() {
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
+  }
+  update() {
+    X(U`<div part="body">${this.iconHtml(Eh)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.if !== "" ? `"${us}<${this.if}"` : `"${us}"`;
+  }
+}, "_r");
+c(_r, "TDaggerGateElement"), _r = M([K], _r);
+var Sh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 13H33M24 13V35" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var er = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(be(Ne(Se(ve(fe(HTMLElement))))))))) {
+  get operationType() {
+    return ls;
+  }
+  connectedCallback() {
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
+  }
+  update() {
+    X(U`<div part="body">${this.iconHtml(Sh)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.if !== "" ? `"${ls}<${this.if}"` : `"${ls}"`;
+  }
+}, "er");
+c(er, "TGateElement"), er = M([K], er);
+var Th = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6 5V43M37.4516 5L43.5 24L37.4516 43" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var Ht = /* @__PURE__ */ __name(class extends xe(ye(be(Se(ve(fe(HTMLElement)))))) {
+>>>>>>> Stashed changes
   constructor() {
     super(...arguments);
     this.value = "";
@@ -10567,9 +16713,15 @@ var Ht = /* @__PURE__ */ __name(class extends Ee(xe(we(Te(be(ve(HTMLElement)))))
   get operationType() {
     switch (this.value) {
       case "0":
+<<<<<<< Updated upstream
         return dd;
       case "1":
         return fd;
+=======
+        return bd;
+      case "1":
+        return yd;
+>>>>>>> Stashed changes
       default:
         throw new Error(`Invalid write value: ${this.value}`);
     }
@@ -10578,8 +16730,13 @@ var Ht = /* @__PURE__ */ __name(class extends Ee(xe(we(Te(be(ve(HTMLElement)))))
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
+<<<<<<< Updated upstream
     Z(U`<div part="body">
           ${this.iconHtml(gh)}
+=======
+    X(U`<div part="body">
+          ${this.iconHtml(Th)}
+>>>>>>> Stashed changes
           <div part="value"></div>
         </div>
         <div part="outline"></div>`, this.shadowRoot);
@@ -10589,6 +16746,7 @@ var Ht = /* @__PURE__ */ __name(class extends Ee(xe(we(Te(be(ve(HTMLElement)))))
   }
 }, "Ht");
 c(Ht, "WriteGateElement"), M([D], Ht.prototype, "value", 2), Ht = M([K], Ht);
+<<<<<<< Updated upstream
 var bh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M15 24H33M24 15V33" stroke="currentColor" stroke-width="2" stroke-linecap="round"/ vector-effect="non-scaling-stroke">
 </svg>
@@ -10596,11 +16754,21 @@ var bh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 var tr = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(we(Le(Te(be(ve(HTMLElement))))))))) {
   get operationType() {
     return ss;
+=======
+var Ch = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 24H33M24 15V33" stroke="currentColor" stroke-width="2" stroke-linecap="round"/ vector-effect="non-scaling-stroke">
+</svg>
+`;
+var tr = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(be(Ne(Se(ve(fe(HTMLElement))))))))) {
+  get operationType() {
+    return cs;
+>>>>>>> Stashed changes
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
+<<<<<<< Updated upstream
     Z(U`<div part="body">${this.iconHtml(bh)}</div>
         <div part="outline"></div>`, this.shadowRoot);
   }
@@ -10616,11 +16784,29 @@ var yh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 var rr = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(we(Le(Te(be(ve(HTMLElement))))))))) {
   get operationType() {
     return ls;
+=======
+    X(U`<div part="body">${this.iconHtml(Ch)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.if !== "" ? `"${cs}<${this.if}"` : `"${cs}"`;
+  }
+}, "tr");
+c(tr, "XGateElement"), tr = M([K], tr);
+var Oh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M17 13L24 24M24 24L31 13M24 24V35" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var rr = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(be(Ne(Se(ve(fe(HTMLElement))))))))) {
+  get operationType() {
+    return ps;
+>>>>>>> Stashed changes
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
+<<<<<<< Updated upstream
     Z(U`<div part="body">${this.iconHtml(yh)}</div>
         <div part="outline"></div>`, this.shadowRoot);
   }
@@ -10636,11 +16822,29 @@ var wh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
 var nr = /* @__PURE__ */ __name(class extends Ee(xe(lt(Ke(we(Le(Te(be(ve(HTMLElement))))))))) {
   get operationType() {
     return us;
+=======
+    X(U`<div part="body">${this.iconHtml(Oh)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.if !== "" ? `"${ps}<${this.if}"` : `"${ps}"`;
+  }
+}, "rr");
+c(rr, "YGateElement"), rr = M([K], rr);
+var Mh = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M17.5 13H31L17.5 35H31" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+</svg>
+`;
+var nr = /* @__PURE__ */ __name(class extends xe(ye(Je(Ye(be(Ne(Se(ve(fe(HTMLElement))))))))) {
+  get operationType() {
+    return ds;
+>>>>>>> Stashed changes
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable());
   }
   update() {
+<<<<<<< Updated upstream
     Z(U`<div part="body">${this.iconHtml(wh)}</div>
         <div part="outline"></div>`, this.shadowRoot);
   }
@@ -10671,6 +16875,38 @@ var Ph = Gt(Qr(), 1);
 var Ko = Gt(ko(), 1);
 var Ju = c((t) => t !== null && t instanceof _r, "isAngleSliderElement");
 var _r = /* @__PURE__ */ __name(class extends HTMLElement {
+=======
+    X(U`<div part="body">${this.iconHtml(Mh)}</div>
+        <div part="outline"></div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.if !== "" ? `"${ds}<${this.if}"` : `"${ds}"`;
+  }
+}, "nr");
+c(nr, "ZGateElement"), nr = M([K], nr);
+var Xe = c((e) => e instanceof xr || e instanceof it || e instanceof Bt || e instanceof Wt || e instanceof Vt || e instanceof Yt || e instanceof wr || e instanceof Er || e instanceof Xt || e instanceof Zt || e instanceof Kt || e instanceof Qt || e instanceof Sr || e instanceof Jt || e instanceof _r || e instanceof er || e instanceof Ht || e instanceof tr || e instanceof rr || e instanceof nr, "isOperation");
+var Ih = c((e) => e != null && e instanceof Wt, "isHGateElement");
+var Ah = c((e) => e != null && e instanceof tr, "isXGateElement");
+var Ph = c((e) => e != null && e instanceof rr, "isYGateElement");
+var _h = c((e) => e != null && e instanceof nr, "isZGateElement");
+var Ko = c((e) => e != null && e instanceof Yt, "isPhaseGateElement");
+var zh = c((e) => e != null && e instanceof er, "isTGateElement");
+var Rh = c((e) => e != null && e instanceof Xt, "isRnotGateElement");
+var Zs = c((e) => e != null && e instanceof Zt, "isRxGateElement");
+var Ks = c((e) => e != null && e instanceof Kt, "isRyGateElement");
+var Qs = c((e) => e != null && e instanceof Qt, "isRzGateElement");
+var ez = c((e) => e != null && e instanceof Sr, "isSpacerGateElement");
+var Dh = c((e) => e != null && e instanceof Jt, "isSwapGateElement");
+var rc = c((e) => e != null && e instanceof Bt, "isControlGateElement");
+var nc = c((e) => e != null && e instanceof xr, "isAntiControlGateElement");
+var Nh = c((e) => e != null && e instanceof it, "isBlochDisplayElement");
+var tz = c((e) => e != null && e instanceof Ht, "isWriteGateElement");
+var kh = c((e) => e != null && e instanceof Vt, "isMeasurementGateElement");
+var Lh = zt(kr(), 1);
+var Qo = zt(Lo(), 1);
+var ic = c((e) => e !== null && e instanceof zr, "isAngleSliderElement");
+var zr = /* @__PURE__ */ __name(class extends HTMLElement {
+>>>>>>> Stashed changes
   constructor() {
     super(...arguments);
     this.angle = "";
@@ -10682,9 +16918,15 @@ var _r = /* @__PURE__ */ __name(class extends HTMLElement {
     this.angleSliderMachine = ht({ id: "angle-slider", initial: "idle", states: { idle: { on: { START_MOVE: { target: "moving" }, SET_ANGLE: { target: "idle", actions: ["setDenominatorByAngle", "updateSnapAngles", "setRadianInAngle", "updateHandlePosition", "dispatchUpdateEvent"] }, SET_DENOMINATOR: { target: "idle", actions: ["validateDenominator", "updateSnapAngles", "setAngleInRadian"] } } }, moving: { on: { SET_ANGLE: { target: "moving", actions: ["dispatchChangeEvent"] }, END_MOVE: { target: "idle", actions: ["dispatchUpdateEvent"] } } } } }, { actions: { validateDenominator: () => {
       if (!Number.isInteger(this.denominator) || this.denominator <= 0)
         throw new pt("Bad denominator", this.denominator);
+<<<<<<< Updated upstream
     }, setDenominatorByAngle: (e, n) => {
       n.type === "SET_ANGLE" && (this.denominator = wo(this.angle));
     }, setAngleInRadian: (e, n) => {
+=======
+    }, setDenominatorByAngle: (t, n) => {
+      n.type === "SET_ANGLE" && (this.denominator = wo(this.angle));
+    }, setAngleInRadian: (t, n) => {
+>>>>>>> Stashed changes
       if (n.type !== "SET_DENOMINATOR")
         return;
       let [, a] = this.findSnapAngle(this.radian);
@@ -10692,7 +16934,11 @@ var _r = /* @__PURE__ */ __name(class extends HTMLElement {
     }, setRadianInAngle: (e, n) => {
       if (n.type !== "SET_ANGLE")
         return;
+<<<<<<< Updated upstream
       let [a] = this.findSnapAngle(od(this.angle));
+=======
+      let [a] = this.findSnapAngle(cd(this.angle));
+>>>>>>> Stashed changes
       this.radian = a;
     }, updateSnapAngles: () => {
       this.updateSnapAngles();
@@ -10703,8 +16949,13 @@ var _r = /* @__PURE__ */ __name(class extends HTMLElement {
     }, dispatchUpdateEvent: () => {
       this.dispatchEvent(new Event("angle-slider-update", { bubbles: true }));
     } } });
+<<<<<<< Updated upstream
     this.angleSliderService = at(this.angleSliderMachine).onTransition((e) => {
       this.debug && console.log(`circuit-step: ${(0, Ph.format)(e.value)}`);
+=======
+    this.angleSliderService = st(this.angleSliderMachine).onTransition((t) => {
+      this.debug && console.log(`circuit-step: ${(0, Lh.format)(t.value)}`);
+>>>>>>> Stashed changes
     }).start();
   }
   attributeChangedCallback(e, n, a) {
@@ -10714,10 +16965,14 @@ var _r = /* @__PURE__ */ __name(class extends HTMLElement {
     this.shadowRoot === null && this.attachShadow({ mode: "open" }), this.update(), this.updateSnapAngles(), this.initInteraction();
   }
   disconnectedCallback() {
+<<<<<<< Updated upstream
     (0, Ko.default)(this).unset();
+=======
+    (0, Qo.default)(this).unset();
+>>>>>>> Stashed changes
   }
   update() {
-    Z(U`<style>
+    X(U`<style>
         :host {
           display: inline-block;
           position: relative;
@@ -10733,13 +16988,22 @@ var _r = /* @__PURE__ */ __name(class extends HTMLElement {
       </style>`, this.shadowRoot);
   }
   initInteraction() {
+<<<<<<< Updated upstream
     (0, Ko.default)(this).draggable({ origin: "self", modifiers: [Ko.default.modifiers.restrict({ restriction: "self" })], listeners: { start: this.startMove.bind(this), move: this.move.bind(this), end: this.endMove.bind(this) } });
+=======
+    (0, Qo.default)(this).draggable({ origin: "self", modifiers: [Qo.default.modifiers.restrict({ restriction: "self" })], listeners: { start: this.startMove.bind(this), move: this.move.bind(this), end: this.endMove.bind(this) } });
+>>>>>>> Stashed changes
   }
   startMove() {
     this.angleSliderService.send({ type: "START_MOVE" });
   }
+<<<<<<< Updated upstream
   move(e) {
     let n = Ko.default.getElementRect(e.target).width, a = e.pageX / n;
+=======
+  move(t) {
+    let n = Qo.default.getElementRect(t.target).width, a = t.pageX / n;
+>>>>>>> Stashed changes
     this.left = a;
     let s = this.proportionToRadian(a);
     this.setAttribute("data-radian", s.toString());
@@ -10771,14 +17035,20 @@ var _r = /* @__PURE__ */ __name(class extends HTMLElement {
   set left(e) {
     this.style.paddingLeft = `${e * 100}%`;
   }
+<<<<<<< Updated upstream
 }, "_r");
 c(_r, "AngleSliderElement"), M([D], _r.prototype, "angle", 2), M([D], _r.prototype, "radian", 2), M([D], _r.prototype, "denominator", 2), M([D], _r.prototype, "disabled", 2), M([D], _r.prototype, "debug", 2), _r = M([K], _r);
 var Ui = /* @__PURE__ */ __name(class extends HTMLElement {
+=======
+}, "zr");
+c(zr, "AngleSliderElement"), M([D], zr.prototype, "angle", 2), M([D], zr.prototype, "radian", 2), M([D], zr.prototype, "denominator", 2), M([D], zr.prototype, "disabled", 2), M([D], zr.prototype, "debug", 2), zr = M([K], zr);
+var Vi = /* @__PURE__ */ __name(class extends HTMLElement {
+>>>>>>> Stashed changes
   connectedCallback() {
     this.attachShadow({ mode: "open" }), this.update();
   }
   update() {
-    Z(U`<slot></slot>`, this.shadowRoot);
+    X(U`<slot></slot>`, this.shadowRoot);
   }
   activateButton(e) {
     let n = e.currentTarget;
@@ -10787,9 +17057,15 @@ var Ui = /* @__PURE__ */ __name(class extends HTMLElement {
       a.removeAttribute("data-active");
     n.setAttribute("data-active", "");
   }
+<<<<<<< Updated upstream
 }, "Ui");
 c(Ui, "ButtonGroupElement"), M([dt], Ui.prototype, "buttons", 2), Ui = M([K], Ui);
 var Wi = Gt(zh(), 1);
+=======
+}, "Vi");
+c(Vi, "ButtonGroupElement"), M([dt], Vi.prototype, "buttons", 2), Vi = M([K], Vi);
+var Yi = zt(jh(), 1);
+>>>>>>> Stashed changes
 var ut = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
@@ -10983,8 +17259,13 @@ var ut = /* @__PURE__ */ __name(class extends HTMLElement {
       return H.notNull(n), parseInt(n);
     }), H.need(this.visibleQubitCircleKets.length <= 2 ** this.qubitCount, `visibleQubitCircleKets.length (= ${this.visibleQubitCircleKets.length}) must be <= 2^${this.qubitCount}`), this.dispatchEvent(new CustomEvent("circle-notation-visibility-change", { detail: this.visibleQubitCircleKets, bubbles: true }));
   }
+<<<<<<< Updated upstream
   setAmplitudes(e) {
     Wi.default.mutate(() => {
+=======
+  setAmplitudes(t) {
+    Yi.default.mutate(() => {
+>>>>>>> Stashed changes
       for (let n of this.qubitCircles) {
         let a = n.getAttribute("data-ket");
         H.notNull(a);
@@ -10999,7 +17280,7 @@ var ut = /* @__PURE__ */ __name(class extends HTMLElement {
     });
   }
   renderShadowRoot() {
-    Z(U`<style>
+    X(U`<style>
           circle-notation {
             --magnitude: 0;
             --magnitude-color: rgb(14 165 233); /* sky-500 */
@@ -11239,7 +17520,11 @@ var ut = /* @__PURE__ */ __name(class extends HTMLElement {
     }
   }
   drawQubitCircles() {
+<<<<<<< Updated upstream
     H.notNull(this.window), H.notNull(this.innerContainer), this.qubitCount !== 0 && Wi.default.mutate(() => {
+=======
+    H.notNull(this.window), H.notNull(this.innerContainer), this.qubitCount !== 0 && Yi.default.mutate(() => {
+>>>>>>> Stashed changes
       this.style.setProperty("--width", `${this.qubitCircleSizePx}px`), this.style.setProperty("--height", `${this.qubitCircleSizePx}px`), this.style.setProperty("--magnitude", "0"), this.style.setProperty("--magnitude-color", "rgb(14 165 233)"), this.style.setProperty("--border-width", `${this.qubitCircleLineWidth}px`), this.style.setProperty("--phase-width", `${this.qubitCircleLineWidth}px`);
       let e = [];
       this.lastColStartIndex = this.visibleColStartIndex, this.lastColEndIndex = this.visibleColEndIndex, this.lastRowStartIndex = this.visibleRowStartIndex, this.lastRowEndIndex = this.visibleRowEndIndex;
@@ -11256,7 +17541,11 @@ var ut = /* @__PURE__ */ __name(class extends HTMLElement {
     this.drawNewlyVisibleQubitCircles(), this.removeInvisibleQubitCircles();
   }
   drawNewlyVisibleQubitCircles() {
+<<<<<<< Updated upstream
     this.window !== void 0 && this.innerContainer !== void 0 && (Wi.default.measure(() => {
+=======
+    this.window !== void 0 && this.innerContainer !== void 0 && (Yi.default.measure(() => {
+>>>>>>> Stashed changes
       this.qubitCirclePositions = [];
       let e = this.overscanColStartIndex, n = this.overscanColEndIndex, a = this.overscanRowStartIndex, s = this.overscanRowEndIndex;
       if (!(this.lastColStartIndex === e && this.lastColEndIndex === n && this.lastRowStartIndex === a && this.lastRowEndIndex === s)) {
@@ -11265,17 +17554,28 @@ var ut = /* @__PURE__ */ __name(class extends HTMLElement {
             (v < this.lastColStartIndex || this.lastColEndIndex < v || p < this.lastRowStartIndex || this.lastRowEndIndex < p) && this.qubitCirclePositions.push({ col: v, row: p });
         this.lastColStartIndex = e, this.lastColEndIndex = n, this.lastRowStartIndex = a, this.lastRowEndIndex = s;
       }
+<<<<<<< Updated upstream
     }), Wi.default.mutate(() => {
       let e = document.createDocumentFragment();
+=======
+    }), Yi.default.mutate(() => {
+      let t = document.createDocumentFragment();
+>>>>>>> Stashed changes
       for (let n of this.allQubitCircleElements(this.qubitCirclePositions))
         e.appendChild(n);
       this.innerContainer.appendChild(e), this.qubitCirclePositions.length !== 0 && this.updateVisibleQubitCircleKets();
     }));
   }
   removeInvisibleQubitCircles() {
+<<<<<<< Updated upstream
     Wi.default.mutate(() => {
       for (let e of this.qubitCircles) {
         let n = e.getAttribute("data-col"), a = e.getAttribute("data-row");
+=======
+    Yi.default.mutate(() => {
+      for (let t of this.qubitCircles) {
+        let n = t.getAttribute("data-col"), a = t.getAttribute("data-row");
+>>>>>>> Stashed changes
         H.notNull(n), H.notNull(a);
         let s = parseInt(n), p = parseInt(a);
         if (s < this.lastColStartIndex || this.lastColEndIndex < s || p < this.lastRowStartIndex || this.lastRowEndIndex < p) {
@@ -11397,10 +17697,15 @@ var ut = /* @__PURE__ */ __name(class extends HTMLElement {
     H.notNull(p);
     let v = n.getAttribute("data-amplitude-imag");
     H.notNull(v);
+<<<<<<< Updated upstream
     let m = parseInt(s), d = parseFloat(p), h = parseFloat(v), y = new Tn(d, h), w = y.abs(), S = y.phase() / Math.PI * 180, C = document.importNode(this.qubitCirclePopupTemplate.content, true), T = C.getElementById("qubit-circle-popup--ket-binary-value"), _ = C.getElementById("qubit-circle-popup--ket-decimal-value"), N = C.getElementById("qubit-circle-popup--amplitude"), j = C.getElementById("qubit-circle-popup--amplitude-real-value"), $ = C.getElementById("qubit-circle-popup--amplitude-imag-value"), A = C.getElementById("qubit-circle-popup--probability"), ee = C.getElementById("qubit-circle-popup--probability-value"), z = C.getElementById("qubit-circle-popup--phase"), B = C.getElementById("qubit-circle-popup--phase-value");
     H.notNull(N), H.notNull(j), H.notNull($), H.notNull(A), H.notNull(ee), H.notNull(z), H.notNull(B), T && (T.textContent = m.toString(2).padStart(this.qubitCount, "0")), _ && (_.textContent = m.toString()), this.showQubitCirclePopupAmplitude ? (j.textContent = Ot(y.real, 5), $.textContent = `${Ot(y.imag, 5)}i`) : N.style.display = "none", this.showQubitCirclePopupProbability ? ee.textContent = `${Ot(w * w * 100, 4)}%` : A.style.display = "none", this.showQubitCirclePopupPhase ? B.textContent = `${Ot(S, 2)}\xB0` : z.style.display = "none";
+=======
+    let m = parseInt(s), d = parseFloat(p), h = parseFloat(v), y = new On(d, h), x = y.abs(), S = y.phase() / Math.PI * 180, T = document.importNode(this.qubitCirclePopupTemplate.content, true), C = T.getElementById("qubit-circle-popup--ket-binary-value"), _ = T.getElementById("qubit-circle-popup--ket-decimal-value"), N = T.getElementById("qubit-circle-popup--amplitude"), j = T.getElementById("qubit-circle-popup--amplitude-real-value"), $ = T.getElementById("qubit-circle-popup--amplitude-imag-value"), A = T.getElementById("qubit-circle-popup--probability"), ee = T.getElementById("qubit-circle-popup--probability-value"), z = T.getElementById("qubit-circle-popup--phase"), B = T.getElementById("qubit-circle-popup--phase-value");
+    H.notNull(N), H.notNull(j), H.notNull($), H.notNull(A), H.notNull(ee), H.notNull(z), H.notNull(B), C && (C.textContent = m.toString(2).padStart(this.qubitCount, "0")), _ && (_.textContent = m.toString()), this.showQubitCirclePopupAmplitude ? (j.textContent = Ot(y.real, 5), $.textContent = `${Ot(y.imag, 5)}i`) : N.style.display = "none", this.showQubitCirclePopupProbability ? ee.textContent = `${Ot(x * x * 100, 4)}%` : A.style.display = "none", this.showQubitCirclePopupPhase ? B.textContent = `${Ot(S, 2)}\xB0` : z.style.display = "none";
+>>>>>>> Stashed changes
     let J = document.createElement("div");
-    J.appendChild(C), a.setContent(J.innerHTML), a.show();
+    J.appendChild(T), a.setContent(J.innerHTML), a.show();
   }
   hideQubitCirclePopup(e) {
     let n = e.target;
@@ -11413,7 +17718,11 @@ var ut = /* @__PURE__ */ __name(class extends HTMLElement {
   }
 }, "ut");
 c(ut, "CircleNotationElement"), M([D], ut.prototype, "qubitCount", 2), M([D], ut.prototype, "qubitCircleSize", 2), M([D], ut.prototype, "colCount", 2), M([D], ut.prototype, "rowCount", 2), M([D], ut.prototype, "paddingX", 2), M([D], ut.prototype, "paddingY", 2), M([D], ut.prototype, "overscanCount", 2), M([D], ut.prototype, "colorPhase", 2), M([D], ut.prototype, "qubitCirclePopupTemplateId", 2), M([D], ut.prototype, "showQubitCirclePopupAmplitude", 2), M([D], ut.prototype, "showQubitCirclePopupProbability", 2), M([D], ut.prototype, "showQubitCirclePopupPhase", 2), M([Oe], ut.prototype, "window", 2), M([Oe], ut.prototype, "innerContainer", 2), M([dt], ut.prototype, "qubitCircles", 2), ut = M([K], ut);
+<<<<<<< Updated upstream
 var Vi = /* @__PURE__ */ __name(class extends HTMLElement {
+=======
+var Xi = /* @__PURE__ */ __name(class extends HTMLElement {
+>>>>>>> Stashed changes
   connectedCallback() {
     this.attachShadow({ mode: "open" }), this.renderShadowRoot();
   }
@@ -11424,11 +17733,17 @@ var Vi = /* @__PURE__ */ __name(class extends HTMLElement {
     this.circleNotation.startColorPhaseMode();
   }
   renderShadowRoot() {
-    Z(U`<slot></slot>`, this.shadowRoot);
+    X(U`<slot></slot>`, this.shadowRoot);
   }
+<<<<<<< Updated upstream
 }, "Vi");
 c(Vi, "CircleNotationPanelElement"), M([Oe], Vi.prototype, "circleNotation", 2), Vi = M([K], Vi);
 var Rh = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+=======
+}, "Xi");
+c(Xi, "CircleNotationPanelElement"), M([Oe], Xi.prototype, "circleNotation", 2), Xi = M([K], Xi);
+var Bh = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+>>>>>>> Stashed changes
   <path
     d="M15 18L9 12L15 6"
     stroke="currentColor"
@@ -11438,7 +17753,11 @@ var Rh = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="htt
     />
 </svg>
 `;
+<<<<<<< Updated upstream
 var Dh = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+=======
+var Hh = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+>>>>>>> Stashed changes
   <path
     d="M9 18L15 12L9 6"
     stroke="currentColor"
@@ -11448,7 +17767,11 @@ var Dh = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="htt
     />
 </svg>
 `;
+<<<<<<< Updated upstream
 var Hr = /* @__PURE__ */ __name(class extends HTMLElement {
+=======
+var qr = /* @__PURE__ */ __name(class extends HTMLElement {
+>>>>>>> Stashed changes
   constructor() {
     super(...arguments);
     this.currentGateSetIndex = 0;
@@ -11466,7 +17789,7 @@ var Hr = /* @__PURE__ */ __name(class extends HTMLElement {
     this.toggleGateSets(), this.toggleDots(), this.removePopinAnimationGates(), this.enableContentClipping(), this.makeAllGateSetsInvisible(), this.createPopinAnimationGates(), this.animatePopinAnimationGates();
   }
   update() {
-    Z(U`
+    X(U`
         <style>
           button {
             position: absolute;
@@ -11537,7 +17860,11 @@ var Hr = /* @__PURE__ */ __name(class extends HTMLElement {
             data-action="click:gate-carousel#prevGateSet"
             style="left: 0"
           >
+<<<<<<< Updated upstream
             ${this.iconHtml(Rh)}
+=======
+            ${this.iconHtml(Bh)}
+>>>>>>> Stashed changes
           </button>
           <button
             id="next-button"
@@ -11546,7 +17873,11 @@ var Hr = /* @__PURE__ */ __name(class extends HTMLElement {
             data-action="click:gate-carousel#nextGateSet"
             style="right: 0"
           >
+<<<<<<< Updated upstream
             ${this.iconHtml(Dh)}
+=======
+            ${this.iconHtml(Hh)}
+>>>>>>> Stashed changes
           </button>
 
           <div id="body">
@@ -11604,9 +17935,15 @@ var Hr = /* @__PURE__ */ __name(class extends HTMLElement {
     return H.notNull(e), e;
   }
   get gatesInActiveGateSet() {
+<<<<<<< Updated upstream
     return Array.from(this.activeGateSet.children).map((e) => {
       let n = e.children.item(0);
       return H.need(Ye(n), `${n} must be an operation.`), n;
+=======
+    return Array.from(this.activeGateSet.children).map((t) => {
+      let n = t.children.item(0);
+      return H.need(Xe(n), `${n} must be an operation.`), n;
+>>>>>>> Stashed changes
     });
   }
   createPopinAnimationGates() {
@@ -11630,9 +17967,15 @@ var Hr = /* @__PURE__ */ __name(class extends HTMLElement {
     for (let [e, n] of this.dots.entries())
       e === this.currentGateSetIndex ? n.classList.add("dot--active") : n.classList.remove("dot--active");
   }
+<<<<<<< Updated upstream
 }, "Hr");
 c(Hr, "GateCarouselElement"), M([D], Hr.prototype, "currentGateSetIndex", 2), M([Oe], Hr.prototype, "contentClipper", 2), M([dt], Hr.prototype, "gateSets", 2), M([dt], Hr.prototype, "dots", 2), M([dt], Hr.prototype, "popinAnimationGates", 2), Hr = M([K], Hr);
 var Qo = /* @__PURE__ */ __name(class extends HTMLElement {
+=======
+}, "qr");
+c(qr, "GateCarouselElement"), M([D], qr.prototype, "currentGateSetIndex", 2), M([Oe], qr.prototype, "contentClipper", 2), M([dt], qr.prototype, "gateSets", 2), M([dt], qr.prototype, "dots", 2), M([dt], qr.prototype, "popinAnimationGates", 2), qr = M([K], qr);
+var Jo = /* @__PURE__ */ __name(class extends HTMLElement {
+>>>>>>> Stashed changes
   get isInspectorShown() {
     return this.popup.state.isVisible;
   }
@@ -11640,7 +17983,7 @@ var Qo = /* @__PURE__ */ __name(class extends HTMLElement {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initPopup(), this.addEventListener("mousedown", this.showPopup), document.addEventListener("click", this.maybeHidePopup.bind(this)));
   }
   update() {
-    Z(U`<slot></slot>`, this.shadowRoot);
+    X(U`<slot></slot>`, this.shadowRoot);
   }
   showInspector(e) {
     this.showPopup(), this.inspector.operation = e;
@@ -11670,6 +18013,7 @@ var Qo = /* @__PURE__ */ __name(class extends HTMLElement {
   showPopup() {
     this.popup.show(), this.inspector.disableAllPanes();
   }
+<<<<<<< Updated upstream
   maybeHidePopup(e) {
     let n = e.target;
     !this.popup.popper.contains(n) && !this.popup.reference.contains(n) && !Ye(n) && this.popup.hide();
@@ -11682,6 +18026,20 @@ var Qo = /* @__PURE__ */ __name(class extends HTMLElement {
   }
 }, "Qo");
 c(Qo, "InspectorButtonElement"), Qo = M([K], Qo);
+=======
+  maybeHidePopup(t) {
+    let n = t.target;
+    !this.popup.popper.contains(n) && !this.popup.reference.contains(n) && !Xe(n) && this.popup.hide();
+  }
+  get popupContent() {
+    let t = document.querySelector("#operation-inspector-template");
+    H.notNull(t);
+    let n = t.content.cloneNode(true), a = document.createDocumentFragment();
+    return X(U`${n}`, a), a;
+  }
+}, "Jo");
+c(Jo, "InspectorButtonElement"), Jo = M([K], Jo);
+>>>>>>> Stashed changes
 var Mt = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
@@ -11696,7 +18054,11 @@ var Mt = /* @__PURE__ */ __name(class extends HTMLElement {
     return this.angleInput.value;
   }
   get reducedAngle() {
+<<<<<<< Updated upstream
     return ud(this.angleInput.value);
+=======
+    return hd(this.angleInput.value);
+>>>>>>> Stashed changes
   }
   get reduceAngleFraction() {
     return this.reduceAngleFractionCheckbox.checked;
@@ -11704,10 +18066,17 @@ var Mt = /* @__PURE__ */ __name(class extends HTMLElement {
   get flag() {
     return this.flagInput.value;
   }
+<<<<<<< Updated upstream
   set operation(e) {
     if (this.clear(), this.disableAllPanes(), ln(e) && (this.conditionalGatePaneDisabled = false, this.ifInput.value = e.if), Xn(e)) {
       let n = wo(e.angle);
       Zo(e) ? (this.angleInputLabel.textContent = "\u{1D711}", this.denominatorVariableLabel.textContent = "\u{1D711}") : (Vs(e) || Ys(e) || Xs(e)) && (this.angleInputLabel.textContent = "\u{1D6F3}", this.denominatorVariableLabel.textContent = "\u{1D6F3}"), this.anglePaneDisabled = false, this.angleInput.value = e.angle, this.backupCurrentPhi(), this.angleSlider.angle = e.angle, this.denominatorInput.value = n.toString(), this.denominatorLabel.textContent = n.toString(), this.backupCurrentDenominator(), this.reduceAngleFractionCheckbox.checked = e.reducedAngle !== "";
+=======
+  set operation(t) {
+    if (this.clear(), this.disableAllPanes(), un(t) && (this.conditionalGatePaneDisabled = false, this.ifInput.value = t.if), Kn(t)) {
+      let n = wo(t.angle);
+      Ko(t) ? (this.angleInputLabel.textContent = "\u{1D711}", this.denominatorVariableLabel.textContent = "\u{1D711}") : (Zs(t) || Ks(t) || Qs(t)) && (this.angleInputLabel.textContent = "\u{1D6F3}", this.denominatorVariableLabel.textContent = "\u{1D6F3}"), this.anglePaneDisabled = false, this.angleInput.value = t.angle, this.backupCurrentPhi(), this.angleSlider.angle = t.angle, this.denominatorInput.value = n.toString(), this.denominatorLabel.textContent = n.toString(), this.backupCurrentDenominator(), this.reduceAngleFractionCheckbox.checked = t.reducedAngle !== "";
+>>>>>>> Stashed changes
     }
     Jn(e) && (this.conditionalFlagPaneDisabled = false, this.flagInput.value = e.flag);
   }
@@ -11721,8 +18090,9 @@ var Mt = /* @__PURE__ */ __name(class extends HTMLElement {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.addEventListener("angle-slider-change", this.changeAngle), this.addEventListener("angle-slider-update", this.updateAngle), this.ifInput.addEventListener("change", this.changeIf.bind(this)), this.angleInput.addEventListener("change", this.updateAngleInput.bind(this)), this.denominatorInput.addEventListener("change", this.changeDenominator.bind(this)), this.reduceAngleFractionCheckbox.addEventListener("change", this.changeReduceSetting.bind(this)), this.flagInput.addEventListener("change", this.changeFlag.bind(this)));
   }
   update() {
-    Z(U`<slot></slot>`, this.shadowRoot);
+    X(U`<slot></slot>`, this.shadowRoot);
   }
+<<<<<<< Updated upstream
   changeAngle(e) {
     let n = e.target;
     if (!Ju(n))
@@ -11732,6 +18102,17 @@ var Mt = /* @__PURE__ */ __name(class extends HTMLElement {
   updateAngle(e) {
     let n = e.target;
     if (!Ju(n))
+=======
+  changeAngle(t) {
+    let n = t.target;
+    if (!ic(n))
+      throw new Error(`${n} isn't an angle-slider`);
+    this.angleInput.value = n.angle, this.dispatchEvent(new Event("operation-inspector-angle-change", { bubbles: true }));
+  }
+  updateAngle(t) {
+    let n = t.target;
+    if (!ic(n))
+>>>>>>> Stashed changes
       throw new Error(`${n} isn't an angle-slider`);
     this.angleInput.value = n.angle, this.dispatchEvent(new Event("operation-inspector-angle-update", { bubbles: true }));
   }
@@ -11746,10 +18127,17 @@ var Mt = /* @__PURE__ */ __name(class extends HTMLElement {
     this.dispatchEvent(new Event("operation-inspector-if-change", { bubbles: true }));
   }
   updateAngleInput() {
+<<<<<<< Updated upstream
     let e = this.angleInput.value;
     if (ld(e)) {
       let n, a = wo(e);
       this.denominatorInput.value = a.toString(), this.denominatorLabel.textContent = a.toString(), this.backupCurrentDenominator(), ad(e, "-2\u03C0") ? (n = `-${a * 2}\u03C0/${a}`, this.angleInput.value = n) : sd(e, "2\u03C0") ? (n = `${a * 2}\u03C0/${a}`, this.angleInput.value = n) : n = e, this.backupCurrentPhi(), this.angleSlider.angle = n, this.dispatchEvent(new Event("operation-inspector-angle-update", { bubbles: true }));
+=======
+    let t = this.angleInput.value;
+    if (fd(t)) {
+      let n, a = wo(t);
+      this.denominatorInput.value = a.toString(), this.denominatorLabel.textContent = a.toString(), this.backupCurrentDenominator(), pd(t, "-2\u03C0") ? (n = `-${a * 2}\u03C0/${a}`, this.angleInput.value = n) : dd(t, "2\u03C0") ? (n = `${a * 2}\u03C0/${a}`, this.angleInput.value = n) : n = t, this.backupCurrentPhi(), this.angleSlider.angle = n, this.dispatchEvent(new Event("operation-inspector-angle-update", { bubbles: true }));
+>>>>>>> Stashed changes
     } else
       this.restoreOriginalPhi();
   }
@@ -11764,15 +18152,24 @@ var Mt = /* @__PURE__ */ __name(class extends HTMLElement {
     H.notNull(e), this.denominatorInput.value = e, this.denominatorLabel.textContent = e;
   }
   changeDenominator() {
+<<<<<<< Updated upstream
     let e = this.denominatorInput.value;
     nh(e) && parseInt(e) > 1 ? (this.denominatorLabel.textContent = e, this.angleSlider.denominator = parseInt(e), this.angleInput.value = this.angleSlider.angle) : this.restoreOriginalDenominator();
+=======
+    let t = this.denominatorInput.value;
+    uh(t) && parseInt(t) > 1 ? (this.denominatorLabel.textContent = t, this.angleSlider.denominator = parseInt(t), this.angleInput.value = this.angleSlider.angle) : this.restoreOriginalDenominator();
+>>>>>>> Stashed changes
   }
   changeReduceSetting() {
     this.dispatchEvent(new Event("operation-inspector-angle-update", { bubbles: true }));
   }
 }, "Mt");
 c(Mt, "OperationInspectorElement"), M([Oe], Mt.prototype, "ifInput", 2), M([Oe], Mt.prototype, "angleInputLabel", 2), M([Oe], Mt.prototype, "angleInput", 2), M([Oe], Mt.prototype, "angleSlider", 2), M([Oe], Mt.prototype, "denominatorInput", 2), M([Oe], Mt.prototype, "denominatorVariableLabel", 2), M([Oe], Mt.prototype, "denominatorLabel", 2), M([Oe], Mt.prototype, "reduceAngleFractionCheckbox", 2), M([Oe], Mt.prototype, "flagInput", 2), M([D], Mt.prototype, "conditionalGatePaneDisabled", 2), M([D], Mt.prototype, "anglePaneDisabled", 2), M([D], Mt.prototype, "conditionalFlagPaneDisabled", 2), Mt = M([K], Mt);
+<<<<<<< Updated upstream
 var Zs = Gt(kh(), 1);
+=======
+var Js = zt(qh(), 1);
+>>>>>>> Stashed changes
 var $t = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
@@ -11791,7 +18188,7 @@ var $t = /* @__PURE__ */ __name(class extends HTMLElement {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.addPopupEventListeners());
   }
   update() {
-    Z(U`<style>
+    X(U`<style>
           :host {
             position: relative;
           }
@@ -11886,6 +18283,7 @@ var $t = /* @__PURE__ */ __name(class extends HTMLElement {
     let e = zt(this, { allowHTML: true, animation: false, delay: 0, theme: "tooltip" });
     if (this.popupTemplate === null)
       return;
+<<<<<<< Updated upstream
     let n = document.importNode(this.popupTemplate.content, true), a = new Zs.default(this.amplitude), s = n.getElementById("qubit-circle-popup--header"), p = n.getElementById("qubit-circle-popup--ket-binary-value"), v = n.getElementById("qubit-circle-popup--ket-decimal-value"), m = n.getElementById("qubit-circle-popup--amplitude"), d = n.getElementById("qubit-circle-popup--amplitude-real-value"), h = n.getElementById("qubit-circle-popup--amplitude-imag-value"), y = n.getElementById("qubit-circle-popup--probability"), w = n.getElementById("qubit-circle-popup--probability-value"), S = n.getElementById("qubit-circle-popup--phase"), C = n.getElementById("qubit-circle-popup--phase-value");
     H.notNull(s), H.notNull(p), H.notNull(v), H.notNull(m), H.notNull(d), H.notNull(h), H.notNull(y), H.notNull(w), H.notNull(S), H.notNull(C), this.showPopupHeader ? (p.textContent = this.ket.toString(2).padStart(this.qubitCount, "0"), v.textContent = this.ket.toString()) : s.style.display = "none", this.showPopupAmplitude ? (d.textContent = Ot(a.re, 5), h.textContent = `${Ot(a.im, 5)}i`) : m.style.display = "none", this.showPopupProbability ? w.textContent = `${Ot(this.magnitude * this.magnitude * 100, 4)}%` : y.style.display = "none", this.showPopupPhase ? C.textContent = `${Ot(this.phaseDeg, 2)}\xB0` : S.style.display = "none";
     let T = document.createElement("div");
@@ -11896,6 +18294,18 @@ var $t = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   get phase() {
     return new Zs.default(this.amplitude).arg();
+=======
+    let n = document.importNode(this.popupTemplate.content, true), a = new Js.default(this.amplitude), s = n.getElementById("qubit-circle-popup--header"), p = n.getElementById("qubit-circle-popup--ket-binary-value"), v = n.getElementById("qubit-circle-popup--ket-decimal-value"), m = n.getElementById("qubit-circle-popup--amplitude"), d = n.getElementById("qubit-circle-popup--amplitude-real-value"), h = n.getElementById("qubit-circle-popup--amplitude-imag-value"), y = n.getElementById("qubit-circle-popup--probability"), x = n.getElementById("qubit-circle-popup--probability-value"), S = n.getElementById("qubit-circle-popup--phase"), T = n.getElementById("qubit-circle-popup--phase-value");
+    H.notNull(s), H.notNull(p), H.notNull(v), H.notNull(m), H.notNull(d), H.notNull(h), H.notNull(y), H.notNull(x), H.notNull(S), H.notNull(T), this.showPopupHeader ? (p.textContent = this.ket.toString(2).padStart(this.qubitCount, "0"), v.textContent = this.ket.toString()) : s.style.display = "none", this.showPopupAmplitude ? (d.textContent = Ot(a.re, 5), h.textContent = `${Ot(a.im, 5)}i`) : m.style.display = "none", this.showPopupProbability ? x.textContent = `${Ot(this.magnitude * this.magnitude * 100, 4)}%` : y.style.display = "none", this.showPopupPhase ? T.textContent = `${Ot(this.phaseDeg, 2)}\xB0` : S.style.display = "none";
+    let C = document.createElement("div");
+    C.appendChild(n), t.setContent(C.innerHTML), t.show();
+  }
+  get magnitude() {
+    return new Js.default(this.amplitude).abs();
+  }
+  get phase() {
+    return new Js.default(this.amplitude).arg();
+>>>>>>> Stashed changes
   }
   get phaseDeg() {
     return this.phase / Math.PI * 180;
@@ -11912,12 +18322,21 @@ var $t = /* @__PURE__ */ __name(class extends HTMLElement {
   }
 }, "$t");
 c($t, "QubitCircleElement"), M([D], $t.prototype, "ket", 2), M([D], $t.prototype, "qubitCount", 2), M([D], $t.prototype, "amplitude", 2), M([D], $t.prototype, "hidePhase", 2), M([D], $t.prototype, "popupTemplateId", 2), M([D], $t.prototype, "showPopupHeader", 2), M([D], $t.prototype, "showPopupAmplitude", 2), M([D], $t.prototype, "showPopupProbability", 2), M([D], $t.prototype, "showPopupPhase", 2), M([D], $t.prototype, "darkMode", 2), $t = M([K], $t);
+<<<<<<< Updated upstream
 var jh = Gt(Qr(), 1);
 var Lh = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M2 10C2 10 4.00498 7.26822 5.63384 5.63824C7.26269 4.00827 9.5136 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.89691 21 4.43511 18.2543 3.35177 14.5M2 10V4M2 10H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
 var Gh = `<svg part="tail-spin-icon" width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+=======
+var Wh = zt(kr(), 1);
+var Fh = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 10C2 10 4.00498 7.26822 5.63384 5.63824C7.26269 4.00827 9.5136 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.89691 21 4.43511 18.2543 3.35177 14.5M2 10V4M2 10H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+var Uh = `<svg part="tail-spin-icon" width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+>>>>>>> Stashed changes
     <defs>
         <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
             <stop stop-color="#fff" stop-opacity="0" offset="0%"/>
@@ -11949,7 +18368,7 @@ var Gh = `<svg part="tail-spin-icon" width="38" height="38" viewBox="0 0 38 38" 
     </g>
 </svg>
 `;
-var un = /* @__PURE__ */ __name(class extends HTMLElement {
+var cn = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
     this.running = false;
@@ -11969,8 +18388,13 @@ var un = /* @__PURE__ */ __name(class extends HTMLElement {
     }, dispatchClickEvent: () => {
       this.dispatchEvent(new Event("run-circuit-button-click", { bubbles: true }));
     } }, guards: { isIdle: () => !this.running, isRunning: () => this.running } });
+<<<<<<< Updated upstream
     this.runCircuitButtonService = at(this.runCircuitButtonMachine).onTransition((e) => {
       this.debug && console.log(`run-circuit-button: ${(0, jh.format)(e.value)}`);
+=======
+    this.runCircuitButtonService = st(this.runCircuitButtonMachine).onTransition((t) => {
+      this.debug && console.log(`run-circuit-button: ${(0, Wh.format)(t.value)}`);
+>>>>>>> Stashed changes
     });
   }
   connectedCallback() {
@@ -11980,7 +18404,7 @@ var un = /* @__PURE__ */ __name(class extends HTMLElement {
     n !== a && e === "data-running" && a !== null && this.runCircuitButtonService.send({ type: "FINISH" });
   }
   update() {
-    Z(U`<style>
+    X(U`<style>
           #body {
             position: relative;
             overflow: hidden;
@@ -12010,6 +18434,7 @@ var un = /* @__PURE__ */ __name(class extends HTMLElement {
     this.runCircuitButtonService.send({ type: "CLICK", clientX: e.clientX, clientY: e.clientY });
   }
   get reloadIcon() {
+<<<<<<< Updated upstream
     return U([Lh]);
   }
   get tailSpinIcon() {
@@ -12018,6 +18443,16 @@ var un = /* @__PURE__ */ __name(class extends HTMLElement {
 }, "un");
 c(un, "RunCircuitButtonElement"), M([D], un.prototype, "running", 2), M([D], un.prototype, "debug", 2), M([Oe], un.prototype, "body", 2), M([Oe], un.prototype, "ripple", 2), un = M([K], un);
 var $r = /* @__PURE__ */ __name(class extends HTMLElement {
+=======
+    return U([Fh]);
+  }
+  get tailSpinIcon() {
+    return U([Uh]);
+  }
+}, "cn");
+c(cn, "RunCircuitButtonElement"), M([D], cn.prototype, "running", 2), M([D], cn.prototype, "debug", 2), M([Oe], cn.prototype, "body", 2), M([Oe], cn.prototype, "ripple", 2), cn = M([K], cn);
+var Fr = /* @__PURE__ */ __name(class extends HTMLElement {
+>>>>>>> Stashed changes
   constructor() {
     super(...arguments);
     this.direction = "";
@@ -12052,11 +18487,17 @@ var $r = /* @__PURE__ */ __name(class extends HTMLElement {
     this.mobile ? this.direction === "up" ? this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)` }, { transform: `translateY(-${this.offsetHeight + this.marginBottom}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }) : this.direction === "down" && this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(${this.offsetHeight + this.marginTop + 16}px)` }, { transform: `translateY(${this.offsetHeight + this.marginTop}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }) : this.directionDesktop === "up" ? this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)` }, { transform: `translateY(-${this.offsetHeight + this.marginBottom}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }) : this.directionDesktop === "down" && this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(${this.offsetHeight + 16}px)` }, { transform: `translateY(${this.offsetHeight}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" });
   }
   renderShadowRoot() {
-    Z(U`<slot></slot>`, this.shadowRoot);
+    X(U`<slot></slot>`, this.shadowRoot);
   }
+<<<<<<< Updated upstream
 }, "$r");
 c($r, "SlideInElement"), M([D], $r.prototype, "direction", 2), M([D], $r.prototype, "directionDesktop", 2), M([D], $r.prototype, "duration", 2), M([D], $r.prototype, "marginTop", 2), M([D], $r.prototype, "marginBottom", 2), $r = M([K], $r);
 var cn = /* @__PURE__ */ __name(class extends HTMLElement {
+=======
+}, "Fr");
+c(Fr, "SlideInElement"), M([D], Fr.prototype, "direction", 2), M([D], Fr.prototype, "directionDesktop", 2), M([D], Fr.prototype, "duration", 2), M([D], Fr.prototype, "marginTop", 2), M([D], Fr.prototype, "marginBottom", 2), Fr = M([K], Fr);
+var pn = /* @__PURE__ */ __name(class extends HTMLElement {
+>>>>>>> Stashed changes
   constructor() {
     super(...arguments);
     this.comment = "";
@@ -12069,7 +18510,7 @@ var cn = /* @__PURE__ */ __name(class extends HTMLElement {
     this.attachShadow({ mode: "open" }), this.update();
   }
   update() {
-    Z(U`<style>
+    X(U`<style>
           :host {
             position: relative;
           }
@@ -12147,6 +18588,7 @@ var cn = /* @__PURE__ */ __name(class extends HTMLElement {
           <slot></slot>
         </div>`, this.shadowRoot);
   }
+<<<<<<< Updated upstream
 }, "cn");
 c(cn, "CircuitBlockElement"), M([D], cn.prototype, "comment", 2), M([D], cn.prototype, "finalized", 2), cn = M([K], cn);
 var Bh = Gt(Qr(), 1);
@@ -12154,6 +18596,15 @@ var qr = c((t) => t != null && t instanceof gt, "isCircuitStepElement");
 var ke = c((t, r) => Array.from(t.reduce((e, n, a, s) => {
   let p = r(n, a, s), v = e.get(p);
   return v ? v.push(n) : e.set(p, [n]), e;
+=======
+}, "pn");
+c(pn, "CircuitBlockElement"), M([D], pn.prototype, "comment", 2), M([D], pn.prototype, "finalized", 2), pn = M([K], pn);
+var Vh = zt(kr(), 1);
+var Ur = c((e) => e != null && e instanceof gt, "isCircuitStepElement");
+var De = c((e, r) => Array.from(e.reduce((t, n, a, s) => {
+  let p = r(n, a, s), v = t.get(p);
+  return v ? v.push(n) : t.set(p, [n]), t;
+>>>>>>> Stashed changes
 }, /* @__PURE__ */ new Map())), "groupBy");
 var gt = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
@@ -12191,8 +18642,13 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
     }, unshadow: () => {
       this.shadow = false;
     } }, guards: { isShadow: () => this.shadow, isVisible: () => !this.shadow, isActive: () => this.active, isInactive: () => !this.active, isBreakpointOn: () => this.breakpoint, isBreakpointOff: () => !this.breakpoint } });
+<<<<<<< Updated upstream
     this.circuitStepService = at(this.circuitStepMachine).onTransition((e) => {
       this.debug && console.log(`circuit-step: ${(0, Bh.format)(e.value)}`);
+=======
+    this.circuitStepService = st(this.circuitStepMachine).onTransition((t) => {
+      this.debug && console.log(`circuit-step: ${(0, Vh.format)(t.value)}`);
+>>>>>>> Stashed changes
     });
   }
   get maxOccupiedDropzoneBit() {
@@ -12206,7 +18662,11 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
         p > e && (e = p);
       }
     }
+<<<<<<< Updated upstream
     return H.need(0 <= e && e <= xo.MAX_QUBIT_COUNT, "invalid number of qubits in use"), e;
+=======
+    return H.need(0 <= t && t <= Eo.MAX_QUBIT_COUNT, "invalid number of qubits in use"), t;
+>>>>>>> Stashed changes
   }
   get wireCount() {
     return this.dropzones.length;
@@ -12226,15 +18686,20 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
         a !== null ? s.shadow = true : s.shadow = false;
   }
   update() {
-    Z(U`<slot></slot>`, this.shadowRoot), this.dispatchUpdateEvent();
+    X(U`<slot></slot>`, this.shadowRoot), this.dispatchUpdateEvent();
   }
   updateOperationAttributes(e) {
     for (let p of this.dropzones)
       p.connectTop = false, p.connectBottom = false;
     let n = this.controlGateDropzones, a = this.antiControlGateDropzones, s = this.controllableDropzones(e);
     for (let p of s)
+<<<<<<< Updated upstream
       Eo(p.operation) && (p.operation.controls = [], p.operation.antiControls = []);
     if (this.updateSwapConnections(e), this.updatePhasePhaseConnections(e), n.length === 1 && s.length === 0) {
+=======
+      So(p.operation) && (p.operation.controls = [], p.operation.antiControls = []);
+    if (this.updateSwapConnections(t), this.updatePhasePhaseConnections(t), n.length === 1 && s.length === 0) {
+>>>>>>> Stashed changes
       n[0].operation.disable();
       return;
     }
@@ -12268,7 +18733,11 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
       if (s.angle === "" || e !== void 0 && e.maxPhasePhaseTargetGates === 1)
         continue;
       let p = n.filter((v) => {
+<<<<<<< Updated upstream
         if (!Zo(v.operation))
+=======
+        if (!Ko(v.operation))
+>>>>>>> Stashed changes
           throw new Error(`${v.operation} isn't a phase-gate element.`);
         return s.angle === v.operation.angle;
       }).map((v) => this.bit(v));
@@ -12288,16 +18757,25 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
       e != null && e.disableControlControl || e !== void 0 && (e.maxControlControlTargetGates === 1 || e.maxControlControlTargetGates > 0 && s > e.maxControlControlTargetGates) ? v.disable() : (v.enable(), p.connectTop = a.some((m) => this.bit(p) > m), p.connectBottom = a.some((m) => this.bit(p) < m));
     }
   }
+<<<<<<< Updated upstream
   updateControlledUConnections(e) {
     let n = this.controllableDropzones(e), a = this.controlGateDropzones, s = this.antiControlGateDropzones, p = [...new Set(n.map((C) => C.operationName))], v = this.numControlGateDropzones(e, p), m = a.map((C) => this.bit(C)), d = s.map((C) => this.bit(C)), h = m.concat(d), y = v === null ? h : h.slice(0, v), w = n.map((C) => this.bit(C)), S = y.concat(w);
     for (let [C, T] of Object.entries(a)) {
       let _ = T.operation;
       T.connectBottom = S.some((N) => this.bit(T) < N), T.connectTop = S.some((N) => this.bit(T) > N), v === null || v !== null && parseInt(C) < v ? _.enable() : (T.connectTop = Math.max(...S) > this.bit(T), _.disable());
+=======
+  updateControlledUConnections(t) {
+    let n = this.controllableDropzones(t), a = this.controlGateDropzones, s = this.antiControlGateDropzones, p = [...new Set(n.map((T) => T.operationName))], v = this.numControlGateDropzones(t, p), m = a.map((T) => this.bit(T)), d = s.map((T) => this.bit(T)), h = m.concat(d), y = v === null ? h : h.slice(0, v), x = n.map((T) => this.bit(T)), S = y.concat(x);
+    for (let [T, C] of Object.entries(a)) {
+      let _ = C.operation;
+      C.connectBottom = S.some((N) => this.bit(C) < N), C.connectTop = S.some((N) => this.bit(C) > N), v === null || v !== null && parseInt(T) < v ? _.enable() : (C.connectTop = Math.max(...S) > this.bit(C), _.disable());
+>>>>>>> Stashed changes
     }
-    for (let [C, T] of Object.entries(s)) {
-      let _ = T.operation;
-      T.connectBottom = S.some((N) => this.bit(T) < N), T.connectTop = S.some((N) => this.bit(T) > N), v === null || v !== null && parseInt(C) < v ? _.enable() : (T.connectTop = Math.max(...S) > this.bit(T), _.disable());
+    for (let [T, C] of Object.entries(s)) {
+      let _ = C.operation;
+      C.connectBottom = S.some((N) => this.bit(C) < N), C.connectTop = S.some((N) => this.bit(C) > N), v === null || v !== null && parseInt(T) < v ? _.enable() : (C.connectTop = Math.max(...S) > this.bit(C), _.disable());
     }
+<<<<<<< Updated upstream
     for (let C of n) {
       if (!Eo(C.operation))
         throw new Error(`${C.operation} isn't controllable.`);
@@ -12306,6 +18784,16 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   updateFreeDropzoneConnections(e) {
     let n = this.controllableDropzones(e), a = this.controlGateDropzones.filter((h) => Ku(h.operation) && !h.operation.disabled).map((h) => this.bit(h)), s = this.antiControlGateDropzones.filter((h) => Qu(h.operation) && !h.operation.disabled).map((h) => this.bit(h)), p = n.map((h) => this.bit(h)), v = a.concat(s).concat(p), m = Math.min(...v), d = Math.max(...v);
+=======
+    for (let T of n) {
+      if (!So(T.operation))
+        throw new Error(`${T.operation} isn't controllable.`);
+      T.operation.controls = this.controlBits(T, m, t), T.operation.antiControls = d, T.connectTop = S.some((C) => C < this.bit(T)), T.connectBottom = S.some((C) => C > this.bit(T));
+    }
+  }
+  updateFreeDropzoneConnections(t) {
+    let n = this.controllableDropzones(t), a = this.controlGateDropzones.filter((h) => rc(h.operation) && !h.operation.disabled).map((h) => this.bit(h)), s = this.antiControlGateDropzones.filter((h) => nc(h.operation) && !h.operation.disabled).map((h) => this.bit(h)), p = n.map((h) => this.bit(h)), v = a.concat(s).concat(p), m = Math.min(...v), d = Math.max(...v);
+>>>>>>> Stashed changes
     for (let h of this.freeDropzones)
       m < this.bit(h) && this.bit(h) < d && (h.connectTop = true, h.connectBottom = true);
   }
@@ -12342,10 +18830,17 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
     return this.occupiedDropzones.filter((e) => e.operationName === "phase-gate");
   }
   get controlGateDropzones() {
+<<<<<<< Updated upstream
     return this.occupiedDropzones.filter((e) => Ku(e.operation));
   }
   get antiControlGateDropzones() {
     return this.occupiedDropzones.filter((e) => Qu(e.operation));
+=======
+    return this.occupiedDropzones.filter((t) => rc(t.operation));
+  }
+  get antiControlGateDropzones() {
+    return this.occupiedDropzones.filter((t) => nc(t.operation));
+>>>>>>> Stashed changes
   }
   numControlGateDropzones(e, n) {
     if (e === void 0)
@@ -12353,9 +18848,15 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
     let a = 0;
     return n.includes("h-gate") && !e.disableCh && e.maxChControlGates > a && (a = e.maxChControlGates), n.includes("x-gate") && !e.disableCnot && e.maxCnotControlGates > a && (a = e.maxCnotControlGates), n.includes("y-gate") && !e.disableCy && e.maxCyControlGates > a && (a = e.maxCyControlGates), n.includes("z-gate") && !e.disableCz && e.maxCzControlGates > a && (a = e.maxCzControlGates), n.includes("phase-gate") && !e.disableCphase && e.maxCphaseControlGates > a && (a = e.maxCphaseControlGates), n.includes("t-gate") && !e.disableCt && e.maxCtControlGates > a && (a = e.maxCtControlGates), n.includes("rnot-gate") && !e.disableCrnot && e.maxCrnotControlGates > a && (a = e.maxCrnotControlGates), n.includes("rx-gate") && !e.disableCrx && e.maxCrxControlGates > a && (a = e.maxCrxControlGates), n.includes("ry-gate") && !e.disableCry && e.maxCryControlGates > a && (a = e.maxCryControlGates), n.includes("rz-gate") && !e.disableCrz && e.maxCrzControlGates > a && (a = e.maxCrzControlGates), n.includes("swap-gate") && !e.disableCswap && e.maxCswapControlGates > a && (a = e.maxCswapControlGates), a === 0 ? null : a;
   }
+<<<<<<< Updated upstream
   controllableDropzones(e) {
     let n = 0, a = 0, s = 0, p = 0, v = 0, m = 0, d = 0, h = 0, y = 0, w = 0;
     return this.occupiedDropzones.filter((S) => Eo(S.operation)).filter((S) => e === void 0 ? true : xh(S.operation) ? (n += 1, e.maxChTargetGates !== 0 && n > e.maxChTargetGates ? false : !e.disableCh) : Eh(S.operation) ? (a += 1, e.maxCnotTargetGates !== 0 && a > e.maxCnotTargetGates ? false : !e.disableCnot) : Sh(S.operation) ? (s += 1, e.maxCyTargetGates !== 0 && s > e.maxCyTargetGates ? false : !e.disableCy) : Ch(S.operation) ? (p += 1, e.maxCzTargetGates !== 0 && p > e.maxCzTargetGates ? false : !e.disableCz) : Zo(S.operation) ? (v += 1, e.maxCphaseTargetGates !== 0 && v > e.maxCphaseTargetGates ? false : !e.disableCphase) : Th(S.operation) ? (m += 1, e.maxCtTargetGates !== 0 && m > e.maxCtTargetGates ? false : !e.disableCt) : Oh(S.operation) ? (d += 1, e.maxCrnotTargetGates !== 0 && d > e.maxCrnotTargetGates ? false : !e.disableCrnot) : Vs(S.operation) ? (h += 1, e.maxCrxTargetGates !== 0 && h > e.maxCrxTargetGates ? false : !e.disableCrx) : Ys(S.operation) ? (y += 1, e.maxCryTargetGates !== 0 && y > e.maxCryTargetGates ? false : !e.disableCry) : Xs(S.operation) ? (w += 1, e.maxCrzTargetGates !== 0 && w > e.maxCrzTargetGates ? false : !e.disableCrz) : Mh(S.operation) ? !e.disableCswap : true);
+=======
+  controllableDropzones(t) {
+    let n = 0, a = 0, s = 0, p = 0, v = 0, m = 0, d = 0, h = 0, y = 0, x = 0;
+    return this.occupiedDropzones.filter((S) => So(S.operation)).filter((S) => t === void 0 ? true : Ih(S.operation) ? (n += 1, t.maxChTargetGates !== 0 && n > t.maxChTargetGates ? false : !t.disableCh) : Ah(S.operation) ? (a += 1, t.maxCnotTargetGates !== 0 && a > t.maxCnotTargetGates ? false : !t.disableCnot) : Ph(S.operation) ? (s += 1, t.maxCyTargetGates !== 0 && s > t.maxCyTargetGates ? false : !t.disableCy) : _h(S.operation) ? (p += 1, t.maxCzTargetGates !== 0 && p > t.maxCzTargetGates ? false : !t.disableCz) : Ko(S.operation) ? (v += 1, t.maxCphaseTargetGates !== 0 && v > t.maxCphaseTargetGates ? false : !t.disableCphase) : zh(S.operation) ? (m += 1, t.maxCtTargetGates !== 0 && m > t.maxCtTargetGates ? false : !t.disableCt) : Rh(S.operation) ? (d += 1, t.maxCrnotTargetGates !== 0 && d > t.maxCrnotTargetGates ? false : !t.disableCrnot) : Zs(S.operation) ? (h += 1, t.maxCrxTargetGates !== 0 && h > t.maxCrxTargetGates ? false : !t.disableCrx) : Ks(S.operation) ? (y += 1, t.maxCryTargetGates !== 0 && y > t.maxCryTargetGates ? false : !t.disableCry) : Qs(S.operation) ? (x += 1, t.maxCrzTargetGates !== 0 && x > t.maxCrzTargetGates ? false : !t.disableCrz) : Dh(S.operation) ? !t.disableCswap : true);
+>>>>>>> Stashed changes
   }
   dispatchUpdateEvent() {
     pe("circuit-step:update", {}, this);
@@ -12374,8 +18875,13 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
   dispatchMouseleaveEvent() {
     pe("circuit-step:mouseleave", {}, this);
   }
+<<<<<<< Updated upstream
   maybeDispatchClickEvent(e) {
     Ye(e.target) || pe("circuit-step:click", {}, this);
+=======
+  maybeDispatchClickEvent(t) {
+    Xe(t.target) || pe("circuit-step:click", {}, this);
+>>>>>>> Stashed changes
   }
   snapDropzone(e) {
     let n = e.target;
@@ -12393,6 +18899,7 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
     this.circuitStepService.send({ type: "OCCUPY_DROPZONE", dropzone: n });
   }
   serialize() {
+<<<<<<< Updated upstream
     let e = [];
     for (let [n, a] of ke(this.operations, (s) => s.constructor))
       switch (n) {
@@ -12402,91 +18909,178 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
             for (let [m, d] of ke(v, (h) => h.controls.toString())) {
               let h = d[0], y = h.operationType, w = d.map((C) => C.bit), S = { type: y, targets: w };
               p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), e.push(S);
+=======
+    let t = [];
+    for (let [n, a] of De(this.operations, (s) => s.constructor))
+      switch (n) {
+        case Wt: {
+          let s = a;
+          for (let [p, v] of De(s, (m) => m.if))
+            for (let [m, d] of De(v, (h) => h.controls.toString())) {
+              let h = d[0], y = h.operationType, x = d.map((T) => T.bit), S = { type: y, targets: x };
+              p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), t.push(S);
+>>>>>>> Stashed changes
             }
           break;
         }
         case tr: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.if))
             for (let [m, d] of ke(v, (h) => h.controls.toString())) {
               let h = d[0], y = h.operationType, w = d.map((C) => C.bit), S = { type: y, targets: w };
               p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), e.push(S);
+=======
+          for (let [p, v] of De(s, (m) => m.if))
+            for (let [m, d] of De(v, (h) => h.controls.toString())) {
+              let h = d[0], y = h.operationType, x = d.map((T) => T.bit), S = { type: y, targets: x };
+              p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), t.push(S);
+>>>>>>> Stashed changes
             }
           break;
         }
         case rr: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.if))
             for (let [m, d] of ke(v, (h) => h.controls.toString())) {
               let h = d[0], y = h.operationType, w = d.map((C) => C.bit), S = { type: y, targets: w };
               p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), e.push(S);
+=======
+          for (let [p, v] of De(s, (m) => m.if))
+            for (let [m, d] of De(v, (h) => h.controls.toString())) {
+              let h = d[0], y = h.operationType, x = d.map((T) => T.bit), S = { type: y, targets: x };
+              p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), t.push(S);
+>>>>>>> Stashed changes
             }
           break;
         }
         case nr: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.if))
             for (let [m, d] of ke(v, (h) => h.controls.toString())) {
               let h = d[0], y = h.operationType, w = d.map((C) => C.bit), S = { type: y, targets: w };
               p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), e.push(S);
+=======
+          for (let [p, v] of De(s, (m) => m.if))
+            for (let [m, d] of De(v, (h) => h.controls.toString())) {
+              let h = d[0], y = h.operationType, x = d.map((T) => T.bit), S = { type: y, targets: x };
+              p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), t.push(S);
+>>>>>>> Stashed changes
             }
           break;
         }
         case Yt: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.angle))
             for (let [m, d] of ke(v, (h) => h.if))
               for (let [h, y] of ke(d, (w) => w.controls.toString())) {
                 let w = y[0], S = w.operationType, C = y.map((_) => _.bit), T = { type: S, targets: C };
                 m !== "" && (T.if = m), p !== "" && (T.angle = p), h !== "" && (T.controls = w.controls), w.antiControls.length > 0 && (T.antiControls = w.antiControls), e.push(T);
+=======
+          for (let [p, v] of De(s, (m) => m.angle))
+            for (let [m, d] of De(v, (h) => h.if))
+              for (let [h, y] of De(d, (x) => x.controls.toString())) {
+                let x = y[0], S = x.operationType, T = y.map((_) => _.bit), C = { type: S, targets: T };
+                m !== "" && (C.if = m), p !== "" && (C.angle = p), h !== "" && (C.controls = x.controls), x.antiControls.length > 0 && (C.antiControls = x.antiControls), t.push(C);
+>>>>>>> Stashed changes
               }
           break;
         }
         case er: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.if))
             for (let [m, d] of ke(v, (h) => h.controls.toString())) {
               let h = d[0], y = h.operationType, w = d.map((C) => C.bit), S = { type: y, targets: w };
               p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), e.push(S);
+=======
+          for (let [p, v] of De(s, (m) => m.if))
+            for (let [m, d] of De(v, (h) => h.controls.toString())) {
+              let h = d[0], y = h.operationType, x = d.map((T) => T.bit), S = { type: y, targets: x };
+              p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), t.push(S);
+            }
+          break;
+        }
+        case _r: {
+          let s = a;
+          for (let [p, v] of De(s, (m) => m.if))
+            for (let [m, d] of De(v, (h) => h.controls.toString())) {
+              let h = d[0], y = h.operationType, x = d.map((T) => T.bit), S = { type: y, targets: x };
+              p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), t.push(S);
+>>>>>>> Stashed changes
             }
           break;
         }
         case Xt: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.if))
             for (let [m, d] of ke(v, (h) => h.controls.toString())) {
               let h = d[0], y = h.operationType, w = d.map((C) => C.bit), S = { type: y, targets: w };
               p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), e.push(S);
+=======
+          for (let [p, v] of De(s, (m) => m.if))
+            for (let [m, d] of De(v, (h) => h.controls.toString())) {
+              let h = d[0], y = h.operationType, x = d.map((T) => T.bit), S = { type: y, targets: x };
+              p !== "" && (S.if = p), m !== "" && (S.controls = h.controls), h.antiControls.length > 0 && (S.antiControls = h.antiControls), t.push(S);
+>>>>>>> Stashed changes
             }
           break;
         }
         case Zt: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.angle))
             for (let [m, d] of ke(v, (h) => h.if))
               for (let [h, y] of ke(d, (w) => w.controls.toString())) {
                 let w = y[0], S = w.operationType, C = y.map((_) => _.bit), T = { type: S, targets: C };
                 m !== "" && (T.if = m), p !== "" && (T.angle = p), h !== "" && (T.controls = w.controls), w.antiControls.length > 0 && (T.antiControls = w.antiControls), e.push(T);
+=======
+          for (let [p, v] of De(s, (m) => m.angle))
+            for (let [m, d] of De(v, (h) => h.if))
+              for (let [h, y] of De(d, (x) => x.controls.toString())) {
+                let x = y[0], S = x.operationType, T = y.map((_) => _.bit), C = { type: S, targets: T };
+                m !== "" && (C.if = m), p !== "" && (C.angle = p), h !== "" && (C.controls = x.controls), x.antiControls.length > 0 && (C.antiControls = x.antiControls), t.push(C);
+>>>>>>> Stashed changes
               }
           break;
         }
         case Kt: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.angle))
             for (let [m, d] of ke(v, (h) => h.if))
               for (let [h, y] of ke(d, (w) => w.controls.toString())) {
                 let w = y[0], S = w.operationType, C = y.map((_) => _.bit), T = { type: S, targets: C };
                 m !== "" && (T.if = m), p !== "" && (T.angle = p), h !== "" && (T.controls = w.controls), w.antiControls.length > 0 && (T.antiControls = w.antiControls), e.push(T);
+=======
+          for (let [p, v] of De(s, (m) => m.angle))
+            for (let [m, d] of De(v, (h) => h.if))
+              for (let [h, y] of De(d, (x) => x.controls.toString())) {
+                let x = y[0], S = x.operationType, T = y.map((_) => _.bit), C = { type: S, targets: T };
+                m !== "" && (C.if = m), p !== "" && (C.angle = p), h !== "" && (C.controls = x.controls), x.antiControls.length > 0 && (C.antiControls = x.antiControls), t.push(C);
+>>>>>>> Stashed changes
               }
           break;
         }
         case Qt: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.angle))
             for (let [m, d] of ke(v, (h) => h.if))
               for (let [h, y] of ke(d, (w) => w.controls.toString())) {
                 let w = y[0], S = w.operationType, C = y.map((_) => _.bit), T = { type: S, targets: C };
                 m !== "" && (T.if = m), p !== "" && (T.angle = p), h !== "" && (T.controls = w.controls), w.antiControls.length > 0 && (T.antiControls = w.antiControls), e.push(T);
+=======
+          for (let [p, v] of De(s, (m) => m.angle))
+            for (let [m, d] of De(v, (h) => h.if))
+              for (let [h, y] of De(d, (x) => x.controls.toString())) {
+                let x = y[0], S = x.operationType, T = y.map((_) => _.bit), C = { type: S, targets: T };
+                m !== "" && (C.if = m), p !== "" && (C.angle = p), h !== "" && (C.controls = x.controls), x.antiControls.length > 0 && (C.antiControls = x.antiControls), t.push(C);
+>>>>>>> Stashed changes
               }
           break;
         }
@@ -12497,17 +19091,29 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
         }
         case Er: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.span)) {
             let d = v[0].operationType, h = v.map((w) => w.bit), y = { type: d, span: p, targets: h };
             e.push(y);
+=======
+          for (let [p, v] of De(s, (m) => m.span)) {
+            let d = v[0].operationType, h = v.map((x) => x.bit), y = { type: d, span: p, targets: h };
+            t.push(y);
+>>>>>>> Stashed changes
           }
           break;
         }
         case xr: {
           let s = a;
+<<<<<<< Updated upstream
           for (let [p, v] of ke(s, (m) => m.span)) {
             let d = v[0].operationType, h = v.map((w) => w.bit), y = { type: d, span: p, targets: h };
             e.push(y);
+=======
+          for (let [p, v] of De(s, (m) => m.span)) {
+            let d = v[0].operationType, h = v.map((x) => x.bit), y = { type: d, span: p, targets: h };
+            t.push(y);
+>>>>>>> Stashed changes
           }
           break;
         }
@@ -12521,7 +19127,11 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
         }
         case Bt: {
           let s = a.filter((v) => !v.disabled);
+<<<<<<< Updated upstream
           if (s.length < 2 || this.operations.some((v) => Eo(v) && v.controls.length > 0))
+=======
+          if (s.length < 2 || this.operations.some((v) => So(v) && v.controls.length > 0))
+>>>>>>> Stashed changes
             break;
           let p = s.map((v) => v.bit);
           e.push({ type: s[0].operationType, targets: p });
@@ -12529,14 +19139,14 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
         }
         case wr:
           break;
-        case nt: {
+        case it: {
           let s = a, p = a.map((v) => v.bit);
           e.push({ type: s[0].operationType, targets: p });
           break;
         }
         case Ht: {
           let s = a;
-          for (let [, p] of ke(s, (v) => v.value)) {
+          for (let [, p] of De(s, (v) => v.value)) {
             let v = p.map((m) => m.bit);
             e.push({ type: p[0].operationType, targets: v });
           }
@@ -12544,7 +19154,7 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
         }
         case Vt: {
           let s = a;
-          for (let [p, v] of ke(s, (m) => m.flag)) {
+          for (let [p, v] of De(s, (m) => m.flag)) {
             let m = v.map((y) => y.bit), h = { type: v[0].operationType, targets: m };
             p !== "" && (h.flag = p), e.push(h);
           }
@@ -12566,8 +19176,13 @@ var gt = /* @__PURE__ */ __name(class extends HTMLElement {
   }
 }, "gt");
 c(gt, "CircuitStepElement"), M([D], gt.prototype, "active", 2), M([D], gt.prototype, "breakpoint", 2), M([D], gt.prototype, "shadow", 2), M([D], gt.prototype, "keep", 2), M([D], gt.prototype, "debug", 2), M([dt], gt.prototype, "dropzones", 2), M([dt], gt.prototype, "freeDropzones", 2), M([dt], gt.prototype, "occupiedDropzones", 2), gt = M([K], gt);
+<<<<<<< Updated upstream
 var $h = Gt(ko(), 1);
 var Hh = `<svg part="wires" width="48" height="48" viewBox="0 0 48 48" preserveAspectRatio="none">
+=======
+var Xh = zt(Lo(), 1);
+var Yh = `<svg part="wires" width="48" height="48" viewBox="0 0 48 48" preserveAspectRatio="none">
+>>>>>>> Stashed changes
   <line
     part="wire-input"
     x1="0"
@@ -12612,12 +19227,21 @@ var Hh = `<svg part="wires" width="48" height="48" viewBox="0 0 48 48" preserveA
   ></line>
 </svg>
 `;
+<<<<<<< Updated upstream
 var ea = c((t) => t != null && t instanceof de, "isCircuitDropzoneElement");
 var Jo;
 var de = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
     ka(this, Jo, null);
+=======
+var ta = c((e) => e != null && e instanceof de, "isCircuitDropzoneElement");
+var ea;
+var de = /* @__PURE__ */ __name(class extends HTMLElement {
+  constructor() {
+    super(...arguments);
+    La(this, ea, null);
+>>>>>>> Stashed changes
     this.occupied = false;
     this.operationName = "";
     this.inputWireQuantum = false;
@@ -12646,8 +19270,13 @@ var de = /* @__PURE__ */ __name(class extends HTMLElement {
     }, dispatchDeleteOperationEvent: () => {
       pe("circuit-dropzone:qpu-operation-delete", {}, this);
     } }, guards: { isEmpty: () => this.operation === null, isOccupied: () => this.operation !== null } });
+<<<<<<< Updated upstream
     this.circuitDropzoneService = at(this.circuitDropzoneMachine).onTransition((e) => {
       this.debug && console.log(`circuit-dropzone: ${e.value}`);
+=======
+    this.circuitDropzoneService = st(this.circuitDropzoneMachine).onTransition((t) => {
+      this.debug && console.log(`circuit-dropzone: ${t.value}`);
+>>>>>>> Stashed changes
     });
   }
   get noConnections() {
@@ -12669,18 +19298,27 @@ var de = /* @__PURE__ */ __name(class extends HTMLElement {
     return e === null ? "1" : e.toJson();
   }
   connectedCallback() {
+<<<<<<< Updated upstream
     let { signal: e } = La(this, Jo, new AbortController());
     this.attachShadow({ mode: "open" }), this.update(), this.initDropzone(), this.circuitDropzoneService.start(), this.addEventListener("draggable:snap-to-dropzone", this.snap, { signal: e }), this.addEventListener("draggable:unsnap", this.unsnap, { signal: e }), this.addEventListener("draggable:end-dragging", this.dropOperation, { signal: e }), this.addEventListener("draggable:delete", this.deleteOperation, { signal: e }), this.addEventListener("menuable:menu-delete", this.deleteOperation, { signal: e }), this.addEventListener("resizeable:resize", this.resizeOperation, { signal: e });
   }
   disconnectedCallback() {
     var e;
     (e = Na(this, Jo)) == null || e.abort();
+=======
+    let { signal: t } = Ga(this, ea, new AbortController());
+    this.attachShadow({ mode: "open" }), this.update(), this.initDropzone(), this.circuitDropzoneService.start(), this.addEventListener("draggable:snap-to-dropzone", this.snap, { signal: t }), this.addEventListener("draggable:unsnap", this.unsnap, { signal: t }), this.addEventListener("draggable:end-dragging", this.dropOperation, { signal: t }), this.addEventListener("draggable:delete", this.deleteOperation, { signal: t }), this.addEventListener("menuable:menu-delete", this.deleteOperation, { signal: t }), this.addEventListener("resizeable:resize", this.resizeOperation, { signal: t });
+  }
+  disconnectedCallback() {
+    var t;
+    (t = ka(this, ea)) == null || t.abort();
+>>>>>>> Stashed changes
   }
   attributeChangedCallback(e, n, a) {
     n !== a && e === "data-occupied" && (a !== null ? this.targets = "circuit-step.dropzones circuit-step.occupiedDropzones" : this.targets = "circuit-step.dropzones circuit-step.freeDropzones");
   }
   update() {
-    Z(U`<style>
+    X(U`<style>
           #body {
             position: relative;
             height: 100%;
@@ -12712,11 +19350,19 @@ var de = /* @__PURE__ */ __name(class extends HTMLElement {
     this.circuitDropzoneService.send({ type: "PUT_OPERATION", operation: e });
   }
   get circuitStep() {
+<<<<<<< Updated upstream
     let e = this.parentElement;
     return H.notNull(e), qr(e) ? e : null;
   }
   initDropzone() {
     this.operation !== null && (this.operationName = this.operation.tagName.toLocaleLowerCase(), this.occupied = true), (0, $h.default)(this).dropzone({ accept: "[data-draggable]", overlap: "center" });
+=======
+    let t = this.parentElement;
+    return H.notNull(t), Ur(t) ? t : null;
+  }
+  initDropzone() {
+    this.operation !== null && (this.operationName = this.operation.tagName.toLocaleLowerCase(), this.occupied = true), (0, Xh.default)(this).dropzone({ accept: "[data-draggable]", overlap: "center" });
+>>>>>>> Stashed changes
   }
   snap() {
     this.circuitDropzoneService.send({ type: "SNAP_OPERATION" });
@@ -12727,9 +19373,15 @@ var de = /* @__PURE__ */ __name(class extends HTMLElement {
   dropOperation() {
     this.circuitDropzoneService.send({ type: "DROP_OPERATION" });
   }
+<<<<<<< Updated upstream
   deleteOperation(e) {
     let n = e.target;
     if (!Ye(n))
+=======
+  deleteOperation(t) {
+    let n = t.target;
+    if (!Xe(n))
+>>>>>>> Stashed changes
       throw new Error(`${n} isn't an Operation.`);
     this.circuitDropzoneService.send({ type: "DELETE_OPERATION", operation: n });
   }
@@ -12740,12 +19392,21 @@ var de = /* @__PURE__ */ __name(class extends HTMLElement {
     this.circuitDropzoneService.send({ type: "RESIZE_OPERATION" });
   }
   get wireSvg() {
+<<<<<<< Updated upstream
     return U([Hh]);
   }
 }, "de");
 c(de, "CircuitDropzoneElement"), Jo = /* @__PURE__ */ new WeakMap(), M([D], de.prototype, "occupied", 2), M([D], de.prototype, "operationName", 2), M([D], de.prototype, "inputWireQuantum", 2), M([D], de.prototype, "outputWireQuantum", 2), M([D], de.prototype, "connectTop", 2), M([D], de.prototype, "connectBottom", 2), M([D], de.prototype, "shadow", 2), M([D], de.prototype, "targets", 2), M([D], de.prototype, "debug", 2), de = M([K], de);
 var qh = Gt(Qr(), 1);
 var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
+=======
+    return U([Yh]);
+  }
+}, "de");
+c(de, "CircuitDropzoneElement"), ea = /* @__PURE__ */ new WeakMap(), M([D], de.prototype, "occupied", 2), M([D], de.prototype, "operationName", 2), M([D], de.prototype, "inputWireQuantum", 2), M([D], de.prototype, "outputWireQuantum", 2), M([D], de.prototype, "connectTop", 2), M([D], de.prototype, "connectBottom", 2), M([D], de.prototype, "shadow", 2), M([D], de.prototype, "targets", 2), M([D], de.prototype, "debug", 2), de = M([K], de);
+var Zh = zt(kr(), 1);
+var Dn = /* @__PURE__ */ __name(class extends HTMLElement {
+>>>>>>> Stashed changes
   constructor() {
     super(...arguments);
     this.debug = false;
@@ -12753,7 +19414,11 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
       if (n.type !== "GRAB_OPERATION")
         return;
       let a = n.operation;
+<<<<<<< Updated upstream
       qs(a) && a.menu && a.hideMenu();
+=======
+      Ws(a) && a.menu && a.hideMenu();
+>>>>>>> Stashed changes
     }, startCircuitEdit: () => {
       this.circuit.editing = true;
     }, endCircuitEdit: () => {
@@ -12778,11 +19443,19 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
       if (!ur(a))
         throw new Error(`${a} is not resizeable`);
       let s = a.dropzone;
+<<<<<<< Updated upstream
       if (!ea(s))
         throw new Error(`${s} is not a circuit dropzone`);
       H.notNull(s.circuitStep);
       let p = s.circuitStep.dropzones.indexOf(s), m = this.circuit.resizeHandleSnapTargetAt(n.x, n.y).wireIndex - p + 1;
       if (!pd(m))
+=======
+      if (!ta(s))
+        throw new Error(`${s} is not a circuit dropzone`);
+      H.notNull(s.circuitStep);
+      let p = s.circuitStep.dropzones.indexOf(s), m = this.circuit.resizeHandleSnapTargetAt(n.x, n.y).wireIndex - p + 1;
+      if (!gd(m))
+>>>>>>> Stashed changes
         throw new Error(`Invalid span: ${m}`);
       a.span = m;
     }, addDocumentCursorGrabbingStyle: () => {
@@ -12794,7 +19467,11 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
     }, removeDocumentCursorResizingStyle: () => {
       document.documentElement.removeAttribute("data-resizing");
     }, maybeAppendCircuitWire: () => {
+<<<<<<< Updated upstream
       this.circuit.wireCount < xo.MAX_QUBIT_COUNT && this.circuit.appendWire();
+=======
+      this.circuit.wireCount < Eo.MAX_QUBIT_COUNT && this.circuit.appendWire();
+>>>>>>> Stashed changes
     }, maybeRemoveLastEmptyWires: () => {
       this.circuit.removeLastEmptyWires();
     }, resizeCircuit: () => {
@@ -12817,8 +19494,13 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
       if (n.type !== "DROP_OPERATION")
         return;
       let a = n.operation;
+<<<<<<< Updated upstream
       qs(a) && a.initMenu();
     }, showOperationMenu: (e, n) => {
+=======
+      Ws(a) && a.initMenu();
+    }, showOperationMenu: (t, n) => {
+>>>>>>> Stashed changes
       n.type === "SHOW_OPERATION_MENU" && (this.inspectorButton.isInspectorShown || n.operation.showMenu());
     }, showOperationInspectorIf: (e, n) => {
       n.type === "SHOW_OPERATION_INSPECTOR_IF" && this.inspectorButton.showIfInspector(n.operation);
@@ -12838,19 +19520,30 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
       let a = n.operation;
       this.inspectorButton.isInspectorShown && this.inspectorButton.showInspector(a);
     } } });
+<<<<<<< Updated upstream
     this.circuitEditorService = at(this.circuitEditorMachine).onTransition((e) => {
       this.debug && console.log(`circuit-editor: ${(0, qh.format)(e.value)}`);
+=======
+    this.circuitEditorService = st(this.circuitEditorMachine).onTransition((t) => {
+      this.debug && console.log(`circuit-editor: ${(0, Zh.format)(t.value)}`);
+>>>>>>> Stashed changes
     });
   }
   connectedCallback() {
     document.addEventListener("click", this.maybeDeactivateOperation.bind(this)), this.addEventListener("draggable:init", this.enableDragging), this.addEventListener("resizeable:init", this.enableResizing), this.addEventListener("activateable:active", this.activateOperation), this.addEventListener("menuable:show-menu", this.showOperationMenu), this.addEventListener("menuable:menu-if", this.showOperationInspectorIf), this.addEventListener("menuable:menu-angle", this.showOperationInspectorAngle), this.addEventListener("menuable:menu-flag", this.showOperationInspectorFlag), this.addEventListener("operation-inspector-if-change", this.setOperationIf), this.addEventListener("operation-inspector-angle-change", this.setOperationAngle), this.addEventListener("operation-inspector-angle-update", this.setOperationAngle), this.addEventListener("operation-inspector-flag-change", this.setOperationFlag), this.addEventListener("draggable:grab", this.grabOperation), this.addEventListener("resizeable:grab-resize-handle", this.grabResizeHandle), this.addEventListener("resizeable:release-resize-handle", this.releaseResizeHandle), this.addEventListener("draggable:release", this.releaseOperation), this.addEventListener("resizeable:end-resizing", this.resizeEnd), this.addEventListener("draggable:end-dragging", this.endDraggingOperation), this.addEventListener("draggable:drop", this.dropOperation), this.addEventListener("draggable:delete", this.deleteOperation), this.addEventListener("menuable:menu-delete", this.deleteOperation), this.addEventListener("circuit-step:click", this.clickStep), this.addEventListener("circuit-step:qpu-operation-snap", this.snapStep), this.addEventListener("circuit-step:qpu-operation-unsnap", this.unsnapStep), this.addEventListener("draggable:in-snap-range", this.operationInSnapRange), this.addEventListener("resizeable:resize-handle-in-snap-range", this.resizeHandleInSnapRange), this.addEventListener("circuit-step:mouseenter", this.mouseEnterStep), this.addEventListener("circuit-step:mouseleave", this.mouseLeaveStep), this.addEventListener("quantum-circuit:mouseleave", this.mouseLeaveCircuit), this.addEventListener("quantum-circuit:init", this.makeCircuitHoverable), this.circuitEditorService.start(), this.attachShadow({ mode: "open" }), this.update();
   }
   update() {
-    Z(U`<slot></slot>`, this.shadowRoot);
+    X(U`<slot></slot>`, this.shadowRoot);
   }
+<<<<<<< Updated upstream
   enableDragging(e) {
     let n = e.target;
     if (Os(n))
+=======
+  enableDragging(t) {
+    let n = t.target;
+    if (As(n))
+>>>>>>> Stashed changes
       n.draggable = true;
     else
       throw new pt("Not a draggable element.", { el: n });
@@ -12869,11 +19562,16 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
     if (e.target === this.circuit) {
       this.circuit.hoverable = true;
       for (let a of this.circuit.operations)
+<<<<<<< Updated upstream
         qs(a) && a.initMenu();
+=======
+        Ws(a) && a.initMenu();
+>>>>>>> Stashed changes
     }
   }
   maybeDeactivateOperation(e) {
     var a;
+<<<<<<< Updated upstream
     let n = e.target;
     !Ye(n) && this.inspectorButton && !((a = this.inspectorButton) != null && a.popup.popper.contains(n)) && !this.inspectorButton.popup.reference.contains(n) && this.activeOperation !== null && (this.activeOperation.active = false);
   }
@@ -12892,6 +19590,26 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
   showOperationInspectorIf(e) {
     let n = e.target;
     if (!ln(n))
+=======
+    let n = t.target;
+    !Xe(n) && this.inspectorButton && !((a = this.inspectorButton) != null && a.popup.popper.contains(n)) && !this.inspectorButton.popup.reference.contains(n) && this.activeOperation !== null && (this.activeOperation.active = false);
+  }
+  activateOperation(t) {
+    let n = t.target;
+    if (!Xe(n))
+      throw new Error(`${n} must be an Operation.`);
+    this.circuitEditorService.send({ type: "ACTIVATE_OPERATION", operation: n });
+  }
+  showOperationMenu(t) {
+    let n = t.target;
+    if (!Xe(n))
+      throw new Error(`${n} must be an Operation.`);
+    this.circuitEditorService.send({ type: "SHOW_OPERATION_MENU", operation: n });
+  }
+  showOperationInspectorIf(t) {
+    let n = t.target;
+    if (!un(n))
+>>>>>>> Stashed changes
       throw new Error(`${n} isn't an Ifable Operation.`);
     this.circuitEditorService.send({ type: "SHOW_OPERATION_INSPECTOR_IF", operation: n });
   }
@@ -12907,9 +19625,15 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
       throw new Error(`${n} isn't a Flaggable Operation.`);
     this.circuitEditorService.send({ type: "SHOW_OPERATION_INSPECTOR_FLAG", operation: n });
   }
+<<<<<<< Updated upstream
   setOperationIf(e) {
     let n = e.target, a = this.activeOperation;
     if (!ln(a))
+=======
+  setOperationIf(t) {
+    let n = t.target, a = this.activeOperation;
+    if (!un(a))
+>>>>>>> Stashed changes
       throw new Error("[data-if] not found.");
     this.circuitEditorService.send({ type: "SET_OPERATION_IF", operation: a, if: n.if });
   }
@@ -12925,6 +19649,7 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
       throw new Error("[data-flag] not found.");
     this.circuitEditorService.send({ type: "SET_OPERATION_FLAG", operation: a, flag: n.flag });
   }
+<<<<<<< Updated upstream
   grabOperation(e) {
     let n = e.target;
     if (!Ye(n))
@@ -12964,12 +19689,54 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
   dropOperation(e) {
     let n = e.target;
     if (!Ye(n))
+=======
+  grabOperation(t) {
+    let n = t.target;
+    if (!Xe(n))
+      throw new Error(`${n} must be an Operation.`);
+    this.circuitEditorService.send({ type: "GRAB_OPERATION", operation: n });
+  }
+  grabResizeHandle(t) {
+    let n = t.target;
+    if (!Xe(n))
+      throw new Error(`${n} must be an Operation.`);
+    this.circuitEditorService.send({ type: "GRAB_RESIZE_HANDLE", operation: n });
+  }
+  releaseResizeHandle(t) {
+    let n = t.target;
+    if (!Xe(n))
+      throw new Error(`${n} must be an Operation.`);
+    this.circuitEditorService.send({ type: "END_RESIZE", operation: n });
+  }
+  releaseOperation(t) {
+    let n = t.target;
+    if (!Xe(n))
+      throw new Error(`${n} must be an Operation.`);
+    this.circuitEditorService.send({ type: "RELEASE_OPERATION", operation: n });
+  }
+  resizeEnd(t) {
+    let n = t.target;
+    if (!Xe(n))
+      throw new Error(`${n} must be an Operation.`);
+    this.circuitEditorService.send({ type: "END_RESIZE", operation: n });
+  }
+  endDraggingOperation(t) {
+    let n = t.target;
+    if (!Xe(n))
+      throw new Error(`${n} must be an Operation.`);
+    this.circuitEditorService.send({ type: "END_DRAGGING_OPERATION", operation: n });
+  }
+  dropOperation(t) {
+    let n = t.target;
+    if (!Xe(n))
+>>>>>>> Stashed changes
       throw new Error(`${n} must be an Operation.`);
     this.circuitEditorService.send({ type: "DROP_OPERATION", operation: n });
   }
   deleteOperation() {
     this.circuitEditorService.send({ type: "DELETE_OPERATION" });
   }
+<<<<<<< Updated upstream
   clickStep(e) {
     let n = e.target;
     if (!qr(n))
@@ -12991,13 +19758,42 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
   operationInSnapRange(e) {
     let n = e.target;
     if (!Ye(n))
+=======
+  clickStep(t) {
+    let n = t.target;
+    if (!Ur(n))
+      throw new Error(`${n} isn't a circuit-step.`);
+    this.circuitEditorService.send({ type: "CLICK_STEP", step: n });
+  }
+  snapStep(t) {
+    let n = t.target;
+    if (!Ur(n))
+      throw new Error(`${n} isn't a circuit-step.`);
+    this.circuitEditorService.send({ type: "SNAP_STEP", step: n });
+  }
+  unsnapStep(t) {
+    let n = t.target;
+    if (!Ur(n))
+      throw new Error(`${n} isn't a circuit-step.`);
+    this.circuitEditorService.send({ type: "UNSNAP_STEP", step: n });
+  }
+  operationInSnapRange(t) {
+    let n = t.target;
+    if (!Xe(n))
+>>>>>>> Stashed changes
       throw new Error(`${n} must be an Operation.`);
     let s = e.detail.snapTargetInfo, p = s.x, v = s.y;
     this.circuitEditorService.send({ type: "OPERATION_IN_SNAP_RANGE", operation: n, x: p, y: v });
   }
+<<<<<<< Updated upstream
   resizeHandleInSnapRange(e) {
     let n = e.target;
     if (!Ye(n))
+=======
+  resizeHandleInSnapRange(t) {
+    let n = t.target;
+    if (!Xe(n))
+>>>>>>> Stashed changes
       throw new Error(`${n} must be an Operation.`);
     let s = e.detail.snapTargetInfo, p = s.x, v = s.y;
     this.circuitEditorService.send({ type: "RESIZE_HANDLE_IN_SNAP_RANGE", operation: n, x: p, y: v });
@@ -13005,22 +19801,33 @@ var Rn = /* @__PURE__ */ __name(class extends HTMLElement {
   mouseEnterStep(e) {
     if (this.circuit.editing)
       return;
+<<<<<<< Updated upstream
     let n = e.target;
     if (!qr(n))
+=======
+    let n = t.target;
+    if (!Ur(n))
+>>>>>>> Stashed changes
       throw new Error(`${n} isn't a circuit-step.`);
     this.circuitEditorService.send({ type: "MOUSE_ENTER_STEP", step: n });
   }
   mouseLeaveStep(e) {
     if (this.circuit.editing)
       return;
+<<<<<<< Updated upstream
     let n = e.target;
     if (!qr(n))
+=======
+    let n = t.target;
+    if (!Ur(n))
+>>>>>>> Stashed changes
       throw new Error(`${n} isn't a circuit-step.`);
     this.circuitEditorService.send({ type: "MOUSE_LEAVE_STEP", step: n });
   }
   mouseLeaveCircuit() {
     this.circuitEditorService.send({ type: "MOUSE_LEAVE_CIRCUIT" });
   }
+<<<<<<< Updated upstream
 }, "Rn");
 c(Rn, "CircuitEditorElement"), M([D], Rn.prototype, "debug", 2), M([Oe], Rn.prototype, "circuit", 2), M([Oe], Rn.prototype, "inspectorButton", 2), Rn = M([K], Rn);
 var ra;
@@ -13036,9 +19843,26 @@ var ta = /* @__PURE__ */ __name(class extends HTMLElement {
   disconnectedCallback() {
     var e;
     (e = Na(this, ra)) == null || e.abort();
+=======
+}, "Dn");
+c(Dn, "CircuitEditorElement"), M([D], Dn.prototype, "debug", 2), M([Oe], Dn.prototype, "circuit", 2), M([Oe], Dn.prototype, "inspectorButton", 2), Dn = M([K], Dn);
+var na;
+var ra = /* @__PURE__ */ __name(class extends HTMLElement {
+  constructor() {
+    super(...arguments);
+    La(this, na, null);
+  }
+  connectedCallback() {
+    let { signal: t } = Ga(this, na, new AbortController());
+    this.attachShadow({ mode: "open" }), this.update(), this.initOperation(this.operation), this.addEventListener("draggable:grab", this.newOperation, { signal: t }), this.addEventListener("draggable:delete", this.deleteOperation, { signal: t });
+  }
+  disconnectedCallback() {
+    var t;
+    (t = ka(this, na)) == null || t.abort();
+>>>>>>> Stashed changes
   }
   update() {
-    Z(U`<style>
+    X(U`<style>
           ::slotted(*) {
             position: absolute !important;
           }
@@ -13046,8 +19870,13 @@ var ta = /* @__PURE__ */ __name(class extends HTMLElement {
 
         <slot></slot>`, this.shadowRoot);
   }
+<<<<<<< Updated upstream
   initOperation(e) {
     Os(e) && (e.draggable = true, e.grabbed = false, e.snapped = true), ur(e) && (e.resizeable = true), Wu(e) && e.initHelp();
+=======
+  initOperation(t) {
+    As(t) && (t.draggable = true, t.grabbed = false, t.snapped = true), ur(t) && (t.resizeable = true), Ku(t) && t.initHelp();
+>>>>>>> Stashed changes
   }
   get operation() {
     if (this.operations.length === 0)
@@ -13057,18 +19886,27 @@ var ta = /* @__PURE__ */ __name(class extends HTMLElement {
     throw new Error("palette-dropzone cannot hold multiple operations.");
   }
   get operations() {
+<<<<<<< Updated upstream
     return Array.from(this.children).filter((e) => Ye(e));
+=======
+    return Array.from(this.children).filter((t) => Xe(t));
+>>>>>>> Stashed changes
   }
   newOperation(e) {
     let n = e.target;
     this.assertOperation(n);
     let a = n.cloneNode(false);
+<<<<<<< Updated upstream
     this.assertOperation(a), Wu(n) && n.disableHelp(), this.prepend(a), this.initOperation(a);
+=======
+    this.assertOperation(a), Ku(n) && n.disableHelp(), this.prepend(a), this.initOperation(a);
+>>>>>>> Stashed changes
   }
   deleteOperation(e) {
     let n = e.target;
     this.assertOperation(n), this.removeChild(n);
   }
+<<<<<<< Updated upstream
   assertOperation(e) {
     if (!Ye(e))
       throw new TypeError(`${e} isn't an operation.`);
@@ -13076,6 +19914,15 @@ var ta = /* @__PURE__ */ __name(class extends HTMLElement {
 }, "ta");
 c(ta, "PaletteDropzoneElement"), ra = /* @__PURE__ */ new WeakMap(), ta = M([K], ta);
 var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
+=======
+  assertOperation(t) {
+    if (!Xe(t))
+      throw new TypeError(`${t} isn't an operation.`);
+  }
+}, "ra");
+c(ra, "PaletteDropzoneElement"), na = /* @__PURE__ */ new WeakMap(), ra = M([K], ra);
+var se = /* @__PURE__ */ __name(class extends fe(HTMLElement) {
+>>>>>>> Stashed changes
   constructor() {
     super(...arguments);
     this.minStepCount = 1;
@@ -13123,8 +19970,13 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
     this.phasePhaseDisabled = false;
     this.phasePhaseMaxTargetGates = 0;
     this.quantumCircuitMachine = ht({ id: "quantum-circuit", initial: "idle", states: { idle: { on: { EDIT: { target: "editing" } } }, editing: { on: { EDIT_DONE: { target: "idle" } } } } });
+<<<<<<< Updated upstream
     this.quantumCircuitService = at(this.quantumCircuitMachine).onTransition((e) => {
       this.debug && console.log(`quantum-circuit: ${e.value}`);
+=======
+    this.quantumCircuitService = st(this.quantumCircuitMachine).onTransition((t) => {
+      this.debug && console.log(`quantum-circuit: ${t.value}`);
+>>>>>>> Stashed changes
     }).start();
     this.cx = this.cnot;
   }
@@ -13218,7 +20070,7 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
       e.hoverable = true;
   }
   update() {
-    Z(U`<slot></slot>`, this.shadowRoot);
+    X(U`<slot></slot>`, this.shadowRoot);
   }
   updateStep(e) {
     let n = e.target;
@@ -13388,8 +20240,13 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
     let n = this.applyOperationToTargets(() => new Bt(), ...e);
     return this.updateStepOperationAttributes(n), this;
   }
+<<<<<<< Updated upstream
   bloch(...e) {
     return this.applyOperationToTargets(() => new nt(), ...e), this;
+=======
+  bloch(...t) {
+    return this.applyOperationToTargets(() => new it(), ...t), this;
+>>>>>>> Stashed changes
   }
   write(e, ...n) {
     return this.applyOperationToTargets(() => {
@@ -13545,6 +20402,11 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
             h.angle = this.angleParameter(d.slice(1)), m.push(h), v.append(new de());
             break;
           }
+          case /^T†/.test(d): {
+            let h = new _r();
+            h.if = this.ifVariable(d.slice(1)), m.push(h), v.append(new de());
+            break;
+          }
           case /^T/.test(d): {
             let h = new er();
             h.if = this.ifVariable(d.slice(1)), m.push(h), v.append(new de());
@@ -13605,7 +20467,7 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
             break;
           }
           case /^Bloch$/.test(d): {
-            let h = new nt();
+            let h = new it();
             m.push(h), v.append(new de());
             break;
           }
@@ -13616,7 +20478,7 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
           }
           case /^[[{](.+)$/.test(d): {
             let h = d.slice(1);
-            v.remove(), n = new cn(), n.comment = h, n.setAttribute("data-targets", "quantum-circuit.blocks"), this.append(n);
+            v.remove(), n = new pn(), n.comment = h, n.setAttribute("data-targets", "quantum-circuit.blocks"), this.append(n);
             break;
           }
           case /^[\]}]$/.test(d): {
@@ -13669,12 +20531,21 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
         s.inputWireQuantum = n, s.outputWireQuantum = n;
     }
   }
+<<<<<<< Updated upstream
   updateChangedWire(e) {
     let n = e.target;
     if (!qr(n))
       throw new Error(`${n} isn't a circuit-step.`);
     let a = e.detail.dropzone;
     if (!ea(a))
+=======
+  updateChangedWire(t) {
+    let n = t.target;
+    if (!Ur(n))
+      throw new Error(`${n} isn't a circuit-step.`);
+    let a = t.detail.dropzone;
+    if (!ta(a))
+>>>>>>> Stashed changes
       throw new Error(`${a} isn't a circuit-dropzone.`);
     let s = n.dropzones.indexOf(a);
     H.need(s !== -1, "circuit-dropzone not found."), this.updateWire(s);
@@ -13694,10 +20565,17 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
     for (let [p, v] of Object.entries(this.steps)) {
       let m = parseInt(p);
       for (let [d, h] of Object.entries(v.dropzones)) {
+<<<<<<< Updated upstream
         let y = parseInt(d), w = h.snapTarget, S = this.isVertical ? w.y : w.x, C = this.isVertical ? w.x : w.y;
         if (m === 0 && v.dropzones[y + a - 1] !== void 0) {
           let _ = S - e.snapRange * 0.75;
           this.isVertical ? n.push({ x: C, y: _ }) : n.push({ x: _, y: C }), this.snapTargets[_] === void 0 && (this.snapTargets[_] = {}), this.snapTargets[_][C] === void 0 && (this.snapTargets[_][C] = { dropzone: null, stepIndex: -1, wireIndex: y });
+=======
+        let y = parseInt(d), x = h.snapTarget, S = this.isVertical ? x.y : x.x, T = this.isVertical ? x.x : x.y;
+        if (m === 0 && v.dropzones[y + a - 1] !== void 0) {
+          let _ = S - t.snapRange * 0.75;
+          this.isVertical ? n.push({ x: T, y: _ }) : n.push({ x: _, y: T }), this.snapTargets[_] === void 0 && (this.snapTargets[_] = {}), this.snapTargets[_][T] === void 0 && (this.snapTargets[_][T] = { dropzone: null, stepIndex: -1, wireIndex: y });
+>>>>>>> Stashed changes
         }
         if (a === 1)
           (h === s || !h.occupied) && n.push(w);
@@ -13708,18 +20586,32 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
             H.notNull(N), n.push(N.snapTarget);
           }
         }
+<<<<<<< Updated upstream
         let T = S + e.snapRange * 0.75;
         v.dropzones[y + a - 1] !== void 0 && (this.isVertical ? n.push({ x: C, y: T }) : n.push({ x: T, y: C })), this.snapTargets[T] === void 0 && (this.snapTargets[T] = {}), this.snapTargets[T][C] === void 0 && (this.snapTargets[T][C] = { dropzone: null, stepIndex: m, wireIndex: y }), this.snapTargets[S] === void 0 && (this.snapTargets[S] = {}), this.snapTargets[S][C] === void 0 && (this.snapTargets[S][C] = { dropzone: h, stepIndex: null, wireIndex: y });
+=======
+        let C = S + t.snapRange * 0.75;
+        v.dropzones[y + a - 1] !== void 0 && (this.isVertical ? n.push({ x: T, y: C }) : n.push({ x: C, y: T })), this.snapTargets[C] === void 0 && (this.snapTargets[C] = {}), this.snapTargets[C][T] === void 0 && (this.snapTargets[C][T] = { dropzone: null, stepIndex: m, wireIndex: y }), this.snapTargets[S] === void 0 && (this.snapTargets[S] = {}), this.snapTargets[S][T] === void 0 && (this.snapTargets[S][T] = { dropzone: h, stepIndex: null, wireIndex: y });
+>>>>>>> Stashed changes
       }
     }
     e.snapTargets = n;
   }
+<<<<<<< Updated upstream
   setResizeHandleSnapTargets(e) {
     if (!ur(e))
       throw new Error(`${e} isn't a resizeable operation.`);
     if (!ea(e == null ? void 0 : e.dropzone))
       throw new Error(`${e.dropzone} isn't a circuit-dropzone.`);
     let n = e.dropzone.circuitStep;
+=======
+  setResizeHandleSnapTargets(t) {
+    if (!ur(t))
+      throw new Error(`${t} isn't a resizeable operation.`);
+    if (!ta(t == null ? void 0 : t.dropzone))
+      throw new Error(`${t.dropzone} isn't a circuit-dropzone.`);
+    let n = t.dropzone.circuitStep;
+>>>>>>> Stashed changes
     H.notNull(n);
     let a = n.freeDropzones, s = e.dropzone;
     a.push(s);
@@ -13729,10 +20621,17 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
       let d = m.resizeHandleSnapTarget, h = this.isVertical ? d.y : d.x, y = this.isVertical ? d.x : d.y, w = parseInt(v) % this.wireCount;
       if (m.occupied || p.push(d), m === s) {
         p.push(d);
+<<<<<<< Updated upstream
         let S = e.span;
         for (let C = 1; C < S; C++) {
           let T = n.dropzones[parseInt(v) + C];
           H.notNull(T), p.push(T.resizeHandleSnapTarget);
+=======
+        let S = t.span;
+        for (let T = 1; T < S; T++) {
+          let C = n.dropzones[parseInt(v) + T];
+          H.notNull(C), p.push(C.resizeHandleSnapTarget);
+>>>>>>> Stashed changes
         }
       }
       this.resizeHandleSnapTargets[h] === void 0 && (this.resizeHandleSnapTargets[h] = {}), this.resizeHandleSnapTargets[h][y] === void 0 && (this.resizeHandleSnapTargets[h][y] = { dropzone: m, stepIndex: null, wireIndex: w });
@@ -13780,7 +20679,7 @@ var se = /* @__PURE__ */ __name(class extends ve(HTMLElement) {
   }
 }, "se");
 c(se, "QuantumCircuitElement"), M([D], se.prototype, "minStepCount", 2), M([D], se.prototype, "minWireCount", 2), M([D], se.prototype, "editing", 2), M([D], se.prototype, "updateUrl", 2), M([D], se.prototype, "json", 2), M([D], se.prototype, "circuitTitle", 2), M([D], se.prototype, "debug", 2), M([D], se.prototype, "chDisabled", 2), M([D], se.prototype, "chMaxControlGates", 2), M([D], se.prototype, "chMaxTargetGates", 2), M([D], se.prototype, "cnotDisabled", 2), M([D], se.prototype, "cnotMaxControlGates", 2), M([D], se.prototype, "cnotMaxTargetGates", 2), M([D], se.prototype, "cyDisabled", 2), M([D], se.prototype, "cyMaxControlGates", 2), M([D], se.prototype, "cyMaxTargetGates", 2), M([D], se.prototype, "czDisabled", 2), M([D], se.prototype, "czMaxControlGates", 2), M([D], se.prototype, "czMaxTargetGates", 2), M([D], se.prototype, "cphaseDisabled", 2), M([D], se.prototype, "cphaseMaxControlGates", 2), M([D], se.prototype, "cphaseMaxTargetGates", 2), M([D], se.prototype, "ctDisabled", 2), M([D], se.prototype, "ctMaxControlGates", 2), M([D], se.prototype, "ctMaxTargetGates", 2), M([D], se.prototype, "crnotDisabled", 2), M([D], se.prototype, "crnotMaxControlGates", 2), M([D], se.prototype, "crnotMaxTargetGates", 2), M([D], se.prototype, "crxDisabled", 2), M([D], se.prototype, "crxMaxControlGates", 2), M([D], se.prototype, "crxMaxTargetGates", 2), M([D], se.prototype, "cryDisabled", 2), M([D], se.prototype, "cryMaxControlGates", 2), M([D], se.prototype, "cryMaxTargetGates", 2), M([D], se.prototype, "crzDisabled", 2), M([D], se.prototype, "crzMaxControlGates", 2), M([D], se.prototype, "crzMaxTargetGates", 2), M([D], se.prototype, "cswapDisabled", 2), M([D], se.prototype, "cswapMaxControlGates", 2), M([D], se.prototype, "swapDisabled", 2), M([D], se.prototype, "controlControlDisabled", 2), M([D], se.prototype, "controlControlMaxTargetGates", 2), M([D], se.prototype, "phasePhaseDisabled", 2), M([D], se.prototype, "phasePhaseMaxTargetGates", 2), M([dt], se.prototype, "blocks", 2), se = M([K], se);
-var pn = /* @__PURE__ */ __name(class extends HTMLElement {
+var dn = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
     this.updateUrl = false;
@@ -13789,7 +20688,7 @@ var pn = /* @__PURE__ */ __name(class extends HTMLElement {
     this.worker = new Worker("./serviceworker.js"), this.worker.addEventListener("message", this.handleServiceWorkerMessage.bind(this)), this.addEventListener("draggable:delete", this.maybeUpdateUrl), this.addEventListener("draggable:delete", this.freshRun), this.addEventListener("menuable:menu-delete", this.maybeUpdateUrl), this.addEventListener("menuable:menu-delete", this.freshRun), this.addEventListener("operation-inspector-if-change", this.freshRun), this.addEventListener("operation-inspector-angle-change", this.freshRun), this.addEventListener("operation-inspector-angle-update", this.maybeUpdateUrl), this.addEventListener("operation-inspector-flag-change", this.freshRun), this.addEventListener("circuit-step:mouseenter", this.runUnlessEditing), this.addEventListener("circuit-step:mouseleave", this.runUnlessEditing), this.addEventListener("circuit-step:qpu-operation-snap", this.freshRun), this.addEventListener("circuit-step:qpu-operation-unsnap", this.freshRun), this.addEventListener("circuit-step:update", this.freshRun), this.addEventListener("circle-notation-visibility-change", this.run), this.addEventListener("run-circuit-button-click", this.freshRun), this.addEventListener("circuit-step:qpu-operation-snap", this.maybeUpdateUrl), this.addEventListener("circuit-step:qpu-operation-unsnap", this.maybeUpdateUrl), this.addEventListener("circuit-step:resize-qpu-operation", this.maybeUpdateUrl), this.addEventListener("circuit-step:resize-qpu-operation", this.freshRun), this.addEventListener("circuit-editor-resize", this.freshRun), this.attachShadow({ mode: "open" }), this.update(), this.maybeUpdateUrl(), this.circuit.setBreakpoint(this.circuit.stepAt(0)), this.setCircleNotationQubitCount();
   }
   update() {
-    Z(U`<slot></slot>`, this.shadowRoot);
+    X(U`<slot></slot>`, this.shadowRoot);
   }
   clearCircuit() {
     this.circuit.clear();
@@ -13802,7 +20701,11 @@ var pn = /* @__PURE__ */ __name(class extends HTMLElement {
         let p = this.circuit.stepAt(n.step);
         for (let v in n.blochVectors) {
           let m = parseInt(v), d = p.dropzoneAt(m).operation;
+<<<<<<< Updated upstream
           if (Ih(d)) {
+=======
+          if (Nh(d)) {
+>>>>>>> Stashed changes
             let h = n.blochVectors[m];
             d.x = h[0], d.y = h[1], d.z = h[2];
           }
@@ -13811,12 +20714,16 @@ var pn = /* @__PURE__ */ __name(class extends HTMLElement {
           let v = n.measuredBits;
           for (let m in v) {
             let d = parseInt(m), h = p.dropzoneAt(d).operation;
+<<<<<<< Updated upstream
             Ah(h) && (h.value = v[d].toString());
+=======
+            kh(h) && (h.value = v[d].toString());
+>>>>>>> Stashed changes
           }
         }
         for (let v of p.dropzones) {
           let m = v.operation;
-          ln(m) && m.if !== "" && (m.disabled = !n.flags[m.if]);
+          un(m) && m.if !== "" && (m.disabled = !n.flags[m.if]);
         }
         if (a === n.step) {
           let v = {};
@@ -13867,8 +20774,8 @@ var pn = /* @__PURE__ */ __name(class extends HTMLElement {
     let e = this.circuit.toJson();
     history.pushState("", "", encodeURIComponent(e));
   }
-}, "pn");
-c(pn, "QuantumSimulatorElement"), M([D], pn.prototype, "updateUrl", 2), M([Oe], pn.prototype, "circuit", 2), M([Oe], pn.prototype, "circleNotation", 2), M([dt], pn.prototype, "runCircuitButtons", 2), pn = M([K], pn);
+}, "dn");
+c(dn, "QuantumSimulatorElement"), M([D], dn.prototype, "updateUrl", 2), M([Oe], dn.prototype, "circuit", 2), M([Oe], dn.prototype, "circleNotation", 2), M([dt], dn.prototype, "runCircuitButtons", 2), dn = M([K], dn);
 
 // src/serviceworker-companion.js
 if (navigator.serviceWorker) {
