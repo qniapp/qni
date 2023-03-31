@@ -9,9 +9,6 @@
     "url": "git+https://github.com/qniapp/qni.git"
   },
   "license": "MIT",
-  "engines": {
-    "node": "16.x"
-  },
   "workspaces": [
     "packages/common",
     "packages/simulator",
