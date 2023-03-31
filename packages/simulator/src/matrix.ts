@@ -3,7 +3,6 @@ import {Eq} from 'fp-ts/number'
 import {isNonEmpty} from 'fp-ts/lib/Array'
 import {range} from 'fp-ts/NonEmptyArray'
 import {uniq} from 'fp-ts/lib/ReadonlyNonEmptyArray'
-import {Plugin} from 'pretty-format'
 
 export class Matrix {
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
