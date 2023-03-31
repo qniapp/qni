@@ -10,6 +10,7 @@ import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
+import {SDaggerGateElement} from './s-dagger-gate-element'
 import {SGateElement} from './s-gate-element'
 import {SpacerGateElement} from './spacer-gate-element'
 import {SwapGateElement} from './swap-gate-element'
@@ -33,6 +34,7 @@ export type Operation =
   | RxGateElement
   | RyGateElement
   | RzGateElement
+  | SDaggerGateElement
   | SGateElement
   | SpacerGateElement
   | SwapGateElement
@@ -56,6 +58,7 @@ export const isOperation = (arg: unknown): arg is Operation =>
   arg instanceof RxGateElement ||
   arg instanceof RyGateElement ||
   arg instanceof RzGateElement ||
+  arg instanceof SDaggerGateElement ||
   arg instanceof SGateElement ||
   arg instanceof SpacerGateElement ||
   arg instanceof SwapGateElement ||
@@ -101,6 +104,9 @@ export const isRzGateElement = (arg: unknown): arg is RzGateElement =>
 
 export const isSGateElement = (arg: unknown): arg is SGateElement =>
   arg !== undefined && arg !== null && arg instanceof SGateElement
+
+export const isSDaggerGateElement = (arg: unknown): arg is SDaggerGateElement =>
+  arg !== undefined && arg !== null && arg instanceof SDaggerGateElement
 
 export const isSpacerGateElement = (arg: unknown): arg is SpacerGateElement =>
   arg !== undefined && arg !== null && arg instanceof SpacerGateElement

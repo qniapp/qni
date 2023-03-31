@@ -13,6 +13,7 @@ import {
   SerializedRxGateType,
   SerializedRyGateType,
   SerializedRzGateType,
+  SerializedSDaggerGateType,
   SerializedSGateType,
   SerializedSpacerGateType,
   SerializedSwapGateType,
@@ -110,6 +111,15 @@ export class Simulator {
             this.acs(each.controls || [], each.antiControls || [], ...each.targets)
           } else {
             this.s(...each.targets)
+          }
+          break
+        }
+        case SerializedSDaggerGateType: {
+          if (each.if && !this.flags[each.if]) break
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acsDagger(each.controls || [], each.antiControls || [], ...each.targets)
+          } else {
+            this.sDagger(...each.targets)
           }
           break
         }
@@ -347,6 +357,25 @@ export class Simulator {
 
     this.x(...antiControls)
     this.cu(allControls, Matrix.S, ...targets)
+    this.x(...antiControls)
+    return this
+  }
+
+  sDagger(...targets: number[]): Simulator {
+    this.u(Matrix.SDagger, ...targets)
+    return this
+  }
+
+  acsDagger(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.SDagger, ...targets)
     this.x(...antiControls)
     return this
   }
