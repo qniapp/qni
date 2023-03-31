@@ -61,7 +61,7 @@ class TDaggerGateTest < ApplicationSystemTestCase
   #       ┏━━━┓
   # |0⟩───┃ T†┃───
   #       ┗━━━┛
-  test 'preview T|0>' do
+  test 'preview T†|0>' do
     put_operation '|0>', step: 0, bit: 0
 
     hover_operation 'T†', step: 1, bit: 0
@@ -87,7 +87,7 @@ class TDaggerGateTest < ApplicationSystemTestCase
   #       ┏━━━┓
   # |1⟩───┃ T†┃───
   #       ┗━━━┛
-  test 'preview T|1>' do
+  test 'preview T†|1>' do
     put_operation '|1>', step: 0, bit: 0
 
     hover_operation 'T†', step: 1, bit: 0

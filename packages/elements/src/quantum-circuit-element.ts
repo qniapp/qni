@@ -10,8 +10,9 @@ import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
 import {RzGateElement, RzGateElementProps} from './rz-gate-element'
-import {TGateElement, TGateElementProps} from './t-gate-element'
+import {SGateElement, SGateElementProps} from './s-gate-element'
 import {TDaggerGateElement, TDaggerGateElementProps} from './t-dagger-gate-element'
+import {TGateElement, TGateElementProps} from './t-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
@@ -537,6 +538,32 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       return phase
     }, ...targetBits)
     if (targetBits.length > 1) this.updateStepOperationAttributes(step)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  s(...args: number[] | [SGateElementProps]): QuantumCircuitElement {
+    let targetBits: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targetBits = args as number[]
+    } else {
+      const props = args[0]
+      targetBits = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const s = new SGateElement()
+      if (disabled) s.disable()
+      return s
+    }, ...targetBits)
+
+    this.resize()
 
     return this
   }
@@ -1165,6 +1192,13 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           case /^Swap$/.test(operation): {
             const swapGate = new SwapGateElement()
             operations.push(swapGate)
+            newStep.append(new CircuitDropzoneElement())
+            break
+          }
+          case /^S/.test(operation): {
+            const sGate = new SGateElement()
+            sGate.if = this.ifVariable(operation.slice(1))
+            operations.push(sGate)
             newStep.append(new CircuitDropzoneElement())
             break
           }

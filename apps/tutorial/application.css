@@ -6653,6 +6653,160 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-if]::
   margin-bottom: -0.875rem;
 }
 
+s-gate {
+  display: inline-block;
+  position: relative;
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+}
+
+s-gate::part(body) {
+  width: 2rem;
+  width: var(--qni-semantic-size-qpu-operation-base);
+  height: 2rem;
+  height: var(--qni-semantic-size-qpu-operation-base);
+  flex-shrink: 0;
+}
+
+s-gate::part(outline) {
+  position: absolute;
+  display: none;
+  top: calc(-1 * (0.125rem));
+  top: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+  right: calc(-1 * (0.125rem));
+  right: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+  bottom: calc(-1 * (0.125rem));
+  bottom: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+  left: calc(-1 * (0.125rem));
+  left: calc(-1 * (var(--qni-semantic-spacing-outline-gap)));
+  border-radius: 0.375rem;
+  border-radius: var(--qni-semantic-radius-outline);
+}
+
+palette-dropzone s-gate[data-hoverable]:not([data-grabbed]):hover::part(outline),
+    quantum-circuit:not([data-editing]) s-gate[data-hoverable]:not([data-active]):not([data-resizing]):hover::part(outline) {
+  display: block;
+  outline: 2px solid #d4d4d8;
+  outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-hover);
+}
+
+s-gate[data-active]::part(outline) {
+  display: block;
+  outline: 2px solid #0ea5e9;
+  outline: var(--qni-semantic-border-width-outline) solid var(--qni-semantic-border-color-active);
+}
+
+s-gate[data-disabled]::part(body) {
+  background-color: #71717a;
+  background-color: var(--qni-semantic-fill-color-disabled);
+}
+
+s-gate::part(body) {
+  border-radius: 0.25rem;
+  border-radius: var(--qni-semantic-radius-default);
+  background-color: #10b981;
+  background-color: var(--qni-semantic-fill-color-primary);
+}
+
+s-gate::part(icon) {
+  color: #fff;
+  color: var(--qni-semantic-color-icon-inverse);
+}
+
+s-gate[data-grabbed] {
+  cursor: grabbing;
+}
+
+s-gate[data-grabbed]:not([data-snapped]) {
+  z-index: 40;
+}
+
+s-gate[data-grabbed]::part(body) {
+  background-color: #a855f7;
+  background-color: var(--qni-semantic-fill-color-intermediate);
+}
+
+s-gate[data-grabbed]::part(icon) {
+  color: #fff;
+  color: var(--qni-semantic-color-icon-inverse);
+}
+
+s-gate[data-grabbed]::part(outline) {
+  display: none;
+}
+
+s-gate {
+  touch-action: none;
+}
+
+circuit-editor palette-dropzone s-gate,
+    circuit-editor quantum-circuit:not([data-editing]) s-gate {
+  cursor: grab;
+}
+
+quantum-circuit([data-editing]) s-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
+  --tw-border-opacity: 1;
+}
+
+circuit-dropzone s-gate:not([data-snapped])::part(body)::before {
+  position: absolute;
+  top: -0.625rem;
+  right: -0.625rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  z-index: 10;
+  content: '';
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+s-gate[data-if]::before {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: -0.05em;
+  font-size: 0.75rem;
+  line-height: .75rem;
+  white-space: nowrap;
+}
+
+circuit-dropzone s-gate[data-if]:not([data-if=''])::before {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
+  content: 'if\2009'attr(data-if);
+}
+
+circuit-dropzone s-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
+  content: attr(data-angle) '\2009if\2009'attr(data-if);
+}
+
+circuit-dropzone:not([data-connect-top]) s-gate[data-if]::before {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
+}
+
+circuit-dropzone[data-connect-top][data-connect-bottom] s-gate[data-if]::before {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
+  text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
+        -1px 0 0 #fff, 1px 0 0 #fff;
+}
+
+circuit-dropzone[data-connect-top]:not([data-connect-bottom]) s-gate[data-if]::before {
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: -0.875rem;
+}
+
 spacer-gate {
   display: inline-block;
   position: relative;
