@@ -10,6 +10,7 @@ import {SerializedRnotGate} from './rnot-gate'
 import {SerializedRxGate} from './rx-gate'
 import {SerializedRyGate} from './ry-gate'
 import {SerializedRzGate} from './rz-gate'
+import {SerializedSDaggerGate} from './s-dagger-gate'
 import {SerializedSGate} from './s-gate'
 import {SerializedSpacerGate} from './spacer-gate'
 import {SerializedSwapGate} from './swap-gate'
@@ -34,6 +35,7 @@ export type SerializedCircuitStep = Array<
   | SerializedRxGate
   | SerializedRyGate
   | SerializedRzGate
+  | SerializedSDaggerGate
   | SerializedSGate
   | SerializedSpacerGate
   | SerializedSwapGate

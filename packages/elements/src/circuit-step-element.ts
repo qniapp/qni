@@ -12,6 +12,7 @@ import {
   SerializedRxGate,
   SerializedRyGate,
   SerializedRzGate,
+  SerializedSDaggerGate,
   SerializedSGate,
   SerializedSpacerGate,
   SerializedSwapGate,
@@ -57,6 +58,7 @@ import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
+import {SDaggerGateElement} from './s-dagger-gate-element'
 import {SGateElement} from './s-gate-element'
 import {SpacerGateElement} from './spacer-gate-element'
 import {SwapGateElement} from './swap-gate-element'
@@ -1121,6 +1123,23 @@ export class CircuitStepElement extends HTMLElement {
               const opType = gate0.operationType
               const targetBits = sameControlGates.map(each => each.bit)
               const serializedGate: SerializedSGate = {type: opType, targets: targetBits}
+              if (ifStr !== '') serializedGate.if = ifStr
+              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls
+
+              serializedStep.push(serializedGate)
+            }
+          }
+          break
+        }
+        case SDaggerGateElement: {
+          const tDaggerGates = sameOps as SDaggerGateElement[]
+          for (const [ifStr, sameIfGates] of groupBy(tDaggerGates, gate => gate.if)) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              const gate0 = sameControlGates[0]
+              const opType = gate0.operationType
+              const targetBits = sameControlGates.map(each => each.bit)
+              const serializedGate: SerializedSDaggerGate = {type: opType, targets: targetBits}
               if (ifStr !== '') serializedGate.if = ifStr
               if (controlsStr !== '') serializedGate.controls = gate0.controls
               if (gate0.antiControls.length > 0) serializedGate.antiControls = gate0.antiControls

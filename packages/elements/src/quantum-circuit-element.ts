@@ -1,7 +1,13 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
+import {AntiControlGateElement} from './anti-control-gate-element'
+import {BlochDisplayElement} from './bloch-display-element'
+import {CircuitBlockElement} from './circuit-block-element'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
+import {ControlGateElement} from './control-gate-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
 import {HoverableMixin, isResizeable} from './mixin'
+import {MeasurementGateElement} from './measurement-gate-element'
+import {Operation} from './operation'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
 import {QftDaggerGateElement, QftDaggerGateElementProps} from './qft-dagger-gate-element'
 import {QftGateElement, QftGateElementProps} from './qft-gate-element'
@@ -10,24 +16,19 @@ import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
 import {RzGateElement, RzGateElementProps} from './rz-gate-element'
+import {SDaggerGateElement, SDaggerGateElementProps} from './s-dagger-gate-element'
 import {SGateElement, SGateElementProps} from './s-gate-element'
+import {SpacerGateElement} from './spacer-gate-element'
+import {SwapGateElement} from './swap-gate-element'
 import {TDaggerGateElement, TDaggerGateElementProps} from './t-dagger-gate-element'
 import {TGateElement, TGateElementProps} from './t-gate-element'
+import {WriteGateElement} from './write-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
 import {attr, controller, targets} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
-import {AntiControlGateElement} from './anti-control-gate-element'
-import {BlochDisplayElement} from './bloch-display-element'
-import {CircuitBlockElement} from './circuit-block-element'
-import {ControlGateElement} from './control-gate-element'
-import {MeasurementGateElement} from './measurement-gate-element'
-import {Operation} from './operation'
-import {SpacerGateElement} from './spacer-gate-element'
-import {SwapGateElement} from './swap-gate-element'
-import {WriteGateElement} from './write-gate-element'
 
 export type SnapTarget = {
   dropzone: CircuitDropzoneElement | null
@@ -561,6 +562,32 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       const s = new SGateElement()
       if (disabled) s.disable()
       return s
+    }, ...targetBits)
+
+    this.resize()
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  sDagger(...args: number[] | [SDaggerGateElementProps]): QuantumCircuitElement {
+    let targetBits: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targetBits = args as number[]
+    } else {
+      const props = args[0]
+      targetBits = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const sDagger = new SDaggerGateElement()
+      if (disabled) sDagger.disable()
+      return sDagger
     }, ...targetBits)
 
     this.resize()
@@ -1192,6 +1219,13 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           case /^Swap$/.test(operation): {
             const swapGate = new SwapGateElement()
             operations.push(swapGate)
+            newStep.append(new CircuitDropzoneElement())
+            break
+          }
+          case /^S†/.test(operation): {
+            const sDaggerGate = new SDaggerGateElement()
+            sDaggerGate.if = this.ifVariable(operation.slice(1))
+            operations.push(sDaggerGate)
             newStep.append(new CircuitDropzoneElement())
             break
           }

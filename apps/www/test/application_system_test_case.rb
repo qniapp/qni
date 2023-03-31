@@ -184,6 +184,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       'Z' => 'z-gate',
       'Phase' => 'phase-gate',
       'S' => 's-gate',
+      'S†' => 's-dagger-gate',
       'T' => 't-gate',
       'T†' => 't-dagger-gate',
       '√X' => 'rnot-gate',

@@ -33,6 +33,7 @@
 @import './rx_gate';
 @import './ry_gate';
 @import './rz_gate';
+@import './s_dagger_gate';
 @import './s_gate';
 @import './spacer_gate';
 @import './swap_gate';
