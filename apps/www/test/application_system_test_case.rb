@@ -26,29 +26,27 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def assert_outline(qpu_operation)
-    outline_el = shadow_root(qpu_operation).find_element(css: '[part="outline"]')
+    outline_el = qpu_operation.shadow_root.find('[part="outline"]')
 
     assert_not_nil outline_el
-    assert outline_el.displayed?
   end
 
   def assert_no_outline(qpu_operation)
-    outline_el = shadow_root(qpu_operation).find_element(css: '[part="outline"]')
-
-    assert_not_nil outline_el
-    assert_not outline_el.displayed?
+    assert_raises(Capybara::ElementNotFound) do
+      qpu_operation.shadow_root.find('[part="outline"]')
+    end
   end
 
   def assert_body_background_color(color, operation)
-    body_part = shadow_root(operation).find_element(css: '[part="body"]')
+    body_part = operation.shadow_root.find('[part="body"]')
 
-    assert_equal color, body_part.css_value('background-color')
+    assert_equal color, body_part.native.css_value('background-color')
   end
 
   def assert_icon_color(color, operation)
-    icon_part = shadow_root(operation).find_element(css: '[part="icon"]')
+    icon_part = operation.shadow_root.find('[part="icon"]')
 
-    assert_equal color, icon_part.css_value('color')
+    assert_equal color, icon_part.native.css_value('color')
   end
 
   def assert_enabled(operation)
@@ -60,7 +58,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def assert_value(value, element)
-    shadow_root(element).find_element :css, '#value'
+    element.shadow_root.find('#value')
     assert_equal value, element['data-value']
   end
 
@@ -100,12 +98,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def assert_qubit_circles(number)
-    qubit_circles = shadow_root(find('#circle-notation')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+    qubit_circles = find('#circle-notation').shadow_root.all('.qubit-circle')
     assert_equal number, qubit_circles.length
   end
 
   def assert_magnitudes(*magnitudes)
-    qubit_circles = shadow_root(find('#circle-notation')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+    qubit_circles = find('#circle-notation').shadow_root.all('.qubit-circle')
 
     magnitudes.each_with_index do |each, index|
       qubit_circle = qubit_circles[index]
@@ -116,7 +114,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def assert_phases(*phases)
-    qubit_circles = shadow_root(find('#circle-notation')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+    qubit_circles = find('#circle-notation').shadow_root.all('.qubit-circle')
 
     phases.each_with_index do |each, index|
       qubit_circle = qubit_circles[index]
@@ -166,7 +164,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     page.driver.browser.action
         .move_to(palette(name).native, 0, 0)
         .click_and_hold
-        .move_to(dropzone.native, client_width(dropzone) / 2, client_height(dropzone) / 2)
+        .move_to(dropzone.native)
         .perform
 
     within dropzone do
@@ -292,14 +290,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   def client_height(element)
     page.evaluate_script("document.querySelector('#{element.tag_name}').clientHeight")
-  end
-
-  def shadow_root(element)
-    page.evaluate_script(<<~JS, element)
-      (function(root){
-        return root.shadowRoot;
-      })(arguments[0])
-    JS
   end
 end
 # rubocop:enable Metrics/ClassLength
