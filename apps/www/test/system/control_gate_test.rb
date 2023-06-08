@@ -36,9 +36,9 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_no_outline control_gate
   end
 
-  # 
+  #
   # |0⟩─────●─────
-  #            
+  #
   test 'apply to |0>' do
     put_operation '|0>', step: 0, bit: 0
 
@@ -50,9 +50,9 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_phases 0, 0
   end
 
-  # 
+  #
   # |1⟩─────●─────
-  # 
+  #
   test 'apply to |1>' do
     put_operation '|1>', step: 0, bit: 0
 
@@ -69,7 +69,7 @@ class ControlGateTest < ApplicationSystemTestCase
   #       └───┘    │
   #       ┌───┐    │
   # |0⟩───│ H │────●────
-  #       └───┘         
+  #       └───┘
   test 'apply CZ to |++>' do
     put_operation '|0>', step: 0, bit: 0
     put_operation '|0>', step: 0, bit: 1

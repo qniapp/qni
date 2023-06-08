@@ -11,6 +11,7 @@ function runSimulator(e) {
   const targets = e.data.targets
   const invalidateCaches = e.data.invalidateCaches
   const debug = e.data.debug
+  const backend = e.data.backend
 
   Util.notNull(qubitCount)
   Util.notNull(stepIndex)
@@ -28,98 +29,139 @@ function runSimulator(e) {
     )
   }
 
-  const s_time = new Date()
-  const simulator = new Simulator('0'.repeat(qubitCount))
+  if (backend) {
+    runBackend(circuitJson, qubitCount, stepIndex, steps, targets, backend)
+  } else {
+    const s_time = new Date()
+    const simulator = new Simulator('0'.repeat(qubitCount))
 
-  if (resultCache[circuitJson] === undefined || invalidateCaches) {
-    resultCache = {}
-    resultCache[circuitJson] = {}
-  }
-
-  let cacheHit = false
-
-  for (const [i, operations] of steps.entries()) {
-    let stepResult = {}
-
-    if (resultCache[circuitJson][i] === undefined) {
-      resultCache[circuitJson][i] = {}
+    if (resultCache[circuitJson] === undefined || invalidateCaches) {
+      resultCache = {}
+      resultCache[circuitJson] = {}
     }
-    const cachedStepResult = resultCache[circuitJson][i]
 
-    if (
-      cachedStepResult === undefined ||
-      cachedStepResult.targets === undefined ||
-      cachedStepResult.targets.length < targets.length
-    ) {
-      cacheHit = false
+    let cacheHit = false
 
-      simulator.runStep(operations)
+    for (const [i, operations] of steps.entries()) {
+      let stepResult = {}
 
-      const allAmplitudes = simulator.state.matrix.clone()
-      const blochVectors = Object.assign({}, simulator.blochVectors)
-      const measuredBits = Object.assign({}, simulator.measuredBits)
-      const flags = Object.assign({}, simulator.flags)
-
-      resultCache[circuitJson][i] = {
-        type: 'step',
-        step: i,
-        amplitudes: allAmplitudes,
-        targets,
-        blochVectors,
-        measuredBits,
-        flags,
+      if (resultCache[circuitJson][i] === undefined) {
+        resultCache[circuitJson][i] = {}
       }
+      const cachedStepResult = resultCache[circuitJson][i]
 
-      if (i === stepIndex) {
-        const amplitudes = pickTargetAmplitudes(targets, allAmplitudes)
+      if (
+        cachedStepResult === undefined ||
+        cachedStepResult.targets === undefined ||
+        cachedStepResult.targets.length < targets.length
+      ) {
+        cacheHit = false
 
-        stepResult = {
+        simulator.runStep(operations)
+
+        const allAmplitudes = simulator.state.matrix.clone()
+        const blochVectors = Object.assign({}, simulator.blochVectors)
+        const measuredBits = Object.assign({}, simulator.measuredBits)
+        const flags = Object.assign({}, simulator.flags)
+
+        resultCache[circuitJson][i] = {
           type: 'step',
           step: i,
-          amplitudes,
+          amplitudes: allAmplitudes,
+          targets,
           blochVectors,
           measuredBits,
           flags,
         }
+
+        if (i === stepIndex) {
+          const amplitudes = pickTargetAmplitudes(targets, allAmplitudes)
+
+          stepResult = {
+            type: 'step',
+            step: i,
+            amplitudes,
+            blochVectors,
+            measuredBits,
+            flags,
+          }
+        } else {
+          stepResult = {
+            type: 'step',
+            step: i,
+            amplitudes: [],
+            blochVectors,
+            measuredBits,
+            flags,
+          }
+        }
       } else {
+        cacheHit = true
+
         stepResult = {
           type: 'step',
           step: i,
           amplitudes: [],
-          blochVectors,
-          measuredBits,
-          flags,
+          blochVectors: cachedStepResult.blochVectors,
+          measuredBits: cachedStepResult.measuredBits,
+          flags: cachedStepResult.flags,
+        }
+
+        if (i === stepIndex) {
+          stepResult.amplitudes = pickTargetAmplitudes(targets, cachedStepResult.amplitudes)
         }
       }
-    } else {
-      cacheHit = true
 
-      stepResult = {
-        type: 'step',
-        step: i,
-        amplitudes: [],
-        blochVectors: cachedStepResult.blochVectors,
-        measuredBits: cachedStepResult.measuredBits,
-        flags: cachedStepResult.flags,
-      }
-
-      if (i === stepIndex) {
-        stepResult.amplitudes = pickTargetAmplitudes(targets, cachedStepResult.amplitudes)
-      }
+      self.postMessage(stepResult)
     }
 
-    self.postMessage(stepResult)
-  }
+    const e_time = new Date()
+    const diff = e_time.getTime() - s_time.getTime()
+    const cacheDesc = cacheHit ? '🎯 CACHE HIT' : '💦 CACHE MISS'
+    if (debug) {
+      // eslint-disable-next-line no-console
+      console.log(`⏱ simulation took ${diff} msec (${cacheDesc})`)
+    }
 
-  const e_time = new Date()
-  const diff = e_time.getTime() - s_time.getTime()
-  const cacheDesc = cacheHit ? '🎯 CACHE HIT' : '💦 CACHE MISS'
-  if (debug) {
-    // eslint-disable-next-line no-console
-    console.log(`⏱ simulation took ${diff} msec (${cacheDesc})`)
+    self.postMessage({type: 'finish'})
   }
+}
 
-  self.postMessage({type: 'finish'})
+function runBackend(json, qubitCount, stepIndex, steps, targets, backend) {
+  const params = new URLSearchParams({
+    id: json,
+    qubitCount: qubitCount,
+    stepIndex: stepIndex,
+    steps: JSON.stringify(steps),
+    targets: targets,
+    backend: backend,
+  })
+
+  fetch(`/backend.json?${params}`, {
+    method: 'GET',
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to connect to Qni's backend endpoint.")
+      }
+      return response.json()
+    })
+    .then(response => {
+      for (let i = 0; i < response.length; i++) {
+        const stepResult = response[i]
+        self.postMessage({
+          type: 'step',
+          step: i,
+          amplitudes: stepResult['amplitudes'],
+          blochVectors: stepResult['blochVectors'],
+          measuredBits: stepResult['measuredBits'],
+          flags: {},
+        })
+      }
+    })
+    .catch(error => {
+      console.error(error)
+    })
 }
 
 const pickTargetAmplitudes = (targets, amplitudes) => {

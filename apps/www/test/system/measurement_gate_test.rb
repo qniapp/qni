@@ -97,9 +97,9 @@ class MeasurementGateTest < ApplicationSystemTestCase
     assert_output_wire_classical step: 1, bit: 0
   end
 
-  #       ┏━━━┓   
+  #       ┏━━━┓
   # |0⟩───┃ M ┃===
-  #       ┗━━━┛   
+  #       ┗━━━┛
   test 'preview the change in input and output wire states' do
     put_operation '|0⟩', step: 0, bit: 0
 
