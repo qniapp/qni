@@ -129,26 +129,28 @@ function runSimulator(e) {
 
 function runBackend(json, qubitCount, stepIndex, steps, targets, backend) {
   const params = new URLSearchParams({
+    qubitCount,
+    stepIndex,
+    targets,
+    backend,
     id: json,
-    qubitCount: qubitCount,
-    stepIndex: stepIndex,
     steps: JSON.stringify(steps),
-    targets: targets,
-    backend: backend,
   })
 
-  fetch(`/backend.json?${params}`, {
-    method: 'GET',
-  })
-    .then(response => {
+  async function call_backend() {
+    try {
+      const response = await fetch(`/backend.json?${params}`, {
+        method: 'GET',
+      })
+
       if (!response.ok) {
         throw new Error("Failed to connect to Qni's backend endpoint.")
       }
-      return response.json()
-    })
-    .then(response => {
-      for (let i = 0; i < response.length; i++) {
-        const stepResult = response[i]
+
+      const jsondata = await response.json()
+
+      for (let i = 0; i < jsondata.length; i++) {
+        const stepResult = jsondata[i]
         self.postMessage({
           type: 'step',
           step: i,
@@ -158,10 +160,13 @@ function runBackend(json, qubitCount, stepIndex, steps, targets, backend) {
           flags: {},
         })
       }
-    })
-    .catch(error => {
+    } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error)
-    })
+    }
+  }
+
+  call_backend()
 }
 
 const pickTargetAmplitudes = (targets, amplitudes) => {
