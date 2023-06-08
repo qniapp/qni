@@ -164,12 +164,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     page.driver.browser.action
         .move_to(palette(name).native, 0, 0)
         .click_and_hold
-        .move_to(dropzone.native, client_width(dropzone) / 2, client_height(dropzone) / 2)
+        .move_to(dropzone.native)
         .perform
 
-    # within dropzone do
-    #   return find(operation_name_to_locator(name))
-    # end
+    within dropzone do
+      return find(operation_name_to_locator(name))
+    end
   end
   # rubocop:enable Metrics/AbcSize
 
