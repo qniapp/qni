@@ -69,6 +69,36 @@
   </div>
 </template>
 
+<template id="s-gate-help">
+  <header>
+    <h1>S Gate</h1>
+    <p>A shortcut for <code>π/2</code> Phase gate.</p>
+    <p>Applies a phase of e<sup>iπ/2</sup> to the <code>|1⟩</code> state.</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [1, 0], operation: 'S', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [0, 'i'], operation: 'S', dark_mode: true) %>
+    </div>
+  </div>
+</template>
+
+<template id="s-dagger-gate-help">
+  <header>
+    <h1>S† Gate</h1>
+    <p>A shortcut for <code>-π/2</code> Phase gate.</p>
+    <p>Applies a phase of e<sup>-iπ/2</sup> to the <code>|1⟩</code> state.</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [1, 0], operation: 's-dagger', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [0, '-i'], operation: 's-dagger', dark_mode: true) %>
+    </div>
+  </div>
+</template>
+
 <template id="t-gate-help">
   <header>
     <h1>T Gate</h1>
@@ -80,6 +110,21 @@
     <div class="flex flex-col space-y-2">
       <%= render QubitTransitionComponent.new(from: [1, 0], to: [1, 0], operation: 'T', dark_mode: true) %>
       <%= render QubitTransitionComponent.new(from: [0, 1], to: [0, '0.7071 + 0.7071i'], operation: 'T', dark_mode: true) %>
+    </div>
+  </div>
+</template>
+
+<template id="t-dagger-gate-help">
+  <header>
+    <h1>T† Gate</h1>
+    <p>A shortcut for <code>-π/4</code> Phase gate.</p>
+    <p>Applies a phase of e<sup>-iπ/4</sup> to the <code>|1⟩</code> state.</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [1, 0], operation: 't-dagger', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [0, '0.7071 - 0.7071i'], operation: 't-dagger', dark_mode: true) %>
     </div>
   </div>
 </template>

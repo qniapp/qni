@@ -13,8 +13,11 @@ import {
   SerializedRxGateType,
   SerializedRyGateType,
   SerializedRzGateType,
+  SerializedSDaggerGateType,
+  SerializedSGateType,
   SerializedSpacerGateType,
   SerializedSwapGateType,
+  SerializedTDaggerGateType,
   SerializedTGateType,
   SerializedWrite0GateType,
   SerializedWrite1GateType,
@@ -102,12 +105,39 @@ export class Simulator {
           }
           break
         }
+        case SerializedSGateType: {
+          if (each.if && !this.flags[each.if]) break
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acs(each.controls || [], each.antiControls || [], ...each.targets)
+          } else {
+            this.s(...each.targets)
+          }
+          break
+        }
+        case SerializedSDaggerGateType: {
+          if (each.if && !this.flags[each.if]) break
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.acsDagger(each.controls || [], each.antiControls || [], ...each.targets)
+          } else {
+            this.sDagger(...each.targets)
+          }
+          break
+        }
         case SerializedTGateType: {
           if (each.if && !this.flags[each.if]) break
           if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
             this.act(each.controls || [], each.antiControls || [], ...each.targets)
           } else {
             this.t(...each.targets)
+          }
+          break
+        }
+        case SerializedTDaggerGateType: {
+          if (each.if && !this.flags[each.if]) break
+          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+            this.actDagger(each.controls || [], each.antiControls || [], ...each.targets)
+          } else {
+            this.tDagger(...each.targets)
           }
           break
         }
@@ -312,6 +342,44 @@ export class Simulator {
     return this
   }
 
+  s(...targets: number[]): Simulator {
+    this.u(Matrix.S, ...targets)
+    return this
+  }
+
+  acs(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.S, ...targets)
+    this.x(...antiControls)
+    return this
+  }
+
+  sDagger(...targets: number[]): Simulator {
+    this.u(Matrix.SDagger, ...targets)
+    return this
+  }
+
+  acsDagger(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.SDagger, ...targets)
+    this.x(...antiControls)
+    return this
+  }
+
   t(...targets: number[]): Simulator {
     this.u(Matrix.T, ...targets)
     return this
@@ -332,6 +400,25 @@ export class Simulator {
 
     this.x(...antiControls)
     this.cu(allControls, Matrix.T, ...targets)
+    this.x(...antiControls)
+    return this
+  }
+
+  tDagger(...targets: number[]): Simulator {
+    this.u(Matrix.TDagger, ...targets)
+    return this
+  }
+
+  actDagger(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
+    let allControls
+    if (typeof controls === 'number') {
+      allControls = [controls].concat(antiControls)
+    } else {
+      allControls = controls.concat(antiControls)
+    }
+
+    this.x(...antiControls)
+    this.cu(allControls, Matrix.TDagger, ...targets)
     this.x(...antiControls)
     return this
   }

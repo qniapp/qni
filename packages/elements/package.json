@@ -1,6 +1,6 @@
 {
   "name": "@qni/elements",
-  "version": "0.0.85",
+  "version": "0.0.86",
   "description": "Quantum circuit components.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -42,12 +42,12 @@
   "dependencies": {
     "@github/catalyst": "1.3.0",
     "@github/jtml": "~0.5",
-    "@qni/common": "^0.0.85",
+    "@qni/common": "^0.0.86",
     "complex.js": "^2.1.1",
     "interactjs": "~1.10",
     "pretty-format": "^29.4.2",
     "tippy.js": "^6.3.7",
-    "xstate": "~4.35"
+    "xstate": "~4.37"
   },
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",

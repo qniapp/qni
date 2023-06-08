@@ -10,8 +10,11 @@ import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
+import {SDaggerGateElement} from './s-dagger-gate-element'
+import {SGateElement} from './s-gate-element'
 import {SpacerGateElement} from './spacer-gate-element'
 import {SwapGateElement} from './swap-gate-element'
+import {TDaggerGateElement} from './t-dagger-gate-element'
 import {TGateElement} from './t-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
@@ -31,8 +34,11 @@ export type Operation =
   | RxGateElement
   | RyGateElement
   | RzGateElement
+  | SDaggerGateElement
+  | SGateElement
   | SpacerGateElement
   | SwapGateElement
+  | TDaggerGateElement
   | TGateElement
   | WriteGateElement
   | XGateElement
@@ -52,8 +58,11 @@ export const isOperation = (arg: unknown): arg is Operation =>
   arg instanceof RxGateElement ||
   arg instanceof RyGateElement ||
   arg instanceof RzGateElement ||
+  arg instanceof SDaggerGateElement ||
+  arg instanceof SGateElement ||
   arg instanceof SpacerGateElement ||
   arg instanceof SwapGateElement ||
+  arg instanceof TDaggerGateElement ||
   arg instanceof TGateElement ||
   arg instanceof WriteGateElement ||
   arg instanceof XGateElement ||
@@ -78,6 +87,9 @@ export const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
 export const isTGateElement = (arg: unknown): arg is TGateElement =>
   arg !== undefined && arg !== null && arg instanceof TGateElement
 
+export const isTDaggerGateElement = (arg: unknown): arg is TDaggerGateElement =>
+  arg !== undefined && arg !== null && arg instanceof TDaggerGateElement
+
 export const isRnotGateElement = (arg: unknown): arg is RnotGateElement =>
   arg !== undefined && arg !== null && arg instanceof RnotGateElement
 
@@ -89,6 +101,12 @@ export const isRyGateElement = (arg: unknown): arg is RyGateElement =>
 
 export const isRzGateElement = (arg: unknown): arg is RzGateElement =>
   arg !== undefined && arg !== null && arg instanceof RzGateElement
+
+export const isSGateElement = (arg: unknown): arg is SGateElement =>
+  arg !== undefined && arg !== null && arg instanceof SGateElement
+
+export const isSDaggerGateElement = (arg: unknown): arg is SDaggerGateElement =>
+  arg !== undefined && arg !== null && arg instanceof SDaggerGateElement
 
 export const isSpacerGateElement = (arg: unknown): arg is SpacerGateElement =>
   arg !== undefined && arg !== null && arg instanceof SpacerGateElement
