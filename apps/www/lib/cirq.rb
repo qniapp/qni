@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CuQuantum
+class Cirq
   def initialize(circuit_id:, qubit_count:, step_index:, steps:, targets:)
     @circuit_id = circuit_id
     @qubit_count = qubit_count

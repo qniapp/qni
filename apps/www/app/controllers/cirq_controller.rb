@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class CuQuantumController < ApplicationController
+class CirqController < ApplicationController
   def show; end
 end
