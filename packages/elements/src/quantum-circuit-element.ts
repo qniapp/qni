@@ -45,6 +45,9 @@ export type ResizeHandleSnapTarget = {
 type QuantumCircuitContext = Record<string, never>
 type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 
+type ParseError = {message: string}
+const toParseError = (): ParseError => ({message: 'Parse Error'})
+
 @controller
 export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   @attr minStepCount = 1
@@ -1070,6 +1073,8 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     }
   }
 
+  private safeJsonParse = Result.fromThrowable(JSON.parse, toParseError)
+
   private loadFromJson(json: string): void {
     // eslint-disable-next-line github/no-inner-html
     this.innerHTML = ''
@@ -1085,11 +1090,11 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
 
     let circuit = null
 
-    type ParseError = {message: string}
-    const toParseError = (): ParseError => ({message: 'Parse Error'})
-    const safeJsonParse = Result.fromThrowable(JSON.parse, toParseError)
+    // type ParseError = {message: string}
+    // const toParseError = (): ParseError => ({message: 'Parse Error'})
+    // const safeJsonParse = Result.fromThrowable(JSON.parse, toParseError)
 
-    const res = safeJsonParse(json)
+    const res = this.safeJsonParse(json)
     if (res.isOk()) {
       circuit = res.value
     } else {
