@@ -26,6 +26,7 @@ type MessageEventData = {
 @controller
 export class QuantumSimulatorElement extends HTMLElement {
   @attr updateUrl = false
+  @attr backend = ''
 
   @target circuit!: QuantumCircuitElement
   @target circleNotation!: CircleNotationElement
@@ -34,7 +35,8 @@ export class QuantumSimulatorElement extends HTMLElement {
   declare worker: Worker
 
   connectedCallback(): void {
-    this.worker = new Worker('./serviceworker.js')
+    // this.worker = new Worker('./serviceworker.js')
+    this.worker = new Worker('/serviceworker.js')
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
 
     this.addEventListener('draggable:delete', this.maybeUpdateUrl)
@@ -148,6 +150,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     Util.need(serializedSteps.length > 0, 'non-zero step length')
     const circuitJson = this.circuit.toJson()
     const qubitCount = this.setCircleNotationQubitCount()
+    const backend = this.backend.trim()
 
     this.worker.postMessage({
       qubitCount,
@@ -156,6 +159,7 @@ export class QuantumSimulatorElement extends HTMLElement {
       invalidateCaches,
       steps: serializedSteps,
       targets: this.circleNotation.visibleQubitCircleKets,
+      backend: backend !== '' ? backend : null,
       debug: window.debugServiceworker,
     })
   }
