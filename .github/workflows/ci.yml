@@ -60,7 +60,7 @@ jobs:
           RAILS_ENV: test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-      - run: lerna bootstrap
+      - run: yarn
       - run: yarn build
       - name: Lint Codebase
         run: yarn lint
