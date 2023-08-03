@@ -1,15 +1,5 @@
 import {Controller} from '@hotwired/stimulus'
-
-class Util {
-  static updateUrlJson(json: string): void {
-    history.pushState('', '', encodeURIComponent(json))
-  }
-
-  static get urlJson(): string {
-    const json = window.location.href.toString().split(window.location.host)[1].slice(1)
-    return decodeURIComponent(json)
-  }
-}
+import {Util} from '@qni/common'
 
 export default class ShareController extends Controller {
   static values = {
@@ -41,7 +31,7 @@ export default class ShareController extends Controller {
     jsonData.title = newTitle
 
     this.updateDocumentTitle(newTitle)
-    Util.updateUrlJson(JSON.stringify(jsonData))
+    history.pushState('', '', encodeURIComponent(JSON.stringify(jsonData)))
     this.updateUrlText()
   }
 

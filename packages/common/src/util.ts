@@ -47,4 +47,13 @@ export class Util {
     }
     return [Math.cos(radians), Math.sin(radians)]
   }
+
+  // 現在の URL をパースし、最後の / 以降をデコードしたものを返す
+  static get urlJson(): string {
+    const url = new URL(location.href, window.location.origin)
+    const path = decodeURIComponent(url.pathname)
+    const lastSlashIndex = path.lastIndexOf('/')
+
+    return path.substring(lastSlashIndex + 1)
+  }
 }

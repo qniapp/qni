@@ -5024,6 +5024,10 @@ Args: ${n}`;
     }
     return [Math.cos(e), Math.sin(e)];
   }
+  static get urlJson() {
+    let e = new URL(location.href, window.location.origin), r = decodeURIComponent(e.pathname), t = r.lastIndexOf("/");
+    return r.substring(t + 1);
+  }
 }, "m");
 var we = u(class {
   static from(e) {
@@ -13666,7 +13670,7 @@ var le = /* @__PURE__ */ __name(class extends pe(HTMLElement) {
   }
   connectedCallback() {
     if (this.attachShadow({ mode: "open" }), this.update(), this.hasAttribute("data-update-url")) {
-      let t = this.urlJson;
+      let t = H.urlJson;
       this.loadFromJson(t);
     }
     this.hoverable && this.makeOperationsHoverable(), this.appendMinimumSteps(), this.appendMinimumWires(), this.updateAllWires(), this.addEventListener("mouseleave", this.dispatchMouseleaveEvent), this.addEventListener("circuit-step:update", this.updateStep), this.addEventListener("circuit-step:qpu-operation-snap", this.updateStep), this.addEventListener("circuit-step:qpu-operation-snap", this.updateChangedWire), this.addEventListener("circuit-step:qpu-operation-unsnap", this.updateStep), this.addEventListener("circuit-step:qpu-operation-unsnap", this.updateChangedWire), this.addEventListener("circuit-step:delete-qpu-operation", this.updateStep), this.addEventListener("circuit-step:delete-qpu-operation", this.updateChangedWire), this.addEventListener("circuit-step:resize-qpu-operation", this.updateStep), fe("quantum-circuit:init", {}, this);
@@ -14277,10 +14281,6 @@ var le = /* @__PURE__ */ __name(class extends pe(HTMLElement) {
   }
   serialize() {
     return this.steps.map((t) => t.serialize());
-  }
-  get urlJson() {
-    let t = new URL(location.href, window.location.origin), n = decodeURIComponent(t.pathname), o = n.lastIndexOf("/");
-    return n.substring(o + 1);
   }
   clear() {
     history.pushState("", "", encodeURIComponent('{"cols":[]}')), location.reload();

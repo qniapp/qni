@@ -289,7 +289,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     this.update()
 
     if (this.hasAttribute('data-update-url')) {
-      const json = this.urlJson
+      const json = Util.urlJson
       this.loadFromJson(json)
     }
 
@@ -1090,10 +1090,6 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
 
     let circuit = null
 
-    // type ParseError = {message: string}
-    // const toParseError = (): ParseError => ({message: 'Parse Error'})
-    // const safeJsonParse = Result.fromThrowable(JSON.parse, toParseError)
-
     const res = this.safeJsonParse(json)
     if (res.isOk()) {
       circuit = res.value
@@ -1590,15 +1586,6 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
 
   serialize(): SerializedCircuitStep[] {
     return this.steps.map(each => each.serialize())
-  }
-
-  // 現在の URL をパースし、最後の / 以降をデコードしたものを返す
-  private get urlJson(): string {
-    const url = new URL(location.href, window.location.origin)
-    const path = decodeURIComponent(url.pathname)
-    const lastSlashIndex = path.lastIndexOf('/')
-
-    return path.substring(lastSlashIndex + 1)
   }
 
   clear(): void {
