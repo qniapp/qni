@@ -28,6 +28,7 @@
   },
   "prettier": "@github/prettier-config",
   "dependencies": {
+    "@types/eslint": "~8.21.0",
     "fraction.js": "~4.2",
     "pretty-format": "^29.4.2"
   },

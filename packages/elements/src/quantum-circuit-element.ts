@@ -1,3 +1,4 @@
+import {Result} from 'neverthrow'
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {AntiControlGateElement} from './anti-control-gate-element'
 import {BlochDisplayElement} from './bloch-display-element'
@@ -1082,7 +1083,23 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       return
     }
 
-    const circuit = JSON.parse(json)
+    let circuit = null
+
+    type ParseError = {message: string}
+    const toParseError = (): ParseError => ({message: 'Parse Error'})
+    const safeJsonParse = Result.fromThrowable(JSON.parse, toParseError)
+
+    const res = safeJsonParse(json)
+    if (res.isOk()) {
+      circuit = res.value
+    } else {
+      // eslint-disable-next-line no-console
+      console.error(res.error.message)
+      // eslint-disable-next-line no-console
+      console.error(json)
+      return
+    }
+
     this.circuitTitle = (circuit.title || '').trim()
 
     let keepStep = false
@@ -1570,11 +1587,13 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     return this.steps.map(each => each.serialize())
   }
 
+  // 現在の URL をパースし、最後の / 以降をデコードしたものを返す
   private get urlJson(): string {
-    const json = window.location.href.toString().split('/').pop()
-    Util.notNull(json)
+    const url = new URL(location.href, window.location.origin)
+    const path = decodeURIComponent(url.pathname)
+    const lastSlashIndex = path.lastIndexOf('/')
 
-    return decodeURIComponent(json)
+    return path.substring(lastSlashIndex + 1)
   }
 
   clear(): void {
