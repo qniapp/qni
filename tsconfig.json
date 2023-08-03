@@ -4,6 +4,7 @@
     "module": "esnext",
     "target": "es2017",
     "strict": true,
+    "skipLibCheck": true,
     "moduleResolution": "node"
   },
   "exclude": ["node_modules", "dist", "*.d.ts"]
