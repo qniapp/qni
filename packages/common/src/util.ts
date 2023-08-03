@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+import {Result} from 'neverthrow'
+
+type ParseError = {message: string}
+const toParseError = (): ParseError => ({message: 'Parse Error'})
+
 export class Util {
   static need(expression: boolean, message: string, args?: unknown[]): asserts expression {
     if (expression !== true) {
@@ -56,4 +61,6 @@ export class Util {
 
     return path.substring(lastSlashIndex + 1)
   }
+
+  static safeJsonParse = Result.fromThrowable(JSON.parse, toParseError)
 }

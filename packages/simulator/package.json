@@ -54,7 +54,7 @@
   ],
   "size-limit": [
     {
-      "limit": "36 kB",
+      "limit": "38 kB",
       "path": "dist/index.js"
     }
   ],

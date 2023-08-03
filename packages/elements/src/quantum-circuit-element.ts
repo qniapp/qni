@@ -1,4 +1,3 @@
-import {Result} from 'neverthrow'
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {AntiControlGateElement} from './anti-control-gate-element'
 import {BlochDisplayElement} from './bloch-display-element'
@@ -44,9 +43,6 @@ export type ResizeHandleSnapTarget = {
 
 type QuantumCircuitContext = Record<string, never>
 type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
-
-type ParseError = {message: string}
-const toParseError = (): ParseError => ({message: 'Parse Error'})
 
 @controller
 export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
@@ -1073,8 +1069,6 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     }
   }
 
-  private safeJsonParse = Result.fromThrowable(JSON.parse, toParseError)
-
   private loadFromJson(json: string): void {
     // eslint-disable-next-line github/no-inner-html
     this.innerHTML = ''
@@ -1090,7 +1084,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
 
     let circuit = null
 
-    const res = this.safeJsonParse(json)
+    const res = Util.safeJsonParse(json)
     if (res.isOk()) {
       circuit = res.value
     } else {
