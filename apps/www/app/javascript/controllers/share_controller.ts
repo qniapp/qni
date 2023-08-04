@@ -1,15 +1,5 @@
 import {Controller} from '@hotwired/stimulus'
-
-class Util {
-  static updateUrlJson(json: string): void {
-    history.pushState('', '', encodeURIComponent(json))
-  }
-
-  static get urlJson(): string {
-    const json = window.location.href.toString().split(window.location.host)[1].slice(1)
-    return decodeURIComponent(json)
-  }
-}
+import {Util} from '@qni/common'
 
 export default class ShareController extends Controller {
   static values = {
@@ -37,11 +27,23 @@ export default class ShareController extends Controller {
 
   update(): void {
     const newTitle = this.circuitTitleInputTarget.value
-    const jsonData = JSON.parse(Util.urlJson)
+    const res = Util.safeJsonParse(Util.urlJson)
+
+    let jsonData = null
+    if (res.isOk()) {
+      jsonData = res.value
+    } else {
+      // eslint-disable-next-line no-console
+      console.error(res.error.message)
+      // eslint-disable-next-line no-console
+      console.error(Util.urlJson)
+      return
+    }
+
     jsonData.title = newTitle
 
     this.updateDocumentTitle(newTitle)
-    Util.updateUrlJson(JSON.stringify(jsonData))
+    history.pushState('', '', encodeURIComponent(JSON.stringify(jsonData)))
     this.updateUrlText()
   }
 
@@ -50,8 +52,18 @@ export default class ShareController extends Controller {
   }
 
   private initCircuitTitleInput(): void {
-    const jsonData = JSON.parse(Util.urlJson)
-    this.circuitTitleInputTarget.value = jsonData.title || ''
+    const res = Util.safeJsonParse(Util.urlJson)
+    let title = ''
+    if (res.isOk()) {
+      title = res.value.title || ''
+    } else {
+      // eslint-disable-next-line no-console
+      console.error(res.error.message)
+      // eslint-disable-next-line no-console
+      console.error(Util.urlJson)
+    }
+
+    this.circuitTitleInputTarget.value = title
     this.circuitTitleInputTarget.focus()
   }
 
@@ -71,7 +83,17 @@ export default class ShareController extends Controller {
     const hashtagsParam = 'hashtags=qni'
     const urlParam = `url=${encodeURIComponent(window.location.href)}`
     const params = [hashtagsParam, urlParam]
-    const title = JSON.parse(Util.urlJson).title
+    const res = Util.safeJsonParse(Util.urlJson)
+
+    let title = null
+    if (res.isOk()) {
+      title = res.value.title
+    } else {
+      // eslint-disable-next-line no-console
+      console.error(res.error.message)
+      // eslint-disable-next-line no-console
+      console.error(Util.urlJson)
+    }
 
     if (title) {
       const textParam = `text=${encodeURIComponent(title)}`

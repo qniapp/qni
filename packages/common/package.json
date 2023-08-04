@@ -30,6 +30,7 @@
   "dependencies": {
     "@types/eslint": "~8.21.0",
     "fraction.js": "~4.2",
+    "neverthrow": "^6.0.0",
     "pretty-format": "^29.4.2"
   },
   "devDependencies": {
@@ -45,7 +46,7 @@
   ],
   "size-limit": [
     {
-      "limit": "13 kB",
+      "limit": "15 kB",
       "path": "dist/index.js"
     }
   ],

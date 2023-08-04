@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+import {Result} from 'neverthrow'
+
+type ParseError = {message: string}
+const toParseError = (): ParseError => ({message: 'Parse Error'})
+
 export class Util {
   static need(expression: boolean, message: string, args?: unknown[]): asserts expression {
     if (expression !== true) {
@@ -47,4 +52,15 @@ export class Util {
     }
     return [Math.cos(radians), Math.sin(radians)]
   }
+
+  // 現在の URL をパースし、最後の / 以降をデコードしたものを返す
+  static get urlJson(): string {
+    const url = new URL(location.href, window.location.origin)
+    const path = decodeURIComponent(url.pathname)
+    const lastSlashIndex = path.lastIndexOf('/')
+
+    return path.substring(lastSlashIndex + 1)
+  }
+
+  static safeJsonParse = Result.fromThrowable(JSON.parse, toParseError)
 }
