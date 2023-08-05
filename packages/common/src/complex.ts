@@ -43,7 +43,7 @@ export class Complex {
 
   static imagPartOf(v: number | Complex): number {
     if (typeof v === 'number') {
-      return v
+      return 0
     }
 
     return v.imag

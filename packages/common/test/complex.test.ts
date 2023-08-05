@@ -324,4 +324,40 @@ describe('Complex', () => {
       })
     })
   })
+
+  describe('isApproximatelyEqualTo', () => {
+    describe('5+7i', () => {
+      beforeEach(() => {
+        c = new Complex(5, 7)
+      })
+
+      test('approximately equal 5+7i (ε=0)', () => {
+        expect(c.isApproximatelyEqualTo(c, 0)).toBeTruthy()
+      })
+
+      test('approximately equal 5+7i (ε=1)', () => {
+        expect(c.isApproximatelyEqualTo(c, 1)).toBeTruthy()
+      })
+
+      test('not approximately equal 5+6i (ε=0.5)', () => {
+        expect(c.isApproximatelyEqualTo(new Complex(5, 6), 0.5)).toBeFalsy()
+      })
+
+      test('approximately equal 5+6i (ε=1)', () => {
+        expect(c.isApproximatelyEqualTo(new Complex(5, 6), 1)).toBeTruthy()
+      })
+
+      test('approximately equal 5+8i (ε=1)', () => {
+        expect(c.isApproximatelyEqualTo(new Complex(5, 8), 1)).toBeTruthy()
+      })
+
+      test('not approximately equal null', () => {
+        expect(c.isApproximatelyEqualTo(null, 0)).toBeFalsy()
+      })
+
+      test("not approximately equal ''", () => {
+        expect(c.isApproximatelyEqualTo('', 0)).toBeFalsy()
+      })
+    })
+  })
 })
