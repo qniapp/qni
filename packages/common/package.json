@@ -34,11 +34,14 @@
     "pretty-format": "^29.4.2"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.3",
     "@types/qunit": "^2.19.4",
+    "jest": "^29.6.2",
     "karma-esbuild": "~2.2",
     "karma-qunit": "^4.1.2",
     "npm-dts": "~1.3",
-    "qunit": "~2.19"
+    "qunit": "~2.19",
+    "ts-jest": "^29.1.1"
   },
   "eslintIgnore": [
     "dist/",
