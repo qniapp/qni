@@ -27,13 +27,11 @@ export class Complex {
   public imag: number
 
   static from(v: number | Complex): Complex {
-    if (v instanceof Complex) {
-      return v
-    }
     if (typeof v === 'number') {
       return new Complex(v, 0)
     }
-    throw new DetailedError('Unrecognized value type.', {v})
+
+    return v
   }
 
   static polar(magnitude: number, phase: number): Complex {
