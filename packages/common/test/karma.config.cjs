@@ -5,16 +5,17 @@ module.exports = function (config) {
       {
         pattern: '**/*.ts',
         type: 'module',
-        included: true
-      }
+        included: true,
+      },
     ],
+    exclude: ['**/*.test.ts'],
     preprocessors: {
-      '**/*.ts': ['esbuild']
+      '**/*.ts': ['esbuild'],
     },
     reporters: ['progress'],
     autoWatch: false,
     browsers: ['ChromeHeadless'],
     singleRun: true,
-    logLevel: config.LOG_INFO
+    logLevel: config.LOG_INFO,
   })
 }
