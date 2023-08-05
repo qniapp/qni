@@ -361,6 +361,20 @@ describe('Complex', () => {
     })
   })
 
+  describe('plus', () => {
+    describe('2+3i + 5+7i', () => {
+      test('equal 7+10i', () => {
+        expect(new Complex(2, 3).plus(new Complex(5, 7)).isEqualTo(new Complex(7, 10))).toBeTruthy()
+      })
+    })
+
+    describe('2+3i + 5+0i', () => {
+      test('equal 7+3i', () => {
+        expect(new Complex(2, 3).plus(new Complex(5, 0)).isEqualTo(new Complex(7, 3))).toBeTruthy()
+      })
+    })
+  })
+
   describe('norm2', () => {
     describe('0+0i', () => {
       test('equal 0', () => {
