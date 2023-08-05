@@ -91,7 +91,7 @@ export class Complex {
   }
 
   isApproximatelyEqualTo(other: number | Complex | unknown, epsilon: number): boolean {
-    if (other instanceof Complex || typeof other === 'number') {
+    if (typeof other === 'number' || other instanceof Complex) {
       const d = this.minus(Complex.from(other))
       return Math.abs(d.real) <= epsilon && Math.abs(d.imag) <= epsilon && d.abs() <= epsilon
     }

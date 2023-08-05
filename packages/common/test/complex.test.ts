@@ -360,4 +360,66 @@ describe('Complex', () => {
       })
     })
   })
+
+  describe('norm2', () => {
+    describe('0+0i', () => {
+      test('equal 0', () => {
+        expect(Complex.ZERO.norm2()).toBe(0)
+      })
+    })
+
+    describe('1+0i', () => {
+      test('equal 1', () => {
+        expect(Complex.ONE.norm2()).toBe(1)
+      })
+    })
+
+    describe('0+i', () => {
+      test('equal 1', () => {
+        expect(Complex.I.norm2()).toBe(1)
+      })
+    })
+
+    describe('1+i', () => {
+      test('equal 2', () => {
+        expect(new Complex(1, 1).norm2()).toBe(2)
+      })
+    })
+
+    describe('2+0i', () => {
+      test('equal 4', () => {
+        expect(new Complex(2, 0).norm2()).toBe(4)
+      })
+    })
+
+    describe('0+2i', () => {
+      test('equal 4', () => {
+        expect(new Complex(0, 2).norm2()).toBe(4)
+      })
+    })
+
+    describe('-2+0i', () => {
+      test('equal 4', () => {
+        expect(new Complex(-2, 0).norm2()).toBe(4)
+      })
+    })
+
+    describe('0-2i', () => {
+      test('equal 4', () => {
+        expect(new Complex(0, -2).norm2()).toBe(4)
+      })
+    })
+
+    describe('2+3i', () => {
+      test('equal 13', () => {
+        expect(new Complex(2, 3).norm2()).toBe(13)
+      })
+    })
+
+    describe('-3-4i', () => {
+      test('equal 25', () => {
+        expect(new Complex(-3, -4).norm2()).toBe(25)
+      })
+    })
+  })
 })
