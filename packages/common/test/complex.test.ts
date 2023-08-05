@@ -107,4 +107,116 @@ describe('Complex', () => {
       })
     })
   })
+
+  describe('polar', () => {
+    describe('0,0', () => {
+      beforeEach(() => {
+        c = Complex.polar(0, 0)
+      })
+
+      test('equal 0', () => {
+        expect(equate(c, 0)).toBeTruthy()
+      })
+    })
+
+    describe('0,2', () => {
+      beforeEach(() => {
+        c = Complex.polar(0, 2)
+      })
+
+      test('equal 0', () => {
+        expect(equate(c, 0)).toBeTruthy()
+      })
+    })
+
+    describe('0,-5', () => {
+      beforeEach(() => {
+        c = Complex.polar(0, -5)
+      })
+
+      test('equal 0', () => {
+        expect(equate(c, 0)).toBeTruthy()
+      })
+    })
+
+    describe('1,0', () => {
+      beforeEach(() => {
+        c = Complex.polar(1, 0)
+      })
+
+      test('equal 1', () => {
+        expect(equate(c, 1)).toBeTruthy()
+      })
+    })
+
+    describe('2,0', () => {
+      beforeEach(() => {
+        c = Complex.polar(2, 0)
+      })
+
+      test('equal 2', () => {
+        expect(equate(c, 2)).toBeTruthy()
+      })
+    })
+
+    describe('1,π', () => {
+      beforeEach(() => {
+        c = Complex.polar(1, Math.PI)
+      })
+
+      test('equal -1', () => {
+        expect(equate(c, -1)).toBeTruthy()
+      })
+    })
+
+    describe('1,3π', () => {
+      beforeEach(() => {
+        c = Complex.polar(1, 3 * Math.PI)
+      })
+
+      test('equal -1', () => {
+        expect(equate(c, -1)).toBeTruthy()
+      })
+    })
+
+    describe('1,-π', () => {
+      beforeEach(() => {
+        c = Complex.polar(1, -Math.PI)
+      })
+
+      test('equal -1', () => {
+        expect(equate(c, -1)).toBeTruthy()
+      })
+    })
+
+    describe('1,π/2', () => {
+      beforeEach(() => {
+        c = Complex.polar(1, Math.PI / 2)
+      })
+
+      test('equal i', () => {
+        expect(equate(c, Complex.I)).toBeTruthy()
+      })
+    })
+
+    describe('1,³⁄₂π', () => {
+      beforeEach(() => {
+        c = Complex.polar(1, (3 * Math.PI) / 2)
+      })
+
+      test('equal -i', () => {
+        expect(equate(c, Complex.I.times(-1))).toBeTruthy()
+      })
+    })
+
+    describe('1,¼π', () => {
+      beforeEach(() => {
+        c = Complex.polar(1, Math.PI / 4)
+      })
+
+      test('equal 1/√2(1+i)', () => {
+        expect(equate(c, new Complex(Math.sqrt(0.5), Math.sqrt(0.5)))).toBeTruthy()
+      })
+    })
+  })
 })
