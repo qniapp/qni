@@ -422,4 +422,60 @@ describe('Complex', () => {
       })
     })
   })
+
+  describe('abs', () => {
+    describe('0+0i', () => {
+      test('equal 0', () => {
+        expect(Complex.ZERO.abs()).toBe(0)
+      })
+    })
+
+    describe('1+0i', () => {
+      test('equal 1', () => {
+        expect(Complex.ONE.abs()).toBe(1)
+      })
+    })
+
+    describe('0+i', () => {
+      test('equal 1', () => {
+        expect(Complex.I.abs()).toBe(1)
+      })
+    })
+
+    describe('2+0i', () => {
+      test('equal 2', () => {
+        expect(new Complex(2, 0).abs()).toBe(2)
+      })
+    })
+
+    describe('0+2i', () => {
+      test('equal 2', () => {
+        expect(new Complex(0, 2).abs()).toBe(2)
+      })
+    })
+
+    describe('-2+0i', () => {
+      test('equal 2', () => {
+        expect(new Complex(-2, 0).abs()).toBe(2)
+      })
+    })
+
+    describe('0-2i', () => {
+      test('equal 2', () => {
+        expect(new Complex(0, -2).abs()).toBe(2)
+      })
+    })
+
+    describe('2+3i', () => {
+      test('equal √13', () => {
+        expect(new Complex(2, 3).abs()).toBe(Math.sqrt(13))
+      })
+    })
+
+    describe('-3-4i', () => {
+      test('equal 5', () => {
+        expect(new Complex(-3, -4).abs()).toBe(5)
+      })
+    })
+  })
 })
