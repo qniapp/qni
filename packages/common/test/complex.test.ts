@@ -39,6 +39,38 @@ describe('Complex', () => {
     })
   })
 
+  describe('realPartOf', () => {
+    describe('1', () => {
+      test('equal 1', () => {
+        expect(equate(Complex.realPartOf(1), 1))
+      })
+    })
+
+    describe('1.5', () => {
+      test('equal 1.5', () => {
+        expect(equate(Complex.realPartOf(1.5), 1.5))
+      })
+    })
+
+    describe('-2', () => {
+      test('equal -2', () => {
+        expect(equate(Complex.realPartOf(-2), -2))
+      })
+    })
+
+    describe('3+i', () => {
+      test('equal 3', () => {
+        expect(equate(Complex.realPartOf(new Complex(3, 1)), 3))
+      })
+    })
+
+    describe('5+0i', () => {
+      test('equal 5', () => {
+        expect(equate(Complex.realPartOf(new Complex(5, 0)), 5))
+      })
+    })
+  })
+
   describe('polar', () => {
     describe('0,0', () => {
       beforeEach(() => {

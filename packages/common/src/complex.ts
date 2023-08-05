@@ -34,19 +34,17 @@ export class Complex {
     return v
   }
 
-  static polar(magnitude: number, phase: number): Complex {
-    const [cos, sin] = Util.snappedCosSin(phase)
-    return new Complex(magnitude * cos, magnitude * sin)
-  }
-
   static realPartOf(v: number | Complex): number {
-    if (v instanceof Complex) {
-      return v.real
-    }
     if (typeof v === 'number') {
       return v
     }
-    throw new DetailedError('Unrecognized value type.', {v})
+
+    return v.real
+  }
+
+  static polar(magnitude: number, phase: number): Complex {
+    const [cos, sin] = Util.snappedCosSin(phase)
+    return new Complex(magnitude * cos, magnitude * sin)
   }
 
   static imagPartOf(v: number | Complex): number {
