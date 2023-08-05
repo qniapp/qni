@@ -108,6 +108,11 @@ export class Complex {
     return new Complex(this.real - c.real, this.imag - c.imag)
   }
 
+  times(v: number | Complex): Complex {
+    const c = Complex.from(v)
+    return new Complex(this.real * c.real - this.imag * c.imag, this.real * c.imag + this.imag * c.real)
+  }
+
   norm2(): number {
     return this.real * this.real + this.imag * this.imag
   }
@@ -122,11 +127,6 @@ export class Complex {
       return Complex.polar(1, this.phase())
     }
     return this.dividedBy(Math.sqrt(m))
-  }
-
-  times(v: number | Complex): Complex {
-    const c = Complex.from(v)
-    return new Complex(this.real * c.real - this.imag * c.imag, this.real * c.imag + this.imag * c.real)
   }
 
   dividedBy(v: number | Complex): Complex {
