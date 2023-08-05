@@ -71,6 +71,44 @@ describe('Complex', () => {
     })
   })
 
+  describe('imagPartOf', () => {
+    describe('1', () => {
+      test('equal 0', () => {
+        expect(equate(Complex.imagPartOf(1), 0))
+      })
+    })
+
+    describe('1.5', () => {
+      test('equal 0', () => {
+        expect(equate(Complex.imagPartOf(1.5), 0))
+      })
+    })
+
+    describe('-2', () => {
+      test('equal 0', () => {
+        expect(equate(Complex.imagPartOf(-2), 0))
+      })
+    })
+
+    describe('3+0i', () => {
+      test('equal 0', () => {
+        expect(equate(Complex.imagPartOf(new Complex(3, 0)), 0))
+      })
+    })
+
+    describe('3+i', () => {
+      test('equal 1', () => {
+        expect(equate(Complex.imagPartOf(new Complex(3, 1)), 1))
+      })
+    })
+
+    describe('5-2i', () => {
+      test('equal -2', () => {
+        expect(equate(Complex.imagPartOf(new Complex(5, -2)), -2))
+      })
+    })
+  })
+
   describe('polar', () => {
     describe('0,0', () => {
       beforeEach(() => {

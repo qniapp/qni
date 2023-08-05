@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import {DetailedError} from './detailed-error'
 import {Format} from './format'
 import {Util} from './util'
 
@@ -42,24 +41,17 @@ export class Complex {
     return v.real
   }
 
+  static imagPartOf(v: number | Complex): number {
+    if (typeof v === 'number') {
+      return v
+    }
+
+    return v.imag
+  }
+
   static polar(magnitude: number, phase: number): Complex {
     const [cos, sin] = Util.snappedCosSin(phase)
     return new Complex(magnitude * cos, magnitude * sin)
-  }
-
-  static imagPartOf(v: number | Complex): number {
-    if (v instanceof Complex) {
-      return v.imag
-    }
-    if (typeof v === 'number') {
-      return 0
-    }
-    throw new DetailedError('Unrecognized value type.', {v})
-  }
-
-  constructor(real: number, imag: number) {
-    this.real = real
-    this.imag = imag
   }
 
   static rootsOfQuadratic(a: number | Complex, b: number | Complex, c: number | Complex): Complex[] {
@@ -81,6 +73,11 @@ export class Complex {
     const mid = b.times(-1)
     const denom = a.times(2)
     return difs.map(d => mid.minus(d).dividedBy(denom))
+  }
+
+  constructor(real: number, imag: number) {
+    this.real = real
+    this.imag = imag
   }
 
   isEqualTo(other: unknown): boolean {
