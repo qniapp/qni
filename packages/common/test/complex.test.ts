@@ -221,14 +221,14 @@ describe('Complex', () => {
     })
   })
 
-  describe('equate', () => {
+  describe('isEqualTo', () => {
     describe('2.5', () => {
       beforeEach(() => {
         c = new Complex(2.5, 0)
       })
 
       test('equal 2.5', () => {
-        expect(equate(c, 2.5)).toBeTruthy()
+        expect(c.isEqualTo(2.5)).toBeTruthy()
       })
     })
 
@@ -238,7 +238,7 @@ describe('Complex', () => {
       })
 
       test('not equal 2.5', () => {
-        expect(equate(c, 2.5)).toBeFalsy()
+        expect(c.isEqualTo(2.5)).toBeFalsy()
       })
     })
 
@@ -248,15 +248,15 @@ describe('Complex', () => {
       })
 
       test('equal 5+7i', () => {
-        expect(equate(c, c)).toBeTruthy()
+        expect(c.isEqualTo(c)).toBeTruthy()
       })
 
       test('not equal null', () => {
-        expect(equate(c, null)).toBeFalsy()
+        expect(c.isEqualTo(null)).toBeFalsy()
       })
 
       test("not equal ''", () => {
-        expect(equate(c, '')).toBeFalsy()
+        expect(c.isEqualTo('')).toBeFalsy()
       })
     })
 
@@ -266,19 +266,19 @@ describe('Complex', () => {
       })
 
       test('equal 2+3i', () => {
-        expect(equate(c, c)).toBeTruthy()
+        expect(c.isEqualTo(c)).toBeTruthy()
       })
 
       test('not equal 3+3i', () => {
-        expect(equate(c, new Complex(3, 3))).toBeFalsy()
+        expect(c.isEqualTo(new Complex(3, 3))).toBeFalsy()
       })
 
       test('not equal 2+4i', () => {
-        expect(equate(c, new Complex(2, 4))).toBeFalsy()
+        expect(c.isEqualTo(new Complex(2, 4))).toBeFalsy()
       })
 
       test('not equal 3+2i', () => {
-        expect(equate(c, new Complex(3, 2))).toBeFalsy()
+        expect(c.isEqualTo(new Complex(3, 2))).toBeFalsy()
       })
     })
 
@@ -288,11 +288,11 @@ describe('Complex', () => {
       })
 
       test('equal 0', () => {
-        expect(equate(c, 0)).toBeTruthy()
+        expect(c.isEqualTo(0)).toBeTruthy()
       })
 
       test('not equal 1', () => {
-        expect(equate(c, 1)).toBeFalsy()
+        expect(c.isEqualTo(1)).toBeFalsy()
       })
     })
 
@@ -302,11 +302,11 @@ describe('Complex', () => {
       })
 
       test('equal 1', () => {
-        expect(equate(c, 1)).toBeTruthy()
+        expect(c.isEqualTo(1)).toBeTruthy()
       })
 
       test('not equal 0', () => {
-        expect(equate(c, 0)).toBeFalsy()
+        expect(c.isEqualTo(0)).toBeFalsy()
       })
     })
 
@@ -316,11 +316,11 @@ describe('Complex', () => {
       })
 
       test('equal i', () => {
-        expect(equate(c, new Complex(0, 1))).toBeTruthy()
+        expect(c.isEqualTo(new Complex(0, 1))).toBeTruthy()
       })
 
       test('not equal 1', () => {
-        expect(equate(c, 1)).toBeFalsy()
+        expect(c.isEqualTo(1)).toBeFalsy()
       })
     })
   })

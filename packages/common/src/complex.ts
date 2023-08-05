@@ -81,11 +81,11 @@ export class Complex {
   }
 
   isEqualTo(other: unknown): boolean {
-    if (other instanceof Complex) {
-      return this.real === other.real && this.imag === other.imag
-    }
     if (typeof other === 'number') {
       return this.real === other && this.imag === 0
+    }
+    if (other instanceof Complex) {
+      return this.real === other.real && this.imag === other.imag
     }
     return false
   }
