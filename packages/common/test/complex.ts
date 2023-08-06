@@ -218,10 +218,10 @@ QUnit.module('Complex', () => {
   })
 
   QUnit.test('dividedBy', assert => {
-    assert.throws(() => Complex.ONE.dividedBy(0))
-    assert.equates(new Complex(2, 3).dividedBy(new Complex(2, 0)), new Complex(1, 1.5))
-    assert.equates(new Complex(2, 3).dividedBy(new Complex(0, 2)), new Complex(1.5, -1))
-    assert.equates(new Complex(2, -2).dividedBy(new Complex(1, 1)), new Complex(0, -2))
+    assert.true(Complex.ONE.dividedBy(0).isErr())
+    assert.equates(new Complex(2, 3).dividedBy(new Complex(2, 0))._unsafeUnwrap(), new Complex(1, 1.5))
+    assert.equates(new Complex(2, 3).dividedBy(new Complex(0, 2))._unsafeUnwrap(), new Complex(1.5, -1))
+    assert.equates(new Complex(2, -2).dividedBy(new Complex(1, 1))._unsafeUnwrap(), new Complex(0, -2))
   })
 
   QUnit.test('sqrts', assert => {

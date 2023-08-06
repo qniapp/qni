@@ -2436,7 +2436,12 @@ export class Simulator {
       if (rand <= pZero) {
         for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
           if ((bit & (1 << t)) !== 0) this.state.setAmplifier(bit, Complex.ZERO)
-          this.state.setAmplifier(bit, this.state.amplifier(bit).dividedBy(Math.sqrt(pZero)))
+          const res = this.state.amplifier(bit).dividedBy(Math.sqrt(pZero))
+          if (res.isOk()) {
+            this.state.setAmplifier(bit, res.value)
+          } else {
+            throw Error(res.error.message)
+          }
         }
         this.measuredBits[t] = 0
       } else {
