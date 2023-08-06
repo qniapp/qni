@@ -559,5 +559,88 @@ describe('Complex', () => {
         expect(Complex.ZERO.unit().isEqualTo(1))
       })
     })
+
+    describe('0.5+0i', () => {
+      test('equal 1', () => {
+        expect(new Complex(0.5, 0).unit().isEqualTo(1))
+      })
+    })
+
+    describe('1+0i', () => {
+      test('equal 1', () => {
+        expect(Complex.ONE.unit().isEqualTo(1))
+      })
+    })
+
+    describe('2+0i', () => {
+      test('equal 1', () => {
+        expect(new Complex(2, 0).unit().isEqualTo(1))
+      })
+    })
+
+    describe('-0.5+0i', () => {
+      test('equal -1', () => {
+        expect(new Complex(-0.5, 0).unit().isEqualTo(-1))
+      })
+    })
+
+    describe('-1+0i', () => {
+      test('equal -1', () => {
+        expect(new Complex(-1, 0).unit().isEqualTo(-1))
+      })
+    })
+
+    describe('-2+0i', () => {
+      test('equal -1', () => {
+        expect(new Complex(-2, 0).unit().isEqualTo(-1))
+      })
+    })
+
+    describe('0+0.5i', () => {
+      test('equal i', () => {
+        expect(new Complex(0, 0.5).unit().isEqualTo(Complex.I))
+      })
+    })
+
+    describe('0+i', () => {
+      test('equal i', () => {
+        expect(Complex.I.unit().isEqualTo(Complex.I))
+      })
+    })
+
+    describe('0+2i', () => {
+      test('equal i', () => {
+        expect(new Complex(0, 2).unit().isEqualTo(Complex.I))
+      })
+    })
+
+    describe('0-0.5i', () => {
+      test('equal -i', () => {
+        expect(new Complex(0, -0.5).unit().isEqualTo(Complex.I.times(-1)))
+      })
+    })
+
+    describe('0-i', () => {
+      test('equal -i', () => {
+        expect(new Complex(0, -1).unit().isEqualTo(Complex.I.times(-1)))
+      })
+    })
+
+    describe('0-2i', () => {
+      test('equal -i', () => {
+        expect(new Complex(0, -2).unit().isEqualTo(Complex.I.times(-1)))
+      })
+    })
+
+    describe('((1, 1).unit - 1/√2(1, 1)).norm2', () => {
+      test('< 0.0000001', () => {
+        expect(
+          new Complex(1, 1)
+            .unit()
+            .minus(new Complex(Math.sqrt(0.5), Math.sqrt(0.5)))
+            .norm2() < 0.0000001,
+        ).toBeTruthy()
+      })
+    })
   })
 })

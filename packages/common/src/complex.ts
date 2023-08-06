@@ -149,11 +149,8 @@ export class Complex {
     if (m < 0.00001) {
       return Complex.polar(1, this.phase())
     }
-    const res = this.dividedBy(Math.sqrt(m))
-    if (res.isOk()) {
-      return res.value
-    }
-    throw Error(res.error.message)
+
+    return this.dividedBy(Math.sqrt(m))._unsafeUnwrap()
   }
 
   sqrts(): [Complex] | [Complex, Complex] {
