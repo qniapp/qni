@@ -552,4 +552,12 @@ describe('Complex', () => {
       })
     })
   })
+
+  describe('unit', () => {
+    describe('0+0i', () => {
+      test('equal 1', () => {
+        expect(Complex.ZERO.unit().isEqualTo(1))
+      })
+    })
+  })
 })
