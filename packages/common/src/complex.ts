@@ -16,6 +16,7 @@
 
 import {Format} from './format'
 import {Util} from './util'
+import {ok, err, Result} from 'neverthrow'
 
 export class Complex {
   static readonly ZERO = new Complex(0, 0)
@@ -61,7 +62,11 @@ export class Complex {
 
     if (a.isEqualTo(0)) {
       if (!b.isEqualTo(0)) {
-        return [c.times(-1).dividedBy(b)]
+        const res = c.times(-1).dividedBy(b)
+        if (res.isOk()) {
+          return [res.value]
+        }
+        throw Error(res.error.message)
       }
       if (!c.isEqualTo(0)) {
         return []
@@ -72,7 +77,14 @@ export class Complex {
     const difs = b.times(b).minus(a.times(c).times(4)).sqrts()
     const mid = b.times(-1)
     const denom = a.times(2)
-    return difs.map(d => mid.minus(d).dividedBy(denom))
+
+    return difs.map(d => {
+      const res = mid.minus(d).dividedBy(denom)
+      if (res.isOk()) {
+        return res.value
+      }
+      throw Error(res.error.message)
+    })
   }
 
   constructor(real: number, imag: number) {
@@ -113,15 +125,15 @@ export class Complex {
     return new Complex(this.real * c.real - this.imag * c.imag, this.real * c.imag + this.imag * c.real)
   }
 
-  dividedBy(v: number | Complex): Complex {
+  dividedBy(v: number | Complex): Result<Complex, Error> {
     const c = Complex.from(v)
     const d = c.norm2()
     if (d === 0) {
-      throw new Error('Division by Zero')
+      return err(Error('Division by Zero'))
     }
 
     const n = this.times(c.conjugate())
-    return new Complex(n.real / d, n.imag / d)
+    return ok(new Complex(n.real / d, n.imag / d))
   }
 
   norm2(): number {
@@ -137,7 +149,11 @@ export class Complex {
     if (m < 0.00001) {
       return Complex.polar(1, this.phase())
     }
-    return this.dividedBy(Math.sqrt(m))
+    const res = this.dividedBy(Math.sqrt(m))
+    if (res.isOk()) {
+      return res.value
+    }
+    throw Error(res.error.message)
   }
 
   sqrts(): [Complex] | [Complex, Complex] {
@@ -192,11 +208,21 @@ export class Complex {
 
   sin(): Complex {
     const z = this.times(Complex.I)
-    return z.exp().minus(z.neg().exp()).dividedBy(new Complex(0, 2))
+    const res = z.exp().minus(z.neg().exp()).dividedBy(new Complex(0, 2))
+
+    if (res.isOk()) {
+      return res.value
+    }
+    throw Error(res.error.message)
   }
 
   tan(): Complex {
-    return this.sin().dividedBy(this.cos())
+    const res = this.sin().dividedBy(this.cos())
+
+    if (res.isOk()) {
+      return res.value
+    }
+    throw Error(res.error.message)
   }
 
   ln(): Complex {
