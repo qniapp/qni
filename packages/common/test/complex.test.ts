@@ -403,6 +403,34 @@ describe('Complex', () => {
     })
   })
 
+  describe('dividedBy', () => {
+    describe('1+0i / 0', () => {
+      test('throws Division by Zero', () => {
+        expect(() => {
+          Complex.ONE.dividedBy(0)
+        }).toThrowError()
+      })
+    })
+
+    describe('2+3i / 2+0i', () => {
+      test('equal 1+1.5i', () => {
+        expect(new Complex(2, 3).dividedBy(new Complex(2, 0)).isEqualTo(new Complex(1, 1.5))).toBeTruthy()
+      })
+    })
+
+    describe('2+3i / 0+2i', () => {
+      test('equal 1.5-i', () => {
+        expect(new Complex(2, 3).dividedBy(new Complex(0, 2)).isEqualTo(new Complex(1.5, -1))).toBeTruthy()
+      })
+    })
+
+    describe('2-2i / 1+i', () => {
+      test('equal 0-2i', () => {
+        expect(new Complex(2, -2).dividedBy(new Complex(1, 1)).isEqualTo(new Complex(0, -2))).toBeTruthy()
+      })
+    })
+  })
+
   describe('norm2', () => {
     describe('0+0i', () => {
       test('equal 0', () => {
