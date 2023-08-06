@@ -131,7 +131,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('i')
       assert.approximatelyEquates(
         simulator.h(0).state.matrix,
-        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4))),
+        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)._unsafeUnwrap())),
       )
     })
 
@@ -143,7 +143,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('(-i)')
       assert.approximatelyEquates(
         simulator.h(0).state.matrix,
-        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4))),
+        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)._unsafeUnwrap())),
       )
     })
 
@@ -289,7 +289,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('i')
       assert.approximatelyEquates(
         simulator.qft(1, 0).state.matrix,
-        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4))),
+        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)._unsafeUnwrap())),
       )
     })
 
@@ -301,7 +301,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('(-i)')
       assert.approximatelyEquates(
         simulator.qft(1, 0).state.matrix,
-        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4))),
+        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)._unsafeUnwrap())),
       )
     })
 
@@ -350,7 +350,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('i')
       assert.approximatelyEquates(
         simulator.qftDagger(1, 0).state.matrix,
-        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4))),
+        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)._unsafeUnwrap())),
       )
     })
 
@@ -362,7 +362,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('(-i)')
       assert.approximatelyEquates(
         simulator.qftDagger(1, 0).state.matrix,
-        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4))),
+        new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)._unsafeUnwrap())),
       )
     })
 
