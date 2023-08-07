@@ -5,6 +5,7 @@ import {
   isAngleGreaterThan,
   isValidAngle,
   radian,
+  reduceAngle,
 } from '../src/angle-parser'
 
 describe('radian', () => {
@@ -156,5 +157,39 @@ describe('isValidAngle', () => {
 
   test('π/2/3', () => {
     expect(isValidAngle('π/2/3')).toBeFalsy()
+  })
+})
+
+describe('reduceAngle', () => {
+  test('π', () => {
+    expect(reduceAngle('π')).toBe('π')
+  })
+
+  test('-π', () => {
+    expect(reduceAngle('-π')).toBe('-π')
+  })
+
+  test('π/1', () => {
+    expect(reduceAngle('π/1')).toBe('π')
+  })
+
+  test('-π/1', () => {
+    expect(reduceAngle('-π/1')).toBe('-π')
+  })
+
+  test('2π/4', () => {
+    expect(reduceAngle('2π/4')).toBe('π/2')
+  })
+
+  test('4π/6', () => {
+    expect(reduceAngle('4π/6')).toBe('2π/3')
+  })
+
+  test('-2π/4', () => {
+    expect(reduceAngle('-2π/4')).toBe('-π/2')
+  })
+
+  test('-4π/6', () => {
+    expect(reduceAngle('-4π/6')).toBe('-2π/3')
   })
 })
