@@ -361,6 +361,20 @@ describe('Complex', () => {
     })
   })
 
+  describe('conjugate', () => {
+    describe('0', () => {
+      test('equal 0', () => {
+        expect(Complex.ZERO.conjugate().isEqualTo(0)).toBeTruthy()
+      })
+    })
+
+    describe('2+3i', () => {
+      test('equal 2-3i', () => {
+        expect(new Complex(2, 3).conjugate().isEqualTo(new Complex(2, -3))).toBeTruthy()
+      })
+    })
+  })
+
   describe('plus', () => {
     describe('2+3i + 5+7i', () => {
       test('equal 7+10i', () => {

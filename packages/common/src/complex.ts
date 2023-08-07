@@ -110,6 +110,10 @@ export class Complex {
     return false
   }
 
+  conjugate(): Complex {
+    return new Complex(this.real, -this.imag)
+  }
+
   plus(v: number | Complex): Complex {
     const c = Complex.from(v)
     return new Complex(this.real + c.real, this.imag + c.imag)
@@ -166,10 +170,6 @@ export class Complex {
     const a = this.phase() / 2
     const c = Complex.polar(m, a)
     return [c, c.times(-1)]
-  }
-
-  conjugate(): Complex {
-    return new Complex(this.real, -this.imag)
   }
 
   toString(format?: Format): string {
