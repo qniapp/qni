@@ -33,26 +33,6 @@ export class Util {
     Util.need(v !== null && v !== undefined, 'notNull')
   }
 
-  static snappedCosSin(radians: number): number[] {
-    const unit = Math.PI / 4
-    const i = Math.round(radians / unit)
-    if (i * unit === radians) {
-      const s = Math.sqrt(0.5)
-      const snaps = [
-        [1, 0],
-        [s, s],
-        [0, 1],
-        [-s, s],
-        [-1, 0],
-        [-s, -s],
-        [0, -1],
-        [s, -s],
-      ]
-      return snaps[i & 7]
-    }
-    return [Math.cos(radians), Math.sin(radians)]
-  }
-
   // 現在の URL をパースし、最後の / 以降をデコードしたものを返す
   static get urlJson(): string {
     const url = new URL(location.href, window.location.origin)

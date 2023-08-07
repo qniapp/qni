@@ -15,7 +15,6 @@
  */
 
 import {Format} from './format'
-import {Util} from './util'
 import {ok, err, Result} from 'neverthrow'
 
 export class Complex {
@@ -51,8 +50,28 @@ export class Complex {
   }
 
   static polar(magnitude: number, phase: number): Complex {
-    const [cos, sin] = Util.snappedCosSin(phase)
+    const [cos, sin] = this.snappedCosSin(phase)
     return new Complex(magnitude * cos, magnitude * sin)
+  }
+
+  private static snappedCosSin(radians: number): number[] {
+    const unit = Math.PI / 4
+    const i = Math.round(radians / unit)
+    if (i * unit === radians) {
+      const s = Math.sqrt(0.5)
+      const snaps = [
+        [1, 0],
+        [s, s],
+        [0, 1],
+        [-s, s],
+        [-1, 0],
+        [-s, -s],
+        [0, -1],
+        [s, -s],
+      ]
+      return snaps[i & 7]
+    }
+    return [Math.cos(radians), Math.sin(radians)]
   }
 
   constructor(real: number, imag: number) {
