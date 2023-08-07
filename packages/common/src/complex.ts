@@ -133,11 +133,7 @@ export class Complex {
     return Math.atan2(this.imag, this.real)
   }
 
-  toString(format?: Format): string {
-    format = format || Format.EXACT
-    return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
-  }
-
+  // TODO: exp に関数名を変更
   raisedTo(exponent: number | Complex): Complex {
     if (exponent === 0.5 && this.imag === 0 && this.real >= 0) {
       return new Complex(Math.sqrt(this.real), 0)
@@ -157,6 +153,11 @@ export class Complex {
 
   ln(): Complex {
     return new Complex(Math.log(this.abs()), this.phase())
+  }
+
+  toString(format?: Format): string {
+    format = format || Format.EXACT
+    return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
   }
 
   private toStringAllowSingleValue(format: Format): string {
