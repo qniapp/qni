@@ -152,7 +152,6 @@ export class Complex {
     return Math.atan2(this.imag, this.real)
   }
 
-  // TODO: exp に関数名を変更
   raisedTo(exponent: number | Complex): Complex {
     if (exponent === 0.5 && this.imag === 0 && this.real >= 0) {
       return new Complex(Math.sqrt(this.real), 0)
