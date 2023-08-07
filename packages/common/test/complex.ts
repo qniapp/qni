@@ -310,10 +310,4 @@ QUnit.module('Complex', () => {
       new Complex(0.1525582909989, 0.6079153491494),
     )
   })
-
-  QUnit.test('trig', assert => {
-    assert.approximatelyEquates(Complex.from(0.2).cos(), Complex.from(Math.cos(0.2)))
-    assert.approximatelyEquates(Complex.from(0.2).sin(), Complex.from(Math.sin(0.2)))
-    assert.approximatelyEquates(Complex.from(0.2).tan(), Complex.from(Math.tan(0.2)))
-  })
 })

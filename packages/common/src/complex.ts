@@ -151,30 +151,6 @@ export class Complex {
     return Complex.polar(Math.exp(this.real), this.imag)
   }
 
-  cos(): Complex {
-    const z = this.times(Complex.I)
-    return z.exp().plus(z.neg().exp()).times(0.5)
-  }
-
-  sin(): Complex {
-    const z = this.times(Complex.I)
-    const res = z.exp().minus(z.neg().exp()).dividedBy(new Complex(0, 2))
-
-    if (res.isOk()) {
-      return res.value
-    }
-    throw Error(res.error.message)
-  }
-
-  tan(): Complex {
-    const res = this.sin().dividedBy(this.cos())
-
-    if (res.isOk()) {
-      return res.value
-    }
-    throw Error(res.error.message)
-  }
-
   ln(): Complex {
     return new Complex(Math.log(this.abs()), this.phase())
   }
