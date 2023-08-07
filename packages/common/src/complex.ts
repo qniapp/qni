@@ -147,17 +147,17 @@ export class Complex {
     return this.ln().times(Complex.from(exponent)).exp()
   }
 
-  exp(): Complex {
-    return Complex.polar(Math.exp(this.real), this.imag)
-  }
-
-  ln(): Complex {
-    return new Complex(Math.log(this.abs()), this.phase())
-  }
-
   toString(format?: Format): string {
     format = format || Format.EXACT
     return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
+  }
+
+  private exp(): Complex {
+    return Complex.polar(Math.exp(this.real), this.imag)
+  }
+
+  private ln(): Complex {
+    return new Complex(Math.log(this.abs()), this.phase())
   }
 
   private toStringAllowSingleValue(format: Format): string {
