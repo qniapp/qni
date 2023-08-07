@@ -375,6 +375,14 @@ describe('Complex', () => {
     })
   })
 
+  describe('neg', () => {
+    describe('3+5i', () => {
+      test('equal -3-5i', () => {
+        expect(new Complex(3, 5).neg().isEqualTo(new Complex(-3, -5))).toBeTruthy()
+      })
+    })
+  })
+
   describe('plus', () => {
     describe('2+3i + 5+7i', () => {
       test('equal 7+10i', () => {

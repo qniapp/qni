@@ -55,38 +55,6 @@ export class Complex {
     return new Complex(magnitude * cos, magnitude * sin)
   }
 
-  static rootsOfQuadratic(a: number | Complex, b: number | Complex, c: number | Complex): Complex[] {
-    a = Complex.from(a)
-    b = Complex.from(b)
-    c = Complex.from(c)
-
-    if (a.isEqualTo(0)) {
-      if (!b.isEqualTo(0)) {
-        const res = c.times(-1).dividedBy(b)
-        if (res.isOk()) {
-          return [res.value]
-        }
-        throw Error(res.error.message)
-      }
-      if (!c.isEqualTo(0)) {
-        return []
-      }
-      throw Error('Degenerate')
-    }
-
-    const difs = b.times(b).minus(a.times(c).times(4)).sqrts()
-    const mid = b.times(-1)
-    const denom = a.times(2)
-
-    return difs.map(d => {
-      const res = mid.minus(d).dividedBy(denom)
-      if (res.isOk()) {
-        return res.value
-      }
-      throw Error(res.error.message)
-    })
-  }
-
   constructor(real: number, imag: number) {
     this.real = real
     this.imag = imag
@@ -112,6 +80,10 @@ export class Complex {
 
   conjugate(): Complex {
     return new Complex(this.real, -this.imag)
+  }
+
+  neg(): Complex {
+    return new Complex(-this.real, -this.imag)
   }
 
   plus(v: number | Complex): Complex {
@@ -157,28 +129,9 @@ export class Complex {
     return this.dividedBy(Math.sqrt(m))._unsafeUnwrap()
   }
 
-  sqrts(): [Complex] | [Complex, Complex] {
-    const [r, i] = [this.real, this.imag]
-    const m = Math.sqrt(Math.sqrt(r * r + i * i))
-    if (m === 0) {
-      return [Complex.ZERO]
-    }
-    if (i === 0 && r < 0) {
-      return [new Complex(0, m), new Complex(0, -m)]
-    }
-
-    const a = this.phase() / 2
-    const c = Complex.polar(m, a)
-    return [c, c.times(-1)]
-  }
-
   toString(format?: Format): string {
     format = format || Format.EXACT
     return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
-  }
-
-  neg(): Complex {
-    return new Complex(-this.real, -this.imag)
   }
 
   raisedTo(exponent: number | Complex): Complex {
