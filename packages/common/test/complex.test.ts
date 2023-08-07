@@ -665,4 +665,48 @@ describe('Complex', () => {
       })
     })
   })
+
+  describe('phase', () => {
+    describe('0+0i', () => {
+      test('equal 0', () => {
+        expect(Complex.ZERO.phase()).toBe(0)
+      })
+    })
+
+    describe('1+0i', () => {
+      test('equal 0', () => {
+        expect(Complex.ONE.phase()).toBe(0)
+      })
+    })
+
+    describe('0+i', () => {
+      test('equal π/2', () => {
+        expect(Complex.I.phase()).toBeCloseTo(Math.PI / 2)
+      })
+    })
+
+    describe('-1+0i', () => {
+      test('equal π', () => {
+        expect(new Complex(-1, 0).phase()).toBeCloseTo(Math.PI)
+      })
+    })
+
+    describe('0-i', () => {
+      test('equal -π/2', () => {
+        expect(new Complex(0, -1).phase()).toBeCloseTo(-Math.PI / 2)
+      })
+    })
+
+    describe('1+i', () => {
+      test('equal π/4', () => {
+        expect(new Complex(1, 1).phase()).toBeCloseTo(Math.PI / 4)
+      })
+    })
+
+    describe('2+i', () => {
+      test('equal 0.1475836π', () => {
+        expect(new Complex(2, 1).phase()).toBeCloseTo(Math.PI * 0.1475836)
+      })
+    })
+  })
 })

@@ -129,6 +129,10 @@ export class Complex {
     return this.dividedBy(Math.sqrt(m))._unsafeUnwrap()
   }
 
+  phase(): number {
+    return Math.atan2(this.imag, this.real)
+  }
+
   toString(format?: Format): string {
     format = format || Format.EXACT
     return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
@@ -153,10 +157,6 @@ export class Complex {
 
   ln(): Complex {
     return new Complex(Math.log(this.abs()), this.phase())
-  }
-
-  phase(): number {
-    return Math.atan2(this.imag, this.real)
   }
 
   private toStringAllowSingleValue(format: Format): string {
