@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import {DetailedError} from './detailed-error'
 import {Format} from './format'
-import {Util} from './util'
+import {ok, err, Result} from 'neverthrow'
 
 export class Complex {
   static readonly ZERO = new Complex(0, 0)
@@ -27,38 +26,52 @@ export class Complex {
   public imag: number
 
   static from(v: number | Complex): Complex {
-    if (v instanceof Complex) {
-      return v
-    }
     if (typeof v === 'number') {
       return new Complex(v, 0)
     }
-    throw new DetailedError('Unrecognized value type.', {v})
-  }
 
-  static polar(magnitude: number, phase: number): Complex {
-    const [cos, sin] = Util.snappedCosSin(phase)
-    return new Complex(magnitude * cos, magnitude * sin)
+    return v
   }
 
   static realPartOf(v: number | Complex): number {
-    if (v instanceof Complex) {
-      return v.real
-    }
     if (typeof v === 'number') {
       return v
     }
-    throw new DetailedError('Unrecognized value type.', {v})
+
+    return v.real
   }
 
   static imagPartOf(v: number | Complex): number {
-    if (v instanceof Complex) {
-      return v.imag
-    }
     if (typeof v === 'number') {
       return 0
     }
-    throw new DetailedError('Unrecognized value type.', {v})
+
+    return v.imag
+  }
+
+  static polar(magnitude: number, phase: number): Complex {
+    const [cos, sin] = this.snappedCosSin(phase)
+    return new Complex(magnitude * cos, magnitude * sin)
+  }
+
+  private static snappedCosSin(radians: number): number[] {
+    const unit = Math.PI / 4
+    const i = Math.round(radians / unit)
+    if (i * unit === radians) {
+      const s = Math.sqrt(0.5)
+      const snaps = [
+        [1, 0],
+        [s, s],
+        [0, 1],
+        [-s, s],
+        [-1, 0],
+        [-s, -s],
+        [0, -1],
+        [s, -s],
+      ]
+      return snaps[i & 7]
+    }
+    return [Math.cos(radians), Math.sin(radians)]
   }
 
   constructor(real: number, imag: number) {
@@ -66,59 +79,30 @@ export class Complex {
     this.imag = imag
   }
 
-  static rootsOfQuadratic(a: number | Complex, b: number | Complex, c: number | Complex): Complex[] {
-    a = Complex.from(a)
-    b = Complex.from(b)
-    c = Complex.from(c)
-
-    if (a.isEqualTo(0)) {
-      if (!b.isEqualTo(0)) {
-        return [c.times(-1).dividedBy(b)]
-      }
-      if (!c.isEqualTo(0)) {
-        return []
-      }
-      throw Error('Degenerate')
-    }
-
-    const difs = b.times(b).minus(a.times(c).times(4)).sqrts()
-    const mid = b.times(-1)
-    const denom = a.times(2)
-    return difs.map(d => mid.minus(d).dividedBy(denom))
-  }
-
   isEqualTo(other: unknown): boolean {
-    if (other instanceof Complex) {
-      return this.real === other.real && this.imag === other.imag
-    }
     if (typeof other === 'number') {
       return this.real === other && this.imag === 0
+    }
+    if (other instanceof Complex) {
+      return this.real === other.real && this.imag === other.imag
     }
     return false
   }
 
   isApproximatelyEqualTo(other: number | Complex | unknown, epsilon: number): boolean {
-    if (other instanceof Complex || typeof other === 'number') {
+    if (typeof other === 'number' || other instanceof Complex) {
       const d = this.minus(Complex.from(other))
       return Math.abs(d.real) <= epsilon && Math.abs(d.imag) <= epsilon && d.abs() <= epsilon
     }
     return false
   }
 
-  norm2(): number {
-    return this.real * this.real + this.imag * this.imag
+  conjugate(): Complex {
+    return new Complex(this.real, -this.imag)
   }
 
-  abs(): number {
-    return Math.sqrt(this.norm2())
-  }
-
-  unit(): Complex {
-    const m = this.norm2()
-    if (m < 0.00001) {
-      return Complex.polar(1, this.phase())
-    }
-    return this.dividedBy(Math.sqrt(m))
+  neg(): Complex {
+    return new Complex(-this.real, -this.imag)
   }
 
   plus(v: number | Complex): Complex {
@@ -136,43 +120,36 @@ export class Complex {
     return new Complex(this.real * c.real - this.imag * c.imag, this.real * c.imag + this.imag * c.real)
   }
 
-  dividedBy(v: number | Complex): Complex {
+  dividedBy(v: number | Complex): Result<Complex, Error> {
     const c = Complex.from(v)
     const d = c.norm2()
     if (d === 0) {
-      throw new Error('Division by Zero')
+      return err(Error('Division by Zero'))
     }
 
     const n = this.times(c.conjugate())
-    return new Complex(n.real / d, n.imag / d)
+    return ok(new Complex(n.real / d, n.imag / d))
   }
 
-  sqrts(): [Complex] | [Complex, Complex] {
-    const [r, i] = [this.real, this.imag]
-    const m = Math.sqrt(Math.sqrt(r * r + i * i))
-    if (m === 0) {
-      return [Complex.ZERO]
+  norm2(): number {
+    return this.real * this.real + this.imag * this.imag
+  }
+
+  abs(): number {
+    return Math.sqrt(this.norm2())
+  }
+
+  unit(): Complex {
+    const m = this.norm2()
+    if (m < 0.00001) {
+      return Complex.polar(1, this.phase())
     }
-    if (i === 0 && r < 0) {
-      return [new Complex(0, m), new Complex(0, -m)]
-    }
 
-    const a = this.phase() / 2
-    const c = Complex.polar(m, a)
-    return [c, c.times(-1)]
+    return this.dividedBy(Math.sqrt(m))._unsafeUnwrap()
   }
 
-  conjugate(): Complex {
-    return new Complex(this.real, -this.imag)
-  }
-
-  toString(format?: Format): string {
-    format = format || Format.EXACT
-    return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
-  }
-
-  neg(): Complex {
-    return new Complex(-this.real, -this.imag)
+  phase(): number {
+    return Math.atan2(this.imag, this.real)
   }
 
   raisedTo(exponent: number | Complex): Complex {
@@ -188,30 +165,17 @@ export class Complex {
     return this.ln().times(Complex.from(exponent)).exp()
   }
 
-  exp(): Complex {
+  toString(format?: Format): string {
+    format = format || Format.EXACT
+    return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
+  }
+
+  private exp(): Complex {
     return Complex.polar(Math.exp(this.real), this.imag)
   }
 
-  cos(): Complex {
-    const z = this.times(Complex.I)
-    return z.exp().plus(z.neg().exp()).times(0.5)
-  }
-
-  sin(): Complex {
-    const z = this.times(Complex.I)
-    return z.exp().minus(z.neg().exp()).dividedBy(new Complex(0, 2))
-  }
-
-  tan(): Complex {
-    return this.sin().dividedBy(this.cos())
-  }
-
-  ln(): Complex {
+  private ln(): Complex {
     return new Complex(Math.log(this.abs()), this.phase())
-  }
-
-  phase(): number {
-    return Math.atan2(this.imag, this.real)
   }
 
   private toStringAllowSingleValue(format: Format): string {

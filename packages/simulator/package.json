@@ -35,7 +35,10 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@qni/elements": "^0.0.86",
-    "fp-ts": "^2.11.5"
+    "fp-ts": "^2.11.5",
+    "karma-esbuild": "^2.2.5",
+    "karma-qunit": "^4.1.2",
+    "qunit": "^2.19.4"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",
