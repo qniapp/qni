@@ -212,4 +212,78 @@ describe('Simulator', () => {
       expect(equate(simulator.phase('π', 0, 1).state, new StateVector('--'))).toBe(true)
     })
   })
+
+  describe('.rnot', () => {
+    test("|0>.rnot(0) should be |0>.h(0).phase('π/2', 0).h(0)", () => {
+      expect(
+        new Simulator('0')
+          .rnot(0)
+          .state.isApproximatelyEqualTo(new Simulator('0').h(0).phase('π/2', 0).h(0).state, 0.000001),
+      ).toBe(true)
+    })
+
+    test("|1>.rnot(0) should be |1>.h(0).phase('π/2', 0).h(0)", () => {
+      expect(
+        new Simulator('1')
+          .rnot(0)
+          .state.isApproximatelyEqualTo(new Simulator('1').h(0).phase('π/2', 0).h(0).state, 0.000001),
+      ).toBe(true)
+    })
+
+    test("|+>.rnot(0) should be |+>.h(0).phase('-π/2', 0).h(0)", () => {
+      expect(
+        new Simulator('+')
+          .rnot(0)
+          .state.isApproximatelyEqualTo(new Simulator('+').h(0).phase('-π/2', 0).h(0).state, 0.000001),
+      ).toBe(true)
+    })
+
+    test("|->.rnot(0) should be |->.h(0).phase('π/2', 0).h(0)", () => {
+      expect(
+        new Simulator('-')
+          .rnot(0)
+          .state.isApproximatelyEqualTo(new Simulator('-').h(0).phase('π/2', 0).h(0).state, 0.000001),
+      ).toBe(true)
+    })
+
+    test("|i>.rnot(0) should be |i>.h(0).phase('π/2', 0).h(0)", () => {
+      expect(
+        new Simulator('i')
+          .rnot(0)
+          .state.isApproximatelyEqualTo(new Simulator('i').h(0).phase('π/2', 0).h(0).state, 0.000001),
+      ).toBe(true)
+    })
+
+    test("|-i>.rnot(0) should be |-i>.h(0).phase('π/2', 0).h(0)", () => {
+      expect(
+        new Simulator('(-i)')
+          .rnot(0)
+          .state.isApproximatelyEqualTo(new Simulator('(-i)').h(0).phase('π/2', 0).h(0).state, 0.000001),
+      ).toBe(true)
+    })
+
+    test("|00>.rnot(0) should be |00>.h(0).phase('π/2', 0).h(0)", () => {
+      expect(
+        new Simulator('00')
+          .rnot(0)
+          .state.isApproximatelyEqualTo(new Simulator('00').h(0).phase('π/2', 0).h(0).state, 0.000001),
+      ).toBe(true)
+    })
+
+    test("|00>.rnot(1) should be |00>.h(1).phase('π/2', 1).h(1)", () => {
+      expect(
+        new Simulator('00')
+          .rnot(1)
+          .state.isApproximatelyEqualTo(new Simulator('00').h(1).phase('π/2', 1).h(1).state, 0.000001),
+      ).toBe(true)
+    })
+
+    test("|00>.rnot(0, 1) should be |00>.h(0, 1).phase('π/2', 0, 1).h(0, 1)", () => {
+      expect(
+        new Simulator('00')
+          .rnot(0, 1)
+          .state.isApproximatelyEqualTo(new Simulator('00').h(0, 1).phase('π/2', 0, 1).h(0, 1).state, 0.000001),
+      ).toBe(true)
+    })
+  })
 })
