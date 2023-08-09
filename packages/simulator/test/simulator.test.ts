@@ -573,4 +573,16 @@ describe('Simulator', () => {
       expect(equate(simulator.measuredBits, {0: 1, 1: 1})).toBeTruthy()
     })
   })
+
+  describe('cswap', () => {
+    test('|011>.cswap(0, 1, 2) should be |101>', () => {
+      const simulator = new Simulator('011')
+      expect(equate(simulator.cswap(0, 1, 2).state, new StateVector('101'))).toBeTruthy()
+    })
+
+    test('|011>.cswap(2, 0, 1) should be |011>', () => {
+      const simulator = new Simulator('011')
+      expect(equate(simulator.cswap(2, 0, 1).state, new StateVector('011'))).toBeTruthy()
+    })
+  })
 })
