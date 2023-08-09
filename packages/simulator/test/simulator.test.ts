@@ -286,4 +286,69 @@ describe('Simulator', () => {
       ).toBe(true)
     })
   })
+
+  describe('.qft', () => {
+    test('|0>.qft(1, 0) should be |+>', () => {
+      const simulator = new Simulator('0')
+      expect(equate(simulator.qft(1, 0).state, new StateVector('+'))).toBe(true)
+    })
+
+    test('|1>.qft(1, 0) should be |->', () => {
+      const simulator = new Simulator('1')
+      expect(equate(simulator.qft(1, 0).state, new StateVector('-'))).toBe(true)
+    })
+
+    test('|+>.qft(1, 0) should be |0>', () => {
+      const simulator = new Simulator('+')
+      expect(simulator.qft(1, 0).state.isApproximatelyEqualTo(new StateVector('0'), 0.000001)).toBe(true)
+    })
+
+    test('|->.qft(1, 0) should be |1>', () => {
+      const simulator = new Simulator('-')
+      expect(simulator.qft(1, 0).state.isApproximatelyEqualTo(new StateVector('1'), 0.000001)).toBe(true)
+    })
+
+    test('|i>.qft(1, 0) should be e^{iπ/4}|-i>', () => {
+      const π = Math.PI
+      const i = Complex.I
+      const e = new Complex(Math.E, 0)
+
+      const simulator = new Simulator('i')
+      expect(
+        equate(
+          simulator.qft(1, 0).state.matrix,
+          new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)._unsafeUnwrap())),
+        ),
+      ).toBe(true)
+    })
+
+    test('|-i>.qft(1, 0) should be e^{-iπ/4}|i>', () => {
+      const π = Math.PI
+      const i = Complex.I
+      const e = new Complex(Math.E, 0)
+
+      const simulator = new Simulator('(-i)')
+      expect(
+        equate(
+          simulator.qft(1, 0).state.matrix,
+          new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)._unsafeUnwrap())),
+        ),
+      ).toBe(true)
+    })
+
+    test('|00>.qft(1, 0) should be |0+>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.qft(1, 0).state, new StateVector('0+'))).toBe(true)
+    })
+
+    test('|00>.qft(1, 1) should be |+0>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.qft(1, 1).state, new StateVector('+0'))).toBe(true)
+    })
+
+    test('|00>.qft(0, 1) should be |++>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.qft(1, 0, 1).state, new StateVector('++'))).toBe(true)
+    })
+  })
 })
