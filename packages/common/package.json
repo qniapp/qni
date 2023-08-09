@@ -19,7 +19,7 @@
     "build": "node build.js",
     "presize": "npm run build",
     "size": "size-limit",
-    "test": "yarn jest",
+    "test": "yarn jest --coverage",
     "test:ci": "npm test",
     "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },

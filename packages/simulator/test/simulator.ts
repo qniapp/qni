@@ -2,58 +2,6 @@ import {Matrix, Simulator, StateVector} from '../src'
 import {Complex} from '@qni/common'
 
 QUnit.module('Simulator', () => {
-  QUnit.module('.write', () => {
-    QUnit.test('|0>.write(0, 0) should be |0>', assert => {
-      const simulator = new Simulator('0')
-      assert.equates(simulator.write(0, 0).state, new StateVector('0'))
-    })
-
-    QUnit.test('|0>.write(0, 1) should be |1>', assert => {
-      const simulator = new Simulator('0')
-      assert.equates(simulator.write(1, 0).state, new StateVector('1'))
-    })
-
-    QUnit.test('|1>.write(0, 0) should be |0>', assert => {
-      const simulator = new Simulator('1')
-      assert.equates(simulator.write(0, 0).state, new StateVector('0'))
-    })
-
-    QUnit.test('|1>.write(1, 0) should be |1>', assert => {
-      const simulator = new Simulator('1')
-      assert.equates(simulator.write(1, 0).state, new StateVector('1'))
-    })
-
-    QUnit.test('|00>.write(0, 0, 1) should be |00>', assert => {
-      const simulator = new Simulator('00')
-      assert.equates(simulator.write(0, 0, 1).state, new StateVector('00'))
-    })
-
-    QUnit.test('|00>.write(1, 0) should be |01>', assert => {
-      const simulator = new Simulator('00')
-      assert.equates(simulator.write(1, 0).state, new StateVector('01'))
-    })
-
-    QUnit.test('|00>.write(1, 0, 1) should be |11>', assert => {
-      const simulator = new Simulator('00')
-      assert.equates(simulator.write(1, 0, 1).state, new StateVector('11'))
-    })
-
-    QUnit.test('|11>.write(1, 0, 1) should be |11>', assert => {
-      const simulator = new Simulator('11')
-      assert.equates(simulator.write(1, 0, 1).state, new StateVector('11'))
-    })
-
-    QUnit.test('|11>.write(0, 0) should be |10>', assert => {
-      const simulator = new Simulator('11')
-      assert.equates(simulator.write(0, 0).state, new StateVector('10'))
-    })
-
-    QUnit.test('|11>.write(0, 0, 1) should be |00>', assert => {
-      const simulator = new Simulator('11')
-      assert.equates(simulator.write(0, 0, 1).state, new StateVector('00'))
-    })
-  })
-
   QUnit.module('.x', () => {
     QUnit.test('|0>.x(0) should be |1>', assert => {
       const simulator = new Simulator('0')

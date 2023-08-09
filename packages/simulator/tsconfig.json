@@ -2,7 +2,9 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
-    "declaration": true
+    "declaration": true,
+    "allowJs": true,
+    "esModuleInterop": true
   },
   "include": ["src/**/*"],
   "files": ["src/index.ts"]
