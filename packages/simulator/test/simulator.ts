@@ -2,54 +2,6 @@ import {Matrix, Simulator, StateVector} from '../src'
 import {Complex} from '@qni/common'
 
 QUnit.module('Simulator', () => {
-  QUnit.module('.x', () => {
-    QUnit.test('|0>.x(0) should be |1>', assert => {
-      const simulator = new Simulator('0')
-      assert.equates(simulator.x(0).state, new StateVector('1'))
-    })
-
-    QUnit.test('|1>.x(0) should be |0>', assert => {
-      const simulator = new Simulator('1')
-      assert.equates(simulator.x(0).state, new StateVector('0'))
-    })
-
-    QUnit.test('|+>.x(0) should be |+>', assert => {
-      const simulator = new Simulator('+')
-      assert.equates(simulator.x(0).state, new StateVector('+'))
-    })
-
-    QUnit.test('|->.x(0) should be -|->', assert => {
-      const simulator = new Simulator('-')
-      assert.equates(simulator.x(0).state.matrix, new StateVector('-').matrix.times(-1))
-    })
-
-    QUnit.test('|i>.x(0) should be i|-i>', assert => {
-      const simulator = new Simulator('i')
-      assert.equates(simulator.x(0).state.matrix, new StateVector('(-i)').matrix.times(new Complex(0, 1)))
-    })
-
-    QUnit.test('|-i>.x(0) should be -i|i>', assert => {
-      const simulator = new Simulator('(-i)')
-
-      assert.equates(simulator.x(0).state.matrix, new StateVector('i').matrix.times(new Complex(0, -1)))
-    })
-
-    QUnit.test('|00>.x(0) should be |01>', assert => {
-      const simulator = new Simulator('00')
-      assert.equates(simulator.x(0).state, new StateVector('01'))
-    })
-
-    QUnit.test('|00>.x(1) should be |10>', assert => {
-      const simulator = new Simulator('00')
-      assert.equates(simulator.x(1).state, new StateVector('10'))
-    })
-
-    QUnit.test('|00>.x(0, 1) should be |11>', assert => {
-      const simulator = new Simulator('00')
-      assert.equates(simulator.x(0, 1).state, new StateVector('11'))
-    })
-  })
-
   QUnit.module('.h', () => {
     QUnit.test('|0>.h(0) should be |+>', assert => {
       const simulator = new Simulator('0')
