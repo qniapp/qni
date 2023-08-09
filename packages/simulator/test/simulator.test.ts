@@ -165,4 +165,51 @@ describe('Simulator', () => {
       expect(equate(simulator.h(0, 1).state, new StateVector('++'))).toBe(true)
     })
   })
+
+  describe('phase', () => {
+    test("|0>.phase('π', 0) should be |0>", () => {
+      const simulator = new Simulator('0')
+      expect(equate(simulator.phase('π', 0).state, new StateVector('0'))).toBe(true)
+    })
+
+    test("|1>.phase('π', 0) should be -|1>", () => {
+      const simulator = new Simulator('1')
+      expect(equate(simulator.phase('π', 0).state.matrix, new StateVector('1').matrix.times(-1))).toBe(true)
+    })
+
+    test("|+>.phase('π', 0) should be |->", () => {
+      const simulator = new Simulator('+')
+      expect(equate(simulator.phase('π', 0).state, new StateVector('-'))).toBe(true)
+    })
+
+    test("|->.phase('π', 0) should be |+>", () => {
+      const simulator = new Simulator('-')
+      expect(equate(simulator.phase('π', 0).state, new StateVector('+'))).toBe(true)
+    })
+
+    test("|i>.phase('π', 0) should be |-i>", () => {
+      const simulator = new Simulator('i')
+      expect(equate(simulator.phase('π', 0).state, new StateVector('(-i)'))).toBe(true)
+    })
+
+    test("|-i>.phase('π', 0) should be |i>", () => {
+      const simulator = new Simulator('(-i)')
+      expect(equate(simulator.phase('π', 0).state, new StateVector('i'))).toBe(true)
+    })
+
+    test("|++>.phase('π', 0) should be |+->", () => {
+      const simulator = new Simulator('++')
+      expect(equate(simulator.phase('π', 0).state, new StateVector('+-'))).toBe(true)
+    })
+
+    test("|++>.phase('π', 1) should be |-+>", () => {
+      const simulator = new Simulator('++')
+      expect(equate(simulator.phase('π', 1).state, new StateVector('-+'))).toBe(true)
+    })
+
+    test("|++>.phase('π', 0, 1) should be |-->", () => {
+      const simulator = new Simulator('++')
+      expect(equate(simulator.phase('π', 0, 1).state, new StateVector('--'))).toBe(true)
+    })
+  })
 })
