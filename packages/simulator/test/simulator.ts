@@ -2,57 +2,6 @@ import {Matrix, Simulator, StateVector} from '../src'
 import {Complex} from '@qni/common'
 
 QUnit.module('Simulator', () => {
-  QUnit.module('.swap', () => {
-    QUnit.test('|01>.swap(0, 1) should be |10>', assert => {
-      const simulator = new Simulator('01')
-      assert.equates(simulator.swap(0, 1).state, new StateVector('10'))
-    })
-  })
-
-  QUnit.module('.cnot', () => {
-    QUnit.test('|00>.cnot(0, 1) should be |00>', assert => {
-      const simulator = new Simulator('00')
-      assert.equates(simulator.cnot(0, 1).state, new StateVector('00'))
-    })
-
-    QUnit.test('|00>.cnot(1, 0) should be |00>', assert => {
-      const simulator = new Simulator('00')
-      assert.equates(simulator.cnot(1, 0).state, new StateVector('00'))
-    })
-
-    QUnit.test('|11>.cnot(0, 1) should be |01>', assert => {
-      const simulator = new Simulator('11')
-      assert.equates(simulator.cnot(0, 1).state, new StateVector('01'))
-    })
-
-    QUnit.test('|11>.cnot(1, 0) should be |10>', assert => {
-      const simulator = new Simulator('11')
-      assert.equates(simulator.cnot(1, 0).state, new StateVector('10'))
-    })
-
-    QUnit.test('|010>.cnot([0, 1], 2) should be |010>', assert => {
-      const simulator = new Simulator('010')
-      assert.approximatelyEquates(simulator.cnot([0, 1], 2).state, new StateVector('010'))
-    })
-
-    QUnit.test('|011>.cnot([0, 1], 2) should be |111>', assert => {
-      const simulator = new Simulator('011')
-      assert.approximatelyEquates(simulator.cnot([0, 1], 2).state, new StateVector('111'))
-    })
-  })
-
-  QUnit.module('.cphase', () => {
-    QUnit.test("|00>.cphase(0, 'π', 1) should be |00>", assert => {
-      const simulator = new Simulator('00')
-      assert.equates(simulator.cphase(0, 'π', 1).state, new StateVector('00'))
-    })
-
-    QUnit.test("|11>.cphase(0, 'π', 1) should be -|11>", assert => {
-      const simulator = new Simulator('11')
-      assert.approximatelyEquates(simulator.cphase(0, 'π', 1).state.matrix, new StateVector('11').matrix.times(-1))
-    })
-  })
-
   QUnit.module('.measure', () => {
     QUnit.test('|0>.measure(0) should be |0>', assert => {
       const simulator = new Simulator('0')

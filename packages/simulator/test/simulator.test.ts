@@ -213,7 +213,7 @@ describe('Simulator', () => {
     })
   })
 
-  describe('.rnot', () => {
+  describe('rnot', () => {
     test("|0>.rnot(0) should be |0>.h(0).phase('π/2', 0).h(0)", () => {
       expect(
         new Simulator('0')
@@ -287,7 +287,7 @@ describe('Simulator', () => {
     })
   })
 
-  describe('.qft', () => {
+  describe('qft', () => {
     test('|0>.qft(1, 0) should be |+>', () => {
       const simulator = new Simulator('0')
       expect(equate(simulator.qft(1, 0).state, new StateVector('+'))).toBe(true)
@@ -352,7 +352,7 @@ describe('Simulator', () => {
     })
   })
 
-  describe('.qftDagger', () => {
+  describe('qftDagger', () => {
     test('|0>.qftDagger(0) should be |+>', () => {
       const simulator = new Simulator('0')
       expect(equate(simulator.qftDagger(1, 0).state, new StateVector('+'))).toBeTruthy()
@@ -414,6 +414,57 @@ describe('Simulator', () => {
     test('|00>.qftDagger(0, 1) should be |++>', () => {
       const simulator = new Simulator('00')
       expect(equate(simulator.qftDagger(1, 0, 1).state, new StateVector('++'))).toBeTruthy()
+    })
+  })
+
+  describe('swap', () => {
+    test('|01>.swap(0, 1) should be |10>', () => {
+      const simulator = new Simulator('01')
+      expect(equate(simulator.swap(0, 1).state, new StateVector('10'))).toBeTruthy()
+    })
+  })
+
+  describe('cnot', () => {
+    test('|00>.cnot(0, 1) should be |00>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.cnot(0, 1).state, new StateVector('00'))).toBeTruthy()
+    })
+
+    test('|00>.cnot(1, 0) should be |00>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.cnot(1, 0).state, new StateVector('00'))).toBeTruthy()
+    })
+
+    test('|11>.cnot(0, 1) should be |01>', () => {
+      const simulator = new Simulator('11')
+      expect(equate(simulator.cnot(0, 1).state, new StateVector('01'))).toBeTruthy()
+    })
+
+    test('|11>.cnot(1, 0) should be |10>', () => {
+      const simulator = new Simulator('11')
+      expect(equate(simulator.cnot(1, 0).state, new StateVector('10'))).toBeTruthy()
+    })
+
+    test('|010>.cnot([0, 1], 2) should be |010>', () => {
+      const simulator = new Simulator('010')
+      expect(equate(simulator.cnot([0, 1], 2).state, new StateVector('010'))).toBeTruthy()
+    })
+
+    test('|011>.cnot([0, 1], 2) should be |111>', () => {
+      const simulator = new Simulator('011')
+      expect(equate(simulator.cnot([0, 1], 2).state, new StateVector('111'))).toBeTruthy()
+    })
+  })
+
+  describe('cphase', () => {
+    test("|00>.cphase(0, 'π', 1) should be |00>", () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.cphase(0, 'π', 1).state, new StateVector('00'))).toBeTruthy()
+    })
+
+    test("|11>.cphase(0, 'π', 1) should be -|11>", () => {
+      const simulator = new Simulator('11')
+      expect(equate(simulator.cphase(0, 'π', 1).state.matrix, new StateVector('11').matrix.times(-1))).toBeTruthy()
     })
   })
 })
