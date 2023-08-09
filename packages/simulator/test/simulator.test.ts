@@ -1,5 +1,5 @@
 import {Complex, equate} from '@qni/common'
-import {Simulator, StateVector} from '../src'
+import {Matrix, Simulator, StateVector} from '../src'
 
 describe('Simulator', () => {
   describe('write', () => {
@@ -465,6 +465,112 @@ describe('Simulator', () => {
     test("|11>.cphase(0, 'π', 1) should be -|11>", () => {
       const simulator = new Simulator('11')
       expect(equate(simulator.cphase(0, 'π', 1).state.matrix, new StateVector('11').matrix.times(-1))).toBeTruthy()
+    })
+  })
+
+  describe('measure', () => {
+    test('|0>.measure(0) should be |0>', () => {
+      const simulator = new Simulator('0')
+      simulator.measure(0)
+      expect(equate(simulator.state, new StateVector('0'))).toBeTruthy()
+      expect(equate(simulator.measuredBits, {0: 0})).toBeTruthy()
+    })
+
+    test('|1>.measure(0) should be |1>', () => {
+      const simulator = new Simulator('1')
+      simulator.measure(0)
+      expect(equate(simulator.state, new StateVector('1'))).toBeTruthy()
+      expect(equate(simulator.measuredBits, {0: 1})).toBeTruthy()
+    })
+
+    test('|+>.measure(0) should be |0> or |1>', () => {
+      const simulator = new Simulator('+')
+      simulator.measure(0)
+
+      expect(
+        simulator.state.isApproximatelyEqualTo(new StateVector('0'), 0.000001) ||
+          simulator.state.isApproximatelyEqualTo(new StateVector('1'), 0.000001),
+      ).toBeTruthy()
+      expect(equate(Object.keys(simulator.measuredBits).length, 1)).toBeTruthy()
+      expect(simulator.measuredBits[0] === 0 || simulator.measuredBits[0] === 1).toBeTruthy()
+    })
+
+    test('|->.measure(0) should be |0> or |1>', () => {
+      const simulator = new Simulator('-')
+      simulator.measure(0)
+
+      expect(
+        simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(1, 0), 0.000001) ||
+          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, -1), 0.000001),
+      ).toBeTruthy()
+    })
+
+    test('|i>.measure(0) should be |0> or |1>', () => {
+      const simulator = new Simulator('i')
+      simulator.measure(0)
+
+      expect(
+        simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(1, 0), 0.000001) ||
+          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, Complex.I), 0.000001),
+      ).toBeTruthy()
+    })
+
+    test('|-i>.measure(0) should be |0> or |1>', () => {
+      const simulator = new Simulator('(-i)')
+      simulator.measure(0)
+
+      expect(
+        simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(1, 0), 0.000001) ||
+          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, new Complex(0, -1)), 0.000001),
+      ).toBeTruthy()
+    })
+
+    test('|00>.measure(0) should be |00>', () => {
+      const simulator = new Simulator('00')
+      simulator.measure(0)
+
+      expect(equate(simulator.state, new StateVector('00'))).toBeTruthy()
+      expect(equate(simulator.measuredBits, {0: 0})).toBeTruthy()
+    })
+
+    test('|00>.measure(1) should be |00>', () => {
+      const simulator = new Simulator('00')
+      simulator.measure(1)
+
+      expect(equate(simulator.state, new StateVector('00'))).toBeTruthy()
+      expect(equate(simulator.measuredBits, {1: 0})).toBeTruthy()
+    })
+
+    test('|00>.measure(0, 1) should be |00>', () => {
+      const simulator = new Simulator('00')
+      simulator.measure(0, 1)
+
+      expect(equate(simulator.state, new StateVector('00'))).toBeTruthy()
+      expect(equate(simulator.measuredBits, {0: 0, 1: 0})).toBeTruthy()
+    })
+
+    test('|11>.measure(0) should be |11>', () => {
+      const simulator = new Simulator('11')
+      simulator.measure(0)
+
+      expect(equate(simulator.state, new StateVector('11'))).toBeTruthy()
+      expect(equate(simulator.measuredBits, {0: 1})).toBeTruthy()
+    })
+
+    test('|11>.measure(1) should be |11>', () => {
+      const simulator = new Simulator('11')
+      simulator.measure(1)
+
+      expect(equate(simulator.state, new StateVector('11'))).toBeTruthy()
+      expect(equate(simulator.measuredBits, {1: 1})).toBeTruthy()
+    })
+
+    test('|11>.measure(0, 1) should be |11>', () => {
+      const simulator = new Simulator('11')
+      simulator.measure(0, 1)
+
+      expect(equate(simulator.state, new StateVector('11'))).toBeTruthy()
+      expect(equate(simulator.measuredBits, {0: 1, 1: 1})).toBeTruthy()
     })
   })
 })
