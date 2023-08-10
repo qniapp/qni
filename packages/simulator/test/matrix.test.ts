@@ -1,5 +1,7 @@
 import {Complex, Format, equate} from '@qni/common'
 import {Matrix} from '../src/matrix'
+// eslint-disable-next-line import/no-nodejs-modules
+import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
   test('isEqualTo', () => {
