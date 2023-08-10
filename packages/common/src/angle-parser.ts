@@ -7,6 +7,7 @@ export function radian(angle: string): number {
   return fraction * Math.PI
 }
 
+// TODO: neverthrow 化
 export function angleDenominator(angle: string): number {
   const coefficient = piCoefficient(angle)
   const split = coefficient.split('/')
@@ -20,6 +21,7 @@ export function angleDenominator(angle: string): number {
   }
 }
 
+// TODO: neverthrow 化
 export function angleNumerator(angle: string): number {
   const coefficient = piCoefficient(angle)
   const split = coefficient.split('/')

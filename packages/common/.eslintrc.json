@@ -3,5 +3,5 @@
   "rules": {
     "i18n-text/no-en": "off"
   },
-  "ignorePatterns": ["build.js", "/dist/", "/doc/"]
+  "ignorePatterns": ["build.js", "/coverage/", "/dist/", "/doc/"]
 }

@@ -285,7 +285,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     this.update()
 
     if (this.hasAttribute('data-update-url')) {
-      const json = this.urlJson
+      const json = Util.urlJson
       this.loadFromJson(json)
     }
 
@@ -1082,7 +1082,19 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       return
     }
 
-    const circuit = JSON.parse(json)
+    let circuit = null
+
+    const res = Util.safeJsonParse(json)
+    if (res.isOk()) {
+      circuit = res.value
+    } else {
+      // eslint-disable-next-line no-console
+      console.error(res.error.message)
+      // eslint-disable-next-line no-console
+      console.error(json)
+      return
+    }
+
     this.circuitTitle = (circuit.title || '').trim()
 
     let keepStep = false
@@ -1568,11 +1580,6 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
 
   serialize(): SerializedCircuitStep[] {
     return this.steps.map(each => each.serialize())
-  }
-
-  private get urlJson(): string {
-    const json = window.location.href.toString().split(window.location.host)[1].slice(1)
-    return decodeURIComponent(json)
   }
 
   clear(): void {

@@ -53,6 +53,7 @@
     "@esm-bundle/chai": "^4.3.4-fix.0",
     "@web/dev-server-rollup": "~0.3",
     "@web/test-runner": "~0.15",
+    "eslint-plugin-neverthrow": "^1.1.4",
     "postcss-flexbugs-fixes": "^5.0.2",
     "rollup-plugin-postcss": "^4.0.2"
   },
@@ -65,7 +66,7 @@
   ],
   "size-limit": [
     {
-      "limit": "122 kB",
+      "limit": "124 kB",
       "path": "dist/index.js"
     }
   ],
