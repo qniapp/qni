@@ -278,10 +278,10 @@ export class Matrix {
     return this.toString(format)
   }
 
-  toString(format = Format.EXACT): string {
+  toString(options = DEFAULT_FORMAT_OPTIONS): string {
     const data = this.rows()
-      .map(row => row.map(e => e.toString(format)).join(format.itemSeparator))
-      .join(`}${format.itemSeparator}{`)
+      .map(row => row.map(e => e.format(options)).join(options.itemSeparator))
+      .join(`}${options.itemSeparator}{`)
     return `{{${data}}}`
   }
 

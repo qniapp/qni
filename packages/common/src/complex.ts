@@ -184,12 +184,11 @@ export class Complex {
       options.fixedDigits,
       ', ',
     )
-    return this.toString(format)
+    return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
   }
 
-  toString(format?: Format): string {
-    format = format || Format.EXACT
-    return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
+  toString(): string {
+    return this.toStringAllowSingleValue(Format.EXACT)
   }
 
   private exp(): Complex {
