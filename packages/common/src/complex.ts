@@ -17,6 +17,12 @@
 import {Format} from './format'
 import {ok, err, Result} from 'neverthrow'
 
+type FormatOptions = {
+  allowAbbreviation: boolean
+  maxAbbreviationError: number
+  fixedDigits: number | undefined
+}
+
 export class Complex {
   static readonly ZERO = new Complex(0, 0)
   static readonly ONE = new Complex(1, 0)
@@ -163,6 +169,16 @@ export class Complex {
       return Complex.ZERO
     }
     return this.ln().times(Complex.from(exponent)).exp()
+  }
+
+  format(user_options?: FormatOptions): string {
+    const options: FormatOptions = user_options || {
+      allowAbbreviation: true,
+      maxAbbreviationError: 0,
+      fixedDigits: undefined,
+    }
+    const format = new Format(options.allowAbbreviation, options.maxAbbreviationError, options.fixedDigits, ', ')
+    return this.toString(format)
   }
 
   toString(format?: Format): string {
