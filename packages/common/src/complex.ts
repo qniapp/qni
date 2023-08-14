@@ -20,7 +20,7 @@ import {ok, err, Result} from 'neverthrow'
 type FormatOptions = {
   allowAbbreviation: boolean
   maxAbbreviationError: number
-  fixedDigits: number | undefined
+  fixedDigits?: number | undefined
 }
 
 export class Complex {

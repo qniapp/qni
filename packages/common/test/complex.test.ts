@@ -1,5 +1,4 @@
 import {Complex} from '../src/complex'
-import {Format} from '../src/format'
 import {equate} from '../src/equate'
 
 describe('Complex', () => {
@@ -934,7 +933,6 @@ describe('Complex', () => {
           c.format({
             allowAbbreviation: true,
             maxAbbreviationError: 0,
-            fixedDigits: undefined,
           }),
         ).toBe('2-3i')
         expect(
@@ -964,7 +962,6 @@ describe('Complex', () => {
           c.format({
             allowAbbreviation: true,
             maxAbbreviationError: 0,
-            fixedDigits: undefined,
           }),
         ).toBe('-2-3i')
         expect(
@@ -995,7 +992,6 @@ describe('Complex', () => {
           c.format({
             allowAbbreviation: true,
             maxAbbreviationError: 0,
-            fixedDigits: undefined,
           }),
         ).toBe('-i')
         expect(
@@ -1025,7 +1021,6 @@ describe('Complex', () => {
           c.format({
             allowAbbreviation: true,
             maxAbbreviationError: 0,
-            fixedDigits: undefined,
           }),
         ).toBe('⅓')
         expect(
@@ -1129,7 +1124,6 @@ describe('Complex', () => {
           c.format({
             allowAbbreviation: true,
             maxAbbreviationError: 0,
-            fixedDigits: undefined,
           }),
         ).toBe('2-3i')
         expect(
@@ -1159,7 +1153,6 @@ describe('Complex', () => {
           c.format({
             allowAbbreviation: true,
             maxAbbreviationError: 0,
-            fixedDigits: undefined,
           }),
         ).toBe('-2-3i')
         expect(
@@ -1189,7 +1182,6 @@ describe('Complex', () => {
           c.format({
             allowAbbreviation: true,
             maxAbbreviationError: 0,
-            fixedDigits: undefined,
           }),
         ).toBe('-i')
         expect(
@@ -1219,7 +1211,6 @@ describe('Complex', () => {
           c.format({
             allowAbbreviation: true,
             maxAbbreviationError: 0,
-            fixedDigits: undefined,
           }),
         ).toBe('⅓')
         expect(
