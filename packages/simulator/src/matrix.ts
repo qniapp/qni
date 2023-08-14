@@ -8,7 +8,7 @@ type FormatOptions = {
   allowAbbreviation?: boolean
   maxAbbreviationError?: number
   fixedDigits?: number | undefined
-  itemSeparator: string
+  itemSeparator?: string
 }
 
 const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
@@ -273,7 +273,7 @@ export class Matrix {
       options.allowAbbreviation === undefined ? true : options.allowAbbreviation,
       options.maxAbbreviationError || 0,
       options.fixedDigits,
-      options.itemSeparator,
+      options.itemSeparator || ', ',
     )
     return this.toString(format)
   }

@@ -102,10 +102,7 @@ describe('Matrix', () => {
 
     expect(
       equate(
-        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
-          fixedDigits: undefined,
-          itemSeparator: ', ',
-        }),
+        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format(),
         '{{0, 1}, {⅓+i, 0.3333334333333333i}}',
       ),
     ).toBeTruthy()
@@ -114,7 +111,6 @@ describe('Matrix', () => {
         Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
           maxAbbreviationError: 0.0005,
           fixedDigits: 3,
-          itemSeparator: ', ',
         }),
         '{{0, 1}, {⅓+i, ⅓i}}',
       ),
@@ -122,7 +118,6 @@ describe('Matrix', () => {
     expect(
       equate(
         Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
-          fixedDigits: undefined,
           itemSeparator: ',',
         }),
         '{{0,1},{⅓+i,0.3333334333333333i}}',
@@ -133,7 +128,6 @@ describe('Matrix', () => {
         Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
           allowAbbreviation: false,
           fixedDigits: 2,
-          itemSeparator: ', ',
         }),
         '{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}',
       ),
