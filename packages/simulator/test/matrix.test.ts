@@ -103,7 +103,6 @@ describe('Matrix', () => {
     expect(
       equate(
         Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
-          maxAbbreviationError: 0,
           fixedDigits: undefined,
           itemSeparator: ', ',
         }),
@@ -123,7 +122,6 @@ describe('Matrix', () => {
     expect(
       equate(
         Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
-          maxAbbreviationError: 0,
           fixedDigits: undefined,
           itemSeparator: ',',
         }),
@@ -134,7 +132,6 @@ describe('Matrix', () => {
       equate(
         Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
           allowAbbreviation: false,
-          maxAbbreviationError: 0,
           fixedDigits: 2,
           itemSeparator: ', ',
         }),
