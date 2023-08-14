@@ -92,6 +92,60 @@ describe('Matrix', () => {
     expect(Matrix.solo(0).isApproximatelyEqualTo('', 0)).toBeFalsy()
   })
 
+  test('format', () => {
+    expect(equate(Matrix.solo(2).format(), '{{2}}')).toBeTruthy()
+    expect(
+      equate(Matrix.square(1, 0, new Complex(0, -1), new Complex(2, -3)).format(), '{{1, 0}, {-i, 2-3i}}'),
+    ).toBeTruthy()
+    expect(equate(Matrix.square(1, 0, 0, 1).format(), '{{1, 0}, {0, 1}}')).toBeTruthy()
+    expect(equate(Matrix.identity(3).format(), '{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')).toBeTruthy()
+
+    expect(
+      equate(
+        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+          allowAbbreviation: true,
+          maxAbbreviationError: 0,
+          fixedDigits: undefined,
+          itemSeparator: ', ',
+        }),
+        '{{0, 1}, {⅓+i, 0.3333334333333333i}}',
+      ),
+    ).toBeTruthy()
+    expect(
+      equate(
+        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+          allowAbbreviation: true,
+          maxAbbreviationError: 0.0005,
+          fixedDigits: 3,
+          itemSeparator: ', ',
+        }),
+        '{{0, 1}, {⅓+i, ⅓i}}',
+      ),
+    ).toBeTruthy()
+    expect(
+      equate(
+        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+          allowAbbreviation: true,
+          maxAbbreviationError: 0,
+          fixedDigits: undefined,
+          itemSeparator: ',',
+        }),
+        '{{0,1},{⅓+i,0.3333334333333333i}}',
+      ),
+    ).toBeTruthy()
+    expect(
+      equate(
+        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+          allowAbbreviation: false,
+          maxAbbreviationError: 0,
+          fixedDigits: 2,
+          itemSeparator: ', ',
+        }),
+        '{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}',
+      ),
+    ).toBeTruthy()
+  })
+
   test('toString', () => {
     expect(equate(Matrix.solo(2).toString(), '{{2}}')).toBeTruthy()
     expect(

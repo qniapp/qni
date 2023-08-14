@@ -4,6 +4,20 @@ import {isNonEmpty} from 'fp-ts/lib/Array'
 import {range} from 'fp-ts/NonEmptyArray'
 import {uniq} from 'fp-ts/lib/ReadonlyNonEmptyArray'
 
+type FormatOptions = {
+  allowAbbreviation?: boolean
+  maxAbbreviationError?: number
+  fixedDigits?: number | undefined
+  itemSeparator: string
+}
+
+const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
+  allowAbbreviation: true,
+  maxAbbreviationError: 0,
+  fixedDigits: undefined,
+  itemSeparator: ', ',
+}
+
 export class Matrix {
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
   static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
@@ -252,6 +266,16 @@ export class Matrix {
       t += e * e
     }
     return t
+  }
+
+  format(options = DEFAULT_FORMAT_OPTIONS): string {
+    const format = new Format(
+      options.allowAbbreviation === undefined ? true : options.allowAbbreviation,
+      options.maxAbbreviationError || 0,
+      options.fixedDigits,
+      options.itemSeparator,
+    )
+    return this.toString(format)
   }
 
   toString(format = Format.EXACT): string {
