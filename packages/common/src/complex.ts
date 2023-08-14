@@ -23,6 +23,12 @@ type FormatOptions = {
   fixedDigits?: number | undefined
 }
 
+const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
+  allowAbbreviation: true,
+  maxAbbreviationError: 0,
+  fixedDigits: undefined,
+}
+
 export class Complex {
   static readonly ZERO = new Complex(0, 0)
   static readonly ONE = new Complex(1, 0)
@@ -171,12 +177,7 @@ export class Complex {
     return this.ln().times(Complex.from(exponent)).exp()
   }
 
-  format(user_options?: FormatOptions): string {
-    const options: FormatOptions = user_options || {
-      allowAbbreviation: true,
-      maxAbbreviationError: 0,
-      fixedDigits: undefined,
-    }
+  format(options = DEFAULT_FORMAT_OPTIONS): string {
     const format = new Format(
       options.allowAbbreviation === undefined ? true : options.allowAbbreviation,
       options.maxAbbreviationError || 0,
