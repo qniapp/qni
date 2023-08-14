@@ -928,14 +928,9 @@ describe('Complex', () => {
             fixedDigits: 2,
           }),
         ).toBe('+2.00-3.00i')
+        expect(c.format()).toBe('2-3i')
         expect(
           c.format({
-            allowAbbreviation: true,
-          }),
-        ).toBe('2-3i')
-        expect(
-          c.format({
-            allowAbbreviation: true,
             maxAbbreviationError: 0.0005,
             fixedDigits: 3,
           }),
@@ -955,14 +950,9 @@ describe('Complex', () => {
             fixedDigits: 2,
           }),
         ).toBe('-2.00-3.00i')
+        expect(c.format()).toBe('-2-3i')
         expect(
           c.format({
-            allowAbbreviation: true,
-          }),
-        ).toBe('-2-3i')
-        expect(
-          c.format({
-            allowAbbreviation: true,
             maxAbbreviationError: 0.0005,
             fixedDigits: 3,
           }),
@@ -983,14 +973,9 @@ describe('Complex', () => {
             fixedDigits: 2,
           }),
         ).toBe('+0.00-1.00i')
+        expect(c.format()).toBe('-i')
         expect(
           c.format({
-            allowAbbreviation: true,
-          }),
-        ).toBe('-i')
-        expect(
-          c.format({
-            allowAbbreviation: true,
             maxAbbreviationError: 0.0005,
             fixedDigits: 3,
           }),
@@ -1010,14 +995,9 @@ describe('Complex', () => {
             fixedDigits: 2,
           }),
         ).toBe('+0.33+0.00i')
+        expect(c.format()).toBe('⅓')
         expect(
           c.format({
-            allowAbbreviation: true,
-          }),
-        ).toBe('⅓')
-        expect(
-          c.format({
-            allowAbbreviation: true,
             maxAbbreviationError: 0.0005,
             fixedDigits: 3,
           }),
@@ -1111,14 +1091,9 @@ describe('Complex', () => {
             fixedDigits: 2,
           }),
         ).toBe('+2.00-3.00i')
+        expect(c.format()).toBe('2-3i')
         expect(
           c.format({
-            allowAbbreviation: true,
-          }),
-        ).toBe('2-3i')
-        expect(
-          c.format({
-            allowAbbreviation: true,
             maxAbbreviationError: 0.0005,
             fixedDigits: 3,
           }),
@@ -1138,14 +1113,9 @@ describe('Complex', () => {
             fixedDigits: 2,
           }),
         ).toBe('-2.00-3.00i')
+        expect(c.format()).toBe('-2-3i')
         expect(
           c.format({
-            allowAbbreviation: true,
-          }),
-        ).toBe('-2-3i')
-        expect(
-          c.format({
-            allowAbbreviation: true,
             maxAbbreviationError: 0.0005,
             fixedDigits: 3,
           }),
@@ -1162,18 +1132,12 @@ describe('Complex', () => {
         expect(
           c.format({
             allowAbbreviation: false,
-
             fixedDigits: 2,
           }),
         ).toBe('+0.00-1.00i')
+        expect(c.format()).toBe('-i')
         expect(
           c.format({
-            allowAbbreviation: true,
-          }),
-        ).toBe('-i')
-        expect(
-          c.format({
-            allowAbbreviation: true,
             maxAbbreviationError: 0.0005,
             fixedDigits: 3,
           }),
@@ -1190,18 +1154,12 @@ describe('Complex', () => {
         expect(
           c.format({
             allowAbbreviation: false,
-
             fixedDigits: 2,
           }),
         ).toBe('+0.33+0.00i')
+        expect(c.format()).toBe('⅓')
         expect(
           c.format({
-            allowAbbreviation: true,
-          }),
-        ).toBe('⅓')
-        expect(
-          c.format({
-            allowAbbreviation: true,
             maxAbbreviationError: 0.0005,
             fixedDigits: 3,
           }),
