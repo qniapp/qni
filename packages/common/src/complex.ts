@@ -19,7 +19,7 @@ import {ok, err, Result} from 'neverthrow'
 
 type FormatOptions = {
   allowAbbreviation: boolean
-  maxAbbreviationError: number
+  maxAbbreviationError?: number
   fixedDigits?: number | undefined
 }
 
@@ -177,7 +177,7 @@ export class Complex {
       maxAbbreviationError: 0,
       fixedDigits: undefined,
     }
-    const format = new Format(options.allowAbbreviation, options.maxAbbreviationError, options.fixedDigits, ', ')
+    const format = new Format(options.allowAbbreviation, options.maxAbbreviationError || 0, options.fixedDigits, ', ')
     return this.toString(format)
   }
 
