@@ -76,6 +76,9 @@ export class Complex {
     this.real = real
     this.imag = imag
 
+    // aliases for sub
+    this.subtract = this.sub
+    this.minus = this.sub
     // aliases for mult
     this.multiply = this.mult
     this.times = this.mult
@@ -99,7 +102,7 @@ export class Complex {
 
   isApproximatelyEqualTo(other: number | Complex | unknown, epsilon: number): boolean {
     if (typeof other === 'number' || other instanceof Complex) {
-      const d = this.minus(Complex.from(other))
+      const d = this.sub(Complex.from(other))
       return Math.abs(d.real) <= epsilon && Math.abs(d.imag) <= epsilon && d.abs() <= epsilon
     }
     return false
@@ -118,10 +121,19 @@ export class Complex {
     return new Complex(this.real + c.real, this.imag + c.imag)
   }
 
-  minus(value: number | Complex): Complex {
+  /**
+   * Returns the subtraction of this complex number and value.
+   *
+   * @param value - The subtrahend number.
+   * @returns A new complex number representing the subtraction of this complex number and value.
+   */
+  sub(value: number | Complex): Complex {
     const c = Complex.from(value)
     return new Complex(this.real - c.real, this.imag - c.imag)
   }
+
+  subtract = this.sub.bind(this)
+  minus = this.sub.bind(this)
 
   /**
    * Returns the product of this complex number and value.
