@@ -1035,4 +1035,96 @@ describe('Complex', () => {
       })
     })
   })
+
+  describe('toString', () => {
+    describe('ZERO', () => {
+      test("'0'", () => {
+        expect(Complex.ZERO.toString()).toBe('0')
+      })
+    })
+
+    describe('ONE', () => {
+      test("'1'", () => {
+        expect(Complex.ONE.toString()).toBe('1')
+      })
+    })
+
+    describe('I', () => {
+      test("'i'", () => {
+        expect(i.toString()).toBe('i')
+      })
+    })
+
+    describe('1+i', () => {
+      test("'1+i'", () => {
+        expect(new Complex(1, 1).toString()).toBe('1+i')
+      })
+    })
+
+    describe('-1', () => {
+      test("'-1'", () => {
+        expect(new Complex(-1, 0).toString()).toBe('-1')
+      })
+    })
+
+    describe('-i', () => {
+      test("'-i'", () => {
+        expect(new Complex(0, -1).toString()).toBe('-i')
+      })
+    })
+
+    describe('-1-i', () => {
+      test("'-1-i'", () => {
+        expect(new Complex(-1, -1).toString()).toBe('-1-i')
+      })
+    })
+
+    describe('2', () => {
+      test("'2'", () => {
+        expect(new Complex(2, 0).toString()).toBe('2')
+      })
+    })
+
+    describe('2i', () => {
+      test("'2i'", () => {
+        expect(new Complex(0, 2).toString()).toBe('2i')
+      })
+    })
+
+    describe('2+2i', () => {
+      test("'2+2i'", () => {
+        expect(new Complex(2, 2).toString()).toBe('2+2i')
+      })
+    })
+
+    describe('√½-⅓i', () => {
+      test("'√½-⅓i'", () => {
+        expect(new Complex(Math.sqrt(1 / 2), -1 / 3).toString()).toBe('√½-⅓i')
+      })
+    })
+
+    describe('2-3i', () => {
+      test("'2-3i'", () => {
+        expect(new Complex(2, -3).toString()).toBe('2-3i')
+      })
+    })
+
+    describe('-2-3i', () => {
+      test("'-2-3i'", () => {
+        expect(new Complex(-2, -3).toString()).toBe('-2-3i')
+      })
+    })
+
+    describe('-i', () => {
+      test("'-i'", () => {
+        expect(new Complex(0, -1).toString()).toBe('-i')
+      })
+    })
+
+    describe('1/3', () => {
+      test("'⅓'", () => {
+        expect(new Complex(1 / 3, 0).toString()).toBe('⅓')
+      })
+    })
+  })
 })

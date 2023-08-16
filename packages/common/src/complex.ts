@@ -176,6 +176,16 @@ export class Complex {
     return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
   }
 
+  /**
+   * Returns a compact string representing this Complex number.
+   *
+   * @returns A string representing this complex number.
+   * @example
+   * ```
+   * new Complex(1, 2).toString() // '1+2i'
+   * new Complex(Math.sqrt(1 / 2), -1 / 3).toString() // '√½-⅓i'
+   * ```
+   */
   toString(): string {
     const formatter = new NumberFormatter(
       DEFAULT_FORMAT_OPTIONS.allowAbbreviation,
