@@ -166,7 +166,20 @@ export class Complex {
     return this.ln().times(Complex.from(exponent)).exp()
   }
 
-  // Converts a complex number to a string according to the specified format.
+  /**
+   * Returns a string representing this complex number according to the specified format.
+   *
+   * @param options - An object that sets the format options for this complex number.
+   * @returns A string representing this complex number.
+   * @example
+   * ```
+   * new Complex(1, 2).format() // '1+2i'
+   * new Complex(1, 2).format({
+   *   allowAbbreviation: false,
+   *   fixedDigits: 2,
+   * }) // '+1.00+2.00i'
+   * ```
+   */
   format(options: FormatOptions = DEFAULT_FORMAT_OPTIONS): string {
     const format = new NumberFormatter(
       options.allowAbbreviation === undefined ? DEFAULT_FORMAT_OPTIONS.allowAbbreviation : options.allowAbbreviation,
