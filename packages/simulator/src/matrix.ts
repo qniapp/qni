@@ -18,6 +18,7 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
   itemSeparator: ', ',
 }
 
+// TODO: X, Y, Z などの各定数を Simulator に移動
 export class Matrix {
   /**
    * Hadamard gate.
@@ -37,7 +38,23 @@ export class Matrix {
    * ```
    */
   static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
+  /**
+   * Pauli Y gate.
+   *
+   * ```
+   * Y = | 0  -i |
+   *     | i   0 |
+   * ```
+   */
   static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
+  /**
+   * Pauli Z gate.
+   *
+   * ```
+   * Z = | 1  0 |
+   *     | 0 -1 |
+   * ```
+   */
   static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
   static readonly S = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / 2)))
   static readonly SDagger = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / -2)))

@@ -16,6 +16,18 @@ describe('Matrix', () => {
     })
   })
 
+  describe('PAULI_Y', () => {
+    test('toString', () => {
+      expect(Matrix.PAULI_Y.toString()).toBe('{{0, -i}, {i, 0}}')
+    })
+  })
+
+  describe('PAULI_Z', () => {
+    test('toString', () => {
+      expect(Matrix.PAULI_Z.toString()).toBe('{{1, 0}, {0, -1}}')
+    })
+  })
+
   test('isEqualTo', () => {
     const m = Matrix.fromRows([
       [new Complex(2, 3), new Complex(5, 7)],
