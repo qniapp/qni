@@ -21,50 +21,51 @@ export class Complex {
   public real: number
   public imag: number
 
-  static from(v: number | Complex): Complex {
-    if (typeof v === 'number') {
-      return new Complex(v, 0)
+  static from(value: number | Complex): Complex {
+    if (typeof value === 'number') {
+      return new Complex(value, 0)
     }
 
-    return v
+    return value
   }
 
-  static realPartOf(v: number | Complex): number {
-    if (typeof v === 'number') {
-      return v
+  static realPartOf(value: number | Complex): number {
+    if (typeof value === 'number') {
+      return value
     }
 
-    return v.real
+    return value.real
   }
 
-  static imagPartOf(v: number | Complex): number {
-    if (typeof v === 'number') {
+  static imagPartOf(value: number | Complex): number {
+    if (typeof value === 'number') {
       return 0
     }
 
-    return v.imag
+    return value.imag
   }
 
   // Returns a complex number with the given magnitude and phase.
   static polar(magnitude: number, phase: number): Complex {
-    const [cos, sin] = this.snappedCosSin(phase)
+    const [cos, sin] = this.cosAndSin(phase)
+
     return new Complex(magnitude * cos, magnitude * sin)
   }
 
-  private static snappedCosSin(radians: number): number[] {
+  private static cosAndSin(radians: number): number[] {
     const unit = Math.PI / 4
     const i = Math.round(radians / unit)
     if (i * unit === radians) {
       const s = Math.sqrt(0.5)
       const snaps = [
-        [1, 0],
-        [s, s],
-        [0, 1],
-        [-s, s],
-        [-1, 0],
-        [-s, -s],
-        [0, -1],
-        [s, -s],
+        [1, 0], // 0
+        [s, s], // π/4
+        [0, 1], // π/2
+        [-s, s], // 3π/4
+        [-1, 0], // π
+        [-s, -s], // 5π/4
+        [0, -1], // 3π/2
+        [s, -s], // 7π/4
       ]
       return snaps[i & 7]
     }
@@ -102,23 +103,23 @@ export class Complex {
     return new Complex(-this.real, -this.imag)
   }
 
-  plus(v: number | Complex): Complex {
-    const c = Complex.from(v)
+  plus(value: number | Complex): Complex {
+    const c = Complex.from(value)
     return new Complex(this.real + c.real, this.imag + c.imag)
   }
 
-  minus(v: number | Complex): Complex {
-    const c = Complex.from(v)
+  minus(value: number | Complex): Complex {
+    const c = Complex.from(value)
     return new Complex(this.real - c.real, this.imag - c.imag)
   }
 
-  times(v: number | Complex): Complex {
-    const c = Complex.from(v)
+  times(value: number | Complex): Complex {
+    const c = Complex.from(value)
     return new Complex(this.real * c.real - this.imag * c.imag, this.real * c.imag + this.imag * c.real)
   }
 
-  dividedBy(v: number | Complex): Result<Complex, Error> {
-    const c = Complex.from(v)
+  dividedBy(value: number | Complex): Result<Complex, Error> {
+    const c = Complex.from(value)
     const d = c.norm2()
     if (d === 0) {
       return err(Error('Division by Zero'))
