@@ -5,6 +5,7 @@ export * from './detailed-error'
 export * from './emit-event'
 export * from './equate'
 export * from './format'
+export * from './number-formatter'
 export * from './numeric-range'
 export * from './util'
 

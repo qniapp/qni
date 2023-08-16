@@ -1,5 +1,4 @@
 import {Complex} from '../src/complex'
-import {Format} from '../src/format'
 import {equate} from '../src/equate'
 
 describe('Complex', () => {
@@ -45,72 +44,72 @@ describe('Complex', () => {
     })
   })
 
-  describe('realPartOf', () => {
+  describe('real', () => {
     describe('1', () => {
       test('equal 1', () => {
-        expect(equate(Complex.realPartOf(1), 1))
+        expect(equate(Complex.real(1), 1))
       })
     })
 
     describe('1.5', () => {
       test('equal 1.5', () => {
-        expect(equate(Complex.realPartOf(1.5), 1.5))
+        expect(equate(Complex.real(1.5), 1.5))
       })
     })
 
     describe('-2', () => {
       test('equal -2', () => {
-        expect(equate(Complex.realPartOf(-2), -2))
+        expect(equate(Complex.real(-2), -2))
       })
     })
 
     describe('3+i', () => {
       test('equal 3', () => {
-        expect(equate(Complex.realPartOf(new Complex(3, 1)), 3))
+        expect(equate(Complex.real(new Complex(3, 1)), 3))
       })
     })
 
     describe('5+0i', () => {
       test('equal 5', () => {
-        expect(equate(Complex.realPartOf(new Complex(5, 0)), 5))
+        expect(equate(Complex.real(new Complex(5, 0)), 5))
       })
     })
   })
 
-  describe('imagPartOf', () => {
+  describe('imag', () => {
     describe('1', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imagPartOf(1), 0))
+        expect(equate(Complex.imag(1), 0))
       })
     })
 
     describe('1.5', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imagPartOf(1.5), 0))
+        expect(equate(Complex.imag(1.5), 0))
       })
     })
 
     describe('-2', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imagPartOf(-2), 0))
+        expect(equate(Complex.imag(-2), 0))
       })
     })
 
     describe('3+0i', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imagPartOf(new Complex(3, 0)), 0))
+        expect(equate(Complex.imag(new Complex(3, 0)), 0))
       })
     })
 
     describe('3+i', () => {
       test('equal 1', () => {
-        expect(equate(Complex.imagPartOf(new Complex(3, 1)), 1))
+        expect(equate(Complex.imag(new Complex(3, 1)), 1))
       })
     })
 
     describe('5-2i', () => {
       test('equal -2', () => {
-        expect(equate(Complex.imagPartOf(new Complex(5, -2)), -2))
+        expect(equate(Complex.imag(new Complex(5, -2)), -2))
       })
     })
   })
@@ -581,97 +580,6 @@ describe('Complex', () => {
     })
   })
 
-  describe('unit', () => {
-    describe('0+0i', () => {
-      test('equal 1', () => {
-        expect(Complex.ZERO.unit().isEqualTo(1))
-      })
-    })
-
-    describe('0.5+0i', () => {
-      test('equal 1', () => {
-        expect(new Complex(0.5, 0).unit().isEqualTo(1))
-      })
-    })
-
-    describe('1+0i', () => {
-      test('equal 1', () => {
-        expect(Complex.ONE.unit().isEqualTo(1))
-      })
-    })
-
-    describe('2+0i', () => {
-      test('equal 1', () => {
-        expect(new Complex(2, 0).unit().isEqualTo(1))
-      })
-    })
-
-    describe('-0.5+0i', () => {
-      test('equal -1', () => {
-        expect(new Complex(-0.5, 0).unit().isEqualTo(-1))
-      })
-    })
-
-    describe('-1+0i', () => {
-      test('equal -1', () => {
-        expect(new Complex(-1, 0).unit().isEqualTo(-1))
-      })
-    })
-
-    describe('-2+0i', () => {
-      test('equal -1', () => {
-        expect(new Complex(-2, 0).unit().isEqualTo(-1))
-      })
-    })
-
-    describe('0+0.5i', () => {
-      test('equal i', () => {
-        expect(new Complex(0, 0.5).unit().isEqualTo(i))
-      })
-    })
-
-    describe('0+i', () => {
-      test('equal i', () => {
-        expect(i.unit().isEqualTo(i))
-      })
-    })
-
-    describe('0+2i', () => {
-      test('equal i', () => {
-        expect(new Complex(0, 2).unit().isEqualTo(i))
-      })
-    })
-
-    describe('0-0.5i', () => {
-      test('equal -i', () => {
-        expect(new Complex(0, -0.5).unit().isEqualTo(i.times(-1)))
-      })
-    })
-
-    describe('0-i', () => {
-      test('equal -i', () => {
-        expect(new Complex(0, -1).unit().isEqualTo(i.times(-1)))
-      })
-    })
-
-    describe('0-2i', () => {
-      test('equal -i', () => {
-        expect(new Complex(0, -2).unit().isEqualTo(i.times(-1)))
-      })
-    })
-
-    describe('((1, 1).unit - 1/√2(1, 1)).norm2', () => {
-      test('< 0.0000001', () => {
-        expect(
-          new Complex(1, 1)
-            .unit()
-            .minus(new Complex(Math.sqrt(0.5), Math.sqrt(0.5)))
-            .norm2() < 0.0000001,
-        ).toBeTruthy()
-      })
-    })
-  })
-
   describe('phase', () => {
     describe('0+0i', () => {
       test('equal 0', () => {
@@ -716,125 +624,155 @@ describe('Complex', () => {
     })
   })
 
-  describe('raisedTo', () => {
+  describe('pow', () => {
     describe('e^-iπ/2', () => {
       test('equal -i', () => {
-        expect(e.raisedTo(i.times(-π / 2))).toEqual(new Complex(0, -1))
+        expect(e.pow(i.times(-π / 2))).toEqual(new Complex(0, -1))
       })
     })
 
     describe('e^0', () => {
       test('equal 1', () => {
-        expect(e.raisedTo(i.times(0))).toEqual(new Complex(1, 0))
+        expect(e.pow(i.times(0))).toEqual(new Complex(1, 0))
+      })
+    })
+
+    describe('e^(0+0i)', () => {
+      test('equal 1', () => {
+        expect(e.pow(i.times(Complex.ZERO))).toEqual(new Complex(1, 0))
       })
     })
 
     describe('e^iπ/2', () => {
       test('equal i', () => {
-        expect(e.raisedTo(i.times(π / 2))).toEqual(i)
+        expect(e.pow(i.times(π / 2))).toEqual(i)
       })
     })
 
     describe('e^iπ', () => {
       test('equal -1', () => {
-        expect(e.raisedTo(i.times(π))).toEqual(new Complex(-1, 0))
+        expect(e.pow(i.times(π))).toEqual(new Complex(-1, 0))
       })
     })
 
     describe('e^i3π/2', () => {
       test('equal -i', () => {
-        expect(e.raisedTo(i.times((3 * π) / 2))).toEqual(new Complex(0, -1))
+        expect(e.pow(i.times((3 * π) / 2))).toEqual(new Complex(0, -1))
       })
     })
 
     describe('e^i2π', () => {
       test('equal 1', () => {
-        expect(e.raisedTo(i.times(2 * π))).toEqual(Complex.ONE)
+        expect(e.pow(i.times(2 * π))).toEqual(Complex.ONE)
       })
     })
 
     describe('e^-iπ/4', () => {
       test('equal 1/√2(1-i)', () => {
-        expect(e.raisedTo(i.times(-π / 4))).toEqual(new Complex(s, -s))
+        expect(e.pow(i.times(-π / 4))).toEqual(new Complex(s, -s))
       })
     })
 
     describe('e^iπ/4', () => {
       test('equal 1/√2(1+i)', () => {
-        expect(e.raisedTo(i.times(π / 4))).toEqual(new Complex(s, s))
+        expect(e.pow(i.times(π / 4))).toEqual(new Complex(s, s))
       })
     })
 
     describe('e^i3π/4', () => {
       test('equal 1/√2(-1+i)', () => {
-        expect(e.raisedTo(i.times((3 * π) / 4))).toEqual(new Complex(-s, s))
+        expect(e.pow(i.times((3 * π) / 4))).toEqual(new Complex(-s, s))
       })
     })
 
     describe('e^i5π/4', () => {
       test('equal 1/√2(-1-i)', () => {
-        expect(e.raisedTo(i.times((5 * π) / 4))).toEqual(new Complex(-s, -s))
+        expect(e.pow(i.times((5 * π) / 4))).toEqual(new Complex(-s, -s))
       })
     })
 
     describe('0^2', () => {
       test('equal 0', () => {
-        expect(Complex.ZERO.raisedTo(2)).toEqual(Complex.ZERO)
+        expect(Complex.ZERO.pow(2)).toEqual(Complex.ZERO)
       })
     })
 
     describe('0^(1+3i)', () => {
       test('equal 0', () => {
-        expect(Complex.ZERO.raisedTo(new Complex(1, 3))).toEqual(Complex.ZERO)
+        expect(Complex.ZERO.pow(new Complex(1, 3))).toEqual(Complex.ZERO)
       })
     })
 
     describe('(2+3i)^0', () => {
       test('equal 1', () => {
-        expect(new Complex(2, 3).raisedTo(0)).toEqual(Complex.ONE)
+        expect(new Complex(2, 3).pow(0)).toEqual(Complex.ONE)
+      })
+    })
+
+    describe('(2+3i)^(0+0i)', () => {
+      test('equal 1', () => {
+        expect(new Complex(2, 3).pow(Complex.ZERO)).toEqual(Complex.ONE)
       })
     })
 
     describe('(-1)^0', () => {
       test('equal 1', () => {
-        expect(new Complex(-1, 0).raisedTo(0)).toEqual(Complex.ONE)
+        expect(new Complex(-1, 0).pow(0)).toEqual(Complex.ONE)
+      })
+    })
+
+    describe('(-1)^(0+0i)', () => {
+      test('equal 1', () => {
+        expect(new Complex(-1, 0).pow(Complex.ZERO)).toEqual(Complex.ONE)
       })
     })
 
     describe('(-1)^½', () => {
       test('equal i', () => {
-        expect(new Complex(-1, 0).raisedTo(0.5)).toEqual(i)
+        expect(new Complex(-1, 0).pow(0.5)).toEqual(i)
       })
     })
 
     describe('(-1)^-½', () => {
       test('equal -i', () => {
-        expect(new Complex(-1, 0).raisedTo(-0.5)).toEqual(new Complex(0, -1))
+        expect(new Complex(-1, 0).pow(-0.5)).toEqual(new Complex(0, -1))
       })
     })
 
     describe('(-1)^1', () => {
       test('equal -1', () => {
-        expect(new Complex(-1, 0).raisedTo(1)).toEqual(new Complex(-1, 0))
+        expect(new Complex(-1, 0).pow(1)).toEqual(new Complex(-1, 0))
       })
     })
 
     describe('2^½', () => {
       test('equal √2', () => {
-        expect(new Complex(2, 0).raisedTo(0.5)).toEqual(new Complex(Math.sqrt(2), 0))
+        expect(new Complex(2, 0).pow(0.5)).toEqual(new Complex(Math.sqrt(2), 0))
+      })
+    })
+
+    describe('i^0', () => {
+      test('equal 1', () => {
+        expect(i.pow(0)).toEqual(Complex.ONE)
+      })
+    })
+
+    describe('i^(0+0i)', () => {
+      test('equal 1', () => {
+        expect(i.pow(Complex.ZERO)).toEqual(Complex.ONE)
       })
     })
 
     describe('i^i', () => {
       test('equal e^-π/2', () => {
-        expect(i.raisedTo(i).real).toBeCloseTo(Math.exp(-π / 2))
-        expect(i.raisedTo(i).imag).toBe(0)
+        expect(i.pow(i).real).toBeCloseTo(Math.exp(-π / 2))
+        expect(i.pow(i).imag).toBe(0)
       })
     })
 
     describe('(1+i)^(1+i)', () => {
       test('equal 0.2739572538301+0.5837007587586i', () => {
-        const res = new Complex(1, 1).raisedTo(new Complex(1, 1))
+        const res = new Complex(1, 1).pow(new Complex(1, 1))
         expect(res.real).toBeCloseTo(0.2739572538301)
         expect(res.imag).toBeCloseTo(0.5837007587586)
       })
@@ -842,83 +780,77 @@ describe('Complex', () => {
 
     describe('(2+3i)^(5+7i)', () => {
       test('equal 0.1525582909989+0.6079153491494i', () => {
-        const res = new Complex(2, 3).raisedTo(new Complex(5, 7))
+        const res = new Complex(2, 3).pow(new Complex(5, 7))
         expect(res.real).toBeCloseTo(0.1525582909989)
         expect(res.imag).toBeCloseTo(0.6079153491494)
       })
     })
   })
 
-  describe('toString', () => {
+  describe('format', () => {
     describe('ZERO', () => {
-      test("equal '0'", () => {
-        expect(Complex.ZERO.toString()).toBe('0')
+      test("'0'", () => {
+        expect(Complex.ZERO.format()).toBe('0')
       })
     })
 
     describe('ONE', () => {
-      test("equal '1'", () => {
-        expect(Complex.ONE.toString()).toBe('1')
+      test("'1'", () => {
+        expect(Complex.ONE.format()).toBe('1')
       })
     })
 
     describe('I', () => {
-      test("equal 'i'", () => {
-        expect(i.toString()).toBe('i')
+      test("'i'", () => {
+        expect(i.format()).toBe('i')
       })
     })
 
     describe('1+i', () => {
-      test("equal '1+i'", () => {
-        expect(new Complex(1, 1).toString()).toBe('1+i')
+      test("'1+i'", () => {
+        expect(new Complex(1, 1).format()).toBe('1+i')
       })
     })
 
     describe('-1', () => {
-      test("equal '-1'", () => {
-        expect(new Complex(-1, 0).toString()).toBe('-1')
+      test("'-1'", () => {
+        expect(new Complex(-1, 0).format()).toBe('-1')
       })
     })
 
     describe('-i', () => {
-      test("equal '-i'", () => {
-        expect(new Complex(0, -1).toString()).toBe('-i')
+      test("'-i'", () => {
+        expect(new Complex(0, -1).format()).toBe('-i')
       })
     })
 
     describe('-1-i', () => {
-      test("equal '-1-i'", () => {
-        expect(new Complex(-1, -1).toString()).toBe('-1-i')
+      test("'-1-i'", () => {
+        expect(new Complex(-1, -1).format()).toBe('-1-i')
       })
     })
 
     describe('2', () => {
-      test("equal '2'", () => {
-        expect(new Complex(2, 0).toString()).toBe('2')
+      test("'2'", () => {
+        expect(new Complex(2, 0).format()).toBe('2')
       })
     })
 
     describe('2i', () => {
-      test("equal '2i'", () => {
-        expect(new Complex(0, 2).toString()).toBe('2i')
+      test("'2i'", () => {
+        expect(new Complex(0, 2).format()).toBe('2i')
       })
     })
 
     describe('2+2i', () => {
-      test("equal '2+2i'", () => {
-        expect(new Complex(2, 2).toString()).toBe('2+2i')
-      })
-    })
-
-    describe('2-3i', () => {
-      test("equal '2-3i'", () => {
-        expect(new Complex(2, -3).toString()).toBe('2-3i')
+      test("'2+2i'", () => {
+        expect(new Complex(2, 2).format()).toBe('2+2i')
       })
     })
 
     describe('√½-⅓i', () => {
-      test("equal '√½-⅓i'", () => {
-        expect(new Complex(Math.sqrt(1 / 2), -1 / 3).toString()).toBe('√½-⅓i')
+      test("'√½-⅓i'", () => {
+        expect(new Complex(Math.sqrt(1 / 2), -1 / 3).format()).toBe('√½-⅓i')
       })
     })
 
@@ -927,11 +859,21 @@ describe('Complex', () => {
         c = new Complex(2, -3)
       })
 
-      test('Format', () => {
-        expect(c.toString(Format.CONSISTENT)).toBe('+2.00-3.00i')
-        expect(c.toString(Format.EXACT)).toBe('2-3i')
-        expect(c.toString(Format.MINIFIED)).toBe('2-3i')
-        expect(c.toString(Format.SIMPLIFIED)).toBe('2-3i')
+      test('formats', () => {
+        expect(c.format()).toBe('2-3i')
+        expect(
+          c.format({
+            allowAbbreviation: false,
+            fixedDigits: 2,
+          }),
+        ).toBe('+2.00-3.00i')
+        expect(c.format()).toBe('2-3i')
+        expect(
+          c.format({
+            maxAbbreviationError: 0.0005,
+            fixedDigits: 3,
+          }),
+        ).toBe('2-3i')
       })
     })
 
@@ -940,11 +882,20 @@ describe('Complex', () => {
         c = new Complex(-2, -3)
       })
 
-      test('Format', () => {
-        expect(c.toString(Format.CONSISTENT)).toBe('-2.00-3.00i')
-        expect(c.toString(Format.EXACT)).toBe('-2-3i')
-        expect(c.toString(Format.MINIFIED)).toBe('-2-3i')
-        expect(c.toString(Format.SIMPLIFIED)).toBe('-2-3i')
+      test('formats', () => {
+        expect(
+          c.format({
+            allowAbbreviation: false,
+            fixedDigits: 2,
+          }),
+        ).toBe('-2.00-3.00i')
+        expect(c.format()).toBe('-2-3i')
+        expect(
+          c.format({
+            maxAbbreviationError: 0.0005,
+            fixedDigits: 3,
+          }),
+        ).toBe('-2-3i')
       })
     })
 
@@ -953,11 +904,21 @@ describe('Complex', () => {
         c = new Complex(0, -1)
       })
 
-      test('Format', () => {
-        expect(c.toString(Format.CONSISTENT)).toBe('+0.00-1.00i')
-        expect(c.toString(Format.EXACT)).toBe('-i')
-        expect(c.toString(Format.MINIFIED)).toBe('-i')
-        expect(c.toString(Format.SIMPLIFIED)).toBe('-i')
+      test('formats', () => {
+        expect(c.format()).toBe('-i')
+        expect(
+          c.format({
+            allowAbbreviation: false,
+            fixedDigits: 2,
+          }),
+        ).toBe('+0.00-1.00i')
+        expect(c.format()).toBe('-i')
+        expect(
+          c.format({
+            maxAbbreviationError: 0.0005,
+            fixedDigits: 3,
+          }),
+        ).toBe('-i')
       })
     })
 
@@ -966,11 +927,112 @@ describe('Complex', () => {
         c = new Complex(1 / 3, 0)
       })
 
-      test('Format', () => {
-        expect(c.toString(Format.CONSISTENT)).toBe('+0.33+0.00i')
-        expect(c.toString(Format.EXACT)).toBe('⅓')
-        expect(c.toString(Format.MINIFIED)).toBe('⅓')
-        expect(c.toString(Format.SIMPLIFIED)).toBe('⅓')
+      test('formats', () => {
+        expect(
+          c.format({
+            allowAbbreviation: false,
+            fixedDigits: 2,
+          }),
+        ).toBe('+0.33+0.00i')
+        expect(c.format()).toBe('⅓')
+        expect(
+          c.format({
+            maxAbbreviationError: 0.0005,
+            fixedDigits: 3,
+          }),
+        ).toBe('⅓')
+      })
+    })
+  })
+
+  describe('toString', () => {
+    describe('ZERO', () => {
+      test("'0'", () => {
+        expect(Complex.ZERO.toString()).toBe('0')
+      })
+    })
+
+    describe('ONE', () => {
+      test("'1'", () => {
+        expect(Complex.ONE.toString()).toBe('1')
+      })
+    })
+
+    describe('I', () => {
+      test("'i'", () => {
+        expect(i.toString()).toBe('i')
+      })
+    })
+
+    describe('1+i', () => {
+      test("'1+i'", () => {
+        expect(new Complex(1, 1).toString()).toBe('1+i')
+      })
+    })
+
+    describe('-1', () => {
+      test("'-1'", () => {
+        expect(new Complex(-1, 0).toString()).toBe('-1')
+      })
+    })
+
+    describe('-i', () => {
+      test("'-i'", () => {
+        expect(new Complex(0, -1).toString()).toBe('-i')
+      })
+    })
+
+    describe('-1-i', () => {
+      test("'-1-i'", () => {
+        expect(new Complex(-1, -1).toString()).toBe('-1-i')
+      })
+    })
+
+    describe('2', () => {
+      test("'2'", () => {
+        expect(new Complex(2, 0).toString()).toBe('2')
+      })
+    })
+
+    describe('2i', () => {
+      test("'2i'", () => {
+        expect(new Complex(0, 2).toString()).toBe('2i')
+      })
+    })
+
+    describe('2+2i', () => {
+      test("'2+2i'", () => {
+        expect(new Complex(2, 2).toString()).toBe('2+2i')
+      })
+    })
+
+    describe('√½-⅓i', () => {
+      test("'√½-⅓i'", () => {
+        expect(new Complex(Math.sqrt(1 / 2), -1 / 3).toString()).toBe('√½-⅓i')
+      })
+    })
+
+    describe('2-3i', () => {
+      test("'2-3i'", () => {
+        expect(new Complex(2, -3).toString()).toBe('2-3i')
+      })
+    })
+
+    describe('-2-3i', () => {
+      test("'-2-3i'", () => {
+        expect(new Complex(-2, -3).toString()).toBe('-2-3i')
+      })
+    })
+
+    describe('-i', () => {
+      test("'-i'", () => {
+        expect(new Complex(0, -1).toString()).toBe('-i')
+      })
+    })
+
+    describe('1/3', () => {
+      test("'⅓'", () => {
+        expect(new Complex(1 / 3, 0).toString()).toBe('⅓')
       })
     })
   })

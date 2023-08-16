@@ -131,7 +131,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.h(0).state.matrix,
-          new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)._unsafeUnwrap())),
+          new StateVector('(-i)').matrix.times(e.pow(i.times(π).div(4)._unsafeUnwrap())),
         ),
       ).toBe(true)
     })
@@ -145,7 +145,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.h(0).state.matrix,
-          new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)._unsafeUnwrap())),
+          new StateVector('i').matrix.times(e.pow(i.times(π).div(-4)._unsafeUnwrap())),
         ),
       ).toBe(true)
     })
@@ -317,7 +317,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.qft(1, 0).state.matrix,
-          new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)._unsafeUnwrap())),
+          new StateVector('(-i)').matrix.times(e.pow(i.times(π).div(4)._unsafeUnwrap())),
         ),
       ).toBe(true)
     })
@@ -331,7 +331,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.qft(1, 0).state.matrix,
-          new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)._unsafeUnwrap())),
+          new StateVector('i').matrix.times(e.pow(i.times(π).div(-4)._unsafeUnwrap())),
         ),
       ).toBe(true)
     })
@@ -382,7 +382,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.qftDagger(1, 0).state.matrix,
-          new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)._unsafeUnwrap())),
+          new StateVector('(-i)').matrix.times(e.pow(i.times(π).div(4)._unsafeUnwrap())),
         ),
       ).toBeTruthy()
     })
@@ -396,7 +396,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.qftDagger(1, 0).state.matrix,
-          new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)._unsafeUnwrap())),
+          new StateVector('i').matrix.times(e.pow(i.times(π).div(-4)._unsafeUnwrap())),
         ),
       ).toBeTruthy()
     })

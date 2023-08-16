@@ -4,21 +4,35 @@ import {isNonEmpty} from 'fp-ts/lib/Array'
 import {range} from 'fp-ts/NonEmptyArray'
 import {uniq} from 'fp-ts/lib/ReadonlyNonEmptyArray'
 
+type FormatOptions = {
+  allowAbbreviation?: boolean
+  maxAbbreviationError?: number
+  fixedDigits?: number | undefined
+  itemSeparator?: string
+}
+
+const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
+  allowAbbreviation: true,
+  maxAbbreviationError: 0,
+  fixedDigits: undefined,
+  itemSeparator: ', ',
+}
+
 export class Matrix {
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
   static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
   static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
   static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
-  static readonly S = Matrix.square(1, 0, 0, Complex.from(Math.E).raisedTo(Complex.I.times(Math.PI / 2)))
-  static readonly SDagger = Matrix.square(1, 0, 0, Complex.from(Math.E).raisedTo(Complex.I.times(Math.PI / -2)))
-  static readonly T = Matrix.square(1, 0, 0, Complex.from(Math.E).raisedTo(Complex.I.times(Math.PI / 4)))
-  static readonly TDagger = Matrix.square(1, 0, 0, Complex.from(Math.E).raisedTo(Complex.I.times(Math.PI / -4)))
+  static readonly S = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / 2)))
+  static readonly SDagger = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / -2)))
+  static readonly T = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / 4)))
+  static readonly TDagger = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / -4)))
 
   static PHASE(phi: string): Matrix {
     const φ = radian(phi)
     const e = Complex.from(Math.E)
 
-    return Matrix.square(1, 0, 0, e.raisedTo(Complex.I.times(φ)))
+    return Matrix.square(1, 0, 0, e.pow(Complex.I.times(φ)))
   }
 
   static get RNOT(): Matrix {
@@ -50,7 +64,7 @@ export class Matrix {
     const e = Complex.from(Math.E)
     const i = Complex.I
 
-    return Matrix.square(e.raisedTo(i.neg().times(θ / 2)), 0, 0, e.raisedTo(i.times(θ / 2)))
+    return Matrix.square(e.pow(i.neg().times(θ / 2)), 0, 0, e.pow(i.times(θ / 2)))
   }
 
   static fromRows(rows: Complex[][]): Matrix {
@@ -66,8 +80,8 @@ export class Matrix {
     let i = 0
     for (const row of rows) {
       for (const cell of row) {
-        buffer[i] = Complex.realPartOf(cell)
-        buffer[i + 1] = Complex.imagPartOf(cell)
+        buffer[i] = Complex.real(cell)
+        buffer[i + 1] = Complex.imag(cell)
         i += 2
       }
     }
@@ -84,15 +98,15 @@ export class Matrix {
       for (let c = 0; c < width; c++) {
         const k = (r * width + c) * 2
         const v = coefficientRowColGenerator(r, c)
-        buf[k] = Complex.realPartOf(v)
-        buf[k + 1] = Complex.imagPartOf(v)
+        buf[k] = Complex.real(v)
+        buf[k + 1] = Complex.imag(v)
       }
     }
     return new Matrix(width, height, buf)
   }
 
   static solo(coef: number | Complex): Matrix {
-    return new Matrix(1, 1, new Float64Array([Complex.realPartOf(coef), Complex.imagPartOf(coef)]))
+    return new Matrix(1, 1, new Float64Array([Complex.real(coef), Complex.imag(coef)]))
   }
 
   static square(...coefs: Array<number | Complex>): Matrix {
@@ -202,8 +216,8 @@ export class Matrix {
 
   private timesScalar(v: number | Complex): Matrix {
     const newBuffer = new Float64Array(this.buffer.length)
-    const sr = Complex.realPartOf(v)
-    const si = Complex.imagPartOf(v)
+    const sr = Complex.real(v)
+    const si = Complex.imag(v)
     for (let i = 0; i < newBuffer.length; i += 2) {
       const vr = this.buffer[i]
       const vi = this.buffer[i + 1]
@@ -254,10 +268,20 @@ export class Matrix {
     return t
   }
 
-  toString(format = Format.EXACT): string {
+  format(options = DEFAULT_FORMAT_OPTIONS): string {
+    const format = new Format(
+      options.allowAbbreviation === undefined ? true : options.allowAbbreviation,
+      options.maxAbbreviationError || 0,
+      options.fixedDigits,
+      options.itemSeparator || ', ',
+    )
+    return this.toString(format)
+  }
+
+  toString(options = DEFAULT_FORMAT_OPTIONS): string {
     const data = this.rows()
-      .map(row => row.map(e => e.toString(format)).join(format.itemSeparator))
-      .join(`}${format.itemSeparator}{`)
+      .map(row => row.map(e => e.format(options)).join(options.itemSeparator))
+      .join(`}${options.itemSeparator}{`)
     return `{{${data}}}`
   }
 
@@ -406,7 +430,7 @@ export class Matrix {
     if (!this.isApproximatelyHermitian(0.01)) {
       throw new DetailedError('Density matrix should be Hermitian.', this)
     }
-    if (!this.trace().isApproximatelyEqualTo(1, 0.01)) {
+    if (!this.trace().nearlyEq(1, 0.01)) {
       throw new DetailedError('Density matrix should have unit trace.', this)
     }
 
