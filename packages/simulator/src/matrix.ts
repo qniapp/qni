@@ -430,7 +430,7 @@ export class Matrix {
     if (!this.isApproximatelyHermitian(0.01)) {
       throw new DetailedError('Density matrix should be Hermitian.', this)
     }
-    if (!this.trace().isApproximatelyEqualTo(1, 0.01)) {
+    if (!this.trace().nearlyEq(1, 0.01)) {
       throw new DetailedError('Density matrix should have unit trace.', this)
     }
 

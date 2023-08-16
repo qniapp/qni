@@ -76,6 +76,7 @@ export class Complex {
     this.real = real
     this.imag = imag
 
+    this.isApproximatelyEqualTo = this.nearlyEq // alias for nearlyEq
     this.isEqualTo = this.eq // alias for eq
     this.conj = this.conjugate // alias for conjugate
     this.plus = this.add // alias for add
@@ -110,13 +111,20 @@ export class Complex {
 
   isEqualTo = this.eq.bind(this)
 
-  isApproximatelyEqualTo(other: number | Complex | unknown, epsilon: number): boolean {
+  /**
+   * Returns true if the complex number is close to the value of other.
+   *
+   * @param other - The other value to compare with
+   */
+  nearlyEq(other: number | Complex | unknown, epsilon: number): boolean {
     if (typeof other === 'number' || other instanceof Complex) {
       const d = this.sub(Complex.from(other))
       return Math.abs(d.real) <= epsilon && Math.abs(d.imag) <= epsilon && d.abs() <= epsilon
     }
     return false
   }
+
+  isApproximatelyEqualTo = this.nearlyEq.bind(this)
 
   /**
    * Returns the complex conjugate.
