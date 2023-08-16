@@ -76,6 +76,7 @@ export class Complex {
     this.real = real
     this.imag = imag
 
+    this.conj = this.conjugate // alias for conjugate
     this.plus = this.add // alias for add
     // aliases for sub
     this.subtract = this.sub
@@ -109,10 +110,22 @@ export class Complex {
     return false
   }
 
+  /**
+   * Returns the complex conjugate.
+   *
+   * @returns A new Complex representing the complex conjugate of this complex number.
+   */
   conjugate(): Complex {
     return new Complex(this.real, -this.imag)
   }
 
+  conj = this.conjugate.bind(this)
+
+  /**
+   * Returns negation of the value.
+   *
+   * @returns A new Complex representing the negation of this complex number.
+   */
   neg(): Complex {
     return new Complex(-this.real, -this.imag)
   }
@@ -121,7 +134,7 @@ export class Complex {
    * Returns the sum of this complex number and value.
    *
    * @param value - The addend number.
-   * @returns A new complex number representing the sum of this complex number and value.
+   * @returns A new Complex representing the sum of this complex number and value.
    */
   add(value: number | Complex): Complex {
     const c = Complex.from(value)
@@ -134,7 +147,7 @@ export class Complex {
    * Returns the subtraction of this complex number and value.
    *
    * @param value - The subtrahend number.
-   * @returns A new complex number representing the subtraction of this complex number and value.
+   * @returns A new Complex representing the subtraction of this complex number and value.
    */
   sub(value: number | Complex): Complex {
     const c = Complex.from(value)
@@ -148,7 +161,7 @@ export class Complex {
    * Returns the product of this complex number and value.
    *
    * @param value - The multiplier number.
-   * @returns A new complex number representing the product of this complex number and value.
+   * @returns A new Complex representing the product of this complex number and value.
    */
   mult(value: number | Complex): Complex {
     const c = Complex.from(value)
