@@ -14,8 +14,17 @@ const DEFAULT_FORMAT_OPTIONS = {
 }
 
 export class Complex {
+  /**
+   * Complex { real: 0, imag: 0 }
+   */
   static readonly ZERO = new Complex(0, 0)
+  /**
+   * Complex { real: 1, imag: 0 }
+   */
   static readonly ONE = new Complex(1, 0)
+  /**
+   * The imaginary unit.
+   */
   static readonly I = new Complex(0, 1)
 
   public real: number
