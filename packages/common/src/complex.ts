@@ -76,6 +76,12 @@ export class Complex {
     this.real = real
     this.imag = imag
 
+    // alias for abs
+    this.magnitude = this.abs
+
+    // alias for abs2
+    this.norm2 = this.abs2
+
     // aliases for arg
     this.angle = this.arg
     this.phase = this.arg
@@ -124,7 +130,7 @@ export class Complex {
 
   dividedBy(value: number | Complex): Result<Complex, Error> {
     const c = Complex.from(value)
-    const d = c.norm2()
+    const d = c.abs2()
     if (d === 0) {
       return err(Error('Division by Zero'))
     }
@@ -133,13 +139,37 @@ export class Complex {
     return ok(new Complex(n.real / d, n.imag / d))
   }
 
-  norm2(): number {
+  /**
+   * Returns the absolute part of its polar form.
+   *
+   * @returns A number representing the absolute part of its polar form.
+   * @example
+   * ```
+   * new Complex(-1, 0).abs() // 1
+   * new Complex(3, 4).abs() // 5
+   * ```
+   */
+  abs(): number {
+    return Math.sqrt(this.abs2())
+  }
+
+  magnitude = this.abs.bind(this)
+
+  /**
+   * Returns square of the absolute value.
+   *
+   * @returns A number representing the square of the absolute value.
+   * @example
+   * ```
+   * new Complex(-1, 0).abs2() // 1
+   * new Complex(3, 4).abs2() // 25
+   * ```
+   */
+  abs2(): number {
     return this.real * this.real + this.imag * this.imag
   }
 
-  abs(): number {
-    return Math.sqrt(this.norm2())
-  }
+  norm2 = this.abs2.bind(this)
 
   /**
    * Returns the angle part of its polar form.
