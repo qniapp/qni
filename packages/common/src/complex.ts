@@ -29,7 +29,12 @@ export class Complex {
     return value
   }
 
-  static realPartOf(value: number | Complex): number {
+  /**
+   * Returns the real part of a Complex or a number value.
+   *
+   * @param value - The value to get the real part of.
+   */
+  static real(value: number | Complex): number {
     if (typeof value === 'number') {
       return value
     }
@@ -37,7 +42,12 @@ export class Complex {
     return value.real
   }
 
-  static imagPartOf(value: number | Complex): number {
+  /**
+   * Returns the imaginary part of a Complex value, or else 0 for number values.
+   *
+   * @param value - The value to get the imaginary part of.
+   */
+  static imag(value: number | Complex): number {
     if (typeof value === 'number') {
       return 0
     }
@@ -45,7 +55,12 @@ export class Complex {
     return value.imag
   }
 
-  // Returns a complex number with the given magnitude and phase.
+  /**
+   * Returns a new Complex number with the given magnitude and phase.
+   *
+   * @param magnitude - The magnitude of the complex number.
+   * @param phase - The phase of the complex number.
+   */
   static polar(magnitude: number, phase: number): Complex {
     const [cos, sin] = this.cosAndSin(phase)
 
@@ -72,6 +87,10 @@ export class Complex {
     return [Math.cos(radians), Math.sin(radians)]
   }
 
+  /**
+   * @param real - The real part of the complex number.
+   * @param imag - The imaginary part of the complex number.
+   */
   constructor(real: number, imag: number) {
     this.real = real
     this.imag = imag
@@ -154,6 +173,7 @@ export class Complex {
    */
   add(value: number | Complex): Complex {
     const c = Complex.from(value)
+
     return new Complex(this.real + c.real, this.imag + c.imag)
   }
 
@@ -167,6 +187,7 @@ export class Complex {
    */
   sub(value: number | Complex): Complex {
     const c = Complex.from(value)
+
     return new Complex(this.real - c.real, this.imag - c.imag)
   }
 
@@ -181,6 +202,7 @@ export class Complex {
    */
   mult(value: number | Complex): Complex {
     const c = Complex.from(value)
+
     return new Complex(this.real * c.real - this.imag * c.imag, this.real * c.imag + this.imag * c.real)
   }
 

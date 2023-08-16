@@ -5363,7 +5363,7 @@ var Ld = (ri = class {
     let a = ri.matchUnicodeFraction((p) => Math.abs(Math.sqrt(p.value) - r) <= e);
     return a !== void 0 ? `\u221A${a.character}` : r % 1 !== 0 && n !== void 0 ? r.toFixed(n) : r.toString();
   }
-}, u(ri, "t"), ri);
+}, u(ri, "r"), ri);
 var zo = { allowAbbreviation: true, maxAbbreviationError: 0, fixedDigits: void 0 };
 var Fe;
 var ti = (Fe = class {
@@ -5371,7 +5371,7 @@ var ti = (Fe = class {
     __name(this, "Fe");
   }
   constructor(r, e) {
-    this.dividedBy = this.div.bind(this), this.magnitude = this.abs.bind(this), this.norm2 = this.abs2.bind(this), this.angle = this.arg.bind(this), this.phase = this.arg.bind(this), this.real = r, this.imag = e, this.dividedBy = this.div, this.magnitude = this.abs, this.norm2 = this.abs2, this.angle = this.arg, this.phase = this.arg;
+    this.isEqualTo = this.eq.bind(this), this.isApproximatelyEqualTo = this.nearlyEq.bind(this), this.conj = this.conjugate.bind(this), this.plus = this.add.bind(this), this.subtract = this.sub.bind(this), this.minus = this.sub.bind(this), this.multiply = this.mult.bind(this), this.times = this.mult.bind(this), this.dividedBy = this.div.bind(this), this.magnitude = this.abs.bind(this), this.norm2 = this.abs2.bind(this), this.angle = this.arg.bind(this), this.phase = this.arg.bind(this), this.real = r, this.imag = e, this.isApproximatelyEqualTo = this.nearlyEq, this.isEqualTo = this.eq, this.conj = this.conjugate, this.plus = this.add, this.subtract = this.sub, this.minus = this.sub, this.multiply = this.mult, this.times = this.mult, this.dividedBy = this.div, this.magnitude = this.abs, this.norm2 = this.abs2, this.angle = this.arg, this.phase = this.arg;
   }
   static from(r) {
     return typeof r == "number" ? new Fe(r, 0) : r;
@@ -5379,7 +5379,7 @@ var ti = (Fe = class {
   static realPartOf(r) {
     return typeof r == "number" ? r : r.real;
   }
-  static imagPartOf(r) {
+  static imag(r) {
     return typeof r == "number" ? 0 : r.imag;
   }
   static polar(r, e) {
@@ -5394,12 +5394,12 @@ var ti = (Fe = class {
     }
     return [Math.cos(r), Math.sin(r)];
   }
-  isEqualTo(r) {
+  eq(r) {
     return typeof r == "number" ? this.real === r && this.imag === 0 : r instanceof Fe ? this.real === r.real && this.imag === r.imag : false;
   }
-  isApproximatelyEqualTo(r, e) {
+  nearlyEq(r, e) {
     if (typeof r == "number" || r instanceof Fe) {
-      let n = this.minus(Fe.from(r));
+      let n = this.sub(Fe.from(r));
       return Math.abs(n.real) <= e && Math.abs(n.imag) <= e && n.abs() <= e;
     }
     return false;
@@ -5410,15 +5410,15 @@ var ti = (Fe = class {
   neg() {
     return new Fe(-this.real, -this.imag);
   }
-  plus(r) {
+  add(r) {
     let e = Fe.from(r);
     return new Fe(this.real + e.real, this.imag + e.imag);
   }
-  minus(r) {
+  sub(r) {
     let e = Fe.from(r);
     return new Fe(this.real - e.real, this.imag - e.imag);
   }
-  times(r) {
+  mult(r) {
     let e = Fe.from(r);
     return new Fe(this.real * e.real - this.imag * e.imag, this.real * e.imag + this.imag * e.real);
   }
@@ -5426,7 +5426,7 @@ var ti = (Fe = class {
     let e = Fe.from(r), n = e.abs2();
     if (n === 0)
       return rn(Error("Division by Zero"));
-    let s = this.times(e.conjugate());
+    let s = this.mult(e.conjugate());
     return tn(new Fe(s.real / n, s.imag / n));
   }
   abs() {
@@ -5439,7 +5439,7 @@ var ti = (Fe = class {
     return Math.atan2(this.imag, this.real);
   }
   pow(r) {
-    return r === 0.5 && this.imag === 0 && this.real >= 0 ? new Fe(Math.sqrt(this.real), 0) : this.isEqualTo(Fe.ZERO) ? Fe.ZERO : this.ln().times(Fe.from(r)).exp();
+    return r === 0.5 && this.imag === 0 && this.real >= 0 ? new Fe(Math.sqrt(this.real), 0) : this.eq(Fe.ZERO) ? Fe.ZERO : this.ln().mult(Fe.from(r)).exp();
   }
   format(r = zo) {
     let e = new Ld(r.allowAbbreviation === void 0 ? zo.allowAbbreviation : r.allowAbbreviation, r.maxAbbreviationError || 0, r.fixedDigits);
@@ -5512,7 +5512,7 @@ function fe(t, r = {}, e = document) {
 __name(fe, "fe");
 u(fe, "ae");
 var Ud = u((t) => typeof t == "number" && 1 <= t && t <= No.MAX_QUBIT_COUNT, "le");
-var qb = u(() => ({ message: "Parse Error" }), "q");
+var qb = u(() => ({ message: "Parse Error" }), "P");
 var _i;
 var Wd = (_i = class {
   static {
@@ -5535,7 +5535,7 @@ Args: ${s}`;
     let r = new URL(location.href, window.location.origin), e = decodeURIComponent(r.pathname), n = e.lastIndexOf("/");
     return e.substring(n + 1);
   }
-}, u(_i, "g"), _i);
+}, u(_i, "h"), _i);
 Wd.safeJsonParse = Oo.fromThrowable(JSON.parse, qb);
 var B = Wd;
 var du = "\u25E6";

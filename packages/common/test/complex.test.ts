@@ -44,72 +44,72 @@ describe('Complex', () => {
     })
   })
 
-  describe('realPartOf', () => {
+  describe('real', () => {
     describe('1', () => {
       test('equal 1', () => {
-        expect(equate(Complex.realPartOf(1), 1))
+        expect(equate(Complex.real(1), 1))
       })
     })
 
     describe('1.5', () => {
       test('equal 1.5', () => {
-        expect(equate(Complex.realPartOf(1.5), 1.5))
+        expect(equate(Complex.real(1.5), 1.5))
       })
     })
 
     describe('-2', () => {
       test('equal -2', () => {
-        expect(equate(Complex.realPartOf(-2), -2))
+        expect(equate(Complex.real(-2), -2))
       })
     })
 
     describe('3+i', () => {
       test('equal 3', () => {
-        expect(equate(Complex.realPartOf(new Complex(3, 1)), 3))
+        expect(equate(Complex.real(new Complex(3, 1)), 3))
       })
     })
 
     describe('5+0i', () => {
       test('equal 5', () => {
-        expect(equate(Complex.realPartOf(new Complex(5, 0)), 5))
+        expect(equate(Complex.real(new Complex(5, 0)), 5))
       })
     })
   })
 
-  describe('imagPartOf', () => {
+  describe('imag', () => {
     describe('1', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imagPartOf(1), 0))
+        expect(equate(Complex.imag(1), 0))
       })
     })
 
     describe('1.5', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imagPartOf(1.5), 0))
+        expect(equate(Complex.imag(1.5), 0))
       })
     })
 
     describe('-2', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imagPartOf(-2), 0))
+        expect(equate(Complex.imag(-2), 0))
       })
     })
 
     describe('3+0i', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imagPartOf(new Complex(3, 0)), 0))
+        expect(equate(Complex.imag(new Complex(3, 0)), 0))
       })
     })
 
     describe('3+i', () => {
       test('equal 1', () => {
-        expect(equate(Complex.imagPartOf(new Complex(3, 1)), 1))
+        expect(equate(Complex.imag(new Complex(3, 1)), 1))
       })
     })
 
     describe('5-2i', () => {
       test('equal -2', () => {
-        expect(equate(Complex.imagPartOf(new Complex(5, -2)), -2))
+        expect(equate(Complex.imag(new Complex(5, -2)), -2))
       })
     })
   })

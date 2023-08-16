@@ -80,8 +80,8 @@ export class Matrix {
     let i = 0
     for (const row of rows) {
       for (const cell of row) {
-        buffer[i] = Complex.realPartOf(cell)
-        buffer[i + 1] = Complex.imagPartOf(cell)
+        buffer[i] = Complex.real(cell)
+        buffer[i + 1] = Complex.imag(cell)
         i += 2
       }
     }
@@ -98,15 +98,15 @@ export class Matrix {
       for (let c = 0; c < width; c++) {
         const k = (r * width + c) * 2
         const v = coefficientRowColGenerator(r, c)
-        buf[k] = Complex.realPartOf(v)
-        buf[k + 1] = Complex.imagPartOf(v)
+        buf[k] = Complex.real(v)
+        buf[k + 1] = Complex.imag(v)
       }
     }
     return new Matrix(width, height, buf)
   }
 
   static solo(coef: number | Complex): Matrix {
-    return new Matrix(1, 1, new Float64Array([Complex.realPartOf(coef), Complex.imagPartOf(coef)]))
+    return new Matrix(1, 1, new Float64Array([Complex.real(coef), Complex.imag(coef)]))
   }
 
   static square(...coefs: Array<number | Complex>): Matrix {
@@ -216,8 +216,8 @@ export class Matrix {
 
   private timesScalar(v: number | Complex): Matrix {
     const newBuffer = new Float64Array(this.buffer.length)
-    const sr = Complex.realPartOf(v)
-    const si = Complex.imagPartOf(v)
+    const sr = Complex.real(v)
+    const si = Complex.imag(v)
     for (let i = 0; i < newBuffer.length; i += 2) {
       const vr = this.buffer[i]
       const vi = this.buffer[i + 1]
