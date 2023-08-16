@@ -141,15 +141,6 @@ export class Complex {
     return Math.sqrt(this.norm2())
   }
 
-  unit(): Complex {
-    const m = this.norm2()
-    if (m < 0.00001) {
-      return Complex.polar(1, this.phase())
-    }
-
-    return this.dividedBy(Math.sqrt(m))._unsafeUnwrap()
-  }
-
   /**
    * Returns the angle part of its polar form.
    *
