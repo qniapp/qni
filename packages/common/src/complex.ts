@@ -150,7 +150,12 @@ export class Complex {
     return Math.atan2(this.imag, this.real)
   }
 
-  // c^x
+  /**
+   * Returns the exponentiation of a complex number. That is c.pow(x) = c^x.
+   *
+   * @param exponent - the exponent number
+   * @returns A number representing base taken to the power of exponent
+   */
   pow(exponent: number | Complex): Complex {
     if (exponent === 0.5 && this.imag === 0 && this.real >= 0) {
       return new Complex(Math.sqrt(this.real), 0)
