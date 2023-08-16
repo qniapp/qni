@@ -76,6 +76,9 @@ export class Complex {
     this.real = real
     this.imag = imag
 
+    // aliases for mult
+    this.multiply = this.mult
+    this.times = this.mult
     this.dividedBy = this.div // alias for div
     this.magnitude = this.abs // alias for abs
     this.norm2 = this.abs2 // alias for abs2
@@ -120,10 +123,19 @@ export class Complex {
     return new Complex(this.real - c.real, this.imag - c.imag)
   }
 
-  times(value: number | Complex): Complex {
+  /**
+   * Returns the product of this complex number and value.
+   *
+   * @param value - The multiplier number.
+   * @returns A new complex number representing the product of this complex number and value.
+   */
+  mult(value: number | Complex): Complex {
     const c = Complex.from(value)
     return new Complex(this.real * c.real - this.imag * c.imag, this.real * c.imag + this.imag * c.real)
   }
+
+  multiply = this.mult.bind(this)
+  times = this.mult.bind(this)
 
   /**
    * Returns a complex number divided by value.
@@ -148,7 +160,7 @@ export class Complex {
       return err(Error('Division by Zero'))
     }
 
-    const n = this.times(c.conjugate())
+    const n = this.mult(c.conjugate())
     return ok(new Complex(n.real / d, n.imag / d))
   }
 
@@ -211,7 +223,7 @@ export class Complex {
     if (this.isEqualTo(Complex.ZERO)) {
       return Complex.ZERO
     }
-    return this.ln().times(Complex.from(exponent)).exp()
+    return this.ln().mult(Complex.from(exponent)).exp()
   }
 
   /**
