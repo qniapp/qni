@@ -5376,7 +5376,7 @@ var ti = (Fe = class {
   static from(r) {
     return typeof r == "number" ? new Fe(r, 0) : r;
   }
-  static realPartOf(r) {
+  static real(r) {
     return typeof r == "number" ? r : r.real;
   }
   static imag(r) {
