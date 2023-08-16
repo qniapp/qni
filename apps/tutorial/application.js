@@ -5370,6 +5370,9 @@ var ti = ($e = class {
   static {
     __name(this, "$e");
   }
+  constructor(r, e) {
+    this.angle = this.arg.bind(this), this.phase = this.arg.bind(this), this.real = r, this.imag = e, this.angle = this.arg, this.phase = this.arg;
+  }
   static from(r) {
     return typeof r == "number" ? new $e(r, 0) : r;
   }
@@ -5380,19 +5383,16 @@ var ti = ($e = class {
     return typeof r == "number" ? 0 : r.imag;
   }
   static polar(r, e) {
-    let [n, s] = this.snappedCosSin(e);
+    let [n, s] = this.cosAndSin(e);
     return new $e(r * n, r * s);
   }
-  static snappedCosSin(r) {
+  static cosAndSin(r) {
     let e = Math.PI / 4, n = Math.round(r / e);
     if (n * e === r) {
       let s = Math.sqrt(0.5);
       return [[1, 0], [s, s], [0, 1], [-s, s], [-1, 0], [-s, -s], [0, -1], [s, -s]][n & 7];
     }
     return [Math.cos(r), Math.sin(r)];
-  }
-  constructor(r, e) {
-    this.real = r, this.imag = e;
   }
   isEqualTo(r) {
     return typeof r == "number" ? this.real === r && this.imag === 0 : r instanceof $e ? this.real === r.real && this.imag === r.imag : false;
@@ -5439,7 +5439,7 @@ var ti = ($e = class {
     let r = this.norm2();
     return r < 1e-5 ? $e.polar(1, this.phase()) : this.dividedBy(Math.sqrt(r))._unsafeUnwrap();
   }
-  phase() {
+  arg() {
     return Math.atan2(this.imag, this.real);
   }
   pow(r) {
@@ -5457,7 +5457,7 @@ var ti = ($e = class {
     return $e.polar(Math.exp(this.real), this.imag);
   }
   ln() {
-    return new $e(Math.log(this.abs()), this.phase());
+    return new $e(Math.log(this.abs()), this.arg());
   }
   toStringAllowSingleValue(r) {
     if (this.canImagPartBeOmitted(r.maxAbbreviationError))
@@ -5539,7 +5539,7 @@ Args: ${s}`;
     let r = new URL(location.href, window.location.origin), e = decodeURIComponent(r.pathname), n = e.lastIndexOf("/");
     return e.substring(n + 1);
   }
-}, u(_i, "y"), _i);
+}, u(_i, "g"), _i);
 Wd.safeJsonParse = Oo.fromThrowable(JSON.parse, qb);
 var B = Wd;
 var du = "\u25E6";

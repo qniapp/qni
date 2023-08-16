@@ -75,6 +75,10 @@ export class Complex {
   constructor(real: number, imag: number) {
     this.real = real
     this.imag = imag
+
+    // aliases for arg
+    this.angle = this.arg
+    this.phase = this.arg
   }
 
   isEqualTo(other: unknown): boolean {
@@ -146,9 +150,17 @@ export class Complex {
     return this.dividedBy(Math.sqrt(m))._unsafeUnwrap()
   }
 
-  phase(): number {
+  /**
+   * Returns the angle part of its polar form.
+   *
+   * @returns A number representing the angle part of its polar form in radians.
+   */
+  arg(): number {
     return Math.atan2(this.imag, this.real)
   }
+
+  angle = this.arg.bind(this)
+  phase = this.arg.bind(this)
 
   /**
    * Returns the exponentiation of a complex number. That is c.pow(x) = c^x.
@@ -213,9 +225,9 @@ export class Complex {
     return Complex.polar(Math.exp(this.real), this.imag)
   }
 
-  // log(c) = ln|c| + phase(c)i
+  // log(c) = ln|c| + arg(c)i
   private ln(): Complex {
-    return new Complex(Math.log(this.abs()), this.phase())
+    return new Complex(Math.log(this.abs()), this.arg())
   }
 
   // If a complex number has only real or imaginary parts,
