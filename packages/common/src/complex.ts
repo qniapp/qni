@@ -76,6 +76,7 @@ export class Complex {
     this.real = real
     this.imag = imag
 
+    this.plus = this.add // alias for add
     // aliases for sub
     this.subtract = this.sub
     this.minus = this.sub
@@ -116,10 +117,18 @@ export class Complex {
     return new Complex(-this.real, -this.imag)
   }
 
-  plus(value: number | Complex): Complex {
+  /**
+   * Returns the sum of this complex number and value.
+   *
+   * @param value - The addend number.
+   * @returns A new complex number representing the sum of this complex number and value.
+   */
+  add(value: number | Complex): Complex {
     const c = Complex.from(value)
     return new Complex(this.real + c.real, this.imag + c.imag)
   }
+
+  plus = this.add.bind(this)
 
   /**
    * Returns the subtraction of this complex number and value.
