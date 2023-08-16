@@ -76,12 +76,9 @@ export class Complex {
     this.real = real
     this.imag = imag
 
-    // alias for abs
-    this.magnitude = this.abs
-
-    // alias for abs2
-    this.norm2 = this.abs2
-
+    this.dividedBy = this.div // alias for div
+    this.magnitude = this.abs // alias for abs
+    this.norm2 = this.abs2 // alias for abs2
     // aliases for arg
     this.angle = this.arg
     this.phase = this.arg
@@ -128,7 +125,23 @@ export class Complex {
     return new Complex(this.real * c.real - this.imag * c.imag, this.real * c.imag + this.imag * c.real)
   }
 
-  dividedBy(value: number | Complex): Result<Complex, Error> {
+  /**
+   * Returns a complex number divided by value.
+   * If value is zero, returns an error.
+   *
+   * @param value - The divisor number.
+   * @returns A Result object with the result of division or a division-by-zero error.
+   * @example
+   * ```
+   * const res = new Complex(2, 3).div(2)
+   * if (res.isOk()) {
+   *   console.log(res.value) // Complex { real: 1, imag: 1.5 }
+   * } else {
+   *   console.error(res.error)
+   * }
+   * ```
+   */
+  div(value: number | Complex): Result<Complex, Error> {
     const c = Complex.from(value)
     const d = c.abs2()
     if (d === 0) {
@@ -138,6 +151,8 @@ export class Complex {
     const n = this.times(c.conjugate())
     return ok(new Complex(n.real / d, n.imag / d))
   }
+
+  dividedBy = this.div.bind(this)
 
   /**
    * Returns the absolute part of its polar form.

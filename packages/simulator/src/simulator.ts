@@ -2436,7 +2436,7 @@ export class Simulator {
       if (rand <= pZero) {
         for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
           if ((bit & (1 << t)) !== 0) this.state.setAmplifier(bit, Complex.ZERO)
-          const res = this.state.amplifier(bit).dividedBy(Math.sqrt(pZero))
+          const res = this.state.amplifier(bit).div(Math.sqrt(pZero))
           if (res.isOk()) {
             this.state.setAmplifier(bit, res.value)
           } else {
@@ -2447,7 +2447,7 @@ export class Simulator {
       } else {
         for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
           if ((bit & (1 << t)) === 0) this.state.setAmplifier(bit, Complex.ZERO)
-          const res = this.state.amplifier(bit).dividedBy(Math.sqrt(1 - pZero))
+          const res = this.state.amplifier(bit).div(Math.sqrt(1 - pZero))
           if (res.isOk()) {
             this.state.setAmplifier(bit, res.value)
           } else {
