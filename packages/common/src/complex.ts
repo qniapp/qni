@@ -1,20 +1,4 @@
-/**
- * Copyright 2017 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import {Format} from './format'
+import {NumberFormatter} from './number-formatter'
 import {ok, err, Result} from 'neverthrow'
 
 type FormatOptions = {
@@ -23,7 +7,7 @@ type FormatOptions = {
   fixedDigits?: number | undefined
 }
 
-const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
+const DEFAULT_FORMAT_OPTIONS = {
   allowAbbreviation: true,
   maxAbbreviationError: 0,
   fixedDigits: undefined,
@@ -61,6 +45,7 @@ export class Complex {
     return v.imag
   }
 
+  // Returns a complex number with the given magnitude and phase.
   static polar(magnitude: number, phase: number): Complex {
     const [cos, sin] = this.snappedCosSin(phase)
     return new Complex(magnitude * cos, magnitude * sin)
@@ -164,12 +149,10 @@ export class Complex {
     return Math.atan2(this.imag, this.real)
   }
 
-  raisedTo(exponent: number | Complex): Complex {
+  // c^x
+  pow(exponent: number | Complex): Complex {
     if (exponent === 0.5 && this.imag === 0 && this.real >= 0) {
       return new Complex(Math.sqrt(this.real), 0)
-    }
-    if (Complex.ZERO.isEqualTo(exponent)) {
-      return Complex.ONE
     }
     if (this.isEqualTo(Complex.ZERO)) {
       return Complex.ZERO
@@ -177,52 +160,90 @@ export class Complex {
     return this.ln().times(Complex.from(exponent)).exp()
   }
 
-  format(options = DEFAULT_FORMAT_OPTIONS): string {
-    const format = new Format(
-      options.allowAbbreviation === undefined ? true : options.allowAbbreviation,
+  // Converts a complex number to a string according to the specified format.
+  format(options: FormatOptions = DEFAULT_FORMAT_OPTIONS): string {
+    const format = new NumberFormatter(
+      options.allowAbbreviation === undefined ? DEFAULT_FORMAT_OPTIONS.allowAbbreviation : options.allowAbbreviation,
       options.maxAbbreviationError || 0,
       options.fixedDigits,
-      ', ',
     )
     return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
   }
 
   toString(): string {
-    return this.toStringAllowSingleValue(Format.EXACT)
+    const formatter = new NumberFormatter(
+      DEFAULT_FORMAT_OPTIONS.allowAbbreviation,
+      DEFAULT_FORMAT_OPTIONS.maxAbbreviationError,
+      DEFAULT_FORMAT_OPTIONS.fixedDigits,
+    )
+    return this.toStringAllowSingleValue(formatter)
   }
 
+  // e^(x+yi) = e^x(cosy + isiny)
   private exp(): Complex {
     return Complex.polar(Math.exp(this.real), this.imag)
   }
 
+  // log(c) = ln|c| + phase(c)i
   private ln(): Complex {
     return new Complex(Math.log(this.abs()), this.phase())
   }
 
-  private toStringAllowSingleValue(format: Format): string {
-    if (Math.abs(this.imag) <= format.maxAbbreviationError) {
-      return format.formatFloat(this.real)
-    }
-    if (Math.abs(this.real) <= format.maxAbbreviationError) {
-      if (Math.abs(this.imag - 1) <= format.maxAbbreviationError) {
-        return 'i'
-      }
-      if (Math.abs(this.imag + 1) <= format.maxAbbreviationError) {
-        return '-i'
-      }
-      return `${format.formatFloat(this.imag)}i`
+  // If a complex number has only real or imaginary parts,
+  // convert it to a string with only real or imaginary parts, such as '⅓' or '-3i'.
+  private toStringAllowSingleValue(formatter: NumberFormatter): string {
+    if (this.canImagPartBeOmitted(formatter.maxAbbreviationError)) {
+      return formatter.format(this.real)
     }
 
-    return this.toStringBothValues(format)
+    if (this.canRealPartBeOmitted(formatter.maxAbbreviationError)) {
+      let imagFactor
+
+      if (this.isImagFactorCloseToOne(formatter.maxAbbreviationError)) {
+        imagFactor = ''
+      } else if (this.isImagFactorMinusOne(formatter.maxAbbreviationError)) {
+        imagFactor = '-'
+      } else {
+        imagFactor = formatter.format(this.imag)
+      }
+
+      return `${imagFactor}i`
+    }
+
+    return this.toStringBothValues(formatter)
   }
 
-  private toStringBothValues(format: Format): string {
-    const separator = this.imag >= 0 ? '+' : '-'
-    const imagFactor =
-      format.allowAbbreviation && Math.abs(Math.abs(this.imag) - 1) <= format.maxAbbreviationError
-        ? ''
-        : format.formatFloat(Math.abs(this.imag))
-    const prefix = format.allowAbbreviation || format.fixedDigits === undefined || this.real < 0 ? '' : '+'
-    return `${prefix + format.formatFloat(this.real) + separator + imagFactor}i`
+  // Convert a complex number whose real and imaginary parts are not both zero into a string like '⅓-3i'.
+  private toStringBothValues(formatter: NumberFormatter): string {
+    const imagSign = this.imag >= 0 ? '+' : '-'
+    const imagFactor = this.canImagFactorBeOmitted(formatter) ? '' : formatter.format(Math.abs(this.imag))
+    const realPlusSign = formatter.allowAbbreviation || formatter.fixedDigits === undefined || this.real < 0 ? '' : '+'
+
+    return `${realPlusSign + formatter.format(this.real) + imagSign + imagFactor}i`
+  }
+
+  // Returns whether the real part of a complex number can be omitted.
+  private canRealPartBeOmitted(maxAbbreviationError: number): boolean {
+    return Math.abs(this.real) <= maxAbbreviationError
+  }
+
+  // Returns whether the imaginary part of a complex number can be omitted.
+  private canImagPartBeOmitted(maxAbbreviationError: number): boolean {
+    return Math.abs(this.imag) <= maxAbbreviationError
+  }
+
+  // Returns whether the imaginary part of a complex number is close to 1.
+  private isImagFactorCloseToOne(maxAbbreviationError: number): boolean {
+    return Math.abs(this.imag - 1) <= maxAbbreviationError
+  }
+
+  // Returns whether the imaginary part of a complex number is close to -1.
+  private isImagFactorMinusOne(maxAbbreviationError: number): boolean {
+    return Math.abs(this.imag + 1) <= maxAbbreviationError
+  }
+
+  // Returns true if the factor of the imaginary part can be omitted, such as i or -i.
+  private canImagFactorBeOmitted(formatter: NumberFormatter): boolean {
+    return formatter.allowAbbreviation && Math.abs(Math.abs(this.imag) - 1) <= formatter.maxAbbreviationError
   }
 }
