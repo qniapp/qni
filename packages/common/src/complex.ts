@@ -27,7 +27,13 @@ export class Complex {
    */
   static readonly I = new Complex(0, 1)
 
+  /**
+   * The real part of the Complex number.
+   */
   public real: number
+  /**
+   * The imaginary part of the Complex number.
+   */
   public imag: number
 
   /**
@@ -72,8 +78,8 @@ export class Complex {
   /**
    * Returns a new Complex number with the given magnitude and phase.
    *
-   * @param magnitude - The magnitude of the complex number
-   * @param phase - The phase of the complex number
+   * @param magnitude - The magnitude of the Complex number
+   * @param phase - The phase of the Complex number
    */
   static polar(magnitude: number, phase: number): Complex {
     const [cos, sin] = this.cosAndSin(phase)
@@ -102,8 +108,8 @@ export class Complex {
   }
 
   /**
-   * @param real - The real part of the complex number
-   * @param imag - The imaginary part of the complex number
+   * @param real - The real part of the Complex number
+   * @param imag - The imaginary part of the Complex number
    */
   constructor(real: number, imag: number) {
     this.real = real
@@ -145,7 +151,7 @@ export class Complex {
   isEqualTo = this.eq.bind(this)
 
   /**
-   * Returns true if the complex number is close to the value of other.
+   * Returns true if the Complex number is close to the value of other.
    *
    * @param other - The other value to compare with
    */
