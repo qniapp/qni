@@ -76,6 +76,7 @@ export class Complex {
     this.real = real
     this.imag = imag
 
+    this.isEqualTo = this.eq // alias for eq
     this.conj = this.conjugate // alias for conjugate
     this.plus = this.add // alias for add
     // aliases for sub
@@ -92,7 +93,12 @@ export class Complex {
     this.phase = this.arg
   }
 
-  isEqualTo(other: unknown): boolean {
+  /**
+   * Returns true if complex number is equal to other.
+   *
+   * @param other - The other value to compare with
+   */
+  eq(other: unknown): boolean {
     if (typeof other === 'number') {
       return this.real === other && this.imag === 0
     }
@@ -101,6 +107,8 @@ export class Complex {
     }
     return false
   }
+
+  isEqualTo = this.eq.bind(this)
 
   isApproximatelyEqualTo(other: number | Complex | unknown, epsilon: number): boolean {
     if (typeof other === 'number' || other instanceof Complex) {
@@ -113,7 +121,7 @@ export class Complex {
   /**
    * Returns the complex conjugate.
    *
-   * @returns A new Complex representing the complex conjugate of this complex number.
+   * @returns A new Complex representing the complex conjugate of this complex number
    */
   conjugate(): Complex {
     return new Complex(this.real, -this.imag)
@@ -254,7 +262,7 @@ export class Complex {
     if (exponent === 0.5 && this.imag === 0 && this.real >= 0) {
       return new Complex(Math.sqrt(this.real), 0)
     }
-    if (this.isEqualTo(Complex.ZERO)) {
+    if (this.eq(Complex.ZERO)) {
       return Complex.ZERO
     }
     return this.ln().mult(Complex.from(exponent)).exp()
