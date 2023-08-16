@@ -21,6 +21,11 @@ export class Complex {
   public real: number
   public imag: number
 
+  /**
+   * Converts the given value to a Complex value.
+   *
+   * @param value - The value to convert to a Complex value
+   */
   static from(value: number | Complex): Complex {
     if (typeof value === 'number') {
       return new Complex(value, 0)
@@ -32,7 +37,7 @@ export class Complex {
   /**
    * Returns the real part of a Complex or a number value.
    *
-   * @param value - The value to get the real part of.
+   * @param value - The value to get the real part of
    */
   static real(value: number | Complex): number {
     if (typeof value === 'number') {
@@ -45,7 +50,7 @@ export class Complex {
   /**
    * Returns the imaginary part of a Complex value, or else 0 for number values.
    *
-   * @param value - The value to get the imaginary part of.
+   * @param value - The value to get the imaginary part of
    */
   static imag(value: number | Complex): number {
     if (typeof value === 'number') {
@@ -58,8 +63,8 @@ export class Complex {
   /**
    * Returns a new Complex number with the given magnitude and phase.
    *
-   * @param magnitude - The magnitude of the complex number.
-   * @param phase - The phase of the complex number.
+   * @param magnitude - The magnitude of the complex number
+   * @param phase - The phase of the complex number
    */
   static polar(magnitude: number, phase: number): Complex {
     const [cos, sin] = this.cosAndSin(phase)
@@ -88,8 +93,8 @@ export class Complex {
   }
 
   /**
-   * @param real - The real part of the complex number.
-   * @param imag - The imaginary part of the complex number.
+   * @param real - The real part of the complex number
+   * @param imag - The imaginary part of the complex number
    */
   constructor(real: number, imag: number) {
     this.real = real
