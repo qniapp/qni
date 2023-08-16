@@ -19,7 +19,23 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
 }
 
 export class Matrix {
+  /**
+   * Hadamard gate.
+   *
+   * ```
+   * H = 1/√2 * | 1  1 |
+   *            | 1 -1 |
+   * ```
+   */
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
+  /**
+   * Pauli X gate.
+   *
+   * ```
+   * X = | 0  1 |
+   *     | 1  0 |
+   * ```
+   */
   static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
   static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
   static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)

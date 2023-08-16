@@ -4,6 +4,18 @@ import {Matrix} from '../src/matrix'
 import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
+  describe('H', () => {
+    test('toString', () => {
+      expect(Matrix.H.toString()).toBe('{{√½, √½}, {√½, -√½}}')
+    })
+  })
+
+  describe('PAULI_X', () => {
+    test('toString', () => {
+      expect(Matrix.PAULI_X.toString()).toBe('{{0, 1}, {1, 0}}')
+    })
+  })
+
   test('isEqualTo', () => {
     const m = Matrix.fromRows([
       [new Complex(2, 3), new Complex(5, 7)],
