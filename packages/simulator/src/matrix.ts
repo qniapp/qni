@@ -100,6 +100,14 @@ export class Matrix {
    */
   static readonly TDagger = Matrix.square(1, 0, 0, Complex.I.times(Math.PI / -4).exp())
 
+  /**
+   * Phase (P) gate.
+   *
+   * ```
+   * P(φ) = | 1        0 |
+   *        | 0  exp(iφ) |
+   * ```
+   */
   static PHASE(phi: string): Matrix {
     const φ = radian(phi)
     const e = Complex.from(Math.E)
@@ -107,6 +115,14 @@ export class Matrix {
     return Matrix.square(1, 0, 0, e.pow(Complex.I.times(φ)))
   }
 
+  /**
+   * RNOT (√X) gate.
+   *
+   * ```
+   * √X = 1/2 * | 1+i 1-i |
+   *            | 1-i 1+i |
+   * ```
+   */
   static get RNOT(): Matrix {
     const i = Complex.I
     const mi = i.neg()
