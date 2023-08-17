@@ -319,6 +319,13 @@ export class Complex {
   }
 
   /**
+   * Returns e raised to the c power. That is c.exp() = e^c.
+   */
+  exp(): Complex {
+    return Complex.polar(Math.exp(this.real), this.imag)
+  }
+
+  /**
    * Returns a string representing this complex number according to the specified format.
    *
    * @param options - An object that sets the format options for this complex number.
@@ -358,11 +365,6 @@ export class Complex {
       DEFAULT_FORMAT_OPTIONS.fixedDigits,
     )
     return this.toStringAllowSingleValue(formatter)
-  }
-
-  // e^(x+yi) = e^x(cosy + isiny)
-  exp(): Complex {
-    return Complex.polar(Math.exp(this.real), this.imag)
   }
 
   // log(c) = ln|c| + arg(c)i
