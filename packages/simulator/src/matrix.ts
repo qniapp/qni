@@ -29,24 +29,27 @@ export class Matrix {
    * ```
    */
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
+
   /**
    * Pauli X gate.
    *
    * ```
-   * X = | 0  1 |
-   *     | 1  0 |
+   * X = | 0 1 |
+   *     | 1 0 |
    * ```
    */
   static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
+
   /**
    * Pauli Y gate.
    *
    * ```
-   * Y = | 0  -i |
-   *     | i   0 |
+   * Y = | 0 -i |
+   *     | i  0 |
    * ```
    */
   static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
+
   /**
    * Pauli Z gate.
    *
@@ -56,10 +59,46 @@ export class Matrix {
    * ```
    */
   static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
-  static readonly S = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / 2)))
-  static readonly SDagger = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / -2)))
-  static readonly T = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / 4)))
-  static readonly TDagger = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / -4)))
+
+  /**
+   * S gate.
+   *
+   * ```
+   * S = | 1 0 |
+   *     | 0 i |
+   * ```
+   */
+  static readonly S = Matrix.square(1, 0, 0, Complex.I)
+
+  /**
+   * S† gate.
+   *
+   * ```
+   * S† = | 1  0 |
+   *      | 0 -i |
+   * ```
+   */
+  static readonly SDagger = Matrix.square(1, 0, 0, Complex.I.neg())
+
+  /**
+   * T gate.
+   *
+   * ```
+   * T = | 1          0 |
+   *     | 0  exp(iπ/4) |
+   * ```
+   */
+  static readonly T = Matrix.square(1, 0, 0, Complex.I.times(Math.PI / 4).exp())
+
+  /**
+   * T† gate.
+   *
+   * ```
+   * T = | 1           0 |
+   *     | 0  exp(-iπ/4) |
+   * ```
+   */
+  static readonly TDagger = Matrix.square(1, 0, 0, Complex.I.times(Math.PI / -4).exp())
 
   static PHASE(phi: string): Matrix {
     const φ = radian(phi)

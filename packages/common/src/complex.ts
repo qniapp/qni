@@ -361,7 +361,7 @@ export class Complex {
   }
 
   // e^(x+yi) = e^x(cosy + isiny)
-  private exp(): Complex {
+  exp(): Complex {
     return Complex.polar(Math.exp(this.real), this.imag)
   }
 

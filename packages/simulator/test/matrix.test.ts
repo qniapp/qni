@@ -28,6 +28,30 @@ describe('Matrix', () => {
     })
   })
 
+  describe('S', () => {
+    test('toString', () => {
+      expect(Matrix.S.toString()).toBe('{{1, 0}, {0, i}}')
+    })
+  })
+
+  describe('SDagger', () => {
+    test('toString', () => {
+      expect(Matrix.SDagger.toString()).toBe('{{1, 0}, {0, -i}}')
+    })
+  })
+
+  describe('T', () => {
+    test('toString', () => {
+      expect(Matrix.T.toString()).toBe('{{1, 0}, {0, √½+√½i}}')
+    })
+  })
+
+  describe('TDagger', () => {
+    test('toString', () => {
+      expect(Matrix.TDagger.toString()).toBe('{{1, 0}, {0, √½-√½i}}')
+    })
+  })
+
   test('isEqualTo', () => {
     const m = Matrix.fromRows([
       [new Complex(2, 3), new Complex(5, 7)],
