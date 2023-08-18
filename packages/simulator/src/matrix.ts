@@ -18,7 +18,6 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
   itemSeparator: ', ',
 }
 
-// TODO: X, Y, Z などの各定数を Simulator に移動
 export class Matrix {
   /**
    * Hadamard gate.
