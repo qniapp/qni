@@ -5441,6 +5441,9 @@ var ti = (Fe = class {
   pow(r) {
     return r === 0.5 && this.imag === 0 && this.real >= 0 ? new Fe(Math.sqrt(this.real), 0) : this.eq(Fe.ZERO) ? Fe.ZERO : this.ln().mult(Fe.from(r)).exp();
   }
+  exp() {
+    return Fe.polar(Math.exp(this.real), this.imag);
+  }
   format(r = zo) {
     let e = new Ld(r.allowAbbreviation === void 0 ? zo.allowAbbreviation : r.allowAbbreviation, r.maxAbbreviationError || 0, r.fixedDigits);
     return e.allowAbbreviation ? this.toStringAllowSingleValue(e) : this.toStringBothValues(e);
@@ -5448,9 +5451,6 @@ var ti = (Fe = class {
   toString() {
     let r = new Ld(zo.allowAbbreviation, zo.maxAbbreviationError, zo.fixedDigits);
     return this.toStringAllowSingleValue(r);
-  }
-  exp() {
-    return Fe.polar(Math.exp(this.real), this.imag);
   }
   ln() {
     return new Fe(Math.log(this.abs()), this.arg());

@@ -77,6 +77,12 @@ describe('Matrix', () => {
     })
   })
 
+  describe('RZ', () => {
+    test('toString', () => {
+      expect(Matrix.RZ('π/2').toString()).toBe('{{√½-√½i, 0}, {0, √½+√½i}}')
+    })
+  })
+
   test('isEqualTo', () => {
     const m = Matrix.fromRows([
       [new Complex(2, 3), new Complex(5, 7)],
