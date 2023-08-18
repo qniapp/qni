@@ -130,6 +130,21 @@ export class Matrix {
     return Matrix.square(i.plus(1), mi.plus(1), mi.plus(1), i.plus(1)).times(0.5)
   }
 
+  /**
+   * Rx gate.
+   *
+   * ```
+   * Rx(θ) = | cos(θ/2)   -isin(θ/2) |
+   *         | -isin(θ/2)  cos(θ/2)  |
+   *
+   * e.g.,
+   * Rx(π/2) = | cos(π/4)   -isin(π/4) |
+   *           | -isin(π/4)  cos(π/4)  |
+   *
+   *         = 1/√2 * |  1 -i |
+   *                  | -i  1 |
+   * ```
+   */
   static RX(theta: string): Matrix {
     const θ = radian(theta)
     const mi = Complex.I.neg()
@@ -139,6 +154,21 @@ export class Matrix {
     return Matrix.square(cosθ2, mi.times(sinθ2), mi.times(sinθ2), cosθ2)
   }
 
+  /**
+   * Ry gate.
+   *
+   * ```
+   * Ry(θ) = | cos(θ/2) -sin(θ/2) |
+   *         | sin(θ/2)  cos(θ/2)  |
+   *
+   * e.g.,
+   * Ry(π/2) = | cos(π/4) -sin(π/4) |
+   *           | sin(π/4)  cos(π/4) |
+   *
+   *         = 1/√2 * | 1 -1 |
+   *                  | 1  1 |
+   * ```
+   */
   static RY(theta: string): Matrix {
     const θ = radian(theta)
     const cosθ2 = Math.cos(θ / 2)
@@ -149,10 +179,17 @@ export class Matrix {
 
   static RZ(theta: string): Matrix {
     const θ = radian(theta)
-    const e = Complex.from(Math.E)
     const i = Complex.I
 
-    return Matrix.square(e.pow(i.neg().times(θ / 2)), 0, 0, e.pow(i.times(θ / 2)))
+    return Matrix.square(
+      (i
+        .neg()
+        .times(θ / 2)
+        .exp(),
+      0,
+      0,
+      i.times(θ / 2).exp()),
+    )
   }
 
   static fromRows(rows: Complex[][]): Matrix {

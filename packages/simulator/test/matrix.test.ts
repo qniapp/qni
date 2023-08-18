@@ -65,6 +65,18 @@ describe('Matrix', () => {
     })
   })
 
+  describe('RX', () => {
+    test('format', () => {
+      expect(Matrix.RX('π/2').format({maxAbbreviationError: 0.0005})).toBe('{{√½, -√½i}, {-√½i, √½}}')
+    })
+  })
+
+  describe('RY', () => {
+    test('format', () => {
+      expect(Matrix.RY('π/2').format({maxAbbreviationError: 0.0005})).toBe('{{√½, -√½}, {√½, √½}}')
+    })
+  })
+
   test('isEqualTo', () => {
     const m = Matrix.fromRows([
       [new Complex(2, 3), new Complex(5, 7)],
