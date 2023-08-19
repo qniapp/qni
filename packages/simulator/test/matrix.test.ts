@@ -4,13 +4,6 @@ import {Matrix} from '../src/matrix'
 import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
-  describe('PHASE', () => {
-    test('toString', () => {
-      expect(Matrix.PHASE('π/4').toString()).toBe('{{1, 0}, {0, √½+√½i}}')
-      expect(Matrix.PHASE('-π/4').toString()).toBe('{{1, 0}, {0, √½-√½i}}')
-    })
-  })
-
   describe('RNOT', () => {
     test('toString', () => {
       expect(Matrix.RNOT.toString()).toBe('{{½+½i, ½-½i}, {½-½i, ½+½i}}')

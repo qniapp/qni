@@ -1,4 +1,4 @@
-import {Complex} from '@qni/common'
+import {Complex, radian} from '@qni/common'
 import {Matrix} from './matrix'
 
 const i = Complex.I
@@ -83,3 +83,17 @@ export const T = Matrix.square(1, 0, 0, i.times(Math.PI / 4).exp())
  * ```
  */
 export const TDagger = Matrix.square(1, 0, 0, i.times(Math.PI / -4).exp())
+
+/**
+ * Phase (P) gate.
+ *
+ * ```
+ * P(φ) = | 1        0 |
+ *        | 0  exp(iφ) |
+ * ```
+ */
+export function PHASE(phi: string): Matrix {
+  const φ = radian(phi)
+
+  return Matrix.square(1, 0, 0, i.times(φ).exp())
+}

@@ -1,4 +1,4 @@
-import {H, X, Y, Z, S, SDagger, T, TDagger} from '../src/gate-matrices'
+import {H, X, Y, Z, S, SDagger, T, TDagger, PHASE} from '../src/gate-matrices'
 
 describe('H', () => {
   test('toString', () => {
@@ -77,5 +77,17 @@ describe('TDagger', () => {
 
   test('isHermitian', () => {
     expect(TDagger.isHermitian()).toBeFalsy()
+  })
+})
+
+describe('PHASE', () => {
+  test('toString', () => {
+    expect(PHASE('π/4').toString()).toBe('{{1, 0}, {0, √½+√½i}}')
+    expect(PHASE('-π/4').toString()).toBe('{{1, 0}, {0, √½-√½i}}')
+  })
+
+  test('isHermitian', () => {
+    expect(PHASE('π/4').isHermitian()).toBeFalsy()
+    expect(PHASE('-π/4').isHermitian()).toBeFalsy()
   })
 })
