@@ -25,6 +25,7 @@ import {
   SerializedYGateType,
   SerializedZGateType,
 } from '@qni/common'
+import {H, X, Y, Z, S, SDagger, T, TDagger, PHASE, RNOT, RX, RY, RZ} from './gate-matrices'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
@@ -221,12 +222,12 @@ export class Simulator {
   }
 
   h(...targets: number[]): Simulator {
-    this.u(Matrix.H, ...targets)
+    this.u(H, ...targets)
     return this
   }
 
   ch(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.H, ...targets)
+    this.cu(controls, H, ...targets)
     return this
   }
 
@@ -239,18 +240,18 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.H, ...targets)
+    this.cu(allControls, H, ...targets)
     this.x(...antiControls)
     return this
   }
 
   x(...targets: number[]): Simulator {
-    this.u(Matrix.PAULI_X, ...targets)
+    this.u(X, ...targets)
     return this
   }
 
   cnot(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.PAULI_X, ...targets)
+    this.cu(controls, X, ...targets)
 
     return this
   }
@@ -264,19 +265,19 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.PAULI_X, ...targets)
+    this.cu(allControls, X, ...targets)
     this.x(...antiControls)
 
     return this
   }
 
   y(...targets: number[]): Simulator {
-    this.u(Matrix.PAULI_Y, ...targets)
+    this.u(Y, ...targets)
     return this
   }
 
   cy(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.PAULI_Y, ...targets)
+    this.cu(controls, Y, ...targets)
     return this
   }
 
@@ -289,18 +290,18 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.PAULI_Y, ...targets)
+    this.cu(allControls, Y, ...targets)
     this.x(...antiControls)
     return this
   }
 
   z(...targets: number[]): Simulator {
-    this.u(Matrix.PAULI_Z, ...targets)
+    this.u(Z, ...targets)
     return this
   }
 
   cz(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.PAULI_Z, ...targets)
+    this.cu(controls, Z, ...targets)
     return this
   }
 
@@ -313,18 +314,18 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.PAULI_Z, ...targets)
+    this.cu(allControls, Z, ...targets)
     this.x(...antiControls)
     return this
   }
 
   phase(phi: string, ...targets: number[]): Simulator {
-    this.u(Matrix.PHASE(phi), ...targets)
+    this.u(PHASE(phi), ...targets)
     return this
   }
 
   cphase(controls: number | number[], phi: string, ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.PHASE(phi), ...targets)
+    this.cu(controls, PHASE(phi), ...targets)
     return this
   }
 
@@ -337,13 +338,13 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.PHASE(phi), ...targets)
+    this.cu(allControls, PHASE(phi), ...targets)
     this.x(...antiControls)
     return this
   }
 
   s(...targets: number[]): Simulator {
-    this.u(Matrix.S, ...targets)
+    this.u(S, ...targets)
     return this
   }
 
@@ -356,13 +357,13 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.S, ...targets)
+    this.cu(allControls, S, ...targets)
     this.x(...antiControls)
     return this
   }
 
   sDagger(...targets: number[]): Simulator {
-    this.u(Matrix.SDagger, ...targets)
+    this.u(SDagger, ...targets)
     return this
   }
 
@@ -375,18 +376,18 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.SDagger, ...targets)
+    this.cu(allControls, SDagger, ...targets)
     this.x(...antiControls)
     return this
   }
 
   t(...targets: number[]): Simulator {
-    this.u(Matrix.T, ...targets)
+    this.u(T, ...targets)
     return this
   }
 
   ct(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.T, ...targets)
+    this.cu(controls, T, ...targets)
     return this
   }
 
@@ -399,13 +400,13 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.T, ...targets)
+    this.cu(allControls, T, ...targets)
     this.x(...antiControls)
     return this
   }
 
   tDagger(...targets: number[]): Simulator {
-    this.u(Matrix.TDagger, ...targets)
+    this.u(TDagger, ...targets)
     return this
   }
 
@@ -418,7 +419,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.TDagger, ...targets)
+    this.cu(allControls, TDagger, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -434,7 +435,7 @@ export class Simulator {
   }
 
   rnot(...targets: number[]): Simulator {
-    this.u(Matrix.RNOT, ...targets)
+    this.u(RNOT, ...targets)
     return this
   }
 
@@ -447,7 +448,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.RNOT, ...targets)
+    this.cu(allControls, RNOT, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -461,13 +462,13 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.RNOT, ...targets)
+    this.cu(allControls, RNOT, ...targets)
     this.x(...antiControls)
     return this
   }
 
   rx(theta: string, ...targets: number[]): Simulator {
-    this.u(Matrix.RX(theta), ...targets)
+    this.u(RX(theta), ...targets)
     return this
   }
 
@@ -480,23 +481,23 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.RX(theta), ...targets)
+    this.cu(allControls, RX(theta), ...targets)
     this.x(...antiControls)
     return this
   }
 
   crx(controls: number | number[], theta: string, ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.RX(theta), ...targets)
+    this.cu(controls, RX(theta), ...targets)
     return this
   }
 
   ry(theta: string, ...targets: number[]): Simulator {
-    this.u(Matrix.RY(theta), ...targets)
+    this.u(RY(theta), ...targets)
     return this
   }
 
   cry(controls: number | number[], theta: string, ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.RY(theta), ...targets)
+    this.cu(controls, RY(theta), ...targets)
     return this
   }
 
@@ -509,18 +510,18 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.RY(theta), ...targets)
+    this.cu(allControls, RY(theta), ...targets)
     this.x(...antiControls)
     return this
   }
 
   rz(theta: string, ...targets: number[]): Simulator {
-    this.u(Matrix.RZ(theta), ...targets)
+    this.u(RZ(theta), ...targets)
     return this
   }
 
   crz(controls: number | number[], theta: string, ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.RZ(theta), ...targets)
+    this.cu(controls, RZ(theta), ...targets)
     return this
   }
 
@@ -533,7 +534,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.RZ(theta), ...targets)
+    this.cu(allControls, RZ(theta), ...targets)
     this.x(...antiControls)
     return this
   }
