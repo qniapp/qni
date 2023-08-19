@@ -20,26 +20,6 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
 
 export class Matrix {
   /**
-   * Pauli X gate.
-   *
-   * ```
-   * X = | 0 1 |
-   *     | 1 0 |
-   * ```
-   */
-  static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
-
-  /**
-   * Pauli Y gate.
-   *
-   * ```
-   * Y = | 0 -i |
-   *     | i  0 |
-   * ```
-   */
-  static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
-
-  /**
    * Pauli Z gate.
    *
    * ```

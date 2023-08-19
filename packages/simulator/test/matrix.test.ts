@@ -1,6 +1,6 @@
 import {Complex, Format, equate} from '@qni/common'
 // import {H, X, Y, Z, S, SDagger, T, TDagger, PHASE, RNOT, RX, RY, RZ} from '../src/gate-matrices'
-import {H, X} from '../src/gate-matrices'
+import {H, X, Y} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
 // eslint-disable-next-line import/no-nodejs-modules
 import {performance} from 'perf_hooks'
@@ -290,9 +290,7 @@ describe('Matrix', () => {
       new Complex(0.5, -0.5),
     )
     expect(equate(x.times(x.adjoint()), Matrix.identity(2))).toBeTruthy()
-    expect(
-      equate(X.times(Matrix.PAULI_Y).times(Matrix.PAULI_Z).times(new Complex(0, -1)), Matrix.identity(2)),
-    ).toBeTruthy()
+    expect(equate(X.times(Y).times(Matrix.PAULI_Z).times(new Complex(0, -1)), Matrix.identity(2))).toBeTruthy()
   })
 
   test('times_ColRow', () => {
@@ -403,7 +401,7 @@ describe('Matrix', () => {
     expect(equate(Matrix.identity(10).trace(), 10)).toBeTruthy()
 
     expect(equate(X.trace(), 0)).toBeTruthy()
-    expect(equate(Matrix.PAULI_Y.trace(), 0)).toBeTruthy()
+    expect(equate(Y.trace(), 0)).toBeTruthy()
     expect(equate(Matrix.PAULI_Z.trace(), 0)).toBeTruthy()
     expect(equate(H.trace(), 0)).toBeTruthy()
     expect(equate(Matrix.square(1, 2, 3, 4).trace(), 5)).toBeTruthy()
