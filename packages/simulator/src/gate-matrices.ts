@@ -43,3 +43,13 @@ export const Y = Matrix.square(0, mi, i, 0)
  * ```
  */
 export const Z = Matrix.square(1, 0, 0, -1)
+
+/**
+ * S gate.
+ *
+ * ```
+ * S = | 1 0 |
+ *     | 0 i |
+ * ```
+ */
+export const S = Matrix.square(1, 0, 0, i)

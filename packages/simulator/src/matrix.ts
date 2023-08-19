@@ -457,6 +457,10 @@ export class Matrix {
     this.buffer[i + 1] = value.imag
   }
 
+  isHermitian(): boolean {
+    return this.isApproximatelyHermitian(0)
+  }
+
   isApproximatelyHermitian(epsilon: number): boolean {
     if (this.width !== this.height) {
       return false
