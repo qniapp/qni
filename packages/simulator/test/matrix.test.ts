@@ -9,6 +9,18 @@ describe('Matrix', () => {
     expect(Matrix.generate(3, 2, (r, c) => r + 10 * c).toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
   })
 
+  test('square', () => {
+    const m = Matrix.square(1, new Complex(2, 3), -5.5, 0)
+    expect(
+      equate(m.rows(), [
+        [1, new Complex(2, 3)],
+        [-5.5, 0],
+      ]),
+    ).toBeTruthy()
+
+    expect(equate(Matrix.solo(1).rows(), [[1]])).toBeTruthy()
+  })
+
   test('isEqualTo', () => {
     const m = Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     expect(equate(m, m)).toBeTruthy()
@@ -152,18 +164,6 @@ describe('Matrix', () => {
     expect(equate(m.columnAt(0), [2, 5])).toBeTruthy()
     expect(equate(m.columnAt(1), [3, 7])).toBeTruthy()
     expect(equate(Matrix.col(1, 2, 3).columnAt(0), [1, 2, 3])).toBeTruthy()
-  })
-
-  test('square', () => {
-    const m = Matrix.square(1, new Complex(2, 3), -5.5, 0)
-    expect(
-      equate(m.rows(), [
-        [1, new Complex(2, 3)],
-        [-5.5, 0],
-      ]),
-    ).toBeTruthy()
-
-    expect(equate(Matrix.solo(1).rows(), [[1]])).toBeTruthy()
   })
 
   test('col', () => {
