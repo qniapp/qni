@@ -19,15 +19,94 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
 }
 
 export class Matrix {
+  /**
+   * Hadamard gate.
+   *
+   * ```
+   * H = 1/√2 * | 1  1 |
+   *            | 1 -1 |
+   * ```
+   */
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
-  static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
-  static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
-  static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
-  static readonly S = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / 2)))
-  static readonly SDagger = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / -2)))
-  static readonly T = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / 4)))
-  static readonly TDagger = Matrix.square(1, 0, 0, Complex.from(Math.E).pow(Complex.I.times(Math.PI / -4)))
 
+  /**
+   * Pauli X gate.
+   *
+   * ```
+   * X = | 0 1 |
+   *     | 1 0 |
+   * ```
+   */
+  static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
+
+  /**
+   * Pauli Y gate.
+   *
+   * ```
+   * Y = | 0 -i |
+   *     | i  0 |
+   * ```
+   */
+  static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
+
+  /**
+   * Pauli Z gate.
+   *
+   * ```
+   * Z = | 1  0 |
+   *     | 0 -1 |
+   * ```
+   */
+  static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
+
+  /**
+   * S gate.
+   *
+   * ```
+   * S = | 1 0 |
+   *     | 0 i |
+   * ```
+   */
+  static readonly S = Matrix.square(1, 0, 0, Complex.I)
+
+  /**
+   * S† gate.
+   *
+   * ```
+   * S† = | 1  0 |
+   *      | 0 -i |
+   * ```
+   */
+  static readonly SDagger = Matrix.square(1, 0, 0, Complex.I.neg())
+
+  /**
+   * T gate.
+   *
+   * ```
+   * T = | 1          0 |
+   *     | 0  exp(iπ/4) |
+   * ```
+   */
+  static readonly T = Matrix.square(1, 0, 0, Complex.I.times(Math.PI / 4).exp())
+
+  /**
+   * T† gate.
+   *
+   * ```
+   * T = | 1           0 |
+   *     | 0  exp(-iπ/4) |
+   * ```
+   */
+  static readonly TDagger = Matrix.square(1, 0, 0, Complex.I.times(Math.PI / -4).exp())
+
+  /**
+   * Phase (P) gate.
+   *
+   * ```
+   * P(φ) = | 1        0 |
+   *        | 0  exp(iφ) |
+   * ```
+   */
   static PHASE(phi: string): Matrix {
     const φ = radian(phi)
     const e = Complex.from(Math.E)
@@ -35,6 +114,14 @@ export class Matrix {
     return Matrix.square(1, 0, 0, e.pow(Complex.I.times(φ)))
   }
 
+  /**
+   * RNOT (√X) gate.
+   *
+   * ```
+   * √X = 1/2 * | 1+i 1-i |
+   *            | 1-i 1+i |
+   * ```
+   */
   static get RNOT(): Matrix {
     const i = Complex.I
     const mi = i.neg()
@@ -42,6 +129,21 @@ export class Matrix {
     return Matrix.square(i.plus(1), mi.plus(1), mi.plus(1), i.plus(1)).times(0.5)
   }
 
+  /**
+   * Rx gate.
+   *
+   * ```
+   * Rx(θ) = | cos(θ/2)   -isin(θ/2) |
+   *         | -isin(θ/2)  cos(θ/2)  |
+   *
+   * e.g.,
+   * Rx(π/2) = | cos(π/4)   -isin(π/4) |
+   *           | -isin(π/4)  cos(π/4)  |
+   *
+   *         = 1/√2 * |  1 -i |
+   *                  | -i  1 |
+   * ```
+   */
   static RX(theta: string): Matrix {
     const θ = radian(theta)
     const mi = Complex.I.neg()
@@ -51,6 +153,21 @@ export class Matrix {
     return Matrix.square(cosθ2, mi.times(sinθ2), mi.times(sinθ2), cosθ2)
   }
 
+  /**
+   * Ry gate.
+   *
+   * ```
+   * Ry(θ) = | cos(θ/2) -sin(θ/2) |
+   *         | sin(θ/2)  cos(θ/2)  |
+   *
+   * e.g.,
+   * Ry(π/2) = | cos(π/4) -sin(π/4) |
+   *           | sin(π/4)  cos(π/4) |
+   *
+   *         = 1/√2 * | 1 -1 |
+   *                  | 1  1 |
+   * ```
+   */
   static RY(theta: string): Matrix {
     const θ = radian(theta)
     const cosθ2 = Math.cos(θ / 2)
@@ -59,12 +176,34 @@ export class Matrix {
     return Matrix.square(cosθ2, -sinθ2, sinθ2, cosθ2)
   }
 
+  /**
+   * Rz gate.
+   *
+   * ```
+   * Rz(θ) = | exp(-iθ/2)          0 |
+   *         |          0  exp(iθ/2) |
+   *
+   * e.g.,
+   * Rz(π/2) = | exp(-iπ/4)          0 |
+   *           |          0  exp(iπ/4) |
+   *
+   *         = 1/√2 * | 1-i   0 |
+   *                  |   0 1+i |
+   * ```
+   */
   static RZ(theta: string): Matrix {
     const θ = radian(theta)
-    const e = Complex.from(Math.E)
     const i = Complex.I
 
-    return Matrix.square(e.pow(i.neg().times(θ / 2)), 0, 0, e.pow(i.times(θ / 2)))
+    return Matrix.square(
+      i
+        .neg()
+        .times(θ / 2)
+        .exp(),
+      0,
+      0,
+      i.times(θ / 2).exp(),
+    )
   }
 
   static fromRows(rows: Complex[][]): Matrix {

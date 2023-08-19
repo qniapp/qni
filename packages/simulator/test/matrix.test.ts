@@ -4,6 +4,85 @@ import {Matrix} from '../src/matrix'
 import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
+  describe('H', () => {
+    test('toString', () => {
+      expect(Matrix.H.toString()).toBe('{{√½, √½}, {√½, -√½}}')
+    })
+  })
+
+  describe('PAULI_X', () => {
+    test('toString', () => {
+      expect(Matrix.PAULI_X.toString()).toBe('{{0, 1}, {1, 0}}')
+    })
+  })
+
+  describe('PAULI_Y', () => {
+    test('toString', () => {
+      expect(Matrix.PAULI_Y.toString()).toBe('{{0, -i}, {i, 0}}')
+    })
+  })
+
+  describe('PAULI_Z', () => {
+    test('toString', () => {
+      expect(Matrix.PAULI_Z.toString()).toBe('{{1, 0}, {0, -1}}')
+    })
+  })
+
+  describe('S', () => {
+    test('toString', () => {
+      expect(Matrix.S.toString()).toBe('{{1, 0}, {0, i}}')
+    })
+  })
+
+  describe('SDagger', () => {
+    test('toString', () => {
+      expect(Matrix.SDagger.toString()).toBe('{{1, 0}, {0, -i}}')
+    })
+  })
+
+  describe('T', () => {
+    test('toString', () => {
+      expect(Matrix.T.toString()).toBe('{{1, 0}, {0, √½+√½i}}')
+    })
+  })
+
+  describe('TDagger', () => {
+    test('toString', () => {
+      expect(Matrix.TDagger.toString()).toBe('{{1, 0}, {0, √½-√½i}}')
+    })
+  })
+
+  describe('PHASE', () => {
+    test('toString', () => {
+      expect(Matrix.PHASE('π/4').toString()).toBe('{{1, 0}, {0, √½+√½i}}')
+      expect(Matrix.PHASE('-π/4').toString()).toBe('{{1, 0}, {0, √½-√½i}}')
+    })
+  })
+
+  describe('RNOT', () => {
+    test('toString', () => {
+      expect(Matrix.RNOT.toString()).toBe('{{½+½i, ½-½i}, {½-½i, ½+½i}}')
+    })
+  })
+
+  describe('RX', () => {
+    test('format', () => {
+      expect(Matrix.RX('π/2').format({maxAbbreviationError: 0.0005})).toBe('{{√½, -√½i}, {-√½i, √½}}')
+    })
+  })
+
+  describe('RY', () => {
+    test('format', () => {
+      expect(Matrix.RY('π/2').format({maxAbbreviationError: 0.0005})).toBe('{{√½, -√½}, {√½, √½}}')
+    })
+  })
+
+  describe('RZ', () => {
+    test('toString', () => {
+      expect(Matrix.RZ('π/2').toString()).toBe('{{√½-√½i, 0}, {0, √½+√½i}}')
+    })
+  })
+
   test('isEqualTo', () => {
     const m = Matrix.fromRows([
       [new Complex(2, 3), new Complex(5, 7)],
