@@ -5,6 +5,10 @@ import {Matrix} from '../src/matrix'
 import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
+  test('generate', () => {
+    expect(Matrix.generate(3, 2, (r, c) => r + 10 * c).toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
+  })
+
   test('isEqualTo', () => {
     const m = Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     expect(equate(m, m)).toBeTruthy()
@@ -134,10 +138,6 @@ describe('Matrix', () => {
         '{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}',
       ),
     ).toBeTruthy()
-  })
-
-  test('generate', () => {
-    expect(equate(Matrix.generate(3, 2, (r, c) => r + 10 * c).toString(), '{{0, 10, 20}, {1, 11, 21}}')).toBeTruthy()
   })
 
   test('zero', () => {
