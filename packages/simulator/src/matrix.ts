@@ -1,8 +1,5 @@
 import {Complex, DetailedError, Format, Util} from '@qni/common'
-import {Eq} from 'fp-ts/number'
-import {isNonEmpty} from 'fp-ts/lib/Array'
 import {range} from 'fp-ts/NonEmptyArray'
-import {uniq} from 'fp-ts/lib/ReadonlyNonEmptyArray'
 
 type FormatOptions = {
   allowAbbreviation?: boolean
