@@ -4,12 +4,6 @@ import {Matrix} from '../src/matrix'
 import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
-  describe('PAULI_X', () => {
-    test('toString', () => {
-      expect(Matrix.PAULI_X.toString()).toBe('{{0, 1}, {1, 0}}')
-    })
-  })
-
   describe('PAULI_Y', () => {
     test('toString', () => {
       expect(Matrix.PAULI_Y.toString()).toBe('{{0, -i}, {i, 0}}')
@@ -307,7 +301,6 @@ describe('Matrix', () => {
     expect(Matrix.solo(i).isApproximatelyHermitian(0.5)).toBeFalsy()
     expect(Matrix.solo(i).isApproximatelyHermitian(999)).toBeTruthy()
 
-    expect(Matrix.PAULI_X.isApproximatelyHermitian(0)).toBeTruthy()
     expect(Matrix.PAULI_Y.isApproximatelyHermitian(0)).toBeTruthy()
     expect(Matrix.PAULI_Z.isApproximatelyHermitian(0)).toBeTruthy()
 

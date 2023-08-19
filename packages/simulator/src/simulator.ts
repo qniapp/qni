@@ -25,7 +25,7 @@ import {
   SerializedYGateType,
   SerializedZGateType,
 } from '@qni/common'
-import {H} from './gate-matrices'
+import {H, X} from './gate-matrices'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
@@ -246,12 +246,12 @@ export class Simulator {
   }
 
   x(...targets: number[]): Simulator {
-    this.u(Matrix.PAULI_X, ...targets)
+    this.u(X, ...targets)
     return this
   }
 
   cnot(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.PAULI_X, ...targets)
+    this.cu(controls, X, ...targets)
 
     return this
   }
@@ -265,7 +265,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.PAULI_X, ...targets)
+    this.cu(allControls, X, ...targets)
     this.x(...antiControls)
 
     return this
