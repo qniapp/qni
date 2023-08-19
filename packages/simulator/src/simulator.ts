@@ -25,7 +25,7 @@ import {
   SerializedYGateType,
   SerializedZGateType,
 } from '@qni/common'
-import {H, X, Y} from './gate-matrices'
+import {H, X, Y, Z, S, SDagger, T} from './gate-matrices'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
@@ -296,12 +296,12 @@ export class Simulator {
   }
 
   z(...targets: number[]): Simulator {
-    this.u(Matrix.PAULI_Z, ...targets)
+    this.u(Z, ...targets)
     return this
   }
 
   cz(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.PAULI_Z, ...targets)
+    this.cu(controls, Z, ...targets)
     return this
   }
 
@@ -314,7 +314,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.PAULI_Z, ...targets)
+    this.cu(allControls, Z, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -344,7 +344,7 @@ export class Simulator {
   }
 
   s(...targets: number[]): Simulator {
-    this.u(Matrix.S, ...targets)
+    this.u(S, ...targets)
     return this
   }
 
@@ -357,13 +357,13 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.S, ...targets)
+    this.cu(allControls, S, ...targets)
     this.x(...antiControls)
     return this
   }
 
   sDagger(...targets: number[]): Simulator {
-    this.u(Matrix.SDagger, ...targets)
+    this.u(SDagger, ...targets)
     return this
   }
 
@@ -376,18 +376,18 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.SDagger, ...targets)
+    this.cu(allControls, SDagger, ...targets)
     this.x(...antiControls)
     return this
   }
 
   t(...targets: number[]): Simulator {
-    this.u(Matrix.T, ...targets)
+    this.u(T, ...targets)
     return this
   }
 
   ct(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.T, ...targets)
+    this.cu(controls, T, ...targets)
     return this
   }
 
@@ -400,7 +400,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.T, ...targets)
+    this.cu(allControls, T, ...targets)
     this.x(...antiControls)
     return this
   }

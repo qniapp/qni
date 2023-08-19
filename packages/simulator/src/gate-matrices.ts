@@ -2,7 +2,7 @@ import {Complex} from '@qni/common'
 import {Matrix} from './matrix'
 
 const i = Complex.I
-const mi = new Complex(0, -1)
+const mi = i.neg()
 
 /**
  * Hadamard gate.
@@ -63,3 +63,13 @@ export const S = Matrix.square(1, 0, 0, i)
  * ```
  */
 export const SDagger = Matrix.square(1, 0, 0, mi)
+
+/**
+ * T gate.
+ *
+ * ```
+ * T = | 1          0 |
+ *     | 0  exp(iπ/4) |
+ * ```
+ */
+export const T = Matrix.square(1, 0, 0, i.times(Math.PI / 4).exp())
