@@ -3,7 +3,6 @@ import {Matrix} from './matrix'
 
 const i = Complex.I
 const mi = i.neg()
-const s = Math.sqrt(0.5)
 
 /**
  * Hadamard gate.

@@ -1,5 +1,4 @@
 import {Complex, Format, equate} from '@qni/common'
-// import {S, SDagger, T, TDagger, PHASE, RNOT, RX, RY, RZ} from '../src/gate-matrices'
 import {H, X, Y, Z} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
 // eslint-disable-next-line import/no-nodejs-modules
