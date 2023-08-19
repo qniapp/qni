@@ -4,12 +4,6 @@ import {Matrix} from '../src/matrix'
 import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
-  describe('RY', () => {
-    test('format', () => {
-      expect(Matrix.RY('π/2').format({maxAbbreviationError: 0.0005})).toBe('{{√½, -√½}, {√½, √½}}')
-    })
-  })
-
   describe('RZ', () => {
     test('toString', () => {
       expect(Matrix.RZ('π/2').toString()).toBe('{{√½-√½i, 0}, {0, √½+√½i}}')

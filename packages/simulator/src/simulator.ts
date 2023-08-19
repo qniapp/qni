@@ -25,7 +25,7 @@ import {
   SerializedYGateType,
   SerializedZGateType,
 } from '@qni/common'
-import {H, X, Y, Z, S, SDagger, T, TDagger, PHASE, RNOT, RX} from './gate-matrices'
+import {H, X, Y, Z, S, SDagger, T, TDagger, PHASE, RNOT, RX, RY} from './gate-matrices'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
@@ -492,12 +492,12 @@ export class Simulator {
   }
 
   ry(theta: string, ...targets: number[]): Simulator {
-    this.u(Matrix.RY(theta), ...targets)
+    this.u(RY(theta), ...targets)
     return this
   }
 
   cry(controls: number | number[], theta: string, ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.RY(theta), ...targets)
+    this.cu(controls, RY(theta), ...targets)
     return this
   }
 
@@ -510,7 +510,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.RY(theta), ...targets)
+    this.cu(allControls, RY(theta), ...targets)
     this.x(...antiControls)
     return this
   }

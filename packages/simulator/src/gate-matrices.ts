@@ -134,3 +134,26 @@ export function RX(theta: string): Matrix {
 
   return Matrix.square(cosθ2, mi.times(sinθ2), mi.times(sinθ2), cosθ2)
 }
+
+/**
+ * Ry gate.
+ *
+ * ```
+ * Ry(θ) = | cos(θ/2) -sin(θ/2) |
+ *         | sin(θ/2)  cos(θ/2)  |
+ *
+ * e.g.,
+ * Ry(π/2) = | cos(π/4) -sin(π/4) |
+ *           | sin(π/4)  cos(π/4) |
+ *
+ *         = 1/√2 * | 1 -1 |
+ *                  | 1  1 |
+ * ```
+ */
+export function RY(theta: string): Matrix {
+  const θ = radian(theta)
+  const cosθ2 = Math.cos(θ / 2)
+  const sinθ2 = Math.sin(θ / 2)
+
+  return Matrix.square(cosθ2, -sinθ2, sinθ2, cosθ2)
+}
