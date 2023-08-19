@@ -97,3 +97,13 @@ export function PHASE(phi: string): Matrix {
 
   return Matrix.square(1, 0, 0, i.times(φ).exp())
 }
+
+/**
+ * RNOT (√X) gate.
+ *
+ * ```
+ * √X = 1/2 * | 1+i 1-i |
+ *            | 1-i 1+i |
+ * ```
+ */
+export const RNOT = Matrix.square(i.plus(1), mi.plus(1), mi.plus(1), i.plus(1)).times(0.5)
