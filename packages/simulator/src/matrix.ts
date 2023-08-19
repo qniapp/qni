@@ -16,6 +16,10 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
 }
 
 export class Matrix {
+  public width: number
+  public height: number
+  public buffer: Float64Array
+
   static generate(
     width: number,
     height: number,
@@ -69,11 +73,7 @@ export class Matrix {
     return new Matrix(width, height, new Float64Array(width * height * 2))
   }
 
-  public width: number
-  public height: number
-  public buffer: Float64Array | Float32Array
-
-  constructor(width: number, height: number, buffer: Float64Array | Float32Array) {
+  constructor(width: number, height: number, buffer: Float64Array) {
     if (width * height * 2 !== buffer.length) {
       throw new DetailedError('width*height*2 !== buffer.length', {
         width,
