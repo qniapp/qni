@@ -19,27 +19,6 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
 }
 
 export class Matrix {
-  static fromRows(rows: Complex[][]): Matrix {
-    const h = rows.length
-    const rowWidths = rows.map(e => e.length)
-    if (!isNonEmpty(rowWidths)) throw new DetailedError('Zero height', {rows})
-
-    const ws = uniq(Eq)(rowWidths)
-    if (ws.length !== 1) throw new DetailedError('Inconsistent row widths.', {rows})
-    const w = ws[0]
-
-    const buffer = new Float64Array(w * h * 2)
-    let i = 0
-    for (const row of rows) {
-      for (const cell of row) {
-        buffer[i] = Complex.real(cell)
-        buffer[i + 1] = Complex.imag(cell)
-        i += 2
-      }
-    }
-    return new Matrix(w, h, buffer)
-  }
-
   static generate(
     width: number,
     height: number,

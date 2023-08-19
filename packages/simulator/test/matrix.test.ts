@@ -6,63 +6,30 @@ import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
   test('isEqualTo', () => {
-    const m = Matrix.fromRows([
-      [new Complex(2, 3), new Complex(5, 7)],
-      [new Complex(11, 13), new Complex(17, 19)],
-    ])
+    const m = Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     expect(equate(m, m)).toBeTruthy()
     expect(equate(m, null)).toBeFalsy()
     expect(equate(m, '')).toBeFalsy()
 
     expect(
-      equate(
-        m,
-        Matrix.fromRows([
-          [new Complex(2, 3), new Complex(5, 7)],
-          [new Complex(11, 13), new Complex(17, 19)],
-        ]),
-      ),
+      equate(m, Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))),
     ).toBeTruthy()
-    expect(equate(m, Matrix.fromRows([[new Complex(2, 3)]]))).toBeFalsy()
+    expect(equate(m, Matrix.solo(new Complex(2, 3)))).toBeFalsy()
     expect(
-      equate(
-        m,
-        Matrix.fromRows([
-          [new Complex(-2, 3), new Complex(5, 7)],
-          [new Complex(11, 13), new Complex(17, 19)],
-        ]),
-      ),
+      equate(m, Matrix.square(new Complex(-2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))),
     ).toBeFalsy()
     expect(
-      equate(
-        m,
-        Matrix.fromRows([
-          [new Complex(2, 3), new Complex(-5, 7)],
-          [new Complex(11, 13), new Complex(17, 19)],
-        ]),
-      ),
+      equate(m, Matrix.square(new Complex(2, 3), new Complex(-5, 7), new Complex(11, 13), new Complex(17, 19))),
     ).toBeFalsy()
     expect(
-      equate(
-        m,
-        Matrix.fromRows([
-          [new Complex(2, 3), new Complex(5, 7)],
-          [new Complex(-11, 13), new Complex(17, 19)],
-        ]),
-      ),
+      equate(m, Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(-11, 13), new Complex(17, 19))),
     ).toBeFalsy()
     expect(
-      equate(
-        m,
-        Matrix.fromRows([
-          [new Complex(2, 3), new Complex(5, 7)],
-          [new Complex(11, 13), new Complex(-17, 19)],
-        ]),
-      ),
+      equate(m, Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(-17, 19))),
     ).toBeFalsy()
 
-    const col = Matrix.fromRows([[new Complex(2, 3), new Complex(5, 7)]])
-    const row = Matrix.fromRows([[new Complex(2, 3)], [new Complex(5, 7)]])
+    const col = Matrix.col(new Complex(2, 3), new Complex(5, 7))
+    const row = Matrix.row(new Complex(2, 3), new Complex(5, 7))
     expect(equate(col, col)).toBeTruthy()
     expect(equate(row, row)).toBeTruthy()
     expect(equate(row, col)).toBeFalsy()
