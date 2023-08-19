@@ -53,3 +53,13 @@ export const Z = Matrix.square(1, 0, 0, -1)
  * ```
  */
 export const S = Matrix.square(1, 0, 0, i)
+
+/**
+ * S† gate.
+ *
+ * ```
+ * S† = | 1  0 |
+ *      | 0 -i |
+ * ```
+ */
+export const SDagger = Matrix.square(1, 0, 0, mi)

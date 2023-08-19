@@ -4,18 +4,6 @@ import {Matrix} from '../src/matrix'
 import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
-  describe('S', () => {
-    test('toString', () => {
-      expect(Matrix.S.toString()).toBe('{{1, 0}, {0, i}}')
-    })
-  })
-
-  describe('SDagger', () => {
-    test('toString', () => {
-      expect(Matrix.SDagger.toString()).toBe('{{1, 0}, {0, -i}}')
-    })
-  })
-
   describe('T', () => {
     test('toString', () => {
       expect(Matrix.T.toString()).toBe('{{1, 0}, {0, √½+√½i}}')
