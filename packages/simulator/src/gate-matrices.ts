@@ -157,3 +157,24 @@ export function RY(theta: string): Matrix {
 
   return Matrix.square(cosθ2, -sinθ2, sinθ2, cosθ2)
 }
+
+/**
+ * Rz gate.
+ *
+ * ```
+ * Rz(θ) = | exp(-iθ/2)          0 |
+ *         |          0  exp(iθ/2) |
+ *
+ * e.g.,
+ * Rz(π/2) = | exp(-iπ/4)          0 |
+ *           |          0  exp(iπ/4) |
+ *
+ *         = 1/√2 * | 1-i   0 |
+ *                  |   0 1+i |
+ * ```
+ */
+export function RZ(theta: string): Matrix {
+  const θ = radian(theta)
+
+  return Matrix.square(mi.times(θ / 2).exp(), 0, 0, i.times(θ / 2).exp())
+}
