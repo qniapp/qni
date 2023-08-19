@@ -1,3 +1,4 @@
+export * from './gate-matrices'
 export * from './matrix'
 export * from './simulator'
 export * from './state-vector'
