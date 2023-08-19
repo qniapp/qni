@@ -270,11 +270,7 @@ export class Matrix {
     this.buffer[i + 1] = value.imag
   }
 
-  isHermitian(): boolean {
-    return this.isApproximatelyHermitian(0)
-  }
-
-  isApproximatelyHermitian(epsilon: number): boolean {
+  isHermitian(epsilon = 0): boolean {
     if (this.width !== this.height) {
       return false
     }
@@ -383,7 +379,7 @@ export class Matrix {
     if (this.width !== 2 || this.height !== 2) {
       throw new DetailedError('Need a 2x2 density matrix.', this)
     }
-    if (!this.isApproximatelyHermitian(0.01)) {
+    if (!this.isHermitian(0.01)) {
       throw new DetailedError('Density matrix should be Hermitian.', this)
     }
     if (!this.trace().nearlyEq(1, 0.01)) {

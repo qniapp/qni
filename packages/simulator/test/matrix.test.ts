@@ -221,30 +221,30 @@ describe('Matrix', () => {
     expect(Matrix.col(1, 1, 3).height).toBe(3)
   })
 
-  test('isApproximatelyHermitian', () => {
+  test('isHermitian', () => {
     const i = Complex.I
 
-    expect(Matrix.row(1, 1).isApproximatelyHermitian(999)).toBeFalsy()
-    expect(Matrix.col(1, 1).isApproximatelyHermitian(999)).toBeFalsy()
+    expect(Matrix.row(1, 1).isHermitian(999)).toBeFalsy()
+    expect(Matrix.col(1, 1).isHermitian(999)).toBeFalsy()
 
-    expect(Matrix.solo(1).isApproximatelyHermitian(0)).toBeTruthy()
-    expect(Matrix.solo(0).isApproximatelyHermitian(0)).toBeTruthy()
-    expect(Matrix.solo(-1).isApproximatelyHermitian(0)).toBeTruthy()
-    expect(Matrix.solo(-2).isApproximatelyHermitian(0)).toBeTruthy()
-    expect(Matrix.solo(i).isApproximatelyHermitian(0)).toBeFalsy()
-    expect(Matrix.solo(i).isApproximatelyHermitian(0.5)).toBeFalsy()
-    expect(Matrix.solo(i).isApproximatelyHermitian(999)).toBeTruthy()
+    expect(Matrix.solo(1).isHermitian(0)).toBeTruthy()
+    expect(Matrix.solo(0).isHermitian(0)).toBeTruthy()
+    expect(Matrix.solo(-1).isHermitian(0)).toBeTruthy()
+    expect(Matrix.solo(-2).isHermitian(0)).toBeTruthy()
+    expect(Matrix.solo(i).isHermitian(0)).toBeFalsy()
+    expect(Matrix.solo(i).isHermitian(0.5)).toBeFalsy()
+    expect(Matrix.solo(i).isHermitian(999)).toBeTruthy()
 
-    expect(Matrix.square(1, 0, 0, 1).isApproximatelyHermitian(0)).toBeTruthy()
-    expect(Matrix.square(1, 1, 1, 1).isApproximatelyHermitian(0)).toBeTruthy()
-    expect(Matrix.square(1, 1, 1.5, 1).isApproximatelyHermitian(0)).toBeFalsy()
-    expect(Matrix.square(1, 1, 1.5, 1).isApproximatelyHermitian(0.5)).toBeTruthy()
+    expect(Matrix.square(1, 0, 0, 1).isHermitian(0)).toBeTruthy()
+    expect(Matrix.square(1, 1, 1, 1).isHermitian(0)).toBeTruthy()
+    expect(Matrix.square(1, 1, 1.5, 1).isHermitian(0)).toBeFalsy()
+    expect(Matrix.square(1, 1, 1.5, 1).isHermitian(0.5)).toBeTruthy()
 
-    expect(Matrix.square(1, i, i, 1).isApproximatelyHermitian(0)).toBeFalsy()
-    expect(Matrix.square(1, i, i.neg(), 1).isApproximatelyHermitian(0)).toBeTruthy()
-    expect(Matrix.square(1, i.neg(), i, 1).isApproximatelyHermitian(0)).toBeTruthy()
-    expect(Matrix.square(1, i, i.times(-1.5), 1).isApproximatelyHermitian(0)).toBeFalsy()
-    expect(Matrix.square(1, i, i.times(-1.5), 1).isApproximatelyHermitian(0.5)).toBeTruthy()
+    expect(Matrix.square(1, i, i, 1).isHermitian(0)).toBeFalsy()
+    expect(Matrix.square(1, i, i.neg(), 1).isHermitian(0)).toBeTruthy()
+    expect(Matrix.square(1, i.neg(), i, 1).isHermitian(0)).toBeTruthy()
+    expect(Matrix.square(1, i, i.times(-1.5), 1).isHermitian(0)).toBeFalsy()
+    expect(Matrix.square(1, i, i.times(-1.5), 1).isHermitian(0.5)).toBeTruthy()
   })
 
   test('adjoint', () => {

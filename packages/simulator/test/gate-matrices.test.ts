@@ -104,13 +104,25 @@ describe('√X', () => {
 
 describe('RX', () => {
   test('format', () => {
+    expect(RX('0').format({maxAbbreviationError: 0.0005})).toBe('{{1, 0}, {0, 1}}')
     expect(RX('π/2').format({maxAbbreviationError: 0.0005})).toBe('{{√½, -√½i}, {-√½i, √½}}')
-    expect(RX('-π/2').format({maxAbbreviationError: 0.0005})).toBe('{{√½, √½i}, {√½i, √½}}')
+    expect(RX('π').format({maxAbbreviationError: 0.0005})).toBe('{{0, -i}, {-i, 0}}')
+    expect(RX('3π/2').format({maxAbbreviationError: 0.0005})).toBe('{{-√½, -√½i}, {-√½i, -√½}}')
+    expect(RX('2π').format({maxAbbreviationError: 0.0005})).toBe('{{-1, 0}, {0, -1}}')
+    expect(RX('5π/2').format({maxAbbreviationError: 0.0005})).toBe('{{-√½, √½i}, {√½i, -√½}}')
+    expect(RX('3π').format({maxAbbreviationError: 0.0005})).toBe('{{0, i}, {i, 0}}')
+    expect(RX('7π/2').format({maxAbbreviationError: 0.0005})).toBe('{{√½, √½i}, {√½i, √½}}')
   })
 
   test('isHermitian', () => {
+    expect(RX('0').isHermitian()).toBeTruthy()
     expect(RX('π/2').isHermitian()).toBeFalsy()
-    expect(RX('-π/2').isHermitian()).toBeFalsy()
+    expect(RX('π').isHermitian()).toBeFalsy()
+    expect(RX('3π/2').isHermitian()).toBeFalsy()
+    expect(RX('2π').isHermitian(0.001)).toBeTruthy()
+    expect(RX('5π/2').isHermitian(0.001)).toBeFalsy()
+    expect(RX('3π').isHermitian(0.001)).toBeFalsy()
+    expect(RX('7π/2').isHermitian(0.001)).toBeFalsy()
   })
 })
 
