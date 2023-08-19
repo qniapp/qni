@@ -1,6 +1,6 @@
 import {Complex, Format, equate} from '@qni/common'
 // import {H, X, Y, Z, S, SDagger, T, TDagger, PHASE, RNOT, RX, RY, RZ} from '../src/gate-matrices'
-import {H} from '../src/gate-matrices'
+import {H, X} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
 // eslint-disable-next-line import/no-nodejs-modules
 import {performance} from 'perf_hooks'
@@ -291,7 +291,7 @@ describe('Matrix', () => {
     )
     expect(equate(x.times(x.adjoint()), Matrix.identity(2))).toBeTruthy()
     expect(
-      equate(Matrix.PAULI_X.times(Matrix.PAULI_Y).times(Matrix.PAULI_Z).times(new Complex(0, -1)), Matrix.identity(2)),
+      equate(X.times(Matrix.PAULI_Y).times(Matrix.PAULI_Z).times(new Complex(0, -1)), Matrix.identity(2)),
     ).toBeTruthy()
   })
 
@@ -332,7 +332,7 @@ describe('Matrix', () => {
     expect(equate(Matrix.solo(2).tensorProduct(Matrix.solo(3)), Matrix.solo(6))).toBeTruthy()
     expect(
       equate(
-        Matrix.PAULI_X.tensorProduct(Matrix.PAULI_Z),
+        X.tensorProduct(Matrix.PAULI_Z),
         // prettier-ignore
         Matrix.square(
                      0, 0, 1, 0,
@@ -369,12 +369,8 @@ describe('Matrix', () => {
     expect(equate(Matrix.col(0, 0, 1, 0).timesQubitOperation(H, 1, 0, 0), Matrix.col(s, 0, -s, 0))).toBeTruthy()
     expect(equate(Matrix.col(0, 0, 0, 1).timesQubitOperation(H, 1, 0, 0), Matrix.col(0, s, 0, -s))).toBeTruthy()
 
-    expect(
-      equate(Matrix.col(2, 3, 0, 0).timesQubitOperation(Matrix.PAULI_X, 1, 1, 0), Matrix.col(0, 3, 2, 0)),
-    ).toBeTruthy()
-    expect(
-      equate(Matrix.col(2, 3, 0, 0).timesQubitOperation(Matrix.PAULI_X, 1, 1, 1), Matrix.col(2, 0, 0, 3)),
-    ).toBeTruthy()
+    expect(equate(Matrix.col(2, 3, 0, 0).timesQubitOperation(X, 1, 1, 0), Matrix.col(0, 3, 2, 0))).toBeTruthy()
+    expect(equate(Matrix.col(2, 3, 0, 0).timesQubitOperation(X, 1, 1, 1), Matrix.col(2, 0, 0, 3))).toBeTruthy()
   })
 
   test('timesQubitOperation_speed', () => {
@@ -406,7 +402,7 @@ describe('Matrix', () => {
     expect(equate(Matrix.identity(2).trace(), 2)).toBeTruthy()
     expect(equate(Matrix.identity(10).trace(), 10)).toBeTruthy()
 
-    expect(equate(Matrix.PAULI_X.trace(), 0)).toBeTruthy()
+    expect(equate(X.trace(), 0)).toBeTruthy()
     expect(equate(Matrix.PAULI_Y.trace(), 0)).toBeTruthy()
     expect(equate(Matrix.PAULI_Z.trace(), 0)).toBeTruthy()
     expect(equate(H.trace(), 0)).toBeTruthy()
