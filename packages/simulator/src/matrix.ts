@@ -20,16 +20,6 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
 
 export class Matrix {
   /**
-   * Hadamard gate.
-   *
-   * ```
-   * H = 1/√2 * | 1  1 |
-   *            | 1 -1 |
-   * ```
-   */
-  static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
-
-  /**
    * Pauli X gate.
    *
    * ```

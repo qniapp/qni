@@ -1,15 +1,11 @@
 import {Complex, Format, equate} from '@qni/common'
+// import {H, X, Y, Z, S, SDagger, T, TDagger, PHASE, RNOT, RX, RY, RZ} from '../src/gate-matrices'
+import {H} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
 // eslint-disable-next-line import/no-nodejs-modules
 import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
-  describe('RZ', () => {
-    test('toString', () => {
-      expect(Matrix.RZ('π/2').toString()).toBe('{{√½-√½i, 0}, {0, √½+√½i}}')
-    })
-  })
-
   test('isEqualTo', () => {
     const m = Matrix.fromRows([
       [new Complex(2, 3), new Complex(5, 7)],
@@ -363,15 +359,15 @@ describe('Matrix', () => {
   test('timesQubitOperation', () => {
     const s = Math.sqrt(0.5)
 
-    expect(equate(Matrix.col(1, 0, 0, 0).timesQubitOperation(Matrix.H, 0, 0, 0), Matrix.col(s, s, 0, 0))).toBeTruthy()
-    expect(equate(Matrix.col(0, 1, 0, 0).timesQubitOperation(Matrix.H, 0, 0, 0), Matrix.col(s, -s, 0, 0))).toBeTruthy()
-    expect(equate(Matrix.col(0, 0, 1, 0).timesQubitOperation(Matrix.H, 0, 0, 0), Matrix.col(0, 0, s, s))).toBeTruthy()
-    expect(equate(Matrix.col(0, 0, 0, 1).timesQubitOperation(Matrix.H, 0, 0, 0), Matrix.col(0, 0, s, -s))).toBeTruthy()
+    expect(equate(Matrix.col(1, 0, 0, 0).timesQubitOperation(H, 0, 0, 0), Matrix.col(s, s, 0, 0))).toBeTruthy()
+    expect(equate(Matrix.col(0, 1, 0, 0).timesQubitOperation(H, 0, 0, 0), Matrix.col(s, -s, 0, 0))).toBeTruthy()
+    expect(equate(Matrix.col(0, 0, 1, 0).timesQubitOperation(H, 0, 0, 0), Matrix.col(0, 0, s, s))).toBeTruthy()
+    expect(equate(Matrix.col(0, 0, 0, 1).timesQubitOperation(H, 0, 0, 0), Matrix.col(0, 0, s, -s))).toBeTruthy()
 
-    expect(equate(Matrix.col(1, 0, 0, 0).timesQubitOperation(Matrix.H, 1, 0, 0), Matrix.col(s, 0, s, 0))).toBeTruthy()
-    expect(equate(Matrix.col(0, 1, 0, 0).timesQubitOperation(Matrix.H, 1, 0, 0), Matrix.col(0, s, 0, s))).toBeTruthy()
-    expect(equate(Matrix.col(0, 0, 1, 0).timesQubitOperation(Matrix.H, 1, 0, 0), Matrix.col(s, 0, -s, 0))).toBeTruthy()
-    expect(equate(Matrix.col(0, 0, 0, 1).timesQubitOperation(Matrix.H, 1, 0, 0), Matrix.col(0, s, 0, -s))).toBeTruthy()
+    expect(equate(Matrix.col(1, 0, 0, 0).timesQubitOperation(H, 1, 0, 0), Matrix.col(s, 0, s, 0))).toBeTruthy()
+    expect(equate(Matrix.col(0, 1, 0, 0).timesQubitOperation(H, 1, 0, 0), Matrix.col(0, s, 0, s))).toBeTruthy()
+    expect(equate(Matrix.col(0, 0, 1, 0).timesQubitOperation(H, 1, 0, 0), Matrix.col(s, 0, -s, 0))).toBeTruthy()
+    expect(equate(Matrix.col(0, 0, 0, 1).timesQubitOperation(H, 1, 0, 0), Matrix.col(0, s, 0, -s))).toBeTruthy()
 
     expect(
       equate(Matrix.col(2, 3, 0, 0).timesQubitOperation(Matrix.PAULI_X, 1, 1, 0), Matrix.col(0, 3, 2, 0)),
@@ -389,7 +385,7 @@ describe('Matrix', () => {
     buf[0] = 1
     let state = new Matrix(1, 1 << numQubits, buf)
     for (let i = 0; i < numOps; i++) {
-      state = state.timesQubitOperation(Matrix.H, 0, 6, 0)
+      state = state.timesQubitOperation(H, 0, 6, 0)
     }
 
     const t1 = performance.now()
@@ -413,7 +409,7 @@ describe('Matrix', () => {
     expect(equate(Matrix.PAULI_X.trace(), 0)).toBeTruthy()
     expect(equate(Matrix.PAULI_Y.trace(), 0)).toBeTruthy()
     expect(equate(Matrix.PAULI_Z.trace(), 0)).toBeTruthy()
-    expect(equate(Matrix.H.trace(), 0)).toBeTruthy()
+    expect(equate(H.trace(), 0)).toBeTruthy()
     expect(equate(Matrix.square(1, 2, 3, 4).trace(), 5)).toBeTruthy()
 
     expect(equate(Matrix.square(0, 1, 2, 3, 4, 5, 6, 7, 8).trace(), 12)).toBeTruthy()
