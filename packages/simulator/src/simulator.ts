@@ -25,7 +25,7 @@ import {
   SerializedYGateType,
   SerializedZGateType,
 } from '@qni/common'
-import {H, X, Y, Z, S, SDagger, T} from './gate-matrices'
+import {H, X, Y, Z, S, SDagger, T, TDagger} from './gate-matrices'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
@@ -406,7 +406,7 @@ export class Simulator {
   }
 
   tDagger(...targets: number[]): Simulator {
-    this.u(Matrix.TDagger, ...targets)
+    this.u(TDagger, ...targets)
     return this
   }
 
@@ -419,7 +419,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Matrix.TDagger, ...targets)
+    this.cu(allControls, TDagger, ...targets)
     this.x(...antiControls)
     return this
   }

@@ -73,3 +73,13 @@ export const SDagger = Matrix.square(1, 0, 0, mi)
  * ```
  */
 export const T = Matrix.square(1, 0, 0, i.times(Math.PI / 4).exp())
+
+/**
+ * T† gate.
+ *
+ * ```
+ * T = | 1           0 |
+ *     | 0  exp(-iπ/4) |
+ * ```
+ */
+export const TDagger = Matrix.square(1, 0, 0, i.times(Math.PI / -4).exp())
