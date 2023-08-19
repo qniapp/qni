@@ -61,10 +61,8 @@ export const S = Matrix.square(1, 0, 0, i)
  * S† = | 1  0 |
  *      | 0 -i |
  * ```
- *
- * TODO: T.conjugate().transpose() で定義する
  */
-export const SDagger = Matrix.square(1, 0, 0, mi)
+export const SDagger = S.adjoint()
 
 /**
  * T gate.
@@ -83,10 +81,8 @@ export const T = Matrix.square(1, 0, 0, i.times(Math.PI / 4).exp())
  * T = | 1           0 |
  *     | 0  exp(-iπ/4) |
  * ```
- *
- * TODO: T.conjugate().transpose() で定義する
  */
-export const TDagger = Matrix.square(1, 0, 0, i.times(Math.PI / -4).exp())
+export const TDagger = T.adjoint()
 
 /**
  * Phase (P) gate.
