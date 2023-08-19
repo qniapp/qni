@@ -1,4 +1,4 @@
-import {H, X, Y} from '../src/gate-matrices'
+import {H, X, Y, Z} from '../src/gate-matrices'
 
 describe('H', () => {
   test('toString', () => {
@@ -29,5 +29,15 @@ describe('Y', () => {
 
   test('isApproximatelyHermitian', () => {
     expect(Y.isApproximatelyHermitian(0)).toBeTruthy()
+  })
+})
+
+describe('Z', () => {
+  test('toString', () => {
+    expect(Z.toString()).toBe('{{1, 0}, {0, -1}}')
+  })
+
+  test('isApproximatelyHermitian', () => {
+    expect(Z.isApproximatelyHermitian(0)).toBeTruthy()
   })
 })

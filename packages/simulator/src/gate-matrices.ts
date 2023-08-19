@@ -33,3 +33,13 @@ export const X = Matrix.square(0, 1, 1, 0)
  * ```
  */
 export const Y = Matrix.square(0, mi, i, 0)
+
+/**
+ * Pauli Z gate.
+ *
+ * ```
+ * Z = | 1  0 |
+ *     | 0 -1 |
+ * ```
+ */
+export const Z = Matrix.square(1, 0, 0, -1)
