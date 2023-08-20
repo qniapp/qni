@@ -16,6 +16,12 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
   itemSeparator: ', ',
 }
 
+export type NonNegativeInteger<T extends number> = number extends T
+  ? never
+  : `${T}` extends `-${string}` | `${string}.${string}`
+  ? never
+  : T
+
 export class Matrix {
   public width: number
   public height: number
@@ -33,25 +39,6 @@ export class Matrix {
   }
 
   /**
-   * Returns an identity matrix of the specified size.
-   *
-   * @param size - The size of the identity matrix
-   * @returns A result object with the generated identity matrix or an error
-   */
-  static identity(size: number): Result<Matrix, Error> {
-    if (!Number.isInteger(size) || size <= 0) {
-      return err(Error(`Bad size ${size}`))
-    }
-
-    const buf = new Float64Array(size * size * 2)
-    for (let i = 0; i < size; i++) {
-      buf[i * (size + 1) * 2] = 1
-    }
-
-    return ok(new Matrix(size, size, buf))
-  }
-
-  /**
    * Generates a 1x1 matrix.
    *
    * @param element - The element of the matrix
@@ -59,6 +46,41 @@ export class Matrix {
    */
   static solo(element: number | Complex): Matrix {
     return new Matrix(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))
+  }
+
+  /**
+   * Return a column vector.
+   *
+   * @param elements - The elements of the vector
+   * @returns A column vector (Matrix with 1 column)
+   */
+  static col(...elements: Array<number | Complex>): Matrix {
+    return Matrix.generate(1, elements.length, row => elements[row])
+  }
+
+  /**
+   * Return a row vector.
+   *
+   * @param elements - The elements of the vector
+   * @returns A row vector (Matrix with 1 row)
+   */
+  static row(...elements: Array<number | Complex>): Matrix {
+    return Matrix.generate(elements.length, 1, (_row, col) => elements[col])
+  }
+
+  /**
+   * Returns an identity matrix of the specified size.
+   *
+   * @param size - The size of the identity matrix
+   * @returns A result object with the generated identity matrix or an error
+   */
+  static identity<N extends number>(size: NonNegativeInteger<N>): Matrix {
+    const buf = new Float64Array(size * size * 2)
+    for (let i = 0; i < size; i++) {
+      buf[i * (size + 1) * 2] = 1
+    }
+
+    return new Matrix(size, size, buf)
   }
 
   /**
@@ -103,16 +125,6 @@ export class Matrix {
     }
 
     return new Matrix(width, height, buf)
-  }
-
-  static col(...coefs: Array<number | Complex>): Matrix {
-    Util.need(Array.isArray(coefs), 'Array.isArray(coefs)', coefs)
-    return Matrix.generate(1, coefs.length, r => coefs[r])
-  }
-
-  static row(...coefs: Array<number | Complex>): Matrix {
-    Util.need(Array.isArray(coefs), 'Array.isArray(coefs)', coefs)
-    return Matrix.generate(coefs.length, 1, (r, c) => coefs[c])
   }
 
   constructor(width: number, height: number, buffer: Float64Array) {
