@@ -129,7 +129,7 @@ export class StateVector {
         }, num)
     }
 
-    let densityMatrix = Matrix.zero(2, 2)
+    let densityMatrix = Matrix.zero(2, 2)._unsafeUnwrap()
 
     for (let bra = 0; bra < this.matrix.height; bra++) {
       for (let ket = 0; ket < this.matrix.height; ket++) {

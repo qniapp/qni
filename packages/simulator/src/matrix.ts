@@ -16,12 +16,6 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
   itemSeparator: ', ',
 }
 
-export type NonNegativeInteger<T extends number> = number extends T
-  ? never
-  : `${T}` extends `-${string}` | `${string}.${string}`
-  ? never
-  : T
-
 export class Matrix {
   public width: number
   public height: number
@@ -34,8 +28,8 @@ export class Matrix {
    * @param height - The height of the matrix
    * @returns A matrix with all zero elements
    */
-  static zero<N extends number>(width: NonNegativeInteger<N>, height: number): Matrix {
-    return new Matrix(width, height, new Float64Array(width * height * 2))
+  static zero(width: number, height: number): Result<Matrix, Error> {
+    return Matrix.create(width, height, new Float64Array(width * height * 2))
   }
 
   /**
@@ -45,7 +39,11 @@ export class Matrix {
    * @returns A 1x1 matrix
    */
   static solo(element: number | Complex): Matrix {
-    return new Matrix(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))
+    const res = Matrix.create(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))
+    if (res.isErr()) {
+      throw res.error
+    }
+    return res.value
   }
 
   /**
@@ -55,7 +53,11 @@ export class Matrix {
    * @returns A column vector (Matrix with 1 column)
    */
   static col(...elements: Array<number | Complex>): Matrix {
-    return Matrix.generate(1, elements.length, row => elements[row])
+    const res = Matrix.generate(1, elements.length, row => elements[row])
+    if (res.isErr()) {
+      throw res.error
+    }
+    return res.value
   }
 
   /**
@@ -65,7 +67,11 @@ export class Matrix {
    * @returns A row vector (Matrix with 1 row)
    */
   static row(...elements: Array<number | Complex>): Matrix {
-    return Matrix.generate(elements.length, 1, (_row, col) => elements[col])
+    const res = Matrix.generate(elements.length, 1, (_row, col) => elements[col])
+    if (res.isErr()) {
+      throw res.error
+    }
+    return res.value
   }
 
   /**
@@ -74,13 +80,13 @@ export class Matrix {
    * @param size - The size of the identity matrix
    * @returns A result object with the generated identity matrix or an error
    */
-  static identity<N extends number>(size: NonNegativeInteger<N>): Matrix {
+  static identity(size: number): Result<Matrix, Error> {
     const buf = new Float64Array(size * size * 2)
     for (let i = 0; i < size; i++) {
       buf[i * (size + 1) * 2] = 1
     }
 
-    return new Matrix(size, size, buf)
+    return Matrix.create(size, size, buf)
   }
 
   /**
@@ -95,7 +101,7 @@ export class Matrix {
       return err(Error('Matrix.square: non-square number of arguments'))
     }
 
-    return ok(Matrix.generate(n, n, (row, col) => elements[row * n + col]))
+    return Matrix.generate(n, n, (row, col) => elements[row * n + col])
   }
 
   /**
@@ -111,7 +117,7 @@ export class Matrix {
     width: number,
     height: number,
     matrixElementGenerator: (row: number, col: number) => number | Complex,
-  ): Matrix {
+  ): Result<Matrix, Error> {
     const buf = new Float64Array(width * height * 2)
 
     for (let row = 0; row < height; row++) {
@@ -124,35 +130,49 @@ export class Matrix {
       }
     }
 
-    return new Matrix(width, height, buf)
+    return Matrix.create(width, height, buf)
+  }
+
+  static create(width: number, height: number, buffer: Float64Array): Result<Matrix, Error> {
+    if (width < 0) {
+      return err(Error(`width(${width}) < 0`))
+    }
+    if (height < 0) {
+      return err(Error(`height(${height}) < 0`))
+    }
+    if (width * height * 2 !== buffer.length) {
+      return err(Error(`width(${width})*height(${height})*2 !== buffer.length(${buffer.length})`))
+    }
+
+    return ok(new Matrix(width, height, buffer))
   }
 
   constructor(width: number, height: number, buffer: Float64Array) {
-    if (width * height * 2 !== buffer.length) {
-      throw new DetailedError('width*height*2 !== buffer.length', {
-        width,
-        height,
-        len: buffer.length,
-      })
-    }
     this.width = width
     this.height = height
     this.buffer = buffer
   }
 
-  columnAt(colIndex: number): Complex[] {
-    Util.need(colIndex >= 0 && colIndex <= this.width, 'colIndex >= 0 && colIndex <= this.width')
+  columnAt(colIndex: number): Result<Complex[], Error> {
+    if (colIndex < 0) {
+      return err(Error('colIndex < 0'))
+    }
+    if (colIndex < 0 || colIndex > this.width) {
+      return err(Error('colIndex > this.width'))
+    }
+
     const col = []
     for (let r = 0; r < this.height; r++) {
       col.push(this.cell(colIndex, r))
     }
-    return col
+    return ok(col)
   }
 
   adjoint(): Matrix {
     const w = this.height
     const h = this.width
     const newBuf = new Float64Array(w * h * 2)
+
     for (let r = 0; r < h; r++) {
       for (let c = 0; c < w; c++) {
         const kIn = (c * this.width + r) * 2
@@ -161,6 +181,7 @@ export class Matrix {
         newBuf[kOut + 1] = -this.buffer[kIn + 1]
       }
     }
+
     return new Matrix(w, h, newBuf)
   }
 
