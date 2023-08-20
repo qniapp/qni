@@ -33,6 +33,25 @@ export class Matrix {
   }
 
   /**
+   * Returns an identity matrix of the specified size.
+   *
+   * @param size - The size of the identity matrix
+   * @returns A result object with the generated identity matrix or an error
+   */
+  static identity(size: number): Result<Matrix, Error> {
+    if (!Number.isInteger(size) || size <= 0) {
+      return err(Error(`Bad size ${size}`))
+    }
+
+    const buf = new Float64Array(size * size * 2)
+    for (let i = 0; i < size; i++) {
+      buf[i * (size + 1) * 2] = 1
+    }
+
+    return ok(new Matrix(size, size, buf))
+  }
+
+  /**
    * Generates a 1x1 matrix.
    *
    * @param element - The element of the matrix
@@ -43,7 +62,7 @@ export class Matrix {
   }
 
   /**
-   * Generates a square matrix with the specified elements.
+   * Returns a square matrix with the specified elements.
    *
    * @param elements - The elements of the matrix
    * @returns A result object with the generated square matrix or an error
@@ -94,17 +113,6 @@ export class Matrix {
   static row(...coefs: Array<number | Complex>): Matrix {
     Util.need(Array.isArray(coefs), 'Array.isArray(coefs)', coefs)
     return Matrix.generate(coefs.length, 1, (r, c) => coefs[c])
-  }
-
-  static identity(size: number): Matrix {
-    if (!Number.isInteger(size) || size <= 0) {
-      throw new DetailedError('Bad size', {size})
-    }
-    const buf = new Float64Array(size * size * 2)
-    for (let k = 0; k < size; k++) {
-      buf[k * (size + 1) * 2] = 1
-    }
-    return new Matrix(size, size, buf)
   }
 
   constructor(width: number, height: number, buffer: Float64Array) {
