@@ -5,6 +5,13 @@ import {Matrix} from '../src/matrix'
 import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
+  test('zero', () => {
+    expect(Matrix.zero(1, 1).toString()).toBe('{{0}}')
+    expect(Matrix.zero(2, 1).toString()).toBe('{{0, 0}}')
+    expect(Matrix.zero(1, 2).toString()).toBe('{{0}, {0}}')
+    expect(Matrix.zero(2, 2).toString()).toBe('{{0, 0}, {0, 0}}')
+  })
+
   test('generate', () => {
     expect(Matrix.generate(3, 2, (r, c) => r + 10 * c).toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
   })
@@ -153,13 +160,6 @@ describe('Matrix', () => {
         '{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}',
       ),
     ).toBeTruthy()
-  })
-
-  test('zero', () => {
-    expect(equate(Matrix.zero(1, 1).toString(), '{{0}}')).toBeTruthy()
-    expect(equate(Matrix.zero(2, 1).toString(), '{{0, 0}}')).toBeTruthy()
-    expect(equate(Matrix.zero(1, 2).toString(), '{{0}, {0}}')).toBeTruthy()
-    expect(equate(Matrix.zero(2, 2).toString(), '{{0, 0}, {0, 0}}')).toBeTruthy()
   })
 
   test('columnAt', () => {

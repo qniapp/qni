@@ -22,6 +22,17 @@ export class Matrix {
   public buffer: Float64Array
 
   /**
+   * Returns a matrix with all zero elements.
+   *
+   * @param width - The width of the matrix
+   * @param height - The height of the matrix
+   * @returns A matrix with all zero elements
+   */
+  static zero(width: number, height: number): Matrix {
+    return new Matrix(width, height, new Float64Array(width * height * 2))
+  }
+
+  /**
    * Generates a 1x1 matrix.
    *
    * @param element - The element of the matrix
@@ -94,10 +105,6 @@ export class Matrix {
       buf[k * (size + 1) * 2] = 1
     }
     return new Matrix(size, size, buf)
-  }
-
-  static zero(width: number, height: number): Matrix {
-    return new Matrix(width, height, new Float64Array(width * height * 2))
   }
 
   constructor(width: number, height: number, buffer: Float64Array) {
