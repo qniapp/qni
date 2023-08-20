@@ -12,7 +12,7 @@ const mi = i.neg()
  *            | 1 -1 |
  * ```
  */
-export const H = Matrix.square(1, 1, 1, -1)._unsafeUnwrap().times(Math.sqrt(0.5))
+export const H = safeSquareMatrix(1, 1, 1, -1).times(Math.sqrt(0.5))
 
 /**
  * Pauli X gate.
@@ -22,7 +22,7 @@ export const H = Matrix.square(1, 1, 1, -1)._unsafeUnwrap().times(Math.sqrt(0.5)
  *     | 1 0 |
  * ```
  */
-export const X = Matrix.square(0, 1, 1, 0)._unsafeUnwrap()
+export const X = safeSquareMatrix(0, 1, 1, 0)
 
 /**
  * Pauli Y gate.
@@ -32,7 +32,7 @@ export const X = Matrix.square(0, 1, 1, 0)._unsafeUnwrap()
  *     | i  0 |
  * ```
  */
-export const Y = Matrix.square(0, mi, i, 0)._unsafeUnwrap()
+export const Y = safeSquareMatrix(0, mi, i, 0)
 
 /**
  * Pauli Z gate.
@@ -42,7 +42,7 @@ export const Y = Matrix.square(0, mi, i, 0)._unsafeUnwrap()
  *     | 0 -1 |
  * ```
  */
-export const Z = Matrix.square(1, 0, 0, -1)._unsafeUnwrap()
+export const Z = safeSquareMatrix(1, 0, 0, -1)
 
 /**
  * S gate.
@@ -52,7 +52,7 @@ export const Z = Matrix.square(1, 0, 0, -1)._unsafeUnwrap()
  *     | 0 i |
  * ```
  */
-export const S = Matrix.square(1, 0, 0, i)._unsafeUnwrap()
+export const S = safeSquareMatrix(1, 0, 0, i)
 
 /**
  * S† gate.
@@ -72,7 +72,7 @@ export const SDagger = S.adjoint()
  *     | 0  exp(iπ/4) |
  * ```
  */
-export const T = Matrix.square(1, 0, 0, i.times(Math.PI / 4).exp())._unsafeUnwrap()
+export const T = safeSquareMatrix(1, 0, 0, i.times(Math.PI / 4).exp())
 
 /**
  * T† gate.
@@ -95,7 +95,7 @@ export const TDagger = T.adjoint()
 export function PHASE(phi: string): Matrix {
   const φ = radian(phi)
 
-  return Matrix.square(1, 0, 0, i.times(φ).exp())._unsafeUnwrap()
+  return safeSquareMatrix(1, 0, 0, i.times(φ).exp())
 }
 
 /**
@@ -106,7 +106,7 @@ export function PHASE(phi: string): Matrix {
  *            | 1-i 1+i |
  * ```
  */
-export const RNOT = Matrix.square(i.plus(1), mi.plus(1), mi.plus(1), i.plus(1))._unsafeUnwrap().times(0.5)
+export const RNOT = safeSquareMatrix(i.plus(1), mi.plus(1), mi.plus(1), i.plus(1)).times(0.5)
 
 /**
  * Rx gate.
@@ -128,7 +128,7 @@ export function RX(theta: string): Matrix {
   const cosθ2 = Math.cos(θ / 2)
   const sinθ2 = Math.sin(θ / 2)
 
-  return Matrix.square(cosθ2, mi.times(sinθ2), mi.times(sinθ2), cosθ2)._unsafeUnwrap()
+  return safeSquareMatrix(cosθ2, mi.times(sinθ2), mi.times(sinθ2), cosθ2)
 }
 
 /**
@@ -151,7 +151,7 @@ export function RY(theta: string): Matrix {
   const cosθ2 = Math.cos(θ / 2)
   const sinθ2 = Math.sin(θ / 2)
 
-  return Matrix.square(cosθ2, -sinθ2, sinθ2, cosθ2)._unsafeUnwrap()
+  return safeSquareMatrix(cosθ2, -sinθ2, sinθ2, cosθ2)
 }
 
 /**
@@ -172,5 +172,15 @@ export function RY(theta: string): Matrix {
 export function RZ(theta: string): Matrix {
   const θ = radian(theta)
 
-  return Matrix.square(mi.times(θ / 2).exp(), 0, 0, i.times(θ / 2).exp())._unsafeUnwrap()
+  return safeSquareMatrix(mi.times(θ / 2).exp(), 0, 0, i.times(θ / 2).exp())
+}
+
+function safeSquareMatrix(...elements: Array<number | Complex>): Matrix {
+  const res = Matrix.square(...elements)
+
+  if (res.isOk()) {
+    return res.value
+  }
+
+  throw res.error
 }
