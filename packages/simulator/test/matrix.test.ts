@@ -6,10 +6,10 @@ import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
   test('zero', () => {
-    expect(Matrix.zero(1, 1).toString()).toBe('{{0}}')
-    expect(Matrix.zero(2, 1).toString()).toBe('{{0, 0}}')
-    expect(Matrix.zero(1, 2).toString()).toBe('{{0}, {0}}')
-    expect(Matrix.zero(2, 2).toString()).toBe('{{0, 0}, {0, 0}}')
+    expect(Matrix.zero(1, 1)._unsafeUnwrap().toString()).toBe('{{0}}')
+    expect(Matrix.zero(2, 1)._unsafeUnwrap().toString()).toBe('{{0, 0}}')
+    expect(Matrix.zero(1, 2)._unsafeUnwrap().toString()).toBe('{{0}, {0}}')
+    expect(Matrix.zero(2, 2)._unsafeUnwrap().toString()).toBe('{{0, 0}, {0, 0}}')
   })
 
   test('solo', () => {

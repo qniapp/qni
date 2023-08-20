@@ -16,12 +16,6 @@ const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
   itemSeparator: ', ',
 }
 
-export type NonNegativeInteger<T extends number> = number extends T
-  ? never
-  : `${T}` extends `-${string}` | `${string}.${string}`
-  ? never
-  : T
-
 export class Matrix {
   public width: number
   public height: number
@@ -34,8 +28,8 @@ export class Matrix {
    * @param height - The height of the matrix
    * @returns A matrix with all zero elements
    */
-  static zero<N extends number>(width: NonNegativeInteger<N>, height: number): Matrix {
-    return new Matrix(width, height, new Float64Array(width * height * 2))
+  static zero(width: number, height: number): Result<Matrix, Error> {
+    return Matrix.create(width, height, new Float64Array(width * height * 2))
   }
 
   /**
@@ -45,7 +39,7 @@ export class Matrix {
    * @returns A 1x1 matrix
    */
   static solo(element: number | Complex): Matrix {
-    return new Matrix(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))
+    return Matrix.create(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))._unsafeUnwrap()
   }
 
   /**
@@ -141,15 +135,7 @@ export class Matrix {
     return ok(new Matrix(width, height, buffer))
   }
 
-  // TODO: すべて Matrix.create() 経由で生成するように修正
   constructor(width: number, height: number, buffer: Float64Array) {
-    if (width * height * 2 !== buffer.length) {
-      throw new DetailedError('width*height*2 !== buffer.length', {
-        width,
-        height,
-        len: buffer.length,
-      })
-    }
     this.width = width
     this.height = height
     this.buffer = buffer
