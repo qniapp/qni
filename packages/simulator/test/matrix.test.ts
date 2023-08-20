@@ -1,6 +1,6 @@
 import {Complex, Format, equate} from '@qni/common'
 import {H, X, Y, Z} from '../src/gate-matrices'
-import {Matrix, NonNegativeInteger} from '../src/matrix'
+import {Matrix} from '../src/matrix'
 // eslint-disable-next-line import/no-nodejs-modules
 import {performance} from 'perf_hooks'
 

@@ -34,7 +34,7 @@ export class Matrix {
    * @param height - The height of the matrix
    * @returns A matrix with all zero elements
    */
-  static zero(width: number, height: number): Matrix {
+  static zero<N extends number>(width: NonNegativeInteger<N>, height: number): Matrix {
     return new Matrix(width, height, new Float64Array(width * height * 2))
   }
 
