@@ -1,5 +1,6 @@
 import {Complex, DetailedError, Format, Util} from '@qni/common'
 import {range} from 'fp-ts/NonEmptyArray'
+import {ok, err, Result} from 'neverthrow'
 
 type FormatOptions = {
   allowAbbreviation?: boolean
@@ -23,8 +24,8 @@ export class Matrix {
   /**
    * Generates a 1x1 matrix.
    *
-   * @param element - The element of the matrix.
-   * @returns A 1x1 Matrix.
+   * @param element - The element of the matrix
+   * @returns A 1x1 matrix
    */
   static solo(element: number | Complex): Matrix {
     return new Matrix(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))
@@ -33,14 +34,16 @@ export class Matrix {
   /**
    * Generates a square matrix with the specified elements.
    *
-   * @param elements - The elements of the matrix.
-   * @returns A square matrix with the specified elements.
+   * @param elements - The elements of the matrix
+   * @returns A result object with the generated square matrix or an error
    */
-  static square(...elements: Array<number | Complex>): Matrix {
+  static square(...elements: Array<number | Complex>): Result<Matrix, Error> {
     const n = Math.round(Math.sqrt(elements.length))
-    Util.need(n * n === elements.length, 'Matrix.square: non-square number of arguments')
+    if (n * n !== elements.length) {
+      return err(Error('Matrix.square: non-square number of arguments'))
+    }
 
-    return Matrix.generate(n, n, (row, col) => elements[row * n + col])
+    return ok(Matrix.generate(n, n, (row, col) => elements[row * n + col]))
   }
 
   /**
