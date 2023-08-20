@@ -40,6 +40,9 @@ describe('Matrix', () => {
         [-5.5, 0],
       ]),
     ).toBeTruthy()
+
+    const mErr = Matrix.square(1, 1)
+    expect(mErr.isErr).toBeTruthy()
   })
 
   test('generate', () => {
