@@ -206,9 +206,17 @@ describe('Matrix', () => {
 
   test('columnAt', () => {
     const m = squareMatrix(2, 3, 5, 7)
-    expect(equate(m.columnAt(0), [2, 5])).toBeTruthy()
-    expect(equate(m.columnAt(1), [3, 7])).toBeTruthy()
-    expect(equate(Matrix.col(1, 2, 3).columnAt(0), [1, 2, 3])).toBeTruthy()
+    expect(equate(m.columnAt(0)._unsafeUnwrap(), [2, 5])).toBeTruthy()
+    expect(equate(m.columnAt(1)._unsafeUnwrap(), [3, 7])).toBeTruthy()
+    expect(equate(Matrix.col(1, 2, 3).columnAt(0)._unsafeUnwrap(), [1, 2, 3])).toBeTruthy()
+
+    const resErrNegativeIndex = m.columnAt(-1)
+    expect(resErrNegativeIndex.isErr()).toBeTruthy()
+    expect(resErrNegativeIndex._unsafeUnwrapErr().message).toBe('colIndex < 0')
+
+    const resErrIndexTooLarge = m.columnAt(100)
+    expect(resErrIndexTooLarge.isErr()).toBeTruthy()
+    expect(resErrIndexTooLarge._unsafeUnwrapErr().message).toBe('colIndex > this.width')
   })
 
   test('size', () => {

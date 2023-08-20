@@ -153,13 +153,19 @@ export class Matrix {
     this.buffer = buffer
   }
 
-  columnAt(colIndex: number): Complex[] {
-    Util.need(colIndex >= 0 && colIndex <= this.width, 'colIndex >= 0 && colIndex <= this.width')
+  columnAt(colIndex: number): Result<Complex[], Error> {
+    if (colIndex < 0) {
+      return err(Error('colIndex < 0'))
+    }
+    if (colIndex < 0 || colIndex > this.width) {
+      return err(Error('colIndex > this.width'))
+    }
+
     const col = []
     for (let r = 0; r < this.height; r++) {
       col.push(this.cell(colIndex, r))
     }
-    return col
+    return ok(col)
   }
 
   adjoint(): Matrix {

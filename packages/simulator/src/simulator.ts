@@ -2462,7 +2462,7 @@ export class Simulator {
   }
 
   amplitudes(): Complex[] {
-    return this.state.matrix.columnAt(0)
+    return this.state.matrix.columnAt(0)._unsafeUnwrap()
   }
 
   private u(u: Matrix, ...targets: number[]): void {
