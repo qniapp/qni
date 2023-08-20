@@ -9,27 +9,42 @@ describe('Matrix', () => {
     expect(Matrix.generate(3, 2, (r, c) => r + 10 * c).toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
   })
 
+  test('solo', () => {
+    expect(equate(Matrix.solo(1).rows(), [[1]])).toBeTruthy()
+  })
+
+  test('square', () => {
+    const m = Matrix.square(1, new Complex(2, 3), -5.5, 0)._unsafeUnwrap()
+
+    expect(
+      equate(m.rows(), [
+        [1, new Complex(2, 3)],
+        [-5.5, 0],
+      ]),
+    ).toBeTruthy()
+  })
+
   test('isEqualTo', () => {
-    const m = Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
+    const m = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     expect(equate(m, m)).toBeTruthy()
     expect(equate(m, null)).toBeFalsy()
     expect(equate(m, '')).toBeFalsy()
 
     expect(
-      equate(m, Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))),
+      equate(m, squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))),
     ).toBeTruthy()
     expect(equate(m, Matrix.solo(new Complex(2, 3)))).toBeFalsy()
     expect(
-      equate(m, Matrix.square(new Complex(-2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))),
+      equate(m, squareMatrix(new Complex(-2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))),
     ).toBeFalsy()
     expect(
-      equate(m, Matrix.square(new Complex(2, 3), new Complex(-5, 7), new Complex(11, 13), new Complex(17, 19))),
+      equate(m, squareMatrix(new Complex(2, 3), new Complex(-5, 7), new Complex(11, 13), new Complex(17, 19))),
     ).toBeFalsy()
     expect(
-      equate(m, Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(-11, 13), new Complex(17, 19))),
+      equate(m, squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(-11, 13), new Complex(17, 19))),
     ).toBeFalsy()
     expect(
-      equate(m, Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(-17, 19))),
+      equate(m, squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(-17, 19))),
     ).toBeFalsy()
 
     const col = Matrix.col(new Complex(2, 3), new Complex(5, 7))
@@ -42,7 +57,7 @@ describe('Matrix', () => {
   test('isApproximatelyEqualTo', () => {
     // Size must match
     expect(Matrix.row(1, 1).isApproximatelyEqualTo(Matrix.col(1, 1), 0)).toBeFalsy()
-    expect(Matrix.row(1, 1).isApproximatelyEqualTo(Matrix.square(1, 1, 1, 1), 0)).toBeFalsy()
+    expect(Matrix.row(1, 1).isApproximatelyEqualTo(squareMatrix(1, 1, 1, 1), 0)).toBeFalsy()
     expect(Matrix.row(1, 1).isApproximatelyEqualTo(Matrix.row(1, 1, 1), 0)).toBeFalsy()
     expect(Matrix.row(1, 1).isApproximatelyEqualTo(Matrix.row(1, 1), 0)).toBeTruthy()
 
@@ -67,20 +82,20 @@ describe('Matrix', () => {
   test('format', () => {
     expect(equate(Matrix.solo(2).format(), '{{2}}')).toBeTruthy()
     expect(
-      equate(Matrix.square(1, 0, new Complex(0, -1), new Complex(2, -3)).format(), '{{1, 0}, {-i, 2-3i}}'),
+      equate(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).format(), '{{1, 0}, {-i, 2-3i}}'),
     ).toBeTruthy()
-    expect(equate(Matrix.square(1, 0, 0, 1).format(), '{{1, 0}, {0, 1}}')).toBeTruthy()
+    expect(equate(squareMatrix(1, 0, 0, 1).format(), '{{1, 0}, {0, 1}}')).toBeTruthy()
     expect(equate(Matrix.identity(3).format(), '{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')).toBeTruthy()
 
     expect(
       equate(
-        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format(),
+        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format(),
         '{{0, 1}, {⅓+i, 0.3333334333333333i}}',
       ),
     ).toBeTruthy()
     expect(
       equate(
-        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
           maxAbbreviationError: 0.0005,
           fixedDigits: 3,
         }),
@@ -89,7 +104,7 @@ describe('Matrix', () => {
     ).toBeTruthy()
     expect(
       equate(
-        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
           itemSeparator: ',',
         }),
         '{{0,1},{⅓+i,0.3333334333333333i}}',
@@ -97,7 +112,7 @@ describe('Matrix', () => {
     ).toBeTruthy()
     expect(
       equate(
-        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
           allowAbbreviation: false,
           fixedDigits: 2,
         }),
@@ -109,32 +124,32 @@ describe('Matrix', () => {
   test('toString', () => {
     expect(equate(Matrix.solo(2).toString(), '{{2}}')).toBeTruthy()
     expect(
-      equate(Matrix.square(1, 0, new Complex(0, -1), new Complex(2, -3)).toString(), '{{1, 0}, {-i, 2-3i}}'),
+      equate(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).toString(), '{{1, 0}, {-i, 2-3i}}'),
     ).toBeTruthy()
-    expect(equate(Matrix.square(1, 0, 0, 1).toString(), '{{1, 0}, {0, 1}}')).toBeTruthy()
+    expect(equate(squareMatrix(1, 0, 0, 1).toString(), '{{1, 0}, {0, 1}}')).toBeTruthy()
     expect(equate(Matrix.identity(3).toString(), '{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')).toBeTruthy()
 
     expect(
       equate(
-        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.EXACT),
+        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.EXACT),
         '{{0, 1}, {⅓+i, 0.3333334333333333i}}',
       ),
     ).toBeTruthy()
     expect(
       equate(
-        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.SIMPLIFIED),
+        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.SIMPLIFIED),
         '{{0, 1}, {⅓+i, ⅓i}}',
       ),
     ).toBeTruthy()
     expect(
       equate(
-        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.MINIFIED),
+        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.MINIFIED),
         '{{0,1},{⅓+i,0.3333334333333333i}}',
       ),
     ).toBeTruthy()
     expect(
       equate(
-        Matrix.square(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.CONSISTENT),
+        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.CONSISTENT),
         '{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}',
       ),
     ).toBeTruthy()
@@ -148,22 +163,10 @@ describe('Matrix', () => {
   })
 
   test('columnAt', () => {
-    const m = Matrix.square(2, 3, 5, 7)
+    const m = squareMatrix(2, 3, 5, 7)
     expect(equate(m.columnAt(0), [2, 5])).toBeTruthy()
     expect(equate(m.columnAt(1), [3, 7])).toBeTruthy()
     expect(equate(Matrix.col(1, 2, 3).columnAt(0), [1, 2, 3])).toBeTruthy()
-  })
-
-  test('square', () => {
-    const m = Matrix.square(1, new Complex(2, 3), -5.5, 0)
-    expect(
-      equate(m.rows(), [
-        [1, new Complex(2, 3)],
-        [-5.5, 0],
-      ]),
-    ).toBeTruthy()
-
-    expect(equate(Matrix.solo(1).rows(), [[1]])).toBeTruthy()
   })
 
   test('col', () => {
@@ -202,30 +205,30 @@ describe('Matrix', () => {
     expect(Matrix.solo(i).isHermitian(0.5)).toBeFalsy()
     expect(Matrix.solo(i).isHermitian(999)).toBeTruthy()
 
-    expect(Matrix.square(1, 0, 0, 1).isHermitian(0)).toBeTruthy()
-    expect(Matrix.square(1, 1, 1, 1).isHermitian(0)).toBeTruthy()
-    expect(Matrix.square(1, 1, 1.5, 1).isHermitian(0)).toBeFalsy()
-    expect(Matrix.square(1, 1, 1.5, 1).isHermitian(0.5)).toBeTruthy()
+    expect(squareMatrix(1, 0, 0, 1).isHermitian(0)).toBeTruthy()
+    expect(squareMatrix(1, 1, 1, 1).isHermitian(0)).toBeTruthy()
+    expect(squareMatrix(1, 1, 1.5, 1).isHermitian(0)).toBeFalsy()
+    expect(squareMatrix(1, 1, 1.5, 1).isHermitian(0.5)).toBeTruthy()
 
-    expect(Matrix.square(1, i, i, 1).isHermitian(0)).toBeFalsy()
-    expect(Matrix.square(1, i, i.neg(), 1).isHermitian(0)).toBeTruthy()
-    expect(Matrix.square(1, i.neg(), i, 1).isHermitian(0)).toBeTruthy()
-    expect(Matrix.square(1, i, i.times(-1.5), 1).isHermitian(0)).toBeFalsy()
-    expect(Matrix.square(1, i, i.times(-1.5), 1).isHermitian(0.5)).toBeTruthy()
+    expect(squareMatrix(1, i, i, 1).isHermitian(0)).toBeFalsy()
+    expect(squareMatrix(1, i, i.neg(), 1).isHermitian(0)).toBeTruthy()
+    expect(squareMatrix(1, i.neg(), i, 1).isHermitian(0)).toBeTruthy()
+    expect(squareMatrix(1, i, i.times(-1.5), 1).isHermitian(0)).toBeFalsy()
+    expect(squareMatrix(1, i, i.times(-1.5), 1).isHermitian(0.5)).toBeTruthy()
   })
 
   test('adjoint', () => {
-    const v = Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
-    const a = Matrix.square(new Complex(2, -3), new Complex(11, -13), new Complex(5, -7), new Complex(17, -19))
+    const v = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
+    const a = squareMatrix(new Complex(2, -3), new Complex(11, -13), new Complex(5, -7), new Complex(17, -19))
     expect(equate(v.adjoint(), a)).toBeTruthy()
     expect(equate(Matrix.col(1, 2, Complex.I).adjoint(), Matrix.row(1, 2, Complex.I.neg()))).toBeTruthy()
   })
 
   test('times_scalar', () => {
-    const v = Matrix.square(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
-    const a = Matrix.square(new Complex(-2, -3), new Complex(-5, -7), new Complex(-11, -13), new Complex(-17, -19))
+    const v = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
+    const a = squareMatrix(new Complex(-2, -3), new Complex(-5, -7), new Complex(-11, -13), new Complex(-17, -19))
     expect(equate(v.times(-1), a)).toBeTruthy()
-    expect(equate(v.times(0), Matrix.square(0, 0, 0, 0))).toBeTruthy()
+    expect(equate(v.times(0), squareMatrix(0, 0, 0, 0))).toBeTruthy()
     expect(equate(v.times(1), v)).toBeTruthy()
 
     expect(equate(Matrix.col(2, 3).times(5), Matrix.col(10, 15))).toBeTruthy()
@@ -234,27 +237,22 @@ describe('Matrix', () => {
 
   test('plus', () => {
     expect(
-      equate(Matrix.square(2, 3, 5, 7).plus(Matrix.square(11, 13, 17, 19)), Matrix.square(13, 16, 22, 26)),
+      equate(squareMatrix(2, 3, 5, 7).plus(squareMatrix(11, 13, 17, 19)), squareMatrix(13, 16, 22, 26)),
     ).toBeTruthy()
   })
 
   test('minus', () => {
     expect(
-      equate(Matrix.square(2, 3, 5, 7).minus(Matrix.square(11, 13, 17, 19)), Matrix.square(-9, -10, -12, -12)),
+      equate(squareMatrix(2, 3, 5, 7).minus(squareMatrix(11, 13, 17, 19)), squareMatrix(-9, -10, -12, -12)),
     ).toBeTruthy()
   })
 
   test('times_matrix', () => {
     expect(
-      equate(Matrix.square(2, 3, 5, 7).times(Matrix.square(11, 13, 17, 19)), Matrix.square(73, 83, 174, 198)),
+      equate(squareMatrix(2, 3, 5, 7).times(squareMatrix(11, 13, 17, 19)), squareMatrix(73, 83, 174, 198)),
     ).toBeTruthy()
 
-    const x = Matrix.square(
-      new Complex(0.5, -0.5),
-      new Complex(0.5, 0.5),
-      new Complex(0.5, 0.5),
-      new Complex(0.5, -0.5),
-    )
+    const x = squareMatrix(new Complex(0.5, -0.5), new Complex(0.5, 0.5), new Complex(0.5, 0.5), new Complex(0.5, -0.5))
     expect(equate(x.times(x.adjoint()), Matrix.identity(2))).toBeTruthy()
     expect(equate(X.times(Y).times(Z).times(new Complex(0, -1)), Matrix.identity(2))).toBeTruthy()
   })
@@ -282,7 +280,7 @@ describe('Matrix', () => {
     expect(equate(Matrix.solo(2).norm2(), 4)).toBeTruthy()
     expect(equate(Matrix.row(1, 1).norm2(), 2)).toBeTruthy()
     expect(equate(Matrix.col(1, 1).norm2(), 2)).toBeTruthy()
-    expect(equate(Matrix.square(1, 2, 3, 4).norm2(), 30)).toBeTruthy()
+    expect(equate(squareMatrix(1, 2, 3, 4).norm2(), 30)).toBeTruthy()
   })
 
   test('tensorProduct', () => {
@@ -298,7 +296,7 @@ describe('Matrix', () => {
       equate(
         X.tensorProduct(Z),
         // prettier-ignore
-        Matrix.square(
+        squareMatrix(
                      0, 0, 1, 0,
                      0, 0, 0, -1,
                      1, 0, 0, 0,
@@ -308,9 +306,9 @@ describe('Matrix', () => {
     ).toBeTruthy()
     expect(
       equate(
-        Matrix.square(2, 3, 5, 7).tensorProduct(Matrix.square(11, 13, 17, 19)),
+        squareMatrix(2, 3, 5, 7).tensorProduct(squareMatrix(11, 13, 17, 19)),
         // prettier-ignore
-        Matrix.square(
+        squareMatrix(
                      22, 26, 33, 39,
                      34, 38, 51, 57,
                      55, 65, 77, 91,
@@ -370,18 +368,18 @@ describe('Matrix', () => {
     expect(equate(Y.trace(), 0)).toBeTruthy()
     expect(equate(Z.trace(), 0)).toBeTruthy()
     expect(equate(H.trace(), 0)).toBeTruthy()
-    expect(equate(Matrix.square(1, 2, 3, 4).trace(), 5)).toBeTruthy()
+    expect(equate(squareMatrix(1, 2, 3, 4).trace(), 5)).toBeTruthy()
 
-    expect(equate(Matrix.square(0, 1, 2, 3, 4, 5, 6, 7, 8).trace(), 12)).toBeTruthy()
+    expect(equate(squareMatrix(0, 1, 2, 3, 4, 5, 6, 7, 8).trace(), 12)).toBeTruthy()
   })
 
   test('qubitDensityMatrixToBlochVector', () => {
     expect(() => Matrix.solo(1).qubitDensityMatrixToBlochVector()).toThrow()
-    expect(() => Matrix.square(1, 0, 0, 0, 0, 0, 0, 0, 0).qubitDensityMatrixToBlochVector()).toThrow()
+    expect(() => squareMatrix(1, 0, 0, 0, 0, 0, 0, 0, 0).qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => Matrix.identity(2).qubitDensityMatrixToBlochVector()).toThrow()
-    expect(() => Matrix.square(1, 1, -1, 0).qubitDensityMatrixToBlochVector()).toThrow()
-    expect(() => Matrix.square(1, 1, 0, 0).qubitDensityMatrixToBlochVector()).toThrow()
-    expect(() => Matrix.square(1, Complex.I, Complex.I, 0).qubitDensityMatrixToBlochVector()).toThrow()
+    expect(() => squareMatrix(1, 1, -1, 0).qubitDensityMatrixToBlochVector()).toThrow()
+    expect(() => squareMatrix(1, 1, 0, 0).qubitDensityMatrixToBlochVector()).toThrow()
+    expect(() => squareMatrix(1, Complex.I, Complex.I, 0).qubitDensityMatrixToBlochVector()).toThrow()
 
     // Maximally mixed state.
     expect(equate(Matrix.identity(2).times(0.5).qubitDensityMatrixToBlochVector(), [0, 0, 0])).toBeTruthy()
@@ -398,3 +396,13 @@ describe('Matrix', () => {
     expect(equate(f(1, mi).times(0.5).qubitDensityMatrixToBlochVector(), [0, -1, 0])).toBeTruthy()
   })
 })
+
+function squareMatrix(...elements: Array<number | Complex>): Matrix {
+  const res = Matrix.square(...elements)
+
+  if (res.isOk()) {
+    return res.value
+  }
+
+  throw res.error
+}
