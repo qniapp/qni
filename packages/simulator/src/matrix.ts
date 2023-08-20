@@ -55,7 +55,7 @@ export class Matrix {
    * @returns A column vector (Matrix with 1 column)
    */
   static col(...elements: Array<number | Complex>): Matrix {
-    return Matrix.generate(1, elements.length, row => elements[row])
+    return Matrix.generate(1, elements.length, row => elements[row])._unsafeUnwrap()
   }
 
   /**
@@ -65,7 +65,7 @@ export class Matrix {
    * @returns A row vector (Matrix with 1 row)
    */
   static row(...elements: Array<number | Complex>): Matrix {
-    return Matrix.generate(elements.length, 1, (_row, col) => elements[col])
+    return Matrix.generate(elements.length, 1, (_row, col) => elements[col])._unsafeUnwrap()
   }
 
   /**
@@ -74,13 +74,13 @@ export class Matrix {
    * @param size - The size of the identity matrix
    * @returns A result object with the generated identity matrix or an error
    */
-  static identity<N extends number>(size: NonNegativeInteger<N>): Matrix {
+  static identity(size: number): Result<Matrix, Error> {
     const buf = new Float64Array(size * size * 2)
     for (let i = 0; i < size; i++) {
       buf[i * (size + 1) * 2] = 1
     }
 
-    return new Matrix(size, size, buf)
+    return Matrix.create(size, size, buf)
   }
 
   /**
@@ -95,7 +95,7 @@ export class Matrix {
       return err(Error('Matrix.square: non-square number of arguments'))
     }
 
-    return ok(Matrix.generate(n, n, (row, col) => elements[row * n + col]))
+    return Matrix.generate(n, n, (row, col) => elements[row * n + col])
   }
 
   /**
@@ -111,7 +111,7 @@ export class Matrix {
     width: number,
     height: number,
     matrixElementGenerator: (row: number, col: number) => number | Complex,
-  ): Matrix {
+  ): Result<Matrix, Error> {
     const buf = new Float64Array(width * height * 2)
 
     for (let row = 0; row < height; row++) {
@@ -124,10 +124,16 @@ export class Matrix {
       }
     }
 
-    return Matrix.create(width, height, buf)._unsafeUnwrap()
+    return Matrix.create(width, height, buf)
   }
 
   static create(width: number, height: number, buffer: Float64Array): Result<Matrix, Error> {
+    if (width < 0) {
+      return err(Error(`width(${width}) < 0`))
+    }
+    if (height < 0) {
+      return err(Error(`height(${height}) < 0`))
+    }
     if (width * height * 2 !== buffer.length) {
       return err(Error(`width(${width})*height(${height})*2 !== buffer.length(${buffer.length})`))
     }
