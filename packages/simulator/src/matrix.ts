@@ -153,6 +153,20 @@ export class Matrix {
     this.buffer = buffer
   }
 
+  element(col: number, row: number): Complex {
+    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
+      throw new DetailedError('Element out of range', {
+        col,
+        row,
+        width: this.width,
+        height: this.height,
+      })
+    }
+
+    const i = (this.width * row + col) * 2
+    return new Complex(this.buffer[i], this.buffer[i + 1])
+  }
+
   columnAt(colIndex: number): Result<Complex[], Error> {
     if (colIndex < 0) {
       return err(Error('colIndex < 0'))
@@ -163,7 +177,7 @@ export class Matrix {
 
     const col = []
     for (let r = 0; r < this.height; r++) {
-      col.push(this.cell(colIndex, r))
+      col.push(this.element(colIndex, r))
     }
     return ok(col)
   }
@@ -290,21 +304,8 @@ export class Matrix {
 
   rows(): Complex[][] {
     return range(0, this.height - 1).map<Complex[]>(row =>
-      range(0, this.width - 1).map<Complex>(col => this.cell(col, row)),
+      range(0, this.width - 1).map<Complex>(col => this.element(col, row)),
     )
-  }
-
-  cell(col: number, row: number): Complex {
-    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
-      throw new DetailedError('Cell out of range', {
-        col,
-        row,
-        width: this.width,
-        height: this.height,
-      })
-    }
-    const i = (this.width * row + col) * 2
-    return new Complex(this.buffer[i], this.buffer[i + 1])
   }
 
   set(col: number, row: number, value: Complex): void {
