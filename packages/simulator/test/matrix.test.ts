@@ -12,19 +12,23 @@ describe('Matrix', () => {
     expect(Matrix.zero(2, 2).toString()).toBe('{{0, 0}, {0, 0}}')
   })
 
-  test('generate', () => {
-    expect(Matrix.generate(3, 2, (row, col) => row + 10 * col).toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
-  })
-
   test('solo', () => {
     expect(equate(Matrix.solo(1).rows(), [[1]])).toBeTruthy()
   })
 
+  test('col', () => {
+    expect(Matrix.col(2, 3, new Complex(0, 5)).toString()).toBe('{{2}, {3}, {5i}}')
+  })
+
+  test('row', () => {
+    expect(Matrix.row(2, 3, new Complex(0, 5)).toString()).toBe('{{2, 3, 5i}}')
+  })
+
   test('identity', () => {
-    expect(idMatrix(1).toString()).toBe('{{1}}')
-    expect(idMatrix(2).toString()).toBe('{{1, 0}, {0, 1}}')
-    expect(idMatrix(3).toString()).toBe('{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')
-    expect(idMatrix(4).toString()).toBe('{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}')
+    expect(Matrix.identity(1).toString()).toBe('{{1}}')
+    expect(Matrix.identity(2).toString()).toBe('{{1, 0}, {0, 1}}')
+    expect(Matrix.identity(3).toString()).toBe('{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')
+    expect(Matrix.identity(4).toString()).toBe('{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}')
   })
 
   test('square', () => {
@@ -36,6 +40,13 @@ describe('Matrix', () => {
         [-5.5, 0],
       ]),
     ).toBeTruthy()
+
+    const mErr = Matrix.square(1, 1)
+    expect(mErr.isErr).toBeTruthy()
+  })
+
+  test('generate', () => {
+    expect(Matrix.generate(3, 2, (row, col) => row + 10 * col).toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
   })
 
   test('isEqualTo', () => {
@@ -99,7 +110,7 @@ describe('Matrix', () => {
       equate(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).format(), '{{1, 0}, {-i, 2-3i}}'),
     ).toBeTruthy()
     expect(equate(squareMatrix(1, 0, 0, 1).format(), '{{1, 0}, {0, 1}}')).toBeTruthy()
-    expect(equate(idMatrix(3).format(), '{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')).toBeTruthy()
+    expect(equate(Matrix.identity(3).format(), '{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')).toBeTruthy()
 
     expect(
       equate(
@@ -141,7 +152,7 @@ describe('Matrix', () => {
       equate(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).toString(), '{{1, 0}, {-i, 2-3i}}'),
     ).toBeTruthy()
     expect(equate(squareMatrix(1, 0, 0, 1).toString(), '{{1, 0}, {0, 1}}')).toBeTruthy()
-    expect(equate(idMatrix(3).toString(), '{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')).toBeTruthy()
+    expect(equate(Matrix.identity(3).toString(), '{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')).toBeTruthy()
 
     expect(
       equate(
@@ -174,14 +185,6 @@ describe('Matrix', () => {
     expect(equate(m.columnAt(0), [2, 5])).toBeTruthy()
     expect(equate(m.columnAt(1), [3, 7])).toBeTruthy()
     expect(equate(Matrix.col(1, 2, 3).columnAt(0), [1, 2, 3])).toBeTruthy()
-  })
-
-  test('col', () => {
-    expect(equate(Matrix.col(2, 3, new Complex(0, 5)).toString(), '{{2}, {3}, {5i}}')).toBeTruthy()
-  })
-
-  test('row', () => {
-    expect(equate(Matrix.row(2, 3, new Complex(0, 5)).toString(), '{{2, 3, 5i}}')).toBeTruthy()
   })
 
   test('size', () => {
@@ -260,8 +263,8 @@ describe('Matrix', () => {
     ).toBeTruthy()
 
     const x = squareMatrix(new Complex(0.5, -0.5), new Complex(0.5, 0.5), new Complex(0.5, 0.5), new Complex(0.5, -0.5))
-    expect(equate(x.times(x.adjoint()), idMatrix(2))).toBeTruthy()
-    expect(equate(X.times(Y).times(Z).times(new Complex(0, -1)), idMatrix(2))).toBeTruthy()
+    expect(equate(x.times(x.adjoint()), Matrix.identity(2))).toBeTruthy()
+    expect(equate(X.times(Y).times(Z).times(new Complex(0, -1)), Matrix.identity(2))).toBeTruthy()
   })
 
   test('times_ColRow', () => {
@@ -359,8 +362,8 @@ describe('Matrix', () => {
 
   test('trace', () => {
     expect(equate(Matrix.solo(NaN).trace().abs(), NaN)).toBeTruthy()
-    expect(equate(idMatrix(2).trace(), 2)).toBeTruthy()
-    expect(equate(idMatrix(10).trace(), 10)).toBeTruthy()
+    expect(equate(Matrix.identity(2).trace(), 2)).toBeTruthy()
+    expect(equate(Matrix.identity(10).trace(), 10)).toBeTruthy()
 
     expect(equate(X.trace(), 0)).toBeTruthy()
     expect(equate(Y.trace(), 0)).toBeTruthy()
@@ -374,13 +377,13 @@ describe('Matrix', () => {
   test('qubitDensityMatrixToBlochVector', () => {
     expect(() => Matrix.solo(1).qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => squareMatrix(1, 0, 0, 0, 0, 0, 0, 0, 0).qubitDensityMatrixToBlochVector()).toThrow()
-    expect(() => idMatrix(2).qubitDensityMatrixToBlochVector()).toThrow()
+    expect(() => Matrix.identity(2).qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => squareMatrix(1, 1, -1, 0).qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => squareMatrix(1, 1, 0, 0).qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => squareMatrix(1, Complex.I, Complex.I, 0).qubitDensityMatrixToBlochVector()).toThrow()
 
     // Maximally mixed state.
-    expect(equate(idMatrix(2).times(0.5).qubitDensityMatrixToBlochVector(), [0, 0, 0])).toBeTruthy()
+    expect(equate(Matrix.identity(2).times(0.5).qubitDensityMatrixToBlochVector(), [0, 0, 0])).toBeTruthy()
 
     // Pure states as vectors along each axis.
     const f = (...m: Array<number | Complex>) => Matrix.col(...m).times(Matrix.col(...m).adjoint())
@@ -394,16 +397,6 @@ describe('Matrix', () => {
     expect(equate(f(1, mi).times(0.5).qubitDensityMatrixToBlochVector(), [0, -1, 0])).toBeTruthy()
   })
 })
-
-function idMatrix(size: number): Matrix {
-  const res = Matrix.identity(size)
-
-  if (res.isOk()) {
-    return res.value
-  }
-
-  throw res.error
-}
 
 function squareMatrix(...elements: Array<number | Complex>): Matrix {
   const res = Matrix.square(...elements)
