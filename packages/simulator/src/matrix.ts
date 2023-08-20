@@ -124,9 +124,18 @@ export class Matrix {
       }
     }
 
-    return new Matrix(width, height, buf)
+    return Matrix.create(width, height, buf)._unsafeUnwrap()
   }
 
+  static create(width: number, height: number, buffer: Float64Array): Result<Matrix, Error> {
+    if (width * height * 2 !== buffer.length) {
+      return err(Error(`width(${width})*height(${height})*2 !== buffer.length(${buffer.length})`))
+    }
+
+    return ok(new Matrix(width, height, buffer))
+  }
+
+  // TODO: すべて Matrix.create() 経由で生成するように修正
   constructor(width: number, height: number, buffer: Float64Array) {
     if (width * height * 2 !== buffer.length) {
       throw new DetailedError('width*height*2 !== buffer.length', {

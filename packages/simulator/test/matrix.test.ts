@@ -49,6 +49,13 @@ describe('Matrix', () => {
     expect(Matrix.generate(3, 2, (row, col) => row + 10 * col).toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
   })
 
+  test('create', () => {
+    const mErr = Matrix.create(1, 1, new Float64Array(100))
+
+    expect(mErr.isErr()).toBeTruthy()
+    expect(mErr._unsafeUnwrapErr().message).toBe('width(1)*height(1)*2 !== buffer.length(100)')
+  })
+
   test('isEqualTo', () => {
     const m = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     expect(equate(m, m)).toBeTruthy()
