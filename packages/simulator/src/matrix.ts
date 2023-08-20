@@ -39,7 +39,11 @@ export class Matrix {
    * @returns A 1x1 matrix
    */
   static solo(element: number | Complex): Matrix {
-    return Matrix.create(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))._unsafeUnwrap()
+    const res = Matrix.create(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))
+    if (res.isErr()) {
+      throw res.error
+    }
+    return res.value
   }
 
   /**
@@ -49,7 +53,11 @@ export class Matrix {
    * @returns A column vector (Matrix with 1 column)
    */
   static col(...elements: Array<number | Complex>): Matrix {
-    return Matrix.generate(1, elements.length, row => elements[row])._unsafeUnwrap()
+    const res = Matrix.generate(1, elements.length, row => elements[row])
+    if (res.isErr()) {
+      throw res.error
+    }
+    return res.value
   }
 
   /**
@@ -59,7 +67,11 @@ export class Matrix {
    * @returns A row vector (Matrix with 1 row)
    */
   static row(...elements: Array<number | Complex>): Matrix {
-    return Matrix.generate(elements.length, 1, (_row, col) => elements[col])._unsafeUnwrap()
+    const res = Matrix.generate(elements.length, 1, (_row, col) => elements[col])
+    if (res.isErr()) {
+      throw res.error
+    }
+    return res.value
   }
 
   /**
@@ -154,6 +166,7 @@ export class Matrix {
     const w = this.height
     const h = this.width
     const newBuf = new Float64Array(w * h * 2)
+
     for (let r = 0; r < h; r++) {
       for (let c = 0; c < w; c++) {
         const kIn = (c * this.width + r) * 2
@@ -162,6 +175,7 @@ export class Matrix {
         newBuf[kOut + 1] = -this.buffer[kIn + 1]
       }
     }
+
     return new Matrix(w, h, newBuf)
   }
 
