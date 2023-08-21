@@ -153,18 +153,20 @@ export class Matrix {
     this.buffer = buffer
   }
 
-  element(col: number, row: number): Complex {
+  /**
+   * Returns element (col,row) of the matrix.
+   *
+   * @param col - The column index
+   * @param row - The row index
+   * @returns A result object with the element or an error
+   */
+  element(col: number, row: number): Result<Complex, Error> {
     if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
-      throw new DetailedError('Element out of range', {
-        col,
-        row,
-        width: this.width,
-        height: this.height,
-      })
+      return err(Error('Element out of range'))
     }
 
     const i = (this.width * row + col) * 2
-    return new Complex(this.buffer[i], this.buffer[i + 1])
+    return ok(new Complex(this.buffer[i], this.buffer[i + 1]))
   }
 
   columnAt(colIndex: number): Result<Complex[], Error> {
@@ -177,7 +179,7 @@ export class Matrix {
 
     const col = []
     for (let r = 0; r < this.height; r++) {
-      col.push(this.element(colIndex, r))
+      col.push(this.element(colIndex, r)._unsafeUnwrap())
     }
     return ok(col)
   }
@@ -304,7 +306,7 @@ export class Matrix {
 
   rows(): Complex[][] {
     return range(0, this.height - 1).map<Complex[]>(row =>
-      range(0, this.width - 1).map<Complex>(col => this.element(col, row)),
+      range(0, this.width - 1).map<Complex>(col => this.element(col, row)._unsafeUnwrap()),
     )
   }
 
