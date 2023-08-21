@@ -184,7 +184,10 @@ describe('StateVector', () => {
     })
 
     test('amplifier out of range', () => {
-      expect(() => stateVector.setAmplifier(2, Complex.ZERO)).toThrow()
+      const res = stateVector.setAmplifier(2, Complex.ZERO)
+
+      expect(res.isErr()).toBeTruthy()
+      expect(res._unsafeUnwrapErr().message).toBe('Element out of range')
     })
   })
 

@@ -160,6 +160,26 @@ export class Matrix {
     return ok(new Complex(this.buffer[i], this.buffer[i + 1]))
   }
 
+  /**
+   * Sets element (col,row) of the matrix.
+   *
+   * @param col - The column index
+   * @param row - The row index
+   * @param value - The value to set
+   * @returns A result object with the matrix or an error
+   */
+  set(col: number, row: number, value: Complex): Result<Matrix, Error> {
+    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
+      return err(Error('Element out of range'))
+    }
+
+    const i = (this.width * row + col) * 2
+    this.buffer[i] = value.real
+    this.buffer[i + 1] = value.imag
+
+    return ok(this)
+  }
+
   columnAt(colIndex: number): Result<Complex[], Error> {
     if (colIndex < 0) {
       return err(Error('colIndex < 0'))
@@ -299,20 +319,6 @@ export class Matrix {
     return range(0, this.height - 1).map<Complex[]>(row =>
       range(0, this.width - 1).map<Complex>(col => this.element(col, row)._unsafeUnwrap()),
     )
-  }
-
-  set(col: number, row: number, value: Complex): void {
-    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
-      throw new DetailedError('Cell out of range', {
-        col,
-        row,
-        width: this.width,
-        height: this.height,
-      })
-    }
-    const i = (this.width * row + col) * 2
-    this.buffer[i] = value.real
-    this.buffer[i + 1] = value.imag
   }
 
   isHermitian(epsilon = 0): boolean {

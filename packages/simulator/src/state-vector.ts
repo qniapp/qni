@@ -1,5 +1,6 @@
 import {Complex, DetailedError} from '@qni/common'
 import {Matrix} from './matrix'
+import {ok, err, Result} from 'neverthrow'
 
 export class StateVector {
   public matrix: Matrix
@@ -29,8 +30,13 @@ export class StateVector {
     return this.matrix.element(0, index)._unsafeUnwrap()
   }
 
-  setAmplifier(index: number, value: Complex): void {
-    this.matrix.set(0, index, value)
+  setAmplifier(index: number, value: Complex): Result<StateVector, Error> {
+    const res = this.matrix.set(0, index, value)
+    if (res.isErr()) {
+      return err(Error(res.error.message))
+    }
+
+    return ok(this)
   }
 
   blochVector(bit: number): [number, number, number] {
