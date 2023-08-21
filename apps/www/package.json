@@ -52,7 +52,7 @@
     "@svgdotjs/svg.filter.js": "^3.0.8",
     "@svgdotjs/svg.js": "^3.1.1",
     "fastdom": "^1.0.10",
-    "puppeteer": "~19.2",
+    "puppeteer": "~21.1",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
