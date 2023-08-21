@@ -180,11 +180,17 @@ export class Matrix {
     return ok(this)
   }
 
+  /**
+   * Returns the `colIndex` column of the matrix
+   *
+   * @param colIndex - The column index
+   * @returns A result object with the column or an error
+   */
   columnAt(colIndex: number): Result<Complex[], Error> {
     if (colIndex < 0) {
       return err(Error('colIndex < 0'))
     }
-    if (colIndex < 0 || colIndex > this.width) {
+    if (colIndex > this.width) {
       return err(Error('colIndex > this.width'))
     }
 

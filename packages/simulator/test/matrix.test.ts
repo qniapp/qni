@@ -73,6 +73,21 @@ describe('Matrix', () => {
     expect(mErrBufferLength._unsafeUnwrapErr().message).toBe('width(1)*height(1)*2 !== buffer.length(100)')
   })
 
+  test('columnAt', () => {
+    const m = squareMatrix(2, 3, 5, 7)
+    expect(equate(m.columnAt(0)._unsafeUnwrap(), [2, 5])).toBeTruthy()
+    expect(equate(m.columnAt(1)._unsafeUnwrap(), [3, 7])).toBeTruthy()
+    expect(equate(Matrix.col(1, 2, 3).columnAt(0)._unsafeUnwrap(), [1, 2, 3])).toBeTruthy()
+
+    const resErrNegativeIndex = m.columnAt(-1)
+    expect(resErrNegativeIndex.isErr()).toBeTruthy()
+    expect(resErrNegativeIndex._unsafeUnwrapErr().message).toBe('colIndex < 0')
+
+    const resErrIndexTooLarge = m.columnAt(100)
+    expect(resErrIndexTooLarge.isErr()).toBeTruthy()
+    expect(resErrIndexTooLarge._unsafeUnwrapErr().message).toBe('colIndex > this.width')
+  })
+
   test('isEqualTo', () => {
     const m = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     expect(equate(m, m)).toBeTruthy()
@@ -202,21 +217,6 @@ describe('Matrix', () => {
         '{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}',
       ),
     ).toBeTruthy()
-  })
-
-  test('columnAt', () => {
-    const m = squareMatrix(2, 3, 5, 7)
-    expect(equate(m.columnAt(0)._unsafeUnwrap(), [2, 5])).toBeTruthy()
-    expect(equate(m.columnAt(1)._unsafeUnwrap(), [3, 7])).toBeTruthy()
-    expect(equate(Matrix.col(1, 2, 3).columnAt(0)._unsafeUnwrap(), [1, 2, 3])).toBeTruthy()
-
-    const resErrNegativeIndex = m.columnAt(-1)
-    expect(resErrNegativeIndex.isErr()).toBeTruthy()
-    expect(resErrNegativeIndex._unsafeUnwrapErr().message).toBe('colIndex < 0')
-
-    const resErrIndexTooLarge = m.columnAt(100)
-    expect(resErrIndexTooLarge.isErr()).toBeTruthy()
-    expect(resErrIndexTooLarge._unsafeUnwrapErr().message).toBe('colIndex > this.width')
   })
 
   test('size', () => {
