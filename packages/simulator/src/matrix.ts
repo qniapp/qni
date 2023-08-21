@@ -40,10 +40,7 @@ export class Matrix {
    */
   static solo(element: number | Complex): Matrix {
     const res = Matrix.create(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))
-    if (res.isErr()) {
-      throw res.error
-    }
-    return res.value
+    return res._unsafeUnwrap()
   }
 
   /**
@@ -54,10 +51,7 @@ export class Matrix {
    */
   static col(...elements: Array<number | Complex>): Matrix {
     const res = Matrix.generate(1, elements.length, row => elements[row])
-    if (res.isErr()) {
-      throw res.error
-    }
-    return res.value
+    return res._unsafeUnwrap()
   }
 
   /**
@@ -68,10 +62,7 @@ export class Matrix {
    */
   static row(...elements: Array<number | Complex>): Matrix {
     const res = Matrix.generate(elements.length, 1, (_row, col) => elements[col])
-    if (res.isErr()) {
-      throw res.error
-    }
-    return res.value
+    return res._unsafeUnwrap()
   }
 
   /**
