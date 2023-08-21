@@ -26,7 +26,7 @@ export class StateVector {
   }
 
   amplifier(index: number): Complex {
-    return this.matrix.cell(0, index)
+    return this.matrix.element(0, index)._unsafeUnwrap()
   }
 
   setAmplifier(index: number, value: Complex): void {
@@ -138,7 +138,10 @@ export class StateVector {
         })
         if (!survived) continue
 
-        const amp = this.matrix.cell(0, ket).times(this.matrix.cell(0, bra).conjugate())
+        const amp = this.matrix
+          .element(0, ket)
+          ._unsafeUnwrap()
+          .times(this.matrix.element(0, bra)._unsafeUnwrap().conjugate())
         if (amp.isEqualTo(0)) continue
 
         const ketMat = removeBits(ket, traceBits) === 0 ? Matrix.col(1, 0) : Matrix.col(0, 1)

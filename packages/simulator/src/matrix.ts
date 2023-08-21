@@ -40,10 +40,7 @@ export class Matrix {
    */
   static solo(element: number | Complex): Matrix {
     const res = Matrix.create(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))
-    if (res.isErr()) {
-      throw res.error
-    }
-    return res.value
+    return res._unsafeUnwrap()
   }
 
   /**
@@ -54,10 +51,7 @@ export class Matrix {
    */
   static col(...elements: Array<number | Complex>): Matrix {
     const res = Matrix.generate(1, elements.length, row => elements[row])
-    if (res.isErr()) {
-      throw res.error
-    }
-    return res.value
+    return res._unsafeUnwrap()
   }
 
   /**
@@ -68,10 +62,7 @@ export class Matrix {
    */
   static row(...elements: Array<number | Complex>): Matrix {
     const res = Matrix.generate(elements.length, 1, (_row, col) => elements[col])
-    if (res.isErr()) {
-      throw res.error
-    }
-    return res.value
+    return res._unsafeUnwrap()
   }
 
   /**
@@ -153,6 +144,22 @@ export class Matrix {
     this.buffer = buffer
   }
 
+  /**
+   * Returns element (col,row) of the matrix.
+   *
+   * @param col - The column index
+   * @param row - The row index
+   * @returns A result object with the element or an error
+   */
+  element(col: number, row: number): Result<Complex, Error> {
+    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
+      return err(Error('Element out of range'))
+    }
+
+    const i = (this.width * row + col) * 2
+    return ok(new Complex(this.buffer[i], this.buffer[i + 1]))
+  }
+
   columnAt(colIndex: number): Result<Complex[], Error> {
     if (colIndex < 0) {
       return err(Error('colIndex < 0'))
@@ -163,7 +170,7 @@ export class Matrix {
 
     const col = []
     for (let r = 0; r < this.height; r++) {
-      col.push(this.cell(colIndex, r))
+      col.push(this.element(colIndex, r)._unsafeUnwrap())
     }
     return ok(col)
   }
@@ -290,21 +297,8 @@ export class Matrix {
 
   rows(): Complex[][] {
     return range(0, this.height - 1).map<Complex[]>(row =>
-      range(0, this.width - 1).map<Complex>(col => this.cell(col, row)),
+      range(0, this.width - 1).map<Complex>(col => this.element(col, row)._unsafeUnwrap()),
     )
-  }
-
-  cell(col: number, row: number): Complex {
-    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
-      throw new DetailedError('Cell out of range', {
-        col,
-        row,
-        width: this.width,
-        height: this.height,
-      })
-    }
-    const i = (this.width * row + col) * 2
-    return new Complex(this.buffer[i], this.buffer[i + 1])
   }
 
   set(col: number, row: number, value: Complex): void {
