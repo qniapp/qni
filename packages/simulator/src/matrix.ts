@@ -149,6 +149,8 @@ export class Matrix {
     this.width = width
     this.height = height
     this.buffer = buffer
+
+    this.plus = this.add // alias for add
   }
 
   /**
@@ -288,17 +290,28 @@ export class Matrix {
     return new Matrix(w, h, newBuf)
   }
 
-  plus(other: Matrix): Matrix {
+  /**
+   * Matrix addition.
+   *
+   * @param other - The matrix to add
+   * @returns A result object with the matrix or an error
+   */
+  add(other: Matrix): Result<Matrix, Error> {
     const {width: w, height: h, buffer: b1} = this
     const b2 = other.buffer
-    Util.need(other.width === w && other.height === h, 'Matrix.plus: compatible sizes')
+    if (other.width !== w || other.height !== h) {
+      return err(Error('Matrix.add: incompatible sizes'))
+    }
 
     const newBuffer = new Float64Array(this.buffer.length)
     for (let i = 0; i < newBuffer.length; i++) {
       newBuffer[i] = b1[i] + b2[i]
     }
-    return new Matrix(w, h, newBuffer)
+
+    return ok(new Matrix(w, h, newBuffer))
   }
+
+  plus = this.add.bind(this)
 
   minus(other: Matrix): Matrix {
     const {width: w, height: h, buffer: b1} = this

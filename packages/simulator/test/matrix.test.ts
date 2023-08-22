@@ -138,6 +138,19 @@ describe('Matrix', () => {
     expect(Matrix.col(1, 2, Complex.I).adjoint().isEqualTo(Matrix.row(1, 2, Complex.I.neg()))).toBeTruthy()
   })
 
+  test('add', () => {
+    expect(
+      squareMatrix(2, 3, 5, 7)
+        .add(squareMatrix(11, 13, 17, 19))
+        ._unsafeUnwrap()
+        .isEqualTo(squareMatrix(13, 16, 22, 26)),
+    ).toBeTruthy()
+
+    const mErr = squareMatrix(2, 3, 5, 7).add(Matrix.solo(0))
+    expect(mErr.isErr()).toBeTruthy()
+    expect(mErr._unsafeUnwrapErr().message).toBe('Matrix.add: incompatible sizes')
+  })
+
   test('isEqualTo', () => {
     const m = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     expect(equate(m, m)).toBeTruthy()
@@ -292,12 +305,6 @@ describe('Matrix', () => {
 
     expect(equate(Matrix.col(2, 3).times(5), Matrix.col(10, 15))).toBeTruthy()
     expect(equate(Matrix.row(2, 3).times(5), Matrix.row(10, 15))).toBeTruthy()
-  })
-
-  test('plus', () => {
-    expect(
-      equate(squareMatrix(2, 3, 5, 7).plus(squareMatrix(11, 13, 17, 19)), squareMatrix(13, 16, 22, 26)),
-    ).toBeTruthy()
   })
 
   test('minus', () => {

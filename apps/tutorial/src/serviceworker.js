@@ -112,7 +112,7 @@ const pickTargetAmplitudes = (targets, amplitudes) => {
     if (each >= amplitudes.height) {
       map[each] = [0, 0]
     } else {
-      const c = amplitudes.cell(0, each)
+      const c = amplitudes.element(0, each).value
       map[each] = [c.real, c.imag]
     }
     return map

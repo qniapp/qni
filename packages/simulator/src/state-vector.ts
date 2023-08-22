@@ -154,7 +154,7 @@ export class StateVector {
         const braMat = removeBits(bra, traceBits) === 0 ? Matrix.row(1, 0) : Matrix.row(0, 1)
         const ketBra = ketMat.times(braMat)
 
-        densityMatrix = densityMatrix.plus(ketBra.times(amp))
+        densityMatrix = densityMatrix.add(ketBra.times(amp))._unsafeUnwrap()
       }
     }
 
