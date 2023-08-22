@@ -75,14 +75,14 @@ export class StateVector {
         }
         case '+': {
           if (paren) throw invalidBitStringError
-          kets.push(Matrix.col(1, 1).times(Math.sqrt(0.5)))
+          kets.push(Matrix.col(1, 1).mult(Math.sqrt(0.5))._unsafeUnwrap())
           break
         }
         case '-': {
           if (paren) {
             parenToken += '-'
           } else {
-            kets.push(Matrix.col(1, -1).times(Math.sqrt(0.5)))
+            kets.push(Matrix.col(1, -1).mult(Math.sqrt(0.5))._unsafeUnwrap())
           }
           break
         }
@@ -90,7 +90,7 @@ export class StateVector {
           if (paren) {
             parenToken += 'i'
           } else {
-            kets.push(Matrix.col(1, new Complex(0, 1)).times(Math.sqrt(0.5)))
+            kets.push(Matrix.col(1, new Complex(0, 1)).mult(Math.sqrt(0.5))._unsafeUnwrap())
           }
           break
         }
@@ -103,7 +103,7 @@ export class StateVector {
         case ')': {
           if (!paren) throw invalidBitStringError
           if (parenToken !== '-i') throw invalidBitStringError
-          kets.push(Matrix.col(1, new Complex(0, -1)).times(Math.sqrt(0.5)))
+          kets.push(Matrix.col(1, new Complex(0, -1)).mult(Math.sqrt(0.5))._unsafeUnwrap())
           paren = false
           break
         }
@@ -152,9 +152,9 @@ export class StateVector {
 
         const ketMat = removeBits(ket, traceBits) === 0 ? Matrix.col(1, 0) : Matrix.col(0, 1)
         const braMat = removeBits(bra, traceBits) === 0 ? Matrix.row(1, 0) : Matrix.row(0, 1)
-        const ketBra = ketMat.times(braMat)
+        const ketBra = ketMat.mult(braMat)._unsafeUnwrap()
 
-        densityMatrix = densityMatrix.add(ketBra.times(amp))._unsafeUnwrap()
+        densityMatrix = densityMatrix.add(ketBra.mult(amp)._unsafeUnwrap())._unsafeUnwrap()
       }
     }
 

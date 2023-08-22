@@ -12,7 +12,7 @@ const mi = i.neg()
  *            | 1 -1 |
  * ```
  */
-export const H = safeSquareMatrix(1, 1, 1, -1).times(Math.sqrt(0.5))
+export const H = safeSquareMatrix(1, 1, 1, -1).mult(Math.sqrt(0.5))._unsafeUnwrap()
 
 /**
  * Pauli X gate.
@@ -106,7 +106,7 @@ export function PHASE(phi: string): Matrix {
  *            | 1-i 1+i |
  * ```
  */
-export const RNOT = safeSquareMatrix(i.plus(1), mi.plus(1), mi.plus(1), i.plus(1)).times(0.5)
+export const RNOT = safeSquareMatrix(i.plus(1), mi.plus(1), mi.plus(1), i.plus(1)).mult(0.5)._unsafeUnwrap()
 
 /**
  * Rx gate.

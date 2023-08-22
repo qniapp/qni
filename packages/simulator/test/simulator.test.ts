@@ -72,17 +72,21 @@ describe('Simulator', () => {
 
     test('|->.x(0) should be -|->', () => {
       const simulator = new Simulator('-')
-      expect(equate(simulator.x(0).state.matrix, new StateVector('-').matrix.times(-1))).toBe(true)
+      expect(equate(simulator.x(0).state.matrix, new StateVector('-').matrix.mult(-1)._unsafeUnwrap())).toBe(true)
     })
 
     test('|i>.x(0) should be i|-i>', () => {
       const simulator = new Simulator('i')
-      expect(equate(simulator.x(0).state.matrix, new StateVector('(-i)').matrix.times(new Complex(0, 1)))).toBe(true)
+      expect(
+        equate(simulator.x(0).state.matrix, new StateVector('(-i)').matrix.mult(new Complex(0, 1))._unsafeUnwrap()),
+      ).toBe(true)
     })
 
     test('|-i>.x(0) should be -i|i>', () => {
       const simulator = new Simulator('(-i)')
-      expect(equate(simulator.x(0).state.matrix, new StateVector('i').matrix.times(new Complex(0, -1)))).toBe(true)
+      expect(
+        equate(simulator.x(0).state.matrix, new StateVector('i').matrix.mult(new Complex(0, -1))._unsafeUnwrap()),
+      ).toBe(true)
     })
 
     test('|00>.x(0) should be |01>', () => {
@@ -131,7 +135,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.h(0).state.matrix,
-          new StateVector('(-i)').matrix.times(e.pow(i.times(π).div(4)._unsafeUnwrap())),
+          new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
         ),
       ).toBe(true)
     })
@@ -145,7 +149,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.h(0).state.matrix,
-          new StateVector('i').matrix.times(e.pow(i.times(π).div(-4)._unsafeUnwrap())),
+          new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
         ),
       ).toBe(true)
     })
@@ -174,7 +178,9 @@ describe('Simulator', () => {
 
     test("|1>.phase('π', 0) should be -|1>", () => {
       const simulator = new Simulator('1')
-      expect(equate(simulator.phase('π', 0).state.matrix, new StateVector('1').matrix.times(-1))).toBe(true)
+      expect(equate(simulator.phase('π', 0).state.matrix, new StateVector('1').matrix.mult(-1)._unsafeUnwrap())).toBe(
+        true,
+      )
     })
 
     test("|+>.phase('π', 0) should be |->", () => {
@@ -317,7 +323,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.qft(1, 0).state.matrix,
-          new StateVector('(-i)').matrix.times(e.pow(i.times(π).div(4)._unsafeUnwrap())),
+          new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
         ),
       ).toBe(true)
     })
@@ -331,7 +337,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.qft(1, 0).state.matrix,
-          new StateVector('i').matrix.times(e.pow(i.times(π).div(-4)._unsafeUnwrap())),
+          new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
         ),
       ).toBe(true)
     })
@@ -382,7 +388,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.qftDagger(1, 0).state.matrix,
-          new StateVector('(-i)').matrix.times(e.pow(i.times(π).div(4)._unsafeUnwrap())),
+          new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
         ),
       ).toBeTruthy()
     })
@@ -396,7 +402,7 @@ describe('Simulator', () => {
       expect(
         equate(
           simulator.qftDagger(1, 0).state.matrix,
-          new StateVector('i').matrix.times(e.pow(i.times(π).div(-4)._unsafeUnwrap())),
+          new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
         ),
       ).toBeTruthy()
     })
@@ -464,7 +470,9 @@ describe('Simulator', () => {
 
     test("|11>.cphase(0, 'π', 1) should be -|11>", () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.cphase(0, 'π', 1).state.matrix, new StateVector('11').matrix.times(-1))).toBeTruthy()
+      expect(
+        equate(simulator.cphase(0, 'π', 1).state.matrix, new StateVector('11').matrix.mult(-1)._unsafeUnwrap()),
+      ).toBeTruthy()
     })
   })
 

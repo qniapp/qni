@@ -158,6 +158,43 @@ describe('Matrix', () => {
         ._unsafeUnwrap()
         .isEqualTo(squareMatrix(-9, -10, -12, -12)),
     ).toBeTruthy()
+
+    const mErr = squareMatrix(2, 3, 5, 7).sub(Matrix.solo(0))
+    expect(mErr.isErr()).toBeTruthy()
+    expect(mErr._unsafeUnwrapErr().message).toBe('Matrix.sub: incompatible sizes')
+  })
+
+  test('times_scalar', () => {
+    const v = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
+    const a = squareMatrix(new Complex(-2, -3), new Complex(-5, -7), new Complex(-11, -13), new Complex(-17, -19))
+
+    expect(v.mult(-1)._unsafeUnwrap().isEqualTo(a)).toBeTruthy()
+    expect(v.mult(0)._unsafeUnwrap().isEqualTo(squareMatrix(0, 0, 0, 0))).toBeTruthy()
+    expect(v.mult(1)._unsafeUnwrap().isEqualTo(v)).toBeTruthy()
+
+    expect(Matrix.col(2, 3).mult(5)._unsafeUnwrap().isEqualTo(Matrix.col(10, 15))).toBeTruthy()
+    expect(Matrix.row(2, 3).mult(5)._unsafeUnwrap().isEqualTo(Matrix.row(10, 15))).toBeTruthy()
+  })
+
+  test('times_matrix', () => {
+    expect(
+      squareMatrix(2, 3, 5, 7)
+        .mult(squareMatrix(11, 13, 17, 19))
+        ._unsafeUnwrap()
+        .isEqualTo(squareMatrix(73, 83, 174, 198)),
+    ).toBeTruthy()
+
+    const x = squareMatrix(new Complex(0.5, -0.5), new Complex(0.5, 0.5), new Complex(0.5, 0.5), new Complex(0.5, -0.5))
+    expect(x.mult(x.adjoint())._unsafeUnwrap().isEqualTo(Matrix.identity(2)._unsafeUnwrap())).toBeTruthy()
+    expect(
+      X.mult(Y)
+        ._unsafeUnwrap()
+        .mult(Z)
+        ._unsafeUnwrap()
+        .mult(new Complex(0, -1))
+        ._unsafeUnwrap()
+        .isEqualTo(Matrix.identity(2)._unsafeUnwrap()),
+    ).toBeTruthy()
   })
 
   test('isEqualTo', () => {
@@ -305,40 +342,19 @@ describe('Matrix', () => {
     expect(Matrix.col(1, 1, 3).height).toBe(3)
   })
 
-  test('times_scalar', () => {
-    const v = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
-    const a = squareMatrix(new Complex(-2, -3), new Complex(-5, -7), new Complex(-11, -13), new Complex(-17, -19))
-    expect(equate(v.times(-1), a)).toBeTruthy()
-    expect(equate(v.times(0), squareMatrix(0, 0, 0, 0))).toBeTruthy()
-    expect(equate(v.times(1), v)).toBeTruthy()
-
-    expect(equate(Matrix.col(2, 3).times(5), Matrix.col(10, 15))).toBeTruthy()
-    expect(equate(Matrix.row(2, 3).times(5), Matrix.row(10, 15))).toBeTruthy()
-  })
-
-  test('times_matrix', () => {
-    expect(
-      equate(squareMatrix(2, 3, 5, 7).times(squareMatrix(11, 13, 17, 19)), squareMatrix(73, 83, 174, 198)),
-    ).toBeTruthy()
-
-    const x = squareMatrix(new Complex(0.5, -0.5), new Complex(0.5, 0.5), new Complex(0.5, 0.5), new Complex(0.5, -0.5))
-    expect(equate(x.times(x.adjoint()), Matrix.identity(2)._unsafeUnwrap())).toBeTruthy()
-    expect(equate(X.times(Y).times(Z).times(new Complex(0, -1)), Matrix.identity(2)._unsafeUnwrap())).toBeTruthy()
-  })
-
   test('times_ColRow', () => {
     // When one is a column vector and the other is a row vector...
     const r = Matrix.row(2, 3, 5)
     const c = Matrix.col(11, 13, 17)
 
     // Inner product
-    expect(equate(r.times(c).toString(), '{{146}}')).toBeTruthy()
+    expect(equate(r.mult(c)._unsafeUnwrap().toString(), '{{146}}')).toBeTruthy()
 
     // Outer product
-    expect(equate(c.times(r).toString(), '{{22, 33, 55}, {26, 39, 65}, {34, 51, 85}}')).toBeTruthy()
+    expect(equate(c.mult(r)._unsafeUnwrap().toString(), '{{22, 33, 55}, {26, 39, 65}, {34, 51, 85}}')).toBeTruthy()
 
     // Outer product matches tensor product
-    expect(equate(c.times(r), c.tensorProduct(r))).toBeTruthy()
+    expect(equate(c.mult(r)._unsafeUnwrap(), c.tensorProduct(r))).toBeTruthy()
 
     // Tensor product is order independent (in this case)
     expect(equate(r.tensorProduct(c), c.tensorProduct(r))).toBeTruthy()
@@ -421,19 +437,22 @@ describe('Matrix', () => {
 
     // Maximally mixed state.
     expect(
-      equate(Matrix.identity(2)._unsafeUnwrap().times(0.5).qubitDensityMatrixToBlochVector(), [0, 0, 0]),
+      equate(Matrix.identity(2)._unsafeUnwrap().mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [0, 0, 0]),
     ).toBeTruthy()
 
     // Pure states as vectors along each axis.
-    const f = (...m: Array<number | Complex>) => Matrix.col(...m).times(Matrix.col(...m).adjoint())
+    const f = (...m: Array<number | Complex>) =>
+      Matrix.col(...m)
+        .mult(Matrix.col(...m).adjoint())
+        ._unsafeUnwrap()
     const i = Complex.I
     const mi = i.times(-1)
     expect(equate(f(1, 0).qubitDensityMatrixToBlochVector(), [0, 0, 1])).toBeTruthy()
     expect(equate(f(0, 1).qubitDensityMatrixToBlochVector(), [0, 0, -1])).toBeTruthy()
-    expect(equate(f(1, 1).times(0.5).qubitDensityMatrixToBlochVector(), [1, 0, 0])).toBeTruthy()
-    expect(equate(f(1, -1).times(0.5).qubitDensityMatrixToBlochVector(), [-1, 0, 0])).toBeTruthy()
-    expect(equate(f(1, i).times(0.5).qubitDensityMatrixToBlochVector(), [0, 1, 0])).toBeTruthy()
-    expect(equate(f(1, mi).times(0.5).qubitDensityMatrixToBlochVector(), [0, -1, 0])).toBeTruthy()
+    expect(equate(f(1, 1).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [1, 0, 0])).toBeTruthy()
+    expect(equate(f(1, -1).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [-1, 0, 0])).toBeTruthy()
+    expect(equate(f(1, i).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [0, 1, 0])).toBeTruthy()
+    expect(equate(f(1, mi).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [0, -1, 0])).toBeTruthy()
   })
 })
 

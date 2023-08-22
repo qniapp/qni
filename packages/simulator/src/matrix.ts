@@ -334,8 +334,13 @@ export class Matrix {
     return ok(new Matrix(w, h, newBuffer))
   }
 
-  times(other: Matrix | number | Complex): Matrix {
-    return other instanceof Matrix ? this.timesMatrix(other) : this.timesScalar(other)
+  /**
+   * Matrix multiplication.
+   *
+   * @param other - The matrix to multiply
+   */
+  mult(other: Matrix | number | Complex): Result<Matrix, Error> {
+    return other instanceof Matrix ? this.multMatrix(other) : ok(this.multScalar(other))
   }
 
   isEqualTo(obj: Matrix | unknown): boolean {
@@ -471,14 +476,16 @@ export class Matrix {
     return t
   }
 
-  private timesMatrix(other: Matrix): Matrix {
+  private multMatrix(other: Matrix): Result<Matrix, Error> {
     if (this.width !== other.height) {
-      throw new DetailedError('Incompatible sizes.', {this: this, other})
+      return err(Error('Incompatible sizes.'))
     }
+
     const w = other.width
     const h = this.height
     const n = this.width
     const newBuffer = new Float64Array(w * h * 2)
+
     for (let r = 0; r < h; r++) {
       for (let c = 0; c < w; c++) {
         const k3 = (r * w + c) * 2
@@ -496,19 +503,22 @@ export class Matrix {
         }
       }
     }
-    return new Matrix(w, h, newBuffer)
+
+    return ok(new Matrix(w, h, newBuffer))
   }
 
-  private timesScalar(v: number | Complex): Matrix {
+  private multScalar(v: number | Complex): Matrix {
     const newBuffer = new Float64Array(this.buffer.length)
     const sr = Complex.real(v)
     const si = Complex.imag(v)
+
     for (let i = 0; i < newBuffer.length; i += 2) {
       const vr = this.buffer[i]
       const vi = this.buffer[i + 1]
       newBuffer[i] = vr * sr - vi * si
       newBuffer[i + 1] = vr * si + vi * sr
     }
+
     return new Matrix(this.width, this.height, newBuffer)
   }
 }
