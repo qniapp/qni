@@ -202,8 +202,8 @@ export class Matrix {
     }
 
     const col = []
-    for (let r = 0; r < this.height; r++) {
-      col.push(this.element(colIndex, r)._unsafeUnwrap())
+    for (let row = 0; row < this.height; row++) {
+      col.push(this.element(colIndex, row)._unsafeUnwrap())
     }
     return ok(col)
   }
@@ -265,15 +265,21 @@ export class Matrix {
     return new Complex(tr_r, tr_i)
   }
 
+  /**
+   * Returns the adjoint matrix of the matrix.
+   *
+   * @returns The adjoint matrix
+   */
   adjoint(): Matrix {
     const w = this.height
     const h = this.width
     const newBuf = new Float64Array(w * h * 2)
 
-    for (let r = 0; r < h; r++) {
-      for (let c = 0; c < w; c++) {
-        const kIn = (c * this.width + r) * 2
-        const kOut = (r * w + c) * 2
+    for (let row = 0; row < h; row++) {
+      for (let col = 0; col < w; col++) {
+        const kIn = (col * this.width + row) * 2
+        const kOut = (row * w + col) * 2
+
         newBuf[kOut] = this.buffer[kIn]
         newBuf[kOut + 1] = -this.buffer[kIn + 1]
       }

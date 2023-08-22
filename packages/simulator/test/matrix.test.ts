@@ -126,6 +126,18 @@ describe('Matrix', () => {
     expect(equate(Matrix.solo(NaN).trace().abs(), NaN)).toBeTruthy()
   })
 
+  test('adjoint', () => {
+    // prettier-ignore
+    const v = squareMatrix(new Complex(2, 3), new Complex(5, 7),
+                           new Complex(11, 13), new Complex(17, 19))
+    // prettier-ignore
+    const a = squareMatrix(new Complex(2, -3), new Complex(11, -13),
+                           new Complex(5, -7), new Complex(17, -19))
+
+    expect(v.adjoint().isEqualTo(a)).toBeTruthy()
+    expect(Matrix.col(1, 2, Complex.I).adjoint().isEqualTo(Matrix.row(1, 2, Complex.I.neg()))).toBeTruthy()
+  })
+
   test('isEqualTo', () => {
     const m = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     expect(equate(m, m)).toBeTruthy()
@@ -269,13 +281,6 @@ describe('Matrix', () => {
 
     expect(Matrix.col(1, 1, 3).width).toBe(1)
     expect(Matrix.col(1, 1, 3).height).toBe(3)
-  })
-
-  test('adjoint', () => {
-    const v = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
-    const a = squareMatrix(new Complex(2, -3), new Complex(11, -13), new Complex(5, -7), new Complex(17, -19))
-    expect(equate(v.adjoint(), a)).toBeTruthy()
-    expect(equate(Matrix.col(1, 2, Complex.I).adjoint(), Matrix.row(1, 2, Complex.I.neg()))).toBeTruthy()
   })
 
   test('times_scalar', () => {
