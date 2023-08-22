@@ -1,4 +1,4 @@
-import {Complex, Format, equate} from '@qni/common'
+import {Complex, equate} from '@qni/common'
 import {H, X, Y, Z} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
 
@@ -334,31 +334,6 @@ describe('Matrix', () => {
     ).toBeTruthy()
     expect(equate(squareMatrix(1, 0, 0, 1).toString(), '{{1, 0}, {0, 1}}')).toBeTruthy()
     expect(equate(Matrix.identity(3)._unsafeUnwrap().toString(), '{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')).toBeTruthy()
-
-    expect(
-      equate(
-        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.EXACT),
-        '{{0, 1}, {⅓+i, 0.3333334333333333i}}',
-      ),
-    ).toBeTruthy()
-    expect(
-      equate(
-        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.SIMPLIFIED),
-        '{{0, 1}, {⅓+i, ⅓i}}',
-      ),
-    ).toBeTruthy()
-    expect(
-      equate(
-        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.MINIFIED),
-        '{{0,1},{⅓+i,0.3333334333333333i}}',
-      ),
-    ).toBeTruthy()
-    expect(
-      equate(
-        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).toString(Format.CONSISTENT),
-        '{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}',
-      ),
-    ).toBeTruthy()
   })
 
   test('size', () => {

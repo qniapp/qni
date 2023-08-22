@@ -419,14 +419,16 @@ export class Matrix {
       options.fixedDigits,
       options.itemSeparator || ', ',
     )
-    return this.toString(format)
+
+    const data = this.rows()
+      .map(row => row.map(e => e.format(format)).join(format.itemSeparator))
+      .join(`}${format.itemSeparator}{`)
+
+    return `{{${data}}}`
   }
 
-  toString(options = DEFAULT_FORMAT_OPTIONS): string {
-    const data = this.rows()
-      .map(row => row.map(e => e.format(options)).join(options.itemSeparator))
-      .join(`}${options.itemSeparator}{`)
-    return `{{${data}}}`
+  toString(): string {
+    return this.format()
   }
 
   qubitDensityMatrixToBlochVector(): [number, number, number] {
