@@ -164,7 +164,7 @@ describe('Matrix', () => {
     expect(mErr._unsafeUnwrapErr().message).toBe('Matrix.sub: incompatible sizes')
   })
 
-  test('times_scalar', () => {
+  test('multScalar', () => {
     const v = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     const a = squareMatrix(new Complex(-2, -3), new Complex(-5, -7), new Complex(-11, -13), new Complex(-17, -19))
 
@@ -176,7 +176,7 @@ describe('Matrix', () => {
     expect(Matrix.row(2, 3).mult(5)._unsafeUnwrap().isEqualTo(Matrix.row(10, 15))).toBeTruthy()
   })
 
-  test('times_matrix', () => {
+  test('multMatrix', () => {
     expect(
       squareMatrix(2, 3, 5, 7)
         .mult(squareMatrix(11, 13, 17, 19))
@@ -194,6 +194,38 @@ describe('Matrix', () => {
         .mult(new Complex(0, -1))
         ._unsafeUnwrap()
         .isEqualTo(Matrix.identity(2)._unsafeUnwrap()),
+    ).toBeTruthy()
+  })
+
+  test('tensorProduct', () => {
+    expect(Matrix.solo(2).tensorProduct(Matrix.solo(3)).isEqualTo(Matrix.solo(6))).toBeTruthy()
+    expect(
+      Matrix.solo(new Complex(2, 3))
+        .tensorProduct(Matrix.solo(new Complex(5, 7)))
+        .isEqualTo(Matrix.solo(new Complex(-11, 29))),
+    ).toBeTruthy()
+    expect(Matrix.solo(2).tensorProduct(Matrix.solo(3)).isEqualTo(Matrix.solo(6))).toBeTruthy()
+    expect(
+      X.tensorProduct(Z).isEqualTo(
+        // prettier-ignore
+        squareMatrix(
+                     0, 0, 1, 0,
+                     0, 0, 0, -1,
+                     1, 0, 0, 0,
+                     0, -1, 0, 0
+                   ),
+      ),
+    ).toBeTruthy()
+    expect(
+      squareMatrix(2, 3, 5, 7).tensorProduct(squareMatrix(11, 13, 17, 19)).isEqualTo(
+        // prettier-ignore
+        squareMatrix(
+                     22, 26, 33, 39,
+                     34, 38, 51, 57,
+                     55, 65, 77, 91,
+                     85, 95, 119, 133
+                   ),
+      ),
     ).toBeTruthy()
   })
 
@@ -358,41 +390,6 @@ describe('Matrix', () => {
 
     // Tensor product is order independent (in this case)
     expect(equate(r.tensorProduct(c), c.tensorProduct(r))).toBeTruthy()
-  })
-
-  test('tensorProduct', () => {
-    expect(equate(Matrix.solo(2).tensorProduct(Matrix.solo(3)), Matrix.solo(6))).toBeTruthy()
-    expect(
-      equate(
-        Matrix.solo(new Complex(2, 3)).tensorProduct(Matrix.solo(new Complex(5, 7))),
-        Matrix.solo(new Complex(-11, 29)),
-      ),
-    ).toBeTruthy()
-    expect(equate(Matrix.solo(2).tensorProduct(Matrix.solo(3)), Matrix.solo(6))).toBeTruthy()
-    expect(
-      equate(
-        X.tensorProduct(Z),
-        // prettier-ignore
-        squareMatrix(
-                     0, 0, 1, 0,
-                     0, 0, 0, -1,
-                     1, 0, 0, 0,
-                     0, -1, 0, 0
-                   ),
-      ),
-    ).toBeTruthy()
-    expect(
-      equate(
-        squareMatrix(2, 3, 5, 7).tensorProduct(squareMatrix(11, 13, 17, 19)),
-        // prettier-ignore
-        squareMatrix(
-                     22, 26, 33, 39,
-                     34, 38, 51, 57,
-                     55, 65, 77, 91,
-                     85, 95, 119, 133
-                   ),
-      ),
-    ).toBeTruthy()
   })
 
   test('timesQubitOperation', () => {

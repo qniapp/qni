@@ -343,6 +343,44 @@ export class Matrix {
     return other instanceof Matrix ? this.multMatrix(other) : ok(this.multScalar(other))
   }
 
+  /**
+   * Returns the tensor product of matrices.
+   *
+   * @param other - The matrix to multiply
+   */
+  tensorProduct(other: Matrix): Matrix {
+    const w1 = this.width
+    const h1 = this.height
+    const w2 = other.width
+    const h2 = other.height
+    const w = w1 * w2
+    const h = h1 * h2
+    const newBuffer = new Float64Array(w * h * 2)
+
+    for (let r1 = 0; r1 < h1; r1++) {
+      for (let r2 = 0; r2 < h2; r2++) {
+        for (let c1 = 0; c1 < w1; c1++) {
+          for (let c2 = 0; c2 < w2; c2++) {
+            const k1 = (r1 * w1 + c1) * 2
+            const k2 = (r2 * w2 + c2) * 2
+            const k3 = ((r1 * h2 + r2) * w + (c1 * w2 + c2)) * 2
+            const cr1 = this.buffer[k1]
+            const ci1 = this.buffer[k1 + 1]
+            const cr2 = other.buffer[k2]
+            const ci2 = other.buffer[k2 + 1]
+            const cr3 = cr1 * cr2 - ci1 * ci2
+            const ci3 = cr1 * ci2 + ci1 * cr2
+
+            newBuffer[k3] = cr3
+            newBuffer[k3 + 1] = ci3
+          }
+        }
+      }
+    }
+
+    return new Matrix(w, h, newBuffer)
+  }
+
   isEqualTo(obj: Matrix | unknown): boolean {
     if (this === obj) return true
     if (!(obj instanceof Matrix)) return false
@@ -379,36 +417,6 @@ export class Matrix {
       .map(row => row.map(e => e.format(options)).join(options.itemSeparator))
       .join(`}${options.itemSeparator}{`)
     return `{{${data}}}`
-  }
-
-  tensorProduct(other: Matrix): Matrix {
-    const w1 = this.width
-    const h1 = this.height
-    const w2 = other.width
-    const h2 = other.height
-    const w = w1 * w2
-    const h = h1 * h2
-    const newBuffer = new Float64Array(w * h * 2)
-    for (let r1 = 0; r1 < h1; r1++) {
-      for (let r2 = 0; r2 < h2; r2++) {
-        for (let c1 = 0; c1 < w1; c1++) {
-          for (let c2 = 0; c2 < w2; c2++) {
-            const k1 = (r1 * w1 + c1) * 2
-            const k2 = (r2 * w2 + c2) * 2
-            const k3 = ((r1 * h2 + r2) * w + (c1 * w2 + c2)) * 2
-            const cr1 = this.buffer[k1]
-            const ci1 = this.buffer[k1 + 1]
-            const cr2 = other.buffer[k2]
-            const ci2 = other.buffer[k2 + 1]
-            const cr3 = cr1 * cr2 - ci1 * ci2
-            const ci3 = cr1 * ci2 + ci1 * cr2
-            newBuffer[k3] = cr3
-            newBuffer[k3 + 1] = ci3
-          }
-        }
-      }
-    }
-    return new Matrix(w, h, newBuffer)
   }
 
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number, desiredValueMask: number): Matrix {
