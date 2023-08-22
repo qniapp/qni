@@ -219,14 +219,6 @@ export class Matrix {
     )
   }
 
-  norm2(): number {
-    let t = 0
-    for (const e of this.buffer) {
-      t += e * e
-    }
-    return t
-  }
-
   adjoint(): Matrix {
     const w = this.height
     const h = this.width
@@ -425,6 +417,14 @@ export class Matrix {
 
   clone(): Matrix {
     return new Matrix(this.width, this.height, this.buffer.slice())
+  }
+
+  private norm2(): number {
+    let t = 0
+    for (const e of this.buffer) {
+      t += e * e
+    }
+    return t
   }
 
   private timesMatrix(other: Matrix): Matrix {

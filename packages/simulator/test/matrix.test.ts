@@ -317,14 +317,6 @@ describe('Matrix', () => {
     expect(equate(r.tensorProduct(c), c.tensorProduct(r))).toBeTruthy()
   })
 
-  test('norm2', () => {
-    expect(equate(Matrix.solo(1).norm2(), 1)).toBeTruthy()
-    expect(equate(Matrix.solo(2).norm2(), 4)).toBeTruthy()
-    expect(equate(Matrix.row(1, 1).norm2(), 2)).toBeTruthy()
-    expect(equate(Matrix.col(1, 1).norm2(), 2)).toBeTruthy()
-    expect(equate(squareMatrix(1, 2, 3, 4).norm2(), 30)).toBeTruthy()
-  })
-
   test('tensorProduct', () => {
     expect(equate(Matrix.solo(2).tensorProduct(Matrix.solo(3)), Matrix.solo(6))).toBeTruthy()
     expect(
