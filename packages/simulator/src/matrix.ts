@@ -219,6 +219,24 @@ export class Matrix {
     )
   }
 
+  /**
+   * Returns a trace of the `Matrix`.
+   *
+   * @returns A `Complex` number representing the trace
+   */
+  trace(): Complex {
+    let tr_r = 0
+    let tr_i = 0
+    const d = this.width * 2 + 2
+
+    for (let i = 0; i < this.buffer.length; i += d) {
+      tr_r += this.buffer[i]
+      tr_i += this.buffer[i + 1]
+    }
+
+    return new Complex(tr_r, tr_i)
+  }
+
   adjoint(): Matrix {
     const w = this.height
     const h = this.width
@@ -382,17 +400,6 @@ export class Matrix {
       }
     }
     return new Matrix(w, h, buf)
-  }
-
-  trace(): Complex {
-    let total_r = 0
-    let total_i = 0
-    const d = this.width * 2 + 2
-    for (let i = 0; i < this.buffer.length; i += d) {
-      total_r += this.buffer[i]
-      total_i += this.buffer[i + 1]
-    }
-    return new Complex(total_r, total_i)
   }
 
   qubitDensityMatrixToBlochVector(): [number, number, number] {

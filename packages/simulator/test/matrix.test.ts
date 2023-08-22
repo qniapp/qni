@@ -88,6 +88,18 @@ describe('Matrix', () => {
     expect(resErrIndexTooLarge._unsafeUnwrapErr().message).toBe('colIndex > this.width')
   })
 
+  test('trace', () => {
+    expect(Matrix.identity(2)._unsafeUnwrap().trace().eq(2)).toBeTruthy()
+    expect(Matrix.identity(10)._unsafeUnwrap().trace().eq(10)).toBeTruthy()
+    expect(X.trace().eq(0)).toBeTruthy()
+    expect(Y.trace().eq(0)).toBeTruthy()
+    expect(Z.trace().eq(0)).toBeTruthy()
+    expect(H.trace().eq(0)).toBeTruthy()
+    expect(squareMatrix(1, 2, 3, 4).trace().eq(5)).toBeTruthy()
+    expect(squareMatrix(0, 1, 2, 3, 4, 5, 6, 7, 8).trace().eq(12)).toBeTruthy()
+    expect(equate(Matrix.solo(NaN).trace().abs(), NaN)).toBeTruthy()
+  })
+
   test('isEqualTo', () => {
     const m = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     expect(equate(m, m)).toBeTruthy()
@@ -382,20 +394,6 @@ describe('Matrix', () => {
 
     const t1 = performance.now()
     expect(t1 - t0 < 100).toBeTruthy()
-  })
-
-  test('trace', () => {
-    expect(equate(Matrix.solo(NaN).trace().abs(), NaN)).toBeTruthy()
-    expect(equate(Matrix.identity(2)._unsafeUnwrap().trace(), 2)).toBeTruthy()
-    expect(equate(Matrix.identity(10)._unsafeUnwrap().trace(), 10)).toBeTruthy()
-
-    expect(equate(X.trace(), 0)).toBeTruthy()
-    expect(equate(Y.trace(), 0)).toBeTruthy()
-    expect(equate(Z.trace(), 0)).toBeTruthy()
-    expect(equate(H.trace(), 0)).toBeTruthy()
-    expect(equate(squareMatrix(1, 2, 3, 4).trace(), 5)).toBeTruthy()
-
-    expect(equate(squareMatrix(0, 1, 2, 3, 4, 5, 6, 7, 8).trace(), 12)).toBeTruthy()
   })
 
   test('qubitDensityMatrixToBlochVector', () => {
