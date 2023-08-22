@@ -44,7 +44,7 @@ export class StateVector {
   }
 
   isApproximatelyEqualTo(other: StateVector | unknown, epsilon: number): boolean {
-    return other instanceof StateVector && this.matrix.isApproximatelyEqualTo(other.matrix, epsilon)
+    return other instanceof StateVector && this.matrix.nearlyEq(other.matrix, epsilon)
   }
 
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): void {

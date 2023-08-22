@@ -508,8 +508,8 @@ describe('Simulator', () => {
       simulator.measure(0)
 
       expect(
-        simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(1, 0), 0.000001) ||
-          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, -1), 0.000001),
+        simulator.state.matrix.nearlyEq(Matrix.col(1, 0), 0.000001) ||
+          simulator.state.matrix.nearlyEq(Matrix.col(0, -1), 0.000001),
       ).toBeTruthy()
     })
 
@@ -518,8 +518,8 @@ describe('Simulator', () => {
       simulator.measure(0)
 
       expect(
-        simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(1, 0), 0.000001) ||
-          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, Complex.I), 0.000001),
+        simulator.state.matrix.nearlyEq(Matrix.col(1, 0), 0.000001) ||
+          simulator.state.matrix.nearlyEq(Matrix.col(0, Complex.I), 0.000001),
       ).toBeTruthy()
     })
 
@@ -528,8 +528,8 @@ describe('Simulator', () => {
       simulator.measure(0)
 
       expect(
-        simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(1, 0), 0.000001) ||
-          simulator.state.matrix.isApproximatelyEqualTo(Matrix.col(0, new Complex(0, -1)), 0.000001),
+        simulator.state.matrix.nearlyEq(Matrix.col(1, 0), 0.000001) ||
+          simulator.state.matrix.nearlyEq(Matrix.col(0, new Complex(0, -1)), 0.000001),
       ).toBeTruthy()
     })
 

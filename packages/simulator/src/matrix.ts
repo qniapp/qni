@@ -381,7 +381,12 @@ export class Matrix {
     return new Matrix(w, h, newBuffer)
   }
 
-  isEqualTo(obj: Matrix | unknown): boolean {
+  /**
+   * Returns true if the Matrix is equal to other.
+   *
+   * @param other - The other Matrix to compare with
+   */
+  eq(obj: Matrix | unknown): boolean {
     if (this === obj) return true
     if (!(obj instanceof Matrix)) return false
 
@@ -393,7 +398,12 @@ export class Matrix {
     )
   }
 
-  isApproximatelyEqualTo(other: Matrix | unknown, epsilon: number): boolean {
+  /**
+   * Returns true if the Matrix is close to the value of other.
+   *
+   * @param other - The other Matrix to compare with
+   */
+  nearlyEq(other: Matrix | unknown, epsilon: number): boolean {
     return (
       other instanceof Matrix &&
       this.width === other.width &&
