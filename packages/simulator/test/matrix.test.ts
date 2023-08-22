@@ -151,6 +151,15 @@ describe('Matrix', () => {
     expect(mErr._unsafeUnwrapErr().message).toBe('Matrix.add: incompatible sizes')
   })
 
+  test('sub', () => {
+    expect(
+      squareMatrix(2, 3, 5, 7)
+        .sub(squareMatrix(11, 13, 17, 19))
+        ._unsafeUnwrap()
+        .isEqualTo(squareMatrix(-9, -10, -12, -12)),
+    ).toBeTruthy()
+  })
+
   test('isEqualTo', () => {
     const m = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
     expect(equate(m, m)).toBeTruthy()
@@ -305,12 +314,6 @@ describe('Matrix', () => {
 
     expect(equate(Matrix.col(2, 3).times(5), Matrix.col(10, 15))).toBeTruthy()
     expect(equate(Matrix.row(2, 3).times(5), Matrix.row(10, 15))).toBeTruthy()
-  })
-
-  test('minus', () => {
-    expect(
-      equate(squareMatrix(2, 3, 5, 7).minus(squareMatrix(11, 13, 17, 19)), squareMatrix(-9, -10, -12, -12)),
-    ).toBeTruthy()
   })
 
   test('times_matrix', () => {

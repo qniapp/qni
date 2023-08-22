@@ -313,16 +313,25 @@ export class Matrix {
 
   plus = this.add.bind(this)
 
-  minus(other: Matrix): Matrix {
+  /**
+   * Matrix subtraction.
+   *
+   * @param other - The matrix to subtract
+   * @returns A result object with the matrix or an error
+   */
+  sub(other: Matrix): Result<Matrix, Error> {
     const {width: w, height: h, buffer: b1} = this
     const b2 = other.buffer
-    Util.need(other.width === w && other.height === h, 'Matrix.minus: compatible sizes')
+    if (other.width !== w || other.height !== h) {
+      return err(Error('Matrix.sub: incompatible sizes'))
+    }
 
     const newBuffer = new Float64Array(this.buffer.length)
     for (let i = 0; i < newBuffer.length; i++) {
       newBuffer[i] = b1[i] - b2[i]
     }
-    return new Matrix(w, h, newBuffer)
+
+    return ok(new Matrix(w, h, newBuffer))
   }
 
   times(other: Matrix | number | Complex): Matrix {
@@ -346,7 +355,7 @@ export class Matrix {
       other instanceof Matrix &&
       this.width === other.width &&
       this.height === other.height &&
-      Math.sqrt(this.minus(other).norm2()) <= epsilon
+      Math.sqrt(this.sub(other)._unsafeUnwrap().norm2()) <= epsilon
     )
   }
 
