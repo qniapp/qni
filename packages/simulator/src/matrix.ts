@@ -220,6 +220,34 @@ export class Matrix {
   }
 
   /**
+   * Return true if the matrix is a Hermitian matrix.
+   *
+   * @param epsilon - The epsilon to use for comparison
+   * @returns true if the matrix is a Hermitian matrix
+   */
+  isHermitian(epsilon = 0): boolean {
+    if (this.width !== this.height) {
+      return false
+    }
+
+    for (let col = 0; col < this.width; col++) {
+      for (let row = 0; row < this.height; row++) {
+        const i = (this.width * row + col) * 2
+        const j = (this.width * col + row) * 2
+
+        if (Math.abs(this.buffer[i] - this.buffer[j]) > epsilon) {
+          return false
+        }
+        if (Math.abs(this.buffer[i + 1] + this.buffer[j + 1]) > epsilon) {
+          return false
+        }
+      }
+    }
+
+    return true
+  }
+
+  /**
    * Returns a trace of the `Matrix`.
    *
    * @returns A `Complex` number representing the trace
@@ -318,25 +346,6 @@ export class Matrix {
       .map(row => row.map(e => e.format(options)).join(options.itemSeparator))
       .join(`}${options.itemSeparator}{`)
     return `{{${data}}}`
-  }
-
-  isHermitian(epsilon = 0): boolean {
-    if (this.width !== this.height) {
-      return false
-    }
-    for (let c = 0; c < this.width; c++) {
-      for (let r = 0; r < this.height; r++) {
-        const i = (this.width * r + c) * 2
-        const j = (this.width * c + r) * 2
-        if (Math.abs(this.buffer[i] - this.buffer[j]) > epsilon) {
-          return false
-        }
-        if (Math.abs(this.buffer[i + 1] + this.buffer[j + 1]) > epsilon) {
-          return false
-        }
-      }
-    }
-    return true
   }
 
   tensorProduct(other: Matrix): Matrix {
