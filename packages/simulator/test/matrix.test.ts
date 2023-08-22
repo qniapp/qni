@@ -1,8 +1,6 @@
 import {Complex, Format, equate} from '@qni/common'
 import {H, X, Y, Z} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
-// eslint-disable-next-line import/no-nodejs-modules
-import {performance} from 'perf_hooks'
 
 describe('Matrix', () => {
   test('zero', () => {
@@ -393,38 +391,6 @@ describe('Matrix', () => {
 
     // Tensor product is order independent (in this case)
     expect(equate(r.tensorProduct(c), c.tensorProduct(r))).toBeTruthy()
-  })
-
-  test('timesQubitOperation', () => {
-    const s = Math.sqrt(0.5)
-
-    expect(equate(Matrix.col(1, 0, 0, 0).timesQubitOperation(H, 0, 0, 0), Matrix.col(s, s, 0, 0))).toBeTruthy()
-    expect(equate(Matrix.col(0, 1, 0, 0).timesQubitOperation(H, 0, 0, 0), Matrix.col(s, -s, 0, 0))).toBeTruthy()
-    expect(equate(Matrix.col(0, 0, 1, 0).timesQubitOperation(H, 0, 0, 0), Matrix.col(0, 0, s, s))).toBeTruthy()
-    expect(equate(Matrix.col(0, 0, 0, 1).timesQubitOperation(H, 0, 0, 0), Matrix.col(0, 0, s, -s))).toBeTruthy()
-
-    expect(equate(Matrix.col(1, 0, 0, 0).timesQubitOperation(H, 1, 0, 0), Matrix.col(s, 0, s, 0))).toBeTruthy()
-    expect(equate(Matrix.col(0, 1, 0, 0).timesQubitOperation(H, 1, 0, 0), Matrix.col(0, s, 0, s))).toBeTruthy()
-    expect(equate(Matrix.col(0, 0, 1, 0).timesQubitOperation(H, 1, 0, 0), Matrix.col(s, 0, -s, 0))).toBeTruthy()
-    expect(equate(Matrix.col(0, 0, 0, 1).timesQubitOperation(H, 1, 0, 0), Matrix.col(0, s, 0, -s))).toBeTruthy()
-
-    expect(equate(Matrix.col(2, 3, 0, 0).timesQubitOperation(X, 1, 1, 0), Matrix.col(0, 3, 2, 0))).toBeTruthy()
-    expect(equate(Matrix.col(2, 3, 0, 0).timesQubitOperation(X, 1, 1, 1), Matrix.col(2, 0, 0, 3))).toBeTruthy()
-  })
-
-  test('timesQubitOperation_speed', () => {
-    const numQubits = 10
-    const numOps = 100
-    const t0 = performance.now()
-    const buf = new Float64Array(2 << numQubits)
-    buf[0] = 1
-    let state = new Matrix(1, 1 << numQubits, buf)
-    for (let i = 0; i < numOps; i++) {
-      state = state.timesQubitOperation(H, 0, 6, 0)
-    }
-
-    const t1 = performance.now()
-    expect(t1 - t0 < 100).toBeTruthy()
   })
 
   test('qubitDensityMatrixToBlochVector', () => {

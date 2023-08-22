@@ -1,5 +1,8 @@
 import {Matrix, StateVector} from '../src/'
 import {Complex, equate} from '@qni/common'
+import {H} from '../src/gate-matrices'
+// eslint-disable-next-line import/no-nodejs-modules
+import {performance} from 'perf_hooks'
 
 describe('StateVector', () => {
   let stateVector: StateVector
@@ -253,5 +256,36 @@ describe('StateVector', () => {
       stateVector = new StateVector('0(-i)')
       expect(stateVector.blochVector(1).map(each => Math.round(each))).toEqual([0, 0, 1])
     })
+  })
+
+  test('timesQubitOperation', () => {
+    const s = Math.sqrt(0.5)
+
+    expect(new StateVector('00').timesQubitOperation(H, 0, 0).eq(Matrix.col(s, s, 0, 0))).toBeTruthy()
+    expect(new StateVector('01').timesQubitOperation(H, 0, 0).eq(Matrix.col(s, -s, 0, 0))).toBeTruthy()
+    expect(new StateVector('10').timesQubitOperation(H, 0, 0).eq(Matrix.col(0, 0, s, s))).toBeTruthy()
+    expect(new StateVector('11').timesQubitOperation(H, 0, 0).eq(Matrix.col(0, 0, s, -s))).toBeTruthy()
+
+    expect(new StateVector('00').timesQubitOperation(H, 1, 0).eq(Matrix.col(s, 0, s, 0))).toBeTruthy()
+    expect(new StateVector('01').timesQubitOperation(H, 1, 0).eq(Matrix.col(0, s, 0, s))).toBeTruthy()
+    expect(new StateVector('10').timesQubitOperation(H, 1, 0).eq(Matrix.col(s, 0, -s, 0))).toBeTruthy()
+    expect(new StateVector('11').timesQubitOperation(H, 1, 0).eq(Matrix.col(0, s, 0, -s))).toBeTruthy()
+  })
+
+  test('timesQubitOperation_speed', () => {
+    const numQubits = 10
+    const numOps = 100
+    const t0 = performance.now()
+    const buf = new Float64Array(2 << numQubits)
+
+    buf[0] = 1
+    stateVector = new StateVector(new Matrix(1, 1 << numQubits, buf))
+
+    for (let i = 0; i < numOps; i++) {
+      stateVector.timesQubitOperation(H, 0, 6)
+    }
+
+    const t1 = performance.now()
+    expect(t1 - t0 < 100).toBeTruthy()
   })
 })
