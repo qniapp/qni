@@ -124,6 +124,13 @@ export class Matrix {
     return Matrix.create(width, height, buf)
   }
 
+  /**
+   * Returns a matrix of the specified `width` and `height`.
+   *
+   * @param width - The width of the matrix
+   * @param height - The height of the matrix
+   * @param buffer - The buffer containing the matrix elements
+   */
   static create(width: number, height: number, buffer: Float64Array): Result<Matrix, Error> {
     if (width < 0) {
       return err(Error(`width(${width}) < 0`))
@@ -181,7 +188,7 @@ export class Matrix {
   }
 
   /**
-   * Returns the `colIndex` column of the matrix
+   * Returns the `colIndex` column of the matrix.
    *
    * @param colIndex - The column index
    * @returns A result object with the column or an error
@@ -201,6 +208,25 @@ export class Matrix {
     return ok(col)
   }
 
+  /**
+   * Returns the matrix as an array of rows.
+   *
+   * @returns An array of rows
+   */
+  rows(): Complex[][] {
+    return range(0, this.height - 1).map<Complex[]>(row =>
+      range(0, this.width - 1).map<Complex>(col => this.element(col, row)._unsafeUnwrap()),
+    )
+  }
+
+  norm2(): number {
+    let t = 0
+    for (const e of this.buffer) {
+      t += e * e
+    }
+    return t
+  }
+
   adjoint(): Matrix {
     const w = this.height
     const h = this.width
@@ -218,49 +244,32 @@ export class Matrix {
     return new Matrix(w, h, newBuf)
   }
 
-  times(other: Matrix | number | Complex): Matrix {
-    return other instanceof Matrix ? this.timesMatrix(other) : this.timesScalar(other)
-  }
+  plus(other: Matrix): Matrix {
+    const {width: w, height: h, buffer: b1} = this
+    const b2 = other.buffer
+    Util.need(other.width === w && other.height === h, 'Matrix.plus: compatible sizes')
 
-  private timesMatrix(other: Matrix): Matrix {
-    if (this.width !== other.height) {
-      throw new DetailedError('Incompatible sizes.', {this: this, other})
-    }
-    const w = other.width
-    const h = this.height
-    const n = this.width
-    const newBuffer = new Float64Array(w * h * 2)
-    for (let r = 0; r < h; r++) {
-      for (let c = 0; c < w; c++) {
-        const k3 = (r * w + c) * 2
-        for (let k = 0; k < n; k++) {
-          const k1 = (r * n + k) * 2
-          const k2 = (k * w + c) * 2
-          const r1 = this.buffer[k1]
-          const i1 = this.buffer[k1 + 1]
-          const r2 = other.buffer[k2]
-          const i2 = other.buffer[k2 + 1]
-          const r3 = r1 * r2 - i1 * i2
-          const i3 = r1 * i2 + r2 * i1
-          newBuffer[k3] += r3
-          newBuffer[k3 + 1] += i3
-        }
-      }
+    const newBuffer = new Float64Array(this.buffer.length)
+    for (let i = 0; i < newBuffer.length; i++) {
+      newBuffer[i] = b1[i] + b2[i]
     }
     return new Matrix(w, h, newBuffer)
   }
 
-  private timesScalar(v: number | Complex): Matrix {
+  minus(other: Matrix): Matrix {
+    const {width: w, height: h, buffer: b1} = this
+    const b2 = other.buffer
+    Util.need(other.width === w && other.height === h, 'Matrix.minus: compatible sizes')
+
     const newBuffer = new Float64Array(this.buffer.length)
-    const sr = Complex.real(v)
-    const si = Complex.imag(v)
-    for (let i = 0; i < newBuffer.length; i += 2) {
-      const vr = this.buffer[i]
-      const vi = this.buffer[i + 1]
-      newBuffer[i] = vr * sr - vi * si
-      newBuffer[i + 1] = vr * si + vi * sr
+    for (let i = 0; i < newBuffer.length; i++) {
+      newBuffer[i] = b1[i] - b2[i]
     }
-    return new Matrix(this.width, this.height, newBuffer)
+    return new Matrix(w, h, newBuffer)
+  }
+
+  times(other: Matrix | number | Complex): Matrix {
+    return other instanceof Matrix ? this.timesMatrix(other) : this.timesScalar(other)
   }
 
   isEqualTo(obj: Matrix | unknown): boolean {
@@ -284,26 +293,6 @@ export class Matrix {
     )
   }
 
-  minus(other: Matrix): Matrix {
-    const {width: w, height: h, buffer: b1} = this
-    const b2 = other.buffer
-    Util.need(other.width === w && other.height === h, 'Matrix.minus: compatible sizes')
-
-    const newBuffer = new Float64Array(this.buffer.length)
-    for (let i = 0; i < newBuffer.length; i++) {
-      newBuffer[i] = b1[i] - b2[i]
-    }
-    return new Matrix(w, h, newBuffer)
-  }
-
-  norm2(): number {
-    let t = 0
-    for (const e of this.buffer) {
-      t += e * e
-    }
-    return t
-  }
-
   format(options = DEFAULT_FORMAT_OPTIONS): string {
     const format = new Format(
       options.allowAbbreviation === undefined ? true : options.allowAbbreviation,
@@ -319,12 +308,6 @@ export class Matrix {
       .map(row => row.map(e => e.format(options)).join(options.itemSeparator))
       .join(`}${options.itemSeparator}{`)
     return `{{${data}}}`
-  }
-
-  rows(): Complex[][] {
-    return range(0, this.height - 1).map<Complex[]>(row =>
-      range(0, this.width - 1).map<Complex>(col => this.element(col, row)._unsafeUnwrap()),
-    )
   }
 
   isHermitian(epsilon = 0): boolean {
@@ -344,18 +327,6 @@ export class Matrix {
       }
     }
     return true
-  }
-
-  plus(other: Matrix): Matrix {
-    const {width: w, height: h, buffer: b1} = this
-    const b2 = other.buffer
-    Util.need(other.width === w && other.height === h, 'Matrix.plus: compatible sizes')
-
-    const newBuffer = new Float64Array(this.buffer.length)
-    for (let i = 0; i < newBuffer.length; i++) {
-      newBuffer[i] = b1[i] + b2[i]
-    }
-    return new Matrix(w, h, newBuffer)
   }
 
   tensorProduct(other: Matrix): Matrix {
@@ -454,5 +425,46 @@ export class Matrix {
 
   clone(): Matrix {
     return new Matrix(this.width, this.height, this.buffer.slice())
+  }
+
+  private timesMatrix(other: Matrix): Matrix {
+    if (this.width !== other.height) {
+      throw new DetailedError('Incompatible sizes.', {this: this, other})
+    }
+    const w = other.width
+    const h = this.height
+    const n = this.width
+    const newBuffer = new Float64Array(w * h * 2)
+    for (let r = 0; r < h; r++) {
+      for (let c = 0; c < w; c++) {
+        const k3 = (r * w + c) * 2
+        for (let k = 0; k < n; k++) {
+          const k1 = (r * n + k) * 2
+          const k2 = (k * w + c) * 2
+          const r1 = this.buffer[k1]
+          const i1 = this.buffer[k1 + 1]
+          const r2 = other.buffer[k2]
+          const i2 = other.buffer[k2 + 1]
+          const r3 = r1 * r2 - i1 * i2
+          const i3 = r1 * i2 + r2 * i1
+          newBuffer[k3] += r3
+          newBuffer[k3 + 1] += i3
+        }
+      }
+    }
+    return new Matrix(w, h, newBuffer)
+  }
+
+  private timesScalar(v: number | Complex): Matrix {
+    const newBuffer = new Float64Array(this.buffer.length)
+    const sr = Complex.real(v)
+    const si = Complex.imag(v)
+    for (let i = 0; i < newBuffer.length; i += 2) {
+      const vr = this.buffer[i]
+      const vi = this.buffer[i + 1]
+      newBuffer[i] = vr * sr - vi * si
+      newBuffer[i + 1] = vr * si + vi * sr
+    }
+    return new Matrix(this.width, this.height, newBuffer)
   }
 }
