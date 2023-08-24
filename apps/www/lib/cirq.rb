@@ -23,7 +23,7 @@ class Cirq
 
     result_json = nil
 
-    IO.popen(Rails.root.join('bin/cirq.py').to_s, 'r+') do |io|
+    IO.popen(Rails.root.join('bin/cirq_sim.py').to_s, 'r+') do |io|
       io.puts json
       io.close_write
       result_json = io.gets
