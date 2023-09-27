@@ -198,9 +198,12 @@ class cirqbridge:
                     _c = [ cirq.ops.I(index) for index in targetqubits] # add a dummy gate to count Bloch operation as a step
                 elif circuit_qni['type'] == u'':
                     pass #nop
+                elif circuit_qni['type'] == u'…':
+                    targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
+                    _c = [ cirq.ops.I(index) for index in targetqubits] # copyed from Bloch. not sure this works
                 else:
-#                    print("unsupported gate", circuit_qni['type'])
-#                    sys.stdout.flush()
+                    self.logger.fatal("unsupported gate", circuit_qni['type'])
+                    sys.stdout.flush()
                     exit(1)
                 for __c in _c:
                     moment.append(__c)
