@@ -22,14 +22,10 @@ export class Matrix {
   public buffer: Float64Array
 
   /**
-   * Return a column vector.
-   *
-   * @param elements - The elements of the vector
-   * @returns A column vector (Matrix with 1 column)
+   * Creates a column vector from the given elements.
    */
-  static col(...elements: Array<number | Complex>): Matrix {
-    const res = Matrix.build(elements.length, 1, row => elements[row])
-    return res._unsafeUnwrap()
+  static column_vector(...elements: Array<number | Complex>): Result<Matrix, Error> {
+    return Matrix.build(elements.length, 1, row => elements[row])
   }
 
   /**
