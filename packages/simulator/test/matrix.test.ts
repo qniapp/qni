@@ -3,8 +3,21 @@ import {H, X, Y, Z} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
 
 describe('Matrix', () => {
+  test('rows', () => {
+    const m = Matrix.rows([
+      [1, 0],
+      [new Complex(0, -1), new Complex(2, -3)],
+    ])
+
+    expect(m.isOk).toBeTruthy()
+    expect(m._unsafeUnwrap().toString()).toBe('{{1, 0}, {-i, 2-3i}}')
+  })
+
   test('column_vector', () => {
-    expect(Matrix.column_vector(2, 3, new Complex(0, 5))._unsafeUnwrap().toString()).toBe('{{2}, {3}, {5i}}')
+    const m = Matrix.column_vector(2, 3, new Complex(0, 5))
+
+    expect(m.isOk).toBeTruthy()
+    expect(m._unsafeUnwrap().toString()).toBe('{{2}, {3}, {5i}}')
   })
 
   test('row', () => {
