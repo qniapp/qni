@@ -7,7 +7,9 @@ Selenium::WebDriver.logger.ignore(:browser_options)
 
 # rubocop:disable Metrics/ClassLength
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :selenium_chrome_headless
+  driven_by(:selenium, using: :headless_chrome) do |driver_option|
+    driver_option.add_argument('--headless=new')
+  end
 
   def assert_steps(number)
     assert_selector 'circuit-step:not([data-shadow])', count: number
