@@ -166,7 +166,7 @@ export class StateVector {
         }, num)
     }
 
-    let densityMatrix = Matrix.generate(2, 2)._unsafeUnwrap()
+    let densityMatrix = Matrix.build(2, 2)._unsafeUnwrap()
 
     for (let bra = 0; bra < this.matrix.height; bra++) {
       for (let ket = 0; ket < this.matrix.height; ket++) {

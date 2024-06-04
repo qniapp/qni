@@ -40,7 +40,7 @@ describe('Matrix', () => {
   })
 
   test('Matrix.generate', () => {
-    const res = Matrix.generate(3, 2, (row, col) => row + 10 * col)
+    const res = Matrix.build(2, 3, (row, col) => row + 10 * col)
 
     expect(res.isOk()).toBeTruthy()
     expect(res._unsafeUnwrap().toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')

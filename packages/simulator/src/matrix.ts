@@ -28,32 +28,35 @@ export class Matrix {
    * @returns A column vector (Matrix with 1 column)
    */
   static col(...elements: Array<number | Complex>): Matrix {
-    const res = Matrix.generate(1, elements.length, row => elements[row])
+    const res = Matrix.build(elements.length, 1, row => elements[row])
     return res._unsafeUnwrap()
   }
 
   /**
-   * Generates a matrix with the specified width and height.
+   * Builds a matrix with the specified width and height, using the provided
+   * function to generate each element.
    */
-  static generate(
-    width: number,
+  static build(
     height: number,
+    width: number,
     matrixElementGenerator?: (row: number, col: number) => number | Complex,
   ): Result<Matrix, Error> {
     const buf = new Float64Array(width * height * 2)
 
     for (let row = 0; row < height; row++) {
       for (let col = 0; col < width; col++) {
-        const i = (row * width + col) * 2
-        let c
+        const ri = (row * width + col) * 2 // real part index
+        const ii = ri + 1 // imaginary part index
+
+        let v: Complex
         if (matrixElementGenerator) {
-          c = Complex.from(matrixElementGenerator(row, col))
+          v = Complex.from(matrixElementGenerator(row, col))
         } else {
-          c = Complex.from(0)
+          v = Complex.from(0)
         }
 
-        buf[i] = c.real
-        buf[i + 1] = c.imag
+        buf[ri] = v.real
+        buf[ii] = v.imag
       }
     }
 
@@ -67,7 +70,7 @@ export class Matrix {
    * @returns A row vector (Matrix with 1 row)
    */
   static row(...elements: Array<number | Complex>): Matrix {
-    const res = Matrix.generate(elements.length, 1, (_row, col) => elements[col])
+    const res = Matrix.build(1, elements.length, (_row, col) => elements[col])
     return res._unsafeUnwrap()
   }
 
@@ -98,7 +101,7 @@ export class Matrix {
       return err(Error('Matrix.square: non-square number of arguments'))
     }
 
-    return Matrix.generate(n, n, (row, col) => elements[row * n + col])
+    return Matrix.build(n, n, (row, col) => elements[row * n + col])
   }
 
   /**
