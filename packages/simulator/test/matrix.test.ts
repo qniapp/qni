@@ -158,6 +158,10 @@ describe('Matrix', () => {
   })
 
   test('multMatrix', () => {
+    const mErr = squareMatrix(1, 2, 3, 4).mult(Matrix.col(0))
+    expect(mErr.isErr()).toBeTruthy()
+    expect(mErr._unsafeUnwrapErr().message).toBe('Incompatible sizes.')
+
     expect(
       squareMatrix(2, 3, 5, 7).mult(squareMatrix(11, 13, 17, 19))._unsafeUnwrap().eq(squareMatrix(73, 83, 174, 198)),
     ).toBeTruthy()
@@ -383,6 +387,13 @@ describe('Matrix', () => {
     expect(equate(f(1, -1).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [-1, 0, 0])).toBeTruthy()
     expect(equate(f(1, i).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [0, 1, 0])).toBeTruthy()
     expect(equate(f(1, mi).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [0, -1, 0])).toBeTruthy()
+  })
+
+  test('clone', () => {
+    const m = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
+    const c = m.clone()
+
+    expect(m.eq(c))
   })
 })
 
