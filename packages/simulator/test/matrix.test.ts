@@ -10,10 +10,6 @@ describe('Matrix', () => {
     expect(Matrix.zero(2, 2)._unsafeUnwrap().toString()).toBe('{{0, 0}, {0, 0}}')
   })
 
-  test('solo', () => {
-    expect(equate(Matrix.solo(1).rows(), [[1]])).toBeTruthy()
-  })
-
   test('col', () => {
     expect(Matrix.col(2, 3, new Complex(0, 5)).toString()).toBe('{{2}, {3}, {5i}}')
   })
@@ -92,13 +88,13 @@ describe('Matrix', () => {
     expect(Matrix.row(1, 1).isHermitian(999)).toBeFalsy()
     expect(Matrix.col(1, 1).isHermitian(999)).toBeFalsy()
 
-    expect(Matrix.solo(1).isHermitian(0)).toBeTruthy()
-    expect(Matrix.solo(0).isHermitian(0)).toBeTruthy()
-    expect(Matrix.solo(-1).isHermitian(0)).toBeTruthy()
-    expect(Matrix.solo(-2).isHermitian(0)).toBeTruthy()
-    expect(Matrix.solo(i).isHermitian(0)).toBeFalsy()
-    expect(Matrix.solo(i).isHermitian(0.5)).toBeFalsy()
-    expect(Matrix.solo(i).isHermitian(999)).toBeTruthy()
+    expect(Matrix.col(1).isHermitian(0)).toBeTruthy()
+    expect(Matrix.col(0).isHermitian(0)).toBeTruthy()
+    expect(Matrix.col(-1).isHermitian(0)).toBeTruthy()
+    expect(Matrix.col(-2).isHermitian(0)).toBeTruthy()
+    expect(Matrix.col(i).isHermitian(0)).toBeFalsy()
+    expect(Matrix.col(i).isHermitian(0.5)).toBeFalsy()
+    expect(Matrix.col(i).isHermitian(999)).toBeTruthy()
 
     expect(squareMatrix(1, 0, 0, 1).isHermitian(0)).toBeTruthy()
     expect(squareMatrix(1, 1, 1, 1).isHermitian(0)).toBeTruthy()
@@ -121,7 +117,7 @@ describe('Matrix', () => {
     expect(H.trace().eq(0)).toBeTruthy()
     expect(squareMatrix(1, 2, 3, 4).trace().eq(5)).toBeTruthy()
     expect(squareMatrix(0, 1, 2, 3, 4, 5, 6, 7, 8).trace().eq(12)).toBeTruthy()
-    expect(equate(Matrix.solo(NaN).trace().abs(), NaN)).toBeTruthy()
+    expect(equate(Matrix.col(NaN).trace().abs(), NaN)).toBeTruthy()
   })
 
   test('adjoint', () => {
@@ -141,7 +137,7 @@ describe('Matrix', () => {
       squareMatrix(2, 3, 5, 7).add(squareMatrix(11, 13, 17, 19))._unsafeUnwrap().eq(squareMatrix(13, 16, 22, 26)),
     ).toBeTruthy()
 
-    const mErr = squareMatrix(2, 3, 5, 7).add(Matrix.solo(0))
+    const mErr = squareMatrix(2, 3, 5, 7).add(Matrix.col(0))
     expect(mErr.isErr()).toBeTruthy()
     expect(mErr._unsafeUnwrapErr().message).toBe('Matrix.add: incompatible sizes')
   })
@@ -151,7 +147,7 @@ describe('Matrix', () => {
       squareMatrix(2, 3, 5, 7).sub(squareMatrix(11, 13, 17, 19))._unsafeUnwrap().eq(squareMatrix(-9, -10, -12, -12)),
     ).toBeTruthy()
 
-    const mErr = squareMatrix(2, 3, 5, 7).sub(Matrix.solo(0))
+    const mErr = squareMatrix(2, 3, 5, 7).sub(Matrix.col(0))
     expect(mErr.isErr()).toBeTruthy()
     expect(mErr._unsafeUnwrapErr().message).toBe('Matrix.sub: incompatible sizes')
   })
@@ -187,13 +183,13 @@ describe('Matrix', () => {
   })
 
   test('tensorProduct', () => {
-    expect(Matrix.solo(2).tensorProduct(Matrix.solo(3)).eq(Matrix.solo(6))).toBeTruthy()
+    expect(Matrix.col(2).tensorProduct(Matrix.col(3)).eq(Matrix.col(6))).toBeTruthy()
     expect(
-      Matrix.solo(new Complex(2, 3))
-        .tensorProduct(Matrix.solo(new Complex(5, 7)))
-        .eq(Matrix.solo(new Complex(-11, 29))),
+      Matrix.col(new Complex(2, 3))
+        .tensorProduct(Matrix.col(new Complex(5, 7)))
+        .eq(Matrix.col(new Complex(-11, 29))),
     ).toBeTruthy()
-    expect(Matrix.solo(2).tensorProduct(Matrix.solo(3)).eq(Matrix.solo(6))).toBeTruthy()
+    expect(Matrix.col(2).tensorProduct(Matrix.col(3)).eq(Matrix.col(6))).toBeTruthy()
     expect(
       X.tensorProduct(Z).eq(
         // prettier-ignore
@@ -231,7 +227,7 @@ describe('Matrix', () => {
       m.eq(squareMatrix(new Complex(2, 3), new Complex(5, 7),
                         new Complex(11, 13), new Complex(17, 19))),
     ).toBeTruthy()
-    expect(m.eq(Matrix.solo(new Complex(2, 3)))).toBeFalsy()
+    expect(m.eq(Matrix.col(new Complex(2, 3)))).toBeFalsy()
     expect(
       // prettier-ignore
       m.eq(squareMatrix(new Complex(-2, 3), new Complex(5, 7),
@@ -268,12 +264,12 @@ describe('Matrix', () => {
     expect(Matrix.row(1, 1).nearlyEq(Matrix.row(1, 1), 0)).toBeTruthy()
 
     // Error bound matters
-    expect(Matrix.solo(1).nearlyEq(Matrix.solo(1), 0)).toBeTruthy()
-    expect(Matrix.solo(1).nearlyEq(Matrix.solo(1), 1 / 4)).toBeTruthy()
-    expect(Matrix.solo(1.25).nearlyEq(Matrix.solo(1), 1 / 4)).toBeTruthy()
-    expect(Matrix.solo(0.75).nearlyEq(Matrix.solo(1), 1 / 4)).toBeTruthy()
-    expect(Matrix.solo(1.26).nearlyEq(Matrix.solo(1), 1 / 4)).toBeFalsy()
-    expect(Matrix.solo(0.74).nearlyEq(Matrix.solo(1), 1 / 4)).toBeFalsy()
+    expect(Matrix.col(1).nearlyEq(Matrix.col(1), 0)).toBeTruthy()
+    expect(Matrix.col(1).nearlyEq(Matrix.col(1), 1 / 4)).toBeTruthy()
+    expect(Matrix.col(1.25).nearlyEq(Matrix.col(1), 1 / 4)).toBeTruthy()
+    expect(Matrix.col(0.75).nearlyEq(Matrix.col(1), 1 / 4)).toBeTruthy()
+    expect(Matrix.col(1.26).nearlyEq(Matrix.col(1), 1 / 4)).toBeFalsy()
+    expect(Matrix.col(0.74).nearlyEq(Matrix.col(1), 1 / 4)).toBeFalsy()
 
     // Error bound spreads
     expect(Matrix.row(0, 0).nearlyEq(Matrix.row(0, 0), 1)).toBeTruthy()
@@ -281,12 +277,12 @@ describe('Matrix', () => {
     expect(Matrix.row(0, 1).nearlyEq(Matrix.row(0, 0), 1)).toBeTruthy()
     expect(Matrix.row(1, 1).nearlyEq(Matrix.row(0, 0), 1)).toBeFalsy()
 
-    expect(Matrix.solo(0).nearlyEq(null, 0)).toBeFalsy()
-    expect(Matrix.solo(0).nearlyEq('', 0)).toBeFalsy()
+    expect(Matrix.col(0).nearlyEq(null, 0)).toBeFalsy()
+    expect(Matrix.col(0).nearlyEq('', 0)).toBeFalsy()
   })
 
   test('format', () => {
-    expect(equate(Matrix.solo(2).format(), '{{2}}')).toBeTruthy()
+    expect(equate(Matrix.col(2).format(), '{{2}}')).toBeTruthy()
     expect(
       equate(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).format(), '{{1, 0}, {-i, 2-3i}}'),
     ).toBeTruthy()
@@ -328,7 +324,7 @@ describe('Matrix', () => {
   })
 
   test('toString', () => {
-    expect(equate(Matrix.solo(2).toString(), '{{2}}')).toBeTruthy()
+    expect(equate(Matrix.col(2).toString(), '{{2}}')).toBeTruthy()
     expect(
       equate(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).toString(), '{{1, 0}, {-i, 2-3i}}'),
     ).toBeTruthy()
@@ -369,7 +365,7 @@ describe('Matrix', () => {
   })
 
   test('qubitDensityMatrixToBlochVector', () => {
-    expect(() => Matrix.solo(1).qubitDensityMatrixToBlochVector()).toThrow()
+    expect(() => Matrix.col(1).qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => squareMatrix(1, 0, 0, 0, 0, 0, 0, 0, 0).qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => Matrix.identity(2)._unsafeUnwrap().qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => squareMatrix(1, 1, -1, 0).qubitDensityMatrixToBlochVector()).toThrow()
