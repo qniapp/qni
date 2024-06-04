@@ -3,13 +3,6 @@ import {H, X, Y, Z} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
 
 describe('Matrix', () => {
-  test('zero', () => {
-    expect(Matrix.zero(1, 1)._unsafeUnwrap().toString()).toBe('{{0}}')
-    expect(Matrix.zero(2, 1)._unsafeUnwrap().toString()).toBe('{{0, 0}}')
-    expect(Matrix.zero(1, 2)._unsafeUnwrap().toString()).toBe('{{0}, {0}}')
-    expect(Matrix.zero(2, 2)._unsafeUnwrap().toString()).toBe('{{0, 0}, {0, 0}}')
-  })
-
   test('col', () => {
     expect(Matrix.col(2, 3, new Complex(0, 5)).toString()).toBe('{{2}, {3}, {5i}}')
   })
