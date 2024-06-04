@@ -33,17 +33,6 @@ export class Matrix {
   }
 
   /**
-   * Generates a 1x1 matrix.
-   *
-   * @param element - The element of the matrix
-   * @returns A 1x1 matrix
-   */
-  static solo(element: number | Complex): Matrix {
-    const res = Matrix.create(1, 1, new Float64Array([Complex.real(element), Complex.imag(element)]))
-    return res._unsafeUnwrap()
-  }
-
-  /**
    * Return a column vector.
    *
    * @param elements - The elements of the vector

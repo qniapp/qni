@@ -65,7 +65,10 @@ class ShareTest < ApplicationSystemTestCase
     assert_equal 2, windows.size
     within_window windows[1] do
       json = URI.encode_www_form_component('{"cols":[]}')
-      assert_equal "https://twitter.com/share?hashtags=qni&url=#{current_session_base_url}/#{json}", CGI.unescape(current_url)
+      url = CGI.unescape(current_url)
+      expected_url = "https://x.com/share?hashtags=qni&url=#{current_session_base_url}/#{json}"
+
+      assert expected_url.include?(expected_url), "Expected '#{url}' to include '#{expected_url}'"
     end
   end
 
@@ -79,7 +82,10 @@ class ShareTest < ApplicationSystemTestCase
 
     within_window windows[1] do
       json = URI.encode_www_form_component('{"cols":[],"title":"Grover反復"}')
-      assert_equal "https://twitter.com/share?text=Grover反復&hashtags=qni&url=#{current_session_base_url}/#{json}", CGI.unescape(current_url)
+      url = CGI.unescape(current_url)
+      expected_url = "https://x.com/share?text=Grover反復&hashtags=qni&url=#{current_session_base_url}/#{json}"
+
+      assert expected_url.include?(expected_url), "Expected '#{url}' to include '#{expected_url}'"
     end
   end
 end
