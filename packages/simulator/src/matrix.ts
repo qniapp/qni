@@ -87,21 +87,6 @@ export class Matrix {
   }
 
   /**
-   * Returns an identity matrix of the specified size.
-   *
-   * @param size - The size of the identity matrix
-   * @returns A result object with the generated identity matrix or an error
-   */
-  static identity(size: number): Result<Matrix, Error> {
-    const buf = new Float64Array(size * size * 2)
-    for (let i = 0; i < size; i++) {
-      buf[i * (size + 1) * 2] = 1
-    }
-
-    return Matrix.create(size, size, buf)
-  }
-
-  /**
    * Returns a square matrix with the specified elements.
    *
    * @param elements - The elements of the matrix
