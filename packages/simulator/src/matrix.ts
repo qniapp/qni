@@ -72,10 +72,10 @@ export class Matrix {
       }
     }
 
-    return Matrix.create(width, height, buf)
+    return Matrix.create(height, width, buf)
   }
 
-  private static create(width: number, height: number, buffer: Float64Array): Result<Matrix, Error> {
+  private static create(height: number, width: number, buffer: Float64Array): Result<Matrix, Error> {
     if (width < 0) {
       return err(Error(`width(${width}) < 0`))
     }
@@ -86,15 +86,29 @@ export class Matrix {
       return err(Error(`width(${width})*height(${height})*2 !== buffer.length(${buffer.length})`))
     }
 
-    return ok(new Matrix(width, height, buffer))
+    return ok(new Matrix(height, width, buffer))
   }
 
-  private constructor(width: number, height: number, buffer: Float64Array) {
-    this.width = width
+  private constructor(height: number, width: number, buffer: Float64Array) {
     this.height = height
+    this.width = width
     this.buffer = buffer
 
     this.plus = this.add // alias for add
+  }
+
+  /**
+   * Retrieves the value at the specified row and column in the matrix.
+   */
+  element(row: number, col: number): Result<Complex, Error> {
+    if (row < 0 || col < 0 || row >= this.height || col >= this.width) {
+      return err(Error('Element out of range'))
+    }
+
+    const ri = (this.width * row + col) * 2 // real part index
+    const ii = ri + 1 // imaginary part index
+
+    return ok(new Complex(this.buffer[ri], this.buffer[ii]))
   }
 
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {
@@ -128,23 +142,7 @@ export class Matrix {
       }
     }
 
-    return Matrix.create(w, h, buf)._unsafeUnwrap()
-  }
-
-  /**
-   * Returns element (col,row) of the matrix.
-   *
-   * @param col - The column index
-   * @param row - The row index
-   * @returns A result object with the element or an error
-   */
-  element(col: number, row: number): Result<Complex, Error> {
-    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
-      return err(Error('Element out of range'))
-    }
-
-    const i = (this.width * row + col) * 2
-    return ok(new Complex(this.buffer[i], this.buffer[i + 1]))
+    return Matrix.create(h, w, buf)._unsafeUnwrap()
   }
 
   /**
@@ -183,7 +181,7 @@ export class Matrix {
 
     const col = []
     for (let row = 0; row < this.height; row++) {
-      col.push(this.element(colIndex, row)._unsafeUnwrap())
+      col.push(this.element(row, colIndex)._unsafeUnwrap())
     }
     return ok(col)
   }
@@ -195,7 +193,7 @@ export class Matrix {
    */
   rows(): Complex[][] {
     return range(0, this.height - 1).map<Complex[]>(row =>
-      range(0, this.width - 1).map<Complex>(col => this.element(col, row)._unsafeUnwrap()),
+      range(0, this.width - 1).map<Complex>(col => this.element(row, col)._unsafeUnwrap()),
     )
   }
 
@@ -265,7 +263,7 @@ export class Matrix {
       }
     }
 
-    return new Matrix(w, h, newBuf)
+    return new Matrix(h, w, newBuf)
   }
 
   /**
@@ -286,7 +284,7 @@ export class Matrix {
       newBuffer[i] = b1[i] + b2[i]
     }
 
-    return ok(new Matrix(w, h, newBuffer))
+    return ok(new Matrix(h, w, newBuffer))
   }
 
   plus = this.add.bind(this)
@@ -309,7 +307,7 @@ export class Matrix {
       newBuffer[i] = b1[i] - b2[i]
     }
 
-    return ok(new Matrix(w, h, newBuffer))
+    return ok(new Matrix(h, w, newBuffer))
   }
 
   /**
@@ -356,7 +354,7 @@ export class Matrix {
       }
     }
 
-    return new Matrix(w, h, newBuffer)
+    return new Matrix(h, w, newBuffer)
   }
 
   /**
@@ -430,7 +428,7 @@ export class Matrix {
   }
 
   clone(): Matrix {
-    return new Matrix(this.width, this.height, this.buffer.slice())
+    return new Matrix(this.height, this.width, this.buffer.slice())
   }
 
   private norm2(): number {
@@ -469,7 +467,7 @@ export class Matrix {
       }
     }
 
-    return ok(new Matrix(w, h, newBuffer))
+    return ok(new Matrix(h, w, newBuffer))
   }
 
   private multScalar(v: number | Complex): Matrix {
@@ -484,6 +482,6 @@ export class Matrix {
       newBuffer[i + 1] = vr * si + vi * sr
     }
 
-    return new Matrix(this.width, this.height, newBuffer)
+    return new Matrix(this.height, this.width, newBuffer)
   }
 }
