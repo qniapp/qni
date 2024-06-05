@@ -98,15 +98,17 @@ export class Matrix {
   }
 
   /**
-   * Retrieves the element at the specified row and column indices.
+   * Retrieves the value at the specified row and column in the matrix.
    */
   element(row: number, col: number): Result<Complex, Error> {
-    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
+    if (row < 0 || col < 0 || row >= this.height || col >= this.width) {
       return err(Error('Element out of range'))
     }
 
-    const i = (this.width * row + col) * 2
-    return ok(new Complex(this.buffer[i], this.buffer[i + 1]))
+    const ri = (this.width * row + col) * 2 // real part index
+    const ii = ri + 1 // imaginary part index
+
+    return ok(new Complex(this.buffer[ri], this.buffer[ii]))
   }
 
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {
