@@ -44,19 +44,6 @@ describe('Matrix', () => {
     expect(Matrix.row(2, 3, new Complex(0, 5)).toString()).toBe('{{2, 3, 5i}}')
   })
 
-  test('identity', () => {
-    expect(Matrix.identity(1)._unsafeUnwrap().toString()).toBe('{{1}}')
-    expect(Matrix.identity(2)._unsafeUnwrap().toString()).toBe('{{1, 0}, {0, 1}}')
-    expect(Matrix.identity(3)._unsafeUnwrap().toString()).toBe('{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')
-    expect(Matrix.identity(4)._unsafeUnwrap().toString()).toBe(
-      '{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}',
-    )
-
-    const resErr = Matrix.identity(-1)
-    expect(resErr.isErr()).toBeTruthy()
-    expect(resErr._unsafeUnwrapErr().message).toBe('width(-1) < 0')
-  })
-
   test('square', () => {
     const res = Matrix.square(1, new Complex(2, 3), -5.5, 0)
 
@@ -128,8 +115,6 @@ describe('Matrix', () => {
   })
 
   test('trace', () => {
-    expect(Matrix.identity(2)._unsafeUnwrap().trace().eq(2)).toBeTruthy()
-    expect(Matrix.identity(10)._unsafeUnwrap().trace().eq(10)).toBeTruthy()
     expect(X.trace().eq(0)).toBeTruthy()
     expect(Y.trace().eq(0)).toBeTruthy()
     expect(Z.trace().eq(0)).toBeTruthy()
@@ -201,7 +186,17 @@ describe('Matrix', () => {
     ).toBeTruthy()
 
     const x = squareMatrix(new Complex(0.5, -0.5), new Complex(0.5, 0.5), new Complex(0.5, 0.5), new Complex(0.5, -0.5))
-    expect(x.mult(x.adjoint())._unsafeUnwrap().eq(Matrix.identity(2)._unsafeUnwrap())).toBeTruthy()
+    expect(
+      x
+        .mult(x.adjoint())
+        ._unsafeUnwrap()
+        .eq(
+          Matrix.rows([
+            [1, 0],
+            [0, 1],
+          ])._unsafeUnwrap(),
+        ),
+    ).toBeTruthy()
     expect(
       X.mult(Y)
         ._unsafeUnwrap()
@@ -209,7 +204,12 @@ describe('Matrix', () => {
         ._unsafeUnwrap()
         .mult(new Complex(0, -1))
         ._unsafeUnwrap()
-        .eq(Matrix.identity(2)._unsafeUnwrap()),
+        .eq(
+          Matrix.rows([
+            [1, 0],
+            [0, 1],
+          ])._unsafeUnwrap(),
+        ),
     ).toBeTruthy()
   })
 
@@ -349,7 +349,6 @@ describe('Matrix', () => {
       equate(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).format(), '{{1, 0}, {-i, 2-3i}}'),
     ).toBeTruthy()
     expect(equate(squareMatrix(1, 0, 0, 1).format(), '{{1, 0}, {0, 1}}')).toBeTruthy()
-    expect(equate(Matrix.identity(3)._unsafeUnwrap().format(), '{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')).toBeTruthy()
 
     expect(
       equate(
@@ -391,7 +390,6 @@ describe('Matrix', () => {
       equate(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).toString(), '{{1, 0}, {-i, 2-3i}}'),
     ).toBeTruthy()
     expect(equate(squareMatrix(1, 0, 0, 1).toString(), '{{1, 0}, {0, 1}}')).toBeTruthy()
-    expect(equate(Matrix.identity(3)._unsafeUnwrap().toString(), '{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}')).toBeTruthy()
   })
 
   test('size', () => {
@@ -429,14 +427,31 @@ describe('Matrix', () => {
   test('qubitDensityMatrixToBlochVector', () => {
     expect(() => Matrix.column_vector(1)._unsafeUnwrap().qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => squareMatrix(1, 0, 0, 0, 0, 0, 0, 0, 0).qubitDensityMatrixToBlochVector()).toThrow()
-    expect(() => Matrix.identity(2)._unsafeUnwrap().qubitDensityMatrixToBlochVector()).toThrow()
+    expect(() =>
+      Matrix.rows([
+        [1, 0],
+        [0, 1],
+      ])
+        ._unsafeUnwrap()
+        .qubitDensityMatrixToBlochVector(),
+    ).toThrow()
     expect(() => squareMatrix(1, 1, -1, 0).qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => squareMatrix(1, 1, 0, 0).qubitDensityMatrixToBlochVector()).toThrow()
     expect(() => squareMatrix(1, Complex.I, Complex.I, 0).qubitDensityMatrixToBlochVector()).toThrow()
 
     // Maximally mixed state.
     expect(
-      equate(Matrix.identity(2)._unsafeUnwrap().mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [0, 0, 0]),
+      equate(
+        Matrix.rows([
+          [1, 0],
+          [0, 1],
+        ])
+          ._unsafeUnwrap()
+          .mult(0.5)
+          ._unsafeUnwrap()
+          .qubitDensityMatrixToBlochVector(),
+        [0, 0, 0],
+      ),
     ).toBeTruthy()
 
     // Pure states as vectors along each axis.
