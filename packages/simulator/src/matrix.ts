@@ -96,7 +96,7 @@ export class Matrix {
     return ok(new Matrix(width, height, buffer))
   }
 
-  constructor(width: number, height: number, buffer: Float64Array) {
+  private constructor(width: number, height: number, buffer: Float64Array) {
     this.width = width
     this.height = height
     this.buffer = buffer

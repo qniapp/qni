@@ -78,7 +78,7 @@ export class StateVector {
       }
     }
 
-    this.matrix = new Matrix(w, h, buf)
+    this.matrix = Matrix.create(w, h, buf)._unsafeUnwrap()
     return this.matrix
   }
 

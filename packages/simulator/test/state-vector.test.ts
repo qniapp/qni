@@ -342,7 +342,7 @@ describe('StateVector', () => {
     const buf = new Float64Array(2 << numQubits)
 
     buf[0] = 1
-    stateVector = new StateVector(new Matrix(1, 1 << numQubits, buf))
+    stateVector = new StateVector(Matrix.create(1, 1 << numQubits, buf)._unsafeUnwrap())
 
     for (let i = 0; i < numOps; i++) {
       stateVector.timesQubitOperation(H, 0, 6)
