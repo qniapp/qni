@@ -469,15 +469,7 @@ describe('Matrix', () => {
 
 function squareMatrix(...elements: Array<number | Complex>): Matrix {
   const n = Math.round(Math.sqrt(elements.length))
-  if (n * n !== elements.length) {
-    throw 'non-square number of arguments'
-  }
-
   const m = Matrix.build(n, n, (row, col) => elements[row * n + col])
 
-  if (m.isOk()) {
-    return m.value
-  }
-
-  throw m.error
+  return m._unsafeUnwrap()
 }
