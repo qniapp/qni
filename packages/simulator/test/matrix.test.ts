@@ -44,21 +44,6 @@ describe('Matrix', () => {
     expect(Matrix.row(2, 3, new Complex(0, 5)).toString()).toBe('{{2, 3, 5i}}')
   })
 
-  test('square', () => {
-    const res = Matrix.square(1, new Complex(2, 3), -5.5, 0)
-
-    expect(res.isOk()).toBeTruthy()
-    expect(
-      equate(res._unsafeUnwrap().rows(), [
-        [1, new Complex(2, 3)],
-        [-5.5, 0],
-      ]),
-    ).toBeTruthy()
-
-    const mErr = Matrix.square(1, 1)
-    expect(mErr.isErr).toBeTruthy()
-  })
-
   test('Matrix.create', () => {
     const mErrWidth = Matrix.create(-1, 1, new Float64Array(2))
     expect(mErrWidth.isErr()).toBeTruthy()
@@ -483,11 +468,16 @@ describe('Matrix', () => {
 })
 
 function squareMatrix(...elements: Array<number | Complex>): Matrix {
-  const res = Matrix.square(...elements)
-
-  if (res.isOk()) {
-    return res.value
+  const n = Math.round(Math.sqrt(elements.length))
+  if (n * n !== elements.length) {
+    throw 'non-square number of arguments'
   }
 
-  throw res.error
+  const m = Matrix.build(n, n, (row, col) => elements[row * n + col])
+
+  if (m.isOk()) {
+    return m.value
+  }
+
+  throw m.error
 }
