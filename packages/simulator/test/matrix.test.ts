@@ -40,20 +40,6 @@ describe('Matrix', () => {
     expect(m._unsafeUnwrap().toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
   })
 
-  test('Matrix.create', () => {
-    const mErrWidth = Matrix.create(-1, 1, new Float64Array(2))
-    expect(mErrWidth.isErr()).toBeTruthy()
-    expect(mErrWidth._unsafeUnwrapErr().message).toBe('width(-1) < 0')
-
-    const mErrHeight = Matrix.create(1, -1, new Float64Array(2))
-    expect(mErrHeight.isErr()).toBeTruthy()
-    expect(mErrHeight._unsafeUnwrapErr().message).toBe('height(-1) < 0')
-
-    const mErrBufferLength = Matrix.create(1, 1, new Float64Array(100))
-    expect(mErrBufferLength.isErr()).toBeTruthy()
-    expect(mErrBufferLength._unsafeUnwrapErr().message).toBe('width(1)*height(1)*2 !== buffer.length(100)')
-  })
-
   test('columnAt', () => {
     const m = squareMatrix(2, 3, 5, 7)
     expect(equate(m.columnAt(0)._unsafeUnwrap(), [2, 5])).toBeTruthy()

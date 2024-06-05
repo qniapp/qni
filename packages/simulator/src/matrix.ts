@@ -1,4 +1,4 @@
-import {Complex, DetailedError, Format} from '@qni/common'
+import {Complex, DetailedError, Format, Util} from '@qni/common'
 import {range} from 'fp-ts/NonEmptyArray'
 import {ok, err, Result} from 'neverthrow'
 
@@ -75,14 +75,7 @@ export class Matrix {
     return Matrix.create(width, height, buf)
   }
 
-  /**
-   * Returns a matrix of the specified `width` and `height`.
-   *
-   * @param width - The width of the matrix
-   * @param height - The height of the matrix
-   * @param buffer - The buffer containing the matrix elements
-   */
-  static create(width: number, height: number, buffer: Float64Array): Result<Matrix, Error> {
+  private static create(width: number, height: number, buffer: Float64Array): Result<Matrix, Error> {
     if (width < 0) {
       return err(Error(`width(${width}) < 0`))
     }
@@ -96,12 +89,46 @@ export class Matrix {
     return ok(new Matrix(width, height, buffer))
   }
 
-  constructor(width: number, height: number, buffer: Float64Array) {
+  private constructor(width: number, height: number, buffer: Float64Array) {
     this.width = width
     this.height = height
     this.buffer = buffer
 
     this.plus = this.add // alias for add
+  }
+
+  timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {
+    Util.need((controlMask & (1 << qubitIndex)) === 0, 'Matrix.timesQubitOperation: self-controlled')
+    Util.need(operation2x2.width === 2 && operation2x2.height === 2, 'Matrix.timesQubitOperation: not 2x2')
+
+    const {width: w, height: h, buffer: old} = this
+    const [ar, ai, br, bi, cr, ci, dr, di] = operation2x2.buffer
+
+    Util.need(h >= 2 << qubitIndex, 'Matrix.timesQubitOperation: qubit index out of range')
+
+    const buf = new Float64Array(old)
+    let i = 0
+    for (let r = 0; r < h; r++) {
+      const isControlled = ((controlMask & r) ^ controlMask) !== 0
+      const qubitVal = (r & (1 << qubitIndex)) !== 0
+      for (let c = 0; c < w; c++) {
+        if (!isControlled && !qubitVal) {
+          const j = i + (1 << qubitIndex) * 2 * w
+          const xr = buf[i]
+          const xi = buf[i + 1]
+          const yr = buf[j]
+          const yi = buf[j + 1]
+
+          buf[i] = xr * ar - xi * ai + yr * br - yi * bi
+          buf[i + 1] = xr * ai + xi * ar + yr * bi + yi * br
+          buf[j] = xr * cr - xi * ci + yr * dr - yi * di
+          buf[j + 1] = xr * ci + xi * cr + yr * di + yi * dr
+        }
+        i += 2
+      }
+    }
+
+    return Matrix.create(w, h, buf)._unsafeUnwrap()
   }
 
   /**
