@@ -72,10 +72,10 @@ export class Matrix {
       }
     }
 
-    return Matrix.create(width, height, buf)
+    return Matrix.create(height, width, buf)
   }
 
-  private static create(width: number, height: number, buffer: Float64Array): Result<Matrix, Error> {
+  private static create(height: number, width: number, buffer: Float64Array): Result<Matrix, Error> {
     if (width < 0) {
       return err(Error(`width(${width}) < 0`))
     }
@@ -140,7 +140,7 @@ export class Matrix {
       }
     }
 
-    return Matrix.create(w, h, buf)._unsafeUnwrap()
+    return Matrix.create(h, w, buf)._unsafeUnwrap()
   }
 
   /**
