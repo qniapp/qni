@@ -1,4 +1,4 @@
-import {Complex, DetailedError, Util} from '@qni/common'
+import {Complex, DetailedError} from '@qni/common'
 import {Matrix} from './matrix'
 import {ok, err, Result} from 'neverthrow'
 
@@ -48,37 +48,7 @@ export class StateVector {
   }
 
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {
-    Util.need((controlMask & (1 << qubitIndex)) === 0, 'Matrix.timesQubitOperation: self-controlled')
-    Util.need(operation2x2.width === 2 && operation2x2.height === 2, 'Matrix.timesQubitOperation: not 2x2')
-
-    const {width: w, height: h, buffer: old} = this.matrix
-    const [ar, ai, br, bi, cr, ci, dr, di] = operation2x2.buffer
-
-    Util.need(h >= 2 << qubitIndex, 'Matrix.timesQubitOperation: qubit index out of range')
-
-    const buf = new Float64Array(old)
-    let i = 0
-    for (let r = 0; r < h; r++) {
-      const isControlled = ((controlMask & r) ^ controlMask) !== 0
-      const qubitVal = (r & (1 << qubitIndex)) !== 0
-      for (let c = 0; c < w; c++) {
-        if (!isControlled && !qubitVal) {
-          const j = i + (1 << qubitIndex) * 2 * w
-          const xr = buf[i]
-          const xi = buf[i + 1]
-          const yr = buf[j]
-          const yi = buf[j + 1]
-
-          buf[i] = xr * ar - xi * ai + yr * br - yi * bi
-          buf[i + 1] = xr * ai + xi * ar + yr * bi + yi * br
-          buf[j] = xr * cr - xi * ci + yr * dr - yi * di
-          buf[j + 1] = xr * ci + xi * cr + yr * di + yi * dr
-        }
-        i += 2
-      }
-    }
-
-    this.matrix = Matrix.create(w, h, buf)._unsafeUnwrap()
+    this.matrix = this.matrix.timesQubitOperation(operation2x2, qubitIndex, controlMask)
     return this.matrix
   }
 

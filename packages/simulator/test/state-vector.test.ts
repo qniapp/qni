@@ -339,10 +339,17 @@ describe('StateVector', () => {
     const numQubits = 10
     const numOps = 100
     const t0 = performance.now()
-    const buf = new Float64Array(2 << numQubits)
+    let bitString
+    // const buf = new Float64Array(2 << numQubits)
 
-    buf[0] = 1
-    stateVector = new StateVector(Matrix.create(1, 1 << numQubits, buf)._unsafeUnwrap())
+    // "000...0" (0 が numQubits 個) の文字列を bitString に代入
+    bitString = ''
+    for (let i = 0; i < numQubits; i++) {
+      bitString += '0'
+    }
+
+    // buf[0] = 1
+    stateVector = new StateVector(bitString)
 
     for (let i = 0; i < numOps; i++) {
       stateVector.timesQubitOperation(H, 0, 6)
