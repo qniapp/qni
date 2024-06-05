@@ -22,14 +22,26 @@ export class Matrix {
   public buffer: Float64Array
 
   /**
-   * Return a column vector.
-   *
-   * @param elements - The elements of the vector
-   * @returns A column vector (Matrix with 1 column)
+   * Creates a new Matrix object from the given rows.
    */
-  static col(...elements: Array<number | Complex>): Matrix {
-    const res = Matrix.build(elements.length, 1, row => elements[row])
-    return res._unsafeUnwrap()
+  static rows(rows: Array<Array<number | Complex>>): Result<Matrix, Error> {
+    const height = rows.length
+    if (height === 0) {
+      return err(Error('rows is empty'))
+    }
+    const width = rows[0].length
+    if (rows[0].length === 0) {
+      return err(Error('rows[0] is empty'))
+    }
+
+    return Matrix.build(height, width, (row, col) => rows[row][col])
+  }
+
+  /**
+   * Creates a column vector from the given elements.
+   */
+  static column_vector(...elements: Array<number | Complex>): Result<Matrix, Error> {
+    return Matrix.build(elements.length, 1, row => elements[row])
   }
 
   /**

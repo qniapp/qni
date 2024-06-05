@@ -96,24 +96,24 @@ export class StateVector {
       switch (char) {
         case '0': {
           if (paren) throw invalidBitStringError
-          kets.push(Matrix.col(1, 0))
+          kets.push(Matrix.column_vector(1, 0)._unsafeUnwrap())
           break
         }
         case '1': {
           if (paren) throw invalidBitStringError
-          kets.push(Matrix.col(0, 1))
+          kets.push(Matrix.column_vector(0, 1)._unsafeUnwrap())
           break
         }
         case '+': {
           if (paren) throw invalidBitStringError
-          kets.push(Matrix.col(1, 1).mult(Math.sqrt(0.5))._unsafeUnwrap())
+          kets.push(Matrix.column_vector(1, 1)._unsafeUnwrap().mult(Math.sqrt(0.5))._unsafeUnwrap())
           break
         }
         case '-': {
           if (paren) {
             parenToken += '-'
           } else {
-            kets.push(Matrix.col(1, -1).mult(Math.sqrt(0.5))._unsafeUnwrap())
+            kets.push(Matrix.column_vector(1, -1)._unsafeUnwrap().mult(Math.sqrt(0.5))._unsafeUnwrap())
           }
           break
         }
@@ -121,7 +121,7 @@ export class StateVector {
           if (paren) {
             parenToken += 'i'
           } else {
-            kets.push(Matrix.col(1, new Complex(0, 1)).mult(Math.sqrt(0.5))._unsafeUnwrap())
+            kets.push(Matrix.column_vector(1, new Complex(0, 1))._unsafeUnwrap().mult(Math.sqrt(0.5))._unsafeUnwrap())
           }
           break
         }
@@ -134,7 +134,7 @@ export class StateVector {
         case ')': {
           if (!paren) throw invalidBitStringError
           if (parenToken !== '-i') throw invalidBitStringError
-          kets.push(Matrix.col(1, new Complex(0, -1)).mult(Math.sqrt(0.5))._unsafeUnwrap())
+          kets.push(Matrix.column_vector(1, new Complex(0, -1))._unsafeUnwrap().mult(Math.sqrt(0.5))._unsafeUnwrap())
           paren = false
           break
         }
@@ -181,7 +181,10 @@ export class StateVector {
           .times(this.matrix.element(0, bra)._unsafeUnwrap().conjugate())
         if (amp.isEqualTo(0)) continue
 
-        const ketMat = removeBits(ket, traceBits) === 0 ? Matrix.col(1, 0) : Matrix.col(0, 1)
+        const ketMat =
+          removeBits(ket, traceBits) === 0
+            ? Matrix.column_vector(1, 0)._unsafeUnwrap()
+            : Matrix.column_vector(0, 1)._unsafeUnwrap()
         const braMat = removeBits(bra, traceBits) === 0 ? Matrix.row(1, 0) : Matrix.row(0, 1)
         const ketBra = ketMat.mult(braMat)._unsafeUnwrap()
 

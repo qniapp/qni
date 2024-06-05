@@ -129,47 +129,60 @@ describe('StateVector', () => {
   describe('ket', () => {
     test('|0>', () => {
       stateVector = new StateVector('0')
-      expect(equate(stateVector.ket, Matrix.col(1, 0))).toBeTruthy()
+      expect(equate(stateVector.ket, Matrix.column_vector(1, 0)._unsafeUnwrap())).toBeTruthy()
     })
 
     test('|1>', () => {
       stateVector = new StateVector('1')
-      expect(equate(stateVector.ket, Matrix.col(0, 1))).toBeTruthy()
+      expect(equate(stateVector.ket, Matrix.column_vector(0, 1)._unsafeUnwrap())).toBeTruthy()
     })
 
     test('|+>', () => {
       stateVector = new StateVector('+')
-      expect(equate(stateVector.ket, Matrix.col(1, 1).mult(Math.sqrt(0.5))._unsafeUnwrap())).toBeTruthy()
+      expect(
+        equate(stateVector.ket, Matrix.column_vector(1, 1)._unsafeUnwrap().mult(Math.sqrt(0.5))._unsafeUnwrap()),
+      ).toBeTruthy()
     })
 
     test('|->', () => {
       stateVector = new StateVector('-')
-      expect(equate(stateVector.ket, Matrix.col(1, -1).mult(Math.sqrt(0.5))._unsafeUnwrap())).toBeTruthy()
+      expect(
+        equate(stateVector.ket, Matrix.column_vector(1, -1)._unsafeUnwrap().mult(Math.sqrt(0.5))._unsafeUnwrap()),
+      ).toBeTruthy()
     })
 
     test('|i>', () => {
       stateVector = new StateVector('i')
       expect(
-        equate(stateVector.ket, Matrix.col(1, new Complex(0, 1)).mult(Math.sqrt(0.5))._unsafeUnwrap()),
+        equate(
+          stateVector.ket,
+          Matrix.column_vector(1, new Complex(0, 1))._unsafeUnwrap().mult(Math.sqrt(0.5))._unsafeUnwrap(),
+        ),
       ).toBeTruthy()
     })
 
     test('|-i>', () => {
       stateVector = new StateVector('(-i)')
       expect(
-        equate(stateVector.ket, Matrix.col(1, new Complex(0, -1)).mult(Math.sqrt(0.5))._unsafeUnwrap()),
+        equate(
+          stateVector.ket,
+          Matrix.column_vector(1, new Complex(0, -1))._unsafeUnwrap().mult(Math.sqrt(0.5))._unsafeUnwrap(),
+        ),
       ).toBeTruthy()
     })
 
     test('|00>', () => {
       stateVector = new StateVector('00')
-      expect(equate(stateVector.ket, Matrix.col(1, 0, 0, 0))).toBeTruthy()
+      expect(equate(stateVector.ket, Matrix.column_vector(1, 0, 0, 0)._unsafeUnwrap())).toBeTruthy()
     })
 
     test('|0(-i)>', () => {
       stateVector = new StateVector('0(-i)')
       expect(
-        equate(stateVector.ket, Matrix.col(1, new Complex(0, -1), 0, 0).mult(Math.sqrt(0.5))._unsafeUnwrap()),
+        equate(
+          stateVector.ket,
+          Matrix.column_vector(1, new Complex(0, -1), 0, 0)._unsafeUnwrap().mult(Math.sqrt(0.5))._unsafeUnwrap(),
+        ),
       ).toBeTruthy()
     })
   })
@@ -261,15 +274,31 @@ describe('StateVector', () => {
   test('timesQubitOperation', () => {
     const s = Math.sqrt(0.5)
 
-    expect(new StateVector('00').timesQubitOperation(H, 0, 0).eq(Matrix.col(s, s, 0, 0))).toBeTruthy()
-    expect(new StateVector('01').timesQubitOperation(H, 0, 0).eq(Matrix.col(s, -s, 0, 0))).toBeTruthy()
-    expect(new StateVector('10').timesQubitOperation(H, 0, 0).eq(Matrix.col(0, 0, s, s))).toBeTruthy()
-    expect(new StateVector('11').timesQubitOperation(H, 0, 0).eq(Matrix.col(0, 0, s, -s))).toBeTruthy()
+    expect(
+      new StateVector('00').timesQubitOperation(H, 0, 0).eq(Matrix.column_vector(s, s, 0, 0)._unsafeUnwrap()),
+    ).toBeTruthy()
+    expect(
+      new StateVector('01').timesQubitOperation(H, 0, 0).eq(Matrix.column_vector(s, -s, 0, 0)._unsafeUnwrap()),
+    ).toBeTruthy()
+    expect(
+      new StateVector('10').timesQubitOperation(H, 0, 0).eq(Matrix.column_vector(0, 0, s, s)._unsafeUnwrap()),
+    ).toBeTruthy()
+    expect(
+      new StateVector('11').timesQubitOperation(H, 0, 0).eq(Matrix.column_vector(0, 0, s, -s)._unsafeUnwrap()),
+    ).toBeTruthy()
 
-    expect(new StateVector('00').timesQubitOperation(H, 1, 0).eq(Matrix.col(s, 0, s, 0))).toBeTruthy()
-    expect(new StateVector('01').timesQubitOperation(H, 1, 0).eq(Matrix.col(0, s, 0, s))).toBeTruthy()
-    expect(new StateVector('10').timesQubitOperation(H, 1, 0).eq(Matrix.col(s, 0, -s, 0))).toBeTruthy()
-    expect(new StateVector('11').timesQubitOperation(H, 1, 0).eq(Matrix.col(0, s, 0, -s))).toBeTruthy()
+    expect(
+      new StateVector('00').timesQubitOperation(H, 1, 0).eq(Matrix.column_vector(s, 0, s, 0)._unsafeUnwrap()),
+    ).toBeTruthy()
+    expect(
+      new StateVector('01').timesQubitOperation(H, 1, 0).eq(Matrix.column_vector(0, s, 0, s)._unsafeUnwrap()),
+    ).toBeTruthy()
+    expect(
+      new StateVector('10').timesQubitOperation(H, 1, 0).eq(Matrix.column_vector(s, 0, -s, 0)._unsafeUnwrap()),
+    ).toBeTruthy()
+    expect(
+      new StateVector('11').timesQubitOperation(H, 1, 0).eq(Matrix.column_vector(0, s, 0, -s)._unsafeUnwrap()),
+    ).toBeTruthy()
   })
 
   test('timesQubitOperation_speed', () => {
