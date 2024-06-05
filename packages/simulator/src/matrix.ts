@@ -87,21 +87,6 @@ export class Matrix {
   }
 
   /**
-   * Returns a square matrix with the specified elements.
-   *
-   * @param elements - The elements of the matrix
-   * @returns A result object with the generated square matrix or an error
-   */
-  static square(...elements: Array<number | Complex>): Result<Matrix, Error> {
-    const n = Math.round(Math.sqrt(elements.length))
-    if (n * n !== elements.length) {
-      return err(Error('Matrix.square: non-square number of arguments'))
-    }
-
-    return Matrix.build(n, n, (row, col) => elements[row * n + col])
-  }
-
-  /**
    * Returns a matrix of the specified `width` and `height`.
    *
    * @param width - The width of the matrix
