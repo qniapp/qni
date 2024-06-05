@@ -28,7 +28,7 @@ describe('Matrix', () => {
     expect(m._unsafeUnwrap().toString()).toBe('{{2}, {3}, {5i}}')
   })
 
-  test('Matrix.generate with', () => {
+  test('Matrix.generate', () => {
     const m = Matrix.build(2, 3)
 
     expect(m._unsafeUnwrap().toString()).toBe('{{0, 0, 0}, {0, 0, 0}}')
