@@ -31,7 +31,7 @@ export class StateVector {
   }
 
   setAmplifier(index: number, value: Complex): Result<StateVector, Error> {
-    const res = this.matrix.set(0, index, value)
+    const res = this.matrix.set(index, 0, value)
     if (res.isErr()) {
       return err(Error(res.error.message))
     }

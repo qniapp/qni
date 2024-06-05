@@ -111,6 +111,23 @@ export class Matrix {
     return ok(new Complex(this.buffer[ri], this.buffer[ii]))
   }
 
+  /**
+   * Sets the value of a element in the matrix.
+   */
+  set(row: number, col: number, value: Complex): Result<Matrix, Error> {
+    if (row < 0 || col < 0 || row >= this.height || col >= this.width) {
+      return err(Error('Element out of range'))
+    }
+
+    const ri = (this.width * row + col) * 2 // real part index
+    const ii = ri + 1 // imaginary part index
+
+    this.buffer[ri] = value.real
+    this.buffer[ii] = value.imag
+
+    return ok(this)
+  }
+
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {
     Util.need((controlMask & (1 << qubitIndex)) === 0, 'Matrix.timesQubitOperation: self-controlled')
     Util.need(operation2x2.width === 2 && operation2x2.height === 2, 'Matrix.timesQubitOperation: not 2x2')
@@ -143,26 +160,6 @@ export class Matrix {
     }
 
     return Matrix.create(h, w, buf)._unsafeUnwrap()
-  }
-
-  /**
-   * Sets element (col,row) of the matrix.
-   *
-   * @param col - The column index
-   * @param row - The row index
-   * @param value - The value to set
-   * @returns A result object with the matrix or an error
-   */
-  set(col: number, row: number, value: Complex): Result<Matrix, Error> {
-    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
-      return err(Error('Element out of range'))
-    }
-
-    const i = (this.width * row + col) * 2
-    this.buffer[i] = value.real
-    this.buffer[i + 1] = value.imag
-
-    return ok(this)
   }
 
   /**
