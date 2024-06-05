@@ -25,8 +25,14 @@ export class Matrix {
    * Creates a new Matrix object from the given rows.
    */
   static rows(rows: Array<Array<number | Complex>>): Result<Matrix, Error> {
-    const width = rows[0].length
     const height = rows.length
+    if (height === 0) {
+      return err(Error('rows is empty'))
+    }
+    const width = rows[0].length
+    if (rows[0].length === 0) {
+      return err(Error('rows[0] is empty'))
+    }
 
     return Matrix.build(height, width, (row, col) => rows[row][col])
   }

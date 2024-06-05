@@ -3,13 +3,23 @@ import {H, X, Y, Z} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
 
 describe('Matrix', () => {
-  test('Matrix.rows', () => {
-    const m = Matrix.rows([
-      [1, 0],
-      [new Complex(0, -1), new Complex(2, -3)],
-    ])
+  describe('rows', () => {
+    test('Matrix.rows', () => {
+      const m = Matrix.rows([
+        [1, 0],
+        [new Complex(0, -1), new Complex(2, -3)],
+      ])
 
-    expect(m._unsafeUnwrap().toString()).toBe('{{1, 0}, {-i, 2-3i}}')
+      expect(m._unsafeUnwrap().toString()).toBe('{{1, 0}, {-i, 2-3i}}')
+    })
+
+    test('Matrix.rows returns an error (empty rows)', () => {
+      expect(Matrix.rows([])._unsafeUnwrapErr().message).toBe('rows is empty')
+    })
+
+    test('Matrix.rows returns an error (empty rows[0])', () => {
+      expect(Matrix.rows([[]])._unsafeUnwrapErr().message).toBe('rows[0] is empty')
+    })
   })
 
   test('Matrix.column_vector', () => {
