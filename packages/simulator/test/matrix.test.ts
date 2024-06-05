@@ -3,8 +3,41 @@ import {H, X, Y, Z} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
 
 describe('Matrix', () => {
-  test('column_vector', () => {
-    expect(Matrix.column_vector(2, 3, new Complex(0, 5))._unsafeUnwrap().toString()).toBe('{{2}, {3}, {5i}}')
+  describe('rows', () => {
+    test('Matrix.rows', () => {
+      const m = Matrix.rows([
+        [1, 0],
+        [new Complex(0, -1), new Complex(2, -3)],
+      ])
+
+      expect(m._unsafeUnwrap().toString()).toBe('{{1, 0}, {-i, 2-3i}}')
+    })
+
+    test('Matrix.rows returns an error (empty rows)', () => {
+      expect(Matrix.rows([])._unsafeUnwrapErr().message).toBe('rows is empty')
+    })
+
+    test('Matrix.rows returns an error (empty rows[0])', () => {
+      expect(Matrix.rows([[]])._unsafeUnwrapErr().message).toBe('rows[0] is empty')
+    })
+  })
+
+  test('Matrix.column_vector', () => {
+    const m = Matrix.column_vector(2, 3, new Complex(0, 5))
+
+    expect(m._unsafeUnwrap().toString()).toBe('{{2}, {3}, {5i}}')
+  })
+
+  test('Matrix.generate', () => {
+    const m = Matrix.build(2, 3)
+
+    expect(m._unsafeUnwrap().toString()).toBe('{{0, 0, 0}, {0, 0, 0}}')
+  })
+
+  test('Matrix.generate with an element generator', () => {
+    const m = Matrix.build(2, 3, (row, col) => row + 10 * col)
+
+    expect(m._unsafeUnwrap().toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
   })
 
   test('row', () => {
@@ -37,13 +70,6 @@ describe('Matrix', () => {
 
     const mErr = Matrix.square(1, 1)
     expect(mErr.isErr).toBeTruthy()
-  })
-
-  test('Matrix.generate', () => {
-    const res = Matrix.build(2, 3, (row, col) => row + 10 * col)
-
-    expect(res.isOk()).toBeTruthy()
-    expect(res._unsafeUnwrap().toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
   })
 
   test('Matrix.create', () => {

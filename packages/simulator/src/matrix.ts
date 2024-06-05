@@ -22,6 +22,22 @@ export class Matrix {
   public buffer: Float64Array
 
   /**
+   * Creates a new Matrix object from the given rows.
+   */
+  static rows(rows: Array<Array<number | Complex>>): Result<Matrix, Error> {
+    const height = rows.length
+    if (height === 0) {
+      return err(Error('rows is empty'))
+    }
+    const width = rows[0].length
+    if (rows[0].length === 0) {
+      return err(Error('rows[0] is empty'))
+    }
+
+    return Matrix.build(height, width, (row, col) => rows[row][col])
+  }
+
+  /**
    * Creates a column vector from the given elements.
    */
   static column_vector(...elements: Array<number | Complex>): Result<Matrix, Error> {
