@@ -40,10 +40,6 @@ describe('Matrix', () => {
     expect(m._unsafeUnwrap().toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
   })
 
-  test('row', () => {
-    expect(Matrix.row(2, 3, new Complex(0, 5)).toString()).toBe('{{2, 3, 5i}}')
-  })
-
   test('Matrix.create', () => {
     const mErrWidth = Matrix.create(-1, 1, new Float64Array(2))
     expect(mErrWidth.isErr()).toBeTruthy()
@@ -76,7 +72,11 @@ describe('Matrix', () => {
   test('isHermitian', () => {
     const i = Complex.I
 
-    expect(Matrix.row(1, 1).isHermitian(999)).toBeFalsy()
+    expect(
+      Matrix.rows([[1, 1]])
+        ._unsafeUnwrap()
+        .isHermitian(999),
+    ).toBeFalsy()
     expect(Matrix.column_vector(1, 1)._unsafeUnwrap().isHermitian(999)).toBeFalsy()
 
     expect(Matrix.column_vector(1)._unsafeUnwrap().isHermitian(0)).toBeTruthy()
@@ -119,7 +119,10 @@ describe('Matrix', () => {
 
     expect(v.adjoint().eq(a)).toBeTruthy()
     expect(
-      Matrix.column_vector(1, 2, Complex.I)._unsafeUnwrap().adjoint().eq(Matrix.row(1, 2, Complex.I.neg())),
+      Matrix.column_vector(1, 2, Complex.I)
+        ._unsafeUnwrap()
+        .adjoint()
+        .eq(Matrix.rows([[1, 2, Complex.I.neg()]])._unsafeUnwrap()),
     ).toBeTruthy()
   })
 
@@ -158,7 +161,13 @@ describe('Matrix', () => {
         ._unsafeUnwrap()
         .eq(Matrix.column_vector(10, 15)._unsafeUnwrap()),
     ).toBeTruthy()
-    expect(Matrix.row(2, 3).mult(5)._unsafeUnwrap().eq(Matrix.row(10, 15))).toBeTruthy()
+    expect(
+      Matrix.rows([[2, 3]])
+        ._unsafeUnwrap()
+        .mult(5)
+        ._unsafeUnwrap()
+        .eq(Matrix.rows([[10, 15]])._unsafeUnwrap()),
+    ).toBeTruthy()
   })
 
   test('multMatrix', () => {
@@ -277,7 +286,7 @@ describe('Matrix', () => {
     ).toBeFalsy()
 
     const col = Matrix.column_vector(new Complex(2, 3), new Complex(5, 7))._unsafeUnwrap()
-    const row = Matrix.row(new Complex(2, 3), new Complex(5, 7))
+    const row = Matrix.rows([[new Complex(2, 3), new Complex(5, 7)]])._unsafeUnwrap()
     expect(col.eq(col)).toBeTruthy()
     expect(row.eq(row)).toBeTruthy()
     expect(row.eq(col)).toBeFalsy()
@@ -285,10 +294,26 @@ describe('Matrix', () => {
 
   test('nearlyEq', () => {
     // Size must match
-    expect(Matrix.row(1, 1).nearlyEq(Matrix.column_vector(1, 1), 0)).toBeFalsy()
-    expect(Matrix.row(1, 1).nearlyEq(squareMatrix(1, 1, 1, 1), 0)).toBeFalsy()
-    expect(Matrix.row(1, 1).nearlyEq(Matrix.row(1, 1, 1), 0)).toBeFalsy()
-    expect(Matrix.row(1, 1).nearlyEq(Matrix.row(1, 1), 0)).toBeTruthy()
+    expect(
+      Matrix.rows([[1, 1]])
+        ._unsafeUnwrap()
+        .nearlyEq(Matrix.column_vector(1, 1), 0),
+    ).toBeFalsy()
+    expect(
+      Matrix.rows([[1, 1]])
+        ._unsafeUnwrap()
+        .nearlyEq(squareMatrix(1, 1, 1, 1), 0),
+    ).toBeFalsy()
+    expect(
+      Matrix.rows([[1, 1]])
+        ._unsafeUnwrap()
+        .nearlyEq(Matrix.rows([[1, 1, 1]])._unsafeUnwrap(), 0),
+    ).toBeFalsy()
+    expect(
+      Matrix.rows([[1, 1]])
+        ._unsafeUnwrap()
+        .nearlyEq(Matrix.rows([[1, 1]])._unsafeUnwrap(), 0),
+    ).toBeTruthy()
 
     // Error bound matters
     expect(Matrix.column_vector(1)._unsafeUnwrap().nearlyEq(Matrix.column_vector(1)._unsafeUnwrap(), 0)).toBeTruthy()
@@ -319,10 +344,26 @@ describe('Matrix', () => {
     ).toBeFalsy()
 
     // Error bound spreads
-    expect(Matrix.row(0, 0).nearlyEq(Matrix.row(0, 0), 1)).toBeTruthy()
-    expect(Matrix.row(1, 0).nearlyEq(Matrix.row(0, 0), 1)).toBeTruthy()
-    expect(Matrix.row(0, 1).nearlyEq(Matrix.row(0, 0), 1)).toBeTruthy()
-    expect(Matrix.row(1, 1).nearlyEq(Matrix.row(0, 0), 1)).toBeFalsy()
+    expect(
+      Matrix.rows([[0, 0]])
+        ._unsafeUnwrap()
+        .nearlyEq(Matrix.rows([[0, 0]])._unsafeUnwrap(), 1),
+    ).toBeTruthy()
+    expect(
+      Matrix.rows([[1, 0]])
+        ._unsafeUnwrap()
+        .nearlyEq(Matrix.rows([[0, 0]])._unsafeUnwrap(), 1),
+    ).toBeTruthy()
+    expect(
+      Matrix.rows([[0, 1]])
+        ._unsafeUnwrap()
+        .nearlyEq(Matrix.rows([[0, 0]])._unsafeUnwrap(), 1),
+    ).toBeTruthy()
+    expect(
+      Matrix.rows([[1, 1]])
+        ._unsafeUnwrap()
+        .nearlyEq(Matrix.rows([[0, 0]])._unsafeUnwrap(), 1),
+    ).toBeFalsy()
 
     expect(Matrix.column_vector(0)._unsafeUnwrap().nearlyEq(null, 0)).toBeFalsy()
     expect(Matrix.column_vector(0)._unsafeUnwrap().nearlyEq('', 0)).toBeFalsy()
@@ -378,11 +419,11 @@ describe('Matrix', () => {
   })
 
   test('size', () => {
-    expect(Matrix.row(1, 1).width).toBe(2)
-    expect(Matrix.row(1, 1).height).toBe(1)
+    expect(Matrix.rows([[1, 1]])._unsafeUnwrap().width).toBe(2)
+    expect(Matrix.rows([[1, 1]])._unsafeUnwrap().height).toBe(1)
 
-    expect(Matrix.row(1, 1, 3).width).toBe(3)
-    expect(Matrix.row(1, 1, 3).height).toBe(1)
+    expect(Matrix.rows([[1, 1, 3]])._unsafeUnwrap().width).toBe(3)
+    expect(Matrix.rows([[1, 1, 3]])._unsafeUnwrap().height).toBe(1)
 
     expect(Matrix.column_vector(1, 1)._unsafeUnwrap().width).toBe(1)
     expect(Matrix.column_vector(1, 1)._unsafeUnwrap().height).toBe(2)
@@ -393,7 +434,7 @@ describe('Matrix', () => {
 
   test('times_ColRow', () => {
     // When one is a column vector and the other is a row vector...
-    const r = Matrix.row(2, 3, 5)
+    const r = Matrix.rows([[2, 3, 5]])._unsafeUnwrap()
     const c = Matrix.column_vector(11, 13, 17)._unsafeUnwrap()
 
     // Inner product

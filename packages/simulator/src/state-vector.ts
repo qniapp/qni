@@ -185,7 +185,10 @@ export class StateVector {
           removeBits(ket, traceBits) === 0
             ? Matrix.column_vector(1, 0)._unsafeUnwrap()
             : Matrix.column_vector(0, 1)._unsafeUnwrap()
-        const braMat = removeBits(bra, traceBits) === 0 ? Matrix.row(1, 0) : Matrix.row(0, 1)
+        const braMat =
+          removeBits(bra, traceBits) === 0
+            ? Matrix.rows([[1, 0]])._unsafeUnwrap()
+            : Matrix.rows([[0, 1]])._unsafeUnwrap()
         const ketBra = ketMat.mult(braMat)._unsafeUnwrap()
 
         densityMatrix = densityMatrix.add(ketBra.mult(amp)._unsafeUnwrap())._unsafeUnwrap()
