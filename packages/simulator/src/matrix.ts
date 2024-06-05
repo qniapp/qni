@@ -86,12 +86,12 @@ export class Matrix {
       return err(Error(`width(${width})*height(${height})*2 !== buffer.length(${buffer.length})`))
     }
 
-    return ok(new Matrix(width, height, buffer))
+    return ok(new Matrix(height, width, buffer))
   }
 
-  private constructor(width: number, height: number, buffer: Float64Array) {
-    this.width = width
+  private constructor(height: number, width: number, buffer: Float64Array) {
     this.height = height
+    this.width = width
     this.buffer = buffer
 
     this.plus = this.add // alias for add
@@ -261,7 +261,7 @@ export class Matrix {
       }
     }
 
-    return new Matrix(w, h, newBuf)
+    return new Matrix(h, w, newBuf)
   }
 
   /**
@@ -282,7 +282,7 @@ export class Matrix {
       newBuffer[i] = b1[i] + b2[i]
     }
 
-    return ok(new Matrix(w, h, newBuffer))
+    return ok(new Matrix(h, w, newBuffer))
   }
 
   plus = this.add.bind(this)
@@ -305,7 +305,7 @@ export class Matrix {
       newBuffer[i] = b1[i] - b2[i]
     }
 
-    return ok(new Matrix(w, h, newBuffer))
+    return ok(new Matrix(h, w, newBuffer))
   }
 
   /**
@@ -352,7 +352,7 @@ export class Matrix {
       }
     }
 
-    return new Matrix(w, h, newBuffer)
+    return new Matrix(h, w, newBuffer)
   }
 
   /**
@@ -426,7 +426,7 @@ export class Matrix {
   }
 
   clone(): Matrix {
-    return new Matrix(this.width, this.height, this.buffer.slice())
+    return new Matrix(this.height, this.width, this.buffer.slice())
   }
 
   private norm2(): number {
@@ -465,7 +465,7 @@ export class Matrix {
       }
     }
 
-    return ok(new Matrix(w, h, newBuffer))
+    return ok(new Matrix(h, w, newBuffer))
   }
 
   private multScalar(v: number | Complex): Matrix {
@@ -480,6 +480,6 @@ export class Matrix {
       newBuffer[i + 1] = vr * si + vi * sr
     }
 
-    return new Matrix(this.width, this.height, newBuffer)
+    return new Matrix(this.height, this.width, newBuffer)
   }
 }
