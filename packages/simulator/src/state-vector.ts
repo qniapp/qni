@@ -27,7 +27,7 @@ export class StateVector {
   }
 
   amplifier(index: number): Complex {
-    return this.matrix.element(0, index)._unsafeUnwrap()
+    return this.matrix.element(index, 0)._unsafeUnwrap()
   }
 
   setAmplifier(index: number, value: Complex): Result<StateVector, Error> {
@@ -146,9 +146,9 @@ export class StateVector {
         if (!survived) continue
 
         const amp = this.matrix
-          .element(0, ket)
+          .element(ket, 0)
           ._unsafeUnwrap()
-          .times(this.matrix.element(0, bra)._unsafeUnwrap().conjugate())
+          .times(this.matrix.element(bra, 0)._unsafeUnwrap().conjugate())
         if (amp.isEqualTo(0)) continue
 
         const ketMat =

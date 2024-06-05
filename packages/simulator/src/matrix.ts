@@ -97,6 +97,18 @@ export class Matrix {
     this.plus = this.add // alias for add
   }
 
+  /**
+   * Retrieves the element at the specified row and column indices.
+   */
+  element(row: number, col: number): Result<Complex, Error> {
+    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
+      return err(Error('Element out of range'))
+    }
+
+    const i = (this.width * row + col) * 2
+    return ok(new Complex(this.buffer[i], this.buffer[i + 1]))
+  }
+
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {
     Util.need((controlMask & (1 << qubitIndex)) === 0, 'Matrix.timesQubitOperation: self-controlled')
     Util.need(operation2x2.width === 2 && operation2x2.height === 2, 'Matrix.timesQubitOperation: not 2x2')
@@ -129,22 +141,6 @@ export class Matrix {
     }
 
     return Matrix.create(w, h, buf)._unsafeUnwrap()
-  }
-
-  /**
-   * Returns element (col,row) of the matrix.
-   *
-   * @param col - The column index
-   * @param row - The row index
-   * @returns A result object with the element or an error
-   */
-  element(col: number, row: number): Result<Complex, Error> {
-    if (col < 0 || row < 0 || col >= this.width || row >= this.height) {
-      return err(Error('Element out of range'))
-    }
-
-    const i = (this.width * row + col) * 2
-    return ok(new Complex(this.buffer[i], this.buffer[i + 1]))
   }
 
   /**
@@ -183,7 +179,7 @@ export class Matrix {
 
     const col = []
     for (let row = 0; row < this.height; row++) {
-      col.push(this.element(colIndex, row)._unsafeUnwrap())
+      col.push(this.element(row, colIndex)._unsafeUnwrap())
     }
     return ok(col)
   }
@@ -195,7 +191,7 @@ export class Matrix {
    */
   rows(): Complex[][] {
     return range(0, this.height - 1).map<Complex[]>(row =>
-      range(0, this.width - 1).map<Complex>(col => this.element(col, row)._unsafeUnwrap()),
+      range(0, this.width - 1).map<Complex>(col => this.element(row, col)._unsafeUnwrap()),
     )
   }
 
