@@ -81,47 +81,81 @@ describe('StateVector', () => {
   describe('bra', () => {
     test('<0|', () => {
       stateVector = new StateVector('0')
-      expect(equate(stateVector.bra, Matrix.row(1, 0))).toBeTruthy()
+      expect(equate(stateVector.bra, Matrix.rows([[1, 0]])._unsafeUnwrap())).toBeTruthy()
     })
 
     test('<1|', () => {
       stateVector = new StateVector('1')
-      expect(equate(stateVector.bra, Matrix.row(0, 1))).toBeTruthy()
+      expect(equate(stateVector.bra, Matrix.rows([[0, 1]])._unsafeUnwrap())).toBeTruthy()
     })
 
     test('<+|', () => {
       stateVector = new StateVector('+')
-      expect(equate(stateVector.bra, Matrix.row(1, 1).mult(Math.sqrt(0.5))._unsafeUnwrap())).toBeTruthy()
+      expect(
+        equate(
+          stateVector.bra,
+          Matrix.rows([[1, 1]])
+            ._unsafeUnwrap()
+            .mult(Math.sqrt(0.5))
+            ._unsafeUnwrap(),
+        ),
+      ).toBeTruthy()
     })
 
     test('<-|', () => {
       stateVector = new StateVector('-')
-      expect(equate(stateVector.bra, Matrix.row(1, -1).mult(Math.sqrt(0.5))._unsafeUnwrap())).toBeTruthy()
+      expect(
+        equate(
+          stateVector.bra,
+          Matrix.rows([[1, -1]])
+            ._unsafeUnwrap()
+            .mult(Math.sqrt(0.5))
+            ._unsafeUnwrap(),
+        ),
+      ).toBeTruthy()
     })
 
     test('<i|', () => {
       stateVector = new StateVector('i')
       expect(
-        equate(stateVector.bra, Matrix.row(1, new Complex(0, -1)).mult(Math.sqrt(0.5))._unsafeUnwrap()),
+        equate(
+          stateVector.bra,
+          Matrix.rows([[1, new Complex(0, -1)]])
+            ._unsafeUnwrap()
+            .mult(Math.sqrt(0.5))
+            ._unsafeUnwrap(),
+        ),
       ).toBeTruthy()
     })
 
     test('<-i|', () => {
       stateVector = new StateVector('(-i)')
       expect(
-        equate(stateVector.bra, Matrix.row(1, new Complex(0, 1)).mult(Math.sqrt(0.5))._unsafeUnwrap()),
+        equate(
+          stateVector.bra,
+          Matrix.rows([[1, new Complex(0, 1)]])
+            ._unsafeUnwrap()
+            .mult(Math.sqrt(0.5))
+            ._unsafeUnwrap(),
+        ),
       ).toBeTruthy()
     })
 
     test('<00|', () => {
       stateVector = new StateVector('00')
-      expect(equate(stateVector.bra, Matrix.row(1, 0, 0, 0))).toBeTruthy()
+      expect(equate(stateVector.bra, Matrix.rows([[1, 0, 0, 0]])._unsafeUnwrap())).toBeTruthy()
     })
 
     test('<0(-i)|', () => {
       stateVector = new StateVector('0(-i)')
       expect(
-        equate(stateVector.bra, Matrix.row(1, new Complex(0, 1), 0, 0).mult(Math.sqrt(0.5))._unsafeUnwrap()),
+        equate(
+          stateVector.bra,
+          Matrix.rows([[1, new Complex(0, 1), 0, 0]])
+            ._unsafeUnwrap()
+            .mult(Math.sqrt(0.5))
+            ._unsafeUnwrap(),
+        ),
       ).toBeTruthy()
     })
   })

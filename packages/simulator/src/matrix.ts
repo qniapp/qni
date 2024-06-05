@@ -76,17 +76,6 @@ export class Matrix {
   }
 
   /**
-   * Return a row vector.
-   *
-   * @param elements - The elements of the vector
-   * @returns A row vector (Matrix with 1 row)
-   */
-  static row(...elements: Array<number | Complex>): Matrix {
-    const res = Matrix.build(1, elements.length, (_row, col) => elements[col])
-    return res._unsafeUnwrap()
-  }
-
-  /**
    * Returns a matrix of the specified `width` and `height`.
    *
    * @param width - The width of the matrix
