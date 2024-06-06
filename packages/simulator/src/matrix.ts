@@ -145,6 +145,9 @@ export class Matrix {
   }
   plus = this.add.bind(this)
 
+  /**
+   * Subtracts another matrix from this matrix.
+   */
   sub(other: Matrix): Result<Matrix, Error> {
     if (other.width !== this.width || other.height !== this.height) {
       return err(Error('Incompatible sizes'))

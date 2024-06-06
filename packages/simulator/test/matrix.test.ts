@@ -75,12 +75,31 @@ describe('Matrix', () => {
   describe('sub', () => {
     test('sub Matrix', () => {
       expect(
-        squareMatrix(2, 3, 5, 7).sub(squareMatrix(11, 13, 17, 19))._unsafeUnwrap().eq(squareMatrix(-9, -10, -12, -12)),
+        M([
+          [2, 3],
+          [5, 7],
+        ])
+          .sub(
+            M([
+              [11, 13],
+              [17, 19],
+            ]),
+          )
+          ._unsafeUnwrap()
+          .eq(
+            M([
+              [-9, -10],
+              [-12, -12],
+            ]),
+          ),
       ).toBeTruthy()
     })
 
     test('error (incompatible sizes)', () => {
-      const mErr = squareMatrix(2, 3, 5, 7).sub(Matrix.column_vector(0)._unsafeUnwrap())
+      const mErr = M([
+        [2, 3],
+        [5, 7],
+      ]).sub(M([[0]]))
       expect(mErr._unsafeUnwrapErr().message).toBe('Incompatible sizes')
     })
   })
