@@ -145,6 +145,19 @@ export class Matrix {
   }
   plus = this.add.bind(this)
 
+  sub(other: Matrix): Result<Matrix, Error> {
+    if (other.width !== this.width || other.height !== this.height) {
+      return err(Error('Incompatible sizes'))
+    }
+
+    const newBuffer = new Float64Array(this.buffer.length)
+    for (let i = 0; i < newBuffer.length; i++) {
+      newBuffer[i] = this.buffer[i] - other.buffer[i]
+    }
+
+    return ok(new Matrix(this.height, this.width, newBuffer))
+  }
+
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {
     Util.need((controlMask & (1 << qubitIndex)) === 0, 'Matrix.timesQubitOperation: self-controlled')
     Util.need(operation2x2.width === 2 && operation2x2.height === 2, 'Matrix.timesQubitOperation: not 2x2')
@@ -278,27 +291,6 @@ export class Matrix {
     }
 
     return new Matrix(h, w, newBuf)
-  }
-
-  /**
-   * Matrix subtraction.
-   *
-   * @param other - The matrix to subtract
-   * @returns A result object with the matrix or an error
-   */
-  sub(other: Matrix): Result<Matrix, Error> {
-    const {width: w, height: h, buffer: b1} = this
-    const b2 = other.buffer
-    if (other.width !== w || other.height !== h) {
-      return err(Error('Matrix.sub: incompatible sizes'))
-    }
-
-    const newBuffer = new Float64Array(this.buffer.length)
-    for (let i = 0; i < newBuffer.length; i++) {
-      newBuffer[i] = b1[i] - b2[i]
-    }
-
-    return ok(new Matrix(h, w, newBuffer))
   }
 
   /**
