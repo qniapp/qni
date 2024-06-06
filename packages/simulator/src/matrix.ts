@@ -161,6 +161,10 @@ export class Matrix {
     return ok(new Matrix(this.height, this.width, newBuffer))
   }
 
+  mult(other: Matrix | number | Complex): Result<Matrix, Error> {
+    return other instanceof Matrix ? this.multMatrix(other) : ok(this.multScalar(other))
+  }
+
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {
     Util.need((controlMask & (1 << qubitIndex)) === 0, 'Matrix.timesQubitOperation: self-controlled')
     Util.need(operation2x2.width === 2 && operation2x2.height === 2, 'Matrix.timesQubitOperation: not 2x2')
@@ -294,15 +298,6 @@ export class Matrix {
     }
 
     return new Matrix(h, w, newBuf)
-  }
-
-  /**
-   * Matrix multiplication.
-   *
-   * @param other - The matrix to multiply
-   */
-  mult(other: Matrix | number | Complex): Result<Matrix, Error> {
-    return other instanceof Matrix ? this.multMatrix(other) : ok(this.multScalar(other))
   }
 
   /**

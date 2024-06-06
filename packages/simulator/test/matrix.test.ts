@@ -104,6 +104,118 @@ describe('Matrix', () => {
     })
   })
 
+  describe('mult', () => {
+    test('* -1', () => {
+      expect(
+        M([
+          [new Complex(2, 3), new Complex(5, 7)],
+          [new Complex(11, 13), new Complex(17, 19)],
+        ])
+          .mult(-1)
+          ._unsafeUnwrap()
+          .eq(
+            M([
+              [new Complex(-2, -3), new Complex(-5, -7)],
+              [new Complex(-11, -13), new Complex(-17, -19)],
+            ]),
+          ),
+      ).toBeTruthy()
+    })
+
+    test('* 0', () => {
+      const v = M([
+        [new Complex(2, 3), new Complex(5, 7)],
+        [new Complex(11, 13), new Complex(17, 19)],
+      ])
+
+      expect(
+        v
+          .mult(0)
+          ._unsafeUnwrap()
+          .eq(
+            M([
+              [0, 0],
+              [0, 0],
+            ]),
+          ),
+      ).toBeTruthy()
+    })
+
+    test('* 1', () => {
+      const v = M([
+        [new Complex(2, 3), new Complex(5, 7)],
+        [new Complex(11, 13), new Complex(17, 19)],
+      ])
+
+      expect(v.mult(1)._unsafeUnwrap().eq(v)).toBeTruthy()
+    })
+
+    test('* 5', () => {
+      expect(
+        M([
+          [1, 2],
+          [3, 4],
+        ])
+          .mult(5)
+          ._unsafeUnwrap()
+          .eq(
+            M([
+              [5, 10],
+              [15, 20],
+            ]),
+          ),
+      )
+    })
+
+    test('* M', () => {
+      expect(
+        M([
+          [2, 3],
+          [5, 7],
+        ])
+          .mult(
+            M([
+              [11, 13],
+              [17, 19],
+            ]),
+          )
+          ._unsafeUnwrap()
+          .eq(
+            M([
+              [73, 83],
+              [174, 198],
+            ]),
+          ),
+      ).toBeTruthy()
+    })
+
+    test('-iXYZ = I', () => {
+      expect(
+        X.mult(Y)
+          ._unsafeUnwrap()
+          .mult(Z)
+          ._unsafeUnwrap()
+          .mult(new Complex(0, -1))
+          ._unsafeUnwrap()
+          .eq(
+            M([
+              [1, 0],
+              [0, 1],
+            ]),
+          ),
+      ).toBeTruthy()
+    })
+
+    test('incompatible sizes error', () => {
+      const mErr = M([
+        [1, 2],
+        [3, 4],
+      ]).mult(M([[0]]))
+
+      expect(mErr._unsafeUnwrapErr().message).toBe('Incompatible sizes.')
+    })
+  })
+
   test('columnAt', () => {
     const m = squareMatrix(2, 3, 5, 7)
     expect(equate(m.columnAt(0)._unsafeUnwrap(), [2, 5])).toBeTruthy()
@@ -173,67 +285,6 @@ describe('Matrix', () => {
         ._unsafeUnwrap()
         .adjoint()
         .eq(Matrix.rows([[1, 2, Complex.I.neg()]])._unsafeUnwrap()),
-    ).toBeTruthy()
-  })
-
-  test('multScalar', () => {
-    const v = squareMatrix(new Complex(2, 3), new Complex(5, 7), new Complex(11, 13), new Complex(17, 19))
-    const a = squareMatrix(new Complex(-2, -3), new Complex(-5, -7), new Complex(-11, -13), new Complex(-17, -19))
-
-    expect(v.mult(-1)._unsafeUnwrap().eq(a)).toBeTruthy()
-    expect(v.mult(0)._unsafeUnwrap().eq(squareMatrix(0, 0, 0, 0))).toBeTruthy()
-    expect(v.mult(1)._unsafeUnwrap().eq(v)).toBeTruthy()
-
-    expect(
-      Matrix.column_vector(2, 3)
-        ._unsafeUnwrap()
-        .mult(5)
-        ._unsafeUnwrap()
-        .eq(Matrix.column_vector(10, 15)._unsafeUnwrap()),
-    ).toBeTruthy()
-    expect(
-      Matrix.rows([[2, 3]])
-        ._unsafeUnwrap()
-        .mult(5)
-        ._unsafeUnwrap()
-        .eq(Matrix.rows([[10, 15]])._unsafeUnwrap()),
-    ).toBeTruthy()
-  })
-
-  test('multMatrix', () => {
-    const mErr = squareMatrix(1, 2, 3, 4).mult(Matrix.column_vector(0)._unsafeUnwrap())
-    expect(mErr.isErr()).toBeTruthy()
-    expect(mErr._unsafeUnwrapErr().message).toBe('Incompatible sizes.')
-
-    expect(
-      squareMatrix(2, 3, 5, 7).mult(squareMatrix(11, 13, 17, 19))._unsafeUnwrap().eq(squareMatrix(73, 83, 174, 198)),
-    ).toBeTruthy()
-
-    const x = squareMatrix(new Complex(0.5, -0.5), new Complex(0.5, 0.5), new Complex(0.5, 0.5), new Complex(0.5, -0.5))
-    expect(
-      x
-        .mult(x.adjoint())
-        ._unsafeUnwrap()
-        .eq(
-          Matrix.rows([
-            [1, 0],
-            [0, 1],
-          ])._unsafeUnwrap(),
-        ),
-    ).toBeTruthy()
-    expect(
-      X.mult(Y)
-        ._unsafeUnwrap()
-        .mult(Z)
-        ._unsafeUnwrap()
-        .mult(new Complex(0, -1))
-        ._unsafeUnwrap()
-        .eq(
-          Matrix.rows([
-            [1, 0],
-            [0, 1],
-          ])._unsafeUnwrap(),
-        ),
     ).toBeTruthy()
   })
 
