@@ -129,6 +129,28 @@ export class Matrix {
   }
 
   /**
+   * Retrieves a column from the matrix.
+   */
+  column(colIndex: number): Result<Complex[], Error> {
+    if (colIndex < 0) {
+      return err(Error('colIndex < 0'))
+    }
+    if (colIndex > this.width) {
+      return err(Error('colIndex > this.width'))
+    }
+
+    const col = []
+    for (let row = 0; row < this.height; row++) {
+      const element = this.element(row, colIndex)
+      if (element.isErr()) {
+        return err(element.error)
+      }
+      col.push(element.value)
+    }
+    return ok(col)
+  }
+
+  /**
    * Adds another matrix to the current matrix.
    */
   add(other: Matrix): Result<Matrix, Error> {
@@ -197,27 +219,6 @@ export class Matrix {
     }
 
     return Matrix.create(h, w, buf)._unsafeUnwrap()
-  }
-
-  /**
-   * Returns the `colIndex` column of the matrix.
-   *
-   * @param colIndex - The column index
-   * @returns A result object with the column or an error
-   */
-  columnAt(colIndex: number): Result<Complex[], Error> {
-    if (colIndex < 0) {
-      return err(Error('colIndex < 0'))
-    }
-    if (colIndex > this.width) {
-      return err(Error('colIndex > this.width'))
-    }
-
-    const col = []
-    for (let row = 0; row < this.height; row++) {
-      col.push(this.element(row, colIndex)._unsafeUnwrap())
-    }
-    return ok(col)
   }
 
   /**

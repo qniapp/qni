@@ -40,6 +40,26 @@ describe('Matrix', () => {
     expect(m._unsafeUnwrap().toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
   })
 
+  describe('column', () => {
+    const m = M([
+      [2, 3],
+      [5, 7],
+    ])
+
+    test('returns a Complex array', () => {
+      expect(equate(m.column(0)._unsafeUnwrap(), [2, 5])).toBeTruthy()
+      expect(equate(m.column(1)._unsafeUnwrap(), [3, 7])).toBeTruthy()
+    })
+
+    test('negative index error', () => {
+      expect(m.column(-1)._unsafeUnwrapErr().message).toBe('colIndex < 0')
+    })
+
+    test('index too large error', () => {
+      expect(m.column(100)._unsafeUnwrapErr().message).toBe('colIndex > this.width')
+    })
+  })
+
   describe('add', () => {
     test('add Matrix', () => {
       expect(
@@ -214,21 +234,6 @@ describe('Matrix', () => {
 
       expect(mErr._unsafeUnwrapErr().message).toBe('Incompatible sizes.')
     })
-  })
-
-  test('columnAt', () => {
-    const m = squareMatrix(2, 3, 5, 7)
-    expect(equate(m.columnAt(0)._unsafeUnwrap(), [2, 5])).toBeTruthy()
-    expect(equate(m.columnAt(1)._unsafeUnwrap(), [3, 7])).toBeTruthy()
-    expect(equate(Matrix.column_vector(1, 2, 3)._unsafeUnwrap().columnAt(0)._unsafeUnwrap(), [1, 2, 3])).toBeTruthy()
-
-    const resErrNegativeIndex = m.columnAt(-1)
-    expect(resErrNegativeIndex.isErr()).toBeTruthy()
-    expect(resErrNegativeIndex._unsafeUnwrapErr().message).toBe('colIndex < 0')
-
-    const resErrIndexTooLarge = m.columnAt(100)
-    expect(resErrIndexTooLarge.isErr()).toBeTruthy()
-    expect(resErrIndexTooLarge._unsafeUnwrapErr().message).toBe('colIndex > this.width')
   })
 
   test('isHermitian', () => {
