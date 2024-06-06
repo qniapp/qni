@@ -72,6 +72,38 @@ describe('Matrix', () => {
     })
   })
 
+  describe('sub', () => {
+    test('sub Matrix', () => {
+      expect(
+        M([
+          [2, 3],
+          [5, 7],
+        ])
+          .sub(
+            M([
+              [11, 13],
+              [17, 19],
+            ]),
+          )
+          ._unsafeUnwrap()
+          .eq(
+            M([
+              [-9, -10],
+              [-12, -12],
+            ]),
+          ),
+      ).toBeTruthy()
+    })
+
+    test('error (incompatible sizes)', () => {
+      const mErr = M([
+        [2, 3],
+        [5, 7],
+      ]).sub(M([[0]]))
+      expect(mErr._unsafeUnwrapErr().message).toBe('Incompatible sizes')
+    })
+  })
+
   test('columnAt', () => {
     const m = squareMatrix(2, 3, 5, 7)
     expect(equate(m.columnAt(0)._unsafeUnwrap(), [2, 5])).toBeTruthy()
@@ -142,16 +174,6 @@ describe('Matrix', () => {
         .adjoint()
         .eq(Matrix.rows([[1, 2, Complex.I.neg()]])._unsafeUnwrap()),
     ).toBeTruthy()
-  })
-
-  test('sub', () => {
-    expect(
-      squareMatrix(2, 3, 5, 7).sub(squareMatrix(11, 13, 17, 19))._unsafeUnwrap().eq(squareMatrix(-9, -10, -12, -12)),
-    ).toBeTruthy()
-
-    const mErr = squareMatrix(2, 3, 5, 7).sub(Matrix.column_vector(0)._unsafeUnwrap())
-    expect(mErr.isErr()).toBeTruthy()
-    expect(mErr._unsafeUnwrapErr().message).toBe('Matrix.sub: incompatible sizes')
   })
 
   test('multScalar', () => {
