@@ -128,21 +128,21 @@ export class Matrix {
     return ok(this)
   }
 
+  /**
+   * Adds another matrix to the current matrix.
+   */
   add(other: Matrix): Result<Matrix, Error> {
-    const {width: w, height: h, buffer: b1} = this
-    const b2 = other.buffer
-    if (other.width !== w || other.height !== h) {
+    if (other.width !== this.width || other.height !== this.height) {
       return err(Error('Incompatible sizes'))
     }
 
     const newBuffer = new Float64Array(this.buffer.length)
     for (let i = 0; i < newBuffer.length; i++) {
-      newBuffer[i] = b1[i] + b2[i]
+      newBuffer[i] = this.buffer[i] + other.buffer[i]
     }
 
-    return ok(new Matrix(h, w, newBuffer))
+    return ok(new Matrix(this.height, this.width, newBuffer))
   }
-
   plus = this.add.bind(this)
 
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {

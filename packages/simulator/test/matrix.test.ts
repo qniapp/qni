@@ -28,16 +28,48 @@ describe('Matrix', () => {
     expect(m._unsafeUnwrap().toString()).toBe('{{2}, {3}, {5i}}')
   })
 
-  test('Matrix.generate', () => {
+  test('Matrix.build', () => {
     const m = Matrix.build(2, 3)
 
     expect(m._unsafeUnwrap().toString()).toBe('{{0, 0, 0}, {0, 0, 0}}')
   })
 
-  test('Matrix.generate with an element generator', () => {
+  test('Matrix.build with an element generator', () => {
     const m = Matrix.build(2, 3, (row, col) => row + 10 * col)
 
     expect(m._unsafeUnwrap().toString()).toBe('{{0, 10, 20}, {1, 11, 21}}')
+  })
+
+  describe('add', () => {
+    test('add Matrix', () => {
+      expect(
+        M([
+          [2, 3],
+          [5, 7],
+        ])
+          .add(
+            M([
+              [11, 13],
+              [17, 19],
+            ]),
+          )
+          ._unsafeUnwrap()
+          .eq(
+            M([
+              [13, 16],
+              [22, 26],
+            ]),
+          ),
+      ).toBeTruthy()
+    })
+
+    test('error (incompatible sizes)', () => {
+      const mErr = M([
+        [2, 3],
+        [5, 7],
+      ]).add(M([[0]]))
+      expect(mErr._unsafeUnwrapErr().message).toBe('Incompatible sizes')
+    })
   })
 
   test('columnAt', () => {
@@ -110,34 +142,6 @@ describe('Matrix', () => {
         .adjoint()
         .eq(Matrix.rows([[1, 2, Complex.I.neg()]])._unsafeUnwrap()),
     ).toBeTruthy()
-  })
-
-  test('add', () => {
-    expect(
-      M([
-        [2, 3],
-        [5, 7],
-      ])
-        .add(
-          M([
-            [11, 13],
-            [17, 19],
-          ]),
-        )
-        ._unsafeUnwrap()
-        .eq(
-          M([
-            [13, 16],
-            [22, 26],
-          ]),
-        ),
-    ).toBeTruthy()
-
-    const mErr = M([
-      [2, 3],
-      [5, 7],
-    ]).add(Matrix.column_vector(0)._unsafeUnwrap())
-    expect(mErr._unsafeUnwrapErr().message).toBe('Incompatible sizes')
   })
 
   test('sub', () => {
