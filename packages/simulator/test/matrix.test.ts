@@ -114,12 +114,30 @@ describe('Matrix', () => {
 
   test('add', () => {
     expect(
-      squareMatrix(2, 3, 5, 7).add(squareMatrix(11, 13, 17, 19))._unsafeUnwrap().eq(squareMatrix(13, 16, 22, 26)),
+      M([
+        [2, 3],
+        [5, 7],
+      ])
+        .add(
+          M([
+            [11, 13],
+            [17, 19],
+          ]),
+        )
+        ._unsafeUnwrap()
+        .eq(
+          M([
+            [13, 16],
+            [22, 26],
+          ]),
+        ),
     ).toBeTruthy()
 
-    const mErr = squareMatrix(2, 3, 5, 7).add(Matrix.column_vector(0)._unsafeUnwrap())
-    expect(mErr.isErr()).toBeTruthy()
-    expect(mErr._unsafeUnwrapErr().message).toBe('Matrix.add: incompatible sizes')
+    const mErr = M([
+      [2, 3],
+      [5, 7],
+    ]).add(Matrix.column_vector(0)._unsafeUnwrap())
+    expect(mErr._unsafeUnwrapErr().message).toBe('Incompatible sizes')
   })
 
   test('sub', () => {
@@ -493,6 +511,10 @@ describe('Matrix', () => {
     expect(m.eq(c))
   })
 })
+
+function M(rows: Array<Array<number | Complex>>): Matrix {
+  return Matrix.rows(rows)._unsafeUnwrap()
+}
 
 function squareMatrix(...elements: Array<number | Complex>): Matrix {
   const n = Math.round(Math.sqrt(elements.length))

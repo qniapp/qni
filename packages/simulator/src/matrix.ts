@@ -128,6 +128,23 @@ export class Matrix {
     return ok(this)
   }
 
+  add(other: Matrix): Result<Matrix, Error> {
+    const {width: w, height: h, buffer: b1} = this
+    const b2 = other.buffer
+    if (other.width !== w || other.height !== h) {
+      return err(Error('Incompatible sizes'))
+    }
+
+    const newBuffer = new Float64Array(this.buffer.length)
+    for (let i = 0; i < newBuffer.length; i++) {
+      newBuffer[i] = b1[i] + b2[i]
+    }
+
+    return ok(new Matrix(h, w, newBuffer))
+  }
+
+  plus = this.add.bind(this)
+
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {
     Util.need((controlMask & (1 << qubitIndex)) === 0, 'Matrix.timesQubitOperation: self-controlled')
     Util.need(operation2x2.width === 2 && operation2x2.height === 2, 'Matrix.timesQubitOperation: not 2x2')
@@ -262,29 +279,6 @@ export class Matrix {
 
     return new Matrix(h, w, newBuf)
   }
-
-  /**
-   * Matrix addition.
-   *
-   * @param other - The matrix to add
-   * @returns A result object with the matrix or an error
-   */
-  add(other: Matrix): Result<Matrix, Error> {
-    const {width: w, height: h, buffer: b1} = this
-    const b2 = other.buffer
-    if (other.width !== w || other.height !== h) {
-      return err(Error('Matrix.add: incompatible sizes'))
-    }
-
-    const newBuffer = new Float64Array(this.buffer.length)
-    for (let i = 0; i < newBuffer.length; i++) {
-      newBuffer[i] = b1[i] + b2[i]
-    }
-
-    return ok(new Matrix(h, w, newBuffer))
-  }
-
-  plus = this.add.bind(this)
 
   /**
    * Matrix subtraction.
