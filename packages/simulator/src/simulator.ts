@@ -74,7 +74,7 @@ export class Simulator {
         case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
           if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.acnot(each.targets, each.controls || [], each.antiControls || [])
+            this.cnot(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.x(...each.targets)
           }
@@ -236,19 +236,8 @@ export class Simulator {
     return this
   }
 
-  cnot(target: number, controls: number[]): Simulator {
-    this.cu(X, [target], controls)
-
-    return this
-  }
-
-  acnot(targets: number[], controls: number[], antiControls: number[]): Simulator {
-    const allControls = controls.concat(antiControls)
-
-    this.x(...antiControls)
-    this.cu_old(allControls, X, ...targets)
-    this.x(...antiControls)
-
+  cnot(targets: number[], controls: number[], antiControls: number[] = []): Simulator {
+    this.cu(X, targets, controls, antiControls)
     return this
   }
 
@@ -406,12 +395,12 @@ export class Simulator {
   }
 
   swap(target0: number, target1: number): Simulator {
-    this.cnot(target1, [target0]).cnot(target0, [target1]).cnot(target1, [target0])
+    this.cnot([target1], [target0]).cnot([target0], [target1]).cnot([target1], [target0])
     return this
   }
 
   cswap(control: number, target0: number, target1: number): Simulator {
-    this.cnot(target1, [control, target0]).cnot(target0, [control, target1]).cnot(target1, [control, target0])
+    this.cnot([target1], [control, target0]).cnot([target0], [control, target1]).cnot([target1], [control, target0])
     return this
   }
 

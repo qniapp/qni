@@ -433,32 +433,32 @@ describe('Simulator', () => {
   describe('cnot', () => {
     test('|00>.cnot(0, 1) should be |00>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.cnot(1, [0]).state, new StateVector('00'))).toBeTruthy()
+      expect(equate(simulator.cnot([1], [0]).state, new StateVector('00'))).toBeTruthy()
     })
 
     test('|00>.cnot(1, 0) should be |00>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.cnot(0, [1]).state, new StateVector('00'))).toBeTruthy()
+      expect(equate(simulator.cnot([0], [1]).state, new StateVector('00'))).toBeTruthy()
     })
 
     test('|11>.cnot(0, 1) should be |01>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.cnot(1, [0]).state, new StateVector('01'))).toBeTruthy()
+      expect(equate(simulator.cnot([1], [0]).state, new StateVector('01'))).toBeTruthy()
     })
 
     test('|11>.cnot(1, 0) should be |10>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.cnot(0, [1]).state, new StateVector('10'))).toBeTruthy()
+      expect(equate(simulator.cnot([0], [1]).state, new StateVector('10'))).toBeTruthy()
     })
 
     test('|010>.cnot([0, 1], 2) should be |010>', () => {
       const simulator = new Simulator('010')
-      expect(equate(simulator.cnot(2, [0, 1]).state, new StateVector('010'))).toBeTruthy()
+      expect(equate(simulator.cnot([2], [0, 1]).state, new StateVector('010'))).toBeTruthy()
     })
 
     test('|011>.cnot([0, 1], 2) should be |111>', () => {
       const simulator = new Simulator('011')
-      expect(equate(simulator.cnot(2, [0, 1]).state, new StateVector('111'))).toBeTruthy()
+      expect(equate(simulator.cnot([2], [0, 1]).state, new StateVector('111'))).toBeTruthy()
     })
   })
 
