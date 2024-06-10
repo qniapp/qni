@@ -47,6 +47,11 @@ export class StateVector {
     return other instanceof StateVector && this.matrix.nearlyEq(other.matrix, epsilon)
   }
 
+  applyControlledGate(operation2x2: Matrix, qubitIndex: number, controls: number[], antiControls: number[]): Matrix {
+    this.matrix = this.matrix.applyControlledGate(operation2x2, qubitIndex, controls, antiControls)
+    return this.matrix
+  }
+
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {
     this.matrix = this.matrix.timesQubitOperation(operation2x2, qubitIndex, controlMask)
     return this.matrix

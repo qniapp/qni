@@ -66,7 +66,7 @@ export class Simulator {
         case SerializedHGateType:
           if (each.if && !this.flags[each.if]) break
           if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.ach(each.controls || [], each.antiControls || [], ...each.targets)
+            this.ch(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.h(...each.targets)
           }
@@ -74,7 +74,7 @@ export class Simulator {
         case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
           if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.acnot(each.controls || [], each.antiControls || [], ...each.targets)
+            this.acnot(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.x(...each.targets)
           }
@@ -222,50 +222,31 @@ export class Simulator {
   }
 
   h(...targets: number[]): Simulator {
-    this.u(H, ...targets)
+    this.cu(H, targets, [], [])
     return this
   }
 
-  ch(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, H, ...targets)
-    return this
-  }
-
-  ach(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
-    let allControls
-    if (typeof controls === 'number') {
-      allControls = [controls].concat(antiControls)
-    } else {
-      allControls = controls.concat(antiControls)
-    }
-
-    this.x(...antiControls)
-    this.cu(allControls, H, ...targets)
-    this.x(...antiControls)
+  ch(targets: number[], controls: number[], antiControls: number[]): Simulator {
+    this.cu(H, targets, controls, antiControls)
     return this
   }
 
   x(...targets: number[]): Simulator {
-    this.u(X, ...targets)
+    this.cu(X, targets)
     return this
   }
 
-  cnot(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, X, ...targets)
+  cnot(target: number, controls: number[]): Simulator {
+    this.cu(X, [target], controls)
 
     return this
   }
 
-  acnot(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
-    let allControls
-    if (typeof controls === 'number') {
-      allControls = [controls].concat(antiControls)
-    } else {
-      allControls = controls.concat(antiControls)
-    }
+  acnot(targets: number[], controls: number[], antiControls: number[]): Simulator {
+    const allControls = controls.concat(antiControls)
 
     this.x(...antiControls)
-    this.cu(allControls, X, ...targets)
+    this.cu_old(allControls, X, ...targets)
     this.x(...antiControls)
 
     return this
@@ -277,7 +258,7 @@ export class Simulator {
   }
 
   cy(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Y, ...targets)
+    this.cu_old(controls, Y, ...targets)
     return this
   }
 
@@ -290,7 +271,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Y, ...targets)
+    this.cu_old(allControls, Y, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -301,7 +282,7 @@ export class Simulator {
   }
 
   cz(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Z, ...targets)
+    this.cu_old(controls, Z, ...targets)
     return this
   }
 
@@ -314,7 +295,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, Z, ...targets)
+    this.cu_old(allControls, Z, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -325,7 +306,7 @@ export class Simulator {
   }
 
   cphase(controls: number | number[], phi: string, ...targets: number[]): Simulator {
-    this.cu(controls, PHASE(phi), ...targets)
+    this.cu_old(controls, PHASE(phi), ...targets)
     return this
   }
 
@@ -338,7 +319,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, PHASE(phi), ...targets)
+    this.cu_old(allControls, PHASE(phi), ...targets)
     this.x(...antiControls)
     return this
   }
@@ -357,7 +338,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, S, ...targets)
+    this.cu_old(allControls, S, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -376,7 +357,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, SDagger, ...targets)
+    this.cu_old(allControls, SDagger, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -387,7 +368,7 @@ export class Simulator {
   }
 
   ct(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, T, ...targets)
+    this.cu_old(controls, T, ...targets)
     return this
   }
 
@@ -400,7 +381,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, T, ...targets)
+    this.cu_old(allControls, T, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -419,18 +400,18 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, TDagger, ...targets)
+    this.cu_old(allControls, TDagger, ...targets)
     this.x(...antiControls)
     return this
   }
 
   swap(target0: number, target1: number): Simulator {
-    this.cnot(target0, target1).cnot(target1, target0).cnot(target0, target1)
+    this.cnot(target1, [target0]).cnot(target0, [target1]).cnot(target1, [target0])
     return this
   }
 
   cswap(control: number, target0: number, target1: number): Simulator {
-    this.cnot([control, target0], target1).cnot([control, target1], target0).cnot([control, target0], target1)
+    this.cnot(target1, [control, target0]).cnot(target0, [control, target1]).cnot(target1, [control, target0])
     return this
   }
 
@@ -448,7 +429,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, RNOT, ...targets)
+    this.cu_old(allControls, RNOT, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -462,7 +443,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, RNOT, ...targets)
+    this.cu_old(allControls, RNOT, ...targets)
     this.x(...antiControls)
     return this
   }
@@ -481,13 +462,13 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, RX(theta), ...targets)
+    this.cu_old(allControls, RX(theta), ...targets)
     this.x(...antiControls)
     return this
   }
 
   crx(controls: number | number[], theta: string, ...targets: number[]): Simulator {
-    this.cu(controls, RX(theta), ...targets)
+    this.cu_old(controls, RX(theta), ...targets)
     return this
   }
 
@@ -497,7 +478,7 @@ export class Simulator {
   }
 
   cry(controls: number | number[], theta: string, ...targets: number[]): Simulator {
-    this.cu(controls, RY(theta), ...targets)
+    this.cu_old(controls, RY(theta), ...targets)
     return this
   }
 
@@ -510,7 +491,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, RY(theta), ...targets)
+    this.cu_old(allControls, RY(theta), ...targets)
     this.x(...antiControls)
     return this
   }
@@ -521,7 +502,7 @@ export class Simulator {
   }
 
   crz(controls: number | number[], theta: string, ...targets: number[]): Simulator {
-    this.cu(controls, RZ(theta), ...targets)
+    this.cu_old(controls, RZ(theta), ...targets)
     return this
   }
 
@@ -534,7 +515,7 @@ export class Simulator {
     }
 
     this.x(...antiControls)
-    this.cu(allControls, RZ(theta), ...targets)
+    this.cu_old(allControls, RZ(theta), ...targets)
     this.x(...antiControls)
     return this
   }
@@ -2471,7 +2452,13 @@ export class Simulator {
     }
   }
 
-  private cu(controls: number | number[], u: Matrix, ...targets: number[]): void {
+  private cu(u: Matrix, targets: number[], controls: number[] = [], antiControls: number[] = []): void {
+    for (const t of targets) {
+      this.state.applyControlledGate(u, t, controls, antiControls)
+    }
+  }
+
+  private cu_old(controls: number | number[], u: Matrix, ...targets: number[]): void {
     const cs = typeof controls === 'number' ? [controls] : controls
     const controlMask = cs.reduce((result, each) => {
       return result | (1 << each)
