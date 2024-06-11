@@ -65,7 +65,7 @@ export class Simulator {
           break
         case SerializedHGateType:
           if (each.if && !this.flags[each.if]) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+          if (each.controls || each.antiControls) {
             this.ch(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.h(...each.targets)
@@ -73,7 +73,7 @@ export class Simulator {
           break
         case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+          if (each.controls || each.antiControls) {
             this.cnot(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.x(...each.targets)
@@ -81,7 +81,7 @@ export class Simulator {
           break
         case SerializedYGateType:
           if (each.if && !this.flags[each.if]) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+          if (each.controls || each.antiControls) {
             this.cy(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.y(...each.targets)
@@ -89,7 +89,7 @@ export class Simulator {
           break
         case SerializedZGateType:
           if (each.if && !this.flags[each.if]) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+          if (each.controls || each.antiControls) {
             this.cz(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.z(...each.targets)
@@ -99,7 +99,7 @@ export class Simulator {
           break
         case SerializedPhaseGateType: {
           if (!each.angle) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+          if (each.controls || each.antiControls) {
             this.cphase(each.angle, [each.targets[0]], each.controls || [], each.antiControls || [])
           } else {
             this.cphase(each.angle, [each.targets[0]])
@@ -108,7 +108,7 @@ export class Simulator {
         }
         case SerializedSGateType: {
           if (each.if && !this.flags[each.if]) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
+          if (each.controls || each.antiControls) {
             this.cs(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.s(...each.targets)
@@ -162,8 +162,8 @@ export class Simulator {
         }
         case SerializedRnotGateType:
           if (each.if && !this.flags[each.if]) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.acrnot(each.controls || [], each.antiControls || [], ...each.targets)
+          if (each.controls || each.antiControls) {
+            this.crnot(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.rnot(...each.targets)
           }
@@ -327,31 +327,8 @@ export class Simulator {
     return this
   }
 
-  crnot(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
-    let allControls
-    if (typeof controls === 'number') {
-      allControls = [controls].concat(antiControls)
-    } else {
-      allControls = controls.concat(antiControls)
-    }
-
-    this.x(...antiControls)
-    this.cu_old(allControls, RNOT, ...targets)
-    this.x(...antiControls)
-    return this
-  }
-
-  acrnot(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
-    let allControls
-    if (typeof controls === 'number') {
-      allControls = [controls].concat(antiControls)
-    } else {
-      allControls = controls.concat(antiControls)
-    }
-
-    this.x(...antiControls)
-    this.cu_old(allControls, RNOT, ...targets)
-    this.x(...antiControls)
+  crnot(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+    this.cu(RNOT, targets, controls, antiControls)
     return this
   }
 
