@@ -165,7 +165,7 @@ export class Simulator {
   }
 
   h(...targets: number[]): Simulator {
-    this.cu(H, targets, [], [])
+    this.cu(H, targets)
     return this
   }
 
@@ -174,6 +174,9 @@ export class Simulator {
     return this
   }
 
+  /**
+   * Applies the X gate to the specified qubit targets.
+   */
   x(...targets: number[]): Simulator {
     this.cu(X, targets)
     return this

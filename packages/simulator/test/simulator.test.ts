@@ -89,6 +89,16 @@ describe('Simulator', () => {
       ).toBe(true)
     })
 
+    test('|0>.x(1) should throw an error', () => {
+      const simulator = new Simulator('0')
+      expect(() => simulator.x(1)).toThrow('target bit out of range')
+    })
+
+    test('|0>.x(-1) should throw an error', () => {
+      const simulator = new Simulator('0')
+      expect(() => simulator.x(-1)).toThrow('target bit out of range')
+    })
+
     test('|00>.x(0) should be |01>', () => {
       const simulator = new Simulator('00')
       expect(equate(simulator.x(0).state, new StateVector('01'))).toBe(true)
@@ -102,6 +112,70 @@ describe('Simulator', () => {
     test('|00>.x(0, 1) should be |11>', () => {
       const simulator = new Simulator('00')
       expect(equate(simulator.x(0, 1).state, new StateVector('11'))).toBe(true)
+    })
+  })
+
+  // TODO: antiControls を指定したときの動作も確認
+  // TODO: 1 ビットに cnot を適用しようとしたときエラーが出ることを確認
+  describe('cnot', () => {
+    test('|00>.cnot (target = 1, control = 0) should be |00>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.cnot([1], [0]).state, new StateVector('00'))).toBeTruthy()
+    })
+
+    test('|00>.cnot (target = 0, control = 1) should be |00>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.cnot([0], [1]).state, new StateVector('00'))).toBeTruthy()
+    })
+
+    test('|11>.cnot (target = 1, control = 0) should be |01>', () => {
+      const simulator = new Simulator('11')
+      expect(equate(simulator.cnot([1], [0]).state, new StateVector('01'))).toBeTruthy()
+    })
+
+    test('|11>.cnot (target = 0, control = 1) should be |10>', () => {
+      const simulator = new Simulator('11')
+      expect(equate(simulator.cnot([0], [1]).state, new StateVector('10'))).toBeTruthy()
+    })
+
+    test('|010>.cnot (target = 2, control = 0, 1) should be |010>', () => {
+      const simulator = new Simulator('010')
+      expect(equate(simulator.cnot([2], [0, 1]).state, new StateVector('010'))).toBeTruthy()
+    })
+
+    test('|011>.cnot (target = 2, control = 0, 1) should be |111>', () => {
+      const simulator = new Simulator('011')
+      expect(equate(simulator.cnot([2], [0, 1]).state, new StateVector('111'))).toBeTruthy()
+    })
+
+    test('|00>.cnot (target = 2) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.cnot([2])).toThrow('target bit out of range')
+    })
+
+    test('|00>.cnot (target = -1, control = 0) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.cnot([-1])).toThrow('target bit out of range')
+    })
+
+    test('|00>.cnot (target = 0, control = 2) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.cnot([0], [2])).toThrow('control bit out of range')
+    })
+
+    test('|00>.cnot (target = 0, control = -1) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.cnot([0], [-1])).toThrow('control bit out of range')
+    })
+
+    test('|00>.cnot (target = 0, antiControl = 2) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.cnot([0], [], [2])).toThrow('anti control bit out of range')
+    })
+
+    test('|00>.cnot (target = 0, antiControl = -) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.cnot([0], [], [-1])).toThrow('anti control bit out of range')
     })
   })
 
@@ -427,38 +501,6 @@ describe('Simulator', () => {
     test('|01>.swap(0, 1) should be |10>', () => {
       const simulator = new Simulator('01')
       expect(equate(simulator.swap(0, 1).state, new StateVector('10'))).toBeTruthy()
-    })
-  })
-
-  describe('cnot', () => {
-    test('|00>.cnot(0, 1) should be |00>', () => {
-      const simulator = new Simulator('00')
-      expect(equate(simulator.cnot([1], [0]).state, new StateVector('00'))).toBeTruthy()
-    })
-
-    test('|00>.cnot(1, 0) should be |00>', () => {
-      const simulator = new Simulator('00')
-      expect(equate(simulator.cnot([0], [1]).state, new StateVector('00'))).toBeTruthy()
-    })
-
-    test('|11>.cnot(0, 1) should be |01>', () => {
-      const simulator = new Simulator('11')
-      expect(equate(simulator.cnot([1], [0]).state, new StateVector('01'))).toBeTruthy()
-    })
-
-    test('|11>.cnot(1, 0) should be |10>', () => {
-      const simulator = new Simulator('11')
-      expect(equate(simulator.cnot([0], [1]).state, new StateVector('10'))).toBeTruthy()
-    })
-
-    test('|010>.cnot([0, 1], 2) should be |010>', () => {
-      const simulator = new Simulator('010')
-      expect(equate(simulator.cnot([2], [0, 1]).state, new StateVector('010'))).toBeTruthy()
-    })
-
-    test('|011>.cnot([0, 1], 2) should be |111>', () => {
-      const simulator = new Simulator('011')
-      expect(equate(simulator.cnot([2], [0, 1]).state, new StateVector('111'))).toBeTruthy()
     })
   })
 
