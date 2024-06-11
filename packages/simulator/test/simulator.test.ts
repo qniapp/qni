@@ -465,13 +465,13 @@ describe('Simulator', () => {
   describe('cphase', () => {
     test("|00>.cphase(0, 'π', 1) should be |00>", () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.cphase(0, 'π', 1).state, new StateVector('00'))).toBeTruthy()
+      expect(equate(simulator.cphase('π', [1], [0]).state, new StateVector('00'))).toBeTruthy()
     })
 
     test("|11>.cphase(0, 'π', 1) should be -|11>", () => {
       const simulator = new Simulator('11')
       expect(
-        equate(simulator.cphase(0, 'π', 1).state.matrix, new StateVector('11').matrix.mult(-1)._unsafeUnwrap()),
+        equate(simulator.cphase('π', [1], [0]).state.matrix, new StateVector('11').matrix.mult(-1)._unsafeUnwrap()),
       ).toBeTruthy()
     })
   })
