@@ -153,9 +153,8 @@ export class Simulator {
           break
         }
         case SerializedSwapGateType: {
-          // TODO: controls が複数の場合にも対応
-          if (each.controls && each.controls.length === 1) {
-            this.cswap(each.controls[0], each.targets[0], each.targets[1])
+          if (each.controls) {
+            this.cswap(each.targets[0], each.targets[1], each.controls)
           } else {
             this.swap(each.targets[0], each.targets[1])
           }
@@ -312,12 +311,14 @@ export class Simulator {
   }
 
   swap(target0: number, target1: number): Simulator {
-    this.cnot([target1], [target0]).cnot([target0], [target1]).cnot([target1], [target0])
+    this.cswap(target0, target1)
     return this
   }
 
-  cswap(control: number, target0: number, target1: number): Simulator {
-    this.cnot([target1], [control, target0]).cnot([target0], [control, target1]).cnot([target1], [control, target0])
+  cswap(target0: number, target1: number, controls: number[] = []): Simulator {
+    this.cnot([target1], controls.concat([target0]))
+      .cnot([target0], controls.concat([target1]))
+      .cnot([target1], controls.concat([target0]))
     return this
   }
 
