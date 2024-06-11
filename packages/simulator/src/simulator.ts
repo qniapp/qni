@@ -109,7 +109,7 @@ export class Simulator {
         case SerializedSGateType: {
           if (each.if && !this.flags[each.if]) break
           if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.acs(each.controls || [], each.antiControls || [], ...each.targets)
+            this.cs(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.s(...each.targets)
           }
@@ -276,17 +276,8 @@ export class Simulator {
     return this
   }
 
-  acs(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
-    let allControls
-    if (typeof controls === 'number') {
-      allControls = [controls].concat(antiControls)
-    } else {
-      allControls = controls.concat(antiControls)
-    }
-
-    this.x(...antiControls)
-    this.cu_old(allControls, S, ...targets)
-    this.x(...antiControls)
+  cs(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+    this.cu(S, targets, controls, antiControls)
     return this
   }
 
