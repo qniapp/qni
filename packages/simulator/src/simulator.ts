@@ -90,7 +90,7 @@ export class Simulator {
         case SerializedZGateType:
           if (each.if && !this.flags[each.if]) break
           if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.acz(each.controls || [], each.antiControls || [], ...each.targets)
+            this.cz(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.z(...each.targets)
           }
@@ -149,7 +149,7 @@ export class Simulator {
           this.qftDagger(each.span, ...each.targets)
           break
         case SerializedControlGateType: {
-          this.cz(each.targets.slice(1), each.targets[0])
+          this.cz([each.targets[0]], each.targets.slice(1))
           break
         }
         case SerializedSwapGateType: {
@@ -256,22 +256,8 @@ export class Simulator {
     return this
   }
 
-  cz(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu_old(controls, Z, ...targets)
-    return this
-  }
-
-  acz(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
-    let allControls
-    if (typeof controls === 'number') {
-      allControls = [controls].concat(antiControls)
-    } else {
-      allControls = controls.concat(antiControls)
-    }
-
-    this.x(...antiControls)
-    this.cu_old(allControls, Z, ...targets)
-    this.x(...antiControls)
+  cz(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+    this.cu(Z, targets, controls, antiControls)
     return this
   }
 
