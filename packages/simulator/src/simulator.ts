@@ -118,7 +118,7 @@ export class Simulator {
         case SerializedSDaggerGateType: {
           if (each.if && !this.flags[each.if]) break
           if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.acsDagger(each.controls || [], each.antiControls || [], ...each.targets)
+            this.csDagger(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.sDagger(...each.targets)
           }
@@ -286,17 +286,8 @@ export class Simulator {
     return this
   }
 
-  acsDagger(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
-    let allControls
-    if (typeof controls === 'number') {
-      allControls = [controls].concat(antiControls)
-    } else {
-      allControls = controls.concat(antiControls)
-    }
-
-    this.x(...antiControls)
-    this.cu_old(allControls, SDagger, ...targets)
-    this.x(...antiControls)
+  csDagger(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+    this.cu(SDagger, targets, controls, antiControls)
     return this
   }
 
