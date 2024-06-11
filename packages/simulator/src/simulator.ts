@@ -136,7 +136,7 @@ export class Simulator {
         case SerializedTDaggerGateType: {
           if (each.if && !this.flags[each.if]) break
           if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.actDagger(each.controls || [], each.antiControls || [], ...each.targets)
+            this.ctDagger(each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.tDagger(...each.targets)
           }
@@ -306,17 +306,8 @@ export class Simulator {
     return this
   }
 
-  actDagger(controls: number | number[], antiControls: number[], ...targets: number[]): Simulator {
-    let allControls
-    if (typeof controls === 'number') {
-      allControls = [controls].concat(antiControls)
-    } else {
-      allControls = controls.concat(antiControls)
-    }
-
-    this.x(...antiControls)
-    this.cu_old(allControls, TDagger, ...targets)
-    this.x(...antiControls)
+  ctDagger(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+    this.cu(TDagger, targets, controls, antiControls)
     return this
   }
 
