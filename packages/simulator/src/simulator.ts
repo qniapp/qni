@@ -65,81 +65,45 @@ export class Simulator {
           break
         case SerializedHGateType:
           if (each.if && !this.flags[each.if]) break
-          if (each.controls || each.antiControls) {
-            this.ch(each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.h(...each.targets)
-          }
+          this.ch(each.targets, each.controls, each.antiControls)
           break
         case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
-          if (each.controls || each.antiControls) {
-            this.cnot(each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.x(...each.targets)
-          }
+          this.cnot(each.targets, each.controls, each.antiControls)
           break
         case SerializedYGateType:
           if (each.if && !this.flags[each.if]) break
-          if (each.controls || each.antiControls) {
-            this.cy(each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.y(...each.targets)
-          }
+          this.cy(each.targets, each.controls, each.antiControls)
           break
         case SerializedZGateType:
           if (each.if && !this.flags[each.if]) break
-          if (each.controls || each.antiControls) {
-            this.cz(each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.z(...each.targets)
-          }
+          this.cz(each.targets, each.controls, each.antiControls)
           break
         case SerializedSpacerGateType:
           break
         case SerializedPhaseGateType: {
           if (!each.angle) break
-          if (each.controls || each.antiControls) {
-            this.cphase(each.angle, [each.targets[0]], each.controls || [], each.antiControls || [])
-          } else {
-            this.cphase(each.angle, [each.targets[0]])
-          }
+          this.cphase(each.angle, [each.targets[0]], each.controls, each.antiControls)
           break
         }
         case SerializedSGateType: {
           if (each.if && !this.flags[each.if]) break
-          if (each.controls || each.antiControls) {
-            this.cs(each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.s(...each.targets)
-          }
+          this.cs(each.targets, each.controls, each.antiControls)
           break
         }
         case SerializedSDaggerGateType: {
           if (each.if && !this.flags[each.if]) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.csDagger(each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.sDagger(...each.targets)
-          }
+          this.csDagger(each.targets, each.controls, each.antiControls)
           break
         }
         case SerializedTGateType: {
           if (each.if && !this.flags[each.if]) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.ct(each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.t(...each.targets)
-          }
+          this.ct(each.targets, each.controls, each.antiControls)
           break
         }
         case SerializedTDaggerGateType: {
           if (each.if && !this.flags[each.if]) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.ctDagger(each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.tDagger(...each.targets)
-          }
+          this.ctDagger(each.targets, each.controls, each.antiControls)
           break
         }
         case SerializedQftGateType:
@@ -153,47 +117,27 @@ export class Simulator {
           break
         }
         case SerializedSwapGateType: {
-          if (each.controls) {
-            this.cswap(each.targets[0], each.targets[1], each.controls)
-          } else {
-            this.swap(each.targets[0], each.targets[1])
-          }
+          this.cswap(each.targets[0], each.targets[1], each.controls)
           break
         }
         case SerializedRnotGateType:
           if (each.if && !this.flags[each.if]) break
-          if (each.controls || each.antiControls) {
-            this.crnot(each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.rnot(...each.targets)
-          }
+          this.crnot(each.targets, each.controls, each.antiControls)
           break
         case SerializedRxGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
-          if (each.controls || each.antiControls) {
-            this.crx(each.angle, each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.rx(each.angle, ...each.targets)
-          }
+          this.crx(each.angle, each.targets, each.controls, each.antiControls)
           break
         case SerializedRyGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
-          if (each.controls || each.antiControls) {
-            this.cry(each.angle, each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.ry(each.angle, ...each.targets)
-          }
+          this.cry(each.angle, each.targets, each.controls, each.antiControls)
           break
         case SerializedRzGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
-          if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.crz(each.angle, each.targets, each.controls || [], each.antiControls || [])
-          } else {
-            this.rz(each.angle, ...each.targets)
-          }
+          this.crz(each.angle, each.targets, each.controls, each.antiControls)
           break
         case SerializedMeasurementGateType:
           for (const target of each.targets) {
@@ -225,7 +169,7 @@ export class Simulator {
     return this
   }
 
-  ch(targets: number[], controls: number[], antiControls: number[]): Simulator {
+  ch(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(H, targets, controls, antiControls)
     return this
   }
@@ -235,7 +179,7 @@ export class Simulator {
     return this
   }
 
-  cnot(targets: number[], controls: number[], antiControls: number[] = []): Simulator {
+  cnot(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(X, targets, controls, antiControls)
     return this
   }
@@ -245,7 +189,7 @@ export class Simulator {
     return this
   }
 
-  cy(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+  cy(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(Y, targets, controls, antiControls)
     return this
   }
@@ -255,7 +199,7 @@ export class Simulator {
     return this
   }
 
-  cz(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+  cz(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(Z, targets, controls, antiControls)
     return this
   }
@@ -265,7 +209,7 @@ export class Simulator {
     return this
   }
 
-  cphase(phi: string, targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+  cphase(phi: string, targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(PHASE(phi), targets, controls, antiControls)
     return this
   }
@@ -275,7 +219,7 @@ export class Simulator {
     return this
   }
 
-  cs(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+  cs(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(S, targets, controls, antiControls)
     return this
   }
@@ -285,7 +229,7 @@ export class Simulator {
     return this
   }
 
-  csDagger(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+  csDagger(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(SDagger, targets, controls, antiControls)
     return this
   }
@@ -295,7 +239,7 @@ export class Simulator {
     return this
   }
 
-  ct(targets: number[], controls: number[], antiControls: number[]): Simulator {
+  ct(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(T, targets, controls, antiControls)
     return this
   }
@@ -305,7 +249,7 @@ export class Simulator {
     return this
   }
 
-  ctDagger(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+  ctDagger(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(TDagger, targets, controls, antiControls)
     return this
   }
@@ -327,7 +271,7 @@ export class Simulator {
     return this
   }
 
-  crnot(targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+  crnot(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(RNOT, targets, controls, antiControls)
     return this
   }
@@ -337,7 +281,7 @@ export class Simulator {
     return this
   }
 
-  crx(theta: string, targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+  crx(theta: string, targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(RX(theta), targets, controls, antiControls)
     return this
   }
@@ -347,7 +291,7 @@ export class Simulator {
     return this
   }
 
-  cry(theta: string, targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+  cry(theta: string, targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(RY(theta), targets, controls, antiControls)
     return this
   }
@@ -357,7 +301,7 @@ export class Simulator {
     return this
   }
 
-  crz(theta: string, targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+  crz(theta: string, targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(RZ(theta), targets, controls, antiControls)
     return this
   }
@@ -441,17 +385,6 @@ export class Simulator {
   private cu(u: Matrix, targets: number[], controls: number[] = [], antiControls: number[] = []): void {
     for (const t of targets) {
       this.state.applyControlledGate(u, t, controls, antiControls)
-    }
-  }
-
-  private cu_old(controls: number | number[], u: Matrix, ...targets: number[]): void {
-    const cs = typeof controls === 'number' ? [controls] : controls
-    const controlMask = cs.reduce((result, each) => {
-      return result | (1 << each)
-    }, 0)
-
-    for (const t of targets) {
-      this.state.timesQubitOperation(u, t, controlMask)
     }
   }
 
