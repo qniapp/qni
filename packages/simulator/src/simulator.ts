@@ -172,7 +172,7 @@ export class Simulator {
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
           if ((each.controls && each.controls.length > 0) || (each.antiControls && each.antiControls.length > 0)) {
-            this.acrx(each.controls || [], each.antiControls || [], each.angle, ...each.targets)
+            this.crx(each.angle, each.targets, each.controls || [], each.antiControls || [])
           } else {
             this.rx(each.angle, ...each.targets)
           }
@@ -337,22 +337,8 @@ export class Simulator {
     return this
   }
 
-  acrx(controls: number | number[], antiControls: number[], theta: string, ...targets: number[]): Simulator {
-    let allControls
-    if (typeof controls === 'number') {
-      allControls = [controls].concat(antiControls)
-    } else {
-      allControls = controls.concat(antiControls)
-    }
-
-    this.x(...antiControls)
-    this.cu_old(allControls, RX(theta), ...targets)
-    this.x(...antiControls)
-    return this
-  }
-
-  crx(controls: number | number[], theta: string, ...targets: number[]): Simulator {
-    this.cu_old(controls, RX(theta), ...targets)
+  crx(theta: string, targets: number[], controls: number[] = [], antiControls: number[] = []): Simulator {
+    this.cu(RX(theta), targets, controls, antiControls)
     return this
   }
 
