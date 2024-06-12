@@ -36,13 +36,8 @@ export class Simulator {
   public measuredBits: {[bit: number]: number}
   public flags: {[key: string]: boolean}
 
-  constructor(bits: string | StateVector) {
-    if ('string' === typeof bits) {
-      this.state = new StateVector(bits)
-    } else {
-      this.state = bits
-    }
-
+  constructor(bits: string) {
+    this.state = new StateVector(bits)
     this.measuredBits = {}
     this.flags = {}
   }
