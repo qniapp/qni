@@ -54,6 +54,145 @@ describe('Simulator', () => {
     })
   })
 
+  describe('h', () => {
+    test('|0>.h(0) should be |+>', () => {
+      const simulator = new Simulator('0')
+      expect(equate(simulator.h(0).state, new StateVector('+'))).toBe(true)
+    })
+
+    test('|1>.h(0) should be |->', () => {
+      const simulator = new Simulator('1')
+      expect(equate(simulator.h(0).state, new StateVector('-'))).toBe(true)
+    })
+
+    test('|+>.h(0) should be |0>', () => {
+      const simulator = new Simulator('+')
+      expect(simulator.h(0).state.isApproximatelyEqualTo(new StateVector('0'), 0.000001)).toBe(true)
+    })
+
+    test('|->.h(0) should be |1>', () => {
+      const simulator = new Simulator('-')
+      expect(simulator.h(0).state.isApproximatelyEqualTo(new StateVector('1'), 0.000001)).toBe(true)
+    })
+
+    test('|i>.h(0) should be e^{iπ/4}|-i>', () => {
+      const π = Math.PI
+      const i = Complex.I
+      const e = new Complex(Math.E, 0)
+
+      const simulator = new Simulator('i')
+      expect(
+        equate(
+          simulator.h(0).state.matrix,
+          new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
+        ),
+      ).toBe(true)
+    })
+
+    test('|-i>.h(0) should be e^{-iπ/4}|i>', () => {
+      const π = Math.PI
+      const i = Complex.I
+      const e = new Complex(Math.E, 0)
+
+      const simulator = new Simulator('(-i)')
+      expect(
+        equate(
+          simulator.h(0).state.matrix,
+          new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
+        ),
+      ).toBe(true)
+    })
+
+    test('|0>.h(1) should throw an error', () => {
+      const simulator = new Simulator('0')
+      expect(() => simulator.h(1)).toThrow('target bit out of range')
+    })
+
+    test('|0>.h(-1) should throw an error', () => {
+      const simulator = new Simulator('0')
+      expect(() => simulator.h(-1)).toThrow('target bit out of range')
+    })
+
+    test('|00>.h(0) should be |0+>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.h(0).state, new StateVector('0+'))).toBe(true)
+    })
+
+    test('|00>.h(1) should be |+0>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.h(1).state, new StateVector('+0'))).toBe(true)
+    })
+
+    test('|00>.h(0, 1) should be |++>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.h(0, 1).state, new StateVector('++'))).toBe(true)
+    })
+  })
+
+  // TODO: antiControls を指定したときの動作も確認
+  // TODO: 1 ビットに ch を適用しようとしたときエラーが出ることを確認
+  describe('ch', () => {
+    test('|00>.ch (target = 1, control = 0) should be |00>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.ch([1], [0]).state, new StateVector('00'))).toBeTruthy()
+    })
+
+    test('|00>.ch (target = 0, control = 1) should be |00>', () => {
+      const simulator = new Simulator('00')
+      expect(equate(simulator.ch([0], [1]).state, new StateVector('00'))).toBeTruthy()
+    })
+
+    test('|11>.ch (target = 1, control = 0) should be |01>', () => {
+      const simulator = new Simulator('11')
+      expect(equate(simulator.ch([1], [0]).state, new StateVector('-1'))).toBeTruthy()
+    })
+
+    test('|11>.ch (target = 0, control = 1) should be |10>', () => {
+      const simulator = new Simulator('11')
+      expect(equate(simulator.ch([0], [1]).state, new StateVector('1-'))).toBeTruthy()
+    })
+
+    test('|010>.ch (target = 2, control = 0, 1) should be |010>', () => {
+      const simulator = new Simulator('010')
+      expect(equate(simulator.ch([2], [0, 1]).state, new StateVector('010'))).toBeTruthy()
+    })
+
+    test('|011>.ch (target = 2, control = 0, 1) should be |111>', () => {
+      const simulator = new Simulator('011')
+      expect(equate(simulator.ch([2], [0, 1]).state, new StateVector('+11'))).toBeTruthy()
+    })
+
+    test('|00>.ch (target = 2) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.ch([2])).toThrow('target bit out of range')
+    })
+
+    test('|00>.ch (target = -1, control = 0) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.ch([-1])).toThrow('target bit out of range')
+    })
+
+    test('|00>.ch (target = 0, control = 2) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.ch([0], [2])).toThrow('control bit out of range')
+    })
+
+    test('|00>.ch (target = 0, control = -1) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.ch([0], [-1])).toThrow('control bit out of range')
+    })
+
+    test('|00>.ch (target = 0, antiControl = 2) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.ch([0], [], [2])).toThrow('anti control bit out of range')
+    })
+
+    test('|00>.ch (target = 0, antiControl = -1) should throw an error', () => {
+      const simulator = new Simulator('00')
+      expect(() => simulator.ch([0], [], [-1])).toThrow('anti control bit out of range')
+    })
+  })
+
   describe('x', () => {
     test('|0>.x(0) should be |1>', () => {
       const simulator = new Simulator('0')
@@ -173,74 +312,9 @@ describe('Simulator', () => {
       expect(() => simulator.cnot([0], [], [2])).toThrow('anti control bit out of range')
     })
 
-    test('|00>.cnot (target = 0, antiControl = -) should throw an error', () => {
+    test('|00>.cnot (target = 0, antiControl = -1) should throw an error', () => {
       const simulator = new Simulator('00')
       expect(() => simulator.cnot([0], [], [-1])).toThrow('anti control bit out of range')
-    })
-  })
-
-  describe('h', () => {
-    test('|0>.h(0) should be |+>', () => {
-      const simulator = new Simulator('0')
-      expect(equate(simulator.h(0).state, new StateVector('+'))).toBe(true)
-    })
-
-    test('|1>.h(0) should be |->', () => {
-      const simulator = new Simulator('1')
-      expect(equate(simulator.h(0).state, new StateVector('-'))).toBe(true)
-    })
-
-    test('|+>.h(0) should be |0>', () => {
-      const simulator = new Simulator('+')
-      expect(simulator.h(0).state.isApproximatelyEqualTo(new StateVector('0'), 0.000001)).toBe(true)
-    })
-
-    test('|->.h(0) should be |1>', () => {
-      const simulator = new Simulator('-')
-      expect(simulator.h(0).state.isApproximatelyEqualTo(new StateVector('1'), 0.000001)).toBe(true)
-    })
-
-    test('|i>.h(0) should be e^{iπ/4}|-i>', () => {
-      const π = Math.PI
-      const i = Complex.I
-      const e = new Complex(Math.E, 0)
-
-      const simulator = new Simulator('i')
-      expect(
-        equate(
-          simulator.h(0).state.matrix,
-          new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
-        ),
-      ).toBe(true)
-    })
-
-    test('|-i>.h(0) should be e^{-iπ/4}|i>', () => {
-      const π = Math.PI
-      const i = Complex.I
-      const e = new Complex(Math.E, 0)
-
-      const simulator = new Simulator('(-i)')
-      expect(
-        equate(
-          simulator.h(0).state.matrix,
-          new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
-        ),
-      ).toBe(true)
-    })
-
-    test('|00>.h(0) should be |0+>', () => {
-      const simulator = new Simulator('00')
-      expect(equate(simulator.h(0).state, new StateVector('0+'))).toBe(true)
-    })
-
-    test('|00>.h(1) should be |+0>', () => {
-      const simulator = new Simulator('00')
-      expect(equate(simulator.h(1).state, new StateVector('+0'))).toBe(true)
-    })
-
-    test('|00>.h(0, 1) should be |++>', () => {
-      const simulator = new Simulator('00')
-      expect(equate(simulator.h(0, 1).state, new StateVector('++'))).toBe(true)
     })
   })
 

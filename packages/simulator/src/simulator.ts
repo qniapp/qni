@@ -164,11 +164,17 @@ export class Simulator {
     return this
   }
 
+  /**
+   * Applies the Hadamard gate to the specified qubit targets.
+   */
   h(...targets: number[]): Simulator {
     this.cu(H, targets)
     return this
   }
 
+  /**
+   * Applies the controlled-Hadamard (CH) gate to the specified qubits.
+   */
   ch(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(H, targets, controls, antiControls)
     return this
