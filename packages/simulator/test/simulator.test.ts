@@ -2,6 +2,29 @@ import {Complex, equate} from '@qni/common'
 import {Matrix, Simulator, StateVector} from '../src'
 
 describe('Simulator', () => {
+  describe('runStep', () => {
+    test('H|0>', () => {
+      const simulator = new Simulator('0')
+
+      simulator.runStep([{type: 'H', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{√½}, {√½}}')
+    })
+
+    test('write 0 to |1>', () => {
+      const simulator = new Simulator('1')
+
+      simulator.runStep([{type: '|0>', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{1}, {0}}')
+    })
+
+    test('write 1 to |0>', () => {
+      const simulator = new Simulator('0')
+
+      simulator.runStep([{type: '|1>', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{0}, {1}}')
+    })
+  })
+
   describe('write', () => {
     test('|0>.write(0, 0) should be |0>', () => {
       const simulator = new Simulator('0')

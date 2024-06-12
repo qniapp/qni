@@ -47,6 +47,10 @@ export class Simulator {
 
     for (const each of operations) {
       switch (each.type) {
+        case SerializedHGateType:
+          if (each.if && !this.flags[each.if]) break
+          this.ch(each.targets, each.controls, each.antiControls)
+          break
         case SerializedWrite0GateType:
           this.write(0, ...each.targets)
           break
@@ -57,10 +61,6 @@ export class Simulator {
           for (const target of each.targets) {
             this.blochVectors[target] = this.state.blochVector(target)
           }
-          break
-        case SerializedHGateType:
-          if (each.if && !this.flags[each.if]) break
-          this.ch(each.targets, each.controls, each.antiControls)
           break
         case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
