@@ -63,6 +63,20 @@ export class Simulator {
           if (each.if && !this.flags[each.if]) break
           this.cz(each.targets, each.controls, each.antiControls)
           break
+        case SerializedRnotGateType:
+          if (each.if && !this.flags[each.if]) break
+          this.crnot(each.targets, each.controls, each.antiControls)
+          break
+        case SerializedSGateType: {
+          if (each.if && !this.flags[each.if]) break
+          this.cs(each.targets, each.controls, each.antiControls)
+          break
+        }
+        case SerializedSDaggerGateType: {
+          if (each.if && !this.flags[each.if]) break
+          this.csDagger(each.targets, each.controls, each.antiControls)
+          break
+        }
         case SerializedWrite0GateType:
           this.write(0, ...each.targets)
           break
@@ -79,16 +93,6 @@ export class Simulator {
         case SerializedPhaseGateType: {
           if (!each.angle) break
           this.cphase(each.angle, [each.targets[0]], each.controls, each.antiControls)
-          break
-        }
-        case SerializedSGateType: {
-          if (each.if && !this.flags[each.if]) break
-          this.cs(each.targets, each.controls, each.antiControls)
-          break
-        }
-        case SerializedSDaggerGateType: {
-          if (each.if && !this.flags[each.if]) break
-          this.csDagger(each.targets, each.controls, each.antiControls)
           break
         }
         case SerializedTGateType: {
@@ -115,10 +119,6 @@ export class Simulator {
           this.cswap(each.targets[0], each.targets[1], each.controls)
           break
         }
-        case SerializedRnotGateType:
-          if (each.if && !this.flags[each.if]) break
-          this.crnot(each.targets, each.controls, each.antiControls)
-          break
         case SerializedRxGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
