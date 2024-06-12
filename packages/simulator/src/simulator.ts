@@ -51,17 +51,6 @@ export class Simulator {
           if (each.if && !this.flags[each.if]) break
           this.ch(each.targets, each.controls, each.antiControls)
           break
-        case SerializedWrite0GateType:
-          this.write(0, ...each.targets)
-          break
-        case SerializedWrite1GateType:
-          this.write(1, ...each.targets)
-          break
-        case SerializedBlochDisplayType:
-          for (const target of each.targets) {
-            this.blochVectors[target] = this.state.blochVector(target)
-          }
-          break
         case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
           this.cnot(each.targets, each.controls, each.antiControls)
@@ -73,6 +62,17 @@ export class Simulator {
         case SerializedZGateType:
           if (each.if && !this.flags[each.if]) break
           this.cz(each.targets, each.controls, each.antiControls)
+          break
+        case SerializedWrite0GateType:
+          this.write(0, ...each.targets)
+          break
+        case SerializedWrite1GateType:
+          this.write(1, ...each.targets)
+          break
+        case SerializedBlochDisplayType:
+          for (const target of each.targets) {
+            this.blochVectors[target] = this.state.blochVector(target)
+          }
           break
         case SerializedSpacerGateType:
           break

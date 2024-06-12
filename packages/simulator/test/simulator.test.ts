@@ -10,6 +10,27 @@ describe('Simulator', () => {
       expect(simulator.state.toString()).toBe('{{√½}, {√½}}')
     })
 
+    test('X|0>', () => {
+      const simulator = new Simulator('0')
+
+      simulator.runStep([{type: 'X', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{0}, {1}}')
+    })
+
+    test('Y|0>', () => {
+      const simulator = new Simulator('0')
+
+      simulator.runStep([{type: 'Y', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{0}, {i}}')
+    })
+
+    test('Z|1>', () => {
+      const simulator = new Simulator('1')
+
+      simulator.runStep([{type: 'Z', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{0}, {-1}}')
+    })
+
     test('write 0 to |1>', () => {
       const simulator = new Simulator('1')
 
