@@ -77,6 +77,16 @@ export class Simulator {
           this.csDagger(each.targets, each.controls, each.antiControls)
           break
         }
+        case SerializedTGateType: {
+          if (each.if && !this.flags[each.if]) break
+          this.ct(each.targets, each.controls, each.antiControls)
+          break
+        }
+        case SerializedTDaggerGateType: {
+          if (each.if && !this.flags[each.if]) break
+          this.ctDagger(each.targets, each.controls, each.antiControls)
+          break
+        }
         case SerializedWrite0GateType:
           this.write(0, ...each.targets)
           break
@@ -93,16 +103,6 @@ export class Simulator {
         case SerializedPhaseGateType: {
           if (!each.angle) break
           this.cphase(each.angle, [each.targets[0]], each.controls, each.antiControls)
-          break
-        }
-        case SerializedTGateType: {
-          if (each.if && !this.flags[each.if]) break
-          this.ct(each.targets, each.controls, each.antiControls)
-          break
-        }
-        case SerializedTDaggerGateType: {
-          if (each.if && !this.flags[each.if]) break
-          this.ctDagger(each.targets, each.controls, each.antiControls)
           break
         }
         case SerializedQftGateType:

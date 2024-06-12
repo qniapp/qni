@@ -52,6 +52,20 @@ describe('Simulator', () => {
       expect(simulator.state.toString()).toBe('{{0}, {-i}}')
     })
 
+    test('T|1>', () => {
+      const simulator = new Simulator('1')
+
+      simulator.runStep([{type: 'T', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{0}, {√½+√½i}}')
+    })
+
+    test('T†|1>', () => {
+      const simulator = new Simulator('1')
+
+      simulator.runStep([{type: 'T†', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{0}, {√½-√½i}}')
+    })
+
     test('write 0 to |1>', () => {
       const simulator = new Simulator('1')
 
