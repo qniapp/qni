@@ -66,6 +66,13 @@ describe('Simulator', () => {
       expect(simulator.state.toString()).toBe('{{0}, {√½-√½i}}')
     })
 
+    test('P(π)|1>', () => {
+      const simulator = new Simulator('1')
+
+      simulator.runStep([{type: 'P', angle: 'π', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{0}, {-1}}')
+    })
+
     test('write 0 to |1>', () => {
       const simulator = new Simulator('1')
 

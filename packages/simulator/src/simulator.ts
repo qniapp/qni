@@ -87,6 +87,11 @@ export class Simulator {
           this.ctDagger(each.targets, each.controls, each.antiControls)
           break
         }
+        case SerializedPhaseGateType: {
+          if (!each.angle) break
+          this.cphase(each.angle, [each.targets[0]], each.controls, each.antiControls)
+          break
+        }
         case SerializedWrite0GateType:
           this.write(0, ...each.targets)
           break
@@ -100,11 +105,6 @@ export class Simulator {
           break
         case SerializedSpacerGateType:
           break
-        case SerializedPhaseGateType: {
-          if (!each.angle) break
-          this.cphase(each.angle, [each.targets[0]], each.controls, each.antiControls)
-          break
-        }
         case SerializedQftGateType:
           this.qft(each.span, ...each.targets)
           break
