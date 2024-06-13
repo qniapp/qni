@@ -43,7 +43,7 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe('{{0}, {i}}')
       })
 
-      test('X(target=1, control=0)|01>', () => {
+      test('Y(target=1, control=0)|01>', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'Y', targets: [1], controls: [0]}])
@@ -147,32 +147,68 @@ describe('Simulator', () => {
       })
     })
 
-    test('P(π)|1>', () => {
-      const simulator = new Simulator('1')
+    describe('P', () => {
+      test('P(π)|1>', () => {
+        const simulator = new Simulator('1')
 
-      simulator.runStep([{type: 'P', angle: 'π', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{0}, {-1}}')
+        simulator.runStep([{type: 'P', angle: 'π', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {-1}}')
+      })
+
+      test('P(π, target=1, control=0)|11>', () => {
+        const simulator = new Simulator('11')
+
+        simulator.runStep([{type: 'P', angle: 'π', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {-1}}')
+      })
     })
 
-    test('Rx(π)|0>', () => {
-      const simulator = new Simulator('0')
+    describe('Rx', () => {
+      test('Rx(π)|0>', () => {
+        const simulator = new Simulator('0')
 
-      simulator.runStep([{type: 'Rx', angle: 'π', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{0}, {-i}}')
+        simulator.runStep([{type: 'Rx', angle: 'π', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {-i}}')
+      })
+
+      test('Rx(π, target=1, control=0)|01>', () => {
+        const simulator = new Simulator('01')
+
+        simulator.runStep([{type: 'Rx', angle: 'π', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {-i}}')
+      })
     })
 
-    test('Ry(π)|0>', () => {
-      const simulator = new Simulator('0')
+    describe('Ry', () => {
+      test('Ry(π)|0>', () => {
+        const simulator = new Simulator('0')
 
-      simulator.runStep([{type: 'Ry', angle: 'π', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{0}, {1}}')
+        simulator.runStep([{type: 'Ry', angle: 'π', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {1}}')
+      })
+
+      test('Ry(π, target=1, control=0)|01>', () => {
+        const simulator = new Simulator('01')
+
+        simulator.runStep([{type: 'Ry', angle: 'π', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {1}}')
+      })
     })
 
-    test('Rz(π)|0>', () => {
-      const simulator = new Simulator('0')
+    describe('Rz', () => {
+      test('Rz(π)|0>', () => {
+        const simulator = new Simulator('0')
 
-      simulator.runStep([{type: 'Rz', angle: 'π', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{-i}, {0}}')
+        simulator.runStep([{type: 'Rz', angle: 'π', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{-i}, {0}}')
+      })
+
+      test('Rz(π, target=1, control=0)|01>', () => {
+        const simulator = new Simulator('01')
+
+        simulator.runStep([{type: 'Rz', angle: 'π', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {-i}, {0}, {0}}')
+      })
     })
 
     test('Swap(0,1)|01>', () => {
