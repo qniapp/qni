@@ -94,6 +94,20 @@ describe('Simulator', () => {
       expect(simulator.state.toString()).toBe('{{-i}, {0}}')
     })
 
+    test('Swap(0,1)|01>', () => {
+      const simulator = new Simulator('01')
+
+      simulator.runStep([{type: 'Swap', targets: [0, 1]}])
+      expect(simulator.state.toString()).toBe('{{0}, {0}, {1}, {0}}')
+    })
+
+    test('•(0,1)|11>', () => {
+      const simulator = new Simulator('11')
+
+      simulator.runStep([{type: '•', targets: [0, 1]}])
+      expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {-1}}')
+    })
+
     test('write 0 to |1>', () => {
       const simulator = new Simulator('1')
 

@@ -107,6 +107,14 @@ export class Simulator {
           if (!each.angle) break
           this.crz(each.angle, each.targets, each.controls, each.antiControls)
           break
+        case SerializedSwapGateType: {
+          this.cswap(each.targets[0], each.targets[1], each.controls)
+          break
+        }
+        case SerializedControlGateType: {
+          this.cz([each.targets[0]], each.targets.slice(1))
+          break
+        }
         case SerializedWrite0GateType:
           this.write(0, ...each.targets)
           break
@@ -126,14 +134,6 @@ export class Simulator {
         case SerializedQftDaggerGateType:
           this.qftDagger(each.span, ...each.targets)
           break
-        case SerializedControlGateType: {
-          this.cz([each.targets[0]], each.targets.slice(1))
-          break
-        }
-        case SerializedSwapGateType: {
-          this.cswap(each.targets[0], each.targets[1], each.controls)
-          break
-        }
         case SerializedMeasurementGateType:
           for (const target of each.targets) {
             this.measure(target)
@@ -259,7 +259,7 @@ export class Simulator {
   }
 
   swap(target0: number, target1: number): Simulator {
-    this.cswap(target0, target1)
+    this.cswap(target0, target1, [])
     return this
   }
 
