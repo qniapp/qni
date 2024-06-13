@@ -1,0 +1,44 @@
+{
+  "folders": [
+    {
+      "path": "../../.."
+    },
+    {
+      "name": "common",
+      "path": "../../common"
+    },
+    {
+      "name": "simulator",
+      "path": ".."
+    },
+    {
+      "name": "elements",
+      "path": "../../elements"
+    },
+    {
+      "name": "www",
+      "path": "../../../apps/www"
+    },
+    {
+      "name": "tutorial",
+      "path": "../../../apps/tutorial"
+    },
+    {
+      "name": "_site",
+      "path": "../../../apps/tutorial/_site"
+    },
+    {
+      "name": "elements-example",
+      "path": "../../../examples/elements-example"
+    }
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": [
+      "elements",
+      "www",
+      "tutorial",
+      "_site",
+      "elements-example"
+    ]
+  }
+}

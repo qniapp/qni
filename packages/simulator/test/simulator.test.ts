@@ -3,19 +3,55 @@ import {Matrix, Simulator, StateVector} from '../src'
 
 describe('Simulator', () => {
   describe('runStep', () => {
+    // TODO: StateVector のコンストラクタで "i|11>" とかを指定できるようにし、以下のヘルパー関数を削除
+    // TODO: jest の .eq() で StateVector を比較できるようにする
+    function ketString(ket: string): string {
+      if (ket[0] === '|') {
+        const ketLabel = ket.slice(1, -1)
+        return new Simulator(ketLabel).state.toString()
+      } else {
+        const match = ket.match(/^(.*)\|(.+)>$/)
+        if (match === null) {
+          throw new Error(`ketString: invalid ket ${ket}`)
+        }
+
+        // ケットの前の係数を取り出す
+        const coefLabel = match[1]
+        let coef: number | Complex
+        if (coefLabel === '') {
+          coef = 1
+        } else if (coefLabel === '-') {
+          coef = -1
+        } else if (coefLabel === 'i') {
+          coef = Complex.I
+        } else if (coefLabel === '-i') {
+          coef = Complex.I.times(-1)
+        } else {
+          throw new Error(`ketString: invalid coef ${coefLabel}`)
+        }
+
+        const ketLabel = match[2]
+        const vector = new StateVector(ketLabel).matrix
+
+        return vector.mult(coef)._unsafeUnwrap().toString()
+      }
+    }
+
     describe('H', () => {
       test('H|0>', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'H', targets: [0]}])
-        expect(simulator.state.toString()).toBe('{{√½}, {√½}}')
+
+        expect(simulator.state.toString()).toBe(ketString('|+>'))
       })
 
       test('H(target=1, control=0)|01>', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'H', targets: [1], controls: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {√½}, {0}, {√½}}')
+
+        expect(simulator.state.toString()).toBe(ketString('|+1>'))
       })
     })
 
@@ -24,14 +60,16 @@ describe('Simulator', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'X', targets: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {1}}')
+
+        expect(simulator.state.toString()).toBe(ketString('|1>'))
       })
 
       test('X(target=1, control=0)|01>', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'X', targets: [1], controls: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {1}}')
+
+        expect(simulator.state.toString()).toBe(ketString('|11>'))
       })
     })
 
@@ -40,14 +78,16 @@ describe('Simulator', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'Y', targets: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {i}}')
+
+        expect(simulator.state.toString()).toBe(ketString('i|1>'))
       })
 
       test('Y(target=1, control=0)|01>', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'Y', targets: [1], controls: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {i}}')
+
+        expect(simulator.state.toString()).toBe(ketString('i|11>'))
       })
     })
 
@@ -56,14 +96,16 @@ describe('Simulator', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'Z', targets: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {-1}}')
+
+        expect(simulator.state.toString()).toBe(ketString('-|1>'))
       })
 
       test('Z(target=1, control=0)|11>', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'Z', targets: [1], controls: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {-1}}')
+
+        expect(simulator.state.toString()).toBe(ketString('-|11>'))
       })
     })
 
@@ -72,6 +114,7 @@ describe('Simulator', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'X^½', targets: [0]}])
+
         expect(simulator.state.toString()).toBe('{{½+½i}, {½-½i}}')
       })
 
@@ -79,6 +122,7 @@ describe('Simulator', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'X^½', targets: [1], controls: [0]}])
+
         expect(simulator.state.toString()).toBe('{{0}, {½+½i}, {0}, {½-½i}}')
       })
     })
@@ -88,14 +132,16 @@ describe('Simulator', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'S', targets: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {i}}')
+
+        expect(simulator.state.toString()).toBe(ketString('i|1>'))
       })
 
       test('S(target=1, control=0)|11>', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'S', targets: [1], controls: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {i}}')
+
+        expect(simulator.state.toString()).toBe(ketString('i|11>'))
       })
     })
 
@@ -104,14 +150,16 @@ describe('Simulator', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'S†', targets: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {-i}}')
+
+        expect(simulator.state.toString()).toBe(ketString('-i|1>'))
       })
 
       test('S†(target=1, control=0)|11>', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'S†', targets: [1], controls: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {-i}}')
+
+        expect(simulator.state.toString()).toBe(ketString('-i|11>'))
       })
     })
 
@@ -120,6 +168,7 @@ describe('Simulator', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'T', targets: [0]}])
+
         expect(simulator.state.toString()).toBe('{{0}, {√½+√½i}}')
       })
 
@@ -127,6 +176,7 @@ describe('Simulator', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'T', targets: [1], controls: [0]}])
+
         expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {√½+√½i}}')
       })
     })
@@ -136,6 +186,7 @@ describe('Simulator', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'T†', targets: [0]}])
+
         expect(simulator.state.toString()).toBe('{{0}, {√½-√½i}}')
       })
 
@@ -143,6 +194,7 @@ describe('Simulator', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'T†', targets: [1], controls: [0]}])
+
         expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {√½-√½i}}')
       })
     })
@@ -152,14 +204,16 @@ describe('Simulator', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'P', angle: 'π', targets: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {-1}}')
+
+        expect(simulator.state.toString()).toBe(ketString('-|1>'))
       })
 
       test('P(π, target=1, control=0)|11>', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'P', angle: 'π', targets: [1], controls: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {-1}}')
+
+        expect(simulator.state.toString()).toBe(ketString('-|11>'))
       })
     })
 
@@ -168,14 +222,16 @@ describe('Simulator', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'Rx', angle: 'π', targets: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {-i}}')
+
+        expect(simulator.state.toString()).toBe(ketString('-i|1>'))
       })
 
       test('Rx(π, target=1, control=0)|01>', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'Rx', angle: 'π', targets: [1], controls: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {-i}}')
+
+        expect(simulator.state.toString()).toBe(ketString('-i|11>'))
       })
     })
 
@@ -184,14 +240,16 @@ describe('Simulator', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'Ry', angle: 'π', targets: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {1}}')
+
+        expect(simulator.state.toString()).toBe(ketString('|1>'))
       })
 
       test('Ry(π, target=1, control=0)|01>', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'Ry', angle: 'π', targets: [1], controls: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {1}}')
+
+        expect(simulator.state.toString()).toBe(ketString('|11>'))
       })
     })
 
@@ -200,43 +258,69 @@ describe('Simulator', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'Rz', angle: 'π', targets: [0]}])
-        expect(simulator.state.toString()).toBe('{{-i}, {0}}')
+
+        expect(simulator.state.toString()).toBe(ketString('-i|0>'))
       })
 
       test('Rz(π, target=1, control=0)|01>', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'Rz', angle: 'π', targets: [1], controls: [0]}])
-        expect(simulator.state.toString()).toBe('{{0}, {-i}, {0}, {0}}')
+
+        expect(simulator.state.toString()).toBe(ketString('-i|01>'))
       })
     })
 
-    test('Swap(0,1)|01>', () => {
-      const simulator = new Simulator('01')
+    describe('Swap', () => {
+      test('Swap|01>', () => {
+        const simulator = new Simulator('01')
 
-      simulator.runStep([{type: 'Swap', targets: [0, 1]}])
-      expect(simulator.state.toString()).toBe('{{0}, {0}, {1}, {0}}')
+        simulator.runStep([{type: 'Swap', targets: [0, 1]}])
+
+        expect(simulator.state.toString()).toBe(ketString('|10>'))
+      })
+
+      test('Swap(1,2)|011>', () => {
+        const simulator = new Simulator('011')
+
+        simulator.runStep([{type: 'Swap', targets: [1, 2], controls: [0]}])
+
+        expect(simulator.state.toString()).toBe(ketString('|101>'))
+      })
     })
 
-    test('•(0,1)|11>', () => {
-      const simulator = new Simulator('11')
+    describe('• (CZ)', () => {
+      test('•|11>', () => {
+        const simulator = new Simulator('11')
 
-      simulator.runStep([{type: '•', targets: [0, 1]}])
-      expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {-1}}')
+        simulator.runStep([{type: '•', targets: [0, 1]}])
+
+        expect(simulator.state.toString()).toBe(ketString('-|11>'))
+      })
+
+      test('•|111>', () => {
+        const simulator = new Simulator('111')
+
+        simulator.runStep([{type: '•', targets: [0, 1, 2]}])
+
+        expect(simulator.state.toString()).toBe(ketString('-|111>'))
+      })
     })
 
     test('write 0 to |1>', () => {
       const simulator = new Simulator('1')
 
       simulator.runStep([{type: '|0>', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{1}, {0}}')
+
+      expect(simulator.state.toString()).toBe(ketString('|0>'))
     })
 
     test('write 1 to |0>', () => {
       const simulator = new Simulator('0')
 
       simulator.runStep([{type: '|1>', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{0}, {1}}')
+
+      expect(simulator.state.toString()).toBe(ketString('|1>'))
     })
   })
 
