@@ -3,47 +3,13 @@ import {Matrix, Simulator, StateVector} from '../src'
 
 describe('Simulator', () => {
   describe('runStep', () => {
-    // TODO: StateVector のコンストラクタで "i|11>" とかを指定できるようにし、以下のヘルパー関数を削除
-    // TODO: jest の .eq() で StateVector を比較できるようにする
-    function ketString(ket: string): string {
-      if (ket[0] === '|') {
-        const ketLabel = ket.slice(1, -1)
-        return new Simulator(ketLabel).state.toString()
-      } else {
-        const match = ket.match(/^(.*)\|(.+)>$/)
-        if (match === null) {
-          throw new Error(`ketString: invalid ket ${ket}`)
-        }
-
-        // ケットの前の係数を取り出す
-        const coefLabel = match[1]
-        let coef: number | Complex
-        if (coefLabel === '') {
-          coef = 1
-        } else if (coefLabel === '-') {
-          coef = -1
-        } else if (coefLabel === 'i') {
-          coef = Complex.I
-        } else if (coefLabel === '-i') {
-          coef = Complex.I.times(-1)
-        } else {
-          throw new Error(`ketString: invalid coef ${coefLabel}`)
-        }
-
-        const ketLabel = match[2]
-        const vector = new StateVector(ketLabel).matrix
-
-        return vector.mult(coef)._unsafeUnwrap().toString()
-      }
-    }
-
     describe('H', () => {
       test('H|0>', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'H', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('|+>'))
+        expect(simulator.state.toString()).toBe(new StateVector('|+>').toString())
       })
 
       test('H(target=1, control=0)|01>', () => {
@@ -51,7 +17,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'H', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('|+1>'))
+        expect(simulator.state.toString()).toBe(new StateVector('|+1>').toString())
       })
     })
 
@@ -61,7 +27,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'X', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('|1>'))
+        expect(simulator.state.toString()).toBe(new StateVector('|1>').toString())
       })
 
       test('X(target=1, control=0)|01>', () => {
@@ -69,7 +35,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'X', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('|11>'))
+        expect(simulator.state.toString()).toBe(new StateVector('|11>').toString())
       })
     })
 
@@ -79,7 +45,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Y', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('i|1>'))
+        expect(simulator.state.toString()).toBe(new StateVector('i|1>').toString())
       })
 
       test('Y(target=1, control=0)|01>', () => {
@@ -87,7 +53,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Y', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('i|11>'))
+        expect(simulator.state.toString()).toBe(new StateVector('i|11>').toString())
       })
     })
 
@@ -97,7 +63,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Z', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-|1>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-|1>').toString())
       })
 
       test('Z(target=1, control=0)|11>', () => {
@@ -105,7 +71,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Z', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-|11>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-|11>').toString())
       })
     })
 
@@ -133,7 +99,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'S', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('i|1>'))
+        expect(simulator.state.toString()).toBe(new StateVector('i|1>').toString())
       })
 
       test('S(target=1, control=0)|11>', () => {
@@ -141,7 +107,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'S', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('i|11>'))
+        expect(simulator.state.toString()).toBe(new StateVector('i|11>').toString())
       })
     })
 
@@ -151,7 +117,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'S†', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-i|1>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-i|1>').toString())
       })
 
       test('S†(target=1, control=0)|11>', () => {
@@ -159,7 +125,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'S†', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-i|11>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-i|11>').toString())
       })
     })
 
@@ -205,7 +171,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'P', angle: 'π', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-|1>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-|1>').toString())
       })
 
       test('P(π, target=1, control=0)|11>', () => {
@@ -213,7 +179,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'P', angle: 'π', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-|11>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-|11>').toString())
       })
     })
 
@@ -223,7 +189,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Rx', angle: 'π', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-i|1>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-i|1>').toString())
       })
 
       test('Rx(π, target=1, control=0)|01>', () => {
@@ -231,7 +197,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Rx', angle: 'π', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-i|11>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-i|11>').toString())
       })
     })
 
@@ -241,7 +207,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Ry', angle: 'π', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('|1>'))
+        expect(simulator.state.toString()).toBe(new StateVector('|1>').toString())
       })
 
       test('Ry(π, target=1, control=0)|01>', () => {
@@ -249,7 +215,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Ry', angle: 'π', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('|11>'))
+        expect(simulator.state.toString()).toBe(new StateVector('|11>').toString())
       })
     })
 
@@ -259,7 +225,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Rz', angle: 'π', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-i|0>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-i|0>').toString())
       })
 
       test('Rz(π, target=1, control=0)|01>', () => {
@@ -267,7 +233,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Rz', angle: 'π', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-i|01>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-i|01>').toString())
       })
     })
 
@@ -277,7 +243,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Swap', targets: [0, 1]}])
 
-        expect(simulator.state.toString()).toBe(ketString('|10>'))
+        expect(simulator.state.toString()).toBe(new StateVector('|10>').toString())
       })
 
       test('Swap(1,2)|011>', () => {
@@ -285,7 +251,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Swap', targets: [1, 2], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(ketString('|101>'))
+        expect(simulator.state.toString()).toBe(new StateVector('|101>').toString())
       })
     })
 
@@ -295,7 +261,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: '•', targets: [0, 1]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-|11>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-|11>').toString())
       })
 
       test('•|111>', () => {
@@ -303,7 +269,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: '•', targets: [0, 1, 2]}])
 
-        expect(simulator.state.toString()).toBe(ketString('-|111>'))
+        expect(simulator.state.toString()).toBe(new StateVector('-|111>').toString())
       })
     })
 
@@ -312,7 +278,7 @@ describe('Simulator', () => {
 
       simulator.runStep([{type: '|0>', targets: [0]}])
 
-      expect(simulator.state.toString()).toBe(ketString('|0>'))
+      expect(simulator.state.toString()).toBe(new StateVector('|0>').toString())
     })
 
     test('write 1 to |0>', () => {
@@ -320,7 +286,7 @@ describe('Simulator', () => {
 
       simulator.runStep([{type: '|1>', targets: [0]}])
 
-      expect(simulator.state.toString()).toBe(ketString('|1>'))
+      expect(simulator.state.toString()).toBe(new StateVector('|1>').toString())
     })
   })
 

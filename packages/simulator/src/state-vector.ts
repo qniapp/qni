@@ -17,7 +17,12 @@ export class StateVector {
 
   constructor(bits: string | Matrix) {
     if ('string' === typeof bits) {
-      this.matrix = this.bitstringToMatrix(bits)
+      const ketPattern = /^.*\|.+>$/
+      if (ketPattern.test(bits)) {
+        this.matrix = this.ketstringToMatrix(bits)
+      } else {
+        this.matrix = this.bitstringToMatrix(bits)
+      }
     } else {
       this.matrix = bits
     }
@@ -120,6 +125,38 @@ export class StateVector {
 
     if (kets.length === 0) throw invalidBitStringError
     return kets.reduce((result, each) => result.tensorProduct(each))
+  }
+
+  private ketstringToMatrix(ket: string): Matrix {
+    const match = ket.match(/^(.*)\|(.+)>$/)
+    if (match === null) {
+      throw new Error(`ketString: invalid ket ${ket}`)
+    }
+    const coefLabel = match[1]
+    const ketLabel = match[2]
+
+    if (coefLabel === '') {
+      return this.bitstringToMatrix(ketLabel)
+    } else {
+      let coef: number | Complex
+      if (coefLabel === '-') {
+        coef = -1
+      } else if (coefLabel === 'i') {
+        coef = Complex.I
+      } else if (coefLabel === '-i') {
+        coef = Complex.I.times(-1)
+      } else {
+        throw new Error(`ketString: invalid coef ${coefLabel}`)
+      }
+
+      const vector = new StateVector(ketLabel).matrix.mult(coef)
+
+      if (vector.isErr()) {
+        throw new Error(`ketString: invalid ket ${ketLabel}`)
+      }
+
+      return vector.value
+    }
   }
 
   qubitDensityMatrix(qubitIndex: number): Matrix {
