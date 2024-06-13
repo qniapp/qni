@@ -4,7 +4,7 @@ import {Matrix, Simulator, StateVector} from '../src'
 describe('Simulator', () => {
   describe('runStep', () => {
     describe('H', () => {
-      test('H|0>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'H', targets: [0]}])
@@ -12,17 +12,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('|+>').toString())
       })
 
-      test('H(target=1, control=0)|01>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'H', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('|+1>').toString())
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('001')
+
+        simulator.runStep([{type: 'H', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('|+01>').toString())
+      })
     })
 
     describe('X', () => {
-      test('X|0>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'X', targets: [0]}])
@@ -30,17 +38,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('|1>').toString())
       })
 
-      test('X(target=1, control=0)|01>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'X', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('|11>').toString())
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('001')
+
+        simulator.runStep([{type: 'X', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('|101>').toString())
+      })
     })
 
     describe('Y', () => {
-      test('Y|0>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'Y', targets: [0]}])
@@ -48,17 +64,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('i|1>').toString())
       })
 
-      test('Y(target=1, control=0)|01>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'Y', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('i|11>').toString())
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('001')
+
+        simulator.runStep([{type: 'Y', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('i|101>').toString())
+      })
     })
 
     describe('Z', () => {
-      test('Z|1>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'Z', targets: [0]}])
@@ -66,17 +90,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('-|1>').toString())
       })
 
-      test('Z(target=1, control=0)|11>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'Z', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('-|11>').toString())
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('101')
+
+        simulator.runStep([{type: 'Z', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('-|101>').toString())
+      })
     })
 
     describe('√X', () => {
-      test('√X|0>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'X^½', targets: [0]}])
@@ -84,17 +116,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe('{{½+½i}, {½-½i}}')
       })
 
-      test('√X(target=1, control=0)|01>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'X^½', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe('{{0}, {½+½i}, {0}, {½-½i}}')
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('001')
+
+        simulator.runStep([{type: 'X^½', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe('{{0}, {½+½i}, {0}, {0}, {0}, {½-½i}, {0}, {0}}')
+      })
     })
 
     describe('S', () => {
-      test('S|1>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'S', targets: [0]}])
@@ -102,17 +142,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('i|1>').toString())
       })
 
-      test('S(target=1, control=0)|11>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'S', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('i|11>').toString())
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('101')
+
+        simulator.runStep([{type: 'S', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('i|101>').toString())
+      })
     })
 
     describe('S†', () => {
-      test('S†|1>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'S†', targets: [0]}])
@@ -120,17 +168,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('-i|1>').toString())
       })
 
-      test('S†(target=1, control=0)|11>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'S†', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('-i|11>').toString())
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('101')
+
+        simulator.runStep([{type: 'S†', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('-i|101>').toString())
+      })
     })
 
     describe('T', () => {
-      test('T|1>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'T', targets: [0]}])
@@ -138,17 +194,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe('{{0}, {√½+√½i}}')
       })
 
-      test('T(target=1, control=0)|11>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'T', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {√½+√½i}}')
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('101')
+
+        simulator.runStep([{type: 'T', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {0}, {0}, {√½+√½i}, {0}, {0}}')
+      })
     })
 
     describe('T†', () => {
-      test('T†|1>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'T†', targets: [0]}])
@@ -156,17 +220,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe('{{0}, {√½-√½i}}')
       })
 
-      test('T†(target=1, control=0)|11>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'T†', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {√½-√½i}}')
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('101')
+
+        simulator.runStep([{type: 'T†', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {0}, {0}, {√½-√½i}, {0}, {0}}')
+      })
     })
 
     describe('P', () => {
-      test('P(π)|1>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('1')
 
         simulator.runStep([{type: 'P', angle: 'π', targets: [0]}])
@@ -174,17 +246,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('-|1>').toString())
       })
 
-      test('P(π, target=1, control=0)|11>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: 'P', angle: 'π', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('-|11>').toString())
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('101')
+
+        simulator.runStep([{type: 'P', angle: 'π', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('-|101>').toString())
+      })
     })
 
     describe('Rx', () => {
-      test('Rx(π)|0>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'Rx', angle: 'π', targets: [0]}])
@@ -192,17 +272,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('-i|1>').toString())
       })
 
-      test('Rx(π, target=1, control=0)|01>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'Rx', angle: 'π', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('-i|11>').toString())
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('001')
+
+        simulator.runStep([{type: 'Rx', angle: 'π', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('-i|101>').toString())
+      })
     })
 
     describe('Ry', () => {
-      test('Ry(π)|0>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'Ry', angle: 'π', targets: [0]}])
@@ -210,17 +298,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('|1>').toString())
       })
 
-      test('Ry(π, target=1, control=0)|01>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'Ry', angle: 'π', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('|11>').toString())
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('001')
+
+        simulator.runStep([{type: 'Ry', angle: 'π', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('|101>').toString())
+      })
     })
 
     describe('Rz', () => {
-      test('Rz(π)|0>', () => {
+      test('apply to a single qubit', () => {
         const simulator = new Simulator('0')
 
         simulator.runStep([{type: 'Rz', angle: 'π', targets: [0]}])
@@ -228,17 +324,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('-i|0>').toString())
       })
 
-      test('Rz(π, target=1, control=0)|01>', () => {
+      test('apply to a single qubit with control', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'Rz', angle: 'π', targets: [1], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('-i|01>').toString())
       })
+
+      test('apply to a single qubit with control and anti-control', () => {
+        const simulator = new Simulator('001')
+
+        simulator.runStep([{type: 'Rz', angle: 'π', targets: [2], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('-i|001>').toString())
+      })
     })
 
     describe('Swap', () => {
-      test('Swap|01>', () => {
+      test('apply to two qubits', () => {
         const simulator = new Simulator('01')
 
         simulator.runStep([{type: 'Swap', targets: [0, 1]}])
@@ -246,17 +350,25 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('|10>').toString())
       })
 
-      test('Swap(1,2)|011>', () => {
+      test('apply to two qubits with control', () => {
         const simulator = new Simulator('011')
 
         simulator.runStep([{type: 'Swap', targets: [1, 2], controls: [0]}])
 
         expect(simulator.state.toString()).toBe(new StateVector('|101>').toString())
       })
+
+      test('apply to two qubits with control and anti-control', () => {
+        const simulator = new Simulator('0101')
+
+        simulator.runStep([{type: 'Swap', targets: [2, 3], controls: [0], antiControls: [1]}])
+
+        expect(simulator.state.toString()).toBe(new StateVector('|1001>').toString())
+      })
     })
 
     describe('• (CZ)', () => {
-      test('•|11>', () => {
+      test('apply to two qubits', () => {
         const simulator = new Simulator('11')
 
         simulator.runStep([{type: '•', targets: [0, 1]}])
@@ -264,7 +376,7 @@ describe('Simulator', () => {
         expect(simulator.state.toString()).toBe(new StateVector('-|11>').toString())
       })
 
-      test('•|111>', () => {
+      test('apply to three qubits', () => {
         const simulator = new Simulator('111')
 
         simulator.runStep([{type: '•', targets: [0, 1, 2]}])
