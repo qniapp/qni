@@ -3,11 +3,20 @@ import {Matrix, Simulator, StateVector} from '../src'
 
 describe('Simulator', () => {
   describe('runStep', () => {
-    test('H|0>', () => {
-      const simulator = new Simulator('0')
+    describe('H', () => {
+      test('H|0>', () => {
+        const simulator = new Simulator('0')
 
-      simulator.runStep([{type: 'H', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{√½}, {√½}}')
+        simulator.runStep([{type: 'H', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{√½}, {√½}}')
+      })
+
+      test('H(control=0, target=1)|01>', () => {
+        const simulator = new Simulator('01')
+
+        simulator.runStep([{type: 'H', controls: [0], targets: [1]}])
+        expect(simulator.state.toString()).toBe('{{0}, {√½}, {0}, {√½}}')
+      })
     })
 
     test('X|0>', () => {
