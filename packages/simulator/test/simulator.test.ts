@@ -35,53 +35,116 @@ describe('Simulator', () => {
       })
     })
 
-    test('Y|0>', () => {
-      const simulator = new Simulator('0')
+    describe('Y', () => {
+      test('Y|0>', () => {
+        const simulator = new Simulator('0')
 
-      simulator.runStep([{type: 'Y', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{0}, {i}}')
+        simulator.runStep([{type: 'Y', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {i}}')
+      })
+
+      test('X(target=1, control=0)|01>', () => {
+        const simulator = new Simulator('01')
+
+        simulator.runStep([{type: 'Y', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {i}}')
+      })
     })
 
-    test('Z|1>', () => {
-      const simulator = new Simulator('1')
+    describe('Z', () => {
+      test('Z|1>', () => {
+        const simulator = new Simulator('1')
 
-      simulator.runStep([{type: 'Z', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{0}, {-1}}')
+        simulator.runStep([{type: 'Z', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {-1}}')
+      })
+
+      test('Z(target=1, control=0)|11>', () => {
+        const simulator = new Simulator('11')
+
+        simulator.runStep([{type: 'Z', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {-1}}')
+      })
     })
 
-    test('√X|0>', () => {
-      const simulator = new Simulator('0')
+    describe('√X', () => {
+      test('√X|0>', () => {
+        const simulator = new Simulator('0')
 
-      simulator.runStep([{type: 'X^½', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{½+½i}, {½-½i}}')
+        simulator.runStep([{type: 'X^½', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{½+½i}, {½-½i}}')
+      })
+
+      test('√X(target=1, control=0)|01>', () => {
+        const simulator = new Simulator('01')
+
+        simulator.runStep([{type: 'X^½', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {½+½i}, {0}, {½-½i}}')
+      })
     })
 
-    test('S|1>', () => {
-      const simulator = new Simulator('1')
+    describe('S', () => {
+      test('S|1>', () => {
+        const simulator = new Simulator('1')
 
-      simulator.runStep([{type: 'S', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{0}, {i}}')
+        simulator.runStep([{type: 'S', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {i}}')
+      })
+
+      test('S(target=1, control=0)|11>', () => {
+        const simulator = new Simulator('11')
+
+        simulator.runStep([{type: 'S', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {i}}')
+      })
     })
 
-    test('S†|1>', () => {
-      const simulator = new Simulator('1')
+    describe('S†', () => {
+      test('S†|1>', () => {
+        const simulator = new Simulator('1')
 
-      simulator.runStep([{type: 'S†', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{0}, {-i}}')
+        simulator.runStep([{type: 'S†', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {-i}}')
+      })
+
+      test('S†(target=1, control=0)|11>', () => {
+        const simulator = new Simulator('11')
+
+        simulator.runStep([{type: 'S†', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {-i}}')
+      })
     })
 
-    test('T|1>', () => {
-      const simulator = new Simulator('1')
+    describe('T', () => {
+      test('T|1>', () => {
+        const simulator = new Simulator('1')
 
-      simulator.runStep([{type: 'T', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{0}, {√½+√½i}}')
+        simulator.runStep([{type: 'T', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {√½+√½i}}')
+      })
+
+      test('T(target=1, control=0)|11>', () => {
+        const simulator = new Simulator('11')
+
+        simulator.runStep([{type: 'T', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {√½+√½i}}')
+      })
     })
 
-    test('T†|1>', () => {
-      const simulator = new Simulator('1')
+    describe('T†', () => {
+      test('T†|1>', () => {
+        const simulator = new Simulator('1')
 
-      simulator.runStep([{type: 'T†', targets: [0]}])
-      expect(simulator.state.toString()).toBe('{{0}, {√½-√½i}}')
+        simulator.runStep([{type: 'T†', targets: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {√½-√½i}}')
+      })
+
+      test('T†(target=1, control=0)|11>', () => {
+        const simulator = new Simulator('11')
+
+        simulator.runStep([{type: 'T†', targets: [1], controls: [0]}])
+        expect(simulator.state.toString()).toBe('{{0}, {0}, {0}, {√½-√½i}}')
+      })
     })
 
     test('P(π)|1>', () => {
