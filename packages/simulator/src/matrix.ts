@@ -11,7 +11,7 @@ type FormatOptions = {
 
 const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
   allowAbbreviation: true,
-  maxAbbreviationError: 0,
+  maxAbbreviationError: 0.0005,
   fixedDigits: undefined,
   itemSeparator: ', ',
 }

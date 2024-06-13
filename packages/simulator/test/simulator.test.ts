@@ -73,6 +73,27 @@ describe('Simulator', () => {
       expect(simulator.state.toString()).toBe('{{0}, {-1}}')
     })
 
+    test('Rx(π)|0>', () => {
+      const simulator = new Simulator('0')
+
+      simulator.runStep([{type: 'Rx', angle: 'π', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{0}, {-i}}')
+    })
+
+    test('Ry(π)|0>', () => {
+      const simulator = new Simulator('0')
+
+      simulator.runStep([{type: 'Ry', angle: 'π', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{0}, {1}}')
+    })
+
+    test('Rz(π)|0>', () => {
+      const simulator = new Simulator('0')
+
+      simulator.runStep([{type: 'Rz', angle: 'π', targets: [0]}])
+      expect(simulator.state.toString()).toBe('{{-i}, {0}}')
+    })
+
     test('write 0 to |1>', () => {
       const simulator = new Simulator('1')
 

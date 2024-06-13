@@ -92,6 +92,21 @@ export class Simulator {
           this.cphase(each.angle, [each.targets[0]], each.controls, each.antiControls)
           break
         }
+        case SerializedRxGateType:
+          if (each.if && !this.flags[each.if]) break
+          if (!each.angle) break
+          this.crx(each.angle, each.targets, each.controls, each.antiControls)
+          break
+        case SerializedRyGateType:
+          if (each.if && !this.flags[each.if]) break
+          if (!each.angle) break
+          this.cry(each.angle, each.targets, each.controls, each.antiControls)
+          break
+        case SerializedRzGateType:
+          if (each.if && !this.flags[each.if]) break
+          if (!each.angle) break
+          this.crz(each.angle, each.targets, each.controls, each.antiControls)
+          break
         case SerializedWrite0GateType:
           this.write(0, ...each.targets)
           break
@@ -119,21 +134,6 @@ export class Simulator {
           this.cswap(each.targets[0], each.targets[1], each.controls)
           break
         }
-        case SerializedRxGateType:
-          if (each.if && !this.flags[each.if]) break
-          if (!each.angle) break
-          this.crx(each.angle, each.targets, each.controls, each.antiControls)
-          break
-        case SerializedRyGateType:
-          if (each.if && !this.flags[each.if]) break
-          if (!each.angle) break
-          this.cry(each.angle, each.targets, each.controls, each.antiControls)
-          break
-        case SerializedRzGateType:
-          if (each.if && !this.flags[each.if]) break
-          if (!each.angle) break
-          this.crz(each.angle, each.targets, each.controls, each.antiControls)
-          break
         case SerializedMeasurementGateType:
           for (const target of each.targets) {
             this.measure(target)
