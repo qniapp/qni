@@ -62,7 +62,7 @@ export class Simulator {
           break
         case SerializedYGateType:
           if (each.if && !this.flags[each.if]) break
-          this.cy(each.targets, each.controls, each.antiControls)
+          this.y(...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedZGateType:
           if (each.if && !this.flags[each.if]) break
@@ -186,13 +186,14 @@ export class Simulator {
     return this
   }
 
-  y(...targets: number[]): Simulator {
-    this.cu(Y, targets)
-    return this
-  }
+  /**
+   * Applies the Y gate to the specified qubit targets.
+   */
+  y(...args: Array<number | GateControlOptions>): Simulator {
+    const options = typeof args[args.length - 1] === 'object' ? (args.pop() as GateControlOptions) : {}
+    const targets = args as number[]
 
-  cy(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(Y, targets, controls, antiControls)
+    this.cu(Y, targets, options.controls, options.antiControls)
     return this
   }
 
