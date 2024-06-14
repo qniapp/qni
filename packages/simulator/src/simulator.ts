@@ -58,7 +58,7 @@ export class Simulator {
           break
         case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
-          this.cnot(each.targets, each.controls, each.antiControls)
+          this.x(...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedYGateType:
           if (each.if && !this.flags[each.if]) break
@@ -178,13 +178,11 @@ export class Simulator {
   /**
    * Applies the X gate to the specified qubit targets.
    */
-  x(...targets: number[]): Simulator {
-    this.cu(X, targets)
-    return this
-  }
+  x(...args: Array<number | GateControlOptions>): Simulator {
+    const options = typeof args[args.length - 1] === 'object' ? (args.pop() as GateControlOptions) : {}
+    const targets = args as number[]
 
-  cnot(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(X, targets, controls, antiControls)
+    this.cu(X, targets, options.controls, options.antiControls)
     return this
   }
 
@@ -264,9 +262,9 @@ export class Simulator {
   }
 
   cswap(target0: number, target1: number, controls: number[] = []): Simulator {
-    this.cnot([target1], controls.concat([target0]))
-      .cnot([target0], controls.concat([target1]))
-      .cnot([target1], controls.concat([target0]))
+    this.x(target1, {controls: controls.concat([target0])})
+      .x(target0, {controls: controls.concat([target1])})
+      .x(target1, {controls: controls.concat([target0])})
     return this
   }
 
