@@ -84,12 +84,12 @@ export class Simulator {
         }
         case SerializedTGateType: {
           if (each.if && !this.flags[each.if]) break
-          this.ct(each.targets, each.controls, each.antiControls)
+          this.t(...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         }
         case SerializedTDaggerGateType: {
           if (each.if && !this.flags[each.if]) break
-          this.ctDagger(each.targets, each.controls, each.antiControls)
+          this.tDagger(...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         }
         case SerializedPhaseGateType: {
@@ -223,6 +223,26 @@ export class Simulator {
     return this
   }
 
+  /**
+   * Applies the T gate to the specified qubit targets.
+   */
+  t(...args: Array<number | GateControlOptions>): Simulator {
+    const {targets, options} = this.processGateArgs(args)
+
+    this.cu(T, targets, options.controls, options.antiControls)
+    return this
+  }
+
+  /**
+   * Applies the T† gate to the specified qubit targets.
+   */
+  tDagger(...args: Array<number | GateControlOptions>): Simulator {
+    const {targets, options} = this.processGateArgs(args)
+
+    this.cu(TDagger, targets, options.controls, options.antiControls)
+    return this
+  }
+
   write(value: number, ...targets: number[]): Simulator {
     for (const t of targets) {
       const pZero = round(this.pZero(t), 5)
@@ -241,26 +261,6 @@ export class Simulator {
 
   cphase(phi: string, targets: number[], controls?: number[], antiControls?: number[]): Simulator {
     this.cu(PHASE(phi), targets, controls, antiControls)
-    return this
-  }
-
-  t(...targets: number[]): Simulator {
-    this.u(T, ...targets)
-    return this
-  }
-
-  ct(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(T, targets, controls, antiControls)
-    return this
-  }
-
-  tDagger(...targets: number[]): Simulator {
-    this.u(TDagger, ...targets)
-    return this
-  }
-
-  ctDagger(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(TDagger, targets, controls, antiControls)
     return this
   }
 
