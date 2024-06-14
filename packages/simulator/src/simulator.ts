@@ -70,7 +70,7 @@ export class Simulator {
           break
         case SerializedRnotGateType:
           if (each.if && !this.flags[each.if]) break
-          this.crnot(each.targets, each.controls, each.antiControls)
+          this.rnot(...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedSGateType: {
           if (each.if && !this.flags[each.if]) break
@@ -153,17 +153,6 @@ export class Simulator {
     return this
   }
 
-  write(value: number, ...targets: number[]): Simulator {
-    for (const t of targets) {
-      const pZero = round(this.pZero(t), 5)
-
-      if ((value === 0 && pZero === 0) || (value === 1 && pZero === 1)) {
-        this.x(t)
-      }
-    }
-    return this
-  }
-
   /**
    * Applies the H gate to the specified qubit targets.
    */
@@ -201,6 +190,27 @@ export class Simulator {
     const {targets, options} = this.processGateArgs(args)
 
     this.cu(Z, targets, options.controls, options.antiControls)
+    return this
+  }
+
+  /**
+   * Applies the √X gate to the specified qubit targets.
+   */
+  rnot(...args: Array<number | GateControlOptions>): Simulator {
+    const {targets, options} = this.processGateArgs(args)
+
+    this.cu(RNOT, targets, options.controls, options.antiControls)
+    return this
+  }
+
+  write(value: number, ...targets: number[]): Simulator {
+    for (const t of targets) {
+      const pZero = round(this.pZero(t), 5)
+
+      if ((value === 0 && pZero === 0) || (value === 1 && pZero === 1)) {
+        this.x(t)
+      }
+    }
     return this
   }
 
@@ -263,16 +273,6 @@ export class Simulator {
     this.x(target1, {controls: controls.concat([target0])})
       .x(target0, {controls: controls.concat([target1])})
       .x(target1, {controls: controls.concat([target0])})
-    return this
-  }
-
-  rnot(...targets: number[]): Simulator {
-    this.u(RNOT, ...targets)
-    return this
-  }
-
-  crnot(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(RNOT, targets, controls, antiControls)
     return this
   }
 
