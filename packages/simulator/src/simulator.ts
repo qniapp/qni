@@ -30,6 +30,11 @@ import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
 
+type GateControlOptions = {
+  controls?: number[]
+  antiControls?: number[]
+}
+
 export class Simulator {
   public state: StateVector
   public blochVectors!: {[bit: number]: [number, number, number]}
@@ -49,7 +54,7 @@ export class Simulator {
       switch (each.type) {
         case SerializedHGateType:
           if (each.if && !this.flags[each.if]) break
-          this.h(each.targets, each.controls, each.antiControls)
+          this.h(...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
@@ -160,10 +165,13 @@ export class Simulator {
   }
 
   /**
-   * Applies the controlled-Hadamard (CH) gate to the specified qubits.
+   * Applies the H gate to the specified qubit targets.
    */
-  h(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(H, targets, controls, antiControls)
+  h(...args: Array<number | GateControlOptions>): Simulator {
+    const options = typeof args[args.length - 1] === 'object' ? (args.pop() as GateControlOptions) : {}
+    const targets = args as number[]
+
+    this.cu(H, targets, options.controls, options.antiControls)
     return this
   }
 
@@ -311,7 +319,7 @@ export class Simulator {
 
   private qftSingleTargetBit(span: ResizeableSpan, target: number): Simulator {
     for (let i = 0; i < span; i++) {
-      this.h([target + i])
+      this.h(target + i)
       for (let j = 1; j < span - i; j++) {
         this.cphase(`π/${2 ** j}`, [target + i], [target + i + j])
       }
@@ -331,7 +339,7 @@ export class Simulator {
       for (let j = span - i - 1; j > 0; j--) {
         this.cphase(`-π/${2 ** j}`, [target + i], [target + i + j])
       }
-      this.h([target + i])
+      this.h(target + i)
     }
     return this
   }

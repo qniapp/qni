@@ -458,22 +458,22 @@ describe('Simulator', () => {
   describe('h', () => {
     test('|0>.h(0) should be |+>', () => {
       const simulator = new Simulator('0')
-      expect(equate(simulator.h([0]).state, new StateVector('+'))).toBe(true)
+      expect(equate(simulator.h(0).state, new StateVector('+'))).toBe(true)
     })
 
     test('|1>.h(0) should be |->', () => {
       const simulator = new Simulator('1')
-      expect(equate(simulator.h([0]).state, new StateVector('-'))).toBe(true)
+      expect(equate(simulator.h(0).state, new StateVector('-'))).toBe(true)
     })
 
     test('|+>.h(0) should be |0>', () => {
       const simulator = new Simulator('+')
-      expect(simulator.h([0]).state.isApproximatelyEqualTo(new StateVector('0'), 0.000001)).toBe(true)
+      expect(simulator.h(0).state.isApproximatelyEqualTo(new StateVector('0'), 0.000001)).toBe(true)
     })
 
     test('|->.h(0) should be |1>', () => {
       const simulator = new Simulator('-')
-      expect(simulator.h([0]).state.isApproximatelyEqualTo(new StateVector('1'), 0.000001)).toBe(true)
+      expect(simulator.h(0).state.isApproximatelyEqualTo(new StateVector('1'), 0.000001)).toBe(true)
     })
 
     test('|i>.h(0) should be e^{iπ/4}|-i>', () => {
@@ -484,7 +484,7 @@ describe('Simulator', () => {
       const simulator = new Simulator('i')
       expect(
         equate(
-          simulator.h([0]).state.matrix,
+          simulator.h(0).state.matrix,
           new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
         ),
       ).toBe(true)
@@ -498,7 +498,7 @@ describe('Simulator', () => {
       const simulator = new Simulator('(-i)')
       expect(
         equate(
-          simulator.h([0]).state.matrix,
+          simulator.h(0).state.matrix,
           new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
         ),
       ).toBe(true)
@@ -506,27 +506,27 @@ describe('Simulator', () => {
 
     test('|0>.h(1) should throw an error', () => {
       const simulator = new Simulator('0')
-      expect(() => simulator.h([1])).toThrow('target bit out of range')
+      expect(() => simulator.h(1)).toThrow('target bit out of range')
     })
 
     test('|0>.h(-1) should throw an error', () => {
       const simulator = new Simulator('0')
-      expect(() => simulator.h([-1])).toThrow('target bit out of range')
+      expect(() => simulator.h(-1)).toThrow('target bit out of range')
     })
 
     test('|00>.h(0) should be |0+>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.h([0]).state, new StateVector('0+'))).toBe(true)
+      expect(equate(simulator.h(0).state, new StateVector('0+'))).toBe(true)
     })
 
     test('|00>.h(1) should be |+0>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.h([1]).state, new StateVector('+0'))).toBe(true)
+      expect(equate(simulator.h(1).state, new StateVector('+0'))).toBe(true)
     })
 
     test('|00>.h(0, 1) should be |++>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.h([0, 1]).state, new StateVector('++'))).toBe(true)
+      expect(equate(simulator.h(0, 1).state, new StateVector('++'))).toBe(true)
     })
   })
 
@@ -535,62 +535,62 @@ describe('Simulator', () => {
   describe('ch', () => {
     test('|00>.ch (target = 1, control = 0) should be |00>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.h([1], [0]).state, new StateVector('00'))).toBeTruthy()
+      expect(equate(simulator.h(1, {controls: [0]}).state, new StateVector('00'))).toBeTruthy()
     })
 
     test('|00>.ch (target = 0, control = 1) should be |00>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.h([0], [1]).state, new StateVector('00'))).toBeTruthy()
+      expect(equate(simulator.h(0, {controls: [1]}).state, new StateVector('00'))).toBeTruthy()
     })
 
     test('|11>.ch (target = 1, control = 0) should be |01>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.h([1], [0]).state, new StateVector('-1'))).toBeTruthy()
+      expect(equate(simulator.h(1, {controls: [0]}).state, new StateVector('-1'))).toBeTruthy()
     })
 
     test('|11>.ch (target = 0, control = 1) should be |10>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.h([0], [1]).state, new StateVector('1-'))).toBeTruthy()
+      expect(equate(simulator.h(0, {controls: [1]}).state, new StateVector('1-'))).toBeTruthy()
     })
 
     test('|010>.ch (target = 2, control = 0, 1) should be |010>', () => {
       const simulator = new Simulator('010')
-      expect(equate(simulator.h([2], [0, 1]).state, new StateVector('010'))).toBeTruthy()
+      expect(equate(simulator.h(2, {controls: [0, 1]}).state, new StateVector('010'))).toBeTruthy()
     })
 
     test('|011>.ch (target = 2, control = 0, 1) should be |111>', () => {
       const simulator = new Simulator('011')
-      expect(equate(simulator.h([2], [0, 1]).state, new StateVector('+11'))).toBeTruthy()
+      expect(equate(simulator.h(2, {controls: [0, 1]}).state, new StateVector('+11'))).toBeTruthy()
     })
 
     test('|00>.ch (target = 2) should throw an error', () => {
       const simulator = new Simulator('00')
-      expect(() => simulator.h([2])).toThrow('target bit out of range')
+      expect(() => simulator.h(2)).toThrow('target bit out of range')
     })
 
     test('|00>.ch (target = -1, control = 0) should throw an error', () => {
       const simulator = new Simulator('00')
-      expect(() => simulator.h([-1])).toThrow('target bit out of range')
+      expect(() => simulator.h(-1)).toThrow('target bit out of range')
     })
 
     test('|00>.ch (target = 0, control = 2) should throw an error', () => {
       const simulator = new Simulator('00')
-      expect(() => simulator.h([0], [2])).toThrow('control bit out of range')
+      expect(() => simulator.h(0, {controls: [2]})).toThrow('control bit out of range')
     })
 
     test('|00>.ch (target = 0, control = -1) should throw an error', () => {
       const simulator = new Simulator('00')
-      expect(() => simulator.h([0], [-1])).toThrow('control bit out of range')
+      expect(() => simulator.h(0, {controls: [-1]})).toThrow('control bit out of range')
     })
 
     test('|00>.ch (target = 0, antiControl = 2) should throw an error', () => {
       const simulator = new Simulator('00')
-      expect(() => simulator.h([0], [], [2])).toThrow('anti control bit out of range')
+      expect(() => simulator.h(0, {antiControls: [2]})).toThrow('anti control bit out of range')
     })
 
     test('|00>.ch (target = 0, antiControl = -1) should throw an error', () => {
       const simulator = new Simulator('00')
-      expect(() => simulator.h([0], [], [-1])).toThrow('anti control bit out of range')
+      expect(() => simulator.h(0, {antiControls: [-1]})).toThrow('anti control bit out of range')
     })
   })
 
@@ -773,7 +773,7 @@ describe('Simulator', () => {
       expect(
         new Simulator('0')
           .rnot(0)
-          .state.isApproximatelyEqualTo(new Simulator('0').h([0]).phase('π/2', 0).h([0]).state, 0.000001),
+          .state.isApproximatelyEqualTo(new Simulator('0').h(0).phase('π/2', 0).h(0).state, 0.000001),
       ).toBe(true)
     })
 
@@ -781,7 +781,7 @@ describe('Simulator', () => {
       expect(
         new Simulator('1')
           .rnot(0)
-          .state.isApproximatelyEqualTo(new Simulator('1').h([0]).phase('π/2', 0).h([0]).state, 0.000001),
+          .state.isApproximatelyEqualTo(new Simulator('1').h(0).phase('π/2', 0).h(0).state, 0.000001),
       ).toBe(true)
     })
 
@@ -789,7 +789,7 @@ describe('Simulator', () => {
       expect(
         new Simulator('+')
           .rnot(0)
-          .state.isApproximatelyEqualTo(new Simulator('+').h([0]).phase('-π/2', 0).h([0]).state, 0.000001),
+          .state.isApproximatelyEqualTo(new Simulator('+').h(0).phase('-π/2', 0).h(0).state, 0.000001),
       ).toBe(true)
     })
 
@@ -797,7 +797,7 @@ describe('Simulator', () => {
       expect(
         new Simulator('-')
           .rnot(0)
-          .state.isApproximatelyEqualTo(new Simulator('-').h([0]).phase('π/2', 0).h([0]).state, 0.000001),
+          .state.isApproximatelyEqualTo(new Simulator('-').h(0).phase('π/2', 0).h(0).state, 0.000001),
       ).toBe(true)
     })
 
@@ -805,7 +805,7 @@ describe('Simulator', () => {
       expect(
         new Simulator('i')
           .rnot(0)
-          .state.isApproximatelyEqualTo(new Simulator('i').h([0]).phase('π/2', 0).h([0]).state, 0.000001),
+          .state.isApproximatelyEqualTo(new Simulator('i').h(0).phase('π/2', 0).h(0).state, 0.000001),
       ).toBe(true)
     })
 
@@ -813,7 +813,7 @@ describe('Simulator', () => {
       expect(
         new Simulator('(-i)')
           .rnot(0)
-          .state.isApproximatelyEqualTo(new Simulator('(-i)').h([0]).phase('π/2', 0).h([0]).state, 0.000001),
+          .state.isApproximatelyEqualTo(new Simulator('(-i)').h(0).phase('π/2', 0).h(0).state, 0.000001),
       ).toBe(true)
     })
 
@@ -821,7 +821,7 @@ describe('Simulator', () => {
       expect(
         new Simulator('00')
           .rnot(0)
-          .state.isApproximatelyEqualTo(new Simulator('00').h([0]).phase('π/2', 0).h([0]).state, 0.000001),
+          .state.isApproximatelyEqualTo(new Simulator('00').h(0).phase('π/2', 0).h(0).state, 0.000001),
       ).toBe(true)
     })
 
@@ -829,7 +829,7 @@ describe('Simulator', () => {
       expect(
         new Simulator('00')
           .rnot(1)
-          .state.isApproximatelyEqualTo(new Simulator('00').h([1]).phase('π/2', 1).h([1]).state, 0.000001),
+          .state.isApproximatelyEqualTo(new Simulator('00').h(1).phase('π/2', 1).h(1).state, 0.000001),
       ).toBe(true)
     })
 
@@ -837,7 +837,7 @@ describe('Simulator', () => {
       expect(
         new Simulator('00')
           .rnot(0, 1)
-          .state.isApproximatelyEqualTo(new Simulator('00').h([0, 1]).phase('π/2', 0, 1).h([0, 1]).state, 0.000001),
+          .state.isApproximatelyEqualTo(new Simulator('00').h(0, 1).phase('π/2', 0, 1).h(0, 1).state, 0.000001),
       ).toBe(true)
     })
   })
