@@ -7,4 +7,5 @@ module.exports = {
   transform: {
     'packages/common/dist/index.js$': 'ts-jest',
   },
+  coveragePathIgnorePatterns: ['/test/matchers/'],
 }

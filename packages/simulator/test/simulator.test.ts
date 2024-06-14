@@ -1,5 +1,6 @@
 import {Complex, equate} from '@qni/common'
 import {Matrix, Simulator, StateVector} from '../src'
+import './matchers/to-be-same-state-vector'
 
 describe('Simulator', () => {
   describe('runStep', () => {
@@ -9,7 +10,8 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'H', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|+>').toString())
+        // TODO: 状態ベクトルに係数がない場合は、係数を省略して表示するようにする (e.g. new StateVector('+'))
+        expect(simulator.state).toBeSameStateVector(new StateVector('|+>'))
       })
 
       test('apply to a single qubit with control', () => {
@@ -17,7 +19,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'H', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|+1>').toString())
+        expect(simulator.state).toBeSameStateVector(new StateVector('|+1>'))
       })
 
       test('apply to a single qubit with control and anti-control', () => {
@@ -25,7 +27,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'H', targets: [2], controls: [0], antiControls: [1]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|+01>').toString())
+        expect(simulator.state).toBeSameStateVector(new StateVector('|+01>'))
       })
     })
 
@@ -35,7 +37,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'X', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|1>').toString())
+        expect(simulator.state).toBeSameStateVector(new StateVector('|1>'))
       })
 
       test('apply to a single qubit with control', () => {
