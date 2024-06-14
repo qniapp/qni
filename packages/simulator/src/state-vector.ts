@@ -29,6 +29,8 @@ export class StateVector {
 
     this.size = this.matrix.height
     this.nqubit = Math.log2(this.size)
+
+    this.toWolfram = this.toString
   }
 
   amplifier(index: number): Complex {
@@ -65,6 +67,7 @@ export class StateVector {
   toString(): string {
     return this.matrix.toString()
   }
+  toWolfram = this.toString.bind(this)
 
   private bitstringToMatrix(bitString: string): Matrix {
     let paren = false
