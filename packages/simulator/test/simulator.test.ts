@@ -10,8 +10,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'H', targets: [0]}])
 
-        // TODO: 状態ベクトルに係数がない場合は、係数を省略して表示するようにする (e.g. new StateVector('+'))
-        expect(simulator.state).toBeSameStateVector(new StateVector('|+>'))
+        expect(simulator.state).toBeSameStateVector(new StateVector('+'))
       })
 
       test('apply to a single qubit with control', () => {
@@ -19,7 +18,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'H', targets: [1], controls: [0]}])
 
-        expect(simulator.state).toBeSameStateVector(new StateVector('|+1>'))
+        expect(simulator.state).toBeSameStateVector(new StateVector('+1'))
       })
 
       test('apply to a single qubit with control and anti-control', () => {
@@ -27,7 +26,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'H', targets: [2], controls: [0], antiControls: [1]}])
 
-        expect(simulator.state).toBeSameStateVector(new StateVector('|+01>'))
+        expect(simulator.state).toBeSameStateVector(new StateVector('+01'))
       })
     })
 
@@ -37,7 +36,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'X', targets: [0]}])
 
-        expect(simulator.state).toBeSameStateVector(new StateVector('|1>'))
+        expect(simulator.state).toBeSameStateVector(new StateVector('1'))
       })
 
       test('apply to a single qubit with control', () => {
@@ -45,7 +44,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'X', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|11>').toString())
+        expect(simulator.state.toString()).toBe(new StateVector('11').toString())
       })
 
       test('apply to a single qubit with control and anti-control', () => {
@@ -53,7 +52,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'X', targets: [2], controls: [0], antiControls: [1]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|101>').toString())
+        expect(simulator.state.toString()).toBe(new StateVector('101').toString())
       })
     })
 
@@ -297,7 +296,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Ry', angle: 'π', targets: [0]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|1>').toString())
+        expect(simulator.state.toString()).toBe(new StateVector('1').toString())
       })
 
       test('apply to a single qubit with control', () => {
@@ -305,7 +304,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Ry', angle: 'π', targets: [1], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|11>').toString())
+        expect(simulator.state.toString()).toBe(new StateVector('11').toString())
       })
 
       test('apply to a single qubit with control and anti-control', () => {
@@ -313,7 +312,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Ry', angle: 'π', targets: [2], controls: [0], antiControls: [1]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|101>').toString())
+        expect(simulator.state.toString()).toBe(new StateVector('101').toString())
       })
     })
 
@@ -349,7 +348,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Swap', targets: [0, 1]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|10>').toString())
+        expect(simulator.state.toString()).toBe(new StateVector('10').toString())
       })
 
       test('apply to two qubits with control', () => {
@@ -357,7 +356,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Swap', targets: [1, 2], controls: [0]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|101>').toString())
+        expect(simulator.state.toString()).toBe(new StateVector('101').toString())
       })
 
       test('apply to two qubits with control and anti-control', () => {
@@ -365,7 +364,7 @@ describe('Simulator', () => {
 
         simulator.runStep([{type: 'Swap', targets: [2, 3], controls: [0], antiControls: [1]}])
 
-        expect(simulator.state.toString()).toBe(new StateVector('|1001>').toString())
+        expect(simulator.state.toString()).toBe(new StateVector('1001').toString())
       })
     })
 
@@ -392,7 +391,7 @@ describe('Simulator', () => {
 
       simulator.runStep([{type: '|0>', targets: [0]}])
 
-      expect(simulator.state.toString()).toBe(new StateVector('|0>').toString())
+      expect(simulator.state.toString()).toBe(new StateVector('0').toString())
     })
 
     test('write 1 to |0>', () => {
@@ -400,7 +399,7 @@ describe('Simulator', () => {
 
       simulator.runStep([{type: '|1>', targets: [0]}])
 
-      expect(simulator.state.toString()).toBe(new StateVector('|1>').toString())
+      expect(simulator.state.toString()).toBe(new StateVector('1').toString())
     })
   })
 
