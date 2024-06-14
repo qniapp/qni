@@ -66,7 +66,7 @@ export class Simulator {
           break
         case SerializedZGateType:
           if (each.if && !this.flags[each.if]) break
-          this.cz(each.targets, each.controls, each.antiControls)
+          this.z(...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedRnotGateType:
           if (each.if && !this.flags[each.if]) break
@@ -117,7 +117,7 @@ export class Simulator {
           break
         }
         case SerializedControlGateType: {
-          this.cz([each.targets[0]], each.targets.slice(1))
+          this.z(each.targets[0], {controls: each.targets.slice(1)})
           break
         }
         case SerializedWrite0GateType:
@@ -168,8 +168,7 @@ export class Simulator {
    * Applies the H gate to the specified qubit targets.
    */
   h(...args: Array<number | GateControlOptions>): Simulator {
-    const options = typeof args[args.length - 1] === 'object' ? (args.pop() as GateControlOptions) : {}
-    const targets = args as number[]
+    const {targets, options} = this.processGateArgs(args)
 
     this.cu(H, targets, options.controls, options.antiControls)
     return this
@@ -179,8 +178,7 @@ export class Simulator {
    * Applies the X gate to the specified qubit targets.
    */
   x(...args: Array<number | GateControlOptions>): Simulator {
-    const options = typeof args[args.length - 1] === 'object' ? (args.pop() as GateControlOptions) : {}
-    const targets = args as number[]
+    const {targets, options} = this.processGateArgs(args)
 
     this.cu(X, targets, options.controls, options.antiControls)
     return this
@@ -190,20 +188,19 @@ export class Simulator {
    * Applies the Y gate to the specified qubit targets.
    */
   y(...args: Array<number | GateControlOptions>): Simulator {
-    const options = typeof args[args.length - 1] === 'object' ? (args.pop() as GateControlOptions) : {}
-    const targets = args as number[]
+    const {targets, options} = this.processGateArgs(args)
 
     this.cu(Y, targets, options.controls, options.antiControls)
     return this
   }
 
-  z(...targets: number[]): Simulator {
-    this.u(Z, ...targets)
-    return this
-  }
+  /**
+   * Applies the Z gate to the specified qubit targets.
+   */
+  z(...args: Array<number | GateControlOptions>): Simulator {
+    const {targets, options} = this.processGateArgs(args)
 
-  cz(targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(Z, targets, controls, antiControls)
+    this.cu(Z, targets, options.controls, options.antiControls)
     return this
   }
 
@@ -379,12 +376,20 @@ export class Simulator {
     return this.state.matrix.column(0)._unsafeUnwrap()
   }
 
+  private processGateArgs(args: Array<number | GateControlOptions>): {targets: number[]; options: GateControlOptions} {
+    const options = typeof args[args.length - 1] === 'object' ? (args.pop() as GateControlOptions) : {}
+    const targets = args as number[]
+
+    return {targets, options}
+  }
+
   private u(u: Matrix, ...targets: number[]): void {
     for (const t of targets) {
       this.state.timesQubitOperation(u, t, 0)
     }
   }
 
+  // TODO: 引数に GateControlOptions を受け取るようにする
   private cu(u: Matrix, targets: number[], controls: number[] = [], antiControls: number[] = []): void {
     for (const t of targets) {
       this.state.applyControlledGate(u, t, controls, antiControls)
