@@ -100,7 +100,7 @@ export class Simulator {
         case SerializedRxGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
-          this.crx(each.angle, each.targets, each.controls, each.antiControls)
+          this.rx(each.angle, ...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedRyGateType:
           if (each.if && !this.flags[each.if]) break
@@ -253,6 +253,13 @@ export class Simulator {
     return this
   }
 
+  rx(theta: string, ...args: Array<number | GateControlOptions>): Simulator {
+    const {targets, options} = this.processGateArgs(args)
+
+    this.cu(RX(theta), targets, options.controls, options.antiControls)
+    return this
+  }
+
   write(value: number, ...targets: number[]): Simulator {
     for (const t of targets) {
       const pZero = round(this.pZero(t), 5)
@@ -273,16 +280,6 @@ export class Simulator {
     this.x(target1, {controls: controls.concat([target0])})
       .x(target0, {controls: controls.concat([target1])})
       .x(target1, {controls: controls.concat([target0])})
-    return this
-  }
-
-  rx(theta: string, ...targets: number[]): Simulator {
-    this.u(RX(theta), ...targets)
-    return this
-  }
-
-  crx(theta: string, targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(RX(theta), targets, controls, antiControls)
     return this
   }
 
