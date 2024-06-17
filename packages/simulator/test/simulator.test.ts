@@ -28,6 +28,14 @@ describe('Simulator', () => {
 
         expect(simulator.state).toBeSameStateVector(new StateVector('+01'))
       })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'H', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
     })
 
     describe('X', () => {
@@ -53,6 +61,14 @@ describe('Simulator', () => {
         simulator.runStep([{type: 'X', targets: [2], controls: [0], antiControls: [1]}])
 
         expect(simulator.state).toBeSameStateVector(new StateVector('101'))
+      })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'X', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
       })
     })
 
@@ -80,6 +96,14 @@ describe('Simulator', () => {
 
         expect(simulator.state).toBeSameStateVector(new StateVector('i|101>'))
       })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'Y', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
     })
 
     describe('Z', () => {
@@ -105,6 +129,14 @@ describe('Simulator', () => {
         simulator.runStep([{type: 'Z', targets: [2], controls: [0], antiControls: [1]}])
 
         expect(simulator.state).toBeSameStateVector(new StateVector('-|101>'))
+      })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'Z', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
       })
     })
 
@@ -132,6 +164,14 @@ describe('Simulator', () => {
 
         expect(simulator.state).toBeSameStateVector('{{0}, {½+½i}, {0}, {0}, {0}, {½-½i}, {0}, {0}}')
       })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'X^½', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
     })
 
     describe('S', () => {
@@ -157,6 +197,14 @@ describe('Simulator', () => {
         simulator.runStep([{type: 'S', targets: [2], controls: [0], antiControls: [1]}])
 
         expect(simulator.state).toBeSameStateVector(new StateVector('i|101>'))
+      })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'S', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
       })
     })
 
@@ -184,6 +232,14 @@ describe('Simulator', () => {
 
         expect(simulator.state).toBeSameStateVector(new StateVector('-i|101>'))
       })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'S†', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
     })
 
     describe('T', () => {
@@ -209,6 +265,14 @@ describe('Simulator', () => {
         simulator.runStep([{type: 'T', targets: [2], controls: [0], antiControls: [1]}])
 
         expect(simulator.state).toBeSameStateVector('{{0}, {0}, {0}, {0}, {0}, {√½+√½i}, {0}, {0}}')
+      })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'T', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
       })
     })
 
@@ -236,6 +300,14 @@ describe('Simulator', () => {
 
         expect(simulator.state).toBeSameStateVector('{{0}, {0}, {0}, {0}, {0}, {√½-√½i}, {0}, {0}}')
       })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'T†', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
     })
 
     describe('P', () => {
@@ -261,6 +333,20 @@ describe('Simulator', () => {
         simulator.runStep([{type: 'P', angle: 'π', targets: [2], controls: [0], antiControls: [1]}])
 
         expect(simulator.state).toBeSameStateVector(new StateVector('-|101>'))
+      })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'P', angle: 'π', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
+
+      test('angle is not set', () => {
+        const simulator = new Simulator('0')
+
+        expect(() => simulator.runStep([{type: 'P', targets: [0]}])).toThrow('angle is not set')
       })
     })
 
@@ -288,6 +374,20 @@ describe('Simulator', () => {
 
         expect(simulator.state).toBeSameStateVector(new StateVector('-i|101>'))
       })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'Rx', angle: 'π', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
+
+      test('angle is not set', () => {
+        const simulator = new Simulator('0')
+
+        expect(() => simulator.runStep([{type: 'Rx', targets: [0]}])).toThrow('angle is not set')
+      })
     })
 
     describe('Ry', () => {
@@ -314,6 +414,20 @@ describe('Simulator', () => {
 
         expect(simulator.state).toBeSameStateVector(new StateVector('101'))
       })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'Ry', angle: 'π', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
+
+      test('angle is not set', () => {
+        const simulator = new Simulator('0')
+
+        expect(() => simulator.runStep([{type: 'Ry', targets: [0]}])).toThrow('angle is not set')
+      })
     })
 
     describe('Rz', () => {
@@ -339,6 +453,20 @@ describe('Simulator', () => {
         simulator.runStep([{type: 'Rz', angle: 'π', targets: [2], controls: [0], antiControls: [1]}])
 
         expect(simulator.state).toBeSameStateVector(new StateVector('-i|001>'))
+      })
+
+      test('if condition is not satisfied', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'Rz', angle: 'π', targets: [0], if: 'FLAG'}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
+
+      test('angle is not set', () => {
+        const simulator = new Simulator('0')
+
+        expect(() => simulator.runStep([{type: 'Rz', targets: [0]}])).toThrow('angle is not set')
       })
     })
 
@@ -386,20 +514,88 @@ describe('Simulator', () => {
       })
     })
 
-    test('write 0 to |1>', () => {
-      const simulator = new Simulator('1')
+    describe('Bloch', () => {
+      test('apply to a single qubit', () => {
+        const simulator = new Simulator('0')
 
-      simulator.runStep([{type: '|0>', targets: [0]}])
+        simulator.runStep([{type: 'Bloch', targets: [0]}])
 
-      expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+        expect(simulator.blochVectors[0]).toEqual({x: 0, y: 0, z: 1})
+      })
     })
 
-    test('write 1 to |0>', () => {
-      const simulator = new Simulator('0')
+    describe('|0> and |1>', () => {
+      test('write 0 to |1>', () => {
+        const simulator = new Simulator('1')
 
-      simulator.runStep([{type: '|1>', targets: [0]}])
+        simulator.runStep([{type: '|0>', targets: [0]}])
 
-      expect(simulator.state).toBeSameStateVector(new StateVector('1'))
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
+
+      test('write 1 to |0>', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: '|1>', targets: [0]}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('1'))
+      })
+    })
+
+    describe('Measure', () => {
+      test('Measure |0>', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'Measure', targets: [0]}])
+
+        expect(simulator.measuredBits[0]).toBe(0)
+      })
+
+      test('Measure |1>', () => {
+        const simulator = new Simulator('1')
+
+        simulator.runStep([{type: 'Measure', targets: [0]}])
+
+        expect(simulator.measuredBits[0]).toBe(1)
+      })
+
+      test('Measure |1> and set flag', () => {
+        const simulator = new Simulator('1')
+
+        simulator.runStep([{type: 'Measure', targets: [0], flag: 'FLAG'}])
+
+        expect(simulator.flags.FLAG).toBeTruthy()
+      })
+    })
+
+    describe('… (spacer)', () => {
+      test('apply to a single qubit', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: '…', targets: [0]}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      })
+    })
+
+    describe('QFT', () => {
+      test('apply to a single qubit', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'QFT', targets: [0], span: 1}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('+'))
+      })
+    })
+
+    describe('QFT†', () => {
+      test('apply to a single qubit', () => {
+        const simulator = new Simulator('0')
+
+        simulator.runStep([{type: 'QFT†', targets: [0], span: 1}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('+'))
+      })
     })
   })
 
@@ -893,17 +1089,22 @@ describe('Simulator', () => {
 
     test('|00>.qft(1, 0) should be |0+>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.qft(1, 0).state, new StateVector('0+'))).toBe(true)
+      expect(simulator.qft(1, 0).state).toBeSameStateVector(new StateVector('0+'))
     })
 
     test('|00>.qft(1, 1) should be |+0>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.qft(1, 1).state, new StateVector('+0'))).toBe(true)
+      expect(simulator.qft(1, 1).state).toBeSameStateVector(new StateVector('+0'))
     })
 
     test('|00>.qft(0, 1) should be |++>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.qft(1, 0, 1).state, new StateVector('++'))).toBe(true)
+      expect(simulator.qft(1, 0, 1).state).toBeSameStateVector(new StateVector('++'))
+    })
+
+    test('|00>.qft(2, 0)', () => {
+      const simulator = new Simulator('00')
+      expect(simulator.qft(2, 0).state).toBeSameStateVector(new StateVector('++'))
     })
   })
 
@@ -969,6 +1170,11 @@ describe('Simulator', () => {
     test('|00>.qftDagger(0, 1) should be |++>', () => {
       const simulator = new Simulator('00')
       expect(equate(simulator.qftDagger(1, 0, 1).state, new StateVector('++'))).toBeTruthy()
+    })
+
+    test('|00>.qftDagger(2, 0)', () => {
+      const simulator = new Simulator('00')
+      expect(simulator.qftDagger(2, 0).state).toBeSameStateVector(new StateVector('++'))
     })
   })
 
@@ -1102,20 +1308,20 @@ describe('Simulator', () => {
     })
   })
 
-  describe('cswap', () => {
-    test('|011>.cswap(0, 1, 2) should be |101>', () => {
+  describe('swap', () => {
+    test('|011>.swap(0, 1, 2) should be |101>', () => {
       const simulator = new Simulator('011')
       expect(equate(simulator.swap(1, 2, {controls: [0]}).state, new StateVector('101'))).toBeTruthy()
     })
 
-    test('|011>.cswap(2, 0, 1) should be |011>', () => {
+    test('|011>.swap(2, 0, 1) should be |011>', () => {
       const simulator = new Simulator('011')
       expect(equate(simulator.swap(0, 1, {controls: [2]}).state, new StateVector('011'))).toBeTruthy()
     })
   })
 
-  describe('blochVector', () => {
-    test('|0>.blochVector(0)', () => {
+  describe('blochDisplay', () => {
+    test('|0>.blochDisplay(0)', () => {
       const simulator = new Simulator('0')
 
       simulator.blochDisplay(0)
@@ -1123,7 +1329,7 @@ describe('Simulator', () => {
       expect(simulator.blochVectors[0]).toEqual({x: 0, y: 0, z: 1})
     })
 
-    test('|1>.blochVector(0)', () => {
+    test('|1>.blochDisplay(0)', () => {
       const simulator = new Simulator('1')
 
       simulator.blochDisplay(0)
@@ -1131,7 +1337,7 @@ describe('Simulator', () => {
       expect(simulator.blochVectors[0]).toEqual({x: 0, y: 0, z: -1})
     })
 
-    test('|+>.blochVector(0)', () => {
+    test('|+>.blochDisplay(0)', () => {
       const simulator = new Simulator('+')
 
       simulator.blochDisplay(0)
@@ -1142,7 +1348,7 @@ describe('Simulator', () => {
       expect(blochVector.z).toBe(0)
     })
 
-    test('|->.blochVector(0)', () => {
+    test('|->.blochDisplay(0)', () => {
       const simulator = new Simulator('-')
 
       simulator.blochDisplay(0)
@@ -1153,7 +1359,7 @@ describe('Simulator', () => {
       expect(blochVector.z).toBe(0)
     })
 
-    test('|i>.blochVector(0)', () => {
+    test('|i>.blochDisplay(0)', () => {
       const simulator = new Simulator('i')
 
       simulator.blochDisplay(0)
@@ -1164,7 +1370,7 @@ describe('Simulator', () => {
       expect(blochVector.z).toBe(0)
     })
 
-    test('|-i>.blochVector(0)', () => {
+    test('|-i>.blochDisplay(0)', () => {
       const simulator = new Simulator('(-i)')
 
       simulator.blochDisplay(0)

@@ -94,23 +94,24 @@ export class Simulator {
           break
         }
         case SerializedPhaseGateType: {
-          if (!each.angle) break
+          if (!each.angle) throw new Error('angle is not set')
+          if (each.if && !this.flags[each.if]) break
           this.phase(each.angle, ...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         }
         case SerializedRxGateType:
+          if (!each.angle) throw new Error('angle is not set')
           if (each.if && !this.flags[each.if]) break
-          if (!each.angle) break
           this.rx(each.angle, ...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedRyGateType:
+          if (!each.angle) throw new Error('angle is not set')
           if (each.if && !this.flags[each.if]) break
-          if (!each.angle) break
           this.ry(each.angle, ...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedRzGateType:
+          if (!each.angle) throw new Error('angle is not set')
           if (each.if && !this.flags[each.if]) break
-          if (!each.angle) break
           this.rz(each.angle, ...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedSwapGateType: {
@@ -148,6 +149,7 @@ export class Simulator {
         case SerializedQftDaggerGateType:
           this.qftDagger(each.span, ...each.targets)
           break
+        /* istanbul ignore next */
         default:
           throw new Error('Unknown instruction')
       }
@@ -335,22 +337,22 @@ export class Simulator {
         for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
           if ((bit & (1 << t)) !== 0) this.state.setAmplifier(bit, Complex.ZERO)
           const res = this.state.amplifier(bit).div(Math.sqrt(pZero))
-          if (res.isOk()) {
-            this.state.setAmplifier(bit, res.value)
-          } else {
+          /* istanbul ignore next */
+          if (res.isErr()) {
             throw Error(res.error.message)
           }
+          this.state.setAmplifier(bit, res.value)
         }
         this.measuredBits[t] = 0
       } else {
         for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
           if ((bit & (1 << t)) === 0) this.state.setAmplifier(bit, Complex.ZERO)
           const res = this.state.amplifier(bit).div(Math.sqrt(1 - pZero))
-          if (res.isOk()) {
-            this.state.setAmplifier(bit, res.value)
-          } else {
+          /* istanbul ignore next */
+          if (res.isErr()) {
             throw Error(res.error.message)
           }
+          this.state.setAmplifier(bit, res.value)
         }
         this.measuredBits[t] = 1
       }
