@@ -30,7 +30,7 @@ import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
 
-type GateControlOptions = {
+type ControlOptions = {
   controls?: number[]
   antiControls?: number[]
 }
@@ -158,130 +158,130 @@ export class Simulator {
   /**
    * Applies the H gate to the specified qubit(s).
    */
-  h(...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  h(...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(H, targets, options.controls, options.antiControls)
+    this.cu(H, targets, controlOptions)
     return this
   }
 
   /**
    * Applies the X gate to the specified qubit(s).
    */
-  x(...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  x(...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(X, targets, options.controls, options.antiControls)
+    this.cu(X, targets, controlOptions)
     return this
   }
 
   /**
    * Applies the Y gate to the specified qubit(s).
    */
-  y(...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  y(...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(Y, targets, options.controls, options.antiControls)
+    this.cu(Y, targets, controlOptions)
     return this
   }
 
   /**
    * Applies the Z gate to the specified qubit(s).
    */
-  z(...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  z(...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(Z, targets, options.controls, options.antiControls)
+    this.cu(Z, targets, controlOptions)
     return this
   }
 
   /**
    * Applies the √X gate to the specified qubit(s).
    */
-  rnot(...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  rnot(...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(RNOT, targets, options.controls, options.antiControls)
+    this.cu(RNOT, targets, controlOptions)
     return this
   }
 
   /**
    * Applies the S gate to the specified qubit(s).
    */
-  s(...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  s(...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(S, targets, options.controls, options.antiControls)
+    this.cu(S, targets, controlOptions)
     return this
   }
 
   /**
    * Applies the S† gate to the specified qubit(s).
    */
-  sDagger(...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  sDagger(...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(SDagger, targets, options.controls, options.antiControls)
+    this.cu(SDagger, targets, controlOptions)
     return this
   }
 
   /**
    * Applies the T gate to the specified qubit(s).
    */
-  t(...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  t(...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(T, targets, options.controls, options.antiControls)
+    this.cu(T, targets, controlOptions)
     return this
   }
 
   /**
    * Applies the T† gate to the specified qubit(s).
    */
-  tDagger(...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  tDagger(...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(TDagger, targets, options.controls, options.antiControls)
+    this.cu(TDagger, targets, controlOptions)
     return this
   }
 
   /**
    * Applies a phase gate to the specified qubit(s).
    */
-  phase(phi: string, ...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  phase(phi: string, ...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(PHASE(phi), targets, options.controls, options.antiControls)
+    this.cu(PHASE(phi), targets, controlOptions)
     return this
   }
 
   /**
    * Apply an RX gate to the specified qubit(s).
    */
-  rx(theta: string, ...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  rx(theta: string, ...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(RX(theta), targets, options.controls, options.antiControls)
+    this.cu(RX(theta), targets, controlOptions)
     return this
   }
 
   /**
    * Apply an RY gate to the specified qubit(s).
    */
-  ry(theta: string, ...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  ry(theta: string, ...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(RY(theta), targets, options.controls, options.antiControls)
+    this.cu(RY(theta), targets, controlOptions)
     return this
   }
 
   /**
    * Apply an RZ gate to the specified qubit(s).
    */
-  rz(theta: string, ...args: Array<number | GateControlOptions>): Simulator {
-    const {targets, options} = this.processGateArgs(args)
+  rz(theta: string, ...args: Array<number | ControlOptions>): Simulator {
+    const {targets, controlOptions} = this.processGateArgs(args)
 
-    this.cu(RZ(theta), targets, options.controls, options.antiControls)
+    this.cu(RZ(theta), targets, controlOptions)
     return this
   }
 
@@ -290,7 +290,7 @@ export class Simulator {
    *
    * TODO: antiControl に対応
    */
-  swap(target0: number, target1: number, controlOptions?: GateControlOptions): Simulator {
+  swap(target0: number, target1: number, controlOptions?: ControlOptions): Simulator {
     const controls = controlOptions?.controls || []
 
     this.x(target1, {controls: controls.concat([target0])})
@@ -355,6 +355,9 @@ export class Simulator {
     return this
   }
 
+  /**
+   * Applies the Quantum Fourier Transform (QFT) to the specified targets.
+   */
   qft(span: ResizeableSpan, ...targets: number[]): Simulator {
     for (const each of targets) {
       this.qftSingleTargetBit(span, each)
@@ -362,6 +365,9 @@ export class Simulator {
     return this
   }
 
+  /**
+   * Applies the inverse Quantum Fourier Transform (QFT) to the specified targets.
+   */
   qftDagger(span: ResizeableSpan, ...targets: number[]): Simulator {
     for (const each of targets) {
       this.qftDaggerSingleTargetBit(span, each)
@@ -389,21 +395,19 @@ export class Simulator {
     return this
   }
 
-  amplitudes(): Complex[] {
-    return this.state.matrix.column(0)._unsafeUnwrap()
-  }
-
-  private processGateArgs(args: Array<number | GateControlOptions>): {targets: number[]; options: GateControlOptions} {
-    const options = typeof args[args.length - 1] === 'object' ? (args.pop() as GateControlOptions) : {}
+  private processGateArgs(args: Array<number | ControlOptions>): {
+    targets: number[]
+    controlOptions: ControlOptions
+  } {
+    const controlOptions = typeof args[args.length - 1] === 'object' ? (args.pop() as ControlOptions) : {}
     const targets = args as number[]
 
-    return {targets, options}
+    return {targets, controlOptions}
   }
 
-  // TODO: 引数に GateControlOptions を受け取るようにする
-  private cu(u: Matrix, targets: number[], controls: number[] = [], antiControls: number[] = []): void {
+  private cu(u: Matrix, targets: number[], gateControlOptions: ControlOptions): void {
     for (const t of targets) {
-      this.state.applyControlledGate(u, t, controls, antiControls)
+      this.state.applyControlledGate(u, t, gateControlOptions.controls, gateControlOptions.antiControls)
     }
   }
 

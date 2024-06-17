@@ -187,7 +187,12 @@ export class Matrix {
     return other instanceof Matrix ? this.multMatrix(other) : ok(this.multScalar(other))
   }
 
-  applyControlledGate(operation2x2: Matrix, targetBit: number, controls: number[], antiControls: number[]): Matrix {
+  applyControlledGate(
+    operation2x2: Matrix,
+    targetBit: number,
+    controls: number[] = [],
+    antiControls: number[] = [],
+  ): Matrix {
     const {width: w, height: h, buffer: old} = this
 
     for (const each of controls) {
