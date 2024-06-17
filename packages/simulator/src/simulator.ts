@@ -304,7 +304,10 @@ export class Simulator {
     return this.state.blochVector(target)
   }
 
-  write(value: number, ...targets: number[]): Simulator {
+  /**
+   * Writes a value zero or one to the specified qubit(s).
+   */
+  write(value: 0 | 1, ...targets: number[]): Simulator {
     for (const t of targets) {
       const pZero = round(this.pZero(t), 5)
 
