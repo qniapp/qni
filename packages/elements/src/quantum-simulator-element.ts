@@ -15,7 +15,7 @@ declare global {
 
 type MessageEventData = {
   type: 'step' | 'finish'
-  blochVectors: {[bit: number]: [number, number, number]}
+  blochVectors: {[bit: number]: {x: number; y: number; z: number}}
   measuredBits: {[bit: number]: number}
   step: number
   amplitudes: Array<[number, number]>
@@ -88,9 +88,9 @@ export class QuantumSimulatorElement extends HTMLElement {
           const blochDisplay = step.dropzoneAt(bit).operation
           if (isBlochDisplayElement(blochDisplay)) {
             const blochVector = data.blochVectors[bit]
-            blochDisplay.x = blochVector[0]
-            blochDisplay.y = blochVector[1]
-            blochDisplay.z = blochVector[2]
+            blochDisplay.x = blochVector.x
+            blochDisplay.y = blochVector.y
+            blochDisplay.z = blochVector.z
           }
         }
 

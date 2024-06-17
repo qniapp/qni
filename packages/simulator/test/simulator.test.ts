@@ -1118,53 +1118,61 @@ describe('Simulator', () => {
     test('|0>.blochVector(0)', () => {
       const simulator = new Simulator('0')
 
-      expect(simulator.blochVector(0)).toEqual([0, 0, 1])
+      simulator.blochDisplay(0)
+
+      expect(simulator.blochVectors[0]).toEqual({x: 0, y: 0, z: 1})
     })
 
     test('|1>.blochVector(0)', () => {
       const simulator = new Simulator('1')
 
-      expect(simulator.blochVector(0)).toEqual([0, 0, -1])
+      simulator.blochDisplay(0)
+
+      expect(simulator.blochVectors[0]).toEqual({x: 0, y: 0, z: -1})
     })
 
     test('|+>.blochVector(0)', () => {
       const simulator = new Simulator('+')
 
-      const blochVector = simulator.blochVector(0)
+      simulator.blochDisplay(0)
 
-      expect(blochVector[0]).toBeCloseTo(1)
-      expect(blochVector[1]).toBe(0)
-      expect(blochVector[2]).toBe(0)
+      const blochVector = simulator.blochVectors[0]
+      expect(blochVector.x).toBeCloseTo(1)
+      expect(blochVector.y).toBe(0)
+      expect(blochVector.z).toBe(0)
     })
 
     test('|->.blochVector(0)', () => {
       const simulator = new Simulator('-')
 
-      const blochVector = simulator.blochVector(0)
+      simulator.blochDisplay(0)
 
-      expect(blochVector[0]).toBeCloseTo(-1)
-      expect(blochVector[1]).toBe(0)
-      expect(blochVector[2]).toBe(0)
+      const blochVector = simulator.blochVectors[0]
+      expect(blochVector.x).toBeCloseTo(-1)
+      expect(blochVector.y).toBe(0)
+      expect(blochVector.z).toBe(0)
     })
 
     test('|i>.blochVector(0)', () => {
       const simulator = new Simulator('i')
 
-      const blochVector = simulator.blochVector(0)
+      simulator.blochDisplay(0)
 
-      expect(blochVector[0]).toBe(0)
-      expect(blochVector[1]).toBeCloseTo(1)
-      expect(blochVector[2]).toBe(0)
+      const blochVector = simulator.blochVectors[0]
+      expect(blochVector.x).toBe(0)
+      expect(blochVector.y).toBeCloseTo(1)
+      expect(blochVector.z).toBe(0)
     })
 
     test('|-i>.blochVector(0)', () => {
       const simulator = new Simulator('(-i)')
 
-      const blochVector = simulator.blochVector(0)
+      simulator.blochDisplay(0)
 
-      expect(blochVector[0]).toBe(0)
-      expect(blochVector[1]).toBeCloseTo(-1)
-      expect(blochVector[2]).toBe(0)
+      const blochVector = simulator.blochVectors[0]
+      expect(blochVector.x).toBe(0)
+      expect(blochVector.y).toBeCloseTo(-1)
+      expect(blochVector.z).toBe(0)
     })
   })
 })

@@ -37,7 +37,7 @@ type ControlOptions = {
 
 export class Simulator {
   public state: StateVector
-  public blochVectors!: {[bit: number]: [number, number, number]}
+  public blochVectors!: {[bit: number]: {x: number; y: number; z: number}}
   public measuredBits: {[bit: number]: number}
   public flags: {[key: string]: boolean}
 
@@ -45,6 +45,7 @@ export class Simulator {
     this.state = new StateVector(bits)
     this.measuredBits = {}
     this.flags = {}
+    this.blochVectors = {}
   }
 
   runStep(operations: SerializedCircuitStep): Simulator {
@@ -122,7 +123,7 @@ export class Simulator {
         }
         case SerializedBlochDisplayType:
           for (const target of each.targets) {
-            this.blochVectors[target] = this.blochVector(target)
+            this.blochDisplay(target)
           }
           break
         case SerializedWrite0GateType:
@@ -302,8 +303,10 @@ export class Simulator {
   /**
    * Calculates the Bloch vector for the specified qubit.
    */
-  blochVector(target: number): [number, number, number] {
-    return this.state.blochVector(target)
+  blochDisplay(target: number): Simulator {
+    const [x, y, z] = this.state.blochVector(target)
+    this.blochVectors[target] = {x, y, z}
+    return this
   }
 
   /**
