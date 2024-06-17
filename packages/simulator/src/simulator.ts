@@ -105,15 +105,15 @@ export class Simulator {
         case SerializedRyGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
-          this.cry(each.angle, each.targets, each.controls, each.antiControls)
+          this.ry(each.angle, ...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedRzGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
-          this.crz(each.angle, each.targets, each.controls, each.antiControls)
+          this.rz(each.angle, ...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedSwapGateType: {
-          this.cswap(each.targets[0], each.targets[1], each.controls)
+          this.swap(each.targets[0], each.targets[1], {controls: each.controls})
           break
         }
         case SerializedControlGateType: {
@@ -154,7 +154,7 @@ export class Simulator {
   }
 
   /**
-   * Applies the H gate to the specified qubit targets.
+   * Applies the H gate to the specified qubit(s).
    */
   h(...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
@@ -164,7 +164,7 @@ export class Simulator {
   }
 
   /**
-   * Applies the X gate to the specified qubit targets.
+   * Applies the X gate to the specified qubit(s).
    */
   x(...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
@@ -174,7 +174,7 @@ export class Simulator {
   }
 
   /**
-   * Applies the Y gate to the specified qubit targets.
+   * Applies the Y gate to the specified qubit(s).
    */
   y(...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
@@ -184,7 +184,7 @@ export class Simulator {
   }
 
   /**
-   * Applies the Z gate to the specified qubit targets.
+   * Applies the Z gate to the specified qubit(s).
    */
   z(...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
@@ -194,7 +194,7 @@ export class Simulator {
   }
 
   /**
-   * Applies the √X gate to the specified qubit targets.
+   * Applies the √X gate to the specified qubit(s).
    */
   rnot(...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
@@ -204,7 +204,7 @@ export class Simulator {
   }
 
   /**
-   * Applies the S gate to the specified qubit targets.
+   * Applies the S gate to the specified qubit(s).
    */
   s(...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
@@ -214,7 +214,7 @@ export class Simulator {
   }
 
   /**
-   * Applies the S† gate to the specified qubit targets.
+   * Applies the S† gate to the specified qubit(s).
    */
   sDagger(...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
@@ -224,7 +224,7 @@ export class Simulator {
   }
 
   /**
-   * Applies the T gate to the specified qubit targets.
+   * Applies the T gate to the specified qubit(s).
    */
   t(...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
@@ -234,7 +234,7 @@ export class Simulator {
   }
 
   /**
-   * Applies the T† gate to the specified qubit targets.
+   * Applies the T† gate to the specified qubit(s).
    */
   tDagger(...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
@@ -244,7 +244,7 @@ export class Simulator {
   }
 
   /**
-   * Applies a phase gate to the specified qubits.
+   * Applies a phase gate to the specified qubit(s).
    */
   phase(phi: string, ...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
@@ -253,10 +253,43 @@ export class Simulator {
     return this
   }
 
+  /**
+   * Apply an RX gate to the specified qubit(s).
+   */
   rx(theta: string, ...args: Array<number | GateControlOptions>): Simulator {
     const {targets, options} = this.processGateArgs(args)
 
     this.cu(RX(theta), targets, options.controls, options.antiControls)
+    return this
+  }
+
+  /**
+   * Apply an RY gate to the specified qubit(s).
+   */
+  ry(theta: string, ...args: Array<number | GateControlOptions>): Simulator {
+    const {targets, options} = this.processGateArgs(args)
+
+    this.cu(RY(theta), targets, options.controls, options.antiControls)
+    return this
+  }
+
+  /**
+   * Apply an RZ gate to the specified qubit(s).
+   */
+  rz(theta: string, ...args: Array<number | GateControlOptions>): Simulator {
+    const {targets, options} = this.processGateArgs(args)
+
+    this.cu(RZ(theta), targets, options.controls, options.antiControls)
+    return this
+  }
+
+  // TODO: antiControl に対応
+  swap(target0: number, target1: number, controlOptions?: GateControlOptions): Simulator {
+    const controls = controlOptions?.controls || []
+
+    this.x(target1, {controls: controls.concat([target0])})
+      .x(target0, {controls: controls.concat([target1])})
+      .x(target1, {controls: controls.concat([target0])})
     return this
   }
 
@@ -268,38 +301,6 @@ export class Simulator {
         this.x(t)
       }
     }
-    return this
-  }
-
-  swap(target0: number, target1: number): Simulator {
-    this.cswap(target0, target1, [])
-    return this
-  }
-
-  cswap(target0: number, target1: number, controls: number[] = []): Simulator {
-    this.x(target1, {controls: controls.concat([target0])})
-      .x(target0, {controls: controls.concat([target1])})
-      .x(target1, {controls: controls.concat([target0])})
-    return this
-  }
-
-  ry(theta: string, ...targets: number[]): Simulator {
-    this.u(RY(theta), ...targets)
-    return this
-  }
-
-  cry(theta: string, targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(RY(theta), targets, controls, antiControls)
-    return this
-  }
-
-  rz(theta: string, ...targets: number[]): Simulator {
-    this.u(RZ(theta), ...targets)
-    return this
-  }
-
-  crz(theta: string, targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(RZ(theta), targets, controls, antiControls)
     return this
   }
 

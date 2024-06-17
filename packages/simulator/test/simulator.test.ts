@@ -1105,12 +1105,12 @@ describe('Simulator', () => {
   describe('cswap', () => {
     test('|011>.cswap(0, 1, 2) should be |101>', () => {
       const simulator = new Simulator('011')
-      expect(equate(simulator.cswap(1, 2, [0]).state, new StateVector('101'))).toBeTruthy()
+      expect(equate(simulator.swap(1, 2, {controls: [0]}).state, new StateVector('101'))).toBeTruthy()
     })
 
     test('|011>.cswap(2, 0, 1) should be |011>', () => {
       const simulator = new Simulator('011')
-      expect(equate(simulator.cswap(0, 1, [2]).state, new StateVector('011'))).toBeTruthy()
+      expect(equate(simulator.swap(0, 1, {controls: [2]}).state, new StateVector('011'))).toBeTruthy()
     })
   })
 })
