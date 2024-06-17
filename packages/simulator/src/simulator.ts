@@ -131,6 +131,14 @@ export class Simulator {
         case SerializedWrite1GateType:
           this.write(1, ...each.targets)
           break
+        case SerializedMeasurementGateType:
+          for (const target of each.targets) {
+            this.measure(target)
+            if (each.flag) {
+              this.flags[each.flag] = this.measuredBits[target] === 1
+            }
+          }
+          break
         case SerializedSpacerGateType:
           break
         case SerializedQftGateType:
@@ -138,12 +146,6 @@ export class Simulator {
           break
         case SerializedQftDaggerGateType:
           this.qftDagger(each.span, ...each.targets)
-          break
-        case SerializedMeasurementGateType:
-          for (const target of each.targets) {
-            this.measure(target)
-            if (each.flag) this.flags[each.flag] = this.measuredBits[target] === 1
-          }
           break
         default:
           throw new Error('Unknown instruction')
@@ -318,40 +320,9 @@ export class Simulator {
     return this
   }
 
-  qft(span: ResizeableSpan, ...targets: number[]): Simulator {
-    for (const each of targets) {
-      this.qftSingleTargetBit(span, each)
-    }
-    return this
-  }
-
-  private qftSingleTargetBit(span: ResizeableSpan, target: number): Simulator {
-    for (let i = 0; i < span; i++) {
-      this.h(target + i)
-      for (let j = 1; j < span - i; j++) {
-        this.phase(`π/${2 ** j}`, target + i, {controls: [target + i + j]})
-      }
-    }
-    return this
-  }
-
-  qftDagger(span: ResizeableSpan, ...targets: number[]): Simulator {
-    for (const each of targets) {
-      this.qftDaggerSingleTargetBit(span, each)
-    }
-    return this
-  }
-
-  private qftDaggerSingleTargetBit(span: ResizeableSpan, target: number): Simulator {
-    for (let i = span - 1; i >= 0; i--) {
-      for (let j = span - i - 1; j > 0; j--) {
-        this.phase(`-π/${2 ** j}`, target + i, {controls: [target + i + j]})
-      }
-      this.h(target + i)
-    }
-    return this
-  }
-
+  /**
+   * Measures the specified qubits and updates the state accordingly.
+   */
   measure(...targets: number[]): Simulator {
     for (const t of targets) {
       const pZero = this.pZero(t)
@@ -384,6 +355,40 @@ export class Simulator {
     return this
   }
 
+  qft(span: ResizeableSpan, ...targets: number[]): Simulator {
+    for (const each of targets) {
+      this.qftSingleTargetBit(span, each)
+    }
+    return this
+  }
+
+  qftDagger(span: ResizeableSpan, ...targets: number[]): Simulator {
+    for (const each of targets) {
+      this.qftDaggerSingleTargetBit(span, each)
+    }
+    return this
+  }
+
+  private qftSingleTargetBit(span: ResizeableSpan, target: number): Simulator {
+    for (let i = 0; i < span; i++) {
+      this.h(target + i)
+      for (let j = 1; j < span - i; j++) {
+        this.phase(`π/${2 ** j}`, target + i, {controls: [target + i + j]})
+      }
+    }
+    return this
+  }
+
+  private qftDaggerSingleTargetBit(span: ResizeableSpan, target: number): Simulator {
+    for (let i = span - 1; i >= 0; i--) {
+      for (let j = span - i - 1; j > 0; j--) {
+        this.phase(`-π/${2 ** j}`, target + i, {controls: [target + i + j]})
+      }
+      this.h(target + i)
+    }
+    return this
+  }
+
   amplitudes(): Complex[] {
     return this.state.matrix.column(0)._unsafeUnwrap()
   }
@@ -393,12 +398,6 @@ export class Simulator {
     const targets = args as number[]
 
     return {targets, options}
-  }
-
-  private u(u: Matrix, ...targets: number[]): void {
-    for (const t of targets) {
-      this.state.timesQubitOperation(u, t, 0)
-    }
   }
 
   // TODO: 引数に GateControlOptions を受け取るようにする
