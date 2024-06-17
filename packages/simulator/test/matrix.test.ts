@@ -464,7 +464,12 @@ describe('Matrix', () => {
 
     expect(
       equate(
-        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format(),
+        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+          allowAbbreviation: true,
+          maxAbbreviationError: 0,
+          fixedDigits: undefined,
+          itemSeparator: ', ',
+        }),
         '{{0, 1}, {⅓+i, 0.3333334333333333i}}',
       ),
     ).toBeTruthy()

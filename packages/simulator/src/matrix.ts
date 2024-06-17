@@ -11,7 +11,7 @@ type FormatOptions = {
 
 const DEFAULT_FORMAT_OPTIONS: FormatOptions = {
   allowAbbreviation: true,
-  maxAbbreviationError: 0,
+  maxAbbreviationError: 0.0005,
   fixedDigits: undefined,
   itemSeparator: ', ',
 }
@@ -185,6 +185,64 @@ export class Matrix {
 
   mult(other: Matrix | number | Complex): Result<Matrix, Error> {
     return other instanceof Matrix ? this.multMatrix(other) : ok(this.multScalar(other))
+  }
+
+  applyControlledGate(
+    operation2x2: Matrix,
+    targetBit: number,
+    controls: number[] = [],
+    antiControls: number[] = [],
+  ): Matrix {
+    const {width: w, height: h, buffer: old} = this
+
+    for (const each of controls) {
+      Util.need(each >= 0, 'control bit out of range')
+      Util.need(h >= 2 << each, 'control bit out of range')
+    }
+    for (const each of antiControls) {
+      Util.need(each >= 0, 'anti control bit out of range')
+      Util.need(h >= 2 << each, 'anti control bit out of range')
+    }
+
+    const controlMask = controls.concat(antiControls).reduce((result, each) => {
+      return result | (1 << each)
+    }, 0)
+    const desiredValueMask = controls.reduce((result, each) => {
+      return result | (1 << each)
+    }, 0)
+
+    Util.need((desiredValueMask & (1 << targetBit)) === 0, 'Matrix.timesQubitOperation: self-controlled')
+    Util.need(operation2x2.width === 2 && operation2x2.height === 2, 'Matrix.timesQubitOperation: not 2x2')
+
+    const [ar, ai, br, bi, cr, ci, dr, di] = operation2x2.buffer
+
+    Util.need(targetBit >= 0, 'target bit out of range')
+    Util.need(h >= 2 << targetBit, 'target bit out of range')
+
+    const buf = new Float64Array(old)
+    let i = 0
+    for (let r = 0; r < h; r++) {
+      const targetBitSet = (r & (1 << targetBit)) !== 0
+      const meetsControlConditions = ((controlMask & r) ^ desiredValueMask) === 0
+
+      for (let c = 0; c < w; c++) {
+        if (meetsControlConditions && !targetBitSet) {
+          const j = i + (1 << targetBit) * 2 * w
+          const xr = buf[i]
+          const xi = buf[i + 1]
+          const yr = buf[j]
+          const yi = buf[j + 1]
+
+          buf[i] = xr * ar - xi * ai + yr * br - yi * bi
+          buf[i + 1] = xr * ai + xi * ar + yr * bi + yi * br
+          buf[j] = xr * cr - xi * ci + yr * dr - yi * di
+          buf[j + 1] = xr * ci + xi * cr + yr * di + yi * dr
+        }
+        i += 2
+      }
+    }
+
+    return Matrix.create(h, w, buf)._unsafeUnwrap()
   }
 
   timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): Matrix {

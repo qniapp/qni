@@ -14542,7 +14542,7 @@ var Vr = class extends HTMLElement {
           let m = parseInt(v), d = p.dropzoneAt(m).operation;
           if (fm(d)) {
             let f = n.blochVectors[m];
-            d.x = f[0], d.y = f[1], d.z = f[2];
+            d.x = f.x, d.y = f.y, d.z = f.z;
           }
         }
         if (n.measuredBits) {

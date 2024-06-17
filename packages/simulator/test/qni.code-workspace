@@ -1,0 +1,22 @@
+{
+  "folders": [
+    {
+      "name": "simulator",
+      "path": ".."
+    },
+    {
+      "name": "elements",
+      "path": "../../elements"
+    },
+    {
+      "name": "www",
+      "path": "../../../apps/www"
+    },
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": [
+      "elements",
+      "www",
+    ]
+  }
+}
