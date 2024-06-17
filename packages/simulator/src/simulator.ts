@@ -94,7 +94,7 @@ export class Simulator {
         }
         case SerializedPhaseGateType: {
           if (!each.angle) break
-          this.cphase(each.angle, [each.targets[0]], each.controls, each.antiControls)
+          this.phase(each.angle, ...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         }
         case SerializedRxGateType:
@@ -243,6 +243,16 @@ export class Simulator {
     return this
   }
 
+  /**
+   * Applies a phase gate to the specified qubits.
+   */
+  phase(phi: string, ...args: Array<number | GateControlOptions>): Simulator {
+    const {targets, options} = this.processGateArgs(args)
+
+    this.cu(PHASE(phi), targets, options.controls, options.antiControls)
+    return this
+  }
+
   write(value: number, ...targets: number[]): Simulator {
     for (const t of targets) {
       const pZero = round(this.pZero(t), 5)
@@ -251,16 +261,6 @@ export class Simulator {
         this.x(t)
       }
     }
-    return this
-  }
-
-  phase(phi: string, ...targets: number[]): Simulator {
-    this.u(PHASE(phi), ...targets)
-    return this
-  }
-
-  cphase(phi: string, targets: number[], controls?: number[], antiControls?: number[]): Simulator {
-    this.cu(PHASE(phi), targets, controls, antiControls)
     return this
   }
 
@@ -317,7 +317,7 @@ export class Simulator {
     for (let i = 0; i < span; i++) {
       this.h(target + i)
       for (let j = 1; j < span - i; j++) {
-        this.cphase(`π/${2 ** j}`, [target + i], [target + i + j])
+        this.phase(`π/${2 ** j}`, target + i, {controls: [target + i + j]})
       }
     }
     return this
@@ -333,7 +333,7 @@ export class Simulator {
   private qftDaggerSingleTargetBit(span: ResizeableSpan, target: number): Simulator {
     for (let i = span - 1; i >= 0; i--) {
       for (let j = span - i - 1; j > 0; j--) {
-        this.cphase(`-π/${2 ** j}`, [target + i], [target + i + j])
+        this.phase(`-π/${2 ** j}`, target + i, {controls: [target + i + j]})
       }
       this.h(target + i)
     }
