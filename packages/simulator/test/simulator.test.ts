@@ -1113,4 +1113,58 @@ describe('Simulator', () => {
       expect(equate(simulator.swap(0, 1, {controls: [2]}).state, new StateVector('011'))).toBeTruthy()
     })
   })
+
+  describe('blochVector', () => {
+    test('|0>.blochVector(0)', () => {
+      const simulator = new Simulator('0')
+
+      expect(simulator.blochVector(0)).toEqual([0, 0, 1])
+    })
+
+    test('|1>.blochVector(0)', () => {
+      const simulator = new Simulator('1')
+
+      expect(simulator.blochVector(0)).toEqual([0, 0, -1])
+    })
+
+    test('|+>.blochVector(0)', () => {
+      const simulator = new Simulator('+')
+
+      const blochVector = simulator.blochVector(0)
+
+      expect(blochVector[0]).toBeCloseTo(1)
+      expect(blochVector[1]).toBe(0)
+      expect(blochVector[2]).toBe(0)
+    })
+
+    test('|->.blochVector(0)', () => {
+      const simulator = new Simulator('-')
+
+      const blochVector = simulator.blochVector(0)
+
+      expect(blochVector[0]).toBeCloseTo(-1)
+      expect(blochVector[1]).toBe(0)
+      expect(blochVector[2]).toBe(0)
+    })
+
+    test('|i>.blochVector(0)', () => {
+      const simulator = new Simulator('i')
+
+      const blochVector = simulator.blochVector(0)
+
+      expect(blochVector[0]).toBe(0)
+      expect(blochVector[1]).toBeCloseTo(1)
+      expect(blochVector[2]).toBe(0)
+    })
+
+    test('|-i>.blochVector(0)', () => {
+      const simulator = new Simulator('(-i)')
+
+      const blochVector = simulator.blochVector(0)
+
+      expect(blochVector[0]).toBe(0)
+      expect(blochVector[1]).toBeCloseTo(-1)
+      expect(blochVector[2]).toBe(0)
+    })
+  })
 })

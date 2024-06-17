@@ -120,16 +120,16 @@ export class Simulator {
           this.z(each.targets[0], {controls: each.targets.slice(1)})
           break
         }
+        case SerializedBlochDisplayType:
+          for (const target of each.targets) {
+            this.blochVectors[target] = this.blochVector(target)
+          }
+          break
         case SerializedWrite0GateType:
           this.write(0, ...each.targets)
           break
         case SerializedWrite1GateType:
           this.write(1, ...each.targets)
-          break
-        case SerializedBlochDisplayType:
-          for (const target of each.targets) {
-            this.blochVectors[target] = this.state.blochVector(target)
-          }
           break
         case SerializedSpacerGateType:
           break
@@ -283,7 +283,11 @@ export class Simulator {
     return this
   }
 
-  // TODO: antiControl に対応
+  /**
+   * Swaps the values of two qubits.
+   *
+   * TODO: antiControl に対応
+   */
   swap(target0: number, target1: number, controlOptions?: GateControlOptions): Simulator {
     const controls = controlOptions?.controls || []
 
@@ -291,6 +295,13 @@ export class Simulator {
       .x(target0, {controls: controls.concat([target1])})
       .x(target1, {controls: controls.concat([target0])})
     return this
+  }
+
+  /**
+   * Calculates the Bloch vector for the specified qubit.
+   */
+  blochVector(target: number): [number, number, number] {
+    return this.state.blochVector(target)
   }
 
   write(value: number, ...targets: number[]): Simulator {
