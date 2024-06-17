@@ -1,4 +1,4 @@
-import {Complex, equate} from '@qni/common'
+import {Complex} from '@qni/common'
 import {Matrix, Simulator, StateVector} from '../src'
 import './matchers/to-be-same-state-vector'
 
@@ -602,64 +602,64 @@ describe('Simulator', () => {
   describe('write', () => {
     test('|0>.write(0, 0) should be |0>', () => {
       const simulator = new Simulator('0')
-      expect(equate(simulator.write(0, 0).state, new StateVector('0'))).toBe(true)
+      expect(simulator.write(0, 0).state).toBeSameStateVector(new StateVector('0'))
     })
 
     test('|0>.write(1, 0) should be |1>', () => {
       const simulator = new Simulator('0')
-      expect(equate(simulator.write(1, 0).state, new StateVector('1'))).toBe(true)
+      expect(simulator.write(1, 0).state).toBeSameStateVector(new StateVector('1'))
     })
 
     test('|1>.write(0, 0) should be |0>', () => {
       const simulator = new Simulator('1')
-      expect(equate(simulator.write(0, 0).state, new StateVector('0'))).toBe(true)
+      expect(simulator.write(0, 0).state).toBeSameStateVector(new StateVector('0'))
     })
 
     test('|1>.write(1, 0) should be |1>', () => {
       const simulator = new Simulator('1')
-      expect(equate(simulator.write(1, 0).state, new StateVector('1'))).toBe(true)
+      expect(simulator.write(1, 0).state).toBeSameStateVector(new StateVector('1'))
     })
 
     test('|00>.write(0, 0, 1) should be |00>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.write(0, 0, 1).state, new StateVector('00'))).toBe(true)
+      expect(simulator.write(0, 0, 1).state).toBeSameStateVector(new StateVector('00'))
     })
 
     test('|00>.write(1, 0) should be |01>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.write(1, 0).state, new StateVector('01'))).toBe(true)
+      expect(simulator.write(1, 0).state).toBeSameStateVector(new StateVector('01'))
     })
 
     test('|00>.write(1, 0, 1) should be |11>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.write(1, 0, 1).state, new StateVector('11'))).toBe(true)
+      expect(simulator.write(1, 0, 1).state).toBeSameStateVector(new StateVector('11'))
     })
 
     test('|11>.write(1, 0, 1) should be |11>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.write(1, 0, 1).state, new StateVector('11'))).toBe(true)
+      expect(simulator.write(1, 0, 1).state).toBeSameStateVector(new StateVector('11'))
     })
 
     test('|11>.write(0, 0) should be |10>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.write(0, 0).state, new StateVector('10'))).toBe(true)
+      expect(simulator.write(0, 0).state).toBeSameStateVector(new StateVector('10'))
     })
 
     test('|11>.write(0, 0, 1) should be |00>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.write(0, 0, 1).state, new StateVector('00'))).toBe(true)
+      expect(simulator.write(0, 0, 1).state).toBeSameStateVector(new StateVector('00'))
     })
   })
 
   describe('h', () => {
     test('|0>.h(0) should be |+>', () => {
       const simulator = new Simulator('0')
-      expect(equate(simulator.h(0).state, new StateVector('+'))).toBe(true)
+      expect(simulator.h(0).state).toBeSameStateVector(new StateVector('+'))
     })
 
     test('|1>.h(0) should be |->', () => {
       const simulator = new Simulator('1')
-      expect(equate(simulator.h(0).state, new StateVector('-'))).toBe(true)
+      expect(simulator.h(0).state).toBeSameStateVector(new StateVector('-'))
     })
 
     test('|+>.h(0) should be |0>', () => {
@@ -678,12 +678,9 @@ describe('Simulator', () => {
       const e = new Complex(Math.E, 0)
 
       const simulator = new Simulator('i')
-      expect(
-        equate(
-          simulator.h(0).state.matrix,
-          new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
-        ),
-      ).toBe(true)
+      expect(simulator.h(0).state).toBeSameStateVector(
+        new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
+      )
     })
 
     test('|-i>.h(0) should be e^{-iπ/4}|i>', () => {
@@ -692,12 +689,9 @@ describe('Simulator', () => {
       const e = new Complex(Math.E, 0)
 
       const simulator = new Simulator('(-i)')
-      expect(
-        equate(
-          simulator.h(0).state.matrix,
-          new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
-        ),
-      ).toBe(true)
+      expect(simulator.h(0).state.matrix).toBeSameStateVector(
+        new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
+      )
     })
 
     test('|0>.h(1) should throw an error', () => {
@@ -712,17 +706,17 @@ describe('Simulator', () => {
 
     test('|00>.h(0) should be |0+>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.h(0).state, new StateVector('0+'))).toBe(true)
+      expect(simulator.h(0).state).toBeSameStateVector(new StateVector('0+'))
     })
 
     test('|00>.h(1) should be |+0>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.h(1).state, new StateVector('+0'))).toBe(true)
+      expect(simulator.h(1).state).toBeSameStateVector(new StateVector('+0'))
     })
 
     test('|00>.h(0, 1) should be |++>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.h(0, 1).state, new StateVector('++'))).toBe(true)
+      expect(simulator.h(0, 1).state).toBeSameStateVector(new StateVector('++'))
     })
   })
 
@@ -731,32 +725,32 @@ describe('Simulator', () => {
   describe('ch', () => {
     test('|00>.ch (target = 1, control = 0) should be |00>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.h(1, {controls: [0]}).state, new StateVector('00'))).toBeTruthy()
+      expect(simulator.h(1, {controls: [0]}).state).toBeSameStateVector(new StateVector('00'))
     })
 
     test('|00>.ch (target = 0, control = 1) should be |00>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.h(0, {controls: [1]}).state, new StateVector('00'))).toBeTruthy()
+      expect(simulator.h(0, {controls: [1]}).state).toBeSameStateVector(new StateVector('00'))
     })
 
     test('|11>.ch (target = 1, control = 0) should be |01>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.h(1, {controls: [0]}).state, new StateVector('-1'))).toBeTruthy()
+      expect(simulator.h(1, {controls: [0]}).state).toBeSameStateVector(new StateVector('-1'))
     })
 
     test('|11>.ch (target = 0, control = 1) should be |10>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.h(0, {controls: [1]}).state, new StateVector('1-'))).toBeTruthy()
+      expect(simulator.h(0, {controls: [1]}).state).toBeSameStateVector(new StateVector('1-'))
     })
 
     test('|010>.ch (target = 2, control = 0, 1) should be |010>', () => {
       const simulator = new Simulator('010')
-      expect(equate(simulator.h(2, {controls: [0, 1]}).state, new StateVector('010'))).toBeTruthy()
+      expect(simulator.h(2, {controls: [0, 1]}).state).toBeSameStateVector(new StateVector('010'))
     })
 
     test('|011>.ch (target = 2, control = 0, 1) should be |111>', () => {
       const simulator = new Simulator('011')
-      expect(equate(simulator.h(2, {controls: [0, 1]}).state, new StateVector('+11'))).toBeTruthy()
+      expect(simulator.h(2, {controls: [0, 1]}).state).toBeSameStateVector(new StateVector('+11'))
     })
 
     test('|00>.ch (target = 2) should throw an error', () => {
@@ -793,36 +787,36 @@ describe('Simulator', () => {
   describe('x', () => {
     test('|0>.x(0) should be |1>', () => {
       const simulator = new Simulator('0')
-      expect(equate(simulator.x(0).state, new StateVector('1'))).toBe(true)
+      expect(simulator.x(0).state).toBeSameStateVector(new StateVector('1'))
     })
 
     test('|1>.x(0) should be |0>', () => {
       const simulator = new Simulator('1')
-      expect(equate(simulator.x(0).state, new StateVector('0'))).toBe(true)
+      expect(simulator.x(0).state).toBeSameStateVector(new StateVector('0'))
     })
 
     test('|+>.x(0) should be |+>', () => {
       const simulator = new Simulator('+')
-      expect(equate(simulator.x(0).state, new StateVector('+'))).toBe(true)
+      expect(simulator.x(0).state).toBeSameStateVector(new StateVector('+'))
     })
 
     test('|->.x(0) should be -|->', () => {
       const simulator = new Simulator('-')
-      expect(equate(simulator.x(0).state.matrix, new StateVector('-').matrix.mult(-1)._unsafeUnwrap())).toBe(true)
+      expect(simulator.x(0).state.matrix).toBeSameStateVector(new StateVector('-').matrix.mult(-1)._unsafeUnwrap())
     })
 
     test('|i>.x(0) should be i|-i>', () => {
       const simulator = new Simulator('i')
-      expect(
-        equate(simulator.x(0).state.matrix, new StateVector('(-i)').matrix.mult(new Complex(0, 1))._unsafeUnwrap()),
-      ).toBe(true)
+      expect(simulator.x(0).state.matrix).toBeSameStateVector(
+        new StateVector('(-i)').matrix.mult(new Complex(0, 1))._unsafeUnwrap(),
+      )
     })
 
     test('|-i>.x(0) should be -i|i>', () => {
       const simulator = new Simulator('(-i)')
-      expect(
-        equate(simulator.x(0).state.matrix, new StateVector('i').matrix.mult(new Complex(0, -1))._unsafeUnwrap()),
-      ).toBe(true)
+      expect(simulator.x(0).state.matrix).toBeSameStateVector(
+        new StateVector('i').matrix.mult(new Complex(0, -1))._unsafeUnwrap(),
+      )
     })
 
     test('|0>.x(1) should throw an error', () => {
@@ -837,17 +831,17 @@ describe('Simulator', () => {
 
     test('|00>.x(0) should be |01>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.x(0).state, new StateVector('01'))).toBe(true)
+      expect(simulator.x(0).state).toBeSameStateVector(new StateVector('01'))
     })
 
     test('|00>.x(1) should be |10>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.x(1).state, new StateVector('10'))).toBe(true)
+      expect(simulator.x(1).state).toBeSameStateVector(new StateVector('10'))
     })
 
     test('|00>.x(0, 1) should be |11>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.x(0, 1).state, new StateVector('11'))).toBe(true)
+      expect(simulator.x(0, 1).state).toBeSameStateVector(new StateVector('11'))
     })
   })
 
@@ -856,32 +850,32 @@ describe('Simulator', () => {
   describe('cnot', () => {
     test('|00>.cnot (target = 1, control = 0) should be |00>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.x(1, {controls: [0]}).state, new StateVector('00'))).toBeTruthy()
+      expect(simulator.x(1, {controls: [0]}).state).toBeSameStateVector(new StateVector('00'))
     })
 
     test('|00>.cnot (target = 0, control = 1) should be |00>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.x(0, {controls: [1]}).state, new StateVector('00'))).toBeTruthy()
+      expect(simulator.x(0, {controls: [1]}).state).toBeSameStateVector(new StateVector('00'))
     })
 
     test('|11>.cnot (target = 1, control = 0) should be |01>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.x(1, {controls: [0]}).state, new StateVector('01'))).toBeTruthy()
+      expect(simulator.x(1, {controls: [0]}).state).toBeSameStateVector(new StateVector('01'))
     })
 
     test('|11>.cnot (target = 0, control = 1) should be |10>', () => {
       const simulator = new Simulator('11')
-      expect(equate(simulator.x(0, {controls: [1]}).state, new StateVector('10'))).toBeTruthy()
+      expect(simulator.x(0, {controls: [1]}).state).toBeSameStateVector(new StateVector('10'))
     })
 
     test('|010>.cnot (target = 2, control = 0, 1) should be |010>', () => {
       const simulator = new Simulator('010')
-      expect(equate(simulator.x(2, {controls: [0, 1]}).state, new StateVector('010'))).toBeTruthy()
+      expect(simulator.x(2, {controls: [0, 1]}).state).toBeSameStateVector(new StateVector('010'))
     })
 
     test('|011>.cnot (target = 2, control = 0, 1) should be |111>', () => {
       const simulator = new Simulator('011')
-      expect(equate(simulator.x(2, {controls: [0, 1]}).state, new StateVector('111'))).toBeTruthy()
+      expect(simulator.x(2, {controls: [0, 1]}).state).toBeSameStateVector(new StateVector('111'))
     })
 
     test('|00>.cnot (target = 2) should throw an error', () => {
@@ -918,49 +912,49 @@ describe('Simulator', () => {
   describe('phase', () => {
     test("|0>.phase('π', 0) should be |0>", () => {
       const simulator = new Simulator('0')
-      expect(equate(simulator.phase('π', 0).state, new StateVector('0'))).toBe(true)
+      expect(simulator.phase('π', 0).state).toBeSameStateVector(new StateVector('0'))
     })
 
     test("|1>.phase('π', 0) should be -|1>", () => {
       const simulator = new Simulator('1')
-      expect(equate(simulator.phase('π', 0).state.matrix, new StateVector('1').matrix.mult(-1)._unsafeUnwrap())).toBe(
-        true,
+      expect(simulator.phase('π', 0).state.matrix).toBeSameStateVector(
+        new StateVector('1').matrix.mult(-1)._unsafeUnwrap(),
       )
     })
 
     test("|+>.phase('π', 0) should be |->", () => {
       const simulator = new Simulator('+')
-      expect(equate(simulator.phase('π', 0).state, new StateVector('-'))).toBe(true)
+      expect(simulator.phase('π', 0).state).toBeSameStateVector(new StateVector('-'))
     })
 
     test("|->.phase('π', 0) should be |+>", () => {
       const simulator = new Simulator('-')
-      expect(equate(simulator.phase('π', 0).state, new StateVector('+'))).toBe(true)
+      expect(simulator.phase('π', 0).state).toBeSameStateVector(new StateVector('+'))
     })
 
     test("|i>.phase('π', 0) should be |-i>", () => {
       const simulator = new Simulator('i')
-      expect(equate(simulator.phase('π', 0).state, new StateVector('(-i)'))).toBe(true)
+      expect(simulator.phase('π', 0).state).toBeSameStateVector(new StateVector('(-i)'))
     })
 
     test("|-i>.phase('π', 0) should be |i>", () => {
       const simulator = new Simulator('(-i)')
-      expect(equate(simulator.phase('π', 0).state, new StateVector('i'))).toBe(true)
+      expect(simulator.phase('π', 0).state).toBeSameStateVector(new StateVector('i'))
     })
 
     test("|++>.phase('π', 0) should be |+->", () => {
       const simulator = new Simulator('++')
-      expect(equate(simulator.phase('π', 0).state, new StateVector('+-'))).toBe(true)
+      expect(simulator.phase('π', 0).state).toBeSameStateVector(new StateVector('+-'))
     })
 
     test("|++>.phase('π', 1) should be |-+>", () => {
       const simulator = new Simulator('++')
-      expect(equate(simulator.phase('π', 1).state, new StateVector('-+'))).toBe(true)
+      expect(simulator.phase('π', 1).state).toBeSameStateVector(new StateVector('-+'))
     })
 
     test("|++>.phase('π', 0, 1) should be |-->", () => {
       const simulator = new Simulator('++')
-      expect(equate(simulator.phase('π', 0, 1).state, new StateVector('--'))).toBe(true)
+      expect(simulator.phase('π', 0, 1).state).toBeSameStateVector(new StateVector('--'))
     })
   })
 
@@ -1041,12 +1035,12 @@ describe('Simulator', () => {
   describe('qft', () => {
     test('|0>.qft(1, 0) should be |+>', () => {
       const simulator = new Simulator('0')
-      expect(equate(simulator.qft(1, 0).state, new StateVector('+'))).toBe(true)
+      expect(simulator.qft(1, 0).state).toBeSameStateVector(new StateVector('+'))
     })
 
     test('|1>.qft(1, 0) should be |->', () => {
       const simulator = new Simulator('1')
-      expect(equate(simulator.qft(1, 0).state, new StateVector('-'))).toBe(true)
+      expect(simulator.qft(1, 0).state).toBeSameStateVector(new StateVector('-'))
     })
 
     test('|+>.qft(1, 0) should be |0>', () => {
@@ -1065,12 +1059,9 @@ describe('Simulator', () => {
       const e = new Complex(Math.E, 0)
 
       const simulator = new Simulator('i')
-      expect(
-        equate(
-          simulator.qft(1, 0).state.matrix,
-          new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
-        ),
-      ).toBe(true)
+      expect(simulator.qft(1, 0).state.matrix).toBeSameStateVector(
+        new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
+      )
     })
 
     test('|-i>.qft(1, 0) should be e^{-iπ/4}|i>', () => {
@@ -1079,12 +1070,9 @@ describe('Simulator', () => {
       const e = new Complex(Math.E, 0)
 
       const simulator = new Simulator('(-i)')
-      expect(
-        equate(
-          simulator.qft(1, 0).state.matrix,
-          new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
-        ),
-      ).toBe(true)
+      expect(simulator.qft(1, 0).state.matrix).toBeSameStateVector(
+        new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
+      )
     })
 
     test('|00>.qft(1, 0) should be |0+>', () => {
@@ -1111,12 +1099,12 @@ describe('Simulator', () => {
   describe('qftDagger', () => {
     test('|0>.qftDagger(0) should be |+>', () => {
       const simulator = new Simulator('0')
-      expect(equate(simulator.qftDagger(1, 0).state, new StateVector('+'))).toBeTruthy()
+      expect(simulator.qftDagger(1, 0).state).toBeSameStateVector(new StateVector('+'))
     })
 
     test('|1>.qftDagger(0) should be |->', () => {
       const simulator = new Simulator('1')
-      expect(equate(simulator.qftDagger(1, 0).state, new StateVector('-'))).toBeTruthy()
+      expect(simulator.qftDagger(1, 0).state).toBeSameStateVector(new StateVector('-'))
     })
 
     test('|+>.qftDagger(0) should be |0>', () => {
@@ -1135,12 +1123,9 @@ describe('Simulator', () => {
       const e = new Complex(Math.E, 0)
 
       const simulator = new Simulator('i')
-      expect(
-        equate(
-          simulator.qftDagger(1, 0).state.matrix,
-          new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
-        ),
-      ).toBeTruthy()
+      expect(simulator.qftDagger(1, 0).state.matrix).toBeSameStateVector(
+        new StateVector('(-i)').matrix.mult(e.pow(i.times(π).div(4)._unsafeUnwrap()))._unsafeUnwrap(),
+      )
     })
 
     test('|-i>.qftDagger(0) should be e^{-iπ/4}|i>', () => {
@@ -1149,27 +1134,24 @@ describe('Simulator', () => {
       const e = new Complex(Math.E, 0)
 
       const simulator = new Simulator('(-i)')
-      expect(
-        equate(
-          simulator.qftDagger(1, 0).state.matrix,
-          new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
-        ),
-      ).toBeTruthy()
+      expect(simulator.qftDagger(1, 0).state.matrix).toBeSameStateVector(
+        new StateVector('i').matrix.mult(e.pow(i.times(π).div(-4)._unsafeUnwrap()))._unsafeUnwrap(),
+      )
     })
 
     test('|00>.qftDagger(0) should be |0+>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.qftDagger(1, 0).state, new StateVector('0+'))).toBeTruthy()
+      expect(simulator.qftDagger(1, 0).state).toBeSameStateVector(new StateVector('0+'))
     })
 
     test('|00>.qftDagger(1) should be |+0>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.qftDagger(1, 1).state, new StateVector('+0'))).toBeTruthy()
+      expect(simulator.qftDagger(1, 1).state).toBeSameStateVector(new StateVector('+0'))
     })
 
     test('|00>.qftDagger(0, 1) should be |++>', () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.qftDagger(1, 0, 1).state, new StateVector('++'))).toBeTruthy()
+      expect(simulator.qftDagger(1, 0, 1).state).toBeSameStateVector(new StateVector('++'))
     })
 
     test('|00>.qftDagger(2, 0)', () => {
@@ -1181,24 +1163,21 @@ describe('Simulator', () => {
   describe('swap', () => {
     test('|01>.swap(0, 1) should be |10>', () => {
       const simulator = new Simulator('01')
-      expect(equate(simulator.swap(0, 1).state, new StateVector('10'))).toBeTruthy()
+      expect(simulator.swap(0, 1).state).toBeSameStateVector(new StateVector('10'))
     })
   })
 
   describe('cphase', () => {
     test("|00>.cphase(0, 'π', 1) should be |00>", () => {
       const simulator = new Simulator('00')
-      expect(equate(simulator.phase('π', 1, {controls: [0]}).state, new StateVector('00'))).toBeTruthy()
+      expect(simulator.phase('π', 1, {controls: [0]}).state).toBeSameStateVector(new StateVector('00'))
     })
 
     test("|11>.cphase(0, 'π', 1) should be -|11>", () => {
       const simulator = new Simulator('11')
-      expect(
-        equate(
-          simulator.phase('π', 1, {controls: [0]}).state.matrix,
-          new StateVector('11').matrix.mult(-1)._unsafeUnwrap(),
-        ),
-      ).toBeTruthy()
+      expect(simulator.phase('π', 1, {controls: [0]}).state.matrix).toBeSameStateVector(
+        new StateVector('11').matrix.mult(-1)._unsafeUnwrap(),
+      )
     })
   })
 
@@ -1206,15 +1185,15 @@ describe('Simulator', () => {
     test('|0>.measure(0) should be |0>', () => {
       const simulator = new Simulator('0')
       simulator.measure(0)
-      expect(equate(simulator.state, new StateVector('0'))).toBeTruthy()
-      expect(equate(simulator.measuredBits, {0: 0})).toBeTruthy()
+      expect(simulator.state).toBeSameStateVector(new StateVector('0'))
+      expect(simulator.measuredBits).toEqual({0: 0})
     })
 
     test('|1>.measure(0) should be |1>', () => {
       const simulator = new Simulator('1')
       simulator.measure(0)
-      expect(equate(simulator.state, new StateVector('1'))).toBeTruthy()
-      expect(equate(simulator.measuredBits, {0: 1})).toBeTruthy()
+      expect(simulator.state).toBeSameStateVector(new StateVector('1'))
+      expect(simulator.measuredBits).toEqual({0: 1})
     })
 
     test('|+>.measure(0) should be |0> or |1>', () => {
@@ -1225,7 +1204,7 @@ describe('Simulator', () => {
         simulator.state.isApproximatelyEqualTo(new StateVector('0'), 0.000001) ||
           simulator.state.isApproximatelyEqualTo(new StateVector('1'), 0.000001),
       ).toBeTruthy()
-      expect(equate(Object.keys(simulator.measuredBits).length, 1)).toBeTruthy()
+      expect(Object.keys(simulator.measuredBits).length).toBe(1)
       expect(simulator.measuredBits[0] === 0 || simulator.measuredBits[0] === 1).toBeTruthy()
     })
 
@@ -1263,60 +1242,60 @@ describe('Simulator', () => {
       const simulator = new Simulator('00')
       simulator.measure(0)
 
-      expect(equate(simulator.state, new StateVector('00'))).toBeTruthy()
-      expect(equate(simulator.measuredBits, {0: 0})).toBeTruthy()
+      expect(simulator.state).toBeSameStateVector(new StateVector('00'))
+      expect(simulator.measuredBits).toEqual({0: 0})
     })
 
     test('|00>.measure(1) should be |00>', () => {
       const simulator = new Simulator('00')
       simulator.measure(1)
 
-      expect(equate(simulator.state, new StateVector('00'))).toBeTruthy()
-      expect(equate(simulator.measuredBits, {1: 0})).toBeTruthy()
+      expect(simulator.state).toBeSameStateVector(new StateVector('00'))
+      expect(simulator.measuredBits).toEqual({1: 0})
     })
 
     test('|00>.measure(0, 1) should be |00>', () => {
       const simulator = new Simulator('00')
       simulator.measure(0, 1)
 
-      expect(equate(simulator.state, new StateVector('00'))).toBeTruthy()
-      expect(equate(simulator.measuredBits, {0: 0, 1: 0})).toBeTruthy()
+      expect(simulator.state).toBeSameStateVector(new StateVector('00'))
+      expect(simulator.measuredBits).toEqual({0: 0, 1: 0})
     })
 
     test('|11>.measure(0) should be |11>', () => {
       const simulator = new Simulator('11')
       simulator.measure(0)
 
-      expect(equate(simulator.state, new StateVector('11'))).toBeTruthy()
-      expect(equate(simulator.measuredBits, {0: 1})).toBeTruthy()
+      expect(simulator.state).toBeSameStateVector(new StateVector('11'))
+      expect(simulator.measuredBits).toEqual({0: 1})
     })
 
     test('|11>.measure(1) should be |11>', () => {
       const simulator = new Simulator('11')
       simulator.measure(1)
 
-      expect(equate(simulator.state, new StateVector('11'))).toBeTruthy()
-      expect(equate(simulator.measuredBits, {1: 1})).toBeTruthy()
+      expect(simulator.state).toBeSameStateVector(new StateVector('11'))
+      expect(simulator.measuredBits).toEqual({1: 1})
     })
 
     test('|11>.measure(0, 1) should be |11>', () => {
       const simulator = new Simulator('11')
       simulator.measure(0, 1)
 
-      expect(equate(simulator.state, new StateVector('11'))).toBeTruthy()
-      expect(equate(simulator.measuredBits, {0: 1, 1: 1})).toBeTruthy()
+      expect(simulator.state).toBeSameStateVector(new StateVector('11'))
+      expect(simulator.measuredBits).toEqual({0: 1, 1: 1})
     })
   })
 
   describe('swap', () => {
     test('|011>.swap(0, 1, 2) should be |101>', () => {
       const simulator = new Simulator('011')
-      expect(equate(simulator.swap(1, 2, {controls: [0]}).state, new StateVector('101'))).toBeTruthy()
+      expect(simulator.swap(1, 2, {controls: [0]}).state).toBeSameStateVector(new StateVector('101'))
     })
 
     test('|011>.swap(2, 0, 1) should be |011>', () => {
       const simulator = new Simulator('011')
-      expect(equate(simulator.swap(0, 1, {controls: [2]}).state, new StateVector('011'))).toBeTruthy()
+      expect(simulator.swap(0, 1, {controls: [2]}).state).toBeSameStateVector(new StateVector('011'))
     })
   })
 
