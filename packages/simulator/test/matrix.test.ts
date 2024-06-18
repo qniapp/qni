@@ -1,4 +1,4 @@
-import {Complex, equate} from '@qni/common'
+import {Complex} from '@qni/common'
 import {H, X, Y, Z} from '../src/gate-matrices'
 import {Matrix} from '../src/matrix'
 
@@ -47,8 +47,8 @@ describe('Matrix', () => {
     ])
 
     test('returns a Complex array', () => {
-      expect(equate(m.column(0)._unsafeUnwrap(), [2, 5])).toBeTruthy()
-      expect(equate(m.column(1)._unsafeUnwrap(), [3, 7])).toBeTruthy()
+      expect(m.column(0)._unsafeUnwrap()).toEqual([Complex.from(2), Complex.from(5)])
+      expect(m.column(1)._unsafeUnwrap()).toEqual([Complex.from(3), Complex.from(7)])
     })
 
     test('negative index error', () => {
@@ -273,7 +273,7 @@ describe('Matrix', () => {
     expect(H.trace().eq(0)).toBeTruthy()
     expect(squareMatrix(1, 2, 3, 4).trace().eq(5)).toBeTruthy()
     expect(squareMatrix(0, 1, 2, 3, 4, 5, 6, 7, 8).trace().eq(12)).toBeTruthy()
-    expect(equate(Matrix.column_vector(NaN)._unsafeUnwrap().trace().abs(), NaN)).toBeTruthy()
+    expect(Matrix.column_vector(NaN)._unsafeUnwrap().trace().abs()).toBe(NaN)
   })
 
   test('adjoint', () => {
@@ -456,57 +456,41 @@ describe('Matrix', () => {
   })
 
   test('format', () => {
-    expect(equate(Matrix.column_vector(2)._unsafeUnwrap().format(), '{{2}}')).toBeTruthy()
-    expect(
-      equate(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).format(), '{{1, 0}, {-i, 2-3i}}'),
-    ).toBeTruthy()
-    expect(equate(squareMatrix(1, 0, 0, 1).format(), '{{1, 0}, {0, 1}}')).toBeTruthy()
+    expect(Matrix.column_vector(2)._unsafeUnwrap().format()).toBe('{{2}}')
+    expect(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).format()).toBe('{{1, 0}, {-i, 2-3i}}')
+    expect(squareMatrix(1, 0, 0, 1).format()).toBe('{{1, 0}, {0, 1}}')
 
     expect(
-      equate(
-        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
-          allowAbbreviation: true,
-          maxAbbreviationError: 0,
-          fixedDigits: undefined,
-          itemSeparator: ', ',
-        }),
-        '{{0, 1}, {⅓+i, 0.3333334333333333i}}',
-      ),
-    ).toBeTruthy()
+      squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+        allowAbbreviation: true,
+        maxAbbreviationError: 0,
+        fixedDigits: undefined,
+        itemSeparator: ', ',
+      }),
+    ).toBe('{{0, 1}, {⅓+i, 0.3333334333333333i}}')
     expect(
-      equate(
-        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
-          maxAbbreviationError: 0.0005,
-          fixedDigits: 3,
-        }),
-        '{{0, 1}, {⅓+i, ⅓i}}',
-      ),
-    ).toBeTruthy()
+      squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+        maxAbbreviationError: 0.0005,
+        fixedDigits: 3,
+      }),
+    ).toBe('{{0, 1}, {⅓+i, ⅓i}}')
     expect(
-      equate(
-        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
-          itemSeparator: ',',
-        }),
-        '{{0,1},{⅓+i,0.3333334333333333i}}',
-      ),
-    ).toBeTruthy()
+      squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+        itemSeparator: ',',
+      }),
+    ).toBe('{{0,1},{⅓+i,0.3333334333333333i}}')
     expect(
-      equate(
-        squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
-          allowAbbreviation: false,
-          fixedDigits: 2,
-        }),
-        '{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}',
-      ),
-    ).toBeTruthy()
+      squareMatrix(0, 1, new Complex(1 / 3, 1), new Complex(0, 1 / 3 + 0.0000001)).format({
+        allowAbbreviation: false,
+        fixedDigits: 2,
+      }),
+    ).toBe('{{+0.00+0.00i, +1.00+0.00i}, {+0.33+1.00i, +0.00+0.33i}}')
   })
 
   test('toString', () => {
-    expect(equate(Matrix.column_vector(2)._unsafeUnwrap().toString(), '{{2}}')).toBeTruthy()
-    expect(
-      equate(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).toString(), '{{1, 0}, {-i, 2-3i}}'),
-    ).toBeTruthy()
-    expect(equate(squareMatrix(1, 0, 0, 1).toString(), '{{1, 0}, {0, 1}}')).toBeTruthy()
+    expect(Matrix.column_vector(2)._unsafeUnwrap().toString()).toBe('{{2}}')
+    expect(squareMatrix(1, 0, new Complex(0, -1), new Complex(2, -3)).toString()).toBe('{{1, 0}, {-i, 2-3i}}')
+    expect(squareMatrix(1, 0, 0, 1).toString()).toBe('{{1, 0}, {0, 1}}')
   })
 
   test('size', () => {
@@ -529,16 +513,16 @@ describe('Matrix', () => {
     const c = Matrix.column_vector(11, 13, 17)._unsafeUnwrap()
 
     // Inner product
-    expect(equate(r.mult(c)._unsafeUnwrap().toString(), '{{146}}')).toBeTruthy()
+    expect(r.mult(c)._unsafeUnwrap().toString()).toBe('{{146}}')
 
     // Outer product
-    expect(equate(c.mult(r)._unsafeUnwrap().toString(), '{{22, 33, 55}, {26, 39, 65}, {34, 51, 85}}')).toBeTruthy()
+    expect(c.mult(r)._unsafeUnwrap().toString()).toBe('{{22, 33, 55}, {26, 39, 65}, {34, 51, 85}}')
 
     // Outer product matches tensor product
-    expect(equate(c.mult(r)._unsafeUnwrap(), c.tensorProduct(r))).toBeTruthy()
+    expect(c.mult(r)._unsafeUnwrap().eq(c.tensorProduct(r))).toBeTruthy()
 
     // Tensor product is order independent (in this case)
-    expect(equate(r.tensorProduct(c), c.tensorProduct(r))).toBeTruthy()
+    expect(r.tensorProduct(c).eq(c.tensorProduct(r))).toBeTruthy()
   })
 
   test('qubitDensityMatrixToBlochVector', () => {
@@ -558,18 +542,15 @@ describe('Matrix', () => {
 
     // Maximally mixed state.
     expect(
-      equate(
-        Matrix.rows([
-          [1, 0],
-          [0, 1],
-        ])
-          ._unsafeUnwrap()
-          .mult(0.5)
-          ._unsafeUnwrap()
-          .qubitDensityMatrixToBlochVector(),
-        [0, 0, 0],
-      ),
-    ).toBeTruthy()
+      Matrix.rows([
+        [1, 0],
+        [0, 1],
+      ])
+        ._unsafeUnwrap()
+        .mult(0.5)
+        ._unsafeUnwrap()
+        .qubitDensityMatrixToBlochVector(),
+    ).toStrictEqual([0, 0, 0])
 
     // Pure states as vectors along each axis.
     const f = (...m: Array<number | Complex>) =>
@@ -583,12 +564,12 @@ describe('Matrix', () => {
         ._unsafeUnwrap()
     const i = Complex.I
     const mi = i.times(-1)
-    expect(equate(f(1, 0).qubitDensityMatrixToBlochVector(), [0, 0, 1])).toBeTruthy()
-    expect(equate(f(0, 1).qubitDensityMatrixToBlochVector(), [0, 0, -1])).toBeTruthy()
-    expect(equate(f(1, 1).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [1, 0, 0])).toBeTruthy()
-    expect(equate(f(1, -1).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [-1, 0, 0])).toBeTruthy()
-    expect(equate(f(1, i).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [0, 1, 0])).toBeTruthy()
-    expect(equate(f(1, mi).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector(), [0, -1, 0])).toBeTruthy()
+    expect(f(1, 0).qubitDensityMatrixToBlochVector()).toStrictEqual([0, 0, 1])
+    expect(f(0, 1).qubitDensityMatrixToBlochVector()).toStrictEqual([0, 0, -1])
+    expect(f(1, 1).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector()).toStrictEqual([1, 0, 0])
+    expect(f(1, -1).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector()).toStrictEqual([-1, 0, 0])
+    expect(f(1, i).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector()).toStrictEqual([0, 1, 0])
+    expect(f(1, mi).mult(0.5)._unsafeUnwrap().qubitDensityMatrixToBlochVector()).toStrictEqual([0, -1, 0])
   })
 
   test('clone', () => {
