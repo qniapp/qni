@@ -1,5 +1,4 @@
 import {Complex} from '../src/complex'
-import {equate} from '../src/equate'
 
 describe('Complex', () => {
   const π = Math.PI
@@ -16,8 +15,8 @@ describe('Complex', () => {
       })
 
       test('equal 1', () => {
-        expect(equate(c.real, 1)).toBeTruthy()
-        expect(equate(c.imag, 0)).toBeTruthy()
+        expect(c.real).toBe(1)
+        expect(c.imag).toBe(0)
       })
     })
 
@@ -27,8 +26,8 @@ describe('Complex', () => {
       })
 
       test('equal -1.5', () => {
-        expect(equate(c.real, -1.5)).toBeTruthy()
-        expect(equate(c.imag, 0)).toBeTruthy()
+        expect(c.real).toBe(-1.5)
+        expect(c.imag).toBe(0)
       })
     })
 
@@ -38,8 +37,8 @@ describe('Complex', () => {
       })
 
       test('equal 2+3i', () => {
-        expect(equate(c.real, 2)).toBeTruthy()
-        expect(equate(c.imag, 3)).toBeTruthy()
+        expect(c.real).toBe(2)
+        expect(c.imag).toBe(3)
       })
     })
   })
@@ -47,31 +46,31 @@ describe('Complex', () => {
   describe('real', () => {
     describe('1', () => {
       test('equal 1', () => {
-        expect(equate(Complex.real(1), 1))
+        expect(Complex.real(1)).toBe(1)
       })
     })
 
     describe('1.5', () => {
       test('equal 1.5', () => {
-        expect(equate(Complex.real(1.5), 1.5))
+        expect(Complex.real(1.5)).toBe(1.5)
       })
     })
 
     describe('-2', () => {
       test('equal -2', () => {
-        expect(equate(Complex.real(-2), -2))
+        expect(Complex.real(-2)).toBe(-2)
       })
     })
 
     describe('3+i', () => {
       test('equal 3', () => {
-        expect(equate(Complex.real(new Complex(3, 1)), 3))
+        expect(Complex.real(new Complex(3, 1))).toBe(3)
       })
     })
 
     describe('5+0i', () => {
       test('equal 5', () => {
-        expect(equate(Complex.real(new Complex(5, 0)), 5))
+        expect(Complex.real(new Complex(5, 0))).toBe(5)
       })
     })
   })
@@ -79,149 +78,149 @@ describe('Complex', () => {
   describe('imag', () => {
     describe('1', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imag(1), 0))
+        expect(Complex.imag(1)).toBe(0)
       })
     })
 
     describe('1.5', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imag(1.5), 0))
+        expect(Complex.imag(1.5)).toBe(0)
       })
     })
 
     describe('-2', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imag(-2), 0))
+        expect(Complex.imag(-2)).toBe(0)
       })
     })
 
     describe('3+0i', () => {
       test('equal 0', () => {
-        expect(equate(Complex.imag(new Complex(3, 0)), 0))
+        expect(Complex.imag(new Complex(3, 0))).toBe(0)
       })
     })
 
     describe('3+i', () => {
       test('equal 1', () => {
-        expect(equate(Complex.imag(new Complex(3, 1)), 1))
+        expect(Complex.imag(new Complex(3, 1))).toBe(1)
       })
     })
 
     describe('5-2i', () => {
       test('equal -2', () => {
-        expect(equate(Complex.imag(new Complex(5, -2)), -2))
+        expect(Complex.imag(new Complex(5, -2))).toBe(-2)
       })
     })
   })
 
   describe('polar', () => {
-    describe('0,0', () => {
+    describe('0, 0', () => {
       beforeEach(() => {
         c = Complex.polar(0, 0)
       })
 
       test('equal 0', () => {
-        expect(equate(c, 0)).toBeTruthy()
+        expect(c.eq(0)).toBeTruthy()
       })
     })
 
-    describe('0,2', () => {
+    describe('0, 2', () => {
       beforeEach(() => {
         c = Complex.polar(0, 2)
       })
 
       test('equal 0', () => {
-        expect(equate(c, 0)).toBeTruthy()
+        expect(c.eq(0)).toBeTruthy()
       })
     })
 
-    describe('0,-5', () => {
+    describe('0, -5', () => {
       beforeEach(() => {
         c = Complex.polar(0, -5)
       })
 
       test('equal 0', () => {
-        expect(equate(c, 0)).toBeTruthy()
+        expect(c.eq(0)).toBeTruthy()
       })
     })
 
-    describe('1,0', () => {
+    describe('1, 0', () => {
       beforeEach(() => {
         c = Complex.polar(1, 0)
       })
 
       test('equal 1', () => {
-        expect(equate(c, 1)).toBeTruthy()
+        expect(c.eq(1)).toBeTruthy()
       })
     })
 
-    describe('2,0', () => {
+    describe('2, 0', () => {
       beforeEach(() => {
         c = Complex.polar(2, 0)
       })
 
       test('equal 2', () => {
-        expect(equate(c, 2)).toBeTruthy()
+        expect(c.eq(2)).toBeTruthy()
       })
     })
 
-    describe('1,π', () => {
+    describe('1, π', () => {
       beforeEach(() => {
         c = Complex.polar(1, Math.PI)
       })
 
       test('equal -1', () => {
-        expect(equate(c, -1)).toBeTruthy()
+        expect(c.eq(-1)).toBeTruthy()
       })
     })
 
-    describe('1,3π', () => {
+    describe('1, 3π', () => {
       beforeEach(() => {
         c = Complex.polar(1, 3 * Math.PI)
       })
 
       test('equal -1', () => {
-        expect(equate(c, -1)).toBeTruthy()
+        expect(c.eq(-1)).toBeTruthy()
       })
     })
 
-    describe('1,-π', () => {
+    describe('1, -π', () => {
       beforeEach(() => {
         c = Complex.polar(1, -Math.PI)
       })
 
       test('equal -1', () => {
-        expect(equate(c, -1)).toBeTruthy()
+        expect(c.eq(-1)).toBeTruthy()
       })
     })
 
-    describe('1,π/2', () => {
+    describe('1, π/2', () => {
       beforeEach(() => {
         c = Complex.polar(1, Math.PI / 2)
       })
 
       test('equal i', () => {
-        expect(equate(c, i)).toBeTruthy()
+        expect(c.eq(i)).toBeTruthy()
       })
     })
 
-    describe('1,³⁄₂π', () => {
+    describe('1, ³⁄₂π', () => {
       beforeEach(() => {
         c = Complex.polar(1, (3 * Math.PI) / 2)
       })
 
       test('equal -i', () => {
-        expect(equate(c, i.times(-1))).toBeTruthy()
+        expect(c.eq(i.times(-1))).toBeTruthy()
       })
     })
 
-    describe('1,¼π', () => {
+    describe('1, ¼π', () => {
       beforeEach(() => {
         c = Complex.polar(1, Math.PI / 4)
       })
 
       test('equal 1/√2(1+i)', () => {
-        expect(equate(c, new Complex(Math.sqrt(0.5), Math.sqrt(0.5)))).toBeTruthy()
+        expect(c.eq(new Complex(Math.sqrt(0.5), Math.sqrt(0.5)))).toBeTruthy()
       })
     })
   })

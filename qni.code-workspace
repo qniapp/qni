@@ -1,16 +1,20 @@
 {
   "folders": [
     {
+      "name": "common",
+      "path": "./packages/common"
+    },
+    {
       "name": "simulator",
-      "path": ".."
+      "path": "./packages/simulator"
     },
     {
       "name": "elements",
-      "path": "../../elements"
+      "path": "./packages/elements"
     },
     {
       "name": "www",
-      "path": "../../../apps/www"
+      "path": "./apps/www"
     },
   ],
   "settings": {
