@@ -1,4 +1,4 @@
-import {Complex, DetailedError, Format, Util} from '@qni/common'
+import {Complex, Format, Util} from '@qni/common'
 import {range} from 'fp-ts/NonEmptyArray'
 import {ok, err, Result} from 'neverthrow'
 
@@ -449,13 +449,13 @@ export class Matrix {
 
   qubitDensityMatrixToBlochVector(): [number, number, number] {
     if (this.width !== 2 || this.height !== 2) {
-      throw new DetailedError('Need a 2x2 density matrix.', this)
+      throw new Error('Need a 2x2 density matrix.')
     }
     if (!this.isHermitian(0.01)) {
-      throw new DetailedError('Density matrix should be Hermitian.', this)
+      throw new Error('Density matrix should be Hermitian.')
     }
     if (!this.trace().nearlyEq(1, 0.01)) {
-      throw new DetailedError('Density matrix should have unit trace.', this)
+      throw new Error('Density matrix should have unit trace.')
     }
 
     // Density matrix from bloch vector equation: M = 1/2 (I + vσ)

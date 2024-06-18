@@ -1,4 +1,4 @@
-import {Complex, DetailedError} from '@qni/common'
+import {Complex} from '@qni/common'
 import {Matrix} from './matrix'
 import {ok, err, Result} from 'neverthrow'
 
@@ -78,7 +78,7 @@ export class StateVector {
     let paren = false
     let parenToken = ''
     const kets = []
-    const invalidBitStringError = new DetailedError('Invalid StateVector bit string', bitString)
+    const invalidBitStringError = new Error(`Invalid StateVector bit string: ${bitString}`)
 
     for (const char of bitString.split('')) {
       switch (char) {
@@ -169,7 +169,7 @@ export class StateVector {
 
   qubitDensityMatrix(qubitIndex: number): Matrix {
     if (qubitIndex < 0 || qubitIndex >= this.nqubit) {
-      throw new DetailedError('Qubit index out of range', qubitIndex)
+      throw new Error(`Qubit index out of range: ${qubitIndex}`)
     }
 
     const traceBits = [...Array(Math.log2(this.matrix.height)).keys()].filter(each => each !== qubitIndex)
