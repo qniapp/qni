@@ -1,6 +1,5 @@
 import {
   Config,
-  DetailedError,
   ResizeableSpan,
   SerializedCircuitStep,
   SerializedHGate,
@@ -1341,7 +1340,7 @@ export class CircuitStepElement extends HTMLElement {
           break
         }
         default:
-          throw new DetailedError('Unrecognized operation', {klass})
+          throw new Error(`Unrecognized operation: ${klass}`)
       }
     }
     return serializedStep

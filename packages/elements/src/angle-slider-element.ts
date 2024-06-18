@@ -1,4 +1,4 @@
-import {DetailedError, Util, angleDenominator, radian as radianOf} from '@qni/common'
+import {Util, angleDenominator, radian as radianOf} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
@@ -65,7 +65,7 @@ export class AngleSliderElement extends HTMLElement {
       actions: {
         validateDenominator: () => {
           if (!Number.isInteger(this.denominator) || this.denominator <= 0) {
-            throw new DetailedError('Bad denominator', this.denominator)
+            throw new Error(`Bad denominator: ${this.denominator}`)
           }
         },
         setDenominatorByAngle: (_context, event) => {

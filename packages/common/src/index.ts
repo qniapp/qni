@@ -1,7 +1,6 @@
 export * from './angle-parser'
 export * from './complex'
 export * from './config'
-export * from './detailed-error'
 export * from './emit-event'
 export * from './format'
 export * from './number-formatter'

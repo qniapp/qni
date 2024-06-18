@@ -1,6 +1,6 @@
 import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isIfable, isMenuable, isResizeable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
-import {Config, DetailedError, Util, isResizeableSpan} from '@qni/common'
+import {Config, Util, isResizeableSpan} from '@qni/common'
 import {Operation, isOperation} from './operation'
 import {attr, controller, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
@@ -435,7 +435,7 @@ export class CircuitEditorElement extends HTMLElement {
     if (isDraggable(el)) {
       el.draggable = true
     } else {
-      throw new DetailedError('Not a draggable element.', {el})
+      throw new Error(`Not a draggable element: ${el}`)
     }
   }
 
@@ -445,7 +445,7 @@ export class CircuitEditorElement extends HTMLElement {
     if (isResizeable(el)) {
       el.resizeable = true
     } else {
-      throw new DetailedError('Not a resizeable element.', {el})
+      throw new Error(`Not a resizeable element: ${el}`)
     }
   }
 

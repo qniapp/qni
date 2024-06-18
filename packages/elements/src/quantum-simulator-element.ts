@@ -1,4 +1,4 @@
-import {Complex, DetailedError, Util} from '@qni/common'
+import {Complex, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
@@ -130,7 +130,7 @@ export class QuantumSimulatorElement extends HTMLElement {
         break
       }
       default:
-        throw new DetailedError('Unknown service worker message', {data})
+        throw new Error(`Unknown service worker message: ${data}`)
     }
   }
 

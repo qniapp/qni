@@ -1,4 +1,4 @@
-import {Complex, DetailedError, Util} from '@qni/common'
+import {Complex, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement} from 'tippy.js'
@@ -198,7 +198,7 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       default:
-        throw new DetailedError('unsupported qubit count', this.qubitCount)
+        throw new Error(`unsupported qubit count: ${this.qubitCount}`)
     }
   }
 
@@ -307,7 +307,7 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       default:
-        throw new DetailedError('unsupported qubit count', this.qubitCount)
+        throw new Error(`unsupported qubit count: ${this.qubitCount}`)
     }
   }
 
@@ -575,7 +575,7 @@ export class CircleNotationElement extends HTMLElement {
         }
       }
       default:
-        throw new DetailedError('unsupported qubit count', this.qubitCount)
+        throw new Error(`unsupported qubit count: ${this.qubitCount}`)
     }
   }
 
@@ -646,7 +646,7 @@ export class CircleNotationElement extends HTMLElement {
         return this.qubitCircleSizePx * 32 + this.gap * 31
       }
       default:
-        throw new DetailedError('unsupported qubit count', this.qubitCount)
+        throw new Error(`unsupported qubit count: ${this.qubitCount}`)
     }
   }
 
@@ -773,7 +773,7 @@ export class CircleNotationElement extends HTMLElement {
         return 16
       }
       default:
-        throw new DetailedError('unsupported qubit count', this.qubitCount)
+        throw new Error(`unsupported qubit count: ${this.qubitCount}`)
     }
   }
 
@@ -1011,7 +1011,7 @@ export class CircleNotationElement extends HTMLElement {
         return 1
       }
       default:
-        throw new DetailedError('unsupported qubit count', this.qubitCount)
+        throw new Error(`unsupported qubit count: ${this.qubitCount}`)
     }
   }
 
