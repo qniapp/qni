@@ -22,7 +22,7 @@
     "presize": "npm run build",
     "size": "size-limit",
     "pretest": "npm run build",
-    "test": "web-test-runner test/**/*-test.js --node-resolve",
+    "test": "web-test-runner test/**/*-test.js --node-resolve --concurrency 1",
     "test:ci": "yarn test",
     "test:watch": "yarn test --watch",
     "watch:css": "yarn build:css --watch",

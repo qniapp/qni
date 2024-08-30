@@ -1,4 +1,3 @@
-// eslint-disable-next-line filenames/match-regex
 import {fromRollup} from '@web/dev-server-rollup'
 import rollupCommonjs from '@rollup/plugin-commonjs'
 import rollupPostcss from 'rollup-plugin-postcss'
@@ -11,16 +10,16 @@ const replace = fromRollup(rollupReplace)
 export default {
   rootDir: '../../',
   mimeTypes: {
-    '**/*.css': 'js'
+    '**/*.css': 'js',
   },
   plugins: [
     commonjs({
-      include: ['../../**/node_modules/fraction.js/**/*', '../../**/node_modules/interactjs/**/*']
+      include: ['../../**/node_modules/fraction.js/**/*', '../../**/node_modules/interactjs/**/*'],
     }),
     postcss({include: ['dist/qni.css'], modules: true}),
     replace({
       'process.env.NODE_ENV': JSON.stringify('production'),
-      preventAssignment: true
-    })
-  ]
+      preventAssignment: true,
+    }),
+  ],
 }
