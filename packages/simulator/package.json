@@ -1,6 +1,6 @@
 {
   "name": "@qni/simulator",
-  "version": "0.0.86",
+  "version": "0.0.87",
   "description": "Quantum simulator for @qni.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/qniapp/qni.git"
   },
-  "main": "index.js",
+  "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -34,7 +34,7 @@
   ],
   "prettier": "@github/prettier-config",
   "dependencies": {
-    "@qni/elements": "^0.0.86",
+    "@qni/elements": "^0.0.87",
     "fp-ts": "^2.11.5",
     "qunit": "^2.19.4"
   },
