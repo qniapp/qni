@@ -10,7 +10,7 @@
     "url": "git+https://github.com/qniapp/qni.git"
   },
   "scripts": {
-    "lint": "bundle exec rubocop",
+    "lint": "ruby -S bundle exec ruby -S rubocop",
     "start": "ruby -S bundle exec jekyll s -d ../../html --host 0.0.0.0",
     "build": "yarn build:css && yarn build:js",
     "build:site": "yarn --cwd ../.. build && ruby -S bundle exec jekyll build -d ../../html",

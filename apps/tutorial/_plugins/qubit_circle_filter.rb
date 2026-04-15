@@ -25,10 +25,12 @@ module Jekyll
 
       contents = %w[amplitude probability phase] if contents.empty?
 
-      show_popup_header = contents.include?('header')
-      show_popup_amplitude = contents.include?('amplitude')
-      show_popup_probability = contents.include?('probability')
-      show_popup_phase = contents.include?('phase')
+      popup_attrs = [
+        ('data-show-popup-header' if contents.include?('header')),
+        ('data-show-popup-amplitude' if contents.include?('amplitude')),
+        ('data-show-popup-probability' if contents.include?('probability')),
+        ('data-show-popup-phase' if contents.include?('phase'))
+      ].compact.join("\n          ")
 
       <<~HTML
         <qubit-circle
@@ -36,10 +38,7 @@ module Jekyll
           data-ket="#{ket}"
           data-amplitude="#{amplitude}"
           data-popup-template-id="qubit-circle-popup"
-          #{show_popup_header ? 'data-show-popup-header' : ''}
-          #{show_popup_amplitude ? 'data-show-popup-amplitude' : ''}
-          #{show_popup_probability ? 'data-show-popup-probability' : ''}
-          #{show_popup_phase ? 'data-show-popup-phase' : ''}
+          #{popup_attrs}
         ></qubit-circle>
       HTML
     end
