@@ -116,11 +116,11 @@ curl -I -L https://www.qniapp.net/
 
 ### 切替直前に埋める欄
 
-- DB backup id: `TBD`
-- Baseline marker: `TBD`
-- Baseline release 番号: `TBD（stack 切替直前に記録する）`
-- Deploy release 番号: `TBD`
-- 実行日時: `TBD`
+- DB backup id: `b002`
+- Baseline marker: `ruby4-rollout-20260415T035023Z`
+- Baseline release 番号: `v854`
+- Deploy release 番号: `v855`
+- 実行日時: `2026-04-15 12:50-13:09 JST`
 
 ### Rollback 前提
 
@@ -267,3 +267,37 @@ curl -I -L https://www.qniapp.net/
 - smoke 結果
 - rollback 実施有無
 - 必要なら cleanup release 番号
+
+## 実行結果
+
+### 反映された Heroku 側変更
+
+- stack: `heroku-20` → `heroku-24`
+- buildpacks:
+  1. `https://github.com/lstoll/heroku-buildpack-monorepo`
+  2. `heroku/nodejs`
+  3. `jontewks/puppeteer`
+  4. `heroku/ruby`
+- 削除した buildpack:
+  - `https://github.com/CoffeeAndCode/puppeteer-heroku-buildpack.git`
+  - 理由: `heroku-24` で `STACK must be 'cedar-14', 'heroku-16', or 'heroku-18'` となり build を阻害したため
+
+### release 記録
+
+- baseline release: `v854`
+- deploy release: `v855`
+- cleanup release: `v856` (`RUBY4_ROLLOUT_BASELINE` の unset)
+
+### smoke 結果
+
+- `qniapp.net` → `HTTP/2 200`
+- `www.qniapp.net` → `HTTP/2 200`
+- homepage HTML に app error はなし
+- homepage から抽出した asset 2 本は 200
+- DB-backed + Grover/Puppeteer path (`/:json`) は 200 で `og:image` を返した
+- `heroku ps -a qni-quantum` で `web.1`, `web.2` は up
+
+### rollback 実施有無
+
+- rollback は **未実施**
+- baseline release `v854` は rollback 先として保持したうえで rollout 完了
