@@ -183,7 +183,7 @@ GEM
     pg (1.6.3)
     prism (1.9.0)
     public_suffix (5.0.3)
-    puma (5.6.9)
+    puma (7.2.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (2.2.23)
@@ -334,7 +334,7 @@ DEPENDENCIES
   mutex_m
   ostruct
   pg
-  puma (~> 5.6)
+  puma (~> 7.0, >= 7.0.4)
   rack-mini-profiler
   rails (~> 6.1)
   rbtrace
