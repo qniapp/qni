@@ -26,8 +26,8 @@ assert(
   `Expected .tool-versions to pin node 16.20.2, got: ${toolVersions.join(', ')}`
 )
 assert(
-  toolVersions.includes('ruby 2.7.4'),
-  `Expected .tool-versions to pin ruby 2.7.4, got: ${toolVersions.join(', ')}`
+  toolVersions.includes('ruby 4.0.2'),
+  `Expected .tool-versions to pin ruby 4.0.2, got: ${toolVersions.join(', ')}`
 )
 
 assert(existsSync('.node-version'), 'Expected root .node-version to exist')
@@ -38,14 +38,20 @@ assert(
 
 assert(existsSync('.ruby-version'), 'Expected root .ruby-version to exist')
 assert(
-  read('.ruby-version') === '2.7.4',
-  `Expected .ruby-version to be 2.7.4, got: ${read('.ruby-version')}`
+  read('.ruby-version') === '4.0.2',
+  `Expected .ruby-version to be 4.0.2, got: ${read('.ruby-version')}`
+)
+
+assert(existsSync('apps/www/.ruby-version'), 'Expected apps/www/.ruby-version to exist')
+assert(
+  read('apps/www/.ruby-version') === '4.0.2',
+  `Expected apps/www/.ruby-version to be 4.0.2, got: ${read('apps/www/.ruby-version')}`
 )
 
 assert(existsSync('apps/tutorial/.ruby-version'), 'Expected apps/tutorial/.ruby-version to exist')
 assert(
-  read('apps/tutorial/.ruby-version') === '2.7.4',
-  `Expected apps/tutorial/.ruby-version to be 2.7.4, got: ${read('apps/tutorial/.ruby-version')}`
+  read('apps/tutorial/.ruby-version') === '4.0.2',
+  `Expected apps/tutorial/.ruby-version to be 4.0.2, got: ${read('apps/tutorial/.ruby-version')}`
 )
 
 assert(

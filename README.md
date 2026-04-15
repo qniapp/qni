@@ -28,13 +28,13 @@ And one example:
 
 ## Local setup
 
-This repository currently builds reliably with the same toolchain used by CI and the Docker image:
+This repository is being migrated toward the following toolchain baseline:
 
 - Node.js `16.20.2`
-- Ruby `2.7.4`
+- Ruby `4.0.2`
 - Yarn 1
 
-If you use [mise](https://mise.jdx.dev/), the repository root now pins those versions. On current Arch/GCC toolchains, Ruby 2.7.4 needs a bootstrap install path: a precompiled Ruby 3.3.7 is installed first, then used as the baseruby while Ruby 2.7.4 is compiled with `-std=gnu17`.
+If you use [mise](https://mise.jdx.dev/), the repository root now pins those versions for local work. The production Heroku app `qni-quantum` deploys the Rails app from `apps/www`, and the repository-wide Ruby version policy is being aligned with that production target. CI, Docker, and local helper scripts are updated in later migration steps.
 
 Bootstrap the local toolchain with:
 
