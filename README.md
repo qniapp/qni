@@ -30,7 +30,7 @@ And one example:
 
 This repository is being migrated toward the following toolchain baseline:
 
-- Node.js `16.20.2`
+- Node.js `20.20.2`
 - Ruby `4.0.2`
 - Yarn 1
 

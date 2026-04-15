@@ -22,8 +22,8 @@ const toolVersions = read('.tool-versions')
   .map((line) => line.trim())
   .filter(Boolean)
 assert(
-  toolVersions.includes('node 16.20.2'),
-  `Expected .tool-versions to pin node 16.20.2, got: ${toolVersions.join(', ')}`
+  toolVersions.includes('node 20.20.2'),
+  `Expected .tool-versions to pin node 20.20.2, got: ${toolVersions.join(', ')}`
 )
 assert(
   toolVersions.includes('ruby 4.0.2'),
@@ -32,8 +32,8 @@ assert(
 
 assert(existsSync('.node-version'), 'Expected root .node-version to exist')
 assert(
-  read('.node-version') === '16.20.2',
-  `Expected .node-version to be 16.20.2, got: ${read('.node-version')}`
+  read('.node-version') === '20.20.2',
+  `Expected .node-version to be 20.20.2, got: ${read('.node-version')}`
 )
 
 assert(existsSync('.ruby-version'), 'Expected root .ruby-version to exist')
@@ -78,8 +78,8 @@ assert(
 
 const wwwPackage = JSON.parse(readFileSync('apps/www/package.json', 'utf8'))
 assert(
-  wwwPackage.engines?.node === '16.20.2',
-  `Expected apps/www/package.json to pin node 16.20.2, got: ${wwwPackage.engines?.node}`
+  wwwPackage.engines?.node === '20.20.2',
+  `Expected apps/www/package.json to pin node 20.20.2, got: ${wwwPackage.engines?.node}`
 )
 assert(
   wwwPackage.engines?.yarn === '1.22.22',
@@ -88,7 +88,7 @@ assert(
 
 const ciWorkflow = readFileSync('.github/workflows/ci.yml', 'utf8')
 assert(ciWorkflow.includes('ruby-version: 4.0.2'), 'Expected CI workflow to use ruby-version: 4.0.2')
-assert(ciWorkflow.includes('node-version: [16.20.2]'), 'Expected CI workflow to pin Node 16.20.2')
+assert(ciWorkflow.includes('node-version: [20.20.2]'), 'Expected CI workflow to pin Node 20.20.2')
 assert(ciWorkflow.includes('yarn@1.22.22'), 'Expected CI workflow to install Yarn 1.22.22 explicitly')
 
 const pagesWorkflow = readFileSync('.github/workflows/pages.yml', 'utf8')

@@ -31,7 +31,7 @@ RUN apt install -y ng-common ng-cjk emacs-nox
 RUN apt install -y postgresql postgresql-contrib
 
 ## node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 RUN apt-get install -y nodejs
 
 ## npm
