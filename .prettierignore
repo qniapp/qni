@@ -8,7 +8,7 @@ apps/www/app/assets/builds/
 apps/www/db/
 apps/www/docs/
 dist
-docs/
+html/
 examples/elements-example/public/
 packages/common/docs/
 packages/elements/docs/

@@ -29,7 +29,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.19.3, 16.x]
+        node-version: [14.19.3, 16.20.2]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -61,6 +61,10 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
       - run: yarn
+      - name: Check Pages migration config
+        run: yarn test:pages-config
+      - name: Check local build environment config
+        run: yarn test:local-build-env
       - run: yarn build
       - name: Lint Codebase
         run: yarn lint

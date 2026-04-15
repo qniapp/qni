@@ -11,8 +11,9 @@
   },
   "scripts": {
     "lint": "bundle exec rubocop",
-    "start": "bundle exec jekyll s -d ../../docs --host 0.0.0.0",
+    "start": "ruby -S bundle exec jekyll s -d ../../html --host 0.0.0.0",
     "build": "yarn build:css && yarn build:js",
+    "build:site": "yarn --cwd ../.. build && ruby -S bundle exec jekyll build -d ../../html",
     "build:js": "esbuild src/application.js --bundle --format=esm --keep-names --sourcemap --outdir=. && esbuild src/serviceworker.js --bundle --keep-names --minify --sourcemap --outdir=.",
     "build:css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./application.css",
     "watch:js": "yarn build:js --watch",

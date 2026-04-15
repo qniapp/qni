@@ -17,9 +17,36 @@ And two apps:
 - [**apps/www**](https://github.com/qniapp/qni/tree/main/apps/www) contains the source for the [qniapp.net](https://qniapp.net) website.
 - [**apps/tutorial**](https://github.com/qniapp/qni/tree/main/apps/tutorial) contains the source for the [qniapp.github.io/qni](https://qniapp.github.io/qni/) website.
 
+And two supporting directories at the repository root:
+
+- [**html**](https://github.com/qniapp/qni/tree/main/html) contains the generated static site artifact for the GitHub Pages deployment of the tutorial site.
+- [**docs**](https://github.com/qniapp/qni/tree/main/docs) contains agent-facing Markdown docs such as specs and implementation plans.
+
 And one example:
 
 - [**examples/elements-example**](https://github.com/qniapp/qni/tree/main/examples/elements-example) is a simple example for `@qni/elements`.
+
+## Local setup
+
+This repository currently builds reliably with the same toolchain used by CI and the Docker image:
+
+- Node.js `16.20.2`
+- Ruby `2.7.4`
+- Yarn 1
+
+If you use [mise](https://mise.jdx.dev/), the repository root now pins those versions. On current Arch/GCC toolchains, Ruby 2.7.4 needs a bootstrap install path: a precompiled Ruby 3.3.7 is installed first, then used as the baseruby while Ruby 2.7.4 is compiled with `-std=gnu17`.
+
+Bootstrap the local toolchain with:
+
+```bash
+./scripts/install-local-build-env.sh
+```
+
+Run the local full build with:
+
+```bash
+./scripts/full-build-local.sh
+```
 
 ## Getting Help & Contributing Back
 
