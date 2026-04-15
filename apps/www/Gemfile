@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 ruby '4.0.2'
 
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.2.0'
 gem 'tzinfo-data'
 gem 'view_component'
 
@@ -15,6 +15,7 @@ gem 'puma', '~> 7.0', '>= 7.0.4'
 
 # JavaScript, CSS and assets
 gem 'cssbundling-rails'
+gem 'sprockets-rails'
 gem 'benchmark'
 gem 'bigdecimal'
 gem 'drb'
@@ -41,7 +42,6 @@ gem 'aws-sdk-s3', require: false
 gem 'better_html'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'grover'
-gem 'serviceworker-rails'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
