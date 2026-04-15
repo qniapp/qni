@@ -6,16 +6,12 @@ cd "$(dirname "$0")/.."
 mise trust .mise.toml >/dev/null 2>&1 || true
 
 mise install node@16.20.2
-mise install ruby@3.3.7
+mise install ruby@4.0.2
 
-if ! mise where ruby@2.7.4 >/dev/null 2>&1; then
-  mise exec ruby@3.3.7 -- bash -lc "CFLAGS='-std=gnu17' mise install ruby@2.7.4"
+mise exec node@16.20.2 -- npm install --global yarn@1.22.22
+
+if ! mise exec ruby@4.0.2 -- bash -lc 'ruby -S bundle _4.0.10_ -v >/dev/null 2>&1'; then
+  mise exec ruby@4.0.2 -- gem install bundler -v 4.0.10 --no-document
 fi
 
-mise exec node@16.20.2 -- npm install --global yarn@1
-
-if ! mise exec ruby@2.7.4 -- bash -lc 'ruby -S bundle _2.2.29_ -v >/dev/null 2>&1'; then
-  mise exec ruby@2.7.4 -- gem install bundler -v 2.2.29 --no-document
-fi
-
-mise exec node@16.20.2 ruby@2.7.4 -- bash -lc 'node -v && ruby -v && yarn -v && ruby -S bundle _2.2.29_ -v'
+mise exec node@16.20.2 ruby@4.0.2 -- bash -lc 'node -v && ruby -v && yarn -v && ruby -S bundle _4.0.10_ -v'

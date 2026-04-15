@@ -19,7 +19,8 @@
     "url": "git+https://github.com/yasuhito/qni.git"
   },
   "engines": {
-    "yarn": "1.x"
+    "node": "16.20.2",
+    "yarn": "1.22.22"
   },
   "main": "dist/index.js",
   "module": "dist/index.js",

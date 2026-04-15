@@ -29,7 +29,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.19.3, 16.20.2]
+        node-version: [16.20.2]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -39,16 +39,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: sudo apt-get -y install libpq-dev
+      - name: Install Yarn 1
+        run: npm install --global yarn@1.22.22
       - name: Setup apps/www
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.4
+          ruby-version: 4.0.2
           working-directory: apps/www
           bundler-cache: true
       - name: Setup apps/tutorial
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.4
+          ruby-version: 4.0.2
           working-directory: apps/tutorial
           bundler-cache: true
       - name: Setup DB

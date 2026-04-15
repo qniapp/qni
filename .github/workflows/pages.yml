@@ -33,7 +33,7 @@ jobs:
           cache: yarn
 
       - name: Install Yarn 1
-        run: npm install --global yarn@1
+        run: npm install --global yarn@1.22.22
 
       - name: Install workspace dependencies
         run: yarn install --frozen-lockfile
@@ -41,7 +41,7 @@ jobs:
       - name: Setup Ruby for tutorial site
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.4
+          ruby-version: 4.0.2
           bundler-cache: true
           working-directory: apps/tutorial
 

@@ -60,6 +60,44 @@ assert(
 )
 assert(existsSync('scripts/full-build-local.sh'), 'Expected scripts/full-build-local.sh to exist')
 
+const installScript = readFileSync('scripts/install-local-build-env.sh', 'utf8')
+assert(
+  installScript.includes('ruby@4.0.2'),
+  'Expected scripts/install-local-build-env.sh to install ruby@4.0.2'
+)
+assert(
+  installScript.includes('bundler -v 4.0.10') || installScript.includes('bundle _4.0.10_'),
+  'Expected scripts/install-local-build-env.sh to provision Bundler 4.0.10'
+)
+
+const fullBuildScript = readFileSync('scripts/full-build-local.sh', 'utf8')
+assert(
+  fullBuildScript.includes('ruby@4.0.2'),
+  'Expected scripts/full-build-local.sh to run with ruby@4.0.2'
+)
+
+const wwwPackage = JSON.parse(readFileSync('apps/www/package.json', 'utf8'))
+assert(
+  wwwPackage.engines?.node === '16.20.2',
+  `Expected apps/www/package.json to pin node 16.20.2, got: ${wwwPackage.engines?.node}`
+)
+assert(
+  wwwPackage.engines?.yarn === '1.22.22',
+  `Expected apps/www/package.json to pin yarn 1.22.22, got: ${wwwPackage.engines?.yarn}`
+)
+
+const ciWorkflow = readFileSync('.github/workflows/ci.yml', 'utf8')
+assert(ciWorkflow.includes('ruby-version: 4.0.2'), 'Expected CI workflow to use ruby-version: 4.0.2')
+assert(ciWorkflow.includes('node-version: [16.20.2]'), 'Expected CI workflow to pin Node 16.20.2')
+assert(ciWorkflow.includes('yarn@1.22.22'), 'Expected CI workflow to install Yarn 1.22.22 explicitly')
+
+const pagesWorkflow = readFileSync('.github/workflows/pages.yml', 'utf8')
+assert(pagesWorkflow.includes('ruby-version: 4.0.2'), 'Expected Pages workflow to use ruby-version: 4.0.2')
+assert(pagesWorkflow.includes('yarn@1.22.22'), 'Expected Pages workflow to install Yarn 1.22.22 explicitly')
+
+const dockerfile = readFileSync('Dockerfile', 'utf8')
+assert(dockerfile.includes('ruby-4.0.2.tar.gz'), 'Expected Dockerfile to install Ruby 4.0.2')
+
 const rootPackage = JSON.parse(readFileSync('package.json', 'utf8'))
 assert(
   rootPackage.scripts['setup:local-build-env'] === 'bash scripts/install-local-build-env.sh',

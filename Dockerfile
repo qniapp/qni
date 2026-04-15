@@ -41,7 +41,7 @@ RUN curl -qL https://www.npmjs.com/install.sh | sh
 RUN npm install -g yarn
 
 ## ruby
-RUN wget https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.4.tar.gz && tar xvfz ruby-2.7.4.tar.gz && cd ruby-2.7.4 && ./configure && make && make install
+RUN wget https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.2.tar.gz && tar xvfz ruby-4.0.2.tar.gz && cd ruby-4.0.2 && ./configure && make && make install
 
 ARG DOCKER_UID=1000
 ARG DOCKER_USER=docker
