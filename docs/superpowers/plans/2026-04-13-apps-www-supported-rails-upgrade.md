@@ -21,6 +21,10 @@
 - `apps/www/config/boot.rb` — early boot requirements already adjusted for Ruby 4; re-check after Rails change
 - `apps/www/package.json` — JS/runtime compatibility checkpoints for Rails-adjacent frontend behavior
 - `apps/www/app/javascript/*` — verify JS boot path for Turbolinks / Stimulus / UJS compatibility after upgrade
+- `apps/www/config/initializers/serviceworker.rb` — current serviceworker-rails routing, now a Rack 3 compatibility hotspot
+- `apps/www/app/assets/javascripts/serviceworker.js` — current service worker asset entry to preserve or migrate
+- `apps/www/app/assets/javascripts/manifest.json` — current manifest asset entry to preserve or migrate
+- `apps/www/app/views/layouts/application.html.erb` — manifest link tag and any related browser-facing references
 - `apps/www/Procfile` — production boot command; verify no change required after framework upgrade
 - `apps/www/config/puma.rb` — verify Puma config still matches the upgraded framework/runtime expectations
 - `apps/www/test/*` — existing regression safety net; extend only if upgrade uncovers uncovered behavior
@@ -34,6 +38,7 @@
 - Prefer keeping `config.load_defaults 6.0` during the first framework jump unless a specific supported target requires otherwise
 - Separate framework upgrade work from unrelated cleanup
 - Require explicit support-posture confirmation before any dependency edits
+- Treat service worker delivery as an explicit migration task, because `serviceworker-rails` 0.6.0 is a Rack 3 / Rails 7.2 boot blocker via `rack/file`
 
 ### Task 1: Confirm the supported target and lock the execution scope
 
@@ -172,6 +177,7 @@ Focus first on known likely items:
 - web-console deprecated config replacement in development
 - Rails application defaults handling
 - environment config names or removed settings
+- service worker delivery migration away from `serviceworker-rails` if production boot still fails on Rack 3
 
 Do not change `config.load_defaults 6.0` in the same step unless the chosen target requires it to boot or tests clearly require a behavior change.
 
@@ -210,9 +216,9 @@ Expected: success with digested assets generated and no boot-time framework erro
 - [ ] **Step 2: If asset build fails, fix one integration point at a time**
 
 Likely focus order:
-1. JS boot / entrypoints
-2. `@rails/ujs`, `turbolinks`, `stimulus-rails` interactions
-3. `serviceworker-rails`
+1. service worker delivery migration (`serviceworker-rails` replacement/removal)
+2. JS boot / entrypoints
+3. `@rails/ujs`, `turbolinks`, `stimulus-rails` interactions
 4. Sprockets asset declarations
 
 - [ ] **Step 3: Run the app test suite after asset/build fixes**
@@ -343,6 +349,7 @@ curl -I -L https://www.qniapp.net/
 Also verify:
 - homepage HTML has no application error
 - homepage assets return 200
+- `/serviceworker.js` and `/manifest.json` return expected content/status under the migrated delivery approach
 - DB-backed + Grover/Puppeteer `/:json` path returns expected metadata such as `og:image`
 - warning evidence shows `PG::Coder.new(hash)` is gone
 

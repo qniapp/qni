@@ -55,6 +55,8 @@ A local monkey patch may be possible, but it would be a framework-internal overr
 
 This app is deployed to the live Heroku production app `qni-quantum`, so upgrade design must prioritize conservative rollout and clear rollback criteria.
 
+During initial Rails 7.2 execution work, the dependency upgrade itself resolved, but production boot failed because `serviceworker-rails` 0.6.0 requires `rack/file`, which is not available under the Rack 3 path brought in by Rails 7.2. That makes service worker delivery strategy a first-class upgrade concern rather than a minor compatibility cleanup.
+
 ## Options considered
 
 ### Option A: stay on Rails 6.1 and add a local compatibility patch
@@ -144,6 +146,10 @@ The implementation plan should expect review and possible edits in at least thes
 - `apps/www/bin/*`
 - `apps/www/package.json`
 - `apps/www/app/javascript/*`
+- `apps/www/config/initializers/serviceworker.rb`
+- `apps/www/app/assets/javascripts/serviceworker.js`
+- `apps/www/app/assets/javascripts/manifest.json`
+- `apps/www/app/views/layouts/application.html.erb`
 - `apps/www/Procfile`
 
 Potentially also:
@@ -167,11 +173,18 @@ The implementation plan must explicitly validate these areas rather than assumin
    - Verify `cssbundling-rails`, `jsbundling-rails`, `sprockets`, and `serviceworker-rails` all behave correctly after the upgrade.
 4. **Frontend runtime compatibility**
    - Confirm `turbolinks`, `stimulus-rails`, and `@rails/ujs` usage still boots cleanly.
-5. **Gem compatibility**
+5. **Service worker delivery strategy**
+   - Replace or remove `serviceworker-rails`, which is not Rack 3 compatible in its current form.
+   - Compare at least these options:
+     - static delivery of `serviceworker.js` / `manifest.json`
+     - Rails 7.2 built-in PWA-style delivery
+     - a minimal self-owned route/controller/static implementation
+   - Prefer the lowest-complexity option that preserves current browser-facing behavior without middleware dependence.
+6. **Gem compatibility**
    - Confirm `view_component`, `grover`, `better_html`, and other runtime gems work on the chosen Rails target.
-6. **Production integration paths**
-   - Verify S3-backed Active Storage, DB-backed circuit rendering, and Grover/Puppeteer output still work under production settings.
-7. **Heroku deploy behavior**
+7. **Production integration paths**
+   - Verify S3-backed Active Storage, DB-backed circuit rendering, Grover/Puppeteer output, and service worker/manifest delivery still work under production settings.
+8. **Heroku deploy behavior**
    - Reconfirm build, release, asset precompile, dyno boot, and rollback behavior on `qni-quantum`.
 
 ## Verification requirements for any future implementation
@@ -203,6 +216,7 @@ For any rollout to `qni-quantum`, verify at minimum:
 - `https://www.qniapp.net/` returns 200
 - homepage HTML does not show application error output
 - homepage assets return 200
+- `/serviceworker.js` and `/manifest.json` return expected content/status after the chosen delivery migration
 - DB-backed and Grover/Puppeteer-backed `/:json` smoke still returns expected metadata such as `og:image`
 - the `PG::Coder.new(hash)` warning is no longer present
 
@@ -225,3 +239,5 @@ This design should lead to one of two outcomes:
 ## Recommendation to carry forward
 
 Proceed to implementation planning for **`apps/www` → the lowest-risk currently supported Rails target`**, using the Rails 7.0 keyword-argument fix as evidence that the warning is resolved upstream and using Rails 7.1 as an intermediate comparison point only if it helps estimate upgrade effort.
+
+That implementation planning must now explicitly include a service worker delivery migration, because the current `serviceworker-rails` setup is a Rails 7.2 / Rack 3 blocker.
