@@ -277,6 +277,7 @@ GEM
       rails (>= 6.0.0)
     thor (1.5.0)
     timeout (0.6.1)
+    tsort (0.2.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -345,6 +346,7 @@ DEPENDENCIES
   serviceworker-rails
   stackprof
   stimulus-rails
+  tsort (>= 0.2)
   turbolinks (~> 5)
   tzinfo-data
   view_component

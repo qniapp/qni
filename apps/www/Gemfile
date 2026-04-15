@@ -24,6 +24,7 @@ gem 'logger'
 gem 'mutex_m'
 gem 'ostruct'
 gem 'stimulus-rails'
+gem 'tsort', '>= 0.2'
 gem 'turbolinks', '~> 5'
 
 # Logging
