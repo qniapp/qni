@@ -50,7 +50,7 @@ Run:
 # gather current support info before touching Gemfile
 ```
 
-Expected: a written note in this plan or follow-up execution log naming the chosen target (for example, 7.2.x if that is the lowest-risk normally supported line at execution time).
+Expected: a written note in this plan or follow-up execution log naming the chosen target. As of 2026-04-13 research, the supported comparison set indicates Rails 7.0 and 7.1 are out of normal support, while Rails 7.2.x, 8.0.x, and 8.1.x are active upstream security lines; therefore the default planning target is **Rails 7.2.x** unless repository-specific blockers force reconsideration.
 
 - [ ] **Step 2: Stop if no acceptable supported target is available**
 
