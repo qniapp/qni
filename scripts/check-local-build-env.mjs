@@ -87,9 +87,27 @@ assert(
 )
 
 const wwwPackage = JSON.parse(readFileSync('apps/www/package.json', 'utf8'))
+const wwwGemfile = readFileSync('apps/www/Gemfile', 'utf8')
+const wwwGemfileLock = readFileSync('apps/www/Gemfile.lock', 'utf8')
 assert(
   wwwPackage.engines?.node === '20.20.2',
   `Expected apps/www/package.json to pin node 20.20.2, got: ${wwwPackage.engines?.node}`
+)
+assert(
+  wwwGemfile.includes("gem 'selenium-webdriver'"),
+  'Expected apps/www/Gemfile to declare selenium-webdriver directly for system tests'
+)
+assert(
+  !wwwGemfile.includes("gem 'webdrivers'"),
+  'Expected apps/www/Gemfile to stop depending on the legacy webdrivers gem'
+)
+assert(
+  wwwGemfileLock.includes('    selenium-webdriver ('),
+  'Expected apps/www/Gemfile.lock to retain selenium-webdriver for system tests'
+)
+assert(
+  !wwwGemfileLock.includes('\n    webdrivers ('),
+  'Expected apps/www/Gemfile.lock to stop locking the legacy webdrivers gem'
 )
 const wwwLintScript = wwwPackage.scripts?.lint
 assert(typeof wwwLintScript === 'string', 'Expected apps/www/package.json to define a lint script')
