@@ -4,8 +4,8 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  transform: {
-    'packages/common/dist/index.js$': 'ts-jest',
+  moduleNameMapper: {
+    '^@qni/common$': '<rootDir>/../common/src/index.ts',
   },
   coveragePathIgnorePatterns: ['/test/matchers/'],
 }
