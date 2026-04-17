@@ -1,5 +1,5 @@
 import {assert} from '@esm-bundle/chai'
-import {isIfable} from '@qni/elements'
+import {isIfable} from '../../dist/index'
 
 export function testIfable(operationName) {
   describe('ifable', function () {

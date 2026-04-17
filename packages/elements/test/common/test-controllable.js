@@ -1,5 +1,5 @@
 import {assert} from '@esm-bundle/chai'
-import {isControllable} from '@qni/elements'
+import {isControllable} from '../../dist/index'
 
 export function testControllable(operationName) {
   describe('controllable', function () {
