@@ -91,6 +91,39 @@ assert(
   wwwPackage.engines?.node === '20.20.2',
   `Expected apps/www/package.json to pin node 20.20.2, got: ${wwwPackage.engines?.node}`
 )
+const wwwLintScript = wwwPackage.scripts?.lint
+assert(typeof wwwLintScript === 'string', 'Expected apps/www/package.json to define a lint script')
+for (const ignoredLintTarget of [
+  'app/javascript/application.js',
+  'app/javascript/**/*.js',
+  'app/javascript/controllers/index.js',
+  'app/assets/javascripts/*.js',
+  'app/assets/javascripts/serviceworker-companion.js',
+  'postcss.config.js',
+  'rollup.config.js',
+  'tailwind.config.js',
+]) {
+  assert(
+    !wwwLintScript.includes(ignoredLintTarget),
+    `Expected apps/www lint script to stop targeting ignored file or glob ${ignoredLintTarget}`
+  )
+}
+assert(
+  wwwLintScript.includes('app/javascript/controllers/**/*.js'),
+  'Expected apps/www lint script to cover controller JavaScript sources'
+)
+assert(
+  wwwLintScript.includes('app/javascript/controllers/**/*.ts'),
+  'Expected apps/www lint script to cover controller TypeScript sources'
+)
+assert(
+  wwwLintScript.includes('app/assets/config/*.js'),
+  'Expected apps/www lint script to cover asset manifest JavaScript files'
+)
+assert(
+  wwwLintScript.includes('app/assets/javascripts/serviceworker.js'),
+  'Expected apps/www lint script to cover the service worker entrypoint'
+)
 assert(
   !existsSync('apps/www/yarn.lock'),
   'Expected apps/www/yarn.lock to be removed after the pnpm migration'
