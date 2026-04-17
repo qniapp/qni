@@ -17,8 +17,9 @@ assert(
   'Expected apps/tutorial/package.json to define scripts["build:site"]'
 )
 assert(
-  tutorialPackage.scripts['build:site'].includes('yarn --cwd ../.. build'),
-  `Expected apps/tutorial/package.json scripts["build:site"] to prebuild the monorepo via yarn --cwd ../.. build, got: ${tutorialPackage.scripts['build:site']}`
+  tutorialPackage.scripts['build:site'].includes('build:site-deps') ||
+    tutorialPackage.scripts['build:site'].includes('pnpm --dir ../.. build:site-deps'),
+  `Expected apps/tutorial/package.json scripts["build:site"] to prebuild the site dependencies via root build:site-deps, got: ${tutorialPackage.scripts['build:site']}`
 )
 assert(
   tutorialPackage.scripts['build:site'].includes('bundle exec jekyll build -d ../../html'),

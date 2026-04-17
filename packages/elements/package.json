@@ -16,16 +16,16 @@
     "clean": "rm -rf dist build",
     "lint": "eslint . --ext .js,.ts",
     "typecheck": "tsc --noEmit",
-    "build": "yarn build:css && yarn build:js",
+    "build": "pnpm build:css && pnpm build:js",
     "build:js": "node build.cjs",
     "build:css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
     "presize": "npm run build",
     "size": "size-limit",
     "pretest": "npm run build",
     "test": "web-test-runner test/**/*-test.js --node-resolve --concurrency 1",
-    "test:ci": "yarn test",
-    "test:watch": "yarn test --watch",
-    "watch:css": "yarn build:css --watch",
+    "test:ci": "pnpm test",
+    "test:watch": "pnpm test --watch",
+    "watch:css": "pnpm build:css --watch",
     "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected --excludeInternal"
   },
   "keywords": [
@@ -51,8 +51,10 @@
   },
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-replace": "^5.0.2",
     "@web/dev-server-rollup": "~0.3",
-    "@web/test-runner": "~0.15",
+    "@web/test-runner": "0.15.0",
     "eslint-plugin-neverthrow": "^1.1.4",
     "postcss-flexbugs-fixes": "^5.0.2",
     "rollup-plugin-postcss": "^4.0.2"

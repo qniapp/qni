@@ -33,15 +33,11 @@ RUN apt install -y postgresql postgresql-contrib
 ## node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 RUN apt-get install -y nodejs
-
-## npm
-RUN curl -qL https://www.npmjs.com/install.sh | sh
-
-## yarn
-RUN npm install -g yarn
+RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 
 ## ruby
 RUN wget https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.2.tar.gz && tar xvfz ruby-4.0.2.tar.gz && cd ruby-4.0.2 && ./configure && make && make install
+RUN gem install bundler -v 4.0.10 --no-document
 
 ARG DOCKER_UID=1000
 ARG DOCKER_USER=docker
@@ -64,10 +60,11 @@ RUN cd /home/$DOCKER_USER && echo "export PATH=$PATH:$HOME/.rbenv/bin" >> ~/.bas
 RUN cd /home/$DOCKER_USER && git clone https://github.com/qniapp/qni.git
 
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/$DOCKER_USER/.rbenv/bin
-RUN cd /home/$DOCKER_USER && cd qni/apps/www && bundle config set path 'vendor/cache' && bundle install && yarn install
+RUN cd /home/$DOCKER_USER/qni && pnpm install --frozen-lockfile
+RUN cd /home/$DOCKER_USER/qni/apps/www && bundle config set path 'vendor/cache' && bundle install
 
 ## settings for rails
-RUN cd /home/$DOCKER_USER && cd qni && yarn build && cd apps/www && ./bin/rails css:build && ./bin/rails javascript:build
+RUN cd /home/$DOCKER_USER/qni && pnpm build && cd apps/www && ./bin/rails css:build && ./bin/rails javascript:build
 
 ## settings for postgresql
 RUN sudo -u postgres service postgresql start && sudo -u postgres psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" && sudo -u postgres createdb -O docker docker

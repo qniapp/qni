@@ -18,9 +18,9 @@
     "build": "node build.js",
     "presize": "npm run build",
     "size": "size-limit",
-    "test": "yarn jest --coverage",
-    "test:ci": "yarn test",
-    "test:watch": "yarn test --auto-watch --no-single-run",
+    "test": "pnpm exec jest --coverage",
+    "test:ci": "pnpm test",
+    "test:watch": "pnpm test --auto-watch --no-single-run",
     "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "keywords": [

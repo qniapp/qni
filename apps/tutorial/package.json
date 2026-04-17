@@ -12,12 +12,12 @@
   "scripts": {
     "lint": "ruby -S bundle exec ruby -S rubocop",
     "start": "ruby -S bundle exec jekyll s -d ../../html --host 0.0.0.0",
-    "build": "yarn build:css && yarn build:js",
-    "build:site": "yarn --cwd ../.. build && ruby -S bundle exec jekyll build -d ../../html",
+    "build": "pnpm build:css && pnpm build:js",
+    "build:site": "pnpm build && pnpm --dir ../.. build:site-deps && ruby -S bundle exec jekyll build -d ../../html",
     "build:js": "esbuild src/application.js --bundle --format=esm --keep-names --sourcemap --outdir=. && esbuild src/serviceworker.js --bundle --keep-names --minify --sourcemap --outdir=.",
     "build:css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./application.css",
-    "watch:js": "yarn build:js --watch",
-    "watch:css": "yarn build:css --watch"
+    "watch:js": "pnpm build:js --watch",
+    "watch:css": "pnpm build:css --watch"
   },
   "bugs": {
     "url": "https://github.com/qniapp/qni/issues"

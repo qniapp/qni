@@ -3,7 +3,8 @@
   "rules": {
     "i18n-text/no-en": "off",
     "import/extensions": "off",
-    "import/named": "off"
+    "import/named": "off",
+    "import/no-named-as-default": "off"
   },
   "overrides": [
     {
@@ -16,13 +17,15 @@
       },
       "rules": {
         "github/no-inner-html": "off",
-        "github/unescaped-html-literal": "off"
+        "github/unescaped-html-literal": "off",
+        "import/namespace": "off",
+        "import/no-deprecated": "off"
       }
     },
     {
       "files": "*.js",
       "parser": "espree",
-      "parserOptions": {"ecmaVersion": 8}
+      "parserOptions": {"ecmaVersion": 2022, "sourceType": "module"}
     }
   ]
 }

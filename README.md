@@ -32,9 +32,9 @@ This repository is being migrated toward the following toolchain baseline:
 
 - Node.js `20.20.2`
 - Ruby `4.0.2`
-- Yarn 1
+- pnpm `10.33.0`
 
-If you use [mise](https://mise.jdx.dev/), the repository root now pins those versions for local work. The production Heroku app `qni-quantum` deploys the Rails app from `apps/www`, and the repository-wide Ruby version policy is being aligned with that production target. CI, Docker, and local helper scripts are updated in later migration steps.
+If you use [mise](https://mise.jdx.dev/), the repository root now pins those versions for local work. The production Heroku app `qni-quantum` deploys the Rails app from `apps/www`, and the repository-wide Ruby version policy is being aligned with that production target. The monorepo now uses pnpm for workspace installs and root orchestration, and Lerna is being removed in favor of native pnpm scripts.
 
 Bootstrap the local toolchain with:
 

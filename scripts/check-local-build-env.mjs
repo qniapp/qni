@@ -81,19 +81,36 @@ assert(
   wwwPackage.engines?.node === '20.20.2',
   `Expected apps/www/package.json to pin node 20.20.2, got: ${wwwPackage.engines?.node}`
 )
-assert(
-  wwwPackage.engines?.yarn === '1.22.22',
-  `Expected apps/www/package.json to pin yarn 1.22.22, got: ${wwwPackage.engines?.yarn}`
-)
 
 const ciWorkflow = readFileSync('.github/workflows/ci.yml', 'utf8')
-assert(ciWorkflow.includes('ruby-version: 4.0.2'), 'Expected CI workflow to use ruby-version: 4.0.2')
+assert(
+  ciWorkflow.includes('ruby-version: 4.0.2'),
+  'Expected CI workflow to use ruby-version: 4.0.2'
+)
 assert(ciWorkflow.includes('node-version: [20.20.2]'), 'Expected CI workflow to pin Node 20.20.2')
-assert(ciWorkflow.includes('yarn@1.22.22'), 'Expected CI workflow to install Yarn 1.22.22 explicitly')
+assert(
+  ciWorkflow.includes('pnpm/action-setup@v4'),
+  'Expected CI workflow to set up pnpm explicitly'
+)
+assert(
+  ciWorkflow.includes('pnpm install --frozen-lockfile'),
+  'Expected CI workflow to install workspace dependencies with pnpm'
+)
+assert(ciWorkflow.includes('pnpm build'), 'Expected CI workflow to run pnpm build')
 
 const pagesWorkflow = readFileSync('.github/workflows/pages.yml', 'utf8')
-assert(pagesWorkflow.includes('ruby-version: 4.0.2'), 'Expected Pages workflow to use ruby-version: 4.0.2')
-assert(pagesWorkflow.includes('yarn@1.22.22'), 'Expected Pages workflow to install Yarn 1.22.22 explicitly')
+assert(
+  pagesWorkflow.includes('ruby-version: 4.0.2'),
+  'Expected Pages workflow to use ruby-version: 4.0.2'
+)
+assert(
+  pagesWorkflow.includes('pnpm/action-setup@v4'),
+  'Expected Pages workflow to set up pnpm explicitly'
+)
+assert(
+  pagesWorkflow.includes('pnpm install --frozen-lockfile'),
+  'Expected Pages workflow to install workspace dependencies with pnpm'
+)
 
 const dockerfile = readFileSync('Dockerfile', 'utf8')
 assert(dockerfile.includes('ruby-4.0.2.tar.gz'), 'Expected Dockerfile to install Ruby 4.0.2')
@@ -108,6 +125,12 @@ assert(
   'Expected package.json scripts["build:local-full"] to run the local full build script'
 )
 
+const installScriptText = readFileSync('scripts/install-local-build-env.sh', 'utf8')
+assert(
+  installScriptText.includes('pnpm'),
+  'Expected scripts/install-local-build-env.sh to install or prepare pnpm'
+)
+
 const readme = readFileSync('README.md', 'utf8')
 assert(
   readme.includes('./scripts/install-local-build-env.sh'),
@@ -117,5 +140,6 @@ assert(
   readme.includes('./scripts/full-build-local.sh'),
   'Expected README.md to document the local full build script'
 )
+assert(readme.includes('pnpm'), 'Expected README.md to mention pnpm')
 
 console.log('Local build environment config OK')

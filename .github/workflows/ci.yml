@@ -38,9 +38,12 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
+          cache: pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
       - run: sudo apt-get -y install libpq-dev
-      - name: Install Yarn 1
-        run: npm install --global yarn@1.22.22
       - name: Setup apps/www
         uses: ruby/setup-ruby@v1
         with:
@@ -62,20 +65,20 @@ jobs:
           RAILS_ENV: test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-      - run: yarn
+      - run: pnpm install --frozen-lockfile
       - name: Check Pages migration config
-        run: yarn test:pages-config
+        run: node scripts/check-pages-config.mjs
       - name: Check local build environment config
-        run: yarn test:local-build-env
-      - run: yarn build
+        run: node scripts/check-local-build-env.mjs
+      - run: pnpm build
       - name: Lint Codebase
-        run: yarn lint
+        run: pnpm lint
       - name: Run Typecheck
-        run: yarn typecheck
-      - run: yarn test:ci
+        run: pnpm typecheck
+      - run: PGHOST=localhost PGUSER=postgres PGPASSWORD=postgres pnpm test:ci
         env:
           RAILS_ENV: test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
       - name: Check Bundle Size
-        run: yarn size
+        run: pnpm size

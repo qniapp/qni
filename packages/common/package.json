@@ -19,8 +19,8 @@
     "build": "node build.js",
     "presize": "npm run build",
     "size": "size-limit",
-    "test": "yarn jest --coverage",
-    "test:ci": "npm test",
+    "test": "pnpm exec jest --coverage",
+    "test:ci": "pnpm test",
     "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "bugs": {

@@ -7,9 +7,9 @@
   "scripts": {
     "clean": "rm -rf dist",
     "start": "node ./bin/www",
-    "build": "yarn build:css && esbuild src/application.js --bundle --keep-names --minify --outdir=public/javascripts/",
+    "build": "pnpm build:css && pnpm exec esbuild src/application.js --bundle --keep-names --minify --outdir=public/javascripts/",
     "build:css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./public/stylesheets/application.css",
-    "css:watch": "yarn build:css --watch"
+    "css:watch": "pnpm build:css --watch"
   },
   "dependencies": {
     "@qni/elements": "^0.0.87",

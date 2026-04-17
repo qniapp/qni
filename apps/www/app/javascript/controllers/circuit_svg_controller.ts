@@ -1,5 +1,5 @@
 import '@svgdotjs/svg.filter.js'
-import {G, SVG, Svg} from '@svgdotjs/svg.js'
+import {G, SVG, Shape, Svg} from '@svgdotjs/svg.js'
 import {Controller} from '@hotwired/stimulus'
 
 export default class CircuitSvgController extends Controller {
@@ -59,7 +59,7 @@ export default class CircuitSvgController extends Controller {
 
   private drawRandomShape(rect: {x: number; y: number; width: number; height: number}) {
     const shapeChoices = ['rect', 'ellipse', 'triangle']
-    let shape
+    let shape: Shape
 
     switch (shapeChoices[~~this.random(0, shapeChoices.length)]) {
       case 'ellipse':

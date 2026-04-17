@@ -19,8 +19,7 @@
     "url": "git+https://github.com/yasuhito/qni.git"
   },
   "engines": {
-    "node": "20.20.2",
-    "yarn": "1.22.22"
+    "node": "20.20.2"
   },
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -30,18 +29,18 @@
     "dev": "./bin/dev",
     "lint": "eslint app/javascript/**/*.js app/javascript/**/*.ts app/assets/config/*.js app/assets/javascripts/*.js postcss.config.js rollup.config.js tailwind.config.js --ignore-path .gitignore",
     "typecheck": "tsc --noEmit",
-    "build": "yarn build:css && yarn build:js",
-    "build:js": "esbuild app/javascript/application.js --bundle --keep-names --sourcemap --minify --outdir=app/assets/builds && esbuild app/assets/javascripts/serviceworker.js --bundle --sourcemap --minify --outdir=app/assets/builds",
-    "build:css": "tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
-    "build:npm": "rollup -c && yarn build:css && cp ./app/assets/builds/application.css dist/qni.css",
+    "build": "pnpm build:css && pnpm build:js",
+    "build:js": "pnpm exec esbuild app/javascript/application.js --bundle --keep-names --sourcemap --minify --outdir=app/assets/builds && pnpm exec esbuild app/assets/javascripts/serviceworker.js --bundle --sourcemap --minify --outdir=app/assets/builds",
+    "build:css": "pnpm exec tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
+    "build:npm": "rollup -c && pnpm build:css && cp ./app/assets/builds/application.css dist/qni.css",
     "build:docs": "cd docs && JEKYLL_ENV=production ruby -S bundle exec jekyll build",
-    "pretest": "yarn build && yarn build:css",
+    "pretest": "pnpm build && pnpm build:css",
     "test": "MINITEST_REPORTER=SpecReporter ruby -S bundle exec rails test:system test",
     "test:ci": "ruby -S bundle exec rails test",
     "update-browserslist-db": "npx update-browserslist-db@latest",
-    "test:watch": "yarn test --auto-watch --no-single-run",
+    "test:watch": "pnpm test --auto-watch --no-single-run",
     "watch": "rollup -wc",
-    "prerelease": "yarn build:npm && git --no-pager diff && echo && npm pack --dry-run",
+    "prerelease": "pnpm build:npm && git --no-pager diff && echo && npm pack --dry-run",
     "release": "npm publish"
   },
   "prettier": "@github/prettier-config",
