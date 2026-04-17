@@ -44,6 +44,7 @@
     "@github/jtml": "~0.5",
     "@qni/common": "^0.0.87",
     "complex.js": "^2.1.1",
+    "fastdom": "^1.0.12",
     "interactjs": "~1.10",
     "pretty-format": "^29.4.2",
     "tippy.js": "^6.3.7",

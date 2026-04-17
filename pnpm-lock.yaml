@@ -281,6 +281,9 @@ importers:
       complex.js:
         specifier: ^2.1.1
         version: 2.4.3
+      fastdom:
+        specifier: ^1.0.12
+        version: 1.0.12
       interactjs:
         specifier: ~1.10
         version: 1.10.27
