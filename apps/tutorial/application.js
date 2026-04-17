@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// ../../packages/elements/dist/index.js
+// ../../node_modules/.pnpm/@qni+elements@0.0.87/node_modules/@qni/elements/dist/index.js
 var sg = Object.create;
 var To = Object.defineProperty;
 var Sp = Object.getOwnPropertyDescriptor;
@@ -14606,48 +14606,52 @@ export {
 };
 /*! Bundled license information:
 
-fraction.js/fraction.js:
-  (**
-   * @license Fraction.js v4.2.0 05/03/2022
-   * https://www.xarg.org/2014/03/rational-numbers-in-javascript/
-   *
-   * Copyright (c) 2021, Robert Eisele (robert@xarg.org)
-   * Dual licensed under the MIT or GPL Version 2 licenses.
-   **)
+@qni/elements/dist/index.js:
+  (*! Bundled license information:
 
-react-is/cjs/react-is.production.min.js:
-  (**
-   * @license React
-   * react-is.production.min.js
-   *
-   * Copyright (c) Facebook, Inc. and its affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   *)
+  fraction.js/fraction.js:
+    (**
+     * @license Fraction.js v4.2.0 05/03/2022
+     * https://www.xarg.org/2014/03/rational-numbers-in-javascript/
+     *
+     * Copyright (c) 2021, Robert Eisele (robert@xarg.org)
+     * Dual licensed under the MIT or GPL Version 2 licenses.
+     **)
 
-complex.js/complex.js:
-  (**
-   * @license Complex.js v2.1.1 12/05/2020
-   *
-   * Copyright (c) 2020, Robert Eisele (robert@xarg.org)
-   * Dual licensed under the MIT or GPL Version 2 licenses.
-   **)
+  react-is/cjs/react-is.production.min.js:
+    (**
+     * @license React
+     * react-is.production.min.js
+     *
+     * Copyright (c) Facebook, Inc. and its affiliates.
+     *
+     * This source code is licensed under the MIT license found in the
+     * LICENSE file in the root directory of this source tree.
+     *)
 
-xstate/es/_virtual/_tslib.js:
-  (*! *****************************************************************************
-  Copyright (c) Microsoft Corporation.
-  
-  Permission to use, copy, modify, and/or distribute this software for any
-  purpose with or without fee is hereby granted.
-  
-  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-  REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-  AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-  INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-  LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-  PERFORMANCE OF THIS SOFTWARE.
-  ***************************************************************************** *)
+  complex.js/complex.js:
+    (**
+     * @license Complex.js v2.1.1 12/05/2020
+     *
+     * Copyright (c) 2020, Robert Eisele (robert@xarg.org)
+     * Dual licensed under the MIT or GPL Version 2 licenses.
+     **)
+
+  xstate/es/_virtual/_tslib.js:
+    (*! *****************************************************************************
+    Copyright (c) Microsoft Corporation.
+
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
+    ***************************************************************************** *)
+  *)
 */
 //# sourceMappingURL=application.js.map
