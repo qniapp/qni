@@ -91,5 +91,10 @@
   },
   "resolutions": {
     "caniuse-lite": "^1.0.30001788"
+  },
+  "pnpm": {
+    "overrides": {
+      "npm-dts>tmp": "0.2.4"
+    }
   }
 }

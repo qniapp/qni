@@ -6,6 +6,7 @@ settings:
 
 overrides:
   caniuse-lite: ^1.0.30001788
+  npm-dts>tmp: 0.2.4
 
 importers:
   .:
@@ -8826,10 +8827,10 @@ packages:
         integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==,
       }
 
-  tmp@0.2.3:
+  tmp@0.2.4:
     resolution:
       {
-        integrity: sha512-nZD7m9iCPC5g0pYmcaxogYKggSfLsdxl8of3Q/oIbqCqLLIO9IAF0GWjX1z9NZRHPiXv8Wex4yDCaZsgEw0Y8w==,
+        integrity: sha512-UdiSoX6ypifLmrfQ/XfiawN6hkjSBpCjhKxxZcWlUUmoXLaCKQU0bx4HF/tdDK2uzRuchf1txGvrWBzYREssoQ==,
       }
     engines: { node: '>=14.14' }
 
@@ -13728,7 +13729,7 @@ snapshots:
       mkdirp: 3.0.1
       npm-run: 5.0.1
       rimraf: 6.0.1
-      tmp: 0.2.3
+      tmp: 0.2.4
       winston: 3.13.1
 
   npm-path@2.0.4:
@@ -15236,7 +15237,7 @@ snapshots:
     dependencies:
       '@popperjs/core': 2.11.8
 
-  tmp@0.2.3: {}
+  tmp@0.2.4: {}
 
   tmpl@1.0.5: {}
 
