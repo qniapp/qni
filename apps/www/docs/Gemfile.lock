@@ -6,8 +6,6 @@ GEM
     base64 (0.3.0)
     bigdecimal (4.1.1)
     colorator (1.1.0)
-    commonmarker (0.17.13)
-      ruby-enum (~> 0.5)
     concurrent-ruby (1.1.9)
     csv (3.3.5)
     em-websocket (0.5.2)
@@ -40,13 +38,6 @@ GEM
       rouge (~> 3.0)
       safe_yaml (~> 1.0)
       terminal-table (~> 2.0)
-    jekyll-commonmark (1.3.1)
-      commonmarker (~> 0.14)
-      jekyll (>= 3.7, < 5.0)
-    jekyll-commonmark-ghpages (0.1.6)
-      commonmarker (~> 0.17.6)
-      jekyll-commonmark (~> 1.2)
-      rouge (>= 2.0, < 4.0)
     jekyll-github-metadata (2.13.0)
       jekyll (>= 3.4, < 5.0)
       octokit (~> 4.0, != 4.4.0)
@@ -81,8 +72,6 @@ GEM
     rexml (3.3.6)
       strscan
     rouge (3.26.0)
-    ruby-enum (0.9.0)
-      i18n
     safe_yaml (1.0.5)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -103,7 +92,6 @@ DEPENDENCIES
   bigdecimal
   csv
   jekyll
-  jekyll-commonmark-ghpages
   jekyll-github-metadata
   jekyll-gzip
   logger
