@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
+    "@interactjs/types": "^1.10.27",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-replace": "^5.0.2",
     "@web/dev-server-rollup": "~0.3",

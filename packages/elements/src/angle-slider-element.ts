@@ -2,7 +2,7 @@ import {Util, angleDenominator, radian as radianOf} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
-import {InteractEvent} from '@interactjs/types'
+import type {InteractEvent} from '@interactjs/types'
 import {format as prettyFormat} from 'pretty-format'
 import interact from 'interactjs'
 

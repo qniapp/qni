@@ -2,7 +2,7 @@ import {ResizeableSpan, Util, emitEvent} from '@qni/common'
 import {attr, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {Constructor} from './constructor'
-import {InteractEvent} from '@interactjs/types'
+import type {InteractEvent} from '@interactjs/types'
 import {format as prettyFormat} from 'pretty-format'
 import interact from 'interactjs'
 
