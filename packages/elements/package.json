@@ -60,7 +60,7 @@
     "@web/test-runner": "0.20.2",
     "@web/test-runner-commands": "^0.9.0",
     "autoprefixer": "^10.4.19",
-    "esbuild": "~0.26",
+    "esbuild": "~0.27",
     "eslint-plugin-neverthrow": "^1.1.4",
     "npm-dts": "~1.3",
     "postcss-flexbugs-fixes": "^5.0.2",
