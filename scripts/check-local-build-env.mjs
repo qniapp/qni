@@ -139,6 +139,12 @@ assert(
 )
 assert(!wwwProcfileDev.includes('yarn'), 'Expected apps/www/Procfile.dev to stop using yarn')
 
+const requiredGitInitDefaultBranchEnv = [
+  'GIT_CONFIG_COUNT: 1',
+  'GIT_CONFIG_KEY_0: init.defaultBranch',
+  'GIT_CONFIG_VALUE_0: main',
+]
+
 const ciWorkflow = readFileSync('.github/workflows/ci.yml', 'utf8')
 assert(
   ciWorkflow.includes('ruby-version: 4.0.2'),
@@ -150,6 +156,24 @@ assert(
   'Expected CI workflow to set up pnpm explicitly with the Node 24-compatible pnpm action'
 )
 assert(
+  ciWorkflow.includes('actions/setup-node@v6'),
+  'Expected CI workflow to use the latest setup-node major to reduce action-runtime deprecation noise'
+)
+assert(
+  ciWorkflow.includes('POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256 --auth-local=scram-sha-256'),
+  'Expected CI workflow to initialize Postgres without trust auth warnings for local or host connections'
+)
+assert(
+  ciWorkflow.includes('--health-cmd "pg_isready -U postgres"'),
+  'Expected CI workflow Postgres healthcheck to authenticate as postgres after tightening auth'
+)
+for (const snippet of requiredGitInitDefaultBranchEnv) {
+  assert(
+    ciWorkflow.includes(snippet),
+    `Expected CI workflow to set ${snippet} to suppress checkout git-init hints`
+  )
+}
+assert(
   ciWorkflow.includes('pnpm install --frozen-lockfile'),
   'Expected CI workflow to install workspace dependencies with pnpm'
 )
@@ -159,7 +183,7 @@ assertInOrder(
   [
     'actions/checkout@v5',
     'pnpm/action-setup@v5',
-    'actions/setup-node@v5',
+    'actions/setup-node@v6',
     'pnpm install --frozen-lockfile',
   ],
   'Expected CI workflow to install pnpm before enabling setup-node pnpm cache'
@@ -175,6 +199,16 @@ assert(
   'Expected Pages workflow to set up pnpm explicitly with the Node 24-compatible pnpm action'
 )
 assert(
+  pagesWorkflow.includes('actions/setup-node@v6'),
+  'Expected Pages workflow to use the latest setup-node major to reduce action-runtime deprecation noise'
+)
+for (const snippet of requiredGitInitDefaultBranchEnv) {
+  assert(
+    pagesWorkflow.includes(snippet),
+    `Expected Pages workflow to set ${snippet} to suppress checkout git-init hints`
+  )
+}
+assert(
   pagesWorkflow.includes('pnpm install --frozen-lockfile'),
   'Expected Pages workflow to install workspace dependencies with pnpm'
 )
@@ -183,7 +217,7 @@ assertInOrder(
   [
     'actions/checkout@v5',
     'pnpm/action-setup@v5',
-    'actions/setup-node@v5',
+    'actions/setup-node@v6',
     'pnpm install --frozen-lockfile',
   ],
   'Expected Pages workflow to install pnpm before enabling setup-node pnpm cache'
@@ -194,6 +228,12 @@ assert(
   codeqlWorkflow.includes('actions/checkout@v5'),
   'Expected CodeQL workflow to use actions/checkout@v5'
 )
+for (const snippet of requiredGitInitDefaultBranchEnv) {
+  assert(
+    codeqlWorkflow.includes(snippet),
+    `Expected CodeQL workflow to set ${snippet} to suppress checkout git-init hints`
+  )
+}
 for (const action of [
   'github/codeql-action/init@v4',
   'github/codeql-action/autobuild@v4',

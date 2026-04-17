@@ -12,17 +12,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      GIT_CONFIG_COUNT: 1
+      GIT_CONFIG_KEY_0: init.defaultBranch
+      GIT_CONFIG_VALUE_0: main
 
     services:
       postgres:
         image: postgres:12
         env:
           POSTGRES_PASSWORD: postgres
+          POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256 --auth-local=scram-sha-256
         ports:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U postgres"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -39,7 +44,7 @@ jobs:
         with:
           version: 10.33.0
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
