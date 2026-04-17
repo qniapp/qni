@@ -91,6 +91,20 @@ assert(
   wwwPackage.engines?.node === '20.20.2',
   `Expected apps/www/package.json to pin node 20.20.2, got: ${wwwPackage.engines?.node}`
 )
+assert(
+  !existsSync('apps/www/yarn.lock'),
+  'Expected apps/www/yarn.lock to be removed after the pnpm migration'
+)
+const wwwProcfileDev = readFileSync('apps/www/Procfile.dev', 'utf8')
+assert(
+  wwwProcfileDev.includes('js: pnpm build --watch'),
+  'Expected apps/www/Procfile.dev to start the JS watcher with pnpm'
+)
+assert(
+  wwwProcfileDev.includes('css: pnpm build:css --watch'),
+  'Expected apps/www/Procfile.dev to start the CSS watcher with pnpm'
+)
+assert(!wwwProcfileDev.includes('yarn'), 'Expected apps/www/Procfile.dev to stop using yarn')
 
 const ciWorkflow = readFileSync('.github/workflows/ci.yml', 'utf8')
 assert(
