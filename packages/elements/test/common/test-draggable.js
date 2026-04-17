@@ -1,12 +1,13 @@
 import '../../dist/qni.css'
 import {assert} from '@esm-bundle/chai'
 import {once} from './once'
-import {sendMouse} from '@web/test-runner-commands'
+import {resetMouse, sendMouse} from '@web/test-runner-commands'
 
 export function testDraggableOperation(operationName) {
   describe('draggable', function () {
-    afterEach(function () {
+    afterEach(async function () {
       document.body.textContent = ''
+      await resetMouse()
     })
 
     it('should reach "grabbable" when it is on a palette-dropzone', function () {

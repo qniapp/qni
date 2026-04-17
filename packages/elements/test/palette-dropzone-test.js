@@ -1,7 +1,7 @@
 import '../dist/index'
 import '../dist/qni.css'
 import {assert} from '@esm-bundle/chai'
-import {sendMouse} from '@web/test-runner-commands'
+import {resetMouse, sendMouse} from '@web/test-runner-commands'
 import {testElementCreation} from './common/test-element-creation'
 
 describe('palette-dropzone element', function () {
@@ -22,8 +22,9 @@ describe('palette-dropzone element', function () {
       operation = document.querySelector('h-gate')
     })
 
-    afterEach(function () {
+    afterEach(async function () {
       document.body.textContent = ''
+      await resetMouse()
     })
 
     it('creates a new operation when its operation is grabbed', async function () {
