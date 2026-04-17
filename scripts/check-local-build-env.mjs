@@ -99,8 +99,8 @@ assert(
 )
 assert(ciWorkflow.includes('node-version: [20.20.2]'), 'Expected CI workflow to pin Node 20.20.2')
 assert(
-  ciWorkflow.includes('pnpm/action-setup@v4'),
-  'Expected CI workflow to set up pnpm explicitly'
+  ciWorkflow.includes('pnpm/action-setup@v5'),
+  'Expected CI workflow to set up pnpm explicitly with the Node 24-compatible pnpm action'
 )
 assert(
   ciWorkflow.includes('pnpm install --frozen-lockfile'),
@@ -111,7 +111,7 @@ assertInOrder(
   ciWorkflow,
   [
     'actions/checkout@v5',
-    'pnpm/action-setup@v4',
+    'pnpm/action-setup@v5',
     'actions/setup-node@v5',
     'pnpm install --frozen-lockfile',
   ],
@@ -124,8 +124,8 @@ assert(
   'Expected Pages workflow to use ruby-version: 4.0.2'
 )
 assert(
-  pagesWorkflow.includes('pnpm/action-setup@v4'),
-  'Expected Pages workflow to set up pnpm explicitly'
+  pagesWorkflow.includes('pnpm/action-setup@v5'),
+  'Expected Pages workflow to set up pnpm explicitly with the Node 24-compatible pnpm action'
 )
 assert(
   pagesWorkflow.includes('pnpm install --frozen-lockfile'),
@@ -135,7 +135,7 @@ assertInOrder(
   pagesWorkflow,
   [
     'actions/checkout@v5',
-    'pnpm/action-setup@v4',
+    'pnpm/action-setup@v5',
     'actions/setup-node@v5',
     'pnpm install --frozen-lockfile',
   ],
