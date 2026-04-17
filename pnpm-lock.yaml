@@ -164,6 +164,9 @@ importers:
       puppeteer:
         specifier: ~23.2
         version: 23.2.2(typescript@4.9.5)
+      tippy.js:
+        specifier: ^6.3.7
+        version: 6.3.7
       turbolinks:
         specifier: ^5.2.0
         version: 5.2.0
