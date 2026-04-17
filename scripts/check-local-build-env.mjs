@@ -8,6 +8,16 @@ function read(path) {
   return readFileSync(path, 'utf8').trim()
 }
 
+function assertInOrder(text, snippets, message) {
+  let previousIndex = -1
+  for (const snippet of snippets) {
+    const index = text.indexOf(snippet)
+    assert(index !== -1, `${message} (missing snippet: ${snippet})`)
+    assert(index > previousIndex, `${message} (out of order around: ${snippet})`)
+    previousIndex = index
+  }
+}
+
 assert(existsSync('.tool-versions'), 'Expected root .tool-versions to exist')
 assert(existsSync('.mise.toml'), 'Expected root .mise.toml to exist')
 const miseToml = readFileSync('.mise.toml', 'utf8')
@@ -97,6 +107,16 @@ assert(
   'Expected CI workflow to install workspace dependencies with pnpm'
 )
 assert(ciWorkflow.includes('pnpm build'), 'Expected CI workflow to run pnpm build')
+assertInOrder(
+  ciWorkflow,
+  [
+    'actions/checkout@v5',
+    'pnpm/action-setup@v4',
+    'actions/setup-node@v5',
+    'pnpm install --frozen-lockfile',
+  ],
+  'Expected CI workflow to install pnpm before enabling setup-node pnpm cache'
+)
 
 const pagesWorkflow = readFileSync('.github/workflows/pages.yml', 'utf8')
 assert(
@@ -110,6 +130,16 @@ assert(
 assert(
   pagesWorkflow.includes('pnpm install --frozen-lockfile'),
   'Expected Pages workflow to install workspace dependencies with pnpm'
+)
+assertInOrder(
+  pagesWorkflow,
+  [
+    'actions/checkout@v5',
+    'pnpm/action-setup@v4',
+    'actions/setup-node@v5',
+    'pnpm install --frozen-lockfile',
+  ],
+  'Expected Pages workflow to install pnpm before enabling setup-node pnpm cache'
 )
 
 const dockerfile = readFileSync('Dockerfile', 'utf8')
