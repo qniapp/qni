@@ -142,6 +142,19 @@ assertInOrder(
   'Expected Pages workflow to install pnpm before enabling setup-node pnpm cache'
 )
 
+const codeqlWorkflow = readFileSync('.github/workflows/codeql-analysis.yml', 'utf8')
+assert(
+  codeqlWorkflow.includes('actions/checkout@v5'),
+  'Expected CodeQL workflow to use actions/checkout@v5'
+)
+for (const action of [
+  'github/codeql-action/init@v4',
+  'github/codeql-action/autobuild@v4',
+  'github/codeql-action/analyze@v4',
+]) {
+  assert(codeqlWorkflow.includes(action), `Expected CodeQL workflow to use ${action}`)
+}
+
 const dockerfile = readFileSync('Dockerfile', 'utf8')
 assert(dockerfile.includes('ruby-4.0.2.tar.gz'), 'Expected Dockerfile to install Ruby 4.0.2')
 
