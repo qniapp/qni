@@ -7,6 +7,12 @@ function assert(condition, message) {
 }
 
 const tutorialPackage = JSON.parse(readFileSync('apps/tutorial/package.json', 'utf8'))
+const tutorialLayout = readFileSync('apps/tutorial/_layouts/default.html', 'utf8')
+
+assert(
+  !tutorialLayout.includes('polyfill.io'),
+  'Expected apps/tutorial/_layouts/default.html to stop loading polyfill.io'
+)
 
 assert(
   tutorialPackage.scripts.start?.includes('../../html'),
