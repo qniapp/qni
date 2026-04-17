@@ -312,12 +312,24 @@ importers:
       '@rollup/plugin-replace':
         specifier: ^5.0.2
         version: 5.0.7(rollup@2.80.0)
+      '@tailwindcss/forms':
+        specifier: ~0.5
+        version: 0.5.11(tailwindcss@3.2.7(postcss@8.4.49))
       '@web/dev-server-rollup':
         specifier: ~0.3
         version: 0.3.21
       '@web/test-runner':
         specifier: 0.15.0
         version: 0.15.0(encoding@0.1.13)
+      '@web/test-runner-commands':
+        specifier: ^0.6.6
+        version: 0.6.6
+      autoprefixer:
+        specifier: ^10.4.19
+        version: 10.5.0(postcss@8.4.49)
+      esbuild:
+        specifier: ~0.18
+        version: 0.18.20
       eslint-plugin-neverthrow:
         specifier: ^1.1.4
         version: 1.1.4(@typescript-eslint/parser@5.51.0(eslint@8.33.0)(typescript@4.9.5))(eslint@8.33.0)(typescript@4.9.5)
@@ -327,9 +339,18 @@ importers:
       postcss-flexbugs-fixes:
         specifier: ^5.0.2
         version: 5.0.2(postcss@8.4.49)
+      postcss-import:
+        specifier: ~15.1
+        version: 15.1.0(postcss@8.4.49)
+      postcss-preset-env:
+        specifier: ^9.1.1
+        version: 9.6.0(postcss@8.4.49)
       rollup-plugin-postcss:
         specifier: ^4.0.2
         version: 4.0.2(postcss@8.4.49)
+      tailwindcss:
+        specifier: ~3.2
+        version: 3.2.7(postcss@8.4.49)
 
   packages/simulator:
     dependencies:
