@@ -34,8 +34,10 @@
   ],
   "prettier": "@github/prettier-config",
   "dependencies": {
+    "@qni/common": "^0.0.87",
     "@qni/elements": "^0.0.87",
     "fp-ts": "^2.11.5",
+    "neverthrow": "^6.0.0",
     "qunit": "^2.19.4"
   },
   "devDependencies": {

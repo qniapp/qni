@@ -327,12 +327,18 @@ importers:
 
   packages/simulator:
     dependencies:
+      '@qni/common':
+        specifier: ^0.0.87
+        version: 0.0.87
       '@qni/elements':
         specifier: ^0.0.87
         version: 0.0.87
       fp-ts:
         specifier: ^2.11.5
         version: 2.16.11
+      neverthrow:
+        specifier: ^6.0.0
+        version: 6.2.2
       qunit:
         specifier: ^2.19.4
         version: 2.25.0
