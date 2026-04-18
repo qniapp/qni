@@ -93,6 +93,7 @@ assert(
 )
 
 const wwwPackage = JSON.parse(readFileSync('apps/www/package.json', 'utf8'))
+const wwwApplicationConfig = readFileSync('apps/www/config/application.rb', 'utf8')
 const wwwApplicationJs = readFileSync('apps/www/app/javascript/application.js', 'utf8')
 const wwwGemfile = readFileSync('apps/www/Gemfile', 'utf8')
 const wwwGemfileLock = readFileSync('apps/www/Gemfile.lock', 'utf8')
@@ -182,6 +183,40 @@ assert(
   wwwGemfileLock.includes('    cssbundling-rails (1.4.3)'),
   'Expected apps/www/Gemfile.lock to upgrade cssbundling-rails to 1.4.3'
 )
+assert(wwwGemfile.includes("gem 'propshaft'"), 'Expected apps/www/Gemfile to depend on propshaft')
+assert(
+  !wwwGemfile.includes("gem 'sprockets-rails'"),
+  'Expected apps/www/Gemfile to stop depending on sprockets-rails'
+)
+assert(
+  !wwwApplicationConfig.includes("require 'sprockets/railtie'"),
+  'Expected apps/www/config/application.rb to stop requiring sprockets/railtie'
+)
+assert(
+  !existsSync('apps/www/app/assets/config/manifest.js'),
+  'Expected apps/www/app/assets/config/manifest.js to be removed for Propshaft'
+)
+assert(
+  !existsSync('apps/www/config/initializers/assets.rb'),
+  'Expected apps/www/config/initializers/assets.rb to be removed for Propshaft'
+)
+assert(
+  existsSync('apps/www/config/initializers/propshaft.rb'),
+  'Expected apps/www/config/initializers/propshaft.rb to exist'
+)
+const wwwPropshaftInitializer = readFileSync('apps/www/config/initializers/propshaft.rb', 'utf8')
+assert(
+  wwwPropshaftInitializer.includes('excluded_paths'),
+  'Expected apps/www/config/initializers/propshaft.rb to configure excluded_paths'
+)
+assert(
+  wwwPropshaftInitializer.includes('app/assets/stylesheets'),
+  'Expected apps/www/config/initializers/propshaft.rb to exclude app/assets/stylesheets'
+)
+assert(
+  wwwPropshaftInitializer.includes('app/assets/javascripts'),
+  'Expected apps/www/config/initializers/propshaft.rb to exclude app/assets/javascripts'
+)
 assert(
   testDatabaseSection.includes('host: <%= ENV.fetch("PGHOST", "localhost") %>'),
   'Expected apps/www/config/database.yml test section to default PGHOST to localhost'
@@ -257,8 +292,8 @@ assert(
   'Expected apps/www lint script to cover controller TypeScript sources'
 )
 assert(
-  wwwLintScript.includes('app/assets/config/*.js'),
-  'Expected apps/www lint script to cover asset manifest JavaScript files'
+  !wwwLintScript.includes('app/assets/config/*.js'),
+  'Expected apps/www lint script to stop targeting the removed asset manifest JavaScript files'
 )
 assert(
   wwwLintScript.includes('app/assets/javascripts/serviceworker.js'),
