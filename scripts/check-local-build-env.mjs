@@ -18,6 +18,12 @@ function assertInOrder(text, snippets, message) {
   }
 }
 
+function findTopLevelYamlSectionStart(yaml, sectionName) {
+  const match = new RegExp(`(^|\\n)${sectionName}:\\r?\\n`).exec(yaml)
+  if (!match) return -1
+  return match.index + (match[1] ? match[1].length : 0)
+}
+
 assert(existsSync('.tool-versions'), 'Expected root .tool-versions to exist')
 assert(existsSync('.mise.toml'), 'Expected root .mise.toml to exist')
 const miseToml = readFileSync('.mise.toml', 'utf8')
@@ -91,6 +97,30 @@ const wwwApplicationJs = readFileSync('apps/www/app/javascript/application.js', 
 const wwwGemfile = readFileSync('apps/www/Gemfile', 'utf8')
 const wwwGemfileLock = readFileSync('apps/www/Gemfile.lock', 'utf8')
 const wwwLayout = readFileSync('apps/www/app/views/layouts/application.html.erb', 'utf8')
+const wwwDatabaseYml = readFileSync('apps/www/config/database.yml', 'utf8')
+assert(
+  existsSync('apps/www/lib/tasks/pnpm_bundling_overrides.rake'),
+  'Expected apps/www pnpm bundling override task file to remain until upstream task detection works with the root lockfile workspace layout'
+)
+const wwwBundlingOverrides = readFileSync('apps/www/lib/tasks/pnpm_bundling_overrides.rake', 'utf8')
+const developmentSectionStart = findTopLevelYamlSectionStart(wwwDatabaseYml, 'development')
+const testSectionStart = findTopLevelYamlSectionStart(wwwDatabaseYml, 'test')
+const productionSectionStart = findTopLevelYamlSectionStart(wwwDatabaseYml, 'production')
+assert(
+  developmentSectionStart !== -1 && testSectionStart !== -1 && productionSectionStart !== -1,
+  'Expected apps/www/config/database.yml to define development, test, and production sections'
+)
+assert(
+  developmentSectionStart < testSectionStart && testSectionStart < productionSectionStart,
+  'Expected apps/www/config/database.yml sections to stay ordered as development, test, production'
+)
+const defaultDatabaseSection = wwwDatabaseYml.slice(0, developmentSectionStart + 1)
+const developmentDatabaseSection = wwwDatabaseYml.slice(
+  developmentSectionStart + 1,
+  testSectionStart + 1
+)
+const testDatabaseSection = wwwDatabaseYml.slice(testSectionStart + 1, productionSectionStart + 1)
+const productionDatabaseSection = wwwDatabaseYml.slice(productionSectionStart + 1)
 assert(
   !wwwApplicationJs.includes("require('@rails/ujs').start()"),
   'Expected apps/www/app/javascript/application.js to stop starting @rails/ujs'
@@ -143,6 +173,63 @@ assert(
 assert(
   !wwwGemfileLock.includes('\n    webdrivers ('),
   'Expected apps/www/Gemfile.lock to stop locking the legacy webdrivers gem'
+)
+assert(
+  wwwGemfileLock.includes('    jsbundling-rails (1.3.1)'),
+  'Expected apps/www/Gemfile.lock to upgrade jsbundling-rails to 1.3.1'
+)
+assert(
+  wwwGemfileLock.includes('    cssbundling-rails (1.4.3)'),
+  'Expected apps/www/Gemfile.lock to upgrade cssbundling-rails to 1.4.3'
+)
+assert(
+  testDatabaseSection.includes('host: <%= ENV.fetch("PGHOST", "localhost") %>'),
+  'Expected apps/www/config/database.yml test section to default PGHOST to localhost'
+)
+assert(
+  testDatabaseSection.includes('port: <%= ENV.fetch("PGPORT", 5432) %>'),
+  'Expected apps/www/config/database.yml test section to default PGPORT to 5432'
+)
+assert(
+  testDatabaseSection.includes('database: qni_test'),
+  'Expected apps/www/config/database.yml test section to keep qni_test fixed'
+)
+assert(
+  testDatabaseSection.includes('username: <%= ENV.fetch("PGUSER", "postgres") %>'),
+  'Expected apps/www/config/database.yml test section to default PGUSER to postgres'
+)
+assert(
+  testDatabaseSection.includes('password: <%= ENV.fetch("PGPASSWORD", "postgres") %>'),
+  'Expected apps/www/config/database.yml test section to default PGPASSWORD to postgres'
+)
+for (const databaseSection of [
+  defaultDatabaseSection,
+  developmentDatabaseSection,
+  productionDatabaseSection,
+]) {
+  for (const forbiddenPgEnv of ['PGHOST', 'PGPORT', 'PGDATABASE', 'PGUSER', 'PGPASSWORD']) {
+    assert(
+      !databaseSection.includes(forbiddenPgEnv),
+      `Expected apps/www/config/database.yml to keep ${forbiddenPgEnv} defaults scoped to test only`
+    )
+  }
+}
+assert(
+  wwwBundlingOverrides.includes("run_www_pnpm_script('build:css', www_root)"),
+  'Expected apps/www pnpm bundling override to delegate css:build to the pnpm build:css package script'
+)
+assert(
+  wwwBundlingOverrides.includes("run_www_pnpm_script('build:js', www_root)"),
+  'Expected apps/www pnpm bundling override to delegate javascript:build to the pnpm build:js package script'
+)
+assert(
+  !wwwBundlingOverrides.includes('root_bin') &&
+    !wwwBundlingOverrides.includes('run_with_root_node_bins'),
+  'Expected apps/www pnpm bundling override to stop wiring root node_modules/.bin directly'
+)
+assert(
+  !existsSync('apps/www/pnpm-lock.yaml'),
+  'Expected apps/www to keep pnpm lockfile ownership at the workspace root instead of adding a package-local lockfile workaround'
 )
 const wwwLintScript = wwwPackage.scripts?.lint
 assert(typeof wwwLintScript === 'string', 'Expected apps/www/package.json to define a lint script')

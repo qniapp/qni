@@ -96,6 +96,9 @@ repo ルートの `package.json` は **pnpm workspace + root scripts** を使っ
 `apps/www` は Rails アプリですが、フロントエンド build は Node toolchain を併用します。
 
 - **Rails**: ルーティング、サーバレンダリング、DB 連携、アプリ本体
+- **jsbundling-rails 1.3.x / cssbundling-rails 1.4.x**: Rails の asset task と frontend build を接続
+- **pnpm scripts (`build:js` / `build:css`)**: `apps/www/package.json` 側の build 正本
+- **小さな pnpm bundling override**: `apps/www/lib/tasks/pnpm_bundling_overrides.rake` で Rails task を `pnpm run build:css` / `pnpm run build:js` に接続し、root にしか `pnpm-lock.yaml` が無い workspace 構成でも安定して動かす
 - **esbuild**: `application.js` / `serviceworker.js` を bundle
 - **Tailwind CSS + PostCSS**: `application.css` を build
 - **TypeScript**: フロントエンド型チェック
@@ -230,6 +233,8 @@ repo ルートで以下を使うのが基本です。
 - `pnpm test:ci`
 
 ローカルセットアップは、単に Node プロジェクトを動かすだけではなく、**Rails / Jekyll / PostgreSQL を含む複合 repo を安定して再現するための補助スクリプト** になっています。
+
+`apps/www` の `test` DB 設定は test environment に限って `localhost` / `qni_test` / `postgres` を default に持つため、project-supported な local PostgreSQL setup では `pnpm test:ci` を毎回 `PGHOST` / `PGUSER` / `PGPASSWORD` 付きで打たなくても動かせます。
 
 ### テスト構成
 
