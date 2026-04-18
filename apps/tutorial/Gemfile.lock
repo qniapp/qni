@@ -123,7 +123,7 @@ DEPENDENCIES
   benchmark
   bigdecimal
   csv
-  jekyll
+  jekyll (~> 4.4)
   logger
   ostruct
   rubocop
