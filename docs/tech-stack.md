@@ -82,13 +82,17 @@ repo ルートの `package.json` は **pnpm workspace + root scripts** を使っ
 - アプリサーバーは **Puma 7**
 - 本番では **Heroku** 上で稼働
 - DB は **PostgreSQL** 前提
+- asset pipeline は **Propshaft**
 - フロントエンド資産は Rails アプリ内で配信
 
 根拠:
 
 - `apps/www/Procfile`: `bundle exec puma -C config/puma.rb`
 - `apps/www/package.json`
+- `apps/www/Gemfile`（`propshaft`, `jsbundling-rails`, `cssbundling-rails`）
 - `apps/www/Gemfile.lock`（Rails 7.2 系）
+- `apps/www/config/initializers/propshaft.rb`
+- `apps/www/test/integration/propshaft_config_test.rb`
 - production rollout/runbook の履歴
 
 #### 何を使って構築するか
@@ -96,11 +100,12 @@ repo ルートの `package.json` は **pnpm workspace + root scripts** を使っ
 `apps/www` は Rails アプリですが、フロントエンド build は Node toolchain を併用します。
 
 - **Rails**: ルーティング、サーバレンダリング、DB 連携、アプリ本体
+- **Propshaft**: `application.js` / `application.css` など app 側 asset の配信を担当。Sprockets 時代の `app/assets/config/manifest.js` や `config.assets.precompile` ベースの追加リストは使わない
 - **jsbundling-rails 1.3.x / cssbundling-rails 1.4.x**: Rails の asset task と frontend build を接続
 - **pnpm scripts (`build:js` / `build:css`)**: `apps/www/package.json` 側の build 正本
-- **小さな pnpm bundling override**: `apps/www/lib/tasks/pnpm_bundling_overrides.rake` で Rails task を `pnpm run build:css` / `pnpm run build:js` に接続し、root にしか `pnpm-lock.yaml` が無い workspace 構成でも安定して動かす
-- **esbuild**: `application.js` / `serviceworker.js` を bundle
+- **esbuild**: `application.js` などの JS bundle を build
 - **Tailwind CSS + PostCSS**: `application.css` を build
+- **`public/` 直下の静的ファイル**: `serviceworker.js` / `manifest.json` / icon assets は root path のまま配信
 - **TypeScript**: フロントエンド型チェック
 - **Stimulus**: ブラウザ側 UI 補助
 - **通常の full reload ナビゲーション**: ページ遷移は Rails 標準の通常遷移
