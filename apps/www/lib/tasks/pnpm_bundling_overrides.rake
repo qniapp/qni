@@ -1,17 +1,20 @@
 repo_root = File.expand_path('../../../..', __dir__)
 www_root = File.join(repo_root, 'apps/www')
-root_bin = File.join(repo_root, 'node_modules', '.bin')
 
-def run_with_root_node_bins(command, root_bin, www_root)
-  sh %(cd "#{www_root}" && PATH="#{root_bin}:$PATH" #{command})
+def run_www_pnpm_script(script, www_root)
+  sh %(cd "#{www_root}" && pnpm run #{script})
 end
 
+# cssbundling-rails 1.4.x still requires a lockfile in the current directory to
+# detect pnpm, and jsbundling-rails will otherwise fall back to bun when it is
+# available on PATH. Keep Rails hooked to the package.json build scripts until
+# upstream task detection works for qni's root-lockfile workspace layout.
 if Rake::Task.task_defined?('css:build')
   Rake::Task['css:build'].clear
 end
 
 task 'css:build' do
-  run_with_root_node_bins('tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css', root_bin, www_root)
+  run_www_pnpm_script('build:css', www_root)
 end
 
 if Rake::Task.task_defined?('javascript:build')
@@ -19,6 +22,5 @@ if Rake::Task.task_defined?('javascript:build')
 end
 
 task 'javascript:build' do
-  run_with_root_node_bins('esbuild app/javascript/application.js --bundle --keep-names --sourcemap --minify --outdir=app/assets/builds', root_bin, www_root)
-  run_with_root_node_bins('esbuild app/assets/javascripts/serviceworker.js --bundle --sourcemap --minify --outdir=app/assets/builds', root_bin, www_root)
+  run_www_pnpm_script('build:js', www_root)
 end
