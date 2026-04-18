@@ -10,7 +10,7 @@ class Circuit < ApplicationRecord
   validate :json_cannot_be_invalid_json_string
 
   def attach_social_image(circuit_svg_url)
-    return if social_image.attached?
+    return if Rails.env.test? || social_image.attached?
 
     social_image.attach(io: StringIO.new(generate_social_image(circuit_svg_url)),
                         filename: 'social_image.png',
