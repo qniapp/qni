@@ -99,7 +99,8 @@ repo ルートの `package.json` は **pnpm workspace + root scripts** を使っ
 - **esbuild**: `application.js` / `serviceworker.js` を bundle
 - **Tailwind CSS + PostCSS**: `application.css` を build
 - **TypeScript**: フロントエンド型チェック
-- **Stimulus / Rails UJS / Turbolinks**: ブラウザ側 UI 補助
+- **Stimulus**: ブラウザ側 UI 補助
+- **通常の full reload ナビゲーション**: ページ遷移は Rails 標準の通常遷移
 - **Puppeteer**: system test / browser 依存処理 / Grover 周辺のブラウザ実行経路で利用
 
 主な scripts:
