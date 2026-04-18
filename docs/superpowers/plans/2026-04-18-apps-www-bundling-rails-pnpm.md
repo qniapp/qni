@@ -104,11 +104,11 @@ Expected: PASS。current main の working path を確保する。
 
 - `host`: `ENV.fetch("PGHOST", "localhost")`
 - `port`: `ENV.fetch("PGPORT", 5432)`
-- `database`: `ENV.fetch("PGDATABASE", "qni_test")`
+- `database`: `qni_test` に固定する
 - `username`: `ENV.fetch("PGUSER", "postgres")`
 - `password`: `ENV.fetch("PGPASSWORD", "postgres")`
 
-`development` / `production` は触らない。
+`development` / `production` は触らない。`PGDATABASE` で別 DB に流れないことも守る。
 
 - [ ] **Step 2: test DB prepare を env なしで実行する**
 
@@ -255,8 +255,9 @@ git commit -m "build: reevaluate www pnpm bundling tasks"
 
 最低限、次を guard する。
 
-- `apps/www/config/database.yml` test section が localhost / qni_test / postgres defaults を持ち、env override 可能であること
-- `ENV.fetch("PGHOST")` / `PGPORT` / `PGDATABASE` / `PGUSER` / `PGPASSWORD` が `test` section 以外（`default` / `development` / `production`）に現れないこと
+- `apps/www/config/database.yml` test section が localhost / qni_test / postgres defaults を持ち、host/port/user/password は env override 可能であること
+- `ENV.fetch("PGHOST")` / `PGPORT` / `PGUSER` / `PGPASSWORD` が `test` section 以外（`default` / `development` / `production`）に現れないこと
+- `PGDATABASE` override を使わず、test DB 名は `qni_test` に固定されていること
 - `development` / `production` section に同様の default injection が広がっていないこと
 - `apps/www` の bundling state が final decision と矛盾しないこと
 

@@ -110,12 +110,13 @@ fallback としては妥当だが、今回の reevaluation 目的には弱い。
 ### 変更方針
 
 1. `apps/www` の `jsbundling-rails` / `cssbundling-rails` を current upstream に近い安全な version へ上げる
-2. `apps/www/config/database.yml` の `test` section にのみ、env override 可能な local default を追加する
+2. `apps/www/config/database.yml` の `test` section にのみ、local default を追加する
    - `host: ENV.fetch("PGHOST", "localhost")`
    - `port: ENV.fetch("PGPORT", 5432)`
-   - `database: ENV.fetch("PGDATABASE", "qni_test")`
+   - `database: qni_test`
    - `username: ENV.fetch("PGUSER", "postgres")`
    - `password: ENV.fetch("PGPASSWORD", "postgres")`
+   - DB 名は固定し、`PGDATABASE` で別 DB に流れないようにする
 3. `apps/www/lib/tasks/pnpm_bundling_overrides.rake` を一度外し、focused verification で upstream task だけで通るかを確認する
 4. もし upstream task だけで通らない場合は、failure を再現して root cause を絞り、**失敗した task だけ** を最小差分で補う
 5. final state を `scripts/check-local-build-env.mjs` と `docs/tech-stack.md` に反映する
