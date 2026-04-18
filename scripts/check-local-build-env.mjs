@@ -314,6 +314,10 @@ for (const snippet of requiredGitInitDefaultBranchEnv) {
   )
 }
 assert(
+  !ciWorkflow.includes('cp config/database.yml.github-actions config/database.yml'),
+  'Expected CI workflow to stop replacing apps/www/config/database.yml now that the canonical test config carries the supported defaults'
+)
+assert(
   ciWorkflow.includes('pnpm install --frozen-lockfile'),
   'Expected CI workflow to install workspace dependencies with pnpm'
 )

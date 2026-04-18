@@ -65,7 +65,6 @@ jobs:
       - name: Setup DB
         run: |-
           cd apps/www
-          cp config/database.yml.github-actions config/database.yml
           bundle exec rails db:setup
         env:
           RAILS_ENV: test
