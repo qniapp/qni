@@ -15,7 +15,7 @@ gem 'puma', '~> 7.0', '>= 7.0.4'
 
 # JavaScript, CSS and assets
 gem 'cssbundling-rails'
-gem 'sprockets-rails'
+gem 'propshaft'
 gem 'benchmark'
 gem 'bigdecimal'
 gem 'drb'
