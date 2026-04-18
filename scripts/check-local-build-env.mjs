@@ -87,8 +87,43 @@ assert(
 )
 
 const wwwPackage = JSON.parse(readFileSync('apps/www/package.json', 'utf8'))
+const wwwApplicationJs = readFileSync('apps/www/app/javascript/application.js', 'utf8')
 const wwwGemfile = readFileSync('apps/www/Gemfile', 'utf8')
 const wwwGemfileLock = readFileSync('apps/www/Gemfile.lock', 'utf8')
+const wwwLayout = readFileSync('apps/www/app/views/layouts/application.html.erb', 'utf8')
+assert(
+  !wwwApplicationJs.includes("require('@rails/ujs').start()"),
+  'Expected apps/www/app/javascript/application.js to stop starting @rails/ujs'
+)
+assert(
+  !wwwApplicationJs.includes("require('turbolinks').start()"),
+  'Expected apps/www/app/javascript/application.js to stop starting turbolinks'
+)
+assert(
+  !wwwPackage.dependencies?.['@rails/ujs'] && !wwwPackage.devDependencies?.['@rails/ujs'],
+  'Expected apps/www/package.json to stop depending on @rails/ujs'
+)
+assert(
+  !wwwPackage.dependencies?.turbolinks && !wwwPackage.devDependencies?.turbolinks,
+  'Expected apps/www/package.json to stop depending on turbolinks'
+)
+assert(
+  !wwwPackage.dependencies?.['@types/turbolinks'] &&
+    !wwwPackage.devDependencies?.['@types/turbolinks'],
+  'Expected apps/www/package.json to stop depending on @types/turbolinks'
+)
+assert(
+  !wwwGemfile.includes("gem 'turbolinks'"),
+  'Expected apps/www/Gemfile to stop depending on turbolinks'
+)
+assert(
+  !wwwGemfileLock.includes('turbolinks ('),
+  'Expected apps/www/Gemfile.lock to stop locking turbolinks'
+)
+assert(
+  !wwwLayout.includes('data-turbo-track'),
+  'Expected apps/www/app/views/layouts/application.html.erb to stop using data-turbo-track'
+)
 assert(
   wwwPackage.engines?.node === '20.20.2',
   `Expected apps/www/package.json to pin node 20.20.2, got: ${wwwPackage.engines?.node}`
