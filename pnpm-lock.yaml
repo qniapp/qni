@@ -153,9 +153,6 @@ importers:
       '@qni/simulator':
         specifier: ^0.0.87
         version: 0.0.87
-      '@rails/ujs':
-        specifier: ~7.0
-        version: 7.0.1000
       '@svgdotjs/svg.filter.js':
         specifier: ^3.0.8
         version: 3.0.9
@@ -171,13 +168,7 @@ importers:
       tippy.js:
         specifier: ^6.3.7
         version: 6.3.7
-      turbolinks:
-        specifier: ^5.2.0
-        version: 5.2.0
     devDependencies:
-      '@types/turbolinks':
-        specifier: ^5.2.0
-        version: 5.2.2
       autoprefixer:
         specifier: ^10.4.19
         version: 10.5.0(postcss@8.4.49)
@@ -1828,12 +1819,6 @@ packages:
         integrity: sha512-gjXb9i5pt7NOphkOAgweHZPN4jpnwu5/X4jxCzDOU3rwufBneL4UiWQwZTMNMoyiXEFJEC0f55kj5epxWqISNA==,
       }
 
-  '@rails/ujs@7.0.1000':
-    resolution:
-      {
-        integrity: sha512-HN3w4RLgXmxPBL3XU/dwGN21KZGO9ookevnX53dfua9F74KOu+fzPsOGfmkkrC2rqWJNAdb83LL0btN7y0fA1g==,
-      }
-
   '@rollup/plugin-commonjs@24.1.0':
     resolution:
       {
@@ -2532,12 +2517,6 @@ packages:
     resolution:
       {
         integrity: sha512-6WaYesThRMCl19iryMYP7/x2OVgCtbIVflDGFpWnb9irXI3UjYE4AzmYuiUKY1AJstGijoY+MgUszMgRxIYTYw==,
-      }
-
-  '@types/turbolinks@5.2.2':
-    resolution:
-      {
-        integrity: sha512-FaCObYvhT7GtQ9a1SLW/DyYb7qxC2tBc5QJx7/xnBED0uBngfJHsIJ4mGT6u5dRTy+VAi0QvzdK7EUEQAeOdfw==,
       }
 
   '@types/ws@7.4.7':
@@ -8996,12 +8975,6 @@ packages:
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
 
-  turbolinks@5.2.0:
-    resolution:
-      {
-        integrity: sha512-pMiez3tyBo6uRHFNNZoYMmrES/IaGgMhQQM+VFF36keryjb5ms0XkVpmKHkfW/4Vy96qiGW3K9bz0tF5sK9bBw==,
-      }
-
   type-check@0.4.0:
     resolution:
       {
@@ -10387,8 +10360,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rails/ujs@7.0.1000': {}
-
   '@rollup/plugin-commonjs@24.1.0(rollup@3.30.0)':
     dependencies:
       '@rollup/pluginutils': 5.3.0(rollup@3.30.0)
@@ -10796,8 +10767,6 @@ snapshots:
   '@types/stack-utils@2.0.3': {}
 
   '@types/triple-beam@1.3.5': {}
-
-  '@types/turbolinks@5.2.2': {}
 
   '@types/ws@7.4.7':
     dependencies:
@@ -15364,8 +15333,6 @@ snapshots:
     dependencies:
       tslib: 1.14.1
       typescript: 4.9.5
-
-  turbolinks@5.2.0: {}
 
   type-check@0.4.0:
     dependencies:
