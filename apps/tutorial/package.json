@@ -23,6 +23,7 @@
     "url": "https://github.com/qniapp/qni/issues"
   },
   "dependencies": {
+    "@hotwired/stimulus": "^3.0.1",
     "@qni/common": "^0.0.87",
     "@qni/elements": "^0.0.87",
     "@qni/simulator": "^0.0.87"

@@ -129,6 +129,9 @@ importers:
 
   apps/tutorial:
     dependencies:
+      '@hotwired/stimulus':
+        specifier: ^3.0.1
+        version: 3.2.2
       '@qni/common':
         specifier: ^0.0.87
         version: 0.0.87
