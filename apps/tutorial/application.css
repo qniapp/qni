@@ -8841,10 +8841,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   border-width: 0;
 }
 
-.static {
-  position: static;
-}
-
 .fixed {
   position: fixed;
 }
