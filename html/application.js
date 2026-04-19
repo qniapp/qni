@@ -13792,19 +13792,6 @@ var Wr = class extends HTMLElement {
   }
 };
 u(Wr, "QuantumSimulatorElement"), M([k], Wr.prototype, "updateUrl", 2), M([Oe], Wr.prototype, "circuit", 2), M([Oe], Wr.prototype, "circleNotation", 2), M([ft], Wr.prototype, "runCircuitButtons", 2), Wr = M([X], Wr);
-
-// src/serviceworker-companion.js
-if (navigator.serviceWorker) {
-  if (location.hostname === "localhost") {
-    navigator.serviceWorker.register("/serviceworker.js", { scope: "./" }).catch(function(error) {
-      console.log("[Companion]", "Service worker registration failed: " + error);
-    });
-  } else {
-    navigator.serviceWorker.register("/qni/serviceworker.js", { scope: "/qni/" }).catch(function(error) {
-      console.log("[Companion]", "Service worker registration failed: " + error);
-    });
-  }
-}
 export {
   Io as Complex
 };
