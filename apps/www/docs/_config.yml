@@ -6,8 +6,8 @@ exclude:
   - node_modules
   - api
 
-repository: yasuhito/qni
-baseurl: "https://yasuhito.github.io/qni"
+repository: qniapp/qni
+baseurl: 'https://qniapp.github.io/qni'
 
 plugins:
   - 'jekyll-github-metadata'
