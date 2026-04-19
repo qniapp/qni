@@ -296,9 +296,36 @@ assert(
   'Expected apps/www lint script to stop targeting the removed asset manifest JavaScript files'
 )
 assert(
-  wwwLintScript.includes('app/assets/javascripts/serviceworker.js'),
-  'Expected apps/www lint script to cover the service worker entrypoint'
+  !wwwLintScript.includes('app/assets/javascripts/serviceworker.js'),
+  'Expected apps/www lint script to stop targeting the removed service worker entrypoint'
 )
+
+const wwwBuildJsScript = wwwPackage.scripts?.['build:js']
+assert(
+  typeof wwwBuildJsScript === 'string',
+  'Expected apps/www/package.json to define a build:js script'
+)
+assert(
+  wwwBuildJsScript.includes('app/javascript/application.js'),
+  'Expected apps/www build:js script to bundle the application entrypoint'
+)
+assert(
+  wwwBuildJsScript.includes('app/assets/builds'),
+  'Expected apps/www build:js script to output bundled assets into app/assets/builds'
+)
+assert(
+  !wwwBuildJsScript.includes('app/assets/javascripts/serviceworker.js'),
+  'Expected apps/www build:js script to stop bundling the removed service worker entrypoint'
+)
+
+for (const removedPwaAssetPath of [
+  'apps/www/app/assets/javascripts/manifest.json',
+  'apps/www/app/assets/javascripts/serviceworker.js',
+  'apps/www/app/assets/javascripts/serviceworker-companion.js',
+]) {
+  assert(!existsSync(removedPwaAssetPath), `Expected ${removedPwaAssetPath} to be removed`)
+}
+
 assert(
   !existsSync('apps/www/yarn.lock'),
   'Expected apps/www/yarn.lock to be removed after the pnpm migration'
