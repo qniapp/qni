@@ -29,7 +29,9 @@ RUN_ID=$(date +%s)
 TITLE="Grover success smoke ${RUN_ID}"
 SMOKE_JSON=$(ruby -rjson -e 'print JSON.generate({ cols: [], title: ARGV[0] })' "$TITLE")
 ENCODED=$(ruby -ruri -e 'puts URI.encode_www_form_component(ARGV[0])' "$SMOKE_JSON")
+ENCODED_TITLE=$(ruby -ruri -e 'puts URI.encode_www_form_component(ARGV[0])' "$TITLE")
 PGHOST=localhost PGUSER=postgres PGPASSWORD=postgres RAILS_ENV=test GROVER_ENABLED_IN_TEST=1 GROVER_EXECUTABLE_PATH="$CHROME_BIN" GROVER_NO_SANDBOX=1 ruby -S bundle exec rails db:test:prepare
+pnpm build
 PGHOST=localhost PGUSER=postgres PGPASSWORD=postgres RAILS_ENV=test GROVER_ENABLED_IN_TEST=1 GROVER_EXECUTABLE_PATH="$CHROME_BIN" GROVER_NO_SANDBOX=1 ruby -S bundle exec rails server -p 3101 -b 127.0.0.1 >/tmp/qni-www-grover-success.log 2>&1 &
 SERVER_PID=$!
 trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
@@ -39,10 +41,10 @@ for _ in $(seq 1 30); do
 done
 curl -fsS http://127.0.0.1:3101/$ENCODED -o /tmp/qni-www-grover-success.html
 rg -n 'og:image' /tmp/qni-www-grover-success.html
-rg -n "$TITLE" /tmp/qni-www-grover-success.html
+rg -n "$ENCODED_TITLE" /tmp/qni-www-grover-success.html
 ```
 
-Using a run-unique `TITLE` and JSON payload avoids stale attachment false-passes.
+Using a run-unique `TITLE` and JSON payload avoids stale attachment false-passes. Running `pnpm build` first ensures the test server can resolve `application.js` / `application.css` before the smoke request.
 
 ### Local smoke (failure path)
 
@@ -54,7 +56,9 @@ RUN_ID=$(date +%s)
 TITLE="Grover failure smoke ${RUN_ID}"
 SMOKE_JSON=$(ruby -rjson -e 'print JSON.generate({ cols: [], title: ARGV[0] })' "$TITLE")
 ENCODED=$(ruby -ruri -e 'puts URI.encode_www_form_component(ARGV[0])' "$SMOKE_JSON")
+ENCODED_TITLE=$(ruby -ruri -e 'puts URI.encode_www_form_component(ARGV[0])' "$TITLE")
 PGHOST=localhost PGUSER=postgres PGPASSWORD=postgres RAILS_ENV=test GROVER_ENABLED_IN_TEST=1 GROVER_EXECUTABLE_PATH=/definitely/missing/chrome GROVER_NO_SANDBOX=1 ruby -S bundle exec rails db:test:prepare
+pnpm build
 PGHOST=localhost PGUSER=postgres PGPASSWORD=postgres RAILS_ENV=test GROVER_ENABLED_IN_TEST=1 GROVER_EXECUTABLE_PATH=/definitely/missing/chrome GROVER_NO_SANDBOX=1 ruby -S bundle exec rails server -p 3102 -b 127.0.0.1 >/tmp/qni-www-grover-failure.log 2>&1 &
 SERVER_PID=$!
 trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
@@ -67,11 +71,11 @@ if rg -n 'og:image' /tmp/qni-www-grover-failure.html; then
   echo 'unexpected og:image in soft-fail smoke'
   exit 1
 fi
-rg -n "$TITLE" /tmp/qni-www-grover-failure.html
-rg -n 'Circuit social image generation failed' /tmp/qni-www-grover-failure.log
+rg -n "$ENCODED_TITLE" /tmp/qni-www-grover-failure.html
+rg -n 'Circuit social image generation failed' log/test.log
 ```
 
-This failure smoke intentionally asserts that no `og:image` is rendered.
+This failure smoke intentionally asserts that no `og:image` is rendered, while the warning itself is observed from `log/test.log`.
 
 ### CI / Heroku notes
 
