@@ -62,7 +62,7 @@
     "@types/node": "^18.11.19",
     "@types/postcss-import": "~14.0.0",
     "@types/prettier": "~2.7.2",
-    "@typescript-eslint/eslint-plugin": "~5.51",
+    "@typescript-eslint/eslint-plugin": "~5.62",
     "@typescript-eslint/parser": "~5.51",
     "autoprefixer": "^10.4.19",
     "esbuild": "~0.26",
