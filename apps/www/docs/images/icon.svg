@@ -1,1 +1,7 @@
-<svg width="512" height="512" fill="none" stroke-width="20" stroke-linecap="round"><circle cx="256" cy="256" r="236" fill="#FFF"/><circle cx="256" cy="256" r="180" fill="#1CB0F6"/><path d="M256 256l139 178" stroke="#4B4B4B"/><circle cx="256" cy="256" r="236" stroke="#777"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" fill="none" stroke-linecap="round" stroke-width="20" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+ <circle cx="256" cy="256" r="236" fill="#FFF"/>
+ <circle cx="256" cy="256" r="180" fill="#1CB0F6"/>
+ <path d="m256 256 139 178" stroke="#4B4B4B"/>
+ <circle cx="256" cy="256" r="236" stroke="#777"/>
+</svg>
