@@ -3,7 +3,7 @@ import {SerializedWrite0GateType, SerializedWrite1GateType} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import writeGateIcon from '../icon/write-gate.svg'
-import {connectDraggableGate} from './gate-element-helpers'
+import {connectDraggableGate} from './gate-element-helpers.js'
 
 @controller
 export class WriteGateElement extends MenuableMixin(

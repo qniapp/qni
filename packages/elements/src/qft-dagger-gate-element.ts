@@ -10,7 +10,7 @@ import {
 import {SerializedQftDaggerGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import qftDaggerGateIcon from '../icon/qft-dagger-gate.svg'
-import {connectResizeableGate, renderResizeableIconGate, toSpannedGateJson} from './gate-element-helpers'
+import {connectResizeableGate, renderResizeableIconGate, toSpannedGateJson} from './gate-element-helpers.js'
 
 export type QftDaggerGateElementProps = {
   targets: number[]

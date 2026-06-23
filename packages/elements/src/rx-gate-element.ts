@@ -13,7 +13,7 @@ import {ControllableMixin} from './mixin/controllable'
 import {SerializedRxGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import rxGateIcon from '../icon/rx-gate.svg'
-import {connectDraggableGate, renderIconGate, toAngleGateJson} from './gate-element-helpers'
+import {connectDraggableGate, renderIconGate, toAngleGateJson} from './gate-element-helpers.js'
 
 export type RxGateElementProps = {
   targets: number[]

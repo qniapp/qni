@@ -1,24 +1,14 @@
 import {html, render} from '@github/jtml'
-import type {Draggable, Iconable, Resizeable} from './mixin'
 import chevronSelectorVerticalIcon from '../icon/chevron_selector_vertical.svg'
 
-type DraggableGateElement = HTMLElement &
-  Draggable & {
-    update(): void
-  }
-
-type ResizeableGateElement = DraggableGateElement & Resizeable
-
-type IconGateElement = HTMLElement & Iconable
-
-export function connectDraggableGate(element: DraggableGateElement): void {
+export function connectDraggableGate(element) {
   if (element.shadowRoot !== null) return
   element.attachShadow({mode: 'open'})
   element.update()
   element.initDraggable()
 }
 
-export function connectResizeableGate(element: ResizeableGateElement): void {
+export function connectResizeableGate(element) {
   if (element.shadowRoot !== null) return
   element.attachShadow({mode: 'open'})
   element.update()
@@ -26,15 +16,15 @@ export function connectResizeableGate(element: ResizeableGateElement): void {
   element.initResizeable()
 }
 
-export function renderIconGate(element: IconGateElement, icon: string): void {
+export function renderIconGate(element, icon) {
   render(
     html`<div part="body">${element.iconHtml(icon)}</div>
       <div part="outline"></div>`,
-    element.shadowRoot!,
+    element.shadowRoot,
   )
 }
 
-export function renderResizeableIconGate(element: IconGateElement, icon: string, resizeHandleTarget: string): void {
+export function renderResizeableIconGate(element, icon, resizeHandleTarget) {
   render(
     html`<div part="layout">
         <div part="body">${element.iconHtml(icon)}</div>
@@ -43,15 +33,15 @@ export function renderResizeableIconGate(element: IconGateElement, icon: string,
         </div>
       </div>
       <div part="outline"></div>`,
-    element.shadowRoot!,
+    element.shadowRoot,
   )
 }
 
-export function toStaticGateJson(type: string): string {
+export function toStaticGateJson(type) {
   return `"${type}"`
 }
 
-export function toIfableGateJson(type: string, condition: string): string {
+export function toIfableGateJson(type, condition) {
   if (condition !== '') {
     return `"${type}<${condition}"`
   } else {
@@ -59,7 +49,7 @@ export function toIfableGateJson(type: string, condition: string): string {
   }
 }
 
-export function toAngleGateJson(type: string, angle: string): string {
+export function toAngleGateJson(type, angle) {
   if (angle === '') {
     return toStaticGateJson(type)
   } else {
@@ -67,6 +57,6 @@ export function toAngleGateJson(type: string, angle: string): string {
   }
 }
 
-export function toSpannedGateJson(type: string, span: number): string {
+export function toSpannedGateJson(type, span) {
   return `"${type}${span}"`
 }

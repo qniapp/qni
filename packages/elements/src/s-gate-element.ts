@@ -12,7 +12,7 @@ import {ControllableMixin} from './mixin/controllable'
 import {SerializedSGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import sGateIcon from '../icon/s-gate.svg'
-import {connectDraggableGate, renderIconGate, toIfableGateJson} from './gate-element-helpers'
+import {connectDraggableGate, renderIconGate, toIfableGateJson} from './gate-element-helpers.js'
 
 export type SGateElementProps = {
   targets: number[]

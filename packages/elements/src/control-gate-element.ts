@@ -9,7 +9,7 @@ import {
 } from './mixin'
 import {SerializedControlGateType} from '@qni/common'
 import controlGateIcon from '../icon/control-gate.svg'
-import {connectDraggableGate, renderIconGate, toStaticGateJson} from './gate-element-helpers'
+import {connectDraggableGate, renderIconGate, toStaticGateJson} from './gate-element-helpers.js'
 import {controller} from '@github/catalyst'
 
 @controller

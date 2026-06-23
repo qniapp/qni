@@ -12,7 +12,7 @@ import {ControllableMixin} from './mixin/controllable'
 import {SerializedTGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import tGateIcon from '../icon/t-gate.svg'
-import {connectDraggableGate, renderIconGate, toIfableGateJson} from './gate-element-helpers'
+import {connectDraggableGate, renderIconGate, toIfableGateJson} from './gate-element-helpers.js'
 
 export type TGateElementProps = {
   targets: number[]

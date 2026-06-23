@@ -4,7 +4,7 @@ import {html, render} from '@github/jtml'
 import {FlaggableMixin} from './mixin/flaggable'
 import {SerializedMeasurementGateType} from '@qni/common'
 import measurementGateIcon from '../icon/measurement-gate.svg'
-import {connectDraggableGate} from './gate-element-helpers'
+import {connectDraggableGate} from './gate-element-helpers.js'
 
 @controller
 export class MeasurementGateElement extends MenuableMixin(

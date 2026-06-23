@@ -12,7 +12,7 @@ import {ControllableMixin} from './mixin/controllable'
 import {SerializedZGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import zGateIcon from '../icon/z-gate.svg'
-import {connectDraggableGate, renderIconGate, toIfableGateJson} from './gate-element-helpers'
+import {connectDraggableGate, renderIconGate, toIfableGateJson} from './gate-element-helpers.js'
 
 export type ZGateElementProps = {
   targets: number[]

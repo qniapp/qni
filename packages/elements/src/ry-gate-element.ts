@@ -13,7 +13,7 @@ import {ControllableMixin} from './mixin/controllable'
 import {SerializedRyGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import ryGateIcon from '../icon/ry-gate.svg'
-import {connectDraggableGate, renderIconGate, toAngleGateJson} from './gate-element-helpers'
+import {connectDraggableGate, renderIconGate, toAngleGateJson} from './gate-element-helpers.js'
 
 export type RyGateElementProps = {
   targets: number[]
