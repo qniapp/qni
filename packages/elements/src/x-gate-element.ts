@@ -7,12 +7,12 @@ import {
   IconableMixin,
   IfableMixin,
   MenuableMixin,
-} from './mixin/'
-import {html, render} from '@github/jtml'
+} from './mixin'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedXGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import xGateIcon from '../icon/x-gate.svg'
+import {connectDraggableGate, renderIconGate, toIfableGateJson} from './gate-element-helpers'
 
 export type XGateElementProps = {
   targets: number[]
@@ -34,25 +34,14 @@ export class XGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(xGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, xGateIcon)
   }
 
   toJson(): string {
-    if (this.if !== '') {
-      return `"${SerializedXGateType}<${this.if}"`
-    } else {
-      return `"${SerializedXGateType}"`
-    }
+    return toIfableGateJson(SerializedXGateType, this.if)
   }
 }
