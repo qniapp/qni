@@ -11,17 +11,25 @@ import {controller} from '@github/catalyst'
 export class InspectorButtonElement extends HTMLElement {
   public popup!: TippyInstance
 
+  private readonly maybeHidePopupListener = (event: Event): void => this.maybeHidePopup(event)
+
   get isInspectorShown(): boolean {
     return this.popup.state.isVisible
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initPopup()
-    this.addEventListener('mousedown', this.showPopup)
-    document.addEventListener('click', this.maybeHidePopup.bind(this))
+    if (this.shadowRoot === null) {
+      this.attachShadow({mode: 'open'})
+      this.update()
+      this.initPopup()
+      this.addEventListener('mousedown', this.showPopup)
+    }
+
+    document.addEventListener('click', this.maybeHidePopupListener)
+  }
+
+  disconnectedCallback(): void {
+    document.removeEventListener('click', this.maybeHidePopupListener)
   }
 
   update(): void {

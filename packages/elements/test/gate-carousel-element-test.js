@@ -10,12 +10,7 @@ describe('gate-carousel element', function () {
   })
 
   it('connects and renders carousel controls', function () {
-    const el = document.createElement('gate-carousel')
-    el.innerHTML = `
-      <div data-targets="gate-carousel.gateSets">
-        <div><h-gate></h-gate></div>
-      </div>
-    `
+    const el = buildGateCarousel()
 
     document.body.append(el)
 
@@ -24,4 +19,29 @@ describe('gate-carousel element', function () {
     assert.exists(el.shadowRoot.querySelector('#prev-button'))
     assert.exists(el.shadowRoot.querySelector('#next-button'))
   })
+
+  it('removes window load listener when disconnected', function () {
+    const el = buildGateCarousel()
+    let animationStartCount = 0
+    el.startAnimation = () => {
+      animationStartCount += 1
+    }
+
+    document.body.append(el)
+    el.remove()
+    window.dispatchEvent(new Event('load'))
+
+    assert.equal(animationStartCount, 0)
+  })
 })
+
+function buildGateCarousel() {
+  const el = document.createElement('gate-carousel')
+  el.innerHTML = `
+    <div data-targets="gate-carousel.gateSets">
+      <div><h-gate></h-gate></div>
+    </div>
+  `
+
+  return el
+}

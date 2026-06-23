@@ -13,9 +13,7 @@ describe('inspector-button element', function () {
   })
 
   it('survives connect, disconnect, and reconnect', function () {
-    appendOperationInspectorTemplate()
-    const el = document.createElement('inspector-button')
-    el.innerHTML = '<button type="button">Inspect</button>'
+    const el = buildInspectorButton()
 
     document.body.append(el)
     assert.instanceOf(el.popup, Object)
@@ -31,7 +29,28 @@ describe('inspector-button element', function () {
 
     assert.isFalse(el.isInspectorShown)
   })
+
+  it('does not react to document clicks while disconnected', function () {
+    const el = buildInspectorButton()
+
+    document.body.append(el)
+    el.dispatchEvent(new MouseEvent('mousedown', {bubbles: true}))
+    assert.isTrue(el.isInspectorShown)
+
+    el.remove()
+    document.body.dispatchEvent(new MouseEvent('click', {bubbles: true}))
+
+    assert.isTrue(el.isInspectorShown)
+  })
 })
+
+function buildInspectorButton() {
+  appendOperationInspectorTemplate()
+  const el = document.createElement('inspector-button')
+  el.innerHTML = '<button type="button">Inspect</button>'
+
+  return el
+}
 
 function appendOperationInspectorTemplate() {
   const template = document.createElement('template')
