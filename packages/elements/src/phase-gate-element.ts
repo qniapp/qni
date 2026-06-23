@@ -8,12 +8,12 @@ import {
   IconableMixin,
   IfableMixin,
   MenuableMixin,
-} from './mixin/'
-import {html, render} from '@github/jtml'
+} from './mixin'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedPhaseGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import phaseGateIcon from '../icon/phase-gate.svg'
+import {connectDraggableGate, renderIconGate, toAngleGateJson} from './gate-element-helpers'
 
 export type PhaseGateElementProps = {
   targets: number[]
@@ -35,25 +35,14 @@ export class PhaseGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(phaseGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, phaseGateIcon)
   }
 
   toJson(): string {
-    if (this.angle === '') {
-      return `"${SerializedPhaseGateType}"`
-    } else {
-      return `"${SerializedPhaseGateType}(${this.angle.replace('/', '_')})"`
-    }
+    return toAngleGateJson(SerializedPhaseGateType, this.angle)
   }
 }
