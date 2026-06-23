@@ -7,11 +7,10 @@ import {
   MenuableMixin,
   ResizeableMixin,
 } from './mixin'
-import {html, render} from '@github/jtml'
 import {SerializedQftGateType} from '@qni/common'
-import chevronSelectorVerticalIcon from '../icon/chevron_selector_vertical.svg'
 import {controller} from '@github/catalyst'
 import qftGateIcon from '../icon/qft-gate.svg'
+import {connectResizeableGate, renderResizeableIconGate, toSpannedGateJson} from './gate-element-helpers'
 
 export type QftGateElementProps = {
   targets: number[]
@@ -26,27 +25,14 @@ export class QftGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
-    this.initResizeable()
+    connectResizeableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="layout">
-          <div part="body">${this.iconHtml(qftGateIcon)}</div>
-          <div class="resize-handle" part="resize-handle" data-target="qft-gate.resizeHandle">
-            <div part="resize-handle-icon">${this.iconHtml(chevronSelectorVerticalIcon)}</div>
-          </div>
-        </div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderResizeableIconGate(this, qftGateIcon, 'qft-gate.resizeHandle')
   }
 
   toJson(): string {
-    return `"${SerializedQftGateType}${this.span}"`
+    return toSpannedGateJson(SerializedQftGateType, this.span)
   }
 }
