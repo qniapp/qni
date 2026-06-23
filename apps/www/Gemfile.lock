@@ -215,7 +215,7 @@ GEM
       date
       stringio
     public_suffix (7.0.5)
-    puma (7.2.0)
+    puma (7.2.1)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.6)
@@ -366,7 +366,7 @@ DEPENDENCIES
   ostruct
   pg
   propshaft
-  puma (~> 7.0, >= 7.0.4)
+  puma (~> 7.2)
   rack-mini-profiler
   rails (~> 7.2.0)
   rbtrace
