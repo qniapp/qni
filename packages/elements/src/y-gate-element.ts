@@ -7,12 +7,12 @@ import {
   IconableMixin,
   IfableMixin,
   MenuableMixin,
-} from './mixin/'
-import {html, render} from '@github/jtml'
+} from './mixin'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedYGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import yGateIcon from '../icon/y-gate.svg'
+import {cD as connectDraggableGate, rI as renderIconGate, tI as toIfableGateJson} from './gate-element-helpers.js'
 
 export type YGateElementProps = {
   targets: number[]
@@ -34,25 +34,14 @@ export class YGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(yGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, yGateIcon)
   }
 
   toJson(): string {
-    if (this.if !== '') {
-      return `"${SerializedYGateType}<${this.if}"`
-    } else {
-      return `"${SerializedYGateType}"`
-    }
+    return toIfableGateJson(SerializedYGateType, this.if)
   }
 }

@@ -62,12 +62,12 @@
     "@types/node": "^18.11.19",
     "@types/postcss-import": "~14.0.0",
     "@types/prettier": "~2.7.2",
-    "@typescript-eslint/eslint-plugin": "~5.51",
+    "@typescript-eslint/eslint-plugin": "~5.62",
     "@typescript-eslint/parser": "~5.51",
     "autoprefixer": "^10.4.19",
-    "esbuild": "~0.26",
+    "esbuild": "~0.28",
     "eslint": "~8.33",
-    "eslint-config-prettier": "~8.6",
+    "eslint-config-prettier": "~10.1",
     "eslint-plugin-github": "~4.6",
     "husky": "^8.0.0",
     "jiti": "^2.6.1",
@@ -84,8 +84,8 @@
     "size-limit": "^12.1.0",
     "tailwindcss": "~3.2",
     "typedoc": "~0.23",
-    "typescript": "~4.9",
-    "typesync": "^0.10.0"
+    "typescript": "~5.0",
+    "typesync": "^0.14.3"
   },
   "dependencies": {
     "browserslist": "^4.23.1"

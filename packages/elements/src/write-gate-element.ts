@@ -1,8 +1,8 @@
-import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, IconableMixin, MenuableMixin} from './mixin/'
+import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, IconableMixin, MenuableMixin} from './mixin'
 import {SerializedWrite0GateType, SerializedWrite1GateType} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
-import {html, render} from '@github/jtml'
 import writeGateIcon from '../icon/write-gate.svg'
+import {cD as connectDraggableGate, rW as renderWriteGate} from './gate-element-helpers.js'
 
 @controller
 export class WriteGateElement extends MenuableMixin(
@@ -22,21 +22,11 @@ export class WriteGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">
-          ${this.iconHtml(writeGateIcon)}
-          <div part="value"></div>
-        </div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderWriteGate(this, writeGateIcon)
   }
 
   toJson(): string {

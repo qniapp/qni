@@ -8,11 +8,11 @@ import {
   IfableMixin,
   MenuableMixin,
 } from './mixin'
-import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedHGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import hGateIcon from '../icon/h-gate.svg'
+import {cD as connectDraggableGate, rI as renderIconGate, tI as toIfableGateJson} from './gate-element-helpers.js'
 
 export type HGateElementProps = {
   targets: number[]
@@ -34,25 +34,14 @@ export class HGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(hGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, hGateIcon)
   }
 
   toJson(): string {
-    if (this.if !== '') {
-      return `"${SerializedHGateType}<${this.if}"`
-    } else {
-      return `"${SerializedHGateType}"`
-    }
+    return toIfableGateJson(SerializedHGateType, this.if)
   }
 }
