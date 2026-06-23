@@ -1,0 +1,21 @@
+diff --git a/minimatch.js b/minimatch.js
+index 2e4a058a130dceebf83a7bd435f5d22b765ac836..6bfc836b34f22d4c7662788611ddc2139d580c29 100644
+--- a/minimatch.js
++++ b/minimatch.js
+@@ -8,6 +8,7 @@ minimatch.sep = path.sep
+ 
+ var GLOBSTAR = minimatch.GLOBSTAR = Minimatch.GLOBSTAR = {}
+ var expand = require('brace-expansion')
++expand = typeof expand === 'function' ? expand : expand.expand
+ 
+ var plTypes = {
+   '!': { open: '(?:(?!(?:', close: '))[^/]*?)'},
+@@ -268,7 +269,7 @@ function braceExpand (pattern, options) {
+     return [pattern]
+   }
+ 
+-  return expand(pattern)
++  return expand(pattern, { max: options.braceExpandMax })
+ }
+ 
+ var MAX_PATTERN_LENGTH = 1024 * 64

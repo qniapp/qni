@@ -1,0 +1,44 @@
+diff --git a/dist/commonjs/index.js b/dist/commonjs/index.js
+index c12dc5e6476874f9dbba429a19e445a4a688e1df..a28f636a376ead4e8c2f4a824ecc8092cc9254aa 100644
+--- a/dist/commonjs/index.js
++++ b/dist/commonjs/index.js
+@@ -1,10 +1,7 @@
+ "use strict";
+-var __importDefault = (this && this.__importDefault) || function (mod) {
+-    return (mod && mod.__esModule) ? mod : { "default": mod };
+-};
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.unescape = exports.escape = exports.AST = exports.Minimatch = exports.match = exports.makeRe = exports.braceExpand = exports.defaults = exports.filter = exports.GLOBSTAR = exports.sep = exports.minimatch = void 0;
+-const brace_expansion_1 = __importDefault(require("brace-expansion"));
++const brace_expansion_1 = require("brace-expansion");
+ const assert_valid_pattern_js_1 = require("./assert-valid-pattern.js");
+ const ast_js_1 = require("./ast.js");
+ const escape_js_1 = require("./escape.js");
+@@ -157,7 +154,7 @@ const braceExpand = (pattern, options = {}) => {
+         // shortcut. no need to expand.
+         return [pattern];
+     }
+-    return (0, brace_expansion_1.default)(pattern);
++    return (0, brace_expansion_1.expand)(pattern, { max: options.braceExpandMax });
+ };
+ exports.braceExpand = braceExpand;
+ exports.minimatch.braceExpand = exports.braceExpand;
+diff --git a/dist/esm/index.js b/dist/esm/index.js
+index 737c8095415235e69e4717b505d0ee4ea3c0b6fa..ce4d2ef05f5ea880ea1958c3a58f7b5061f4a0ea 100644
+--- a/dist/esm/index.js
++++ b/dist/esm/index.js
+@@ -1,4 +1,4 @@
+-import expand from 'brace-expansion';
++import { expand } from 'brace-expansion';
+ import { assertValidPattern } from './assert-valid-pattern.js';
+ import { AST } from './ast.js';
+ import { escape } from './escape.js';
+@@ -148,7 +148,7 @@ export const braceExpand = (pattern, options = {}) => {
+         // shortcut. no need to expand.
+         return [pattern];
+     }
+-    return expand(pattern);
++    return expand(pattern, { max: options.braceExpandMax });
+ };
+ minimatch.braceExpand = braceExpand;
+ // parse a component of the expanded set.
