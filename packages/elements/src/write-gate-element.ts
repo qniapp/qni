@@ -2,7 +2,7 @@ import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, Iconab
 import {SerializedWrite0GateType, SerializedWrite1GateType} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import writeGateIcon from '../icon/write-gate.svg'
-import {connectDraggableGate, renderWriteGate} from './gate-element-helpers.js'
+import {cD as connectDraggableGate, rW as renderWriteGate} from './gate-element-helpers.js'
 
 @controller
 export class WriteGateElement extends MenuableMixin(

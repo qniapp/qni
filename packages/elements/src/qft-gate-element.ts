@@ -10,7 +10,11 @@ import {
 import {SerializedQftGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import qftGateIcon from '../icon/qft-gate.svg'
-import {connectResizeableGate, renderResizeableIconGate, toSpannedGateJson} from './gate-element-helpers.js'
+import {
+  cR as connectResizeableGate,
+  rR as renderResizeableIconGate,
+  tP as toSpannedGateJson,
+} from './gate-element-helpers.js'
 
 export type QftGateElementProps = {
   targets: number[]

@@ -9,14 +9,14 @@ type ResizeableGateElement = DraggableGateElement & Resizeable
 
 type IconGateElement = HTMLElement & Iconable
 
-export function connectDraggableGate(element: DraggableGateElement): void
-export function connectResizeableGate(element: ResizeableGateElement): void
-export function renderIconGate(element: IconGateElement, icon: string): void
-export function renderResizeableIconGate(element: IconGateElement, icon: string, resizeHandleTarget: string): void
-export function renderMeasurementGate(element: IconGateElement, icon: string): void
-export function renderWriteGate(element: IconGateElement, icon: string): void
-export function toStaticGateJson(type: string): string
-export function toIfableGateJson(type: string, condition: string): string
-export function toAngleGateJson(type: string, angle: string): string
-export function toFlaggedGateJson(type: string, flag: string): string
-export function toSpannedGateJson(type: string, span: number): string
+export function cD(element: DraggableGateElement): void
+export function cR(element: ResizeableGateElement): void
+export function rI(element: IconGateElement, icon: string): void
+export function rR(element: IconGateElement, icon: string, resizeHandleTarget: string): void
+export function rM(element: IconGateElement, icon: string): void
+export function rW(element: IconGateElement, icon: string): void
+export function tS(type: string): string
+export function tI(type: string, condition: string): string
+export function tA(type: string, angle: string): string
+export function tF(type: string, flag: string): string
+export function tP(type: string, span: number): string

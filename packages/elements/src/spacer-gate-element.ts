@@ -10,7 +10,7 @@ import {
 import {SerializedSpacerGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import spacerGateIcon from '../icon/spacer-gate.svg'
-import {connectDraggableGate, renderIconGate, toStaticGateJson} from './gate-element-helpers.js'
+import {cD as connectDraggableGate, rI as renderIconGate, tS as toStaticGateJson} from './gate-element-helpers.js'
 
 export type SpacerGateElementProps = {
   targets: number[]

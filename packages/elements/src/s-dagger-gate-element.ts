@@ -12,7 +12,7 @@ import {ControllableMixin} from './mixin/controllable'
 import {SerializedSDaggerGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import sDaggerGateIcon from '../icon/s-dagger-gate.svg'
-import {connectDraggableGate, renderIconGate, toIfableGateJson} from './gate-element-helpers.js'
+import {cD as connectDraggableGate, rI as renderIconGate, tI as toIfableGateJson} from './gate-element-helpers.js'
 
 export type SDaggerGateElementProps = {
   targets: number[]

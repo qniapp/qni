@@ -1,7 +1,7 @@
 import {html, render} from '@github/jtml'
 import chevronSelectorVerticalIcon from '../icon/chevron_selector_vertical.svg'
 
-function connectGate(element, initResizeable) {
+function c(element, initResizeable) {
   if (element.shadowRoot !== null) return
   element.attachShadow({mode: 'open'})
   element.update()
@@ -9,15 +9,15 @@ function connectGate(element, initResizeable) {
   if (initResizeable) element.initResizeable()
 }
 
-export function connectDraggableGate(element) {
-  connectGate(element, false)
+export function cD(element) {
+  c(element, false)
 }
 
-export function connectResizeableGate(element) {
-  connectGate(element, true)
+export function cR(element) {
+  c(element, true)
 }
 
-export function renderIconGate(element, icon) {
+export function rI(element, icon) {
   render(
     html`<div part="body">${element.iconHtml(icon)}</div>
       <div part="outline"></div>`,
@@ -25,7 +25,7 @@ export function renderIconGate(element, icon) {
   )
 }
 
-export function renderResizeableIconGate(element, icon, resizeHandleTarget) {
+export function rR(element, icon, resizeHandleTarget) {
   render(
     html`<div part="layout">
         <div part="body">${element.iconHtml(icon)}</div>
@@ -38,7 +38,7 @@ export function renderResizeableIconGate(element, icon, resizeHandleTarget) {
   )
 }
 
-export function renderMeasurementGate(element, icon) {
+export function rM(element, icon) {
   render(
     html`<div part="body">
         ${element.iconHtml(icon)}
@@ -49,7 +49,7 @@ export function renderMeasurementGate(element, icon) {
   )
 }
 
-export function renderWriteGate(element, icon) {
+export function rW(element, icon) {
   render(
     html`<div part="body">
         ${element.iconHtml(icon)}
@@ -60,34 +60,26 @@ export function renderWriteGate(element, icon) {
   )
 }
 
-export function toStaticGateJson(type) {
-  return `"${type}"`
+function t(type, suffix = '') {
+  return `"${type}${suffix}"`
 }
 
-export function toIfableGateJson(type, condition) {
-  if (condition !== '') {
-    return `"${type}<${condition}"`
-  } else {
-    return toStaticGateJson(type)
-  }
+export function tS(type) {
+  return t(type)
 }
 
-export function toAngleGateJson(type, angle) {
-  if (angle === '') {
-    return toStaticGateJson(type)
-  } else {
-    return `"${type}(${angle.replace('/', '_')})"`
-  }
+export function tI(type, condition) {
+  return t(type, condition === '' ? '' : `<${condition}`)
 }
 
-export function toFlaggedGateJson(type, flag) {
-  if (flag === '') {
-    return toStaticGateJson(type)
-  } else {
-    return `"${type}>${flag}"`
-  }
+export function tA(type, angle) {
+  return t(type, angle === '' ? '' : `(${angle.replace('/', '_')})`)
 }
 
-export function toSpannedGateJson(type, span) {
-  return `"${type}${span}"`
+export function tF(type, flag) {
+  return t(type, flag === '' ? '' : `>${flag}`)
+}
+
+export function tP(type, span) {
+  return t(type, span)
 }

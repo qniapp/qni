@@ -3,7 +3,11 @@ import {attr, controller} from '@github/catalyst'
 import {FlaggableMixin} from './mixin/flaggable'
 import {SerializedMeasurementGateType} from '@qni/common'
 import measurementGateIcon from '../icon/measurement-gate.svg'
-import {connectDraggableGate, renderMeasurementGate, toFlaggedGateJson} from './gate-element-helpers.js'
+import {
+  cD as connectDraggableGate,
+  rM as renderMeasurementGate,
+  tF as toFlaggedGateJson,
+} from './gate-element-helpers.js'
 
 @controller
 export class MeasurementGateElement extends MenuableMixin(

@@ -11,7 +11,7 @@ import {ControllableMixin} from './mixin/controllable'
 import {SerializedSwapGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import swapGateIcon from '../icon/swap-gate.svg'
-import {connectDraggableGate, renderIconGate, toStaticGateJson} from './gate-element-helpers.js'
+import {cD as connectDraggableGate, rI as renderIconGate, tS as toStaticGateJson} from './gate-element-helpers.js'
 
 @controller
 export class SwapGateElement extends MenuableMixin(
