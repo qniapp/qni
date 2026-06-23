@@ -7,12 +7,12 @@ import {
   IconableMixin,
   IfableMixin,
   MenuableMixin,
-} from './mixin/'
-import {html, render} from '@github/jtml'
+} from './mixin'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedSDaggerGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import sDaggerGateIcon from '../icon/s-dagger-gate.svg'
+import {connectDraggableGate, renderIconGate, toIfableGateJson} from './gate-element-helpers'
 
 export type SDaggerGateElementProps = {
   targets: number[]
@@ -34,25 +34,14 @@ export class SDaggerGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(sDaggerGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, sDaggerGateIcon)
   }
 
   toJson(): string {
-    if (this.if !== '') {
-      return `"${SerializedSDaggerGateType}<${this.if}"`
-    } else {
-      return `"${SerializedSDaggerGateType}"`
-    }
+    return toIfableGateJson(SerializedSDaggerGateType, this.if)
   }
 }
