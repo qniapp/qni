@@ -1,9 +1,13 @@
-import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, IconableMixin, MenuableMixin} from './mixin/'
+import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, IconableMixin, MenuableMixin} from './mixin'
 import {attr, controller} from '@github/catalyst'
-import {html, render} from '@github/jtml'
 import {FlaggableMixin} from './mixin/flaggable'
 import {SerializedMeasurementGateType} from '@qni/common'
 import measurementGateIcon from '../icon/measurement-gate.svg'
+import {
+  cD as connectDraggableGate,
+  rM as renderMeasurementGate,
+  tF as toFlaggedGateJson,
+} from './gate-element-helpers.js'
 
 @controller
 export class MeasurementGateElement extends MenuableMixin(
@@ -16,28 +20,14 @@ export class MeasurementGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">
-          ${this.iconHtml(measurementGateIcon)}
-          <div id="value" part="value"></div>
-        </div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderMeasurementGate(this, measurementGateIcon)
   }
 
   toJson(): string {
-    if (this.flag === '') {
-      return `"${SerializedMeasurementGateType}"`
-    } else {
-      return `"${SerializedMeasurementGateType}>${this.flag}"`
-    }
+    return toFlaggedGateJson(SerializedMeasurementGateType, this.flag)
   }
 }
