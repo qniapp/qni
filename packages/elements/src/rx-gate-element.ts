@@ -8,12 +8,12 @@ import {
   IconableMixin,
   IfableMixin,
   MenuableMixin,
-} from './mixin/'
-import {html, render} from '@github/jtml'
+} from './mixin'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedRxGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import rxGateIcon from '../icon/rx-gate.svg'
+import {cD as connectDraggableGate, rI as renderIconGate, tA as toAngleGateJson} from './gate-element-helpers.js'
 
 export type RxGateElementProps = {
   targets: number[]
@@ -35,25 +35,14 @@ export class RxGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(rxGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, rxGateIcon)
   }
 
   toJson(): string {
-    if (this.angle === '') {
-      return `"${SerializedRxGateType}"`
-    } else {
-      return `"${SerializedRxGateType}(${this.angle.replace('/', '_')})"`
-    }
+    return toAngleGateJson(SerializedRxGateType, this.angle)
   }
 }

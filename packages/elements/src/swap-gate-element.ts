@@ -6,12 +6,12 @@ import {
   HoverableMixin,
   IconableMixin,
   MenuableMixin,
-} from './mixin/'
-import {html, render} from '@github/jtml'
+} from './mixin'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedSwapGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import swapGateIcon from '../icon/swap-gate.svg'
+import {cD as connectDraggableGate, rI as renderIconGate, tS as toStaticGateJson} from './gate-element-helpers.js'
 
 @controller
 export class SwapGateElement extends MenuableMixin(
@@ -24,21 +24,14 @@ export class SwapGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(swapGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, swapGateIcon)
   }
 
   toJson(): string {
-    return `"${SerializedSwapGateType}"`
+    return toStaticGateJson(SerializedSwapGateType)
   }
 }
