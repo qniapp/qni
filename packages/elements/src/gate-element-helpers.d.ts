@@ -13,7 +13,10 @@ export function connectDraggableGate(element: DraggableGateElement): void
 export function connectResizeableGate(element: ResizeableGateElement): void
 export function renderIconGate(element: IconGateElement, icon: string): void
 export function renderResizeableIconGate(element: IconGateElement, icon: string, resizeHandleTarget: string): void
+export function renderMeasurementGate(element: IconGateElement, icon: string): void
+export function renderWriteGate(element: IconGateElement, icon: string): void
 export function toStaticGateJson(type: string): string
 export function toIfableGateJson(type: string, condition: string): string
 export function toAngleGateJson(type: string, angle: string): string
+export function toFlaggedGateJson(type: string, flag: string): string
 export function toSpannedGateJson(type: string, span: number): string

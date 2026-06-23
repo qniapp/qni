@@ -1,19 +1,20 @@
 import {html, render} from '@github/jtml'
 import chevronSelectorVerticalIcon from '../icon/chevron_selector_vertical.svg'
 
-export function connectDraggableGate(element) {
+function connectGate(element, initResizeable) {
   if (element.shadowRoot !== null) return
   element.attachShadow({mode: 'open'})
   element.update()
   element.initDraggable()
+  if (initResizeable) element.initResizeable()
+}
+
+export function connectDraggableGate(element) {
+  connectGate(element, false)
 }
 
 export function connectResizeableGate(element) {
-  if (element.shadowRoot !== null) return
-  element.attachShadow({mode: 'open'})
-  element.update()
-  element.initDraggable()
-  element.initResizeable()
+  connectGate(element, true)
 }
 
 export function renderIconGate(element, icon) {
@@ -37,6 +38,28 @@ export function renderResizeableIconGate(element, icon, resizeHandleTarget) {
   )
 }
 
+export function renderMeasurementGate(element, icon) {
+  render(
+    html`<div part="body">
+        ${element.iconHtml(icon)}
+        <div id="value" part="value"></div>
+      </div>
+      <div part="outline"></div>`,
+    element.shadowRoot,
+  )
+}
+
+export function renderWriteGate(element, icon) {
+  render(
+    html`<div part="body">
+        ${element.iconHtml(icon)}
+        <div part="value"></div>
+      </div>
+      <div part="outline"></div>`,
+    element.shadowRoot,
+  )
+}
+
 export function toStaticGateJson(type) {
   return `"${type}"`
 }
@@ -54,6 +77,14 @@ export function toAngleGateJson(type, angle) {
     return toStaticGateJson(type)
   } else {
     return `"${type}(${angle.replace('/', '_')})"`
+  }
+}
+
+export function toFlaggedGateJson(type, flag) {
+  if (flag === '') {
+    return toStaticGateJson(type)
+  } else {
+    return `"${type}>${flag}"`
   }
 }
 
