@@ -6,7 +6,22 @@ settings:
 
 overrides:
   caniuse-lite: ^1.0.30001788
+  brace-expansion: 5.0.6
   npm-dts>tmp: 0.2.4
+
+patchedDependencies:
+  minimatch@3.1.5:
+    hash: 134bc5724416e58e5d192ddf6f03ce69bdb2d8f27d7a20db1cb72974d1829c18
+    path: patches/minimatch@3.1.5.patch
+  minimatch@5.1.9:
+    hash: f761739e45e695f76ecf1e9840e043a58704a387f2f6dc4b3e510216e88be63f
+    path: patches/minimatch@5.1.9.patch
+  minimatch@7.4.9:
+    hash: d229c463aa9fb215a1ec254a3ec80d5416cabb7def136ccc3d3b3ba37f6f5959
+    path: patches/minimatch@7.4.9.patch
+  minimatch@9.0.9:
+    hash: 3efedf0d1130f7d41180634176fec5b09d0418f8a8f3e5062b1bdd73609a839a
+    path: patches/minimatch@9.0.9.patch
 
 importers:
 
@@ -1916,9 +1931,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
 
-  balanced-match@1.0.2:
-    resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
-
   balanced-match@4.0.4:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
@@ -1988,14 +2000,8 @@ packages:
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
 
-  brace-expansion@1.1.14:
-    resolution: {integrity: sha512-MWPGfDxnyzKU7rNOW9SP/c50vi3xrmrua/+6hfPbCS2ABNWfx24vPidzvC7krjU/RTo235sV776ymlsMtGKj8g==}
-
-  brace-expansion@2.1.0:
-    resolution: {integrity: sha512-TN1kCZAgdgweJhWWpgKYrQaMNHcDULHkWwQIspdtjV4Y5aurRdZpjAqn6yX3FPqTA9ngHCc4hJxMAMgGfve85w==}
-
-  brace-expansion@5.0.5:
-    resolution: {integrity: sha512-VZznLgtwhn+Mact9tfiwx64fA9erHH/MCXEUfB/0bX/6Fz6ny5EGTXYltMocqg4xFAQZtnO3DHWWXi8RiuN7cQ==}
+  brace-expansion@5.0.6:
+    resolution: {integrity: sha512-kLpxurY4Z4r9sgMsyG0Z9uzsBlgiU/EFKhj/h91/8yHu0edo7XuixOIH3VcJ8kkxs6/jPzoI6U9Vj3WqbMQ94g==}
     engines: {node: 18 || 20 || >=22}
 
   braces@3.0.3:
@@ -2202,9 +2208,6 @@ packages:
 
   complex.js@2.4.3:
     resolution: {integrity: sha512-UrQVSUur14tNX6tiP4y8T4w4FeJAX3bi2cIv0pu/DTLFNxoq7z2Yh83Vfzztj6Px3X/lubqQ9IrPp7Bpn6p4MQ==}
-
-  concat-map@0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   concat-with-sourcemaps@1.1.0:
     resolution: {integrity: sha512-4gEjHJFT9e+2W/77h/DS5SGUgwDaOwprX8L/gl5+3ixnzkVJJsZWDSelmN3Oilw3LNDZjZV0yqH1hLG3k6nghg==}
@@ -6234,7 +6237,7 @@ snapshots:
       ignore: 5.3.2
       import-fresh: 3.3.1
       js-yaml: 4.1.1
-      minimatch: 3.1.5
+      minimatch: 3.1.5(patch_hash=134bc5724416e58e5d192ddf6f03ce69bdb2d8f27d7a20db1cb72974d1829c18)
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
@@ -6265,7 +6268,7 @@ snapshots:
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
       debug: 4.3.7
-      minimatch: 3.1.5
+      minimatch: 3.1.5(patch_hash=134bc5724416e58e5d192ddf6f03ce69bdb2d8f27d7a20db1cb72974d1829c18)
     transitivePeerDependencies:
       - supports-color
 
@@ -7539,8 +7542,6 @@ snapshots:
       babel-plugin-jest-hoist: 29.6.3
       babel-preset-current-node-syntax: 1.2.0(@babel/core@7.29.0)
 
-  balanced-match@1.0.2: {}
-
   balanced-match@4.0.4: {}
 
   bare-events@2.8.2: {}
@@ -7601,16 +7602,7 @@ snapshots:
 
   boolbase@1.0.0: {}
 
-  brace-expansion@1.1.14:
-    dependencies:
-      balanced-match: 1.0.2
-      concat-map: 0.0.1
-
-  brace-expansion@2.1.0:
-    dependencies:
-      balanced-match: 1.0.2
-
-  brace-expansion@5.0.5:
+  brace-expansion@5.0.6:
     dependencies:
       balanced-match: 4.0.4
 
@@ -7830,8 +7822,6 @@ snapshots:
   commondir@1.0.1: {}
 
   complex.js@2.4.3: {}
-
-  concat-map@0.0.1: {}
 
   concat-with-sourcemaps@1.1.0:
     dependencies:
@@ -8382,7 +8372,7 @@ snapshots:
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
-      minimatch: 3.1.5
+      minimatch: 3.1.5(patch_hash=134bc5724416e58e5d192ddf6f03ce69bdb2d8f27d7a20db1cb72974d1829c18)
       object.fromentries: 2.0.8
       object.groupby: 1.0.3
       object.values: 1.2.1
@@ -8410,7 +8400,7 @@ snapshots:
       hasown: 2.0.2
       jsx-ast-utils: 3.3.5
       language-tags: 1.0.9
-      minimatch: 3.1.5
+      minimatch: 3.1.5(patch_hash=134bc5724416e58e5d192ddf6f03ce69bdb2d8f27d7a20db1cb72974d1829c18)
       object.fromentries: 2.0.8
       safe-regex-test: 1.1.0
       string.prototype.includes: 2.0.1
@@ -8490,7 +8480,7 @@ snapshots:
       json-stable-stringify-without-jsonify: 1.0.1
       levn: 0.4.1
       lodash.merge: 4.6.2
-      minimatch: 3.1.5
+      minimatch: 3.1.5(patch_hash=134bc5724416e58e5d192ddf6f03ce69bdb2d8f27d7a20db1cb72974d1829c18)
       natural-compare: 1.4.0
       optionator: 0.9.4
       regexpp: 3.2.0
@@ -8665,7 +8655,7 @@ snapshots:
 
   filelist@1.0.6:
     dependencies:
-      minimatch: 5.1.9
+      minimatch: 5.1.9(patch_hash=f761739e45e695f76ecf1e9840e043a58704a387f2f6dc4b3e510216e88be63f)
 
   fill-range@7.1.1:
     dependencies:
@@ -8823,7 +8813,7 @@ snapshots:
     dependencies:
       foreground-child: 3.3.1
       jackspeak: 3.4.3
-      minimatch: 9.0.9
+      minimatch: 9.0.9(patch_hash=3efedf0d1130f7d41180634176fec5b09d0418f8a8f3e5062b1bdd73609a839a)
       minipass: 7.1.3
       package-json-from-dist: 1.0.1
       path-scurry: 1.11.1
@@ -8842,7 +8832,7 @@ snapshots:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.1.5
+      minimatch: 3.1.5(patch_hash=134bc5724416e58e5d192ddf6f03ce69bdb2d8f27d7a20db1cb72974d1829c18)
       once: 1.4.0
       path-is-absolute: 1.0.1
 
@@ -8851,7 +8841,7 @@ snapshots:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 5.1.9
+      minimatch: 5.1.9(patch_hash=f761739e45e695f76ecf1e9840e043a58704a387f2f6dc4b3e510216e88be63f)
       once: 1.4.0
 
   global-modules@1.0.0:
@@ -9864,23 +9854,23 @@ snapshots:
 
   minimatch@10.2.5:
     dependencies:
-      brace-expansion: 5.0.5
+      brace-expansion: 5.0.6
 
-  minimatch@3.1.5:
+  minimatch@3.1.5(patch_hash=134bc5724416e58e5d192ddf6f03ce69bdb2d8f27d7a20db1cb72974d1829c18):
     dependencies:
-      brace-expansion: 1.1.14
+      brace-expansion: 5.0.6
 
-  minimatch@5.1.9:
+  minimatch@5.1.9(patch_hash=f761739e45e695f76ecf1e9840e043a58704a387f2f6dc4b3e510216e88be63f):
     dependencies:
-      brace-expansion: 2.1.0
+      brace-expansion: 5.0.6
 
-  minimatch@7.4.9:
+  minimatch@7.4.9(patch_hash=d229c463aa9fb215a1ec254a3ec80d5416cabb7def136ccc3d3b3ba37f6f5959):
     dependencies:
-      brace-expansion: 2.1.0
+      brace-expansion: 5.0.6
 
-  minimatch@9.0.9:
+  minimatch@9.0.9(patch_hash=3efedf0d1130f7d41180634176fec5b09d0418f8a8f3e5062b1bdd73609a839a):
     dependencies:
-      brace-expansion: 2.1.0
+      brace-expansion: 5.0.6
 
   minimist@1.2.8: {}
 
@@ -11505,7 +11495,7 @@ snapshots:
     dependencies:
       '@istanbuljs/schema': 0.1.6
       glob: 7.2.3
-      minimatch: 3.1.5
+      minimatch: 3.1.5(patch_hash=134bc5724416e58e5d192ddf6f03ce69bdb2d8f27d7a20db1cb72974d1829c18)
 
   text-decoder@1.2.7:
     dependencies:
@@ -11662,7 +11652,7 @@ snapshots:
     dependencies:
       lunr: 2.3.9
       marked: 4.3.0
-      minimatch: 7.4.9
+      minimatch: 7.4.9(patch_hash=d229c463aa9fb215a1ec254a3ec80d5416cabb7def136ccc3d3b3ba37f6f5959)
       shiki: 0.14.7
       typescript: 5.0.4
 

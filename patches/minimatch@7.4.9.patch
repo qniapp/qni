@@ -1,0 +1,44 @@
+diff --git a/dist/cjs/index.js b/dist/cjs/index.js
+index 246bc817a26d456efaf8e1c4bc3cbd06d3291f8d..06c9afc4bc5b9f6e9367a345b894c16909b62f85 100644
+--- a/dist/cjs/index.js
++++ b/dist/cjs/index.js
+@@ -1,10 +1,7 @@
+ "use strict";
+-var __importDefault = (this && this.__importDefault) || function (mod) {
+-    return (mod && mod.__esModule) ? mod : { "default": mod };
+-};
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.unescape = exports.escape = exports.Minimatch = exports.match = exports.makeRe = exports.braceExpand = exports.defaults = exports.filter = exports.GLOBSTAR = exports.sep = exports.minimatch = void 0;
+-const brace_expansion_1 = __importDefault(require("brace-expansion"));
++const brace_expansion_1 = require("brace-expansion");
+ const brace_expressions_js_1 = require("./brace-expressions.js");
+ const escape_js_1 = require("./escape.js");
+ const unescape_js_1 = require("./unescape.js");
+@@ -163,7 +160,7 @@ const braceExpand = (pattern, options = {}) => {
+         // shortcut. no need to expand.
+         return [pattern];
+     }
+-    return (0, brace_expansion_1.default)(pattern);
++    return (0, brace_expansion_1.expand)(pattern, { max: options.braceExpandMax });
+ };
+ exports.braceExpand = braceExpand;
+ exports.minimatch.braceExpand = exports.braceExpand;
+diff --git a/dist/mjs/index.js b/dist/mjs/index.js
+index c0470061dec3bc48eb834ee1bea35dbec78f32e6..ef30feb192c418f0943cab04e4900691bc8d4d29 100644
+--- a/dist/mjs/index.js
++++ b/dist/mjs/index.js
+@@ -1,4 +1,4 @@
+-import expand from 'brace-expansion';
++import { expand } from 'brace-expansion';
+ import { parseClass } from './brace-expressions.js';
+ import { escape } from './escape.js';
+ import { unescape } from './unescape.js';
+@@ -154,7 +154,7 @@ export const braceExpand = (pattern, options = {}) => {
+         // shortcut. no need to expand.
+         return [pattern];
+     }
+-    return expand(pattern);
++    return expand(pattern, { max: options.braceExpandMax });
+ };
+ minimatch.braceExpand = braceExpand;
+ const MAX_PATTERN_LENGTH = 1024 * 64;
