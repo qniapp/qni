@@ -1,4 +1,4 @@
-import {UNICODE_FRACTIONS} from './format'
+import {Format} from './format'
 
 type UnicodeFraction = {character: string; ref: string; value: number}
 
@@ -9,10 +9,7 @@ export class NumberFormatter {
   public itemSeparator: string
 
   static matchUnicodeFraction(predicate: (arrayItem: UnicodeFraction) => boolean): UnicodeFraction | undefined {
-    for (const each of UNICODE_FRACTIONS) {
-      if (predicate(each)) return each
-    }
-    return undefined
+    return Format.matchUnicodeFraction(predicate)
   }
 
   constructor(

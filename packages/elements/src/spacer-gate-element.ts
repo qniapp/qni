@@ -7,10 +7,10 @@ import {
   IconableMixin,
   MenuableMixin,
 } from './mixin'
-import {html, render} from '@github/jtml'
 import {SerializedSpacerGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import spacerGateIcon from '../icon/spacer-gate.svg'
+import {cD as connectDraggableGate, rI as renderIconGate, tS as toStaticGateJson} from './gate-element-helpers.js'
 
 export type SpacerGateElementProps = {
   targets: number[]
@@ -25,21 +25,14 @@ export class SpacerGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(spacerGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, spacerGateIcon)
   }
 
   toJson(): string {
-    return `"${SerializedSpacerGateType}"`
+    return toStaticGateJson(SerializedSpacerGateType)
   }
 }
