@@ -21,9 +21,6 @@
   "engines": {
     "node": "20.20.2"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "clean": "./bin/rails javascript:clobber",
     "dev": "./bin/dev",
@@ -32,16 +29,12 @@
     "build": "pnpm build:css && pnpm build:js",
     "build:js": "pnpm exec esbuild app/javascript/application.js --bundle --keep-names --sourcemap --minify --outdir=app/assets/builds",
     "build:css": "pnpm exec tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
-    "build:npm": "rollup -c && pnpm build:css && cp ./app/assets/builds/application.css dist/qni.css",
     "build:docs": "cd docs && JEKYLL_ENV=production ruby -S bundle exec jekyll build",
     "pretest": "pnpm build && pnpm build:css",
     "test": "MINITEST_REPORTER=SpecReporter ruby -S bundle exec rails test:system test",
     "test:ci": "ruby -S bundle exec rails test",
     "update-browserslist-db": "npx update-browserslist-db@latest",
-    "test:watch": "pnpm test --auto-watch --no-single-run",
-    "watch": "rollup -wc",
-    "prerelease": "pnpm build:npm && git --no-pager diff && echo && npm pack --dry-run",
-    "release": "npm publish"
+    "test:watch": "pnpm test --auto-watch --no-single-run"
   },
   "prettier": "@github/prettier-config",
   "dependencies": {
@@ -51,16 +44,14 @@
     "@qni/simulator": "^0.0.87",
     "@svgdotjs/svg.filter.js": "^3.0.8",
     "@svgdotjs/svg.js": "^3.1.1",
-    "fastdom": "^1.0.10",
     "puppeteer": "~23.2",
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
-    "esbuild": "^0.26.0",
+    "esbuild": "^0.28.1",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^9.1.1",
-    "rollup-plugin-replace": "^2.2.0",
     "tailwindcss": "^3.3.1"
   },
   "directories": {
