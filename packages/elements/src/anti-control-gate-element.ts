@@ -6,10 +6,10 @@ import {
   HoverableMixin,
   IconableMixin,
   MenuableMixin,
-} from './mixin/'
-import {html, render} from '@github/jtml'
+} from './mixin'
 import {SerializedAntiControlGateType} from '@qni/common'
 import antiControlGateIcon from '../icon/anti-control-gate.svg'
+import {connectDraggableGate, renderIconGate, toStaticGateJson} from './gate-element-helpers'
 import {controller} from '@github/catalyst'
 
 @controller
@@ -21,21 +21,14 @@ export class AntiControlGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(antiControlGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, antiControlGateIcon)
   }
 
   toJson(): string {
-    return `"${SerializedAntiControlGateType}"`
+    return toStaticGateJson(SerializedAntiControlGateType)
   }
 }
