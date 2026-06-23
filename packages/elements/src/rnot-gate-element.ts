@@ -7,12 +7,12 @@ import {
   IconableMixin,
   IfableMixin,
   MenuableMixin,
-} from './mixin/'
-import {html, render} from '@github/jtml'
+} from './mixin'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedRnotGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import rnotGateIcon from '../icon/rnot-gate.svg'
+import {connectDraggableGate, renderIconGate, toIfableGateJson} from './gate-element-helpers'
 
 export type RnotGateElementProps = {
   targets: number[]
@@ -34,25 +34,14 @@ export class RnotGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(rnotGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, rnotGateIcon)
   }
 
   toJson(): string {
-    if (this.if !== '') {
-      return `"${SerializedRnotGateType}<${this.if}"`
-    } else {
-      return `"${SerializedRnotGateType}"`
-    }
+    return toIfableGateJson(SerializedRnotGateType, this.if)
   }
 }
