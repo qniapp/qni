@@ -1,6 +1,0 @@
-{
-  "name": "@qni/www",
-  "entryPoints": ["app/javascript/index.ts"],
-  "entryPointStrategy": "Expand",
-  "out": "docs/"
-}

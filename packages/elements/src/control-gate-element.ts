@@ -6,10 +6,10 @@ import {
   HoverableMixin,
   IconableMixin,
   MenuableMixin,
-} from './mixin/'
-import {html, render} from '@github/jtml'
+} from './mixin'
 import {SerializedControlGateType} from '@qni/common'
 import controlGateIcon from '../icon/control-gate.svg'
+import {cD as connectDraggableGate, rI as renderIconGate, tS as toStaticGateJson} from './gate-element-helpers.js'
 import {controller} from '@github/catalyst'
 
 @controller
@@ -21,21 +21,14 @@ export class ControlGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
-    render(
-      html`<div part="body">${this.iconHtml(controlGateIcon)}</div>
-        <div part="outline"></div>`,
-      this.shadowRoot!,
-    )
+    renderIconGate(this, controlGateIcon)
   }
 
   toJson(): string {
-    return `"${SerializedControlGateType}"`
+    return toStaticGateJson(SerializedControlGateType)
   }
 }

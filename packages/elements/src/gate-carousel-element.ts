@@ -13,12 +13,22 @@ export class GateCarouselElement extends HTMLElement {
   @targets dots!: HTMLElement[]
   @targets popinAnimationGates!: HTMLElement[]
 
-  connectedCallback(): void {
-    window.addEventListener('load', this.startAnimation.bind(this))
-    this.startBreakpointChangeEventListener(this.startAnimation.bind(this))
+  private readonly startAnimationEventListener = (): void => this.startAnimation()
+  private mobileMediaQuery: MediaQueryList | undefined
 
-    this.attachShadow({mode: 'open'})
-    this.update()
+  connectedCallback(): void {
+    window.addEventListener('load', this.startAnimationEventListener)
+    this.startBreakpointChangeEventListener()
+
+    if (this.shadowRoot === null) {
+      this.attachShadow({mode: 'open'})
+      this.update()
+    }
+  }
+
+  disconnectedCallback(): void {
+    window.removeEventListener('load', this.startAnimationEventListener)
+    this.stopBreakpointChangeEventListener()
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -32,9 +42,16 @@ export class GateCarouselElement extends HTMLElement {
     }
   }
 
-  private startBreakpointChangeEventListener(listener: () => void): void {
-    const mobileMediaQuery = window.matchMedia('(max-width: 639px)')
-    mobileMediaQuery.addEventListener('change', listener)
+  private startBreakpointChangeEventListener(): void {
+    if (this.mobileMediaQuery !== undefined) return
+
+    this.mobileMediaQuery = window.matchMedia('(max-width: 639px)')
+    this.mobileMediaQuery.addEventListener('change', this.startAnimationEventListener)
+  }
+
+  private stopBreakpointChangeEventListener(): void {
+    this.mobileMediaQuery?.removeEventListener('change', this.startAnimationEventListener)
+    this.mobileMediaQuery = undefined
   }
 
   private startAnimation(): void {
