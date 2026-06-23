@@ -181,9 +181,6 @@ importers:
       postcss-preset-env:
         specifier: ^9.1.1
         version: 9.6.0(postcss@8.4.49)
-      rollup-plugin-replace:
-        specifier: ^2.2.0
-        version: 2.2.0
       tailwindcss:
         specifier: ^3.3.1
         version: 3.4.19
