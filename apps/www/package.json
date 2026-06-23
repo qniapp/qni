@@ -44,7 +44,7 @@
     "@qni/simulator": "^0.0.87",
     "@svgdotjs/svg.filter.js": "^3.0.8",
     "@svgdotjs/svg.js": "^3.1.1",
-    "puppeteer": "~23.2",
+    "puppeteer": "~24.42",
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
