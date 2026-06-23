@@ -1,9 +1,10 @@
-import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, IconableMixin, MenuableMixin} from './mixin/'
+import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, IconableMixin, MenuableMixin} from './mixin'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {FlaggableMixin} from './mixin/flaggable'
 import {SerializedMeasurementGateType} from '@qni/common'
 import measurementGateIcon from '../icon/measurement-gate.svg'
+import {connectDraggableGate} from './gate-element-helpers'
 
 @controller
 export class MeasurementGateElement extends MenuableMixin(
@@ -16,10 +17,7 @@ export class MeasurementGateElement extends MenuableMixin(
   }
 
   connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initDraggable()
+    connectDraggableGate(this)
   }
 
   update(): void {
