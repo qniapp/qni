@@ -71,8 +71,8 @@ importers:
         specifier: ~8.33
         version: 8.33.0
       eslint-config-prettier:
-        specifier: ~8.6
-        version: 8.6.0(eslint@8.33.0)
+        specifier: ~10.1
+        version: 10.1.8(eslint@8.33.0)
       eslint-plugin-github:
         specifier: ~4.6
         version: 4.6.1(eslint@8.33.0)(typescript@4.9.5)
@@ -1504,9 +1504,6 @@ packages:
   '@types/qs@6.15.0':
     resolution: {integrity: sha512-JawvT8iBVWpzTrz3EGw9BTQFg3BQNmwERdKE22vlTxawwtbyUSlMppvZYKLZzB5zgACXdXxbD3m1bXaMqP/9ow==}
 
-  '@types/qunit@2.19.13':
-    resolution: {integrity: sha512-N4xp3v4s7f0jb2Oij6+6xw5QhH7/IgHCoGIFLCWtbEWoPkGYp8Te4mIwIP21qaurr6ed5JiPMiy2/ZoiGPkLIw==}
-
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
 
@@ -2600,8 +2597,8 @@ packages:
     engines: {node: '>=6.0'}
     hasBin: true
 
-  eslint-config-prettier@8.6.0:
-    resolution: {integrity: sha512-bAF0eLpLVqP5oEVUFKpMA+NnRFICwn9X8B5jrR9FcqnYBuPbqWEjTEspPWMj5ye6czoSLDweCzSo3Ko7gGrZaA==}
+  eslint-config-prettier@10.1.8:
+    resolution: {integrity: sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -4888,10 +4885,6 @@ packages:
     peerDependencies:
       postcss: 8.x
 
-  rollup-plugin-replace@2.2.0:
-    resolution: {integrity: sha512-/5bxtUPkDHyBJAKketb4NfaeZjL5yLZdeUihSfbF2PQMz+rSTEb8ARKoOl3UBT4m7/X+QOXJo3sLTcq+yMMYTA==}
-    deprecated: This module has moved and is now available at @rollup/plugin-replace. Please update your dependencies. This version is no longer maintained.
-
   rollup-pluginutils@2.8.2:
     resolution: {integrity: sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==}
 
@@ -6820,8 +6813,6 @@ snapshots:
 
   '@types/qs@6.15.0': {}
 
-  '@types/qunit@2.19.13': {}
-
   '@types/range-parser@1.2.7': {}
 
   '@types/resolve@1.17.1':
@@ -8174,7 +8165,7 @@ snapshots:
     optionalDependencies:
       source-map: 0.6.1
 
-  eslint-config-prettier@8.6.0(eslint@8.33.0):
+  eslint-config-prettier@10.1.8(eslint@8.33.0):
     dependencies:
       eslint: 8.33.0
 
@@ -8222,7 +8213,7 @@ snapshots:
       '@typescript-eslint/parser': 5.51.0(eslint@8.33.0)(typescript@4.9.5)
       aria-query: 5.3.2
       eslint: 8.33.0
-      eslint-config-prettier: 8.6.0(eslint@8.33.0)
+      eslint-config-prettier: 10.1.8(eslint@8.33.0)
       eslint-plugin-escompat: 3.11.4(eslint@8.33.0)
       eslint-plugin-eslint-comments: 3.2.0(eslint@8.33.0)
       eslint-plugin-filenames: 1.3.2(eslint@8.33.0)
@@ -8230,7 +8221,7 @@ snapshots:
       eslint-plugin-import: 2.32.0(@typescript-eslint/parser@5.51.0(eslint@8.33.0)(typescript@4.9.5))(eslint@8.33.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.33.0)
       eslint-plugin-no-only-tests: 3.3.0
-      eslint-plugin-prettier: 4.2.5(eslint-config-prettier@8.6.0(eslint@8.33.0))(eslint@8.33.0)(prettier@2.8.8)
+      eslint-plugin-prettier: 4.2.5(eslint-config-prettier@10.1.8(eslint@8.33.0))(eslint@8.33.0)(prettier@2.8.8)
       eslint-rule-documentation: 1.0.23
       jsx-ast-utils: 3.3.5
       prettier: 2.8.8
@@ -8305,13 +8296,13 @@ snapshots:
 
   eslint-plugin-no-only-tests@3.3.0: {}
 
-  eslint-plugin-prettier@4.2.5(eslint-config-prettier@8.6.0(eslint@8.33.0))(eslint@8.33.0)(prettier@2.8.8):
+  eslint-plugin-prettier@4.2.5(eslint-config-prettier@10.1.8(eslint@8.33.0))(eslint@8.33.0)(prettier@2.8.8):
     dependencies:
       eslint: 8.33.0
       prettier: 2.8.8
       prettier-linter-helpers: 1.0.1
     optionalDependencies:
-      eslint-config-prettier: 8.6.0(eslint@8.33.0)
+      eslint-config-prettier: 10.1.8(eslint@8.33.0)
 
   eslint-rule-documentation@1.0.23: {}
 
@@ -10812,11 +10803,6 @@ snapshots:
       style-inject: 0.3.0
     transitivePeerDependencies:
       - ts-node
-
-  rollup-plugin-replace@2.2.0:
-    dependencies:
-      magic-string: 0.25.9
-      rollup-pluginutils: 2.8.2
 
   rollup-pluginutils@2.8.2:
     dependencies:
