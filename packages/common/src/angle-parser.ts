@@ -1,4 +1,4 @@
-import Fraction from 'fraction.js'
+import {Fraction} from 'fraction.js'
 
 export function radian(angle: string): number {
   const coefficient = piCoefficient(angle)

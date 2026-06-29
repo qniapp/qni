@@ -28,7 +28,7 @@
   },
   "prettier": "@github/prettier-config",
   "dependencies": {
-    "fraction.js": "~4.2",
+    "fraction.js": "~5.3",
     "neverthrow": "^6.0.0"
   },
   "devDependencies": {
