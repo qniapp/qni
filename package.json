@@ -54,7 +54,7 @@
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-replace": "^6.0.3",
-    "@rollup/plugin-typescript": "^11.0.0",
+    "@rollup/plugin-typescript": "^12.3.0",
     "@size-limit/preset-small-lib": "^12.1.0",
     "@tailwindcss/forms": "~0.5",
     "@tailwindcss/typography": "^0.5.9",
