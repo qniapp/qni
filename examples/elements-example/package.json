@@ -16,7 +16,7 @@
     "@qni/simulator": "^0.0.87",
     "cookie-parser": "~1.4.4",
     "debug": "~4.3",
-    "ejs": "~3.1",
+    "ejs": "~6.0",
     "express": "~5.2",
     "http-errors": "~2.0",
     "morgan": "~1.10"
