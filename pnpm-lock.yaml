@@ -308,8 +308,8 @@ importers:
         specifier: ^6.3.7
         version: 6.3.7
       xstate:
-        specifier: ~4.37
-        version: 4.37.2
+        specifier: ~4.38
+        version: 4.38.3
     devDependencies:
       '@esm-bundle/chai':
         specifier: ^4.3.4-fix.0
@@ -5825,6 +5825,9 @@ packages:
 
   xstate@4.37.2:
     resolution: {integrity: sha512-Qm337O49CRTZ3PRyRuK6b+kvI+D3JGxXIZCTul+xEsyFCVkTFDt5jixaL1nBWcUBcaTQ9um/5CRGVItPi7fveg==}
+
+  xstate@4.38.3:
+    resolution: {integrity: sha512-SH7nAaaPQx57dx6qvfcIgqKRXIh4L0A1iYEqim4s1u7c9VoCgzZc+63FY90AKU4ZzOC2cfJzTnpO4zK7fCUzzw==}
 
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
@@ -12389,6 +12392,8 @@ snapshots:
   ws@8.21.0: {}
 
   xstate@4.37.2: {}
+
+  xstate@4.38.3: {}
 
   xtend@4.0.2: {}
 
