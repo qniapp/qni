@@ -19,7 +19,7 @@
     "ejs": "~6.0",
     "express": "~5.2",
     "http-errors": "~2.0",
-    "morgan": "~1.10"
+    "morgan": "~1.11"
   },
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779",
   "devDependencies": {
