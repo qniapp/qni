@@ -70,7 +70,7 @@
     "eslint-config-prettier": "~10.1",
     "eslint-plugin-github": "~4.6",
     "husky": "^8.0.0",
-    "jiti": "^2.6.1",
+    "jiti": "^2.7.0",
     "postcss": "~8.5",
     "postcss-import": "~15.1",
     "postcss-nested": "~7.0",
