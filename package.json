@@ -69,7 +69,7 @@
     "eslint": "~8.33",
     "eslint-config-prettier": "~10.1",
     "eslint-plugin-github": "~4.6",
-    "husky": "^8.0.0",
+    "husky": "^9.1.7",
     "jiti": "^2.7.0",
     "postcss": "~8.5",
     "postcss-import": "~15.1",
