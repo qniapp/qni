@@ -20,7 +20,7 @@
 
 repo 全体のローカル標準ツールチェインは以下です。
 
-- **Node.js `20.20.2`**
+- **Node.js `22.23.2`**
 - **Ruby `4.0.2`**
 - **pnpm `10.33.0`**
 
@@ -259,7 +259,7 @@ repo ルートで以下を使うのが基本です。
 `apps/tutorial` の静的サイトを build して、repo ルートの `html/` を artifact として **GitHub Pages** に deploy します。
 
 - workflow: `.github/workflows/pages.yml`
-- Node.js `20.20.2`
+- Node.js `22.23.2`
 - Ruby `4.0.2`
 - `pnpm --dir apps/tutorial build:site`
 - deploy artifact: `html/`
