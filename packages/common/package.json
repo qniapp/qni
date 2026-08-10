@@ -29,7 +29,7 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "fraction.js": "~5.3",
-    "neverthrow": "^6.0.0"
+    "neverthrow": "^8.2.0"
   },
   "devDependencies": {
     "@types/eslint": "~8.21.0",

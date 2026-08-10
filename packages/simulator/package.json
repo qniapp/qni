@@ -36,7 +36,7 @@
   "dependencies": {
     "@qni/common": "^0.0.87",
     "fp-ts": "^2.11.5",
-    "neverthrow": "^6.0.0"
+    "neverthrow": "^8.2.0"
   },
   "devDependencies": {
     "@jest/globals": "^30.4.1",
