@@ -46,7 +46,7 @@
     "complex.js": "^2.1.1",
     "fastdom": "^1.0.12",
     "interactjs": "~1.10",
-    "pretty-format": "^29.4.2",
+    "pretty-format": "^30.4.1",
     "tippy.js": "^6.3.7",
     "xstate": "~4.38"
   },
