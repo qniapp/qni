@@ -40,8 +40,8 @@ importers:
         specifier: ^0.0.6
         version: 0.0.6
       '@prettier/plugin-ruby':
-        specifier: ~3.2
-        version: 3.2.2
+        specifier: ~4.0
+        version: 4.0.1
       '@rollup/plugin-commonjs':
         specifier: ^29.0.3
         version: 29.0.3(rollup@4.62.3)
@@ -1284,8 +1284,8 @@ packages:
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
-  '@prettier/plugin-ruby@3.2.2':
-    resolution: {integrity: sha512-Vc7jVE39Fgswl517ET4kPtpnoRWE6XTi1Sivd84rZyomYnHYUmvUsEeoOf6tVhzTuIXE5XVQB1YCG2hulrwR3Q==}
+  '@prettier/plugin-ruby@4.0.1':
+    resolution: {integrity: sha512-j1xdHARMfKpIvgKOENiuiWY/W9wcuyS3KB87r3ZYCTUzmOuE1leGebaFuZZpsYSS59Pnbcs666MyVQxvw58k3A==}
 
   '@puppeteer/browsers@3.1.0':
     resolution: {integrity: sha512-RDLpio3fH/qrj5k4DVY6eyiN8tCS0Zovd/6jW//n605oeqkWcUjn+3k+9ZtZBnbwMpsu0F7xDIiKXvVmG5c5Bw==}
@@ -4987,6 +4987,11 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
+  prettier@3.9.6:
+    resolution: {integrity: sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   pretty-format@29.7.0:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -6859,9 +6864,9 @@ snapshots:
 
   '@popperjs/core@2.11.8': {}
 
-  '@prettier/plugin-ruby@3.2.2':
+  '@prettier/plugin-ruby@4.0.1':
     dependencies:
-      prettier: 2.8.8
+      prettier: 3.9.6
 
   '@puppeteer/browsers@3.1.0(yauzl@2.10.0)':
     dependencies:
@@ -11071,6 +11076,8 @@ snapshots:
       prettier: 2.8.8
 
   prettier@2.8.8: {}
+
+  prettier@3.9.6: {}
 
   pretty-format@29.7.0:
     dependencies:

@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@github/prettier-config": "^0.0.6",
-    "@prettier/plugin-ruby": "~3.2",
+    "@prettier/plugin-ruby": "~4.0",
     "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-replace": "^6.0.3",
