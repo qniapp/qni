@@ -314,8 +314,8 @@ importers:
         specifier: ^4.3.4-fix.0
         version: 4.3.4-fix.0
       '@interactjs/types':
-        specifier: ^1.10.27
-        version: 1.10.27
+        specifier: ^1.10.28
+        version: 1.10.28
       '@rollup/plugin-commonjs':
         specifier: ^29.0.3
         version: 29.0.3(rollup@4.62.3)
