@@ -59,7 +59,7 @@
     "@web/dev-server-rollup": "~0.6",
     "@web/test-runner": "1.0.0",
     "@web/test-runner-commands": "^1.0.1",
-    "autoprefixer": "^10.5.6",
+    "autoprefixer": "^10.6.1",
     "esbuild": "~0.28",
     "eslint-plugin-neverthrow": "^1.1.4",
     "npm-dts": "~1.3",
