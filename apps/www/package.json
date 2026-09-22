@@ -36,7 +36,17 @@
     "update-browserslist-db": "npx update-browserslist-db@latest",
     "test:watch": "pnpm test --auto-watch --no-single-run"
   },
-  "prettier": "@github/prettier-config",
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@qni/common": "^0.0.87",
