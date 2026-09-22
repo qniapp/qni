@@ -430,11 +430,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const h = new HGateElement()
-      if (disabled) h.disable()
-      return h
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const h = new HGateElement()
+        if (disabled) h.disable()
+        return h
+      },
+      ...targetBits,
+    )
 
     this.resize()
 
@@ -456,11 +459,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const x = new XGateElement()
-      if (disabled) x.disable()
-      return x
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const x = new XGateElement()
+        if (disabled) x.disable()
+        return x
+      },
+      ...targetBits,
+    )
 
     return this
   }
@@ -480,11 +486,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const y = new YGateElement()
-      if (disabled) y.disable()
-      return y
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const y = new YGateElement()
+        if (disabled) y.disable()
+        return y
+      },
+      ...targetBits,
+    )
 
     return this
   }
@@ -504,11 +513,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const z = new ZGateElement()
-      if (disabled) z.disable()
-      return z
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const z = new ZGateElement()
+        if (disabled) z.disable()
+        return z
+      },
+      ...targetBits,
+    )
 
     return this
   }
@@ -532,12 +544,15 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    const step = this.applyOperationToTargets(() => {
-      const phase = new PhaseGateElement()
-      phase.angle = angle
-      if (disabled) phase.disable()
-      return phase
-    }, ...targetBits)
+    const step = this.applyOperationToTargets(
+      () => {
+        const phase = new PhaseGateElement()
+        phase.angle = angle
+        if (disabled) phase.disable()
+        return phase
+      },
+      ...targetBits,
+    )
     if (targetBits.length > 1) this.updateStepOperationAttributes(step)
 
     return this
@@ -558,11 +573,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const s = new SGateElement()
-      if (disabled) s.disable()
-      return s
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const s = new SGateElement()
+        if (disabled) s.disable()
+        return s
+      },
+      ...targetBits,
+    )
 
     this.resize()
 
@@ -584,11 +602,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const sDagger = new SDaggerGateElement()
-      if (disabled) sDagger.disable()
-      return sDagger
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const sDagger = new SDaggerGateElement()
+        if (disabled) sDagger.disable()
+        return sDagger
+      },
+      ...targetBits,
+    )
 
     this.resize()
 
@@ -610,11 +631,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const t = new TGateElement()
-      if (disabled) t.disable()
-      return t
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const t = new TGateElement()
+        if (disabled) t.disable()
+        return t
+      },
+      ...targetBits,
+    )
 
     this.resize()
 
@@ -636,11 +660,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const tDagger = new TDaggerGateElement()
-      if (disabled) tDagger.disable()
-      return tDagger
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const tDagger = new TDaggerGateElement()
+        if (disabled) tDagger.disable()
+        return tDagger
+      },
+      ...targetBits,
+    )
 
     this.resize()
 
@@ -662,11 +689,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const rnot = new RnotGateElement()
-      if (disabled) rnot.disable()
-      return rnot
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const rnot = new RnotGateElement()
+        if (disabled) rnot.disable()
+        return rnot
+      },
+      ...targetBits,
+    )
 
     return this
   }
@@ -686,11 +716,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const rx = new RxGateElement()
-      if (disabled) rx.disable()
-      return rx
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const rx = new RxGateElement()
+        if (disabled) rx.disable()
+        return rx
+      },
+      ...targetBits,
+    )
 
     return this
   }
@@ -710,11 +743,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const ry = new RyGateElement()
-      if (disabled) ry.disable()
-      return ry
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const ry = new RyGateElement()
+        if (disabled) ry.disable()
+        return ry
+      },
+      ...targetBits,
+    )
 
     return this
   }
@@ -734,11 +770,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       disabled = props.disabled
     }
 
-    this.applyOperationToTargets(() => {
-      const rz = new RzGateElement()
-      if (disabled) rz.disable()
-      return rz
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const rz = new RzGateElement()
+        if (disabled) rz.disable()
+        return rz
+      },
+      ...targetBits,
+    )
 
     return this
   }
@@ -756,11 +795,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       targetBits = props.targets
     }
 
-    this.applyOperationToTargets(() => {
-      const qft = new QftGateElement()
-      qft.span = span
-      return qft
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const qft = new QftGateElement()
+        qft.span = span
+        return qft
+      },
+      ...targetBits,
+    )
 
     this.resize()
 
@@ -780,11 +822,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       targetBits = props.targets
     }
 
-    this.applyOperationToTargets(() => {
-      const qftDagger = new QftDaggerGateElement()
-      qftDagger.span = span
-      return qftDagger
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const qftDagger = new QftDaggerGateElement()
+        qftDagger.span = span
+        return qftDagger
+      },
+      ...targetBits,
+    )
 
     this.resize()
 
@@ -821,11 +866,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
    * @category Circuit Operation
    */
   write(value: '0' | '1', ...targetBits: number[]): QuantumCircuitElement {
-    this.applyOperationToTargets(() => {
-      const writeGate = new WriteGateElement()
-      writeGate.value = value
-      return writeGate
-    }, ...targetBits)
+    this.applyOperationToTargets(
+      () => {
+        const writeGate = new WriteGateElement()
+        writeGate.value = value
+        return writeGate
+      },
+      ...targetBits,
+    )
 
     this.resize()
 
