@@ -26,7 +26,17 @@
   "bugs": {
     "url": "https://github.com/qniapp/qni/issues"
   },
-  "prettier": "@github/prettier-config",
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
   "dependencies": {
     "fraction.js": "~5.3",
     "neverthrow": "^8.2.0"
