@@ -41,8 +41,8 @@ export class QubitCircleElement extends HTMLElement {
             line-height: 10px;
             white-space: nowrap;
             content: '|' attr(data-ket) '⟩';
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-              monospace;
+            font-family:
+              ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
           }
 
           :host([data-dark-mode])::after {

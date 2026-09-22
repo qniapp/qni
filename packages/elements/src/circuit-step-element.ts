@@ -314,15 +314,13 @@ export class CircuitStepElement extends HTMLElement {
           dropzone.operation.bit = bit
         },
         updateResizeableSpanDropzones: (_context, event) => {
-          if (
-            !(
-              event.type === 'SNAP_DROPZONE' ||
-              event.type === 'UNSNAP_DROPZONE' ||
-              event.type === 'OCCUPY_DROPZONE' ||
-              event.type === 'DELETE_OPERATION' ||
-              event.type === 'RESIZE_OPERATION'
-            )
-          )
+          if (!(
+            event.type === 'SNAP_DROPZONE' ||
+            event.type === 'UNSNAP_DROPZONE' ||
+            event.type === 'OCCUPY_DROPZONE' ||
+            event.type === 'DELETE_OPERATION' ||
+            event.type === 'RESIZE_OPERATION'
+          ))
             return
 
           let span = 1

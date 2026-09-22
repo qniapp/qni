@@ -32,7 +32,17 @@
   "files": [
     "dist"
   ],
-  "prettier": "@github/prettier-config",
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
   "dependencies": {
     "@qni/common": "^0.0.87",
     "fp-ts": "^2.11.5",

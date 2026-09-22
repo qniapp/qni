@@ -38,7 +38,17 @@
     "dist"
   ],
   "homepage": "https://github.com/qniapp/qni/tree/main/packages/elements#readme",
-  "prettier": "@github/prettier-config",
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
   "dependencies": {
     "@github/catalyst": "1.8.1",
     "@github/jtml": "~0.5",
