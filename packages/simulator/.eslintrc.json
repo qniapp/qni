@@ -1,9 +1,0 @@
-{
-  "extends": ["plugin:github/recommended", "plugin:github/browser", "plugin:github/typescript", "prettier"],
-  "rules": {
-    "github/unescaped-html-literal": "off",
-    "i18n-text/no-en": "off",
-    "import/named": "off"
-  },
-  "ignorePatterns": ["build.js", "/coverage/", "/doc/"]
-}
