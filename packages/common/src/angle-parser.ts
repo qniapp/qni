@@ -52,7 +52,7 @@ export function isValidAngle(angle: string): boolean {
     new Fraction(coefficient).valueOf()
 
     return true
-  } catch (e) {
+  } catch {
     return false
   }
 }
@@ -83,7 +83,7 @@ export function reduceAngle(angle: string): string {
     } else {
       return `${numerator}/${split[1]}`
     }
-  } catch (e) {
+  } catch {
     throw new Error(`Failed to parse angle '${angle}'`)
   }
 }

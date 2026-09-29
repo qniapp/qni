@@ -1,7 +1,0 @@
-{
-  "extends": ["plugin:github/recommended", "plugin:github/browser", "plugin:github/typescript", "prettier"],
-  "rules": {
-    "i18n-text/no-en": "off"
-  },
-  "ignorePatterns": ["build.js", "/coverage/", "/dist/", "/doc/"]
-}
