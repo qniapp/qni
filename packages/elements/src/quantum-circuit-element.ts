@@ -1130,12 +1130,8 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       return
     }
 
-    let circuit = null
-
     const res = Util.safeJsonParse(json)
-    if (res.isOk()) {
-      circuit = res.value
-    } else {
+    if (res.isErr()) {
       // eslint-disable-next-line no-console
       console.error(res.error.message)
       // eslint-disable-next-line no-console
@@ -1143,6 +1139,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       return
     }
 
+    const circuit = res.value
     this.circuitTitle = (circuit.title || '').trim()
 
     let keepStep = false
