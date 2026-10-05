@@ -49,7 +49,7 @@
     "size": "pnpm --dir packages/common size && pnpm --dir packages/elements size && pnpm --dir packages/simulator size"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.5",
+    "@eslint/js": "^10.0.1",
     "@github/prettier-config": "^0.0.6",
     "@prettier/plugin-ruby": "~4.0",
     "@rollup/plugin-commonjs": "^29.0.3",
