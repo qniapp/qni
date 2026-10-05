@@ -44,7 +44,7 @@ importers:
         version: 0.0.6
       '@prettier/plugin-ruby':
         specifier: ~4.0
-        version: 4.0.1
+        version: 4.0.4(prettier@3.9.8)
       '@rollup/plugin-commonjs':
         specifier: ^29.0.3
         version: 29.0.3(rollup@4.63.5)
@@ -330,7 +330,7 @@ importers:
         version: 0.6.4
       '@web/test-runner':
         specifier: 1.0.0
-        version: 1.0.0(yauzl@2.10.0)
+        version: 1.0.0
       '@web/test-runner-commands':
         specifier: ^1.0.1
         version: 1.0.1
@@ -1359,8 +1359,10 @@ packages:
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
-  '@prettier/plugin-ruby@4.0.1':
-    resolution: {integrity: sha512-j1xdHARMfKpIvgKOENiuiWY/W9wcuyS3KB87r3ZYCTUzmOuE1leGebaFuZZpsYSS59Pnbcs666MyVQxvw58k3A==}
+  '@prettier/plugin-ruby@4.0.4':
+    resolution: {integrity: sha512-lCpvfS/dQU5WrwN3AQ5vR8qrvj2h5gE41X08NNzAAXvHdM4zwwGRcP2sHSxfu6n6No+ljWCVx95NvJPFTTjCTg==}
+    peerDependencies:
+      prettier: ^3.0.0
 
   '@puppeteer/browsers@3.1.0':
     resolution: {integrity: sha512-RDLpio3fH/qrj5k4DVY6eyiN8tCS0Zovd/6jW//n605oeqkWcUjn+3k+9ZtZBnbwMpsu0F7xDIiKXvVmG5c5Bw==}
@@ -5409,6 +5411,10 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
+  source-map-js@1.2.2:
+    resolution: {integrity: sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==}
+    engines: {node: '>=0.10.0'}
+
   source-map-support@0.5.13:
     resolution: {integrity: sha512-SHSKFHadjVA5oR4PPqhtAVdcBWwRYVd6g6cAXnIbRiIwc2EhPrTuKUBdSLvlEKyIP3GCf89fltvcZiP9MMFA1w==}
 
@@ -7317,7 +7323,7 @@ snapshots:
 
   '@popperjs/core@2.11.8': {}
 
-  '@prettier/plugin-ruby@4.0.1':
+  '@prettier/plugin-ruby@4.0.4(prettier@3.9.8)':
     dependencies:
       prettier: 3.9.8
 
@@ -8149,7 +8155,7 @@ snapshots:
       '@types/parse5': 6.0.3
       parse5: 6.0.1
 
-  '@web/test-runner-chrome@1.0.1(yauzl@2.10.0)':
+  '@web/test-runner-chrome@1.0.1':
     dependencies:
       '@web/test-runner-core': 1.0.0
       '@web/test-runner-coverage-v8': 1.0.0
@@ -8224,12 +8230,12 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@web/test-runner@1.0.0(yauzl@2.10.0)':
+  '@web/test-runner@1.0.0':
     dependencies:
       '@web/browser-logs': 1.0.0
       '@web/config-loader': 1.0.0
       '@web/dev-server': 1.0.0
-      '@web/test-runner-chrome': 1.0.1(yauzl@2.10.0)
+      '@web/test-runner-chrome': 1.0.1
       '@web/test-runner-commands': 1.0.1
       '@web/test-runner-core': 1.0.0
       '@web/test-runner-mocha': 1.0.0
@@ -11856,7 +11862,7 @@ snapshots:
     dependencies:
       nanoid: 3.3.19
       picocolors: 1.1.1
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
 
   prelude-ls@1.2.1: {}
 
@@ -12351,6 +12357,8 @@ snapshots:
       smart-buffer: 4.2.0
 
   source-map-js@1.2.1: {}
+
+  source-map-js@1.2.2: {}
 
   source-map-support@0.5.13:
     dependencies:
