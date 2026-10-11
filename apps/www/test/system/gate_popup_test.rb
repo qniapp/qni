@@ -7,8 +7,6 @@ class GatePopupTest < ApplicationSystemTestCase
   test 'H gate popup' do
     visit circuit_path
 
-    sleep 1
-
     operation = palette('H')
     operation.hover
 
@@ -20,8 +18,6 @@ class GatePopupTest < ApplicationSystemTestCase
 
   test 'X gate popup' do
     visit circuit_path
-
-    sleep 1
 
     operation = palette('X')
     operation.hover
@@ -35,8 +31,6 @@ class GatePopupTest < ApplicationSystemTestCase
   test 'Y gate popup' do
     visit circuit_path
 
-    sleep 1
-
     operation = palette('Y')
     operation.hover
 
@@ -49,8 +43,6 @@ class GatePopupTest < ApplicationSystemTestCase
   test 'Z gate popup' do
     visit circuit_path
 
-    sleep 1
-
     operation = palette('Z')
     operation.hover
 
@@ -62,8 +54,6 @@ class GatePopupTest < ApplicationSystemTestCase
 
   test 'Phase gate popup' do
     visit circuit_path
-
-    sleep 1
 
     operation = palette('Phase')
     operation.hover
@@ -78,8 +68,6 @@ class GatePopupTest < ApplicationSystemTestCase
   test '√X gate popup' do
     visit circuit_path
 
-    sleep 1
-
     operation = palette('√X')
     operation.hover
 
@@ -91,8 +79,6 @@ class GatePopupTest < ApplicationSystemTestCase
 
   test 'Rx gate popup' do
     visit circuit_path
-
-    sleep 1
 
     operation = palette('Rx')
     operation.hover
@@ -107,8 +93,6 @@ class GatePopupTest < ApplicationSystemTestCase
   test 'Ry gate popup' do
     visit circuit_path
 
-    sleep 1
-
     operation = palette('Ry')
     operation.hover
 
@@ -121,8 +105,6 @@ class GatePopupTest < ApplicationSystemTestCase
 
   test 'Rz gate popup' do
     visit circuit_path
-
-    sleep 1
 
     operation = palette('Rz')
     operation.hover
@@ -137,8 +119,6 @@ class GatePopupTest < ApplicationSystemTestCase
   test 'QFT gate popup' do
     visit circuit_path
 
-    sleep 1
-
     operation = palette('QFT')
     operation.hover
 
@@ -151,8 +131,6 @@ class GatePopupTest < ApplicationSystemTestCase
   test 'QFT† gate popup' do
     visit circuit_path
 
-    sleep 1
-
     operation = palette('QFT†')
     operation.hover
 
@@ -164,8 +142,6 @@ class GatePopupTest < ApplicationSystemTestCase
 
   test 'Swap gate popup' do
     visit circuit_path
-
-    sleep 1
 
     operation = palette('Swap')
     operation.hover
@@ -180,8 +156,6 @@ class GatePopupTest < ApplicationSystemTestCase
   test 'Control gate popup' do
     visit circuit_path
 
-    sleep 1
-
     operation = palette('Control')
     operation.hover
 
@@ -195,8 +169,6 @@ class GatePopupTest < ApplicationSystemTestCase
   test 'Bloch display popup' do
     visit circuit_path
 
-    sleep 1
-
     operation = palette('Bloch')
     operation.hover
 
@@ -208,8 +180,6 @@ class GatePopupTest < ApplicationSystemTestCase
 
   test '|0⟩ gate popup' do
     visit circuit_path
-
-    sleep 1
 
     operation = palette('|0>')
     operation.hover
@@ -223,8 +193,6 @@ class GatePopupTest < ApplicationSystemTestCase
   test '|1⟩ gate popup' do
     visit circuit_path
 
-    sleep 1
-
     operation = palette('|1>')
     operation.hover
 
@@ -236,8 +204,6 @@ class GatePopupTest < ApplicationSystemTestCase
 
   test 'Measurement gate popup' do
     visit circuit_path
-
-    sleep 1
 
     operation = palette('Measure')
     operation.hover
