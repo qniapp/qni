@@ -12,7 +12,7 @@ next_url: ./sat.html
 <p>
   位相論理演算を組合せて、より複雑な論理式回路を作ってみましょう。
   <a href="./superposition_quantum_logic.html">重ね合わせ上での論理演算</a> で見た
-  <code>a OR (NOT b) AND c</code> の位相版はどうなるでしょうか？
+  <code>(a OR (NOT b)) AND c</code> の位相版はどうなるでしょうか？
 </p>
 
 <p>
@@ -23,7 +23,7 @@ next_url: ./sat.html
 
 <p>
   位相論理演算を連結するには、普通の論理演算と位相論理演算を組合わせる必要があります。
-  <code>a OR (NOT b) AND c</code> を例にとると、最初の 2 つの論理演算 (<code>NOT b</code>
+  <code>(a OR (NOT b)) AND c</code> を例にとると、最初の 2 つの論理演算 (<code>NOT b</code>
   とその結果を使った<code>a OR (NOT b)</code>) は普通の論理演算 NOT, OR を連結して回路を作り、
   最後の <code>... AND c</code> の部分だけ位相論理演算 pAND にします。
   このように最後の論理演算だけ位相論理演算にすることで入力と出力がマッチし、結果を位相に書き込むことができます。
