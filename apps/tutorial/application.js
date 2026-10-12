@@ -13949,9 +13949,9 @@ var defaultActionDescriptorFilters = {
       event2.preventDefault();
     return true;
   },
-  self({ event: event2, value, element: element2 }) {
+  self({ event: event2, value, element }) {
     if (value) {
-      return element2 === event2.target;
+      return element === event2.target;
     } else {
       return true;
     }
@@ -14030,11 +14030,11 @@ var Action = class {
   static {
     __name(this, "Action");
   }
-  constructor(element2, index, descriptor, schema) {
-    this.element = element2;
+  constructor(element, index, descriptor, schema) {
+    this.element = element;
     this.index = index;
-    this.eventTarget = descriptor.eventTarget || element2;
-    this.eventName = descriptor.eventName || getDefaultEventNameForElement(element2) || error("missing event name");
+    this.eventTarget = descriptor.eventTarget || element;
+    this.eventName = descriptor.eventName || getDefaultEventNameForElement(element) || error("missing event name");
     this.eventOptions = descriptor.eventOptions || {};
     this.identifier = descriptor.identifier || error("missing identifier");
     this.methodName = descriptor.methodName || error("missing method name");
@@ -14108,10 +14108,10 @@ var defaultEventNames = {
   select: /* @__PURE__ */ __name(() => "change", "select"),
   textarea: /* @__PURE__ */ __name(() => "input", "textarea")
 };
-function getDefaultEventNameForElement(element2) {
-  const tagName = element2.tagName.toLowerCase();
+function getDefaultEventNameForElement(element) {
+  const tagName = element.tagName.toLowerCase();
   if (tagName in defaultEventNames) {
-    return defaultEventNames[tagName](element2);
+    return defaultEventNames[tagName](element);
   }
 }
 __name(getDefaultEventNameForElement, "getDefaultEventNameForElement");
@@ -14164,14 +14164,14 @@ var Binding = class {
     throw new Error(`Action "${this.action}" references undefined method "${this.methodName}"`);
   }
   applyEventModifiers(event2) {
-    const { element: element2 } = this.action;
+    const { element } = this.action;
     const { actionDescriptorFilters } = this.context.application;
     const { controller } = this.context;
     let passes = true;
     for (const [name, value] of Object.entries(this.eventOptions)) {
       if (name in actionDescriptorFilters) {
         const filter = actionDescriptorFilters[name];
-        passes = passes && filter({ name, value, event: event2, element: element2, controller });
+        passes = passes && filter({ name, value, event: event2, element, controller });
       } else {
         continue;
       }
@@ -14187,8 +14187,8 @@ var Binding = class {
       this.method.call(this.controller, event2);
       this.context.logDebugActivity(this.methodName, { event: event2, target, currentTarget, action: this.methodName });
     } catch (error2) {
-      const { identifier, controller, element: element2, index } = this;
-      const detail = { identifier, controller, element: element2, index, event: event2 };
+      const { identifier, controller, element, index } = this;
+      const detail = { identifier, controller, element, index, event: event2 };
       this.context.handleError(error2, `invoking action "${this.action}"`, detail);
     }
   }
@@ -14225,9 +14225,9 @@ var ElementObserver = class {
   static {
     __name(this, "ElementObserver");
   }
-  constructor(element2, delegate) {
+  constructor(element, delegate) {
     this.mutationObserverInit = { attributes: true, childList: true, subtree: true };
-    this.element = element2;
+    this.element = element;
     this.started = false;
     this.delegate = delegate;
     this.elements = /* @__PURE__ */ new Set();
@@ -14261,13 +14261,13 @@ var ElementObserver = class {
   refresh() {
     if (this.started) {
       const matches = new Set(this.matchElementsInTree());
-      for (const element2 of Array.from(this.elements)) {
-        if (!matches.has(element2)) {
-          this.removeElement(element2);
+      for (const element of Array.from(this.elements)) {
+        if (!matches.has(element)) {
+          this.removeElement(element);
         }
       }
-      for (const element2 of Array.from(matches)) {
-        this.addElement(element2);
+      for (const element of Array.from(matches)) {
+        this.addElement(element);
       }
     }
   }
@@ -14286,42 +14286,42 @@ var ElementObserver = class {
       this.processAddedNodes(mutation.addedNodes);
     }
   }
-  processAttributeChange(element2, attributeName) {
-    if (this.elements.has(element2)) {
-      if (this.delegate.elementAttributeChanged && this.matchElement(element2)) {
-        this.delegate.elementAttributeChanged(element2, attributeName);
+  processAttributeChange(element, attributeName) {
+    if (this.elements.has(element)) {
+      if (this.delegate.elementAttributeChanged && this.matchElement(element)) {
+        this.delegate.elementAttributeChanged(element, attributeName);
       } else {
-        this.removeElement(element2);
+        this.removeElement(element);
       }
-    } else if (this.matchElement(element2)) {
-      this.addElement(element2);
+    } else if (this.matchElement(element)) {
+      this.addElement(element);
     }
   }
   processRemovedNodes(nodes) {
     for (const node of Array.from(nodes)) {
-      const element2 = this.elementFromNode(node);
-      if (element2) {
-        this.processTree(element2, this.removeElement);
+      const element = this.elementFromNode(node);
+      if (element) {
+        this.processTree(element, this.removeElement);
       }
     }
   }
   processAddedNodes(nodes) {
     for (const node of Array.from(nodes)) {
-      const element2 = this.elementFromNode(node);
-      if (element2 && this.elementIsActive(element2)) {
-        this.processTree(element2, this.addElement);
+      const element = this.elementFromNode(node);
+      if (element && this.elementIsActive(element)) {
+        this.processTree(element, this.addElement);
       }
     }
   }
-  matchElement(element2) {
-    return this.delegate.matchElement(element2);
+  matchElement(element) {
+    return this.delegate.matchElement(element);
   }
   matchElementsInTree(tree = this.element) {
     return this.delegate.matchElementsInTree(tree);
   }
   processTree(tree, processor) {
-    for (const element2 of this.matchElementsInTree(tree)) {
-      processor.call(this, element2);
+    for (const element of this.matchElementsInTree(tree)) {
+      processor.call(this, element);
     }
   }
   elementFromNode(node) {
@@ -14329,28 +14329,28 @@ var ElementObserver = class {
       return node;
     }
   }
-  elementIsActive(element2) {
-    if (element2.isConnected != this.element.isConnected) {
+  elementIsActive(element) {
+    if (element.isConnected != this.element.isConnected) {
       return false;
     } else {
-      return this.element.contains(element2);
+      return this.element.contains(element);
     }
   }
-  addElement(element2) {
-    if (!this.elements.has(element2)) {
-      if (this.elementIsActive(element2)) {
-        this.elements.add(element2);
+  addElement(element) {
+    if (!this.elements.has(element)) {
+      if (this.elementIsActive(element)) {
+        this.elements.add(element);
         if (this.delegate.elementMatched) {
-          this.delegate.elementMatched(element2);
+          this.delegate.elementMatched(element);
         }
       }
     }
   }
-  removeElement(element2) {
-    if (this.elements.has(element2)) {
-      this.elements.delete(element2);
+  removeElement(element) {
+    if (this.elements.has(element)) {
+      this.elements.delete(element);
       if (this.delegate.elementUnmatched) {
-        this.delegate.elementUnmatched(element2);
+        this.delegate.elementUnmatched(element);
       }
     }
   }
@@ -14359,10 +14359,10 @@ var AttributeObserver = class {
   static {
     __name(this, "AttributeObserver");
   }
-  constructor(element2, attributeName, delegate) {
+  constructor(element, attributeName, delegate) {
     this.attributeName = attributeName;
     this.delegate = delegate;
-    this.elementObserver = new ElementObserver(element2, this);
+    this.elementObserver = new ElementObserver(element, this);
   }
   get element() {
     return this.elementObserver.element;
@@ -14385,27 +14385,27 @@ var AttributeObserver = class {
   get started() {
     return this.elementObserver.started;
   }
-  matchElement(element2) {
-    return element2.hasAttribute(this.attributeName);
+  matchElement(element) {
+    return element.hasAttribute(this.attributeName);
   }
   matchElementsInTree(tree) {
     const match = this.matchElement(tree) ? [tree] : [];
     const matches = Array.from(tree.querySelectorAll(this.selector));
     return match.concat(matches);
   }
-  elementMatched(element2) {
+  elementMatched(element) {
     if (this.delegate.elementMatchedAttribute) {
-      this.delegate.elementMatchedAttribute(element2, this.attributeName);
+      this.delegate.elementMatchedAttribute(element, this.attributeName);
     }
   }
-  elementUnmatched(element2) {
+  elementUnmatched(element) {
     if (this.delegate.elementUnmatchedAttribute) {
-      this.delegate.elementUnmatchedAttribute(element2, this.attributeName);
+      this.delegate.elementUnmatchedAttribute(element, this.attributeName);
     }
   }
-  elementAttributeChanged(element2, attributeName) {
+  elementAttributeChanged(element, attributeName) {
     if (this.delegate.elementAttributeValueChanged && this.attributeName == attributeName) {
-      this.delegate.elementAttributeValueChanged(element2, attributeName);
+      this.delegate.elementAttributeValueChanged(element, attributeName);
     }
   }
 };
@@ -14481,10 +14481,10 @@ var SelectorObserver = class {
   static {
     __name(this, "SelectorObserver");
   }
-  constructor(element2, selector, delegate, details) {
+  constructor(element, selector, delegate, details) {
     this._selector = selector;
     this.details = details;
-    this.elementObserver = new ElementObserver(element2, this);
+    this.elementObserver = new ElementObserver(element, this);
     this.delegate = delegate;
     this.matchesByElement = new Multimap();
   }
@@ -14513,12 +14513,12 @@ var SelectorObserver = class {
   get element() {
     return this.elementObserver.element;
   }
-  matchElement(element2) {
+  matchElement(element) {
     const { selector } = this;
     if (selector) {
-      const matches = element2.matches(selector);
+      const matches = element.matches(selector);
       if (this.delegate.selectorMatchElement) {
-        return matches && this.delegate.selectorMatchElement(element2, this.details);
+        return matches && this.delegate.selectorMatchElement(element, this.details);
       }
       return matches;
     } else {
@@ -14535,45 +14535,45 @@ var SelectorObserver = class {
       return [];
     }
   }
-  elementMatched(element2) {
+  elementMatched(element) {
     const { selector } = this;
     if (selector) {
-      this.selectorMatched(element2, selector);
+      this.selectorMatched(element, selector);
     }
   }
-  elementUnmatched(element2) {
-    const selectors = this.matchesByElement.getKeysForValue(element2);
+  elementUnmatched(element) {
+    const selectors = this.matchesByElement.getKeysForValue(element);
     for (const selector of selectors) {
-      this.selectorUnmatched(element2, selector);
+      this.selectorUnmatched(element, selector);
     }
   }
-  elementAttributeChanged(element2, _attributeName) {
+  elementAttributeChanged(element, _attributeName) {
     const { selector } = this;
     if (selector) {
-      const matches = this.matchElement(element2);
-      const matchedBefore = this.matchesByElement.has(selector, element2);
+      const matches = this.matchElement(element);
+      const matchedBefore = this.matchesByElement.has(selector, element);
       if (matches && !matchedBefore) {
-        this.selectorMatched(element2, selector);
+        this.selectorMatched(element, selector);
       } else if (!matches && matchedBefore) {
-        this.selectorUnmatched(element2, selector);
+        this.selectorUnmatched(element, selector);
       }
     }
   }
-  selectorMatched(element2, selector) {
-    this.delegate.selectorMatched(element2, selector, this.details);
-    this.matchesByElement.add(selector, element2);
+  selectorMatched(element, selector) {
+    this.delegate.selectorMatched(element, selector, this.details);
+    this.matchesByElement.add(selector, element);
   }
-  selectorUnmatched(element2, selector) {
-    this.delegate.selectorUnmatched(element2, selector, this.details);
-    this.matchesByElement.delete(selector, element2);
+  selectorUnmatched(element, selector) {
+    this.delegate.selectorUnmatched(element, selector, this.details);
+    this.matchesByElement.delete(selector, element);
   }
 };
 var StringMapObserver = class {
   static {
     __name(this, "StringMapObserver");
   }
-  constructor(element2, delegate) {
-    this.element = element2;
+  constructor(element, delegate) {
+    this.element = element;
     this.delegate = delegate;
     this.started = false;
     this.stringMap = /* @__PURE__ */ new Map();
@@ -14662,8 +14662,8 @@ var TokenListObserver = class {
   static {
     __name(this, "TokenListObserver");
   }
-  constructor(element2, attributeName, delegate) {
-    this.attributeObserver = new AttributeObserver(element2, attributeName, this);
+  constructor(element, attributeName, delegate) {
+    this.attributeObserver = new AttributeObserver(element, attributeName, this);
     this.delegate = delegate;
     this.tokensByElement = new Multimap();
   }
@@ -14688,16 +14688,16 @@ var TokenListObserver = class {
   get attributeName() {
     return this.attributeObserver.attributeName;
   }
-  elementMatchedAttribute(element2) {
-    this.tokensMatched(this.readTokensForElement(element2));
+  elementMatchedAttribute(element) {
+    this.tokensMatched(this.readTokensForElement(element));
   }
-  elementAttributeValueChanged(element2) {
-    const [unmatchedTokens, matchedTokens] = this.refreshTokensForElement(element2);
+  elementAttributeValueChanged(element) {
+    const [unmatchedTokens, matchedTokens] = this.refreshTokensForElement(element);
     this.tokensUnmatched(unmatchedTokens);
     this.tokensMatched(matchedTokens);
   }
-  elementUnmatchedAttribute(element2) {
-    this.tokensUnmatched(this.tokensByElement.getValuesForKey(element2));
+  elementUnmatchedAttribute(element) {
+    this.tokensUnmatched(this.tokensByElement.getValuesForKey(element));
   }
   tokensMatched(tokens) {
     tokens.forEach((token) => this.tokenMatched(token));
@@ -14713,9 +14713,9 @@ var TokenListObserver = class {
     this.delegate.tokenUnmatched(token);
     this.tokensByElement.delete(token.element, token);
   }
-  refreshTokensForElement(element2) {
-    const previousTokens = this.tokensByElement.getValuesForKey(element2);
-    const currentTokens = this.readTokensForElement(element2);
+  refreshTokensForElement(element) {
+    const previousTokens = this.tokensByElement.getValuesForKey(element);
+    const currentTokens = this.readTokensForElement(element);
     const firstDifferingIndex = zip(previousTokens, currentTokens).findIndex(([previousToken, currentToken]) => !tokensAreEqual(previousToken, currentToken));
     if (firstDifferingIndex == -1) {
       return [[], []];
@@ -14723,14 +14723,14 @@ var TokenListObserver = class {
       return [previousTokens.slice(firstDifferingIndex), currentTokens.slice(firstDifferingIndex)];
     }
   }
-  readTokensForElement(element2) {
+  readTokensForElement(element) {
     const attributeName = this.attributeName;
-    const tokenString = element2.getAttribute(attributeName) || "";
-    return parseTokenString(tokenString, element2, attributeName);
+    const tokenString = element.getAttribute(attributeName) || "";
+    return parseTokenString(tokenString, element, attributeName);
   }
 };
-function parseTokenString(tokenString, element2, attributeName) {
-  return tokenString.trim().split(/\s+/).filter((content) => content.length).map((content, index) => ({ element: element2, attributeName, content, index }));
+function parseTokenString(tokenString, element, attributeName) {
+  return tokenString.trim().split(/\s+/).filter((content) => content.length).map((content, index) => ({ element, attributeName, content, index }));
 }
 __name(parseTokenString, "parseTokenString");
 function zip(left, right) {
@@ -14746,8 +14746,8 @@ var ValueListObserver = class {
   static {
     __name(this, "ValueListObserver");
   }
-  constructor(element2, attributeName, delegate) {
-    this.tokenListObserver = new TokenListObserver(element2, attributeName, this);
+  constructor(element, attributeName, delegate) {
+    this.tokenListObserver = new TokenListObserver(element, attributeName, this);
     this.delegate = delegate;
     this.parseResultsByToken = /* @__PURE__ */ new WeakMap();
     this.valuesByTokenByElement = /* @__PURE__ */ new WeakMap();
@@ -14771,19 +14771,19 @@ var ValueListObserver = class {
     return this.tokenListObserver.attributeName;
   }
   tokenMatched(token) {
-    const { element: element2 } = token;
+    const { element } = token;
     const { value } = this.fetchParseResultForToken(token);
     if (value) {
-      this.fetchValuesByTokenForElement(element2).set(token, value);
-      this.delegate.elementMatchedValue(element2, value);
+      this.fetchValuesByTokenForElement(element).set(token, value);
+      this.delegate.elementMatchedValue(element, value);
     }
   }
   tokenUnmatched(token) {
-    const { element: element2 } = token;
+    const { element } = token;
     const { value } = this.fetchParseResultForToken(token);
     if (value) {
-      this.fetchValuesByTokenForElement(element2).delete(token);
-      this.delegate.elementUnmatchedValue(element2, value);
+      this.fetchValuesByTokenForElement(element).delete(token);
+      this.delegate.elementUnmatchedValue(element, value);
     }
   }
   fetchParseResultForToken(token) {
@@ -14794,11 +14794,11 @@ var ValueListObserver = class {
     }
     return parseResult;
   }
-  fetchValuesByTokenForElement(element2) {
-    let valuesByToken = this.valuesByTokenByElement.get(element2);
+  fetchValuesByTokenForElement(element) {
+    let valuesByToken = this.valuesByTokenByElement.get(element);
     if (!valuesByToken) {
       valuesByToken = /* @__PURE__ */ new Map();
-      this.valuesByTokenByElement.set(element2, valuesByToken);
+      this.valuesByTokenByElement.set(element, valuesByToken);
     }
     return valuesByToken;
   }
@@ -14870,10 +14870,10 @@ var BindingObserver = class {
       return action;
     }
   }
-  elementMatchedValue(element2, action) {
+  elementMatchedValue(element, action) {
     this.connectAction(action);
   }
-  elementUnmatchedValue(element2, action) {
+  elementUnmatchedValue(element, action) {
     this.disconnectAction(action);
   }
 };
@@ -14995,32 +14995,32 @@ var TargetObserver = class {
       delete this.tokenListObserver;
     }
   }
-  tokenMatched({ element: element2, content: name }) {
-    if (this.scope.containsElement(element2)) {
-      this.connectTarget(element2, name);
+  tokenMatched({ element, content: name }) {
+    if (this.scope.containsElement(element)) {
+      this.connectTarget(element, name);
     }
   }
-  tokenUnmatched({ element: element2, content: name }) {
-    this.disconnectTarget(element2, name);
+  tokenUnmatched({ element, content: name }) {
+    this.disconnectTarget(element, name);
   }
-  connectTarget(element2, name) {
+  connectTarget(element, name) {
     var _a;
-    if (!this.targetsByName.has(name, element2)) {
-      this.targetsByName.add(name, element2);
-      (_a = this.tokenListObserver) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.targetConnected(element2, name));
+    if (!this.targetsByName.has(name, element)) {
+      this.targetsByName.add(name, element);
+      (_a = this.tokenListObserver) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.targetConnected(element, name));
     }
   }
-  disconnectTarget(element2, name) {
+  disconnectTarget(element, name) {
     var _a;
-    if (this.targetsByName.has(name, element2)) {
-      this.targetsByName.delete(name, element2);
-      (_a = this.tokenListObserver) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.targetDisconnected(element2, name));
+    if (this.targetsByName.has(name, element)) {
+      this.targetsByName.delete(name, element);
+      (_a = this.tokenListObserver) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.targetDisconnected(element, name));
     }
   }
   disconnectAllTargets() {
     for (const name of this.targetsByName.keys) {
-      for (const element2 of this.targetsByName.getValuesForKey(name)) {
-        this.disconnectTarget(element2, name);
+      for (const element of this.targetsByName.getValuesForKey(name)) {
+        this.disconnectTarget(element, name);
       }
     }
   }
@@ -15116,24 +15116,24 @@ var OutletObserver = class {
       this.attributeObserverMap.clear();
     }
   }
-  selectorMatched(element2, _selector, { outletName }) {
-    const outlet = this.getOutlet(element2, outletName);
+  selectorMatched(element, _selector, { outletName }) {
+    const outlet = this.getOutlet(element, outletName);
     if (outlet) {
-      this.connectOutlet(outlet, element2, outletName);
+      this.connectOutlet(outlet, element, outletName);
     }
   }
-  selectorUnmatched(element2, _selector, { outletName }) {
-    const outlet = this.getOutletFromMap(element2, outletName);
+  selectorUnmatched(element, _selector, { outletName }) {
+    const outlet = this.getOutletFromMap(element, outletName);
     if (outlet) {
-      this.disconnectOutlet(outlet, element2, outletName);
+      this.disconnectOutlet(outlet, element, outletName);
     }
   }
-  selectorMatchElement(element2, { outletName }) {
+  selectorMatchElement(element, { outletName }) {
     const selector = this.selector(outletName);
-    const hasOutlet = this.hasOutlet(element2, outletName);
-    const hasOutletController = element2.matches(`[${this.schema.controllerAttribute}~=${outletName}]`);
+    const hasOutlet = this.hasOutlet(element, outletName);
+    const hasOutletController = element.matches(`[${this.schema.controllerAttribute}~=${outletName}]`);
     if (selector) {
-      return hasOutlet && hasOutletController && element2.matches(selector);
+      return hasOutlet && hasOutletController && element.matches(selector);
     } else {
       return false;
     }
@@ -15156,27 +15156,27 @@ var OutletObserver = class {
       this.updateSelectorObserverForOutlet(outletName);
     }
   }
-  connectOutlet(outlet, element2, outletName) {
+  connectOutlet(outlet, element, outletName) {
     var _a;
-    if (!this.outletElementsByName.has(outletName, element2)) {
+    if (!this.outletElementsByName.has(outletName, element)) {
       this.outletsByName.add(outletName, outlet);
-      this.outletElementsByName.add(outletName, element2);
-      (_a = this.selectorObserverMap.get(outletName)) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.outletConnected(outlet, element2, outletName));
+      this.outletElementsByName.add(outletName, element);
+      (_a = this.selectorObserverMap.get(outletName)) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.outletConnected(outlet, element, outletName));
     }
   }
-  disconnectOutlet(outlet, element2, outletName) {
+  disconnectOutlet(outlet, element, outletName) {
     var _a;
-    if (this.outletElementsByName.has(outletName, element2)) {
+    if (this.outletElementsByName.has(outletName, element)) {
       this.outletsByName.delete(outletName, outlet);
-      this.outletElementsByName.delete(outletName, element2);
-      (_a = this.selectorObserverMap.get(outletName)) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.outletDisconnected(outlet, element2, outletName));
+      this.outletElementsByName.delete(outletName, element);
+      (_a = this.selectorObserverMap.get(outletName)) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.outletDisconnected(outlet, element, outletName));
     }
   }
   disconnectAllOutlets() {
     for (const outletName of this.outletElementsByName.keys) {
-      for (const element2 of this.outletElementsByName.getValuesForKey(outletName)) {
+      for (const element of this.outletElementsByName.getValuesForKey(outletName)) {
         for (const outlet of this.outletsByName.getValuesForKey(outletName)) {
-          this.disconnectOutlet(outlet, element2, outletName);
+          this.disconnectOutlet(outlet, element, outletName);
         }
       }
     }
@@ -15227,14 +15227,14 @@ var OutletObserver = class {
     const identifiers = this.dependentControllerIdentifiers;
     return this.router.contexts.filter((context) => identifiers.includes(context.identifier));
   }
-  hasOutlet(element2, outletName) {
-    return !!this.getOutlet(element2, outletName) || !!this.getOutletFromMap(element2, outletName);
+  hasOutlet(element, outletName) {
+    return !!this.getOutlet(element, outletName) || !!this.getOutletFromMap(element, outletName);
   }
-  getOutlet(element2, outletName) {
-    return this.application.getControllerForElementAndIdentifier(element2, outletName);
+  getOutlet(element, outletName) {
+    return this.application.getControllerForElementAndIdentifier(element, outletName);
   }
-  getOutletFromMap(element2, outletName) {
-    return this.outletsByName.getValuesForKey(outletName).find((outlet) => outlet.element === element2);
+  getOutletFromMap(element, outletName) {
+    return this.outletsByName.getValuesForKey(outletName).find((outlet) => outlet.element === element);
   }
   get scope() {
     return this.context.scope;
@@ -15258,8 +15258,8 @@ var Context = class {
   }
   constructor(module, scope) {
     this.logDebugActivity = (functionName, detail = {}) => {
-      const { identifier, controller, element: element2 } = this;
-      detail = Object.assign({ identifier, controller, element: element2 }, detail);
+      const { identifier, controller, element } = this;
+      detail = Object.assign({ identifier, controller, element }, detail);
       this.application.logDebugActivity(this.identifier, functionName, detail);
     };
     this.module = module;
@@ -15322,21 +15322,21 @@ var Context = class {
     return this.element.parentElement;
   }
   handleError(error2, message, detail = {}) {
-    const { identifier, controller, element: element2 } = this;
-    detail = Object.assign({ identifier, controller, element: element2 }, detail);
+    const { identifier, controller, element } = this;
+    detail = Object.assign({ identifier, controller, element }, detail);
     this.application.handleError(error2, `Error ${message}`, detail);
   }
-  targetConnected(element2, name) {
-    this.invokeControllerMethod(`${name}TargetConnected`, element2);
+  targetConnected(element, name) {
+    this.invokeControllerMethod(`${name}TargetConnected`, element);
   }
-  targetDisconnected(element2, name) {
-    this.invokeControllerMethod(`${name}TargetDisconnected`, element2);
+  targetDisconnected(element, name) {
+    this.invokeControllerMethod(`${name}TargetDisconnected`, element);
   }
-  outletConnected(outlet, element2, name) {
-    this.invokeControllerMethod(`${namespaceCamelize(name)}OutletConnected`, outlet, element2);
+  outletConnected(outlet, element, name) {
+    this.invokeControllerMethod(`${namespaceCamelize(name)}OutletConnected`, outlet, element);
   }
-  outletDisconnected(outlet, element2, name) {
-    this.invokeControllerMethod(`${namespaceCamelize(name)}OutletDisconnected`, outlet, element2);
+  outletDisconnected(outlet, element, name) {
+    this.invokeControllerMethod(`${namespaceCamelize(name)}OutletDisconnected`, outlet, element);
   }
   invokeControllerMethod(methodName, ...args) {
     const controller = this.controller;
@@ -15616,20 +15616,20 @@ var TargetSet = class {
   }
   findAllLegacyTargets(targetName) {
     const selector = this.getLegacySelectorForTargetName(targetName);
-    return this.scope.findAllElements(selector).map((element2) => this.deprecate(element2, targetName));
+    return this.scope.findAllElements(selector).map((element) => this.deprecate(element, targetName));
   }
   getLegacySelectorForTargetName(targetName) {
     const targetDescriptor = `${this.identifier}.${targetName}`;
     return attributeValueContainsToken(this.schema.targetAttribute, targetDescriptor);
   }
-  deprecate(element2, targetName) {
-    if (element2) {
+  deprecate(element, targetName) {
+    if (element) {
       const { identifier } = this;
       const attributeName = this.schema.targetAttribute;
       const revisedAttributeName = this.schema.targetAttributeForScope(identifier);
-      this.guide.warn(element2, `target:${targetName}`, `Please replace ${attributeName}="${identifier}.${targetName}" with ${revisedAttributeName}="${targetName}". The ${attributeName} attribute is deprecated and will be removed in a future version of Stimulus.`);
+      this.guide.warn(element, `target:${targetName}`, `Please replace ${attributeName}="${identifier}.${targetName}" with ${revisedAttributeName}="${targetName}". The ${attributeName} attribute is deprecated and will be removed in a future version of Stimulus.`);
     }
-    return element2;
+    return element;
   }
   get guide() {
     return this.scope.guide;
@@ -15676,33 +15676,33 @@ var OutletSet = class {
   }
   findElement(selector, outletName) {
     const elements = this.scope.queryElements(selector);
-    return elements.filter((element2) => this.matchesElement(element2, selector, outletName))[0];
+    return elements.filter((element) => this.matchesElement(element, selector, outletName))[0];
   }
   findAllElements(selector, outletName) {
     const elements = this.scope.queryElements(selector);
-    return elements.filter((element2) => this.matchesElement(element2, selector, outletName));
+    return elements.filter((element) => this.matchesElement(element, selector, outletName));
   }
-  matchesElement(element2, selector, outletName) {
-    const controllerAttribute = element2.getAttribute(this.scope.schema.controllerAttribute) || "";
-    return element2.matches(selector) && controllerAttribute.split(" ").includes(outletName);
+  matchesElement(element, selector, outletName) {
+    const controllerAttribute = element.getAttribute(this.scope.schema.controllerAttribute) || "";
+    return element.matches(selector) && controllerAttribute.split(" ").includes(outletName);
   }
 };
 var Scope = class _Scope {
   static {
     __name(this, "Scope");
   }
-  constructor(schema, element2, identifier, logger) {
+  constructor(schema, element, identifier, logger) {
     this.targets = new TargetSet(this);
     this.classes = new ClassMap(this);
     this.data = new DataMap(this);
-    this.containsElement = (element3) => {
-      return element3.closest(this.controllerSelector) === this.element;
+    this.containsElement = (element2) => {
+      return element2.closest(this.controllerSelector) === this.element;
     };
     this.schema = schema;
-    this.element = element2;
+    this.element = element;
     this.identifier = identifier;
     this.guide = new Guide(logger);
-    this.outlets = new OutletSet(this.documentScope, element2);
+    this.outlets = new OutletSet(this.documentScope, element);
   }
   findElement(selector) {
     return this.element.matches(selector) ? this.element : this.queryElements(selector).find(this.containsElement);
@@ -15730,8 +15730,8 @@ var ScopeObserver = class {
   static {
     __name(this, "ScopeObserver");
   }
-  constructor(element2, schema, delegate) {
-    this.element = element2;
+  constructor(element, schema, delegate) {
+    this.element = element;
     this.schema = schema;
     this.delegate = delegate;
     this.valueListObserver = new ValueListObserver(this.element, this.controllerAttribute, this);
@@ -15748,26 +15748,26 @@ var ScopeObserver = class {
     return this.schema.controllerAttribute;
   }
   parseValueForToken(token) {
-    const { element: element2, content: identifier } = token;
-    return this.parseValueForElementAndIdentifier(element2, identifier);
+    const { element, content: identifier } = token;
+    return this.parseValueForElementAndIdentifier(element, identifier);
   }
-  parseValueForElementAndIdentifier(element2, identifier) {
-    const scopesByIdentifier = this.fetchScopesByIdentifierForElement(element2);
+  parseValueForElementAndIdentifier(element, identifier) {
+    const scopesByIdentifier = this.fetchScopesByIdentifierForElement(element);
     let scope = scopesByIdentifier.get(identifier);
     if (!scope) {
-      scope = this.delegate.createScopeForElementAndIdentifier(element2, identifier);
+      scope = this.delegate.createScopeForElementAndIdentifier(element, identifier);
       scopesByIdentifier.set(identifier, scope);
     }
     return scope;
   }
-  elementMatchedValue(element2, value) {
+  elementMatchedValue(element, value) {
     const referenceCount = (this.scopeReferenceCounts.get(value) || 0) + 1;
     this.scopeReferenceCounts.set(value, referenceCount);
     if (referenceCount == 1) {
       this.delegate.scopeConnected(value);
     }
   }
-  elementUnmatchedValue(element2, value) {
+  elementUnmatchedValue(element, value) {
     const referenceCount = this.scopeReferenceCounts.get(value);
     if (referenceCount) {
       this.scopeReferenceCounts.set(value, referenceCount - 1);
@@ -15776,11 +15776,11 @@ var ScopeObserver = class {
       }
     }
   }
-  fetchScopesByIdentifierForElement(element2) {
-    let scopesByIdentifier = this.scopesByIdentifierByElement.get(element2);
+  fetchScopesByIdentifierForElement(element) {
+    let scopesByIdentifier = this.scopesByIdentifierByElement.get(element);
     if (!scopesByIdentifier) {
       scopesByIdentifier = /* @__PURE__ */ new Map();
-      this.scopesByIdentifierByElement.set(element2, scopesByIdentifier);
+      this.scopesByIdentifierByElement.set(element, scopesByIdentifier);
     }
     return scopesByIdentifier;
   }
@@ -15834,25 +15834,25 @@ var Router = class {
       this.disconnectModule(module);
     }
   }
-  getContextForElementAndIdentifier(element2, identifier) {
+  getContextForElementAndIdentifier(element, identifier) {
     const module = this.modulesByIdentifier.get(identifier);
     if (module) {
-      return module.contexts.find((context) => context.element == element2);
+      return module.contexts.find((context) => context.element == element);
     }
   }
-  proposeToConnectScopeForElementAndIdentifier(element2, identifier) {
-    const scope = this.scopeObserver.parseValueForElementAndIdentifier(element2, identifier);
+  proposeToConnectScopeForElementAndIdentifier(element, identifier) {
+    const scope = this.scopeObserver.parseValueForElementAndIdentifier(element, identifier);
     if (scope) {
       this.scopeObserver.elementMatchedValue(scope.element, scope);
     } else {
-      console.error(`Couldn't find or create scope for identifier: "${identifier}" and element:`, element2);
+      console.error(`Couldn't find or create scope for identifier: "${identifier}" and element:`, element);
     }
   }
   handleError(error2, message, detail) {
     this.application.handleError(error2, message, detail);
   }
-  createScopeForElementAndIdentifier(element2, identifier) {
-    return new Scope(this.schema, element2, identifier, this.logger);
+  createScopeForElementAndIdentifier(element, identifier) {
+    return new Scope(this.schema, element, identifier, this.logger);
   }
   scopeConnected(scope) {
     this.scopesByIdentifier.add(scope.identifier, scope);
@@ -15895,7 +15895,7 @@ var Application = class {
   static {
     __name(this, "Application");
   }
-  constructor(element2 = document.documentElement, schema = defaultSchema) {
+  constructor(element = document.documentElement, schema = defaultSchema) {
     this.logger = console;
     this.debug = false;
     this.logDebugActivity = (identifier, functionName, detail = {}) => {
@@ -15903,14 +15903,14 @@ var Application = class {
         this.logFormattedMessage(identifier, functionName, detail);
       }
     };
-    this.element = element2;
+    this.element = element;
     this.schema = schema;
     this.dispatcher = new Dispatcher(this);
     this.router = new Router(this);
     this.actionDescriptorFilters = Object.assign({}, defaultActionDescriptorFilters);
   }
-  static start(element2, schema) {
-    const application2 = new this(element2, schema);
+  static start(element, schema) {
+    const application2 = new this(element, schema);
     application2.start();
     return application2;
   }
@@ -15948,8 +15948,8 @@ var Application = class {
   get controllers() {
     return this.router.contexts.map((context) => context.controller);
   }
-  getControllerForElementAndIdentifier(element2, identifier) {
-    const context = this.router.getContextForElementAndIdentifier(element2, identifier);
+  getControllerForElementAndIdentifier(element, identifier) {
+    const context = this.router.getContextForElementAndIdentifier(element, identifier);
     return context ? context.controller : null;
   }
   handleError(error2, message, detail) {
@@ -16018,16 +16018,16 @@ function OutletPropertiesBlessing(constructor) {
   }, {});
 }
 __name(OutletPropertiesBlessing, "OutletPropertiesBlessing");
-function getOutletController(controller, element2, identifier) {
-  return controller.application.getControllerForElementAndIdentifier(element2, identifier);
+function getOutletController(controller, element, identifier) {
+  return controller.application.getControllerForElementAndIdentifier(element, identifier);
 }
 __name(getOutletController, "getOutletController");
-function getControllerAndEnsureConnectedScope(controller, element2, outletName) {
-  let outletController = getOutletController(controller, element2, outletName);
+function getControllerAndEnsureConnectedScope(controller, element, outletName) {
+  let outletController = getOutletController(controller, element, outletName);
   if (outletController)
     return outletController;
-  controller.application.router.proposeToConnectScopeForElementAndIdentifier(element2, outletName);
-  outletController = getOutletController(controller, element2, outletName);
+  controller.application.router.proposeToConnectScopeForElementAndIdentifier(element, outletName);
+  outletController = getOutletController(controller, element, outletName);
   if (outletController)
     return outletController;
 }
@@ -16422,223 +16422,6 @@ var sidebar_controller_default = class extends Controller {
 
 // src/controllers/index.js
 application.register("sidebar", sidebar_controller_default);
-
-// src/quiz-alt.js
-var base = "https://qniapp.github.io/qni/images/";
-var circles = "\u5186\u8868\u793A: |0\u27E9 \u3068 |1\u27E9 \u306E 2 \u3064\u306E\u5186";
-var QUIZ_IMAGE_ALT = {
-  // Used as question images: describe what the learner needs to read.
-  [`${base}superposition-100-0.png`]: "\u5186\u8868\u793A: |0\u27E9 \u306E\u5186\u306F\u5168\u4F53\u304C\u5857\u308A\u3064\u3076\u3055\u308C\u3001\u91DD\u306F\u771F\u4E0A\u3092\u5411\u3044\u3066\u3044\u308B\u3002|1\u27E9 \u306E\u5186\u306F\u7A7A",
-  [`${base}superposition-0-100.png`]: "\u5186\u8868\u793A: |0\u27E9 \u306E\u5186\u306F\u7A7A\u3002|1\u27E9 \u306E\u5186\u306F\u5168\u4F53\u304C\u5857\u308A\u3064\u3076\u3055\u308C\u3001\u91DD\u306F\u771F\u4E0A\u3092\u5411\u3044\u3066\u3044\u308B",
-  [`${base}superposition-50-50.png`]: "\u5186\u8868\u793A: |0\u27E9 \u3068 |1\u27E9 \u306E\u5186\u306E\u5185\u5074\u306B\u3001\u5916\u67A0\u3088\u308A\u5C0F\u3055\u3044\u540C\u3058\u5927\u304D\u3055\u306E\u5857\u308A\u5186\u304C\u3042\u308B\u3002\u91DD\u306F\u3069\u3061\u3089\u3082\u771F\u4E0A\u3092\u5411\u3044\u3066\u3044\u308B",
-  [`${base}superposition_phase.png`]: "\u5186\u8868\u793A: |0\u27E9 \u306E\u5186\u306F\u5C0F\u3055\u306A\u5857\u308A\u5186\u3067\u3001\u91DD\u306F\u5DE6\u4E0B\u3092\u5411\u3044\u3066\u3044\u308B\u3002|1\u27E9 \u306E\u5186\u306F\u307B\u307C\u5168\u4F53\u304C\u5857\u3089\u308C\u3001\u91DD\u306F\u53F3\u4E0A\u3092\u5411\u3044\u3066\u3044\u308B",
-  [`${base}basic_quantum_circuit.png`]: "3 \u672C\u306E\u6A2A\u7DDA\u306E\u56DE\u8DEF\u56F3\u3002\u5404\u7DDA\u306E\u5DE6\u7AEF\u306B |0\u27E9\u30021 \u672C\u76EE\u306E\u7DDA\u4E0A\u306B H \u3068\u66F8\u304B\u308C\u305F\u7BB1\u3001\u305D\u306E\u53F3\u306B 1 \u672C\u76EE\u306E\u9ED2\u4E38\u3068 2 \u672C\u76EE\u306E \u2295 \u3092\u7E26\u7DDA\u3067\u7D50\u3093\u3060\u8A18\u53F7\u3001\u3055\u3089\u306B 2 \u672C\u76EE\u306E\u9ED2\u4E38\u3068 3 \u672C\u76EE\u306E \u2295 \u3092\u7E26\u7DDA\u3067\u7D50\u3093\u3060\u8A18\u53F7",
-  // Used only as answer images: the answer text carries the content.
-  [`${base}superposition_phase_reversed.png`]: circles,
-  [`${base}superposition-minus-state.png`]: circles,
-  [`${base}superposition-50-50-phase\xBC\u03C0.png`]: circles,
-  [`${base}h-gate-reversibility.png`]: "\u5186\u8868\u793A\u306E 2 \u6BB5\u306E\u56F3\u3002\u5404\u6BB5\u3067\u3001\u5DE6\u7AEF\u306E\u72B6\u614B\u306B H \u30B2\u30FC\u30C8\u3092 2 \u56DE\u7D9A\u3051\u3066\u9069\u7528\u3057\u3001\u9014\u4E2D\u3068\u6700\u5F8C\u306E\u72B6\u614B\u3092\u77E2\u5370\u306E\u5148\u306B\u4E26\u3079\u3066\u3044\u308B",
-  [`${base}x-gate-reversibility.png`]: "\u5186\u8868\u793A\u306E\u56F3\u3002\u5DE6\u7AEF\u306E\u72B6\u614B\u306B X \u30B2\u30FC\u30C8\u3092 2 \u56DE\u7D9A\u3051\u3066\u9069\u7528\u3057\u3001\u9014\u4E2D\u3068\u6700\u5F8C\u306E\u72B6\u614B\u3092\u77E2\u5370\u306E\u5148\u306B\u4E26\u3079\u3066\u3044\u308B",
-  [`${base}HH.png`]: "H \u30B2\u30FC\u30C8\u3092 2 \u3064\u4E26\u3079\u305F\u56DE\u8DEF\u3068\u3001\u305D\u308C\u3068\u7B49\u3057\u3044\u56DE\u8DEF\u3092\u7B49\u53F7\u3067\u7D50\u3093\u3060\u56F3",
-  [`${base}HXH.png`]: "PHASE(\u03C0) \u30B2\u30FC\u30C8\u3068\u3001\u305D\u308C\u3068\u7B49\u3057\u3044\u30B2\u30FC\u30C8\u306E\u4E26\u3073\u3092\u7B49\u53F7\u3067\u7D50\u3093\u3060\u56DE\u8DEF\u56F3",
-  [`${base}2rnots.png`]: "\u221AX \u30B2\u30FC\u30C8\u3092\u542B\u3080\u56DE\u8DEF\u306E\u7B49\u5F0F\u306E\u56F3",
-  [`${base}rnot_gate_decomposition.png`]: "\u221AX \u30B2\u30FC\u30C8\u3068\u3001\u305D\u308C\u3068\u7B49\u3057\u3044\u30B2\u30FC\u30C8\u306E\u4E26\u3073\u3092\u7B49\u53F7\u3067\u7D50\u3093\u3060\u56DE\u8DEF\u56F3",
-  [`${base}X_gate_decomposition.png`]: "X \u30B2\u30FC\u30C8\u3068\u3001\u305D\u308C\u3068\u7B49\u3057\u3044\u30B2\u30FC\u30C8\u306E\u4E26\u3073\u3092\u7B49\u53F7\u3067\u7D50\u3093\u3060\u56DE\u8DEF\u56F3",
-  [`${base}random_bit_generator_circuit.png`]: "1 \u91CF\u5B50\u30D3\u30C3\u30C8\u306E\u56DE\u8DEF\u56F3",
-  [`${base}p-bit/p_bit_graph.png`]: "\u6A2A\u8EF8\u3092\u300C\u8868\u306E\u51FA\u308B\u78BA\u7387\u300D\u3001\u7E26\u8EF8\u3092\u300C\u88CF\u306E\u51FA\u308B\u78BA\u7387\u300D\u3068\u3057\u305F\u624B\u63CF\u304D\u306E\u30B0\u30E9\u30D5",
-  [`${base}argument_of_complex.png`]: "\u624B\u63CF\u304D\u306E\u56F3\u3002\u53F3\u5411\u304D\u3068\u4E0A\u5411\u304D\u306E\u77E2\u5370\u304C\u4ED8\u3044\u305F 2 \u672C\u306E\u8EF8\u304C\u76F4\u89D2\u306B\u4EA4\u308F\u3063\u3066\u3044\u308B\u3002\u53F3\u4E0A\u306B\u9752\u3044\u70B9\u304C\u3042\u308A\u3001\u300Ca, b\u300D\u3068\u66F8\u304B\u308C\u3066\u3044\u308B\u3002\u8EF8\u306E\u4EA4\u70B9\u304B\u3089\u305D\u306E\u70B9\u307E\u3067\u9752\u3044\u7834\u7DDA\u304C\u5F15\u304B\u308C\u3001\u7834\u7DDA\u3068\u53F3\u5411\u304D\u306E\u8EF8\u306E\u9593\u306B\u8D64\u3044\u5F27\u304C\u3042\u308A\u3001\u305D\u306E\u6A2A\u306B\u300C\u504F\u89D2\u300D\u3068\u66F8\u304B\u308C\u3066\u3044\u308B"
-};
-
-// src/quiz.js
-var checkIcon = '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-var crossIcon = '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-var nextId = 0;
-function parseCloze(source) {
-  const segments = [];
-  let text = "", depth = 0, math = false;
-  const flush = /* @__PURE__ */ __name((blank) => {
-    if (text || blank) segments.push({ text, blank });
-    text = "";
-  }, "flush");
-  for (let i = 0; i < source.length; i++) {
-    const char = source[i];
-    if (char === "\\" && i + 1 < source.length) {
-      text += char + source[++i];
-      continue;
-    }
-    if (char === "$") math = !math;
-    if (!math && char === "{") {
-      if (depth++ === 0) {
-        flush(false);
-        continue;
-      }
-    } else if (!math && char === "}" && depth > 0) {
-      if (--depth === 0) {
-        flush(true);
-        continue;
-      }
-    }
-    text += char;
-  }
-  if (depth > 0) text = "{" + text;
-  flush(false);
-  return segments;
-}
-__name(parseCloze, "parseCloze");
-function appendRich(parent, source) {
-  const text = source.replace(/\s+/g, " ").trim();
-  for (const [index, part] of text.split(/(\$\$[\s\S]+?\$\$|\$[^$]+?\$)/).entries()) {
-    if (!part) continue;
-    if (index % 2) {
-      parent.append(part.startsWith("$$") ? part : `\\(${part.slice(1, -1)}\\)`);
-      continue;
-    }
-    for (const [i, piece] of part.split(/(\*\*[^*]+\*\*|\*[^*\s][^*]*\*)/).entries()) {
-      if (!piece) continue;
-      if (i % 2 === 0) {
-        parent.append(piece);
-        continue;
-      }
-      const strong = piece.startsWith("**");
-      const element2 = document.createElement(strong ? "strong" : "em");
-      element2.textContent = piece.slice(strong ? 2 : 1, strong ? -2 : -1);
-      parent.append(element2);
-    }
-  }
-}
-__name(appendRich, "appendRich");
-function element(tag, className) {
-  const node = document.createElement(tag);
-  node.className = className;
-  return node;
-}
-__name(element, "element");
-function attachments(value) {
-  const urls = (value ?? "").split(/\s+/).filter(Boolean);
-  if (!urls.length) return null;
-  const box = element("div", "orbit-quiz-attachments");
-  for (const url of urls) {
-    const image = document.createElement("img");
-    image.src = url;
-    image.alt = QUIZ_IMAGE_ALT[url] ?? "";
-    image.loading = "lazy";
-    image.decoding = "async";
-    box.append(image);
-  }
-  return box;
-}
-__name(attachments, "attachments");
-function button(className, label, icon = "") {
-  const node = element("button", `orbit-quiz-button ${className}`);
-  node.type = "button";
-  node.innerHTML = icon;
-  node.append(label);
-  return node;
-}
-__name(button, "button");
-function typeset(node) {
-  const mathJax = window.MathJax;
-  if (!mathJax?.typesetPromise || !mathJax.startup?.promise) return;
-  mathJax.startup.promise = mathJax.startup.promise.then(() => mathJax.typesetPromise([node])).catch(() => {
-  });
-}
-__name(typeset, "typeset");
-var OrbitPrompt = class extends HTMLElement {
-  static {
-    __name(this, "OrbitPrompt");
-  }
-  static observedAttributes = [
-    "question",
-    "answer",
-    "question-attachments",
-    "answer-attachments",
-    "cloze"
-  ];
-  card;
-  connectedCallback() {
-    if (!this.card) this.render();
-  }
-  attributeChangedCallback() {
-    if (this.card) this.render();
-  }
-  render() {
-    const id2 = `orbit-quiz-${++nextId}`;
-    const cloze = this.getAttribute("cloze");
-    const card = element("div", "orbit-quiz-card");
-    card.setAttribute("role", "group");
-    card.setAttribute("aria-labelledby", `${id2}-q`);
-    const question = element("div", "orbit-quiz-question");
-    question.id = `${id2}-q`;
-    const answer = element("div", "orbit-quiz-answer");
-    answer.id = `${id2}-a`;
-    answer.tabIndex = -1;
-    if (cloze !== null) {
-      card.classList.add("is-cloze");
-      for (const segment of parseCloze(cloze)) {
-        if (!segment.blank) {
-          appendRich(question, segment.text);
-          continue;
-        }
-        const blank = element("span", "orbit-quiz-blank");
-        const hidden = element("span", "orbit-quiz-blank-placeholder");
-        hidden.textContent = "\u7A7A\u6B04";
-        const filled = element("span", "orbit-quiz-blank-answer");
-        appendRich(filled, segment.text);
-        blank.append(hidden, filled);
-        question.append(blank);
-      }
-      question.tabIndex = -1;
-    } else {
-      appendRich(question, this.getAttribute("question") ?? "");
-      const questionImages = attachments(this.getAttribute("question-attachments"));
-      if (questionImages) question.append(questionImages);
-      const answerText = element("p", "orbit-quiz-answer-text");
-      appendRich(answerText, this.getAttribute("answer") ?? "");
-      if (answerText.textContent) answer.append(answerText);
-      const answerImages = attachments(this.getAttribute("answer-attachments"));
-      if (answerImages) answer.append(answerImages);
-    }
-    const actions = element("div", "orbit-quiz-actions");
-    const revealed = cloze === null ? answer : question;
-    const reveal = button("orbit-quiz-reveal", "\u7B54\u3048\u3092\u898B\u308B");
-    reveal.setAttribute("aria-controls", revealed.id);
-    reveal.setAttribute("aria-expanded", "false");
-    const correct = button("orbit-quiz-correct", "\u6B63\u89E3", checkIcon);
-    const incorrect = button("orbit-quiz-incorrect", "\u4E0D\u6B63\u89E3", crossIcon);
-    const retry = button("orbit-quiz-retry", "\u3084\u308A\u76F4\u3059");
-    const status = element("p", "orbit-quiz-status");
-    status.setAttribute("role", "status");
-    actions.append(reveal, correct, incorrect, retry);
-    card.append(question);
-    if (cloze === null) card.append(answer);
-    card.append(status, actions);
-    const set = /* @__PURE__ */ __name((state, focus) => {
-      card.dataset.state = state;
-      const graded = state === "correct" || state === "incorrect";
-      reveal.hidden = state !== "unanswered";
-      reveal.setAttribute("aria-expanded", String(state !== "unanswered"));
-      correct.hidden = incorrect.hidden = state !== "revealed";
-      retry.hidden = !graded;
-      answer.hidden = state === "unanswered";
-      status.innerHTML = graded ? state === "correct" ? checkIcon : crossIcon : "";
-      if (graded) status.append(state === "correct" ? "\u6B63\u89E3" : "\u4E0D\u6B63\u89E3");
-      focus?.focus();
-    }, "set");
-    reveal.addEventListener("click", () => set("revealed", revealed));
-    correct.addEventListener("click", () => set("correct", retry));
-    incorrect.addEventListener("click", () => set("incorrect", retry));
-    retry.addEventListener("click", () => set("unanswered", reveal));
-    set("unanswered");
-    this.card?.remove();
-    this.card = card;
-    this.append(card);
-    typeset(card);
-  }
-};
-if (!customElements.get("orbit-prompt")) customElements.define("orbit-prompt", OrbitPrompt);
-if (!customElements.get("orbit-reviewarea"))
-  customElements.define("orbit-reviewarea", class extends HTMLElement {
-  });
 export {
   Io as Complex
 };
