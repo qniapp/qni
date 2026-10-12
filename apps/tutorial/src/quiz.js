@@ -2,6 +2,8 @@
 // shut down. Same markup, no spaced repetition and no storage: each prompt is
 // answered on the spot and self-graded. See docs/quiz-spec.md.
 
+import { QUIZ_IMAGE_ALT } from './quiz-alt.js'
+
 const checkIcon =
   '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 const crossIcon =
@@ -82,6 +84,7 @@ function attachments(value) {
   for (const url of urls) {
     const image = document.createElement('img')
     image.src = url
+    image.alt = QUIZ_IMAGE_ALT[url] ?? ''
     image.loading = 'lazy'
     image.decoding = 'async'
     box.append(image)
