@@ -1,0 +1,351 @@
+/*
+ * Self-graded quiz for <orbit-reviewarea> / <orbit-prompt> (replaces the Orbit web component).
+ * Plain CSS, px only, Flexoki colors; mirrors qni-tutorial-webgpu src/components/orbit-quiz.css.
+ * Spec: quiz-spec.md §3 (look) and §5 (focus rings, no animation).
+ *
+ * Imported before tailwindcss/utilities so `class="mt-5"` on the set still wins. Every rule
+ * restates what Tailwind preflight (transparent button background, p margin 0, img block) and
+ * the typography plugin (.prose p / img / strong) would otherwise change.
+ */
+
+/* Set: accent-50 / accent-600 / accent-700 per Orbit `color` (blue is the default). */
+orbit-reviewarea {
+  --orbit-quiz-50: #e1eceb;
+  --orbit-quiz-600: #205ea6;
+  --orbit-quiz-700: #1a4f8c;
+
+  display: grid;
+  gap: 12px;
+  max-width: 76ch;
+  margin: 32px 0;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--orbit-quiz-50);
+}
+
+orbit-reviewarea[color='red'] {
+  --orbit-quiz-50: #ffe1d5;
+  --orbit-quiz-600: #af3029;
+  --orbit-quiz-700: #942822;
+}
+
+orbit-reviewarea[color='orange'] {
+  --orbit-quiz-50: #ffe7ce;
+  --orbit-quiz-600: #bc5215;
+  --orbit-quiz-700: #9d4310;
+}
+
+orbit-reviewarea[color='yellow'] {
+  --orbit-quiz-50: #faeec6;
+  --orbit-quiz-600: #ad8301;
+  --orbit-quiz-700: #8e6b01;
+}
+
+orbit-reviewarea[color='green'] {
+  --orbit-quiz-50: #edeecf;
+  --orbit-quiz-600: #66800b;
+  --orbit-quiz-700: #536907;
+}
+
+orbit-reviewarea[color='cyan'] {
+  --orbit-quiz-50: #ddf1e4;
+  --orbit-quiz-600: #24837b;
+  --orbit-quiz-700: #1c6c66;
+}
+
+orbit-reviewarea[color='purple'] {
+  --orbit-quiz-50: #f0eaec;
+  --orbit-quiz-600: #5e409d;
+  --orbit-quiz-700: #4f3685;
+}
+
+orbit-reviewarea[color='magenta'] {
+  --orbit-quiz-50: #fee4e5;
+  --orbit-quiz-600: #a02f6f;
+  --orbit-quiz-700: #87285e;
+}
+
+orbit-prompt {
+  display: block;
+  min-width: 0;
+}
+
+/* Card */
+
+.orbit-quiz-card {
+  padding: 16px 20px;
+  border: 1px solid #dad8ce;
+  border-radius: 8px;
+  background: #fffcf0;
+  color: #100f0f;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.orbit-quiz-card[data-state='correct'] {
+  border-color: #66800b;
+  box-shadow: inset 4px 0 0 #66800b;
+}
+
+.orbit-quiz-card[data-state='incorrect'] {
+  border-color: #af3029;
+  box-shadow: inset 4px 0 0 #af3029;
+}
+
+/* Preflight's [hidden] rule ties with the class rules below, so restate it. */
+.orbit-quiz-card [hidden] {
+  display: none;
+}
+
+/* .prose recolors <strong>; keep **bold** / *em* in the card's text color. */
+.orbit-quiz-card strong,
+.orbit-quiz-card em {
+  color: inherit;
+}
+
+.orbit-quiz-card strong {
+  font-weight: 700;
+}
+
+.orbit-quiz-question {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.orbit-quiz-answer {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #dad8ce;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+.orbit-quiz-answer-text {
+  max-width: none;
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Focus moves here via script (tabindex="-1"); ring only for keyboard users. */
+.orbit-quiz-question:focus,
+.orbit-quiz-answer:focus {
+  outline: none;
+}
+
+.orbit-quiz-question:focus-visible,
+.orbit-quiz-answer:focus-visible {
+  outline: 2px solid #205ea6;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Only wide matrices scroll; the page never does. */
+.orbit-quiz-card mjx-container {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.orbit-quiz-card mjx-container[display='true'] {
+  margin: 8px 0 !important;
+}
+
+/* Images */
+
+.orbit-quiz-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.orbit-quiz-attachments img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 160px;
+  margin: 0;
+  border: 1px solid #dad8ce;
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+/* Cloze blank: an empty box until revealed, then the answer in bold accent color. */
+
+.orbit-quiz-blank {
+  display: inline-block;
+  min-width: 4em;
+  min-height: 28px;
+  margin: 0 2px;
+  padding: 0 6px;
+  border-bottom: 2px solid var(--orbit-quiz-600);
+  border-radius: 4px 4px 0 0;
+  background: #f2f0e5;
+  vertical-align: bottom;
+  text-align: center;
+}
+
+/* "空欄" for screen readers only. */
+.orbit-quiz-blank-placeholder {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.orbit-quiz-blank-answer {
+  display: none;
+}
+
+.orbit-quiz-card:not([data-state='unanswered']) .orbit-quiz-blank {
+  min-width: 0;
+  background: var(--orbit-quiz-50);
+  color: var(--orbit-quiz-700);
+  font-weight: 700;
+}
+
+.orbit-quiz-card:not([data-state='unanswered']) .orbit-quiz-blank-placeholder {
+  display: none;
+}
+
+.orbit-quiz-card:not([data-state='unanswered']) .orbit-quiz-blank-answer {
+  display: inline;
+}
+
+/* Result pill */
+
+.orbit-quiz-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: none;
+  margin: 12px 0 0;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.orbit-quiz-status:empty {
+  display: none;
+}
+
+.orbit-quiz-card[data-state='correct'] > .orbit-quiz-status {
+  background: #edeecf;
+  color: #536907;
+}
+
+.orbit-quiz-card[data-state='incorrect'] > .orbit-quiz-status {
+  background: #ffe1d5;
+  color: #af3029;
+}
+
+/* Buttons */
+
+.orbit-quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.orbit-quiz-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+  margin: 0;
+  padding: 8px 16px;
+  border: 1px solid #dad8ce;
+  border-radius: 6px;
+  background: #fffcf0;
+  color: #100f0f;
+  font: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.orbit-quiz-button[hidden] {
+  display: none;
+}
+
+.orbit-quiz-button:focus {
+  outline: none;
+}
+
+.orbit-quiz-button:focus-visible {
+  outline: 2px solid #205ea6;
+  outline-offset: 2px;
+}
+
+.orbit-quiz-button svg {
+  display: block;
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.orbit-quiz-reveal {
+  border-color: var(--orbit-quiz-600);
+  background: var(--orbit-quiz-600);
+  color: #fffcf0;
+}
+
+.orbit-quiz-reveal:hover {
+  border-color: var(--orbit-quiz-700);
+  background: var(--orbit-quiz-700);
+}
+
+.orbit-quiz-correct {
+  border-color: #66800b;
+  color: #536907;
+}
+
+.orbit-quiz-correct:hover {
+  background: #edeecf;
+}
+
+.orbit-quiz-incorrect {
+  border-color: #af3029;
+  color: #af3029;
+}
+
+.orbit-quiz-incorrect:hover {
+  background: #ffe1d5;
+}
+
+.orbit-quiz-retry {
+  color: #6f6e69;
+}
+
+.orbit-quiz-retry:hover {
+  background: #f2f0e5;
+  color: #100f0f;
+}
+
+/* Narrow screens (390px): full-width reveal / retry, correct and incorrect side by side. */
+@media (max-width: 639.98px) {
+  orbit-reviewarea {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .orbit-quiz-card {
+    padding: 12px 16px;
+  }
+
+  .orbit-quiz-button {
+    flex: 1 1 0;
+    min-height: 44px;
+  }
+}
