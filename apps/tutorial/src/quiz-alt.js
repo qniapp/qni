@@ -32,5 +32,6 @@ export const QUIZ_IMAGE_ALT = {
   [`${base}random_bit_generator_circuit.png`]: '1 量子ビットの回路図',
   [`${base}p-bit/p_bit_graph.png`]:
     '横軸を「表の出る確率」、縦軸を「裏の出る確率」とした手描きのグラフ',
-  [`${base}argument_of_complex.png`]: '座標平面に点 a, b と「偏角」の文字を描いた手描きの図',
+  [`${base}argument_of_complex.png`]:
+    '手描きの図。右向きと上向きの矢印が付いた 2 本の軸が直角に交わっている。右上に青い点があり、「a, b」と書かれている。軸の交点からその点まで青い破線が引かれ、破線と右向きの軸の間に赤い弧があり、その横に「偏角」と書かれている',
 }
