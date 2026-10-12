@@ -4,10 +4,16 @@ function assert(condition, message) {
   if (!condition) throw new Error(message)
 }
 
+function attributesOf(node) {
+  return JSON.stringify([...node.attributes].map(({ name, value }) => [name, value]))
+}
+
 function prompt(attributes) {
   const node = document.createElement('orbit-prompt')
   for (const [name, value] of Object.entries(attributes)) node.setAttribute(name, value)
+  const originalAttributes = attributesOf(node)
   document.body.append(node)
+  assert(attributesOf(node) === originalAttributes, 'prompt attributes unchanged on render')
   return node
 }
 
@@ -19,6 +25,24 @@ function checkTransitions(node, revealedContent) {
   const retry = node.querySelector('.orbit-quiz-retry')
   const status = node.querySelector('.orbit-quiz-status')
   const answer = node.querySelector('.orbit-quiz-answer')
+  const originalAttributes = attributesOf(node)
+
+  function unchangedAttributes() {
+    assert(
+      attributesOf(node) === originalAttributes,
+      'prompt attributes unchanged after interaction'
+    )
+  }
+
+  function emptyStatus() {
+    const style = getComputedStyle(status)
+    assert(status.textContent === '', 'result cleared')
+    assert(style.display === 'flex' && style.visibility === 'visible', 'empty live region rendered')
+    assert(!status.hidden && !status.hasAttribute('aria-hidden'), 'empty live region not hidden')
+    assert(status.getClientRects().length > 0, 'empty live region has a layout box')
+    assert(status.getBoundingClientRect().height === 0, 'empty live region zero height')
+    assert(style.margin === '0px' && style.padding === '0px', 'empty live region no spacing')
+  }
 
   function unanswered() {
     assert(card.dataset.state === 'unanswered', 'unanswered state')
@@ -27,7 +51,8 @@ function checkTransitions(node, revealedContent) {
       'only reveal visible'
     )
     assert(reveal.getAttribute('aria-expanded') === 'false', 'collapsed aria state')
-    assert(status.textContent === '', 'result cleared')
+    emptyStatus()
+    unchangedAttributes()
     if (answer) assert(answer.hidden, 'answer hidden')
   }
 
@@ -53,6 +78,8 @@ function checkTransitions(node, revealedContent) {
     assert(reveal.getAttribute('aria-expanded') === 'true', 'expanded aria state')
     assert(document.activeElement === revealedContent, 'focus revealed content')
     if (answer) assert(!answer.hidden, 'answer revealed')
+    emptyStatus()
+    unchangedAttributes()
 
     grade.click()
     assert(card.dataset.state === state && status.textContent === label, 'graded result')
@@ -63,6 +90,7 @@ function checkTransitions(node, revealedContent) {
     )
     assert(document.activeElement === retry, 'focus retry')
     if (answer) assert(!answer.hidden, 'answer remains revealed')
+    unchangedAttributes()
 
     retry.click()
     unanswered()
@@ -71,13 +99,25 @@ function checkTransitions(node, revealedContent) {
 }
 
 describe('tutorial Orbit replacement', () => {
+  let stylesheet
+
+  before(async () => {
+    const response = await fetch(new URL('../css/quiz.css', import.meta.url))
+    assert(response.ok, 'quiz stylesheet loaded')
+    stylesheet = document.createElement('style')
+    stylesheet.textContent = await response.text()
+    document.head.append(stylesheet)
+  })
+
+  after(() => stylesheet.remove())
+
   afterEach(() => {
     document.querySelectorAll('orbit-prompt, orbit-reviewarea').forEach((node) => node.remove())
     delete window.MathJax
   })
 
   it('transitions Q&A through reveal, correct/incorrect and retry independently', () => {
-    const node = prompt({ question: 'Q', answer: '**A**' })
+    const node = prompt({ question: 'Q', answer: '**A**', class: 'authored-class' })
     const other = prompt({ question: 'Other Q', answer: 'Other A' })
     assert(node.querySelector('strong').textContent === 'A', 'formatted answer')
     checkTransitions(node, node.querySelector('.orbit-quiz-answer'))

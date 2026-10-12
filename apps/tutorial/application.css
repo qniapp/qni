@@ -9099,7 +9099,9 @@ orbit-prompt {
 /* Result pill */
 
 .orbit-quiz-status {
-  display: inline-flex;
+  display: flex;
+  width: -moz-fit-content;
+  width: fit-content;
   align-items: center;
   gap: 4px;
   max-width: none;
@@ -9111,8 +9113,11 @@ orbit-prompt {
   font-weight: 600;
 }
 
+/* Keep the live region in the accessibility tree while empty so updates are announced. */
+
 .orbit-quiz-status:empty {
-  display: none;
+  margin: 0;
+  padding: 0;
 }
 
 .orbit-quiz-card[data-state='correct'] > .orbit-quiz-status {
