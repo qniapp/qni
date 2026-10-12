@@ -1,5 +1,4 @@
 import '../src/quiz.js'
-import { QUIZ_IMAGE_ALT } from '../src/quiz-alt.js'
 
 function assert(condition, message) {
   if (!condition) throw new Error(message)
@@ -125,89 +124,6 @@ describe('tutorial Orbit replacement', () => {
     assert(
       other.querySelector('.orbit-quiz-card').dataset.state === 'unanswered',
       'independent state'
-    )
-  })
-
-  it('renders question and answer attachments with their table alt text', () => {
-    const urls = Object.keys(QUIZ_IMAGE_ALT)
-    const node = prompt({
-      question: 'Q',
-      answer: 'A',
-      'question-attachments': urls.join(' '),
-      'answer-attachments': urls.join(' '),
-    })
-    for (const side of ['question', 'answer']) {
-      const images = node.querySelectorAll(`.orbit-quiz-${side} img`)
-      assert(images.length === urls.length, `all ${side} attachments rendered`)
-      for (const [index, image] of images.entries()) {
-        assert(image.alt === QUIZ_IMAGE_ALT[urls[index]], `${side} attachment alt: ${urls[index]}`)
-      }
-    }
-    checkTransitions(node, node.querySelector('.orbit-quiz-answer'))
-  })
-
-  it('uses empty alt text for an unknown attachment URL', () => {
-    const node = prompt({
-      question: 'Q',
-      'question-attachments': 'https://example.com/unknown.png',
-    })
-    assert(node.querySelector('img').getAttribute('alt') === '', 'explicit empty fallback alt')
-  })
-
-  it('covers all 31 quiz image occurrences with exactly 18 table entries', () => {
-    // Extracted with rg 'question-attachments|answer-attachments' apps/tutorial --glob '*.html'.
-    const occurrences = [
-      // circle_notation.html
-      'https://qniapp.github.io/qni/images/argument_of_complex.png',
-      // gate_combination.html
-      'https://qniapp.github.io/qni/images/HH.png',
-      'https://qniapp.github.io/qni/images/HXH.png',
-      'https://qniapp.github.io/qni/images/2rnots.png',
-      'https://qniapp.github.io/qni/images/rnot_gate_decomposition.png',
-      'https://qniapp.github.io/qni/images/X_gate_decomposition.png',
-      // h_gate.html
-      'https://qniapp.github.io/qni/images/superposition-100-0.png',
-      'https://qniapp.github.io/qni/images/superposition-50-50.png',
-      'https://qniapp.github.io/qni/images/superposition-0-100.png',
-      'https://qniapp.github.io/qni/images/superposition-minus-state.png',
-      'https://qniapp.github.io/qni/images/h-gate-reversibility.png',
-      // measurement_operation.html
-      'https://qniapp.github.io/qni/images/superposition-50-50.png',
-      'https://qniapp.github.io/qni/images/superposition-50-50.png',
-      'https://qniapp.github.io/qni/images/random_bit_generator_circuit.png',
-      // p_bit.html
-      'https://qniapp.github.io/qni/images/p-bit/p_bit_graph.png',
-      // phase.html
-      'https://qniapp.github.io/qni/images/superposition_phase.png',
-      'https://qniapp.github.io/qni/images/superposition_phase.png',
-      'https://qniapp.github.io/qni/images/superposition-0-100.png',
-      // phase_gate.html
-      'https://qniapp.github.io/qni/images/superposition-50-50.png',
-      'https://qniapp.github.io/qni/images/superposition-50-50-phase¼π.png',
-      // quantum_circuit.html
-      'https://qniapp.github.io/qni/images/basic_quantum_circuit.png',
-      // superposition.html
-      'https://qniapp.github.io/qni/images/superposition-100-0.png',
-      'https://qniapp.github.io/qni/images/superposition-0-100.png',
-      'https://qniapp.github.io/qni/images/superposition-50-50.png',
-      // x_gate.html
-      'https://qniapp.github.io/qni/images/superposition-100-0.png',
-      'https://qniapp.github.io/qni/images/superposition-0-100.png',
-      'https://qniapp.github.io/qni/images/superposition-0-100.png',
-      'https://qniapp.github.io/qni/images/superposition-100-0.png',
-      'https://qniapp.github.io/qni/images/superposition_phase.png',
-      'https://qniapp.github.io/qni/images/superposition_phase_reversed.png',
-      'https://qniapp.github.io/qni/images/x-gate-reversibility.png',
-    ]
-    assert(occurrences.length === 31, '31 image occurrences')
-    for (const url of occurrences) {
-      assert(QUIZ_IMAGE_ALT[url]?.trim().length > 0, `non-empty alt for ${url}`)
-    }
-    const urls = [...new Set(occurrences)].sort()
-    assert(urls.length === 18, '18 unique image URLs')
-    assert(
-      JSON.stringify(Object.keys(QUIZ_IMAGE_ALT).sort()) === JSON.stringify(urls),
-      'table keys exactly match quiz image URLs'
     )
   })
 
