@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// ../../node_modules/.pnpm/@qni+elements@0.0.87/node_modules/@qni/elements/dist/index.js
+// ../../node_modules/.pnpm/@qni+elements@0.0.87_jiti@2.7.0/node_modules/@qni/elements/dist/index.js
 var sg = Object.create;
 var To = Object.defineProperty;
 var Sp = Object.getOwnPropertyDescriptor;
@@ -503,8 +503,8 @@ var sf = Tt((In) => {
 });
 var uf = Tt((_e) => {
   "use strict";
-  var Gu = Symbol.for("react.element"), ju = Symbol.for("react.portal"), zs = Symbol.for("react.fragment"), Rs = Symbol.for("react.strict_mode"), Ds = Symbol.for("react.profiler"), ks = Symbol.for("react.provider"), Ns = Symbol.for("react.context"), Sb = Symbol.for("react.server_context"), _s = Symbol.for("react.forward_ref"), Ls = Symbol.for("react.suspense"), Gs = Symbol.for("react.suspense_list"), js = Symbol.for("react.memo"), Hs = Symbol.for("react.lazy"), Tb = Symbol.for("react.offscreen"), lf;
-  lf = Symbol.for("react.module.reference");
+  var Gu = /* @__PURE__ */ Symbol.for("react.element"), ju = /* @__PURE__ */ Symbol.for("react.portal"), zs = /* @__PURE__ */ Symbol.for("react.fragment"), Rs = /* @__PURE__ */ Symbol.for("react.strict_mode"), Ds = /* @__PURE__ */ Symbol.for("react.profiler"), ks = /* @__PURE__ */ Symbol.for("react.provider"), Ns = /* @__PURE__ */ Symbol.for("react.context"), Sb = /* @__PURE__ */ Symbol.for("react.server_context"), _s = /* @__PURE__ */ Symbol.for("react.forward_ref"), Ls = /* @__PURE__ */ Symbol.for("react.suspense"), Gs = /* @__PURE__ */ Symbol.for("react.suspense_list"), js = /* @__PURE__ */ Symbol.for("react.memo"), Hs = /* @__PURE__ */ Symbol.for("react.lazy"), Tb = /* @__PURE__ */ Symbol.for("react.offscreen"), lf;
+  lf = /* @__PURE__ */ Symbol.for("react.module.reference");
   function xr(t) {
     if (typeof t == "object" && t !== null) {
       var r = t.$$typeof;
@@ -13949,9 +13949,9 @@ var defaultActionDescriptorFilters = {
       event2.preventDefault();
     return true;
   },
-  self({ event: event2, value, element }) {
+  self({ event: event2, value, element: element2 }) {
     if (value) {
-      return element === event2.target;
+      return element2 === event2.target;
     } else {
       return true;
     }
@@ -14030,11 +14030,11 @@ var Action = class {
   static {
     __name(this, "Action");
   }
-  constructor(element, index, descriptor, schema) {
-    this.element = element;
+  constructor(element2, index, descriptor, schema) {
+    this.element = element2;
     this.index = index;
-    this.eventTarget = descriptor.eventTarget || element;
-    this.eventName = descriptor.eventName || getDefaultEventNameForElement(element) || error("missing event name");
+    this.eventTarget = descriptor.eventTarget || element2;
+    this.eventName = descriptor.eventName || getDefaultEventNameForElement(element2) || error("missing event name");
     this.eventOptions = descriptor.eventOptions || {};
     this.identifier = descriptor.identifier || error("missing identifier");
     this.methodName = descriptor.methodName || error("missing method name");
@@ -14108,10 +14108,10 @@ var defaultEventNames = {
   select: /* @__PURE__ */ __name(() => "change", "select"),
   textarea: /* @__PURE__ */ __name(() => "input", "textarea")
 };
-function getDefaultEventNameForElement(element) {
-  const tagName = element.tagName.toLowerCase();
+function getDefaultEventNameForElement(element2) {
+  const tagName = element2.tagName.toLowerCase();
   if (tagName in defaultEventNames) {
-    return defaultEventNames[tagName](element);
+    return defaultEventNames[tagName](element2);
   }
 }
 __name(getDefaultEventNameForElement, "getDefaultEventNameForElement");
@@ -14164,14 +14164,14 @@ var Binding = class {
     throw new Error(`Action "${this.action}" references undefined method "${this.methodName}"`);
   }
   applyEventModifiers(event2) {
-    const { element } = this.action;
+    const { element: element2 } = this.action;
     const { actionDescriptorFilters } = this.context.application;
     const { controller } = this.context;
     let passes = true;
     for (const [name, value] of Object.entries(this.eventOptions)) {
       if (name in actionDescriptorFilters) {
         const filter = actionDescriptorFilters[name];
-        passes = passes && filter({ name, value, event: event2, element, controller });
+        passes = passes && filter({ name, value, event: event2, element: element2, controller });
       } else {
         continue;
       }
@@ -14187,8 +14187,8 @@ var Binding = class {
       this.method.call(this.controller, event2);
       this.context.logDebugActivity(this.methodName, { event: event2, target, currentTarget, action: this.methodName });
     } catch (error2) {
-      const { identifier, controller, element, index } = this;
-      const detail = { identifier, controller, element, index, event: event2 };
+      const { identifier, controller, element: element2, index } = this;
+      const detail = { identifier, controller, element: element2, index, event: event2 };
       this.context.handleError(error2, `invoking action "${this.action}"`, detail);
     }
   }
@@ -14225,9 +14225,9 @@ var ElementObserver = class {
   static {
     __name(this, "ElementObserver");
   }
-  constructor(element, delegate) {
+  constructor(element2, delegate) {
     this.mutationObserverInit = { attributes: true, childList: true, subtree: true };
-    this.element = element;
+    this.element = element2;
     this.started = false;
     this.delegate = delegate;
     this.elements = /* @__PURE__ */ new Set();
@@ -14261,13 +14261,13 @@ var ElementObserver = class {
   refresh() {
     if (this.started) {
       const matches = new Set(this.matchElementsInTree());
-      for (const element of Array.from(this.elements)) {
-        if (!matches.has(element)) {
-          this.removeElement(element);
+      for (const element2 of Array.from(this.elements)) {
+        if (!matches.has(element2)) {
+          this.removeElement(element2);
         }
       }
-      for (const element of Array.from(matches)) {
-        this.addElement(element);
+      for (const element2 of Array.from(matches)) {
+        this.addElement(element2);
       }
     }
   }
@@ -14286,42 +14286,42 @@ var ElementObserver = class {
       this.processAddedNodes(mutation.addedNodes);
     }
   }
-  processAttributeChange(element, attributeName) {
-    if (this.elements.has(element)) {
-      if (this.delegate.elementAttributeChanged && this.matchElement(element)) {
-        this.delegate.elementAttributeChanged(element, attributeName);
+  processAttributeChange(element2, attributeName) {
+    if (this.elements.has(element2)) {
+      if (this.delegate.elementAttributeChanged && this.matchElement(element2)) {
+        this.delegate.elementAttributeChanged(element2, attributeName);
       } else {
-        this.removeElement(element);
+        this.removeElement(element2);
       }
-    } else if (this.matchElement(element)) {
-      this.addElement(element);
+    } else if (this.matchElement(element2)) {
+      this.addElement(element2);
     }
   }
   processRemovedNodes(nodes) {
     for (const node of Array.from(nodes)) {
-      const element = this.elementFromNode(node);
-      if (element) {
-        this.processTree(element, this.removeElement);
+      const element2 = this.elementFromNode(node);
+      if (element2) {
+        this.processTree(element2, this.removeElement);
       }
     }
   }
   processAddedNodes(nodes) {
     for (const node of Array.from(nodes)) {
-      const element = this.elementFromNode(node);
-      if (element && this.elementIsActive(element)) {
-        this.processTree(element, this.addElement);
+      const element2 = this.elementFromNode(node);
+      if (element2 && this.elementIsActive(element2)) {
+        this.processTree(element2, this.addElement);
       }
     }
   }
-  matchElement(element) {
-    return this.delegate.matchElement(element);
+  matchElement(element2) {
+    return this.delegate.matchElement(element2);
   }
   matchElementsInTree(tree = this.element) {
     return this.delegate.matchElementsInTree(tree);
   }
   processTree(tree, processor) {
-    for (const element of this.matchElementsInTree(tree)) {
-      processor.call(this, element);
+    for (const element2 of this.matchElementsInTree(tree)) {
+      processor.call(this, element2);
     }
   }
   elementFromNode(node) {
@@ -14329,28 +14329,28 @@ var ElementObserver = class {
       return node;
     }
   }
-  elementIsActive(element) {
-    if (element.isConnected != this.element.isConnected) {
+  elementIsActive(element2) {
+    if (element2.isConnected != this.element.isConnected) {
       return false;
     } else {
-      return this.element.contains(element);
+      return this.element.contains(element2);
     }
   }
-  addElement(element) {
-    if (!this.elements.has(element)) {
-      if (this.elementIsActive(element)) {
-        this.elements.add(element);
+  addElement(element2) {
+    if (!this.elements.has(element2)) {
+      if (this.elementIsActive(element2)) {
+        this.elements.add(element2);
         if (this.delegate.elementMatched) {
-          this.delegate.elementMatched(element);
+          this.delegate.elementMatched(element2);
         }
       }
     }
   }
-  removeElement(element) {
-    if (this.elements.has(element)) {
-      this.elements.delete(element);
+  removeElement(element2) {
+    if (this.elements.has(element2)) {
+      this.elements.delete(element2);
       if (this.delegate.elementUnmatched) {
-        this.delegate.elementUnmatched(element);
+        this.delegate.elementUnmatched(element2);
       }
     }
   }
@@ -14359,10 +14359,10 @@ var AttributeObserver = class {
   static {
     __name(this, "AttributeObserver");
   }
-  constructor(element, attributeName, delegate) {
+  constructor(element2, attributeName, delegate) {
     this.attributeName = attributeName;
     this.delegate = delegate;
-    this.elementObserver = new ElementObserver(element, this);
+    this.elementObserver = new ElementObserver(element2, this);
   }
   get element() {
     return this.elementObserver.element;
@@ -14385,27 +14385,27 @@ var AttributeObserver = class {
   get started() {
     return this.elementObserver.started;
   }
-  matchElement(element) {
-    return element.hasAttribute(this.attributeName);
+  matchElement(element2) {
+    return element2.hasAttribute(this.attributeName);
   }
   matchElementsInTree(tree) {
     const match = this.matchElement(tree) ? [tree] : [];
     const matches = Array.from(tree.querySelectorAll(this.selector));
     return match.concat(matches);
   }
-  elementMatched(element) {
+  elementMatched(element2) {
     if (this.delegate.elementMatchedAttribute) {
-      this.delegate.elementMatchedAttribute(element, this.attributeName);
+      this.delegate.elementMatchedAttribute(element2, this.attributeName);
     }
   }
-  elementUnmatched(element) {
+  elementUnmatched(element2) {
     if (this.delegate.elementUnmatchedAttribute) {
-      this.delegate.elementUnmatchedAttribute(element, this.attributeName);
+      this.delegate.elementUnmatchedAttribute(element2, this.attributeName);
     }
   }
-  elementAttributeChanged(element, attributeName) {
+  elementAttributeChanged(element2, attributeName) {
     if (this.delegate.elementAttributeValueChanged && this.attributeName == attributeName) {
-      this.delegate.elementAttributeValueChanged(element, attributeName);
+      this.delegate.elementAttributeValueChanged(element2, attributeName);
     }
   }
 };
@@ -14481,10 +14481,10 @@ var SelectorObserver = class {
   static {
     __name(this, "SelectorObserver");
   }
-  constructor(element, selector, delegate, details) {
+  constructor(element2, selector, delegate, details) {
     this._selector = selector;
     this.details = details;
-    this.elementObserver = new ElementObserver(element, this);
+    this.elementObserver = new ElementObserver(element2, this);
     this.delegate = delegate;
     this.matchesByElement = new Multimap();
   }
@@ -14513,12 +14513,12 @@ var SelectorObserver = class {
   get element() {
     return this.elementObserver.element;
   }
-  matchElement(element) {
+  matchElement(element2) {
     const { selector } = this;
     if (selector) {
-      const matches = element.matches(selector);
+      const matches = element2.matches(selector);
       if (this.delegate.selectorMatchElement) {
-        return matches && this.delegate.selectorMatchElement(element, this.details);
+        return matches && this.delegate.selectorMatchElement(element2, this.details);
       }
       return matches;
     } else {
@@ -14535,45 +14535,45 @@ var SelectorObserver = class {
       return [];
     }
   }
-  elementMatched(element) {
+  elementMatched(element2) {
     const { selector } = this;
     if (selector) {
-      this.selectorMatched(element, selector);
+      this.selectorMatched(element2, selector);
     }
   }
-  elementUnmatched(element) {
-    const selectors = this.matchesByElement.getKeysForValue(element);
+  elementUnmatched(element2) {
+    const selectors = this.matchesByElement.getKeysForValue(element2);
     for (const selector of selectors) {
-      this.selectorUnmatched(element, selector);
+      this.selectorUnmatched(element2, selector);
     }
   }
-  elementAttributeChanged(element, _attributeName) {
+  elementAttributeChanged(element2, _attributeName) {
     const { selector } = this;
     if (selector) {
-      const matches = this.matchElement(element);
-      const matchedBefore = this.matchesByElement.has(selector, element);
+      const matches = this.matchElement(element2);
+      const matchedBefore = this.matchesByElement.has(selector, element2);
       if (matches && !matchedBefore) {
-        this.selectorMatched(element, selector);
+        this.selectorMatched(element2, selector);
       } else if (!matches && matchedBefore) {
-        this.selectorUnmatched(element, selector);
+        this.selectorUnmatched(element2, selector);
       }
     }
   }
-  selectorMatched(element, selector) {
-    this.delegate.selectorMatched(element, selector, this.details);
-    this.matchesByElement.add(selector, element);
+  selectorMatched(element2, selector) {
+    this.delegate.selectorMatched(element2, selector, this.details);
+    this.matchesByElement.add(selector, element2);
   }
-  selectorUnmatched(element, selector) {
-    this.delegate.selectorUnmatched(element, selector, this.details);
-    this.matchesByElement.delete(selector, element);
+  selectorUnmatched(element2, selector) {
+    this.delegate.selectorUnmatched(element2, selector, this.details);
+    this.matchesByElement.delete(selector, element2);
   }
 };
 var StringMapObserver = class {
   static {
     __name(this, "StringMapObserver");
   }
-  constructor(element, delegate) {
-    this.element = element;
+  constructor(element2, delegate) {
+    this.element = element2;
     this.delegate = delegate;
     this.started = false;
     this.stringMap = /* @__PURE__ */ new Map();
@@ -14662,8 +14662,8 @@ var TokenListObserver = class {
   static {
     __name(this, "TokenListObserver");
   }
-  constructor(element, attributeName, delegate) {
-    this.attributeObserver = new AttributeObserver(element, attributeName, this);
+  constructor(element2, attributeName, delegate) {
+    this.attributeObserver = new AttributeObserver(element2, attributeName, this);
     this.delegate = delegate;
     this.tokensByElement = new Multimap();
   }
@@ -14688,16 +14688,16 @@ var TokenListObserver = class {
   get attributeName() {
     return this.attributeObserver.attributeName;
   }
-  elementMatchedAttribute(element) {
-    this.tokensMatched(this.readTokensForElement(element));
+  elementMatchedAttribute(element2) {
+    this.tokensMatched(this.readTokensForElement(element2));
   }
-  elementAttributeValueChanged(element) {
-    const [unmatchedTokens, matchedTokens] = this.refreshTokensForElement(element);
+  elementAttributeValueChanged(element2) {
+    const [unmatchedTokens, matchedTokens] = this.refreshTokensForElement(element2);
     this.tokensUnmatched(unmatchedTokens);
     this.tokensMatched(matchedTokens);
   }
-  elementUnmatchedAttribute(element) {
-    this.tokensUnmatched(this.tokensByElement.getValuesForKey(element));
+  elementUnmatchedAttribute(element2) {
+    this.tokensUnmatched(this.tokensByElement.getValuesForKey(element2));
   }
   tokensMatched(tokens) {
     tokens.forEach((token) => this.tokenMatched(token));
@@ -14713,9 +14713,9 @@ var TokenListObserver = class {
     this.delegate.tokenUnmatched(token);
     this.tokensByElement.delete(token.element, token);
   }
-  refreshTokensForElement(element) {
-    const previousTokens = this.tokensByElement.getValuesForKey(element);
-    const currentTokens = this.readTokensForElement(element);
+  refreshTokensForElement(element2) {
+    const previousTokens = this.tokensByElement.getValuesForKey(element2);
+    const currentTokens = this.readTokensForElement(element2);
     const firstDifferingIndex = zip(previousTokens, currentTokens).findIndex(([previousToken, currentToken]) => !tokensAreEqual(previousToken, currentToken));
     if (firstDifferingIndex == -1) {
       return [[], []];
@@ -14723,14 +14723,14 @@ var TokenListObserver = class {
       return [previousTokens.slice(firstDifferingIndex), currentTokens.slice(firstDifferingIndex)];
     }
   }
-  readTokensForElement(element) {
+  readTokensForElement(element2) {
     const attributeName = this.attributeName;
-    const tokenString = element.getAttribute(attributeName) || "";
-    return parseTokenString(tokenString, element, attributeName);
+    const tokenString = element2.getAttribute(attributeName) || "";
+    return parseTokenString(tokenString, element2, attributeName);
   }
 };
-function parseTokenString(tokenString, element, attributeName) {
-  return tokenString.trim().split(/\s+/).filter((content) => content.length).map((content, index) => ({ element, attributeName, content, index }));
+function parseTokenString(tokenString, element2, attributeName) {
+  return tokenString.trim().split(/\s+/).filter((content) => content.length).map((content, index) => ({ element: element2, attributeName, content, index }));
 }
 __name(parseTokenString, "parseTokenString");
 function zip(left, right) {
@@ -14746,8 +14746,8 @@ var ValueListObserver = class {
   static {
     __name(this, "ValueListObserver");
   }
-  constructor(element, attributeName, delegate) {
-    this.tokenListObserver = new TokenListObserver(element, attributeName, this);
+  constructor(element2, attributeName, delegate) {
+    this.tokenListObserver = new TokenListObserver(element2, attributeName, this);
     this.delegate = delegate;
     this.parseResultsByToken = /* @__PURE__ */ new WeakMap();
     this.valuesByTokenByElement = /* @__PURE__ */ new WeakMap();
@@ -14771,19 +14771,19 @@ var ValueListObserver = class {
     return this.tokenListObserver.attributeName;
   }
   tokenMatched(token) {
-    const { element } = token;
+    const { element: element2 } = token;
     const { value } = this.fetchParseResultForToken(token);
     if (value) {
-      this.fetchValuesByTokenForElement(element).set(token, value);
-      this.delegate.elementMatchedValue(element, value);
+      this.fetchValuesByTokenForElement(element2).set(token, value);
+      this.delegate.elementMatchedValue(element2, value);
     }
   }
   tokenUnmatched(token) {
-    const { element } = token;
+    const { element: element2 } = token;
     const { value } = this.fetchParseResultForToken(token);
     if (value) {
-      this.fetchValuesByTokenForElement(element).delete(token);
-      this.delegate.elementUnmatchedValue(element, value);
+      this.fetchValuesByTokenForElement(element2).delete(token);
+      this.delegate.elementUnmatchedValue(element2, value);
     }
   }
   fetchParseResultForToken(token) {
@@ -14794,11 +14794,11 @@ var ValueListObserver = class {
     }
     return parseResult;
   }
-  fetchValuesByTokenForElement(element) {
-    let valuesByToken = this.valuesByTokenByElement.get(element);
+  fetchValuesByTokenForElement(element2) {
+    let valuesByToken = this.valuesByTokenByElement.get(element2);
     if (!valuesByToken) {
       valuesByToken = /* @__PURE__ */ new Map();
-      this.valuesByTokenByElement.set(element, valuesByToken);
+      this.valuesByTokenByElement.set(element2, valuesByToken);
     }
     return valuesByToken;
   }
@@ -14870,10 +14870,10 @@ var BindingObserver = class {
       return action;
     }
   }
-  elementMatchedValue(element, action) {
+  elementMatchedValue(element2, action) {
     this.connectAction(action);
   }
-  elementUnmatchedValue(element, action) {
+  elementUnmatchedValue(element2, action) {
     this.disconnectAction(action);
   }
 };
@@ -14995,32 +14995,32 @@ var TargetObserver = class {
       delete this.tokenListObserver;
     }
   }
-  tokenMatched({ element, content: name }) {
-    if (this.scope.containsElement(element)) {
-      this.connectTarget(element, name);
+  tokenMatched({ element: element2, content: name }) {
+    if (this.scope.containsElement(element2)) {
+      this.connectTarget(element2, name);
     }
   }
-  tokenUnmatched({ element, content: name }) {
-    this.disconnectTarget(element, name);
+  tokenUnmatched({ element: element2, content: name }) {
+    this.disconnectTarget(element2, name);
   }
-  connectTarget(element, name) {
+  connectTarget(element2, name) {
     var _a;
-    if (!this.targetsByName.has(name, element)) {
-      this.targetsByName.add(name, element);
-      (_a = this.tokenListObserver) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.targetConnected(element, name));
+    if (!this.targetsByName.has(name, element2)) {
+      this.targetsByName.add(name, element2);
+      (_a = this.tokenListObserver) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.targetConnected(element2, name));
     }
   }
-  disconnectTarget(element, name) {
+  disconnectTarget(element2, name) {
     var _a;
-    if (this.targetsByName.has(name, element)) {
-      this.targetsByName.delete(name, element);
-      (_a = this.tokenListObserver) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.targetDisconnected(element, name));
+    if (this.targetsByName.has(name, element2)) {
+      this.targetsByName.delete(name, element2);
+      (_a = this.tokenListObserver) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.targetDisconnected(element2, name));
     }
   }
   disconnectAllTargets() {
     for (const name of this.targetsByName.keys) {
-      for (const element of this.targetsByName.getValuesForKey(name)) {
-        this.disconnectTarget(element, name);
+      for (const element2 of this.targetsByName.getValuesForKey(name)) {
+        this.disconnectTarget(element2, name);
       }
     }
   }
@@ -15116,24 +15116,24 @@ var OutletObserver = class {
       this.attributeObserverMap.clear();
     }
   }
-  selectorMatched(element, _selector, { outletName }) {
-    const outlet = this.getOutlet(element, outletName);
+  selectorMatched(element2, _selector, { outletName }) {
+    const outlet = this.getOutlet(element2, outletName);
     if (outlet) {
-      this.connectOutlet(outlet, element, outletName);
+      this.connectOutlet(outlet, element2, outletName);
     }
   }
-  selectorUnmatched(element, _selector, { outletName }) {
-    const outlet = this.getOutletFromMap(element, outletName);
+  selectorUnmatched(element2, _selector, { outletName }) {
+    const outlet = this.getOutletFromMap(element2, outletName);
     if (outlet) {
-      this.disconnectOutlet(outlet, element, outletName);
+      this.disconnectOutlet(outlet, element2, outletName);
     }
   }
-  selectorMatchElement(element, { outletName }) {
+  selectorMatchElement(element2, { outletName }) {
     const selector = this.selector(outletName);
-    const hasOutlet = this.hasOutlet(element, outletName);
-    const hasOutletController = element.matches(`[${this.schema.controllerAttribute}~=${outletName}]`);
+    const hasOutlet = this.hasOutlet(element2, outletName);
+    const hasOutletController = element2.matches(`[${this.schema.controllerAttribute}~=${outletName}]`);
     if (selector) {
-      return hasOutlet && hasOutletController && element.matches(selector);
+      return hasOutlet && hasOutletController && element2.matches(selector);
     } else {
       return false;
     }
@@ -15156,27 +15156,27 @@ var OutletObserver = class {
       this.updateSelectorObserverForOutlet(outletName);
     }
   }
-  connectOutlet(outlet, element, outletName) {
+  connectOutlet(outlet, element2, outletName) {
     var _a;
-    if (!this.outletElementsByName.has(outletName, element)) {
+    if (!this.outletElementsByName.has(outletName, element2)) {
       this.outletsByName.add(outletName, outlet);
-      this.outletElementsByName.add(outletName, element);
-      (_a = this.selectorObserverMap.get(outletName)) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.outletConnected(outlet, element, outletName));
+      this.outletElementsByName.add(outletName, element2);
+      (_a = this.selectorObserverMap.get(outletName)) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.outletConnected(outlet, element2, outletName));
     }
   }
-  disconnectOutlet(outlet, element, outletName) {
+  disconnectOutlet(outlet, element2, outletName) {
     var _a;
-    if (this.outletElementsByName.has(outletName, element)) {
+    if (this.outletElementsByName.has(outletName, element2)) {
       this.outletsByName.delete(outletName, outlet);
-      this.outletElementsByName.delete(outletName, element);
-      (_a = this.selectorObserverMap.get(outletName)) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.outletDisconnected(outlet, element, outletName));
+      this.outletElementsByName.delete(outletName, element2);
+      (_a = this.selectorObserverMap.get(outletName)) === null || _a === void 0 ? void 0 : _a.pause(() => this.delegate.outletDisconnected(outlet, element2, outletName));
     }
   }
   disconnectAllOutlets() {
     for (const outletName of this.outletElementsByName.keys) {
-      for (const element of this.outletElementsByName.getValuesForKey(outletName)) {
+      for (const element2 of this.outletElementsByName.getValuesForKey(outletName)) {
         for (const outlet of this.outletsByName.getValuesForKey(outletName)) {
-          this.disconnectOutlet(outlet, element, outletName);
+          this.disconnectOutlet(outlet, element2, outletName);
         }
       }
     }
@@ -15227,14 +15227,14 @@ var OutletObserver = class {
     const identifiers = this.dependentControllerIdentifiers;
     return this.router.contexts.filter((context) => identifiers.includes(context.identifier));
   }
-  hasOutlet(element, outletName) {
-    return !!this.getOutlet(element, outletName) || !!this.getOutletFromMap(element, outletName);
+  hasOutlet(element2, outletName) {
+    return !!this.getOutlet(element2, outletName) || !!this.getOutletFromMap(element2, outletName);
   }
-  getOutlet(element, outletName) {
-    return this.application.getControllerForElementAndIdentifier(element, outletName);
+  getOutlet(element2, outletName) {
+    return this.application.getControllerForElementAndIdentifier(element2, outletName);
   }
-  getOutletFromMap(element, outletName) {
-    return this.outletsByName.getValuesForKey(outletName).find((outlet) => outlet.element === element);
+  getOutletFromMap(element2, outletName) {
+    return this.outletsByName.getValuesForKey(outletName).find((outlet) => outlet.element === element2);
   }
   get scope() {
     return this.context.scope;
@@ -15258,8 +15258,8 @@ var Context = class {
   }
   constructor(module, scope) {
     this.logDebugActivity = (functionName, detail = {}) => {
-      const { identifier, controller, element } = this;
-      detail = Object.assign({ identifier, controller, element }, detail);
+      const { identifier, controller, element: element2 } = this;
+      detail = Object.assign({ identifier, controller, element: element2 }, detail);
       this.application.logDebugActivity(this.identifier, functionName, detail);
     };
     this.module = module;
@@ -15322,21 +15322,21 @@ var Context = class {
     return this.element.parentElement;
   }
   handleError(error2, message, detail = {}) {
-    const { identifier, controller, element } = this;
-    detail = Object.assign({ identifier, controller, element }, detail);
+    const { identifier, controller, element: element2 } = this;
+    detail = Object.assign({ identifier, controller, element: element2 }, detail);
     this.application.handleError(error2, `Error ${message}`, detail);
   }
-  targetConnected(element, name) {
-    this.invokeControllerMethod(`${name}TargetConnected`, element);
+  targetConnected(element2, name) {
+    this.invokeControllerMethod(`${name}TargetConnected`, element2);
   }
-  targetDisconnected(element, name) {
-    this.invokeControllerMethod(`${name}TargetDisconnected`, element);
+  targetDisconnected(element2, name) {
+    this.invokeControllerMethod(`${name}TargetDisconnected`, element2);
   }
-  outletConnected(outlet, element, name) {
-    this.invokeControllerMethod(`${namespaceCamelize(name)}OutletConnected`, outlet, element);
+  outletConnected(outlet, element2, name) {
+    this.invokeControllerMethod(`${namespaceCamelize(name)}OutletConnected`, outlet, element2);
   }
-  outletDisconnected(outlet, element, name) {
-    this.invokeControllerMethod(`${namespaceCamelize(name)}OutletDisconnected`, outlet, element);
+  outletDisconnected(outlet, element2, name) {
+    this.invokeControllerMethod(`${namespaceCamelize(name)}OutletDisconnected`, outlet, element2);
   }
   invokeControllerMethod(methodName, ...args) {
     const controller = this.controller;
@@ -15616,20 +15616,20 @@ var TargetSet = class {
   }
   findAllLegacyTargets(targetName) {
     const selector = this.getLegacySelectorForTargetName(targetName);
-    return this.scope.findAllElements(selector).map((element) => this.deprecate(element, targetName));
+    return this.scope.findAllElements(selector).map((element2) => this.deprecate(element2, targetName));
   }
   getLegacySelectorForTargetName(targetName) {
     const targetDescriptor = `${this.identifier}.${targetName}`;
     return attributeValueContainsToken(this.schema.targetAttribute, targetDescriptor);
   }
-  deprecate(element, targetName) {
-    if (element) {
+  deprecate(element2, targetName) {
+    if (element2) {
       const { identifier } = this;
       const attributeName = this.schema.targetAttribute;
       const revisedAttributeName = this.schema.targetAttributeForScope(identifier);
-      this.guide.warn(element, `target:${targetName}`, `Please replace ${attributeName}="${identifier}.${targetName}" with ${revisedAttributeName}="${targetName}". The ${attributeName} attribute is deprecated and will be removed in a future version of Stimulus.`);
+      this.guide.warn(element2, `target:${targetName}`, `Please replace ${attributeName}="${identifier}.${targetName}" with ${revisedAttributeName}="${targetName}". The ${attributeName} attribute is deprecated and will be removed in a future version of Stimulus.`);
     }
-    return element;
+    return element2;
   }
   get guide() {
     return this.scope.guide;
@@ -15676,33 +15676,33 @@ var OutletSet = class {
   }
   findElement(selector, outletName) {
     const elements = this.scope.queryElements(selector);
-    return elements.filter((element) => this.matchesElement(element, selector, outletName))[0];
+    return elements.filter((element2) => this.matchesElement(element2, selector, outletName))[0];
   }
   findAllElements(selector, outletName) {
     const elements = this.scope.queryElements(selector);
-    return elements.filter((element) => this.matchesElement(element, selector, outletName));
+    return elements.filter((element2) => this.matchesElement(element2, selector, outletName));
   }
-  matchesElement(element, selector, outletName) {
-    const controllerAttribute = element.getAttribute(this.scope.schema.controllerAttribute) || "";
-    return element.matches(selector) && controllerAttribute.split(" ").includes(outletName);
+  matchesElement(element2, selector, outletName) {
+    const controllerAttribute = element2.getAttribute(this.scope.schema.controllerAttribute) || "";
+    return element2.matches(selector) && controllerAttribute.split(" ").includes(outletName);
   }
 };
 var Scope = class _Scope {
   static {
     __name(this, "Scope");
   }
-  constructor(schema, element, identifier, logger) {
+  constructor(schema, element2, identifier, logger) {
     this.targets = new TargetSet(this);
     this.classes = new ClassMap(this);
     this.data = new DataMap(this);
-    this.containsElement = (element2) => {
-      return element2.closest(this.controllerSelector) === this.element;
+    this.containsElement = (element3) => {
+      return element3.closest(this.controllerSelector) === this.element;
     };
     this.schema = schema;
-    this.element = element;
+    this.element = element2;
     this.identifier = identifier;
     this.guide = new Guide(logger);
-    this.outlets = new OutletSet(this.documentScope, element);
+    this.outlets = new OutletSet(this.documentScope, element2);
   }
   findElement(selector) {
     return this.element.matches(selector) ? this.element : this.queryElements(selector).find(this.containsElement);
@@ -15730,8 +15730,8 @@ var ScopeObserver = class {
   static {
     __name(this, "ScopeObserver");
   }
-  constructor(element, schema, delegate) {
-    this.element = element;
+  constructor(element2, schema, delegate) {
+    this.element = element2;
     this.schema = schema;
     this.delegate = delegate;
     this.valueListObserver = new ValueListObserver(this.element, this.controllerAttribute, this);
@@ -15748,26 +15748,26 @@ var ScopeObserver = class {
     return this.schema.controllerAttribute;
   }
   parseValueForToken(token) {
-    const { element, content: identifier } = token;
-    return this.parseValueForElementAndIdentifier(element, identifier);
+    const { element: element2, content: identifier } = token;
+    return this.parseValueForElementAndIdentifier(element2, identifier);
   }
-  parseValueForElementAndIdentifier(element, identifier) {
-    const scopesByIdentifier = this.fetchScopesByIdentifierForElement(element);
+  parseValueForElementAndIdentifier(element2, identifier) {
+    const scopesByIdentifier = this.fetchScopesByIdentifierForElement(element2);
     let scope = scopesByIdentifier.get(identifier);
     if (!scope) {
-      scope = this.delegate.createScopeForElementAndIdentifier(element, identifier);
+      scope = this.delegate.createScopeForElementAndIdentifier(element2, identifier);
       scopesByIdentifier.set(identifier, scope);
     }
     return scope;
   }
-  elementMatchedValue(element, value) {
+  elementMatchedValue(element2, value) {
     const referenceCount = (this.scopeReferenceCounts.get(value) || 0) + 1;
     this.scopeReferenceCounts.set(value, referenceCount);
     if (referenceCount == 1) {
       this.delegate.scopeConnected(value);
     }
   }
-  elementUnmatchedValue(element, value) {
+  elementUnmatchedValue(element2, value) {
     const referenceCount = this.scopeReferenceCounts.get(value);
     if (referenceCount) {
       this.scopeReferenceCounts.set(value, referenceCount - 1);
@@ -15776,11 +15776,11 @@ var ScopeObserver = class {
       }
     }
   }
-  fetchScopesByIdentifierForElement(element) {
-    let scopesByIdentifier = this.scopesByIdentifierByElement.get(element);
+  fetchScopesByIdentifierForElement(element2) {
+    let scopesByIdentifier = this.scopesByIdentifierByElement.get(element2);
     if (!scopesByIdentifier) {
       scopesByIdentifier = /* @__PURE__ */ new Map();
-      this.scopesByIdentifierByElement.set(element, scopesByIdentifier);
+      this.scopesByIdentifierByElement.set(element2, scopesByIdentifier);
     }
     return scopesByIdentifier;
   }
@@ -15834,25 +15834,25 @@ var Router = class {
       this.disconnectModule(module);
     }
   }
-  getContextForElementAndIdentifier(element, identifier) {
+  getContextForElementAndIdentifier(element2, identifier) {
     const module = this.modulesByIdentifier.get(identifier);
     if (module) {
-      return module.contexts.find((context) => context.element == element);
+      return module.contexts.find((context) => context.element == element2);
     }
   }
-  proposeToConnectScopeForElementAndIdentifier(element, identifier) {
-    const scope = this.scopeObserver.parseValueForElementAndIdentifier(element, identifier);
+  proposeToConnectScopeForElementAndIdentifier(element2, identifier) {
+    const scope = this.scopeObserver.parseValueForElementAndIdentifier(element2, identifier);
     if (scope) {
       this.scopeObserver.elementMatchedValue(scope.element, scope);
     } else {
-      console.error(`Couldn't find or create scope for identifier: "${identifier}" and element:`, element);
+      console.error(`Couldn't find or create scope for identifier: "${identifier}" and element:`, element2);
     }
   }
   handleError(error2, message, detail) {
     this.application.handleError(error2, message, detail);
   }
-  createScopeForElementAndIdentifier(element, identifier) {
-    return new Scope(this.schema, element, identifier, this.logger);
+  createScopeForElementAndIdentifier(element2, identifier) {
+    return new Scope(this.schema, element2, identifier, this.logger);
   }
   scopeConnected(scope) {
     this.scopesByIdentifier.add(scope.identifier, scope);
@@ -15895,7 +15895,7 @@ var Application = class {
   static {
     __name(this, "Application");
   }
-  constructor(element = document.documentElement, schema = defaultSchema) {
+  constructor(element2 = document.documentElement, schema = defaultSchema) {
     this.logger = console;
     this.debug = false;
     this.logDebugActivity = (identifier, functionName, detail = {}) => {
@@ -15903,14 +15903,14 @@ var Application = class {
         this.logFormattedMessage(identifier, functionName, detail);
       }
     };
-    this.element = element;
+    this.element = element2;
     this.schema = schema;
     this.dispatcher = new Dispatcher(this);
     this.router = new Router(this);
     this.actionDescriptorFilters = Object.assign({}, defaultActionDescriptorFilters);
   }
-  static start(element, schema) {
-    const application2 = new this(element, schema);
+  static start(element2, schema) {
+    const application2 = new this(element2, schema);
     application2.start();
     return application2;
   }
@@ -15948,8 +15948,8 @@ var Application = class {
   get controllers() {
     return this.router.contexts.map((context) => context.controller);
   }
-  getControllerForElementAndIdentifier(element, identifier) {
-    const context = this.router.getContextForElementAndIdentifier(element, identifier);
+  getControllerForElementAndIdentifier(element2, identifier) {
+    const context = this.router.getContextForElementAndIdentifier(element2, identifier);
     return context ? context.controller : null;
   }
   handleError(error2, message, detail) {
@@ -16018,16 +16018,16 @@ function OutletPropertiesBlessing(constructor) {
   }, {});
 }
 __name(OutletPropertiesBlessing, "OutletPropertiesBlessing");
-function getOutletController(controller, element, identifier) {
-  return controller.application.getControllerForElementAndIdentifier(element, identifier);
+function getOutletController(controller, element2, identifier) {
+  return controller.application.getControllerForElementAndIdentifier(element2, identifier);
 }
 __name(getOutletController, "getOutletController");
-function getControllerAndEnsureConnectedScope(controller, element, outletName) {
-  let outletController = getOutletController(controller, element, outletName);
+function getControllerAndEnsureConnectedScope(controller, element2, outletName) {
+  let outletController = getOutletController(controller, element2, outletName);
   if (outletController)
     return outletController;
-  controller.application.router.proposeToConnectScopeForElementAndIdentifier(element, outletName);
-  outletController = getOutletController(controller, element, outletName);
+  controller.application.router.proposeToConnectScopeForElementAndIdentifier(element2, outletName);
+  outletController = getOutletController(controller, element2, outletName);
   if (outletController)
     return outletController;
 }
@@ -16422,6 +16422,189 @@ var sidebar_controller_default = class extends Controller {
 
 // src/controllers/index.js
 application.register("sidebar", sidebar_controller_default);
+
+// src/quiz.js
+var checkIcon = '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var crossIcon = '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+var nextId = 0;
+function parseCloze(source) {
+  const segments = [];
+  let text = "", depth = 0, math = false;
+  const flush = /* @__PURE__ */ __name((blank) => {
+    if (text || blank) segments.push({ text, blank });
+    text = "";
+  }, "flush");
+  for (let i = 0; i < source.length; i++) {
+    const char = source[i];
+    if (char === "\\" && i + 1 < source.length) {
+      text += char + source[++i];
+      continue;
+    }
+    if (char === "$") math = !math;
+    if (!math && char === "{") {
+      if (depth++ === 0) {
+        flush(false);
+        continue;
+      }
+    } else if (!math && char === "}" && depth > 0) {
+      if (--depth === 0) {
+        flush(true);
+        continue;
+      }
+    }
+    text += char;
+  }
+  if (depth > 0) text = "{" + text;
+  flush(false);
+  return segments;
+}
+__name(parseCloze, "parseCloze");
+function appendRich(parent, source) {
+  const text = source.replace(/\s+/g, " ").trim();
+  for (const [index, part] of text.split(/(\$\$[\s\S]+?\$\$|\$[^$]+?\$)/).entries()) {
+    if (!part) continue;
+    if (index % 2) {
+      parent.append(part.startsWith("$$") ? part : `\\(${part.slice(1, -1)}\\)`);
+      continue;
+    }
+    for (const [i, piece] of part.split(/(\*\*[^*]+\*\*|\*[^*\s][^*]*\*)/).entries()) {
+      if (!piece) continue;
+      if (i % 2 === 0) {
+        parent.append(piece);
+        continue;
+      }
+      const strong = piece.startsWith("**");
+      const element2 = document.createElement(strong ? "strong" : "em");
+      element2.textContent = piece.slice(strong ? 2 : 1, strong ? -2 : -1);
+      parent.append(element2);
+    }
+  }
+}
+__name(appendRich, "appendRich");
+function element(tag, className) {
+  const node = document.createElement(tag);
+  node.className = className;
+  return node;
+}
+__name(element, "element");
+function attachments(value) {
+  const urls = (value ?? "").split(/\s+/).filter(Boolean);
+  if (!urls.length) return null;
+  const box = element("div", "orbit-quiz-attachments");
+  for (const url of urls) {
+    const image = document.createElement("img");
+    image.src = url;
+    image.loading = "lazy";
+    image.decoding = "async";
+    box.append(image);
+  }
+  return box;
+}
+__name(attachments, "attachments");
+function button(className, label, icon = "") {
+  const node = element("button", `orbit-quiz-button ${className}`);
+  node.type = "button";
+  node.innerHTML = icon;
+  node.append(label);
+  return node;
+}
+__name(button, "button");
+function typeset(node) {
+  const mathJax = window.MathJax;
+  if (!mathJax?.typesetPromise || !mathJax.startup?.promise) return;
+  mathJax.startup.promise = mathJax.startup.promise.then(() => mathJax.typesetPromise([node])).catch(() => {
+  });
+}
+__name(typeset, "typeset");
+var OrbitPrompt = class extends HTMLElement {
+  static {
+    __name(this, "OrbitPrompt");
+  }
+  static observedAttributes = ["question", "answer", "question-attachments", "answer-attachments", "cloze"];
+  card;
+  connectedCallback() {
+    if (!this.card) this.render();
+  }
+  attributeChangedCallback() {
+    if (this.card) this.render();
+  }
+  render() {
+    const id2 = `orbit-quiz-${++nextId}`;
+    const cloze = this.getAttribute("cloze");
+    const card = element("div", "orbit-quiz-card");
+    card.setAttribute("role", "group");
+    card.setAttribute("aria-labelledby", `${id2}-q`);
+    const question = element("div", "orbit-quiz-question");
+    question.id = `${id2}-q`;
+    const answer = element("div", "orbit-quiz-answer");
+    answer.id = `${id2}-a`;
+    answer.tabIndex = -1;
+    if (cloze !== null) {
+      card.classList.add("is-cloze");
+      for (const segment of parseCloze(cloze)) {
+        if (!segment.blank) {
+          appendRich(question, segment.text);
+          continue;
+        }
+        const blank = element("span", "orbit-quiz-blank");
+        const hidden = element("span", "orbit-quiz-blank-placeholder");
+        hidden.textContent = "\u7A7A\u6B04";
+        const filled = element("span", "orbit-quiz-blank-answer");
+        appendRich(filled, segment.text);
+        blank.append(hidden, filled);
+        question.append(blank);
+      }
+      question.tabIndex = -1;
+    } else {
+      appendRich(question, this.getAttribute("question") ?? "");
+      const questionImages = attachments(this.getAttribute("question-attachments"));
+      if (questionImages) question.append(questionImages);
+      const answerText = element("p", "orbit-quiz-answer-text");
+      appendRich(answerText, this.getAttribute("answer") ?? "");
+      if (answerText.textContent) answer.append(answerText);
+      const answerImages = attachments(this.getAttribute("answer-attachments"));
+      if (answerImages) answer.append(answerImages);
+    }
+    const actions = element("div", "orbit-quiz-actions");
+    const revealed = cloze === null ? answer : question;
+    const reveal = button("orbit-quiz-reveal", "\u7B54\u3048\u3092\u898B\u308B");
+    reveal.setAttribute("aria-controls", revealed.id);
+    reveal.setAttribute("aria-expanded", "false");
+    const correct = button("orbit-quiz-correct", "\u6B63\u89E3", checkIcon);
+    const incorrect = button("orbit-quiz-incorrect", "\u4E0D\u6B63\u89E3", crossIcon);
+    const retry = button("orbit-quiz-retry", "\u3084\u308A\u76F4\u3059");
+    const status = element("p", "orbit-quiz-status");
+    status.setAttribute("role", "status");
+    actions.append(reveal, correct, incorrect, retry);
+    card.append(question);
+    if (cloze === null) card.append(answer);
+    card.append(status, actions);
+    const set = /* @__PURE__ */ __name((state, focus) => {
+      card.dataset.state = state;
+      const graded = state === "correct" || state === "incorrect";
+      reveal.hidden = state !== "unanswered";
+      reveal.setAttribute("aria-expanded", String(state !== "unanswered"));
+      correct.hidden = incorrect.hidden = state !== "revealed";
+      retry.hidden = !graded;
+      answer.hidden = state === "unanswered";
+      status.innerHTML = graded ? state === "correct" ? checkIcon : crossIcon : "";
+      if (graded) status.append(state === "correct" ? "\u6B63\u89E3" : "\u4E0D\u6B63\u89E3");
+      focus?.focus();
+    }, "set");
+    reveal.addEventListener("click", () => set("revealed", revealed));
+    correct.addEventListener("click", () => set("correct", retry));
+    incorrect.addEventListener("click", () => set("incorrect", retry));
+    retry.addEventListener("click", () => set("unanswered", reveal));
+    set("unanswered");
+    this.card?.remove();
+    this.card = card;
+    this.append(card);
+    typeset(card);
+  }
+};
+if (!customElements.get("orbit-prompt")) customElements.define("orbit-prompt", OrbitPrompt);
+if (!customElements.get("orbit-reviewarea")) customElements.define("orbit-reviewarea", class extends HTMLElement {
+});
 export {
   Io as Complex
 };
