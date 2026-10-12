@@ -16423,6 +16423,32 @@ var sidebar_controller_default = class extends Controller {
 // src/controllers/index.js
 application.register("sidebar", sidebar_controller_default);
 
+// src/quiz-alt.js
+var base = "https://qniapp.github.io/qni/images/";
+var circles = "\u5186\u8868\u793A: |0\u27E9 \u3068 |1\u27E9 \u306E 2 \u3064\u306E\u5186";
+var QUIZ_IMAGE_ALT = {
+  // Used as question images: describe what the learner needs to read.
+  [`${base}superposition-100-0.png`]: "\u5186\u8868\u793A: |0\u27E9 \u306E\u5186\u306F\u5168\u4F53\u304C\u5857\u308A\u3064\u3076\u3055\u308C\u3001\u91DD\u306F\u771F\u4E0A\u3092\u5411\u3044\u3066\u3044\u308B\u3002|1\u27E9 \u306E\u5186\u306F\u7A7A",
+  [`${base}superposition-0-100.png`]: "\u5186\u8868\u793A: |0\u27E9 \u306E\u5186\u306F\u7A7A\u3002|1\u27E9 \u306E\u5186\u306F\u5168\u4F53\u304C\u5857\u308A\u3064\u3076\u3055\u308C\u3001\u91DD\u306F\u771F\u4E0A\u3092\u5411\u3044\u3066\u3044\u308B",
+  [`${base}superposition-50-50.png`]: "\u5186\u8868\u793A: |0\u27E9 \u3068 |1\u27E9 \u306E\u5186\u306E\u5185\u5074\u306B\u3001\u5916\u67A0\u3088\u308A\u5C0F\u3055\u3044\u540C\u3058\u5927\u304D\u3055\u306E\u5857\u308A\u5186\u304C\u3042\u308B\u3002\u91DD\u306F\u3069\u3061\u3089\u3082\u771F\u4E0A\u3092\u5411\u3044\u3066\u3044\u308B",
+  [`${base}superposition_phase.png`]: "\u5186\u8868\u793A: |0\u27E9 \u306E\u5186\u306F\u5C0F\u3055\u306A\u5857\u308A\u5186\u3067\u3001\u91DD\u306F\u5DE6\u4E0B\u3092\u5411\u3044\u3066\u3044\u308B\u3002|1\u27E9 \u306E\u5186\u306F\u307B\u307C\u5168\u4F53\u304C\u5857\u3089\u308C\u3001\u91DD\u306F\u53F3\u4E0A\u3092\u5411\u3044\u3066\u3044\u308B",
+  [`${base}basic_quantum_circuit.png`]: "3 \u672C\u306E\u6A2A\u7DDA\u306E\u56DE\u8DEF\u56F3\u3002\u5404\u7DDA\u306E\u5DE6\u7AEF\u306B |0\u27E9\u30021 \u672C\u76EE\u306E\u7DDA\u4E0A\u306B H \u3068\u66F8\u304B\u308C\u305F\u7BB1\u3001\u305D\u306E\u53F3\u306B 1 \u672C\u76EE\u306E\u9ED2\u4E38\u3068 2 \u672C\u76EE\u306E \u2295 \u3092\u7E26\u7DDA\u3067\u7D50\u3093\u3060\u8A18\u53F7\u3001\u3055\u3089\u306B 2 \u672C\u76EE\u306E\u9ED2\u4E38\u3068 3 \u672C\u76EE\u306E \u2295 \u3092\u7E26\u7DDA\u3067\u7D50\u3093\u3060\u8A18\u53F7",
+  // Used only as answer images: the answer text carries the content.
+  [`${base}superposition_phase_reversed.png`]: circles,
+  [`${base}superposition-minus-state.png`]: circles,
+  [`${base}superposition-50-50-phase\xBC\u03C0.png`]: circles,
+  [`${base}h-gate-reversibility.png`]: "\u5186\u8868\u793A\u306E 2 \u6BB5\u306E\u56F3\u3002\u5404\u6BB5\u3067\u3001\u5DE6\u7AEF\u306E\u72B6\u614B\u306B H \u30B2\u30FC\u30C8\u3092 2 \u56DE\u7D9A\u3051\u3066\u9069\u7528\u3057\u3001\u9014\u4E2D\u3068\u6700\u5F8C\u306E\u72B6\u614B\u3092\u77E2\u5370\u306E\u5148\u306B\u4E26\u3079\u3066\u3044\u308B",
+  [`${base}x-gate-reversibility.png`]: "\u5186\u8868\u793A\u306E\u56F3\u3002\u5DE6\u7AEF\u306E\u72B6\u614B\u306B X \u30B2\u30FC\u30C8\u3092 2 \u56DE\u7D9A\u3051\u3066\u9069\u7528\u3057\u3001\u9014\u4E2D\u3068\u6700\u5F8C\u306E\u72B6\u614B\u3092\u77E2\u5370\u306E\u5148\u306B\u4E26\u3079\u3066\u3044\u308B",
+  [`${base}HH.png`]: "H \u30B2\u30FC\u30C8\u3092 2 \u3064\u4E26\u3079\u305F\u56DE\u8DEF\u3068\u3001\u305D\u308C\u3068\u7B49\u3057\u3044\u56DE\u8DEF\u3092\u7B49\u53F7\u3067\u7D50\u3093\u3060\u56F3",
+  [`${base}HXH.png`]: "PHASE(\u03C0) \u30B2\u30FC\u30C8\u3068\u3001\u305D\u308C\u3068\u7B49\u3057\u3044\u30B2\u30FC\u30C8\u306E\u4E26\u3073\u3092\u7B49\u53F7\u3067\u7D50\u3093\u3060\u56DE\u8DEF\u56F3",
+  [`${base}2rnots.png`]: "\u221AX \u30B2\u30FC\u30C8\u3092\u542B\u3080\u56DE\u8DEF\u306E\u7B49\u5F0F\u306E\u56F3",
+  [`${base}rnot_gate_decomposition.png`]: "\u221AX \u30B2\u30FC\u30C8\u3068\u3001\u305D\u308C\u3068\u7B49\u3057\u3044\u30B2\u30FC\u30C8\u306E\u4E26\u3073\u3092\u7B49\u53F7\u3067\u7D50\u3093\u3060\u56DE\u8DEF\u56F3",
+  [`${base}X_gate_decomposition.png`]: "X \u30B2\u30FC\u30C8\u3068\u3001\u305D\u308C\u3068\u7B49\u3057\u3044\u30B2\u30FC\u30C8\u306E\u4E26\u3073\u3092\u7B49\u53F7\u3067\u7D50\u3093\u3060\u56DE\u8DEF\u56F3",
+  [`${base}random_bit_generator_circuit.png`]: "1 \u91CF\u5B50\u30D3\u30C3\u30C8\u306E\u56DE\u8DEF\u56F3",
+  [`${base}p-bit/p_bit_graph.png`]: "\u6A2A\u8EF8\u3092\u300C\u8868\u306E\u51FA\u308B\u78BA\u7387\u300D\u3001\u7E26\u8EF8\u3092\u300C\u88CF\u306E\u51FA\u308B\u78BA\u7387\u300D\u3068\u3057\u305F\u624B\u63CF\u304D\u306E\u30B0\u30E9\u30D5",
+  [`${base}argument_of_complex.png`]: "\u5EA7\u6A19\u5E73\u9762\u306B\u70B9 a, b \u3068\u300C\u504F\u89D2\u300D\u306E\u6587\u5B57\u3092\u63CF\u3044\u305F\u624B\u63CF\u304D\u306E\u56F3"
+};
+
 // src/quiz.js
 var checkIcon = '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 var crossIcon = '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
@@ -16494,6 +16520,7 @@ function attachments(value) {
   for (const url of urls) {
     const image = document.createElement("img");
     image.src = url;
+    image.alt = QUIZ_IMAGE_ALT[url] ?? "";
     image.loading = "lazy";
     image.decoding = "async";
     box.append(image);
@@ -16520,7 +16547,13 @@ var OrbitPrompt = class extends HTMLElement {
   static {
     __name(this, "OrbitPrompt");
   }
-  static observedAttributes = ["question", "answer", "question-attachments", "answer-attachments", "cloze"];
+  static observedAttributes = [
+    "question",
+    "answer",
+    "question-attachments",
+    "answer-attachments",
+    "cloze"
+  ];
   card;
   connectedCallback() {
     if (!this.card) this.render();
@@ -16603,8 +16636,9 @@ var OrbitPrompt = class extends HTMLElement {
   }
 };
 if (!customElements.get("orbit-prompt")) customElements.define("orbit-prompt", OrbitPrompt);
-if (!customElements.get("orbit-reviewarea")) customElements.define("orbit-reviewarea", class extends HTMLElement {
-});
+if (!customElements.get("orbit-reviewarea"))
+  customElements.define("orbit-reviewarea", class extends HTMLElement {
+  });
 export {
   Io as Complex
 };
