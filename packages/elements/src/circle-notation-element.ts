@@ -1208,8 +1208,7 @@ export class CircleNotationElement extends HTMLElement {
     const tmpDiv = document.createElement('div')
     tmpDiv.appendChild(template)
 
-    // eslint-disable-next-line github/no-inner-html
-    popup.setContent(tmpDiv.innerHTML)
+    popup.setContent(tmpDiv)
     popup.show()
   }
 
