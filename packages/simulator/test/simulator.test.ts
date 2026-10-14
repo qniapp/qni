@@ -487,6 +487,14 @@ describe('Simulator', () => {
         expect(simulator.state).toBeSameStateVector(new StateVector('101'))
       })
 
+      test('apply to two qubits with anti-control', () => {
+        const simulator = new Simulator('010')
+
+        simulator.runStep([{type: 'Swap', targets: [0, 1], antiControls: [2]}])
+
+        expect(simulator.state).toBeSameStateVector(new StateVector('001'))
+      })
+
       test('apply to two qubits with control and anti-control', () => {
         const simulator = new Simulator('0101')
 
@@ -1296,6 +1304,23 @@ describe('Simulator', () => {
     test('|011>.swap(2, 0, 1) should be |011>', () => {
       const simulator = new Simulator('011')
       expect(simulator.swap(0, 1, {controls: [2]}).state).toBeSameStateVector(new StateVector('011'))
+    })
+
+    test('swap with anti-control at |0> swaps the targets', () => {
+      const simulator = new Simulator('010')
+      expect(simulator.swap(0, 1, {antiControls: [2]}).state).toBeSameStateVector(new StateVector('001'))
+    })
+
+    test('swap with anti-control at |1> leaves the targets unchanged', () => {
+      const simulator = new Simulator('110')
+      expect(simulator.swap(0, 1, {antiControls: [2]}).state).toBeSameStateVector(new StateVector('110'))
+    })
+
+    test('swap with control and anti-control swaps when both conditions hold', () => {
+      const simulator = new Simulator('0101')
+      expect(simulator.swap(2, 3, {controls: [0], antiControls: [1]}).state).toBeSameStateVector(
+        new StateVector('1001'),
+      )
     })
   })
 

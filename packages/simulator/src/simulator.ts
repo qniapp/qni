@@ -115,7 +115,7 @@ export class Simulator {
           this.rz(each.angle, ...each.targets, {controls: each.controls, antiControls: each.antiControls})
           break
         case SerializedSwapGateType: {
-          this.swap(each.targets[0], each.targets[1], {controls: each.controls})
+          this.swap(each.targets[0], each.targets[1], {controls: each.controls, antiControls: each.antiControls})
           break
         }
         case SerializedControlGateType: {
@@ -290,15 +290,14 @@ export class Simulator {
 
   /**
    * Swaps the values of two qubits.
-   *
-   * TODO: antiControl に対応
    */
   swap(target0: number, target1: number, controlOptions?: ControlOptions): Simulator {
     const controls = controlOptions?.controls || []
+    const antiControls = controlOptions?.antiControls
 
-    this.x(target1, {controls: controls.concat([target0])})
-      .x(target0, {controls: controls.concat([target1])})
-      .x(target1, {controls: controls.concat([target0])})
+    this.x(target1, {controls: controls.concat([target0]), antiControls})
+      .x(target0, {controls: controls.concat([target1]), antiControls})
+      .x(target1, {controls: controls.concat([target0]), antiControls})
     return this
   }
 
