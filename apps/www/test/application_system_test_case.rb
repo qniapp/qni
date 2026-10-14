@@ -2,9 +2,6 @@
 
 require 'test_helper'
 
-# https://github.com/rails/rails/pull/43503
-Selenium::WebDriver.logger.ignore(:browser_options)
-
 # rubocop:disable Metrics/ClassLength
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by(:selenium, using: :headless_chrome) do |driver_option|
