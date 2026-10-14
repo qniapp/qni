@@ -2,7 +2,7 @@ import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzo
 import {AntiControlGateElement} from './anti-control-gate-element'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
-import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
+import {CircuitStepElement, type ControlledUGateSettings, isCircuitStepElement} from './circuit-step-element'
 import {ControlGateElement} from './control-gate-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
 import {HoverableMixin, isResizeable} from './mixin'
@@ -54,55 +54,41 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   @attr circuitTitle = ''
   @attr debug = false
 
-  // Controlled-H
   @attr chDisabled = false
   @attr chMaxControlGates = 0
   @attr chMaxTargetGates = 0
-  // Controlled-NOT
   @attr cnotDisabled = false
   @attr cnotMaxControlGates = 0
   @attr cnotMaxTargetGates = 0
-  // Controlled-Y
   @attr cyDisabled = false
   @attr cyMaxControlGates = 0
   @attr cyMaxTargetGates = 0
-  // Controlled-Z
   @attr czDisabled = false
   @attr czMaxControlGates = 0
   @attr czMaxTargetGates = 0
-  // Controlled-Phase
   @attr cphaseDisabled = false
   @attr cphaseMaxControlGates = 0
   @attr cphaseMaxTargetGates = 0
-  // Controlled-T
   @attr ctDisabled = false
   @attr ctMaxControlGates = 0
   @attr ctMaxTargetGates = 0
-  // Controlled-√X
   @attr crnotDisabled = false
   @attr crnotMaxControlGates = 0
   @attr crnotMaxTargetGates = 0
-  // Controlled-Rx
   @attr crxDisabled = false
   @attr crxMaxControlGates = 0
   @attr crxMaxTargetGates = 0
-  // Controlled-Ry
   @attr cryDisabled = false
   @attr cryMaxControlGates = 0
   @attr cryMaxTargetGates = 0
-  // Controlled-Rz
   @attr crzDisabled = false
   @attr crzMaxControlGates = 0
   @attr crzMaxTargetGates = 0
-  // Controlled-Swap
   @attr cswapDisabled = false
   @attr cswapMaxControlGates = 0
-  // Swap
   @attr swapDisabled = false
-  // CZ
   @attr controlControlDisabled = false
   @attr controlControlMaxTargetGates = 0
-  // CPHASE
   @attr phasePhaseDisabled = false
   @attr phasePhaseMaxTargetGates = 0
 
@@ -349,58 +335,33 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
 
   private updateStepOperationAttributes(step: CircuitStepElement): void {
     step.updateOperationAttributes({
-      // Controlled-H
-      disableCh: this.chDisabled,
-      maxChControlGates: this.chMaxControlGates,
-      maxChTargetGates: this.chMaxTargetGates,
-      // Controlled-NOT
-      disableCnot: this.cnotDisabled,
-      maxCnotControlGates: this.cnotMaxControlGates,
-      maxCnotTargetGates: this.cnotMaxTargetGates,
-      // Controlled-Y
-      disableCy: this.cyDisabled,
-      maxCyControlGates: this.cyMaxControlGates,
-      maxCyTargetGates: this.cyMaxTargetGates,
-      // Controlled-Z
-      disableCz: this.czDisabled,
-      maxCzControlGates: this.czMaxControlGates,
-      maxCzTargetGates: this.czMaxTargetGates,
-      // Controlled-Phase
-      disableCphase: this.cphaseDisabled,
-      maxCphaseControlGates: this.cphaseMaxControlGates,
-      maxCphaseTargetGates: this.cphaseMaxTargetGates,
-      // Controlled-T
-      disableCt: this.ctDisabled,
-      maxCtControlGates: this.ctMaxControlGates,
-      maxCtTargetGates: this.ctMaxTargetGates,
-      // Controlled-√X
-      disableCrnot: this.crnotDisabled,
-      maxCrnotControlGates: this.crnotMaxControlGates,
-      maxCrnotTargetGates: this.crnotMaxTargetGates,
-      // Controlled-Rx
-      disableCrx: this.crxDisabled,
-      maxCrxControlGates: this.crxMaxControlGates,
-      maxCrxTargetGates: this.crxMaxTargetGates,
-      // Controlled-Rx
-      disableCry: this.cryDisabled,
-      maxCryControlGates: this.cryMaxControlGates,
-      maxCryTargetGates: this.cryMaxTargetGates,
-      // Controlled-Rx
-      disableCrz: this.crzDisabled,
-      maxCrzControlGates: this.crzMaxControlGates,
-      maxCrzTargetGates: this.crzMaxTargetGates,
-      // Controlled-Swap
-      disableCswap: this.cswapDisabled,
-      maxCswapControlGates: this.cswapMaxControlGates,
-      // Swap
-      disableSwap: this.swapDisabled,
-      // CZ
-      disableControlControl: this.controlControlDisabled,
-      maxControlControlTargetGates: this.controlControlMaxTargetGates,
-      // CPHASE
-      disablePhasePhase: this.phasePhaseDisabled,
-      maxPhasePhaseTargetGates: this.phasePhaseMaxTargetGates,
+      controlled: {
+        'h-gate': this.controlledUGateSettings('ch'),
+        'x-gate': this.controlledUGateSettings('cnot'),
+        'y-gate': this.controlledUGateSettings('cy'),
+        'z-gate': this.controlledUGateSettings('cz'),
+        'phase-gate': this.controlledUGateSettings('cphase'),
+        't-gate': this.controlledUGateSettings('ct'),
+        'rnot-gate': this.controlledUGateSettings('crnot'),
+        'rx-gate': this.controlledUGateSettings('crx'),
+        'ry-gate': this.controlledUGateSettings('cry'),
+        'rz-gate': this.controlledUGateSettings('crz'),
+        'swap-gate': {disabled: this.cswapDisabled, maxControlGates: this.cswapMaxControlGates},
+      },
+      swap: {disabled: this.swapDisabled},
+      controlControl: {disabled: this.controlControlDisabled, maxTargetGates: this.controlControlMaxTargetGates},
+      phasePhase: {disabled: this.phasePhaseDisabled, maxTargetGates: this.phasePhaseMaxTargetGates},
     })
+  }
+
+  private controlledUGateSettings(
+    gate: 'ch' | 'cnot' | 'cy' | 'cz' | 'cphase' | 'ct' | 'crnot' | 'crx' | 'cry' | 'crz',
+  ): ControlledUGateSettings {
+    return {
+      disabled: this[`${gate}Disabled`],
+      maxControlGates: this[`${gate}MaxControlGates`],
+      maxTargetGates: this[`${gate}MaxTargetGates`],
+    }
   }
 
   private dispatchMouseleaveEvent(): void {
