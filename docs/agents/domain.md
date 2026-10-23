@@ -2,12 +2,12 @@
 
 This repository uses a single context. Domain documentation lives at these repository-root paths:
 
-- `CONTEXT.md`: domain vocabulary and glossary.
+- `GLOSSARY.md`: domain vocabulary and glossary.
 - `docs/adr/`: architectural decision records.
 
 ## Before exploring
 
-Read the relevant domain vocabulary in root `CONTEXT.md` and ADRs in `docs/adr/` that touch the
+Read the relevant domain vocabulary in root `GLOSSARY.md` and ADRs in `docs/adr/` that touch the
 area you will explore.
 
 If these files are absent, proceed silently. Their absence does not block work or require
@@ -15,7 +15,7 @@ scaffolding. `/domain-modeling` creates documentation lazily as terms or decisio
 
 ## Use the glossary's vocabulary
 
-Use the terms defined in `CONTEXT.md` when naming domain concepts in issue titles, refactor
+Use the terms defined in `GLOSSARY.md` when naming domain concepts in issue titles, refactor
 proposals, hypotheses, and tests. Avoid synonyms the glossary explicitly rejects.
 
 If a needed concept is missing, reconsider whether the project uses it. Note genuine vocabulary
