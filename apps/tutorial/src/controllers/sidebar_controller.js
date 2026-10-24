@@ -36,11 +36,13 @@ export default class extends Controller {
   }
 
   close() {
-    if (this.menuTarget.open) this.menuTarget.close()
+    if (this.menuTarget.open) {
+      this.saveScrollPositions()
+      this.menuTarget.close()
+    }
   }
 
   closed() {
-    this.saveScrollPositions()
     this.openerTarget.setAttribute('aria-expanded', 'false')
   }
 
@@ -73,14 +75,19 @@ export default class extends Controller {
   }
 
   saveScrollPositions() {
-    const body = this.media.matches ? this.bodyMdTarget : this.bodyTarget
+    const body = this.menuTarget.open ? this.bodyTarget : this.bodyMdTarget
+    if (body.getClientRects().length === 0) return
     sessionStorage.setItem(
       'sidebar-open-chapters',
       Array.from(body.querySelectorAll('details[open] > summary'), (summary) =>
         summary.textContent.trim()
       ).join('\n')
     )
-    sessionStorage.setItem('sidebar-scroll', this.bodyTarget.scrollTop)
-    sessionStorage.setItem('sidebar-md-scroll', this.bodyMdTarget.scrollTop)
+    for (const [panel, key] of [
+      [this.bodyTarget, 'sidebar-scroll'],
+      [this.bodyMdTarget, 'sidebar-md-scroll'],
+    ]) {
+      if (panel.getClientRects().length > 0) sessionStorage.setItem(key, panel.scrollTop)
+    }
   }
 }

@@ -111,6 +111,33 @@
   --tw-prose-body: #100f0f;
   --tw-prose-links: #205ea6;
 }
+/* Keep fixed-width state tables readable with their own horizontal scrollbar. */
+.legacy-content .content-with-margin > .w-min {
+  max-width: 100%;
+  overflow-x: auto;
+}
+/* A shared intrinsic column keeps table headings aligned with every state row. */
+.legacy-content .content-with-margin > .w-min.flex-col {
+  display: grid;
+  grid-template-columns: max-content;
+}
+/* Sidenotes start at sm (640px), so reserve their column at that same breakpoint. */
+@media (min-width: 640px) {
+  .legacy-content .content-with-margin > p,
+  .legacy-content .content-with-margin > ul,
+  .legacy-content .content-with-margin > figure,
+  .legacy-content .content-with-margin > orbit-reviewarea,
+  .legacy-content .content-with-margin > .mini-qni,
+  .legacy-content .content-with-margin > footer {
+    width: 58.333333%;
+    margin-right: auto;
+  }
+}
+/* Anchor absolute circuit output/controls inside the existing scrollport so they
+   remain reachable when the viewport is narrower than the state display. */
+.legacy-content .overflow-scroll:has(quantum-circuit) {
+  position: relative;
+}
 /* Wide static diagrams scroll within their existing wrapper, not the page. */
 .legacy-content .content-with-margin > div:has(> quantum-circuit) {
   overflow-x: auto;

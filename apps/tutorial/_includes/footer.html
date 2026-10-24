@@ -1,18 +1,16 @@
 <footer class="mt-12 text-sm leading-6">
-  <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
+  <div class="mb-10 flex items-center font-semibold text-slate-700">
     {% if page.prev %}
-    <a
-      class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="{{ page.prev_url }}"
+    <a class="group flex items-center no-underline hover:text-slate-900" href="{{ page.prev_url }}"
       >{% include chevron_left.svg class="mr-3 h-4 w-auto overflow-visible text-slate-400
-      group-hover:text-slate-600 dark:group-hover:text-slate-300" %}{{ page.prev }}</a
+      group-hover:text-slate-600" %}{{ page.prev }}</a
     >
     {% endif %} {% if page.next %}
     <a
-      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      class="group ml-auto flex items-center no-underline hover:text-slate-900"
       href="{{ page.next_url }}"
       >{{ page.next }}{% include chevron_right.svg class="ml-3 h-4 w-auto overflow-visible
-      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" %}</a
+      text-slate-400 group-hover:text-slate-600" %}</a
     >
     {% endif %}
   </div>

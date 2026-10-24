@@ -39,7 +39,7 @@ function observe(page) {
   })
 }
 try {
-  for (const width of [1280, 390]) {
+  for (const width of [1280, 1024, 700, 390]) {
     const page = await browser.newPage({ viewport: { width, height: 900 } })
     observe(page)
     await page.goto(base.href)
@@ -55,7 +55,13 @@ try {
     if (width >= 768) assert.equal((await page.locator('aside').boundingBox()).width, 256)
     await page.emulateMedia({ colorScheme: 'dark' })
     await expect(header).toHaveCSS('background-color', 'rgb(255, 252, 240)')
+    for (const link of await page.locator('footer a').all()) {
+      await link.hover()
+      await expect(link).toHaveCSS('color', 'rgb(15, 23, 42)')
+      await expect(link.locator('svg')).toHaveCSS('color', 'rgb(71, 85, 105)')
+    }
     await page.emulateMedia({ colorScheme: 'light' })
+    await page.evaluate(() => scrollTo(0, 0))
     const box = await header.boundingBox()
     assert.equal(box.x, reference.box.x)
     assert.equal(box.height, reference.box.height)
@@ -106,6 +112,12 @@ try {
       element.scrollTop = 200
     })
     await expect.poll(() => scrollArea.evaluate((element) => element.scrollTop)).toBe(200)
+    if (width < 768) {
+      if (width === 700)
+        await page.getByRole('button', { name: '目次を閉じる', exact: true }).click()
+      else await page.keyboard.press('Escape')
+      await expect(page.getByRole('dialog', { name: '目次', exact: true })).not.toBeVisible()
+    }
     await page.reload()
     if (width < 768) await page.getByRole('button', { name: '目次を開く', exact: true }).click()
     await expect.poll(() => scrollArea.evaluate((element) => element.scrollTop)).toBe(200)
@@ -115,30 +127,6 @@ try {
     await page.goto(new URL('qpu.html', base).href)
     await header.getByRole('link', { name: 'Qni Tutorial ホーム' }).click()
     assert.equal(page.url(), base.href)
-    if (width === 1280) {
-      for (const link of links.filter((link) => !/\/(?:index.html)?$/.test(link))) {
-        // Each circuit-heavy lesson gets a fresh renderer and worker lifecycle.
-        const lesson = await browser.newPage({ viewport: { width, height: 900 } })
-        observe(lesson)
-        await lesson.goto(link)
-        await expect(lesson.getByRole('banner')).toHaveCSS('background-color', reference.background)
-        await expect(lesson.locator('aside nav [aria-current="page"]')).toHaveCount(1)
-        const assets = await lesson
-          .locator('[src], link[rel="stylesheet"]')
-          .evaluateAll((elements) =>
-            elements.map((e) => e.src || e.href).filter((href) => href.startsWith(location.origin))
-          )
-        for (const asset of new Set(assets))
-          assert.equal((await lesson.request.get(asset)).status(), 200, asset)
-        assert.equal(
-          await lesson.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
-          true,
-          link
-        )
-        report.pages.push(link)
-        await lesson.close()
-      }
-    }
     // Real legacy circuit gesture, live simulator result, operation menu and prose help.
     await page.goto(new URL('qni_intro.html', base).href)
     const editor = page.locator('circuit-editor').first()
@@ -177,6 +165,74 @@ try {
       width,
       orbitFrames: await page.locator('orbit-reviewarea iframe').count(),
     })
+    await page.close()
+    if (width === 1280) {
+      for (const link of links.filter((link) => !/\/(?:index.html)?$/.test(link))) {
+        // Dispose Chromium's workers/third-party frames between circuit-heavy lessons.
+        const lessonBrowser = await chromium.launch({ args: ['--no-sandbox'] })
+        try {
+          const lesson = await lessonBrowser.newPage({ viewport: { width, height: 900 } })
+          observe(lesson)
+          await lesson.goto(link)
+          await expect(lesson.getByRole('banner')).toHaveCSS(
+            'background-color',
+            reference.background
+          )
+          await expect(lesson.locator('aside nav [aria-current="page"]')).toHaveCount(1)
+          const assets = await lesson
+            .locator('[src], link[rel="stylesheet"]')
+            .evaluateAll((elements) =>
+              elements
+                .map((e) => e.src || e.href)
+                .filter((href) => href.startsWith(location.origin))
+            )
+          for (const asset of new Set(assets))
+            assert.equal((await lesson.request.get(asset)).status(), 200, asset)
+          assert.equal(
+            await lesson.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+            true,
+            link
+          )
+          report.pages.push(link)
+        } finally {
+          await lessonBrowser.close()
+        }
+      }
+    }
+  }
+  for (const width of [390, 700, 768, 1024]) {
+    const page = await browser.newPage({ viewport: { width, height: 900 } })
+    observe(page)
+    await page.goto(new URL('shor_qft.html', base).href)
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+      true,
+      `Shor QFT at ${width}px`
+    )
+    const table = page.locator('.content-with-margin > .w-min')
+    const heading = await table.locator(':scope > .mb-2 > div').first().boundingBox()
+    const firstState = await table.locator('qubit-circle').first().boundingBox()
+    assert.equal(heading.x, firstState.x, 'State table headings stay aligned with their columns')
+    await page.screenshot({ path: join(evidence, `shor-qft-${width}.png`) })
+    await table.evaluate((element) => {
+      element.scrollLeft = element.scrollWidth
+    })
+    assert.ok(
+      await table.evaluate((element) => element.scrollLeft > 0),
+      'Wide state table remains scrollable'
+    )
+    await page.screenshot({ path: join(evidence, `shor-qft-table-end-${width}.png`) })
+    const circuit = page.locator('quantum-circuit.mb-40')
+    await circuit.scrollIntoViewIfNeeded()
+    const lastGate = circuit.locator('measurement-gate').last()
+    await lastGate.scrollIntoViewIfNeeded()
+    const gateBox = await lastGate.boundingBox()
+    assert.ok(
+      gateBox.x >= 0 && gateBox.x + gateBox.width <= width,
+      'Last circuit operation remains reachable'
+    )
+    assert.equal(await page.evaluate(() => scrollX), 0)
+    await page.screenshot({ path: join(evidence, `shor-qft-circuit-${width}.png`) })
     await page.close()
   }
   assert.deepEqual(report.localErrors, [])
