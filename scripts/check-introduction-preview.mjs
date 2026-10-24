@@ -14,7 +14,53 @@ assert.equal(base.hostname, '127.0.0.1')
 assert.equal(base.pathname, '/qni/')
 const { chromium, expect } = createRequire(resolve(checkout, 'package.json'))('@playwright/test')
 await mkdir(evidence, { recursive: true })
-const report = { localFailures: [], consoleErrors: [], pageErrors: [], external: [], gpu: {} }
+function observations() {
+  return { localFailures: [], localAssets: [], consoleErrors: [], pageErrors: [], external: [] }
+}
+
+function observe(page, result) {
+  page.on('response', (response) => {
+    if (!response.url().startsWith(base.origin)) {
+      result.external.push({ url: response.url(), status: response.status() })
+    } else {
+      if (response.status() >= 400) result.localFailures.push(response.url())
+      if (/\.(m?js|wasm|css)$/.test(response.url()))
+        result.localAssets.push({
+          url: response.url(),
+          status: response.status(),
+          mime: response.headers()['content-type'],
+        })
+    }
+  })
+  page.on('requestfailed', (request) => {
+    const failure = { url: request.url(), error: request.failure() }
+    if (request.url().startsWith(base.origin)) result.localFailures.push(failure)
+    else result.external.push(failure)
+  })
+  page.on('pageerror', (error) => result.pageErrors.push(error.message))
+  page.on('console', (message) => {
+    if (message.type() === 'error')
+      result.consoleErrors.push({ text: message.text(), location: message.location() })
+  })
+}
+
+function assertNoLocalErrors(result) {
+  assert.deepEqual(result.localFailures, [])
+  assert.deepEqual(result.pageErrors, [])
+  assert.deepEqual(
+    result.consoleErrors.filter(
+      (error) => !error.location.url || error.location.url.startsWith(base.origin)
+    ),
+    []
+  )
+  for (const asset of result.localAssets) {
+    if (/\.m?js$/.test(asset.url)) assert.match(asset.mime, /javascript/, asset.url)
+    if (/\.wasm$/.test(asset.url)) assert.match(asset.mime, /application\/wasm/, asset.url)
+    if (/\.css$/.test(asset.url)) assert.match(asset.mime, /text\/css/, asset.url)
+  }
+}
+
+const report = { ...observations(), gpu: {}, gpuDisabled: observations() }
 const browser = await chromium.launch({
   args: [
     '--no-sandbox',
@@ -26,21 +72,7 @@ const browser = await chromium.launch({
 })
 try {
   const page = await browser.newPage()
-  page.on('response', (response) => {
-    if (!response.url().startsWith(base.origin)) {
-      report.external.push({ url: response.url(), status: response.status() })
-    } else if (response.status() >= 400) report.localFailures.push(response.url())
-  })
-  page.on('requestfailed', (request) => {
-    const failure = { url: request.url(), error: request.failure() }
-    if (request.url().startsWith(base.origin)) report.localFailures.push(failure)
-    else report.external.push(failure)
-  })
-  page.on('pageerror', (error) => report.pageErrors.push(error.message))
-  page.on('console', (message) => {
-    if (message.type() === 'error')
-      report.consoleErrors.push({ text: message.text(), location: message.location() })
-  })
+  observe(page, report)
   for (const width of [1280, 390]) {
     await page.setViewportSize({ width, height: 900 })
     for (const entry of ['/qni/', '/qni/index.html']) {
@@ -130,6 +162,7 @@ try {
   const unsupportedBrowser = await chromium.launch({ args: ['--no-sandbox', '--disable-gpu'] })
   try {
     const unsupported = await unsupportedBrowser.newPage()
+    observe(unsupported, report.gpuDisabled)
     await unsupported.goto(base.href)
     const circuit = unsupported.locator('qni-webgpu-circuit')
     await circuit.scrollIntoViewIfNeeded()
@@ -138,17 +171,18 @@ try {
     await expect(message).toBeVisible()
     report.unsupportedMessage = await message.innerText()
     await circuit.screenshot({ path: join(evidence, 'gpu-unavailable.png') })
+    assertNoLocalErrors(report.gpuDisabled)
+    assert.ok(
+      report.gpuDisabled.localAssets.some(
+        (asset) =>
+          asset.url === base.href + 'qni-webgpu/qni-embed-error.mjs' && asset.status === 200
+      ),
+      'GPU-disabled browser must load the real dynamic error module'
+    )
   } finally {
     await unsupportedBrowser.close()
   }
-  assert.deepEqual(report.localFailures, [])
-  assert.deepEqual(report.pageErrors, [])
-  assert.deepEqual(
-    report.consoleErrors.filter(
-      (error) => !error.location.url || error.location.url.startsWith(base.origin)
-    ),
-    []
-  )
+  assertNoLocalErrors(report)
 } finally {
   await writeFile(join(evidence, 'browser-report.json'), JSON.stringify(report, null, 2))
   await browser.close()

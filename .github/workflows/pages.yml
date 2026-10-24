@@ -82,8 +82,17 @@ jobs:
           version: 9.15.9
           package_json_file: .introduction-tutorial/package.json
 
+      # pnpm must not discover the legacy pnpm-workspace.yaml from either
+      # the tutorial checkout or its nested WebGPU source checkout.
+      - name: Move tutorial outside the legacy workspace
+        id: tutorial
+        run: |
+          directory=$(mktemp -d "$RUNNER_TEMP/qni-introduction.XXXXXX")
+          mv .introduction-tutorial "$directory/tutorial"
+          echo "path=$directory/tutorial" >> "$GITHUB_OUTPUT"
+
       - name: Install pinned tutorial dependencies
-        working-directory: .introduction-tutorial
+        working-directory: ${{ steps.tutorial.outputs.path }}
         run: pnpm install --frozen-lockfile
 
       - name: Install prebuilt Trunk
@@ -100,11 +109,11 @@ jobs:
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Build current pinned WebGPU assets
-        working-directory: .introduction-tutorial
+        working-directory: ${{ steps.tutorial.outputs.path }}
         run: bash scripts/fetch-qni-webgpu.sh .qni-webgpu-source
 
       - name: Build migration introduction
-        working-directory: .introduction-tutorial
+        working-directory: ${{ steps.tutorial.outputs.path }}
         env:
           QNI_TUTORIAL_MIGRATION: '1'
           QNI_EMBED_PREBUILT: '0'
@@ -112,9 +121,11 @@ jobs:
         run: pnpm run typecheck && pnpm run build --outDir .astro/migration-dist
 
       - name: Test and compose introduction only
+        env:
+          INTRODUCTION_DIR: ${{ steps.tutorial.outputs.path }}
         run: |
           node --test scripts/compose-introduction.test.mjs
-          node scripts/compose-introduction.mjs html .introduction-tutorial/.astro/migration-dist
+          node scripts/compose-introduction.mjs html "$INTRODUCTION_DIR/.astro/migration-dist"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5

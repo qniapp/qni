@@ -13,7 +13,9 @@ corepack pnpm install --frozen-lockfile
 (cd apps/tutorial && bundle install)
 corepack pnpm --dir apps/tutorial build:site
 
-# An external temporary directory keeps builds/screenshots out of source.
+# Both checkouts MUST be outside the legacy pnpm workspace, including in CI.
+# Otherwise pnpm can install the legacy projects and leave Astro/embed deps absent.
+# The workflow moves both nested checkouts together into a unique RUNNER_TEMP dir.
 work=$(mktemp -d)
 cp -a html "$work/baseline"
 # Until publication, clone the read-only phase-1 worker repo instead of GitHub.
@@ -42,15 +44,13 @@ node scripts/check-introduction-preview.mjs "$work/tutorial" http://127.0.0.1:87
 
 Astro's output must share its checkout's filesystem. The upstream asset script builds fresh pinned embed JS/WASM/error modules and its diagnostic app. Composition includes only `index.html`, `_astro/`, `qni-webgpu/`, `favicon.svg`, the three introduction SVGs, and `images/introduction/qni_screenshot_grover.png`. It never copies other routes, the diagnostic app, or all images. Equal existing assets are reused; any differing collision fails before modifying output. Symlinks and file/directory collisions are refused. Only old `index.html` may change.
 
-The command tests cover selection, preservation, differing collision refusal, equal reuse and repeat composition. The browser check requests actual local assets and TOC targets, checks both `/qni/` and `/qni/index.html` at 1280px/390px, opens menus, follows Next to the real `/qni/qpu.html` and its actual return link, and saves screenshots plus local/external error reports. It uses headless Chromium/SwiftShader, **software WebGPU**, not a physical GPU. A real canvas drag inserts H after H and GPU readback verifies the resulting identity operation; a separate GPU-disabled browser checks the unavailable-adapter guidance and dynamically imported error module. Orbit responses are recorded separately from local failures. Physical mobile/device acceptance remains a human check.
+The command tests cover selection, preservation, differing collision refusal, equal reuse and repeat composition. The browser check requests actual local assets and TOC targets, checks both `/qni/` and `/qni/index.html` at 1280px/390px, opens menus, follows Next to the real `/qni/qpu.html` and its actual return link, and saves screenshots plus local/external error reports. It uses headless Chromium/SwiftShader, **software WebGPU**, not a physical GPU. A real canvas drag inserts H after H and GPU readback verifies the resulting identity operation; a separate GPU-disabled browser checks the unavailable-adapter guidance, successful dynamic error-module loading and MIME type, and local asset/console/page errors. Orbit responses are recorded separately from local failures. Physical mobile/device acceptance remains a human check.
 
-## Local evidence and release limits
+## Release checks and limits
 
-The first phase-2 preview used old source `88fa11396e91b13a6545332600a7131a6c2ec491`, the exact tutorial pin above, and its source embed pin. All 293 baseline files were compared by SHA-256: only `index.html` changed, 41 selected files were added. Index SHA-256 was `174446379359dbd1dab14a85de24cb1cc52523fdb57b7aba34528859e430aa3e`. Evidence, manifests, build logs and the localhost preview are outside source at `/tmp/qni-637-compose/`; the preview root is `preview/`, process ownership is in `preview.pid`, server log is `preview.log`, screenshots and browser report are in `evidence/`. Temporary storage is not durable release storage.
+Before approval, compare every baseline file's SHA-256 against the composed output: only `index.html` may differ, and additions must be limited to the selection above. Retain manifests, source hashes, preview process ownership, screenshots and test logs outside committed source and include their locations in the handoff. Temporary preview storage is not durable release storage.
 
-Local checks passed: six composition command tests; the composed browser check; old-site typecheck, lint, Pages/local-build config checks and full `pnpm test:ci`; pinned tutorial typecheck, migration regression and unit tests; Prettier and actionlint. The old full suite needed an isolated PostgreSQL cluster rather than the unrelated localhost database. Its socket/data/logs are under `/tmp/qni-637-compose/pgsocket`, `pgdata` and `postgres.log` (socket-only port 55467, owned by this worker). No shared database was altered. GitHub returned 404 for the tutorial pin during verification, so remote publication remains a prerequisite, not a completed check.
-
-Local main includes three unpublished documentation commits (`95131fc0`, `ae0abf19`, `88fa1139`). Observed remote main was `c034bfd39020137750cda1ac004461ddcb4ef76c` and has a separate history since the common base. Neither main nor those remote changes were integrated or overwritten here. Before landing/publication, reconcile the intended source history under separate approval, review all pending differences and refresh preview evidence if the old source changes.
+Run the six command tests, composed browser check, old-site typecheck/lint/config checks and full `pnpm test:ci`, pinned tutorial typecheck/migration/unit tests, Prettier and actionlint. Verify fresh dependencies and generated assets using the workflow's actual checkout-and-move layout, not just a previously built standalone checkout. Inspect `main...origin/main` before landing, preserve unpublished commits and reconcile the intended source history only under separate approval. Refresh preview evidence if the old source changes.
 
 Passing local checks does not complete #637. Human preview approval, exact-SHA landing approvals for each repository, separate push/publication approval, and production verification are still required. A push to either main can trigger that repository's existing publication. No push, PR, landing or deployment is part of this worker task.
 
