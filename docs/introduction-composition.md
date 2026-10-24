@@ -1,6 +1,6 @@
 # Introduction composition (#637 phase 2)
 
-The Pages workflow still builds the legacy Jekyll site normally and publishes automatically on main push. Before the existing upload, it builds tutorial commit `217a691d88ff4ec4a2a02d5235f065ade7d91527` with migration enabled and source-generated WebGPU embeds. The experimental tutorial's default build is unchanged.
+The Pages workflow still builds the legacy Jekyll site normally and publishes automatically on main push. Before the existing upload, it builds tutorial commit `18d9cc041bf2be9ef600376519ad9da5d8115f4c` with migration enabled and source-generated WebGPU embeds. The migration header uses selectable colored Qni/Tutorial text, the logo mark and a GitHub icon linking to `https://github.com/qniapp/qni`, without the experimental badge. The experimental tutorial's default build is unchanged.
 
 **Publication dependency:** that exact tutorial commit must be published to `qniapp/qni-tutorial-webgpu` before an approved push of this repository. Checkout must fail if unavailable, never fall back to main. Its `qni-webgpu.ref` pins source `4f4a7f597791868149e9bc3fd8740699190bd54a`; its prebuilt release pin is not used here. Rust follows that source's toolchain (`stable`); Trunk is 0.21.14. Remote Actions execution is not locally verified.
 
@@ -20,7 +20,7 @@ work=$(mktemp -d)
 cp -a html "$work/baseline"
 # Until publication, clone the read-only phase-1 worker repo instead of GitHub.
 git clone https://github.com/qniapp/qni-tutorial-webgpu.git "$work/tutorial"
-git -C "$work/tutorial" checkout --detach 217a691d88ff4ec4a2a02d5235f065ade7d91527
+git -C "$work/tutorial" checkout --detach 18d9cc041bf2be9ef600376519ad9da5d8115f4c
 (
   cd "$work/tutorial"
   corepack pnpm install --frozen-lockfile # tutorial packageManager: 9.15.9
@@ -44,7 +44,7 @@ node scripts/check-introduction-preview.mjs "$work/tutorial" http://127.0.0.1:87
 
 Astro's output must share its checkout's filesystem. The upstream asset script builds fresh pinned embed JS/WASM/error modules and its diagnostic app. Composition includes only `index.html`, `_astro/`, `qni-webgpu/`, `favicon.svg`, the three introduction SVGs, and `images/introduction/qni_screenshot_grover.png`. It never copies other routes, the diagnostic app, or all images. Equal existing assets are reused; any differing collision fails before modifying output. Symlinks and file/directory collisions are refused. Only old `index.html` may change.
 
-The command tests cover selection, preservation, differing collision refusal, equal reuse and repeat composition. The browser check requests actual local assets and TOC targets, checks both `/qni/` and `/qni/index.html` at 1280px/390px, opens menus, follows Next to the real `/qni/qpu.html` and its actual return link, and saves screenshots plus local/external error reports. It uses headless Chromium/SwiftShader, **software WebGPU**, not a physical GPU. A real canvas drag inserts H after H and GPU readback verifies the resulting identity operation; a separate GPU-disabled browser checks the unavailable-adapter guidance, successful dynamic error-module loading and MIME type, and local asset/console/page errors. Orbit responses are recorded separately from local failures. Physical mobile/device acceptance remains a human check.
+The command tests cover selection, preservation, differing collision refusal, equal reuse and repeat composition. The browser check requests actual local assets and TOC targets, checks both `/qni/` and `/qni/index.html` at 1280px/390px, verifies the colored text wordmark, home/GitHub targets and absence of the experiment badge, opens menus, follows Next to the real `/qni/qpu.html` and its actual return link, and saves screenshots plus local/external error reports. It uses headless Chromium/SwiftShader, **software WebGPU**, not a physical GPU. A real canvas drag inserts H after H and GPU readback verifies the resulting identity operation; a separate GPU-disabled browser checks the unavailable-adapter guidance, successful dynamic error-module loading and MIME type, and local asset/console/page errors. Orbit responses are recorded separately from local failures. Physical mobile/device acceptance remains a human check.
 
 ## Release checks and limits
 

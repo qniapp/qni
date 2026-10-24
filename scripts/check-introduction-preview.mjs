@@ -53,10 +53,14 @@ function assertNoLocalErrors(result) {
     ),
     []
   )
+  const cachedMime = new Map()
   for (const asset of result.localAssets) {
-    if (/\.m?js$/.test(asset.url)) assert.match(asset.mime, /javascript/, asset.url)
-    if (/\.wasm$/.test(asset.url)) assert.match(asset.mime, /application\/wasm/, asset.url)
-    if (/\.css$/.test(asset.url)) assert.match(asset.mime, /text\/css/, asset.url)
+    // A valid conditional 304 can omit Content-Type; it reuses the earlier 200.
+    if (asset.status === 200 && asset.mime) cachedMime.set(asset.url, asset.mime)
+    const mime = asset.mime ?? (asset.status === 304 ? cachedMime.get(asset.url) : undefined)
+    if (/\.m?js$/.test(asset.url)) assert.match(mime, /javascript/, asset.url)
+    if (/\.wasm$/.test(asset.url)) assert.match(mime, /application\/wasm/, asset.url)
+    if (/\.css$/.test(asset.url)) assert.match(mime, /text\/css/, asset.url)
   }
 }
 
@@ -78,6 +82,25 @@ try {
     for (const entry of ['/qni/', '/qni/index.html']) {
       await page.goto(base.origin + entry)
       await expect(page.locator('h1')).toHaveText('はじめに')
+      const header = page.getByRole('banner')
+      const brand = header.getByRole('link', { name: 'Qni Tutorial ホーム', exact: true })
+      await expect(brand).toBeVisible()
+      await expect(brand).toHaveAttribute('href', '/qni/')
+      await expect(brand.locator('.brand-qni')).toHaveText('Qni')
+      await expect(brand.locator('.brand-qni')).toHaveCSS('color', 'rgb(24, 24, 27)')
+      await expect(brand.locator('.brand-tutorial')).toHaveText('Tutorial')
+      await expect(brand.locator('.brand-tutorial')).toHaveCSS('color', 'rgb(56, 189, 248)')
+      await expect(brand.locator('svg')).toBeVisible()
+      const github = header.getByRole('link', { name: 'GitHub で Qni を見る', exact: true })
+      await expect(github).toHaveAttribute('href', 'https://github.com/qniapp/qni')
+      await expect(github.locator('svg')).toBeVisible()
+      await expect(header).not.toContainText('実験版')
+      await header.screenshot({
+        path: join(
+          evidence,
+          `header-${width}-${entry.endsWith('index.html') ? 'index' : 'root'}.png`
+        ),
+      })
       assert.equal(
         await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
         true
