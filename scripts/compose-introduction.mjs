@@ -6,7 +6,7 @@ const selected = [
   'index.html',
   '_astro',
   'qni-webgpu',
-  'favicon.svg',
+  'qni-favicon.ico',
   'images/bit_capacitor_vs_quantum.svg',
   'images/quantum_search_vs_linear.svg',
   'images/quantum_factoring.svg',

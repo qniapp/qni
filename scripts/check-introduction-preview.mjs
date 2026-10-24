@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { createHash } from 'node:crypto'
 import { createRequire } from 'node:module'
 import { resolve, join } from 'node:path'
 import { mkdir, writeFile } from 'node:fs/promises'
@@ -82,6 +83,24 @@ try {
     for (const entry of ['/qni/', '/qni/index.html']) {
       await page.goto(base.origin + entry)
       await expect(page.locator('h1')).toHaveText('はじめに')
+      const icon = page.locator('link[rel="icon"]')
+      await expect(icon).toHaveAttribute('href', '/qni/qni-favicon.ico')
+      await expect(icon).toHaveAttribute('type', 'image/x-icon')
+      const iconResponse = await page.request.get(base.href + 'qni-favicon.ico')
+      assert.equal(iconResponse.status(), 200)
+      assert.match(
+        iconResponse.headers()['content-type'],
+        /^image\/(?:x-icon|vnd\.microsoft\.icon)(?:;|$)/
+      )
+      const iconDigest = createHash('sha256')
+        .update(await iconResponse.body())
+        .digest('hex')
+      assert.equal(iconDigest, 'f2c4bad949b0ec8860fd84b540c014d8745479889f42f67ecdd8e09b4c114ef9')
+      report.favicon = {
+        href: '/qni/qni-favicon.ico',
+        mime: iconResponse.headers()['content-type'],
+        sha256: iconDigest,
+      }
       const header = page.getByRole('banner')
       const brand = header.getByRole('link', { name: 'Qni Tutorial ホーム', exact: true })
       await expect(brand).toBeVisible()
@@ -199,6 +218,12 @@ try {
     assert.equal(page.url(), base.origin + '/qni/index.html')
     await expect(page.locator('h1')).toHaveText('はじめに')
   }
+  // Headless screenshots cannot show tab chrome; capture only the real rendered icon asset.
+  const iconPage = await browser.newPage()
+  observe(iconPage, report)
+  await iconPage.goto(base.href + 'qni-favicon.ico')
+  await iconPage.locator('img').screenshot({ path: join(evidence, 'qni-favicon.png') })
+  await iconPage.close()
   await page.setViewportSize({ width: 1280, height: 900 })
   await page.goto(base.href)
   const embed = page.locator('qni-webgpu-circuit')

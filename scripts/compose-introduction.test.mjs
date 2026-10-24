@@ -10,7 +10,7 @@ const assets = [
   '_astro/index.js',
   'qni-webgpu/qni-web_bg.wasm',
   'qni-webgpu/qni-embed-error.mjs',
-  'favicon.svg',
+  'qni-favicon.ico',
   'images/bit_capacitor_vs_quantum.svg',
   'images/quantum_search_vs_linear.svg',
   'images/quantum_factoring.svg',
@@ -27,6 +27,7 @@ async function fixture(t) {
     'new/qpu/index.html': 'must not publish',
     'new/app/index.html': 'diagnostic must not publish',
     'new/images/unused.png': 'unused',
+    'new/favicon.svg': 'experimental icon must not publish',
     ...Object.fromEntries(assets.map((file) => [`new/${file}`, file])),
   })) {
     await mkdir(join(root, file, '..'), { recursive: true })
