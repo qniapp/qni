@@ -2,9 +2,6 @@
 
 require 'test_helper'
 
-# https://github.com/rails/rails/pull/43503
-Selenium::WebDriver.logger.ignore(:browser_options)
-
 # rubocop:disable Metrics/ClassLength
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by(:selenium, using: :headless_chrome) do |driver_option|
@@ -93,9 +90,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def assert_popup(text, element)
+    element.assert_matches_selector(:css, '[aria-describedby]')
     popup_id = element['aria-describedby']
-
-    assert_not_nil popup_id
     assert_selector("##{popup_id}", text: text)
   end
 
@@ -105,27 +101,14 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def assert_magnitudes(*magnitudes)
-    qubit_circles = find('#circle-notation').shadow_root.all('.qubit-circle')
-
-    magnitudes.each_with_index do |each, index|
-      qubit_circle = qubit_circles[index]
-      amplitude_real = qubit_circle['data-amplitude-real'].to_f
-      amplitude_imag = qubit_circle['data-amplitude-imag'].to_f
-      assert_in_delta each, Complex(amplitude_real, amplitude_imag).abs, 0.000001
+    assert_circle_values('magnitudes', magnitudes, ->(amplitude) { amplitude.abs }) do |expected, actual|
+      (expected - actual).abs <= 0.000001
     end
   end
 
   def assert_phases(*phases)
-    qubit_circles = find('#circle-notation').shadow_root.all('.qubit-circle')
-
-    phases.each_with_index do |each, index|
-      qubit_circle = qubit_circles[index]
-      amplitude_real = qubit_circle['data-amplitude-real'].to_f
-      amplitude_imag = qubit_circle['data-amplitude-imag'].to_f
-      phase = Math.atan2(amplitude_imag, amplitude_real)
-      phase_deg = (phase / Math::PI) * 180
-      assert_equal each, phase_deg.to_i
-    end
+    phase_degrees = ->(amplitude) { (Math.atan2(amplitude.imag, amplitude.real) / Math::PI * 180).to_i }
+    assert_circle_values('phases', phases, phase_degrees) { |expected, actual| expected == actual }
   end
 
   def assert_clipboard(expected)
@@ -279,6 +262,29 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   private
+
+  CircleValuesMismatch = Class.new(StandardError)
+  private_constant :CircleValuesMismatch
+
+  def assert_circle_values(label, expected, value_for)
+    actual = []
+    errors = [CircleValuesMismatch, Capybara::ElementNotFound, Selenium::WebDriver::Error::StaleElementReferenceError]
+    page.document.synchronize(Capybara.default_max_wait_time, errors: errors) do
+      circles = find('#circle-notation', wait: 0).shadow_root.all('.qubit-circle', wait: 0)
+      actual = circles.first(expected.length).map do |circle|
+        real = circle['data-amplitude-real']
+        imag = circle['data-amplitude-imag']
+        value_for.call(Complex(real.to_f, imag.to_f)) unless real.nil? || imag.nil?
+      end
+      matches = actual.length == expected.length && expected.zip(actual).all? do |wanted, observed|
+        !observed.nil? && yield(wanted, observed)
+      end
+      raise CircleValuesMismatch unless matches
+    end
+    assert true
+  rescue *errors => error
+    flunk "Expected #{label}: #{expected.inspect}; actual: #{actual.inspect} (#{error.class})"
+  end
 
   def clipboard
     page.driver.browser.execute_cdp('Browser.grantPermissions', origin: page.server_url,

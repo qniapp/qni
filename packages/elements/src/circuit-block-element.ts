@@ -27,8 +27,8 @@ export class CircuitBlockElement extends HTMLElement {
             display: flex;
             justify-content: center;
             color: rgb(14 165 233); /* sky-500 */
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-              monospace;
+            font-family:
+              ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
             white-space: nowrap;
             content: attr(data-comment) '';
             writing-mode: vertical-lr;

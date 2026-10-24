@@ -74,58 +74,18 @@ import {isResizeable} from './mixin'
 export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitStepElement
 
+type ControlledUGateName =
+  'h-gate' | 'x-gate' | 'y-gate' | 'z-gate' | 'phase-gate' | 't-gate' | 'rnot-gate' | 'rx-gate' | 'ry-gate' | 'rz-gate'
+
+type ControlSettings = {disabled: boolean; maxControlGates: number}
+
+export type ControlledUGateSettings = ControlSettings & {maxTargetGates: number}
+
 type ConnectionProps = {
-  // Controlled-H
-  disableCh: boolean
-  maxChControlGates: number
-  maxChTargetGates: number
-  // Controlled-NOT
-  disableCnot: boolean
-  maxCnotControlGates: number
-  maxCnotTargetGates: number
-  // Controlled-Y
-  disableCy: boolean
-  maxCyControlGates: number
-  maxCyTargetGates: number
-  // Controlled-Z
-  disableCz: boolean
-  maxCzControlGates: number
-  maxCzTargetGates: number
-  // Controlled-Phase
-  disableCphase: boolean
-  maxCphaseControlGates: number
-  maxCphaseTargetGates: number
-  // Controlled-T
-  disableCt: boolean
-  maxCtControlGates: number
-  maxCtTargetGates: number
-  // Controlled-√X
-  disableCrnot: boolean
-  maxCrnotControlGates: number
-  maxCrnotTargetGates: number
-  // Controlled-Rx
-  disableCrx: boolean
-  maxCrxControlGates: number
-  maxCrxTargetGates: number
-  // Controlled-Ry
-  disableCry: boolean
-  maxCryControlGates: number
-  maxCryTargetGates: number
-  // Controlled-Rz
-  disableCrz: boolean
-  maxCrzControlGates: number
-  maxCrzTargetGates: number
-  // Controlled-Swap
-  disableCswap: boolean
-  maxCswapControlGates: number
-  // Swap
-  disableSwap: boolean
-  // CZ
-  disableControlControl: boolean
-  maxControlControlTargetGates: number
-  // CPHASE
-  disablePhasePhase: boolean
-  maxPhasePhaseTargetGates: number
+  controlled: Record<ControlledUGateName, ControlledUGateSettings> & Record<'swap-gate', ControlSettings>
+  swap: {disabled: boolean}
+  controlControl: {disabled: boolean; maxTargetGates: number}
+  phasePhase: {disabled: boolean; maxTargetGates: number}
 }
 
 const groupBy = <K, V>(
@@ -314,15 +274,13 @@ export class CircuitStepElement extends HTMLElement {
           dropzone.operation.bit = bit
         },
         updateResizeableSpanDropzones: (_context, event) => {
-          if (
-            !(
-              event.type === 'SNAP_DROPZONE' ||
-              event.type === 'UNSNAP_DROPZONE' ||
-              event.type === 'OCCUPY_DROPZONE' ||
-              event.type === 'DELETE_OPERATION' ||
-              event.type === 'RESIZE_OPERATION'
-            )
-          )
+          if (!(
+            event.type === 'SNAP_DROPZONE' ||
+            event.type === 'UNSNAP_DROPZONE' ||
+            event.type === 'OCCUPY_DROPZONE' ||
+            event.type === 'DELETE_OPERATION' ||
+            event.type === 'RESIZE_OPERATION'
+          ))
             return
 
           let span = 1
@@ -535,7 +493,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private updateSwapConnections(connectionProps?: ConnectionProps): void {
-    const disableSwap = connectionProps?.disableSwap
+    const disableSwap = connectionProps?.swap.disabled
     const swapDropzones = this.swapGateDropzones
 
     if (swapDropzones.length !== 2 || disableSwap) {
@@ -564,14 +522,14 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private updatePhasePhaseConnections(connectionProps?: ConnectionProps): void {
-    if (connectionProps?.disablePhasePhase) return
+    if (connectionProps?.phasePhase.disabled) return
 
     const phaseDropzones = this.phaseGateDropzones
 
     for (const phaseDropzone of phaseDropzones) {
       const phaseGate = phaseDropzone.operation as PhaseGateElement
       if (phaseGate.angle === '') continue
-      if (connectionProps !== undefined && connectionProps.maxPhasePhaseTargetGates === 1) continue
+      if (connectionProps !== undefined && connectionProps.phasePhase.maxTargetGates === 1) continue
 
       let sameAnglePhaseBits = phaseDropzones
         .filter(each => {
@@ -579,8 +537,8 @@ export class CircuitStepElement extends HTMLElement {
           return phaseGate.angle === each.operation.angle
         })
         .map(each => this.bit(each))
-      if (connectionProps !== undefined && connectionProps.maxPhasePhaseTargetGates > 1) {
-        sameAnglePhaseBits = sameAnglePhaseBits.slice(0, connectionProps.maxPhasePhaseTargetGates)
+      if (connectionProps !== undefined && connectionProps.phasePhase.maxTargetGates > 1) {
+        sameAnglePhaseBits = sameAnglePhaseBits.slice(0, connectionProps.phasePhase.maxTargetGates)
       }
 
       if (!sameAnglePhaseBits.includes(this.bit(phaseDropzone))) continue
@@ -608,10 +566,10 @@ export class CircuitStepElement extends HTMLElement {
     let numControl = 0
 
     if (connectionProps !== undefined) {
-      if (connectionProps.maxControlControlTargetGates === 1) {
+      if (connectionProps.controlControl.maxTargetGates === 1) {
         controlBits = []
-      } else if (connectionProps.maxControlControlTargetGates > 1) {
-        controlBits = controlBits.slice(0, connectionProps.maxControlControlTargetGates)
+      } else if (connectionProps.controlControl.maxTargetGates > 1) {
+        controlBits = controlBits.slice(0, connectionProps.controlControl.maxTargetGates)
       }
     }
 
@@ -620,13 +578,13 @@ export class CircuitStepElement extends HTMLElement {
 
       const controlGate = each.operation as ControlGateElement
 
-      if (connectionProps?.disableControlControl) {
+      if (connectionProps?.controlControl.disabled) {
         controlGate.disable()
       } else if (
         connectionProps !== undefined &&
-        (connectionProps.maxControlControlTargetGates === 1 ||
-          (connectionProps.maxControlControlTargetGates > 0 &&
-            numControl > connectionProps.maxControlControlTargetGates))
+        (connectionProps.controlControl.maxTargetGates === 1 ||
+          (connectionProps.controlControl.maxTargetGates > 0 &&
+            numControl > connectionProps.controlControl.maxTargetGates))
       ) {
         controlGate.disable()
       } else {
@@ -739,35 +697,13 @@ export class CircuitStepElement extends HTMLElement {
     allControlBits: number[],
     connectionProps?: ConnectionProps,
   ): number[] {
-    let bits = allControlBits
+    if (connectionProps === undefined) return allControlBits
 
-    if (connectionProps) {
-      if (connectionProps.maxChControlGates > 0 && dropzone.operationName === 'h-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxChControlGates)
-      } else if (connectionProps.maxCnotControlGates > 0 && dropzone.operationName === 'x-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxCnotControlGates)
-      } else if (connectionProps.maxCyControlGates > 0 && dropzone.operationName === 'y-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxCyControlGates)
-      } else if (connectionProps.maxCzControlGates > 0 && dropzone.operationName === 'z-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxCzControlGates)
-      } else if (connectionProps.maxCphaseControlGates > 0 && dropzone.operationName === 'phase-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxCphaseControlGates)
-      } else if (connectionProps.maxCtControlGates > 0 && dropzone.operationName === 't-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxCtControlGates)
-      } else if (connectionProps.maxCrnotControlGates > 0 && dropzone.operationName === 'rnot-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxCrnotControlGates)
-      } else if (connectionProps.maxCrxControlGates > 0 && dropzone.operationName === 'rx-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxCrxControlGates)
-      } else if (connectionProps.maxCryControlGates > 0 && dropzone.operationName === 'ry-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxCryControlGates)
-      } else if (connectionProps.maxCrzControlGates > 0 && dropzone.operationName === 'rz-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxCrzControlGates)
-      } else if (connectionProps.maxCswapControlGates > 0 && dropzone.operationName === 'swap-gate') {
-        bits = allControlBits.slice(0, connectionProps.maxCswapControlGates)
-      }
-    }
+    const settings: ControlSettings | undefined =
+      connectionProps.controlled[dropzone.operationName as keyof ConnectionProps['controlled']]
+    if (settings !== undefined && settings.maxControlGates > 0) return allControlBits.slice(0, settings.maxControlGates)
 
-    return bits
+    return allControlBits
   }
 
   bit(dropzone: CircuitDropzoneElement): number {
@@ -831,50 +767,11 @@ export class CircuitStepElement extends HTMLElement {
     if (props === undefined) return null
 
     let ndropzones = 0
-    if (controllableOperationNames.includes('h-gate') && !props.disableCh && props.maxChControlGates > ndropzones) {
-      ndropzones = props.maxChControlGates
-    }
-    if (controllableOperationNames.includes('x-gate') && !props.disableCnot && props.maxCnotControlGates > ndropzones) {
-      ndropzones = props.maxCnotControlGates
-    }
-    if (controllableOperationNames.includes('y-gate') && !props.disableCy && props.maxCyControlGates > ndropzones) {
-      ndropzones = props.maxCyControlGates
-    }
-    if (controllableOperationNames.includes('z-gate') && !props.disableCz && props.maxCzControlGates > ndropzones) {
-      ndropzones = props.maxCzControlGates
-    }
-    if (
-      controllableOperationNames.includes('phase-gate') &&
-      !props.disableCphase &&
-      props.maxCphaseControlGates > ndropzones
-    ) {
-      ndropzones = props.maxCphaseControlGates
-    }
-    if (controllableOperationNames.includes('t-gate') && !props.disableCt && props.maxCtControlGates > ndropzones) {
-      ndropzones = props.maxCtControlGates
-    }
-    if (
-      controllableOperationNames.includes('rnot-gate') &&
-      !props.disableCrnot &&
-      props.maxCrnotControlGates > ndropzones
-    ) {
-      ndropzones = props.maxCrnotControlGates
-    }
-    if (controllableOperationNames.includes('rx-gate') && !props.disableCrx && props.maxCrxControlGates > ndropzones) {
-      ndropzones = props.maxCrxControlGates
-    }
-    if (controllableOperationNames.includes('ry-gate') && !props.disableCry && props.maxCryControlGates > ndropzones) {
-      ndropzones = props.maxCryControlGates
-    }
-    if (controllableOperationNames.includes('rz-gate') && !props.disableCrz && props.maxCrzControlGates > ndropzones) {
-      ndropzones = props.maxCrzControlGates
-    }
-    if (
-      controllableOperationNames.includes('swap-gate') &&
-      !props.disableCswap &&
-      props.maxCswapControlGates > ndropzones
-    ) {
-      ndropzones = props.maxCswapControlGates
+    for (const name of controllableOperationNames) {
+      const settings: ControlSettings | undefined = props.controlled[name as keyof ConnectionProps['controlled']]
+      if (settings !== undefined && !settings.disabled && settings.maxControlGates > ndropzones) {
+        ndropzones = settings.maxControlGates
+      }
     }
 
     if (ndropzones === 0) return null
@@ -882,93 +779,31 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private controllableDropzones(connectionProps: ConnectionProps | undefined): CircuitDropzoneElement[] {
-    let numH = 0
-    let numX = 0
-    let numY = 0
-    let numZ = 0
-    let numPhase = 0
-    let numT = 0
-    let numRnot = 0
-    let numRx = 0
-    let numRy = 0
-    let numRz = 0
+    const numTargetGates = new Map<ControlledUGateName, number>()
+    const isActiveTarget = (props: ConnectionProps, gateName: ControlledUGateName): boolean => {
+      const numTarget = (numTargetGates.get(gateName) ?? 0) + 1
+      numTargetGates.set(gateName, numTarget)
+      const {disabled, maxTargetGates} = props.controlled[gateName]
+      if (maxTargetGates !== 0 && numTarget > maxTargetGates) return false
+      return !disabled
+    }
 
     return this.occupiedDropzones
       .filter(each => isControllable(each.operation))
       .filter(each => {
         if (connectionProps === undefined) return true
 
-        if (isHGateElement(each.operation)) {
-          numH += 1
-          if (connectionProps.maxChTargetGates !== 0 && numH > connectionProps.maxChTargetGates) {
-            return false
-          }
-          return !connectionProps.disableCh
-        }
-        if (isXGateElement(each.operation)) {
-          numX += 1
-          if (connectionProps.maxCnotTargetGates !== 0 && numX > connectionProps.maxCnotTargetGates) {
-            return false
-          }
-          return !connectionProps.disableCnot
-        }
-        if (isYGateElement(each.operation)) {
-          numY += 1
-          if (connectionProps.maxCyTargetGates !== 0 && numY > connectionProps.maxCyTargetGates) {
-            return false
-          }
-          return !connectionProps.disableCy
-        }
-        if (isZGateElement(each.operation)) {
-          numZ += 1
-          if (connectionProps.maxCzTargetGates !== 0 && numZ > connectionProps.maxCzTargetGates) {
-            return false
-          }
-          return !connectionProps.disableCz
-        }
-        if (isPhaseGateElement(each.operation)) {
-          numPhase += 1
-          if (connectionProps.maxCphaseTargetGates !== 0 && numPhase > connectionProps.maxCphaseTargetGates) {
-            return false
-          }
-          return !connectionProps.disableCphase
-        }
-        if (isTGateElement(each.operation)) {
-          numT += 1
-          if (connectionProps.maxCtTargetGates !== 0 && numT > connectionProps.maxCtTargetGates) {
-            return false
-          }
-          return !connectionProps.disableCt
-        }
-        if (isRnotGateElement(each.operation)) {
-          numRnot += 1
-          if (connectionProps.maxCrnotTargetGates !== 0 && numRnot > connectionProps.maxCrnotTargetGates) {
-            return false
-          }
-          return !connectionProps.disableCrnot
-        }
-        if (isRxGateElement(each.operation)) {
-          numRx += 1
-          if (connectionProps.maxCrxTargetGates !== 0 && numRx > connectionProps.maxCrxTargetGates) {
-            return false
-          }
-          return !connectionProps.disableCrx
-        }
-        if (isRyGateElement(each.operation)) {
-          numRy += 1
-          if (connectionProps.maxCryTargetGates !== 0 && numRy > connectionProps.maxCryTargetGates) {
-            return false
-          }
-          return !connectionProps.disableCry
-        }
-        if (isRzGateElement(each.operation)) {
-          numRz += 1
-          if (connectionProps.maxCrzTargetGates !== 0 && numRz > connectionProps.maxCrzTargetGates) {
-            return false
-          }
-          return !connectionProps.disableCrz
-        }
-        if (isSwapGateElement(each.operation)) return !connectionProps.disableCswap
+        if (isHGateElement(each.operation)) return isActiveTarget(connectionProps, 'h-gate')
+        if (isXGateElement(each.operation)) return isActiveTarget(connectionProps, 'x-gate')
+        if (isYGateElement(each.operation)) return isActiveTarget(connectionProps, 'y-gate')
+        if (isZGateElement(each.operation)) return isActiveTarget(connectionProps, 'z-gate')
+        if (isPhaseGateElement(each.operation)) return isActiveTarget(connectionProps, 'phase-gate')
+        if (isTGateElement(each.operation)) return isActiveTarget(connectionProps, 't-gate')
+        if (isRnotGateElement(each.operation)) return isActiveTarget(connectionProps, 'rnot-gate')
+        if (isRxGateElement(each.operation)) return isActiveTarget(connectionProps, 'rx-gate')
+        if (isRyGateElement(each.operation)) return isActiveTarget(connectionProps, 'ry-gate')
+        if (isRzGateElement(each.operation)) return isActiveTarget(connectionProps, 'rz-gate')
+        if (isSwapGateElement(each.operation)) return !connectionProps.controlled['swap-gate'].disabled
 
         return true
       })

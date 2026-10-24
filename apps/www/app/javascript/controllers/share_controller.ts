@@ -29,10 +29,7 @@ export default class ShareController extends Controller {
     const newTitle = this.circuitTitleInputTarget.value
     const res = Util.safeJsonParse(Util.urlJson)
 
-    let jsonData = null
-    if (res.isOk()) {
-      jsonData = res.value
-    } else {
+    if (res.isErr()) {
       // eslint-disable-next-line no-console
       console.error(res.error.message)
       // eslint-disable-next-line no-console
@@ -40,6 +37,7 @@ export default class ShareController extends Controller {
       return
     }
 
+    const jsonData = res.value
     jsonData.title = newTitle
 
     this.updateDocumentTitle(newTitle)

@@ -107,6 +107,10 @@ try {
       )
       await page.evaluate(() => scrollTo(0, 1200))
       await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThanOrEqual(1000)
+      // Let the compositor paint the newly scrolled viewport before capturing evidence.
+      await page.evaluate(
+        () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+      )
       const headerBox = await header.boundingBox()
       assert.ok(
         headerBox && headerBox.y >= 0 && headerBox.y <= 1 && headerBox.y + headerBox.height < 900
@@ -188,6 +192,9 @@ try {
     await page.locator('.page-footer-next').click()
     assert.equal(page.url(), base.origin + '/qni/qpu.html')
     await expect(page.locator('h1')).toContainText('QPU')
+    // Published #599 correction must survive reconciliation, not the stale preview's count.
+    await expect(page.locator('body')).toContainText(/アルゴリズムは\s*74\s*個/)
+    await page.screenshot({ path: join(evidence, `legacy-qpu-${width}.png`), fullPage: true })
     await page.locator('a[href="./index.html"]').last().click()
     assert.equal(page.url(), base.origin + '/qni/index.html')
     await expect(page.locator('h1')).toHaveText('はじめに')

@@ -36,22 +36,32 @@
     "update-browserslist-db": "npx update-browserslist-db@latest",
     "test:watch": "pnpm test --auto-watch --no-single-run"
   },
-  "prettier": "@github/prettier-config",
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@qni/common": "^0.0.87",
     "@qni/elements": "^0.0.87",
     "@qni/simulator": "^0.0.87",
-    "@svgdotjs/svg.filter.js": "^3.0.8",
+    "@svgdotjs/svg.filter.js": "^3.0.10",
     "@svgdotjs/svg.js": "^3.2.8",
     "puppeteer": "~25.5.0",
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
-    "autoprefixer": "^10.5.6",
-    "esbuild": "^0.28.1",
+    "autoprefixer": "^10.6.1",
+    "esbuild": "^0.28.2",
     "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-preset-env": "^11.4.0",
+    "postcss-preset-env": "^11.5.3",
     "tailwindcss": "^3.3.1"
   },
   "directories": {

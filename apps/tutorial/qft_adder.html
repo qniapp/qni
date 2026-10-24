@@ -4,7 +4,7 @@ section: 量子フーリエ変換 (QFT)
 title: QFT 足し算
 description: 位相の回転で足し算を行う
 prev: QFT の内部
-prev_url: ./inverse_qft.html
+prev_url: ./inside_the_qft.html
 next: 固有位相
 next_url: ./eigenphases.html
 ---
@@ -21,7 +21,7 @@ next_url: ./eigenphases.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -76,7 +76,7 @@ next_url: ./eigenphases.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -116,7 +116,7 @@ next_url: ./eigenphases.html
 
 <p>
   これは一見、最初の回路よりもかなり複雑に見えるかもしれません。 しかし、最初の逆 QFT と最後の QFT
-  を除いた a += b のブロック (左から 3 番目)
+  を除いた a += b のブロック (左から 4 番目)
   だけを見ると、最初の回路よりもかなり単純化できていることがわかります。 とくに {% qpu_operation
   control %} の数はかなり削減できています。
 </p>

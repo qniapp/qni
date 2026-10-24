@@ -5,6 +5,8 @@ title: 周期パターンの読み出し
 description: 周期 r を決めるためのパターンを QFT で調べる
 prev: \(a^xmod(N)\) の実装
 prev_url: ./shor_u.html
+next: クローン禁止定理の証明
+next_url: ./no_cloning_theorem_proof.html
 ---
 
 <p>
@@ -196,7 +198,7 @@ prev_url: ./shor_u.html
       </div>
       <div class="flex w-min flex-row space-x-2">
         {{ '0' | qubit_circle: 240, 'base' }} {{ '0' | qubit_circle: 241, 'base' }} {{ '0' |
-        qubit_circle: 241, 'base' }} {{ '0' | qubit_circle: 243, 'base' }} {{ '0' | qubit_circle:
+        qubit_circle: 242, 'base' }} {{ '0' | qubit_circle: 243, 'base' }} {{ '0' | qubit_circle:
         244, 'base' }} {{ '0' | qubit_circle: 245, 'base' }} {{ '0' | qubit_circle: 246, 'base' }}
         {{ '0' | qubit_circle: 247, 'base' }} {{ '0.25' | qubit_circle: 248, 'base' }} {{ '0' |
         qubit_circle: 249, 'base' }} {{ '0' | qubit_circle: 250, 'base' }} {{ '0' | qubit_circle:
@@ -218,7 +220,7 @@ prev_url: ./shor_u.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -233,7 +235,7 @@ prev_url: ./shor_u.html
         </div>
 
         <quantum-circuit
-          class="mt-12 mb-40"
+          class="mb-40 mt-12"
           data-target="quantum-simulator.circuit circuit-editor.circuit"
           data-min-wire-count="1"
           data-max-wire-count="1"
@@ -246,7 +248,7 @@ prev_url: ./shor_u.html
           id="circle-notation"
           data-target="quantum-simulator.circleNotation"
           data-qubit-circle-popup-template-id="qubit-circle-popup"
-          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          class="border-swan absolute bottom-0 left-0 z-40 mb-8 ml-6 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
           data-padding-X="16"
           data-padding-Y="20"
         >
@@ -260,7 +262,10 @@ prev_url: ./shor_u.html
 
 <p>
   最後の測定で 0, 4, 8, 12 のいずれかが求まることを確認してください。
-  これを連分数アルゴリズムにかければ、\(r = 4, 8\) が得られます。 そして gcd を計算して実際に \(N =
-  15\) の約数として正しい 3, 5 が求まります。 長い道程でしたが、\(15 = 3 \times 5\)
-  の因数分解を実行するショアのアルゴリズムができました!
+  これを連分数アルゴリズムにかければ、\(r\) の候補として 2 と 4 が得られます。 測定値 4、8、12 を 16
+  で割って既約分数にすると、分母はそれぞれ 4、2、4 になります。 測定値 0
+  からは有用な候補が得られないので、測定をやり直します。 そして gcd を計算して、結果が 1 より大きく
+  \(N = 15\) より小さい非自明な因数かチェックします。非自明な因数が得られたら、\(N\)
+  をその因数で割ってもう一つの因数を求めます。 \(r = 4\) の場合因数 3 と 5 がみつかります。
+  長い道程でしたが、\(15 = 3 \times 5\) の因数分解を実行するショアのアルゴリズムができました!
 </p>

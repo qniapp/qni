@@ -41,8 +41,8 @@ export class QubitCircleElement extends HTMLElement {
             line-height: 10px;
             white-space: nowrap;
             content: '|' attr(data-ket) '⟩';
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-              monospace;
+            font-family:
+              ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
           }
 
           :host([data-dark-mode])::after {
@@ -190,8 +190,7 @@ export class QubitCircleElement extends HTMLElement {
     const tmpDiv = document.createElement('div')
     tmpDiv.appendChild(template)
 
-    // eslint-disable-next-line github/no-inner-html
-    popup.setContent(tmpDiv.innerHTML)
+    popup.setContent(tmpDiv)
     popup.show()
   }
 

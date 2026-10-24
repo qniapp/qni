@@ -324,15 +324,17 @@ describe('Matrix', () => {
       ),
     ).toBeTruthy()
     expect(
-      squareMatrix(2, 3, 5, 7).tensorProduct(squareMatrix(11, 13, 17, 19)).eq(
-        // prettier-ignore
-        squareMatrix(
+      squareMatrix(2, 3, 5, 7)
+        .tensorProduct(squareMatrix(11, 13, 17, 19))
+        .eq(
+          // prettier-ignore
+          squareMatrix(
                      22, 26, 33, 39,
                      34, 38, 51, 57,
                      55, 65, 77, 91,
                      85, 95, 119, 133
                    ),
-      ),
+        ),
     ).toBeTruthy()
   })
 

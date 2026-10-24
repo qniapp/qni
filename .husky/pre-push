@@ -1,1 +1,1 @@
-pnpm fix:style && pnpm exec eslint && pnpm test
+pnpm fix:style && pnpm run lint:packages && pnpm run lint:www && pnpm test

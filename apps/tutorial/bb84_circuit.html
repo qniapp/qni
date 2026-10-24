@@ -46,7 +46,7 @@ next_url: ./multi_qubit_circle_notation.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -61,7 +61,7 @@ next_url: ./multi_qubit_circle_notation.html
         </div>
 
         <quantum-circuit
-          class="mt-12 mb-40"
+          class="mb-40 mt-12"
           data-target="quantum-simulator.circuit circuit-editor.circuit"
           data-min-wire-count="1"
           data-max-wire-count="1"
@@ -74,7 +74,7 @@ next_url: ./multi_qubit_circle_notation.html
           id="circle-notation"
           data-target="quantum-simulator.circleNotation"
           data-qubit-circle-popup-template-id="qubit-circle-popup"
-          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          class="border-swan absolute bottom-0 left-0 z-40 mb-8 ml-6 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
           data-padding-X="16"
           data-padding-Y="20"
         >
@@ -126,14 +126,16 @@ next_url: ./multi_qubit_circle_notation.html
   >を参照{% endnmargin_note
   %}によりアリスの量子ビットを複製できないため、測定して量子ビット状態を壊す以外に量子ビットの状態を推定することはできません。
   さらにアリスが {% ket 0 %} と {% ket 1 %} のどちらを送ったのか、さらに {% qpu_operation h %}
-  を適用したかどうかが測定結果からは分からないため、測定結果は 1/2 の確率でしか当たりません。
+  を適用したかどうかが測定結果からは分からないため、{% qpu_operation h %}
+  を適用した量子ビットについては 50% でしか当たらず、全体では 75% でしか当てられません。
   また横取りによってボブに量子ビットが届かないと盗聴行為がすぐにバレてしまうため、測定結果と同じビットを
   {% qpu_operation x %} で作ってボブへと送ります。
 </p>
 
 <p>
-  イブが送信する量子ビットの状態は、左から 3
-  つめのブロッホ球で確認できます。アリスが送る量子ビットの状態は 4 通りなので、およそ 3/4
+  イブが送信する量子ビットの状態は、左から 3 つめのブロッホ球で確認できます。アリスが {%
+  qpu_operation h %} を適用した量子ビット（約半分）については、イブは {% ket 0 %} か {% ket 1 %}
+  しか送れないため、およそ 1/2
   の確率でアリスの送った状態と異なる量子ビットをボブに送ることになります。
 </p>
 
@@ -143,5 +145,5 @@ next_url: ./multi_qubit_circle_notation.html
   ボブは BB84 プロトコルに従ってランダムに {% qpu_operation h %}
   を適用し、アリスからの量子ビットを測定します。 そして {% qpu_operation h %}
   を適用した/しないがアリスと一致する量子ビットのうち、半分の測定結果を突き合わせ、等しいかどうかを確認します。
-  このとき、イブが盗聴した影響でその約半分に不一致が置こるため、イブの盗聴が判明します。
+  このとき、イブが盗聴した影響でその約 4 分の 1 に不一致が起こるため、イブの盗聴が判明します。
 </p>

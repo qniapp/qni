@@ -24,7 +24,7 @@ next_url: ./qft_adder.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -73,7 +73,7 @@ next_url: ./qft_adder.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -112,7 +112,7 @@ next_url: ./qft_adder.html
 </div>
 
 <p>
-  この回路では下から 4 ビット目にだけ {% qpu_operation phase %} がありません。 そこで角度が
+  この回路では上から 4 ビット目にだけ {% qpu_operation phase %} がありません。 そこで角度が
   \(2π\)、つまり何もしない {% qpu_operation phase %}
   をあえて加えると、次の同等な回路に変換できます。
 </p>
@@ -122,7 +122,7 @@ next_url: ./qft_adder.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -172,7 +172,7 @@ next_url: ./qft_adder.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -247,7 +247,7 @@ next_url: ./qft_adder.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -295,7 +295,7 @@ next_url: ./qft_adder.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -345,7 +345,7 @@ next_url: ./qft_adder.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -398,7 +398,7 @@ next_url: ./qft_adder.html
 <p>
   最初の {% qpu_operation h %} で 1 ビット目が重ね合わせ状態になります。 次に \(\frac{π}{2},
   \frac{π}{4}, \frac{π}{8}\) ほど位相を回転する {% qpu_operation control %} {% qpu_operation phase
-  %} の組が続きます。 ここで下から 3 ビット目のみが 1 なので、このうち発火する {% qpu_operation
+  %} の組が続きます。 ここで上から 3 ビット目のみが 1 なので、このうち発火する {% qpu_operation
   phase %} は角度が \(\frac{π}{4}\) のもののみです。 つまり、全体では 1
   ビット目を等しい重ね合わせ状態にし、位相を \(\frac{π}{4}\) 回転していることが分かります。
 </p>

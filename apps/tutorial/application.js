@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// ../../node_modules/.pnpm/@qni+elements@0.0.87/node_modules/@qni/elements/dist/index.js
+// ../../node_modules/.pnpm/@qni+elements@0.0.87_jiti@2.7.0/node_modules/@qni/elements/dist/index.js
 var sg = Object.create;
 var To = Object.defineProperty;
 var Sp = Object.getOwnPropertyDescriptor;
@@ -503,8 +503,8 @@ var sf = Tt((In) => {
 });
 var uf = Tt((_e) => {
   "use strict";
-  var Gu = Symbol.for("react.element"), ju = Symbol.for("react.portal"), zs = Symbol.for("react.fragment"), Rs = Symbol.for("react.strict_mode"), Ds = Symbol.for("react.profiler"), ks = Symbol.for("react.provider"), Ns = Symbol.for("react.context"), Sb = Symbol.for("react.server_context"), _s = Symbol.for("react.forward_ref"), Ls = Symbol.for("react.suspense"), Gs = Symbol.for("react.suspense_list"), js = Symbol.for("react.memo"), Hs = Symbol.for("react.lazy"), Tb = Symbol.for("react.offscreen"), lf;
-  lf = Symbol.for("react.module.reference");
+  var Gu = /* @__PURE__ */ Symbol.for("react.element"), ju = /* @__PURE__ */ Symbol.for("react.portal"), zs = /* @__PURE__ */ Symbol.for("react.fragment"), Rs = /* @__PURE__ */ Symbol.for("react.strict_mode"), Ds = /* @__PURE__ */ Symbol.for("react.profiler"), ks = /* @__PURE__ */ Symbol.for("react.provider"), Ns = /* @__PURE__ */ Symbol.for("react.context"), Sb = /* @__PURE__ */ Symbol.for("react.server_context"), _s = /* @__PURE__ */ Symbol.for("react.forward_ref"), Ls = /* @__PURE__ */ Symbol.for("react.suspense"), Gs = /* @__PURE__ */ Symbol.for("react.suspense_list"), js = /* @__PURE__ */ Symbol.for("react.memo"), Hs = /* @__PURE__ */ Symbol.for("react.lazy"), Tb = /* @__PURE__ */ Symbol.for("react.offscreen"), lf;
+  lf = /* @__PURE__ */ Symbol.for("react.module.reference");
   function xr(t) {
     if (typeof t == "object" && t !== null) {
       var r = t.$$typeof;

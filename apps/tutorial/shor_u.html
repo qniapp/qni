@@ -12,8 +12,9 @@ next_url: ./shor_qft.html
 <p>
   今回はいよいよ、\(a^x\,mod(N)\) を実際に計算できる回路を実装します。
   前々回では、ブラックボックスである U ゲートをいくつも使った場合の実装を見てきました。
-  この実装では、U ゲートの一つひとつは \(a\,mod(N)\) を計算するのでした。 今回は、これらの連続した U
-  と同じ動作をする一つの \(a^xmod(N)\) 回路 (べき剰余回路) の実装を考えます。
+  この実装では、U ゲートの一つひとつは現在の値を \(a\) 倍し、\(mod(N)\) した値を書き込むのでした。
+  今回は、これらの連続した U と同じ動作をする一つの \(a^xmod(N)\) 回路 (べき剰余回路)
+  の実装を考えます。
 </p>
 
 <figure>
@@ -28,12 +29,14 @@ next_url: ./shor_qft.html
   <a href="https://arxiv.org/abs/quant-ph/9511018" class="italic"
     >Quantum Networks for Elementary Arithmetic Operations</a
   >
-  (2021) {% endnmargin_note %}には、べき剰余回路の実装方法が詳しく載っています。
+  (1996) {% endnmargin_note %}には、べき剰余回路の実装方法が詳しく載っています。
 </p>
 
 <figure>
   <img src="./images/axmodN.png" class="h-auto w-full" />
 </figure>
+
+<p>注: 図中の出力ラベル \(x^a\, mod\, N\) は、正しくは \(a^x\, mod\, N\) です。</p>
 
 <p>
   べき剰余回路の大まかな構成は、Ctrl MULT MOD という部品と {% qpu_operation swap %}
@@ -95,7 +98,7 @@ next_url: ./shor_qft.html
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
-          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+          class="absolute right-px top-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
           <inspector-button
             data-target="circuit-editor.inspectorButton"
@@ -110,7 +113,7 @@ next_url: ./shor_qft.html
         </div>
 
         <quantum-circuit
-          class="mt-12 mb-40"
+          class="mb-40 mt-12"
           data-target="quantum-simulator.circuit circuit-editor.circuit"
           data-min-wire-count="1"
           data-max-wire-count="1"
@@ -123,7 +126,7 @@ next_url: ./shor_qft.html
           id="circle-notation"
           data-target="quantum-simulator.circleNotation"
           data-qubit-circle-popup-template-id="qubit-circle-popup"
-          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          class="border-swan absolute bottom-0 left-0 z-40 mb-8 ml-6 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
           data-padding-X="16"
           data-padding-Y="20"
         >
@@ -323,7 +326,7 @@ next_url: ./shor_qft.html
       </div>
       <div class="flex w-min flex-row space-x-2">
         {{ '0' | qubit_circle: 240, 'base' }} {{ '0.25' | qubit_circle: 241, 'base' }} {{ '0' |
-        qubit_circle: 241, 'base' }} {{ '0' | qubit_circle: 243, 'base' }} {{ '0' | qubit_circle:
+        qubit_circle: 242, 'base' }} {{ '0' | qubit_circle: 243, 'base' }} {{ '0' | qubit_circle:
         244, 'base' }} {{ '0' | qubit_circle: 245, 'base' }} {{ '0' | qubit_circle: 246, 'base' }}
         {{ '0' | qubit_circle: 247, 'base' }} {{ '0' | qubit_circle: 248, 'base' }} {{ '0' |
         qubit_circle: 249, 'base' }} {{ '0' | qubit_circle: 250, 'base' }} {{ '0' | qubit_circle:
@@ -335,9 +338,9 @@ next_url: ./shor_qft.html
 </div>
 
 <p>
-  \(f(x) = 2^x mod(15)\) の値は列方向 (縦方向) に読みます。 {% ket 1 %} や {% ket 17 %}
+  \(f(x) = 2^x mod(15)\) の値は列番号 (横方向) から読みます。 {% ket 1 %} や {% ket 17 %}
   などに確率が散らばっていますが、測定すると \(f(x)\) は 100% の確率で 1 となります。 これは
-  \(f(x)\) を {% ket 1 %} に初期化したので当然です。 x の値は行方向 (横方向) に読みます。 {%
+  \(f(x)\) を {% ket 1 %} に初期化したので当然です。 x の値は行番号 (縦方向) から読みます。 {%
   qpu_operation h %} で重ね合わせを作ったので、x の値は 0 から 15 までそれぞれ 6.25%
   の等しい重みを持ちます。
 </p>
@@ -533,7 +536,7 @@ next_url: ./shor_qft.html
       </div>
       <div class="flex w-min flex-row space-x-2">
         {{ '0' | qubit_circle: 240, 'base' }} {{ '0' | qubit_circle: 241, 'base' }} {{ '0.25' |
-        qubit_circle: 241, 'base' }} {{ '0' | qubit_circle: 243, 'base' }} {{ '0' | qubit_circle:
+        qubit_circle: 242, 'base' }} {{ '0' | qubit_circle: 243, 'base' }} {{ '0' | qubit_circle:
         244, 'base' }} {{ '0' | qubit_circle: 245, 'base' }} {{ '0' | qubit_circle: 246, 'base' }}
         {{ '0' | qubit_circle: 247, 'base' }} {{ '0' | qubit_circle: 248, 'base' }} {{ '0' |
         qubit_circle: 249, 'base' }} {{ '0' | qubit_circle: 250, 'base' }} {{ '0' | qubit_circle:
@@ -734,7 +737,7 @@ next_url: ./shor_qft.html
       </div>
       <div class="flex w-min flex-row space-x-2">
         {{ '0' | qubit_circle: 240, 'base' }} {{ '0' | qubit_circle: 241, 'base' }} {{ '0' |
-        qubit_circle: 241, 'base' }} {{ '0' | qubit_circle: 243, 'base' }} {{ '0' | qubit_circle:
+        qubit_circle: 242, 'base' }} {{ '0' | qubit_circle: 243, 'base' }} {{ '0' | qubit_circle:
         244, 'base' }} {{ '0' | qubit_circle: 245, 'base' }} {{ '0' | qubit_circle: 246, 'base' }}
         {{ '0' | qubit_circle: 247, 'base' }} {{ '0.25' | qubit_circle: 248, 'base' }} {{ '0' |
         qubit_circle: 249, 'base' }} {{ '0' | qubit_circle: 250, 'base' }} {{ '0' | qubit_circle:

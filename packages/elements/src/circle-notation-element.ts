@@ -447,8 +447,9 @@ export class CircleNotationElement extends HTMLElement {
           class="circle-notation__window"
           data-target="circle-notation.window"
           data-action="scroll:circle-notation#update"
-          style="height: ${this.windowHeight}px; width: ${this
-            .windowWidth}px; overflow: auto; overscroll-behavior: none;"
+          style="height: ${this.windowHeight}px; width: ${
+            this.windowWidth
+          }px; overflow: auto; overscroll-behavior: none;"
         >
           <div
             class="circle-notation__inner-container"
@@ -1207,8 +1208,7 @@ export class CircleNotationElement extends HTMLElement {
     const tmpDiv = document.createElement('div')
     tmpDiv.appendChild(template)
 
-    // eslint-disable-next-line github/no-inner-html
-    popup.setContent(tmpDiv.innerHTML)
+    popup.setContent(tmpDiv)
     popup.show()
   }
 

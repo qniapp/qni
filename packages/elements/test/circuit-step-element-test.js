@@ -2,6 +2,27 @@ import '../dist/index'
 import {assert} from '@esm-bundle/chai'
 import {testElementCreation} from './common/test-element-creation'
 
+const connectionProps = (overrides = {}) => ({
+  controlled: Object.fromEntries(
+    [
+      'h-gate',
+      'x-gate',
+      'y-gate',
+      'z-gate',
+      'phase-gate',
+      't-gate',
+      'rnot-gate',
+      'rx-gate',
+      'ry-gate',
+      'rz-gate',
+      'swap-gate',
+    ].map(name => [name, {disabled: false, maxControlGates: 0, maxTargetGates: 0, ...overrides[name]}]),
+  ),
+  swap: {disabled: false, ...overrides.swap},
+  controlControl: {disabled: false, maxTargetGates: 0, ...overrides.controlControl},
+  phasePhase: {disabled: false, maxTargetGates: 0, ...overrides.phasePhase},
+})
+
 describe('circuit-step element', function () {
   testElementCreation(window.CircuitStepElement, 'circuit-step')
 
@@ -286,7 +307,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCh: true})
+        step.updateOperationAttributes(connectionProps({'h-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'H', targets: [0, 1]}])
       })
@@ -382,7 +403,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCh: true})
+        step.updateOperationAttributes(connectionProps({'h-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'H', targets: [0]},
@@ -482,7 +503,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCnot: true})
+        step.updateOperationAttributes(connectionProps({'x-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'X', targets: [0, 1]}])
       })
@@ -578,7 +599,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCnot: true})
+        step.updateOperationAttributes(connectionProps({'x-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'X', targets: [0]},
@@ -674,7 +695,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCy: true})
+        step.updateOperationAttributes(connectionProps({'y-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'Y', targets: [0, 1]}])
       })
@@ -770,7 +791,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCy: true})
+        step.updateOperationAttributes(connectionProps({'y-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Y', targets: [0]},
@@ -866,7 +887,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCz: true})
+        step.updateOperationAttributes(connectionProps({'z-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'Z', targets: [0, 1]}])
       })
@@ -962,7 +983,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCz: true})
+        step.updateOperationAttributes(connectionProps({'z-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Z', targets: [0]},
@@ -1148,7 +1169,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCphase: true})
+        step.updateOperationAttributes(connectionProps({'phase-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'P', targets: [0, 1]}])
       })
@@ -1169,7 +1190,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCphase: true})
+        step.updateOperationAttributes(connectionProps({'phase-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'P', angle: 'π', targets: [0, 1]}])
       })
@@ -1190,7 +1211,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCphase: true})
+        step.updateOperationAttributes(connectionProps({'phase-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'P', angle: 'π', targets: [0]},
@@ -1384,7 +1405,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCphase: true})
+        step.updateOperationAttributes(connectionProps({'phase-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'P', targets: [0]},
@@ -1408,7 +1429,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCphase: true})
+        step.updateOperationAttributes(connectionProps({'phase-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'P', angle: 'π', targets: [0]},
@@ -1504,7 +1525,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrnot: true})
+        step.updateOperationAttributes(connectionProps({'rnot-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'X^½', targets: [0, 1]}])
       })
@@ -1600,7 +1621,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrnot: true})
+        step.updateOperationAttributes(connectionProps({'rnot-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'X^½', targets: [0]},
@@ -1786,7 +1807,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrx: true})
+        step.updateOperationAttributes(connectionProps({'rx-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'Rx', targets: [0, 1]}])
       })
@@ -1807,7 +1828,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrx: true})
+        step.updateOperationAttributes(connectionProps({'rx-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'Rx', angle: 'π', targets: [0, 1]}])
       })
@@ -1828,7 +1849,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrx: true})
+        step.updateOperationAttributes(connectionProps({'rx-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', angle: 'π', targets: [0]},
@@ -2022,7 +2043,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrx: true})
+        step.updateOperationAttributes(connectionProps({'rx-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', targets: [0]},
@@ -2046,7 +2067,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrx: true})
+        step.updateOperationAttributes(connectionProps({'rx-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rx', angle: 'π', targets: [0]},
@@ -2232,7 +2253,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCry: true})
+        step.updateOperationAttributes(connectionProps({'ry-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'Ry', targets: [0, 1]}])
       })
@@ -2253,7 +2274,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCry: true})
+        step.updateOperationAttributes(connectionProps({'ry-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'Ry', angle: 'π', targets: [0, 1]}])
       })
@@ -2274,7 +2295,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCry: true})
+        step.updateOperationAttributes(connectionProps({'ry-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', angle: 'π', targets: [0]},
@@ -2468,7 +2489,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCry: true})
+        step.updateOperationAttributes(connectionProps({'ry-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', targets: [0]},
@@ -2492,7 +2513,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCry: true})
+        step.updateOperationAttributes(connectionProps({'ry-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Ry', angle: 'π', targets: [0]},
@@ -2678,7 +2699,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrz: true})
+        step.updateOperationAttributes(connectionProps({'rz-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'Rz', targets: [0, 1]}])
       })
@@ -2699,7 +2720,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrz: true})
+        step.updateOperationAttributes(connectionProps({'rz-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'Rz', angle: 'π', targets: [0, 1]}])
       })
@@ -2720,7 +2741,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrz: true})
+        step.updateOperationAttributes(connectionProps({'rz-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', angle: 'π', targets: [0]},
@@ -2914,7 +2935,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrz: true})
+        step.updateOperationAttributes(connectionProps({'rz-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', targets: [0]},
@@ -2938,7 +2959,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCrz: true})
+        step.updateOperationAttributes(connectionProps({'rz-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [
           {type: 'Rz', angle: 'π', targets: [0]},
@@ -2992,7 +3013,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableSwap: true})
+        step.updateOperationAttributes(connectionProps({swap: {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [])
       })
@@ -3054,7 +3075,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableCswap: true})
+        step.updateOperationAttributes(connectionProps({'swap-gate': {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [{type: 'Swap', targets: [0, 1]}])
       })
@@ -3126,7 +3147,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({maxCswapControlGates: 1})
+        step.updateOperationAttributes(connectionProps({'swap-gate': {maxControlGates: 1}}))
 
         assert.deepEqual(step.serialize(), [{type: 'Swap', targets: [0, 1], controls: [2]}])
       })
@@ -3177,7 +3198,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({disableControlControl: true})
+        step.updateOperationAttributes(connectionProps({controlControl: {disabled: true}}))
 
         assert.deepEqual(step.serialize(), [])
       })
@@ -3198,7 +3219,7 @@ describe('circuit-step element', function () {
 </circuit-step>`
         document.body.append(container)
         const step = document.querySelector('circuit-step')
-        step.updateOperationAttributes({maxControlControlTargetGates: 2})
+        step.updateOperationAttributes(connectionProps({controlControl: {maxTargetGates: 2}}))
 
         assert.deepEqual(step.serialize(), [{type: '•', targets: [0, 1]}])
       })
