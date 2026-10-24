@@ -1,0 +1,304 @@
+/* Shared shell only. Legacy educational content and custom elements keep their styles. */
+.legacy-tutorial {
+  color-scheme: light;
+  background: #fffcf0;
+  color: #100f0f;
+  font-family: system-ui, sans-serif;
+  scroll-padding-top: 96px;
+}
+.legacy-tutorial body {
+  background: #fffcf0;
+}
+.legacy-column {
+  min-width: 0;
+}
+.legacy-header,
+.legacy-content {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding: 24px;
+}
+.legacy-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fffcf0;
+  border-bottom: 1px solid #dad8ce;
+}
+.legacy-header a {
+  font-weight: 600;
+  text-decoration: none;
+}
+.legacy-header .brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.legacy-header .brand-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+.legacy-header .brand-qni {
+  color: #18181b;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+}
+.legacy-header .brand-tutorial {
+  color: #38bdf8;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.legacy-header .github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  margin: -8px -8px -8px 8px;
+  color: #a1a1aa;
+  border-radius: 6px;
+}
+.legacy-header .github-link:hover {
+  color: #71717a;
+}
+.legacy-header a:focus-visible,
+.legacy-toc a:focus-visible,
+.legacy-toc summary:focus-visible {
+  outline: 2px solid #205ea6;
+  outline-offset: 4px;
+}
+.legacy-content {
+  padding-block: 48px;
+}
+.legacy-page-title {
+  border-bottom: 1px solid #e4e4e7;
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+}
+.legacy-page-title .legacy-section-label {
+  color: #6f6e69;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  margin: 16px 0;
+}
+.legacy-page-title .legacy-title {
+  color: #100f0f;
+  font-size: 36px;
+  line-height: 40px;
+  font-weight: 700;
+  letter-spacing: normal;
+  margin: 8px 0 0;
+}
+.legacy-page-title .legacy-lede {
+  color: #6f6e69;
+  font-size: 20px;
+  line-height: 28px;
+  margin: 5px 0 0;
+}
+.legacy-shell .prose {
+  --tw-prose-body: #100f0f;
+  --tw-prose-links: #205ea6;
+}
+/* Wide static diagrams scroll within their existing wrapper, not the page. */
+.legacy-content .content-with-margin > div:has(> quantum-circuit) {
+  overflow-x: auto;
+}
+.legacy-sidebar {
+  display: none;
+}
+.legacy-toc {
+  padding: 24px 12px 56px;
+}
+.legacy-toc details {
+  border: 0;
+  padding: 0;
+}
+.legacy-toc details + details,
+.legacy-toc li {
+  margin-top: 4px;
+}
+.legacy-toc summary {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border-radius: 6px;
+  color: #205ea6;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  list-style: none;
+  cursor: pointer;
+}
+.legacy-toc summary::-webkit-details-marker {
+  display: none;
+}
+.legacy-toc summary::after {
+  content: '';
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+}
+.legacy-toc details[open] > summary::after {
+  transform: rotate(45deg);
+}
+.legacy-toc summary:hover {
+  background: #f2f0e5;
+}
+.legacy-toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.legacy-toc li {
+  font-size: 14px;
+  line-height: 20px;
+}
+.legacy-toc a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #6f6e69;
+}
+.legacy-toc a > span:first-child {
+  flex: 1;
+  min-width: 0;
+}
+.legacy-toc a:hover {
+  color: #100f0f;
+  background: #f2f0e5;
+}
+.legacy-toc a[aria-current='page'] {
+  color: #100f0f;
+  background: #dde7f1;
+}
+.legacy-toc-new {
+  padding: 0 6px;
+  border: 1px solid #dad8ce;
+  border-radius: 9999px;
+  font-size: 11px;
+  line-height: 16px;
+}
+.legacy-toc-open {
+  display: none;
+}
+.legacy-drawer {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: min(320px, calc(100vw - 56px));
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  background: #fffcf0;
+  color: #100f0f;
+}
+.legacy-drawer::backdrop {
+  background: rgb(16 15 15 / 0.5);
+}
+.legacy-drawer-panel {
+  height: 100%;
+  overflow-y: auto;
+}
+.legacy-toc-close {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 8px 8px 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: #fffcf0;
+  color: #6f6e69;
+  cursor: pointer;
+}
+.legacy-toc-close svg,
+.legacy-toc-open svg {
+  width: 24px;
+  height: 24px;
+}
+.legacy-toc-close:hover,
+.legacy-toc-open:hover {
+  background: #f2f0e5;
+  color: #100f0f;
+}
+.legacy-toc-close:focus-visible,
+.legacy-toc-open:focus-visible {
+  outline: 2px solid #205ea6;
+  outline-offset: 2px;
+}
+.legacy-tutorial:has(.legacy-drawer[open]) {
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .legacy-shell {
+    display: grid;
+    grid-template-columns: 256px minmax(0, 1fr);
+  }
+  .legacy-sidebar {
+    display: block;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-right: 1px solid #dad8ce;
+  }
+  .legacy-sidebar-body {
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+@media (max-width: 767.98px) {
+  .legacy-toc-open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    margin: -8px 8px -8px -8px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: #6f6e69;
+    cursor: pointer;
+  }
+  .legacy-header > a {
+    margin-right: auto;
+  }
+}
+@media (max-width: 640px) {
+  .legacy-header,
+  .legacy-content {
+    padding-inline: 16px;
+  }
+  .legacy-page-title .legacy-title {
+    font-size: 30px;
+    line-height: 36px;
+  }
+}
