@@ -64,7 +64,7 @@ function assertNoLocalErrors(result) {
   }
 }
 
-const report = { ...observations(), gpu: {}, gpuDisabled: observations() }
+const report = { ...observations(), gpu: {}, gpuDisabled: observations(), headerScroll: [] }
 const browser = await chromium.launch({
   args: [
     '--no-sandbox',
@@ -105,6 +105,55 @@ try {
         await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
         true
       )
+      await page.evaluate(() => scrollTo(0, 1200))
+      await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThanOrEqual(1000)
+      const headerBox = await header.boundingBox()
+      assert.ok(
+        headerBox && headerBox.y >= 0 && headerBox.y <= 1 && headerBox.y + headerBox.height < 900
+      )
+      for (const link of [brand, github]) {
+        assert.equal(
+          await link.evaluate((element) => {
+            const box = element.getBoundingClientRect()
+            return element.contains(
+              document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)
+            )
+          }),
+          true
+        )
+      }
+      await page.screenshot({
+        path: join(
+          evidence,
+          `scrolled-header-${width}-${entry.endsWith('index.html') ? 'index' : 'root'}.png`
+        ),
+      })
+      if (width === 390) {
+        await page.getByRole('button', { name: '目次を開く', exact: true }).click()
+        await expect(page.getByRole('dialog', { name: '目次', exact: true })).toBeVisible()
+        await page.screenshot({
+          path: join(
+            evidence,
+            `scrolled-drawer-${entry.endsWith('index.html') ? 'index' : 'root'}.png`
+          ),
+        })
+        await page.getByRole('button', { name: '目次を閉じる', exact: true }).click()
+        await expect(page.getByRole('dialog', { name: '目次', exact: true })).not.toBeVisible()
+      }
+      const paragraph = page.locator('main .content-with-margin > p').nth(5)
+      await paragraph.evaluate((element) => element.scrollIntoView({ block: 'start' }))
+      const paragraphBox = await paragraph.boundingBox()
+      assert.ok(paragraphBox && paragraphBox.y >= headerBox.y + headerBox.height)
+      report.headerScroll.push({
+        width,
+        entry,
+        headerBox,
+        paragraphBox,
+        scrollY: await page.evaluate(() => scrollY),
+      })
+      await brand.click()
+      assert.equal(page.url(), base.href)
+      await expect.poll(() => page.evaluate(() => scrollY)).toBe(0)
       // Includes offscreen/sidenote images and every old TOC target.
       const paths = await page
         .locator('[src], a[href], link[href]')
