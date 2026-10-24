@@ -80,6 +80,8 @@ jobs:
         uses: pnpm/action-setup@v5
         with:
           version: 9.15.9
+          # action-setup deletes dest; preserve pnpm 10's setup-node cache store.
+          dest: ~/setup-pnpm-tutorial
           package_json_file: .introduction-tutorial/package.json
 
       # pnpm must not discover the legacy pnpm-workspace.yaml from either

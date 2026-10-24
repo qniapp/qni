@@ -44,6 +44,15 @@ for (const snippet of [
   assert(workflow.includes(snippet), `Expected ${workflowPath} to include: ${snippet}`)
 }
 
+// action-setup recursively replaces dest, including any setup-node cache stored there.
+const pnpmDestinations = [
+  ...workflow.matchAll(/uses: pnpm\/action-setup@[^\n]+\n\s+with:\n((?: {10}[^\n]*\n)+)/g),
+].map((match) => match[1].match(/^\s+dest:\s*(\S+)/m)?.[1] ?? '~/setup-pnpm')
+assert(
+  new Set(pnpmDestinations).size === pnpmDestinations.length,
+  'Pages pnpm setup destinations must be distinct: a later installer removes the earlier cached store'
+)
+
 const prettierIgnore = readFileSync('.prettierignore', 'utf8')
   .split(/\r?\n/)
   .map((line) => line.trim())
