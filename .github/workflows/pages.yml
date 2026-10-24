@@ -55,6 +55,67 @@ jobs:
       - name: Build tutorial Pages site
         run: pnpm --dir apps/tutorial build:site
 
+      # Publication dependency: this exact phase-1 commit must be available on
+      # qniapp/qni-tutorial-webgpu BEFORE an approved push of this repository.
+      # Checkout must fail rather than silently substitute remote main.
+      - name: Checkout pinned introduction tutorial
+        uses: actions/checkout@v5
+        with:
+          repository: qniapp/qni-tutorial-webgpu
+          ref: 217a691d88ff4ec4a2a02d5235f065ade7d91527
+          path: .introduction-tutorial
+
+      - name: Read pinned WebGPU source
+        id: webgpu
+        run: echo "ref=$(tr -d '\r\n' < .introduction-tutorial/qni-webgpu.ref)" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout pinned WebGPU source
+        uses: actions/checkout@v5
+        with:
+          repository: qniapp/qni-webgpu
+          ref: ${{ steps.webgpu.outputs.ref }}
+          path: .introduction-tutorial/.qni-webgpu-source
+
+      - name: Setup tutorial pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: 9.15.9
+          package_json_file: .introduction-tutorial/package.json
+
+      - name: Install pinned tutorial dependencies
+        working-directory: .introduction-tutorial
+        run: pnpm install --frozen-lockfile
+
+      - name: Install prebuilt Trunk
+        env:
+          TRUNK_VERSION: 0.21.14
+        run: |
+          archive=trunk-x86_64-unknown-linux-gnu.tar.gz
+          release="https://github.com/trunk-rs/trunk/releases/download/v${TRUNK_VERSION}"
+          curl -fsSL "$release/$archive" -o "$RUNNER_TEMP/$archive"
+          digest=$(curl -fsSL "$release/$archive.sha256" | awk '{print $1}')
+          echo "$digest  $RUNNER_TEMP/$archive" | sha256sum --check
+          mkdir -p "$HOME/.local/bin"
+          tar -xzf "$RUNNER_TEMP/$archive" -C "$HOME/.local/bin" trunk
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Build current pinned WebGPU assets
+        working-directory: .introduction-tutorial
+        run: bash scripts/fetch-qni-webgpu.sh .qni-webgpu-source
+
+      - name: Build migration introduction
+        working-directory: .introduction-tutorial
+        env:
+          QNI_TUTORIAL_MIGRATION: '1'
+          QNI_EMBED_PREBUILT: '0'
+          QNI_H_GATE_PREBUILT: '0'
+        run: pnpm run typecheck && pnpm run build --outDir .astro/migration-dist
+
+      - name: Test and compose introduction only
+        run: |
+          node --test scripts/compose-introduction.test.mjs
+          node scripts/compose-introduction.mjs html .introduction-tutorial/.astro/migration-dist
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
