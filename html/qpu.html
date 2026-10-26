@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="ja" class="h-full">
+<!doctype html>
+<html lang="ja" class="legacy-tutorial h-full">
   <head>
     <title>QPU とは</title>
 
@@ -10,12 +10,10 @@
 
     <script type="module" src="./application.js" defer></script>
     <link href="./application.css" rel="stylesheet" />
+    <link href="./css/tutorial_shell.css" rel="stylesheet" />
+    <link rel="icon" href="./qni-favicon.ico" type="image/x-icon" />
 
-    <script
-      id="MathJax-script"
-      async
-      src="./vendor/mathjax/es5/tex-mml-chtml.js"
-    ></script>
+    <script id="MathJax-script" async src="./vendor/mathjax/es5/tex-mml-chtml.js"></script>
     <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
     <script
       defer
@@ -24,1490 +22,1629 @@
     ></script>
   </head>
   <body class="h-full">
-    <div data-controller="sidebar">
-  <div
-  class="fixed inset-0 z-[200] flex hidden md:hidden"
-  role="dialog"
-  aria-modal="true"
+    <div class="legacy-shell" data-controller="sidebar">
+  <dialog
+  id="legacy-toc-drawer"
+  class="legacy-drawer"
+  aria-label="目次"
   data-sidebar-target="menu"
+  data-action="click->sidebar#backdrop close->sidebar#closed cancel->sidebar#saveScrollPositions keydown->sidebar#trapFocus"
 >
-  <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
-  <div class="relative flex w-full max-w-xs flex-1 transform flex-col bg-white pt-5 pb-4">
-    <div class="absolute top-0 right-0 -mr-12 pt-2">
-      <button
-        type="button"
-        class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-        data-action="click->sidebar#close"
-      >
-        <svg class="h-6 w-6 text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.8536 2.85355C13.0488 2.65829 13.0488 2.34171 12.8536 2.14645C12.6583 1.95118 12.3417 1.95118 12.1464 2.14645L7.5 6.79289L2.85355 2.14645C2.65829 1.95118 2.34171 1.95118 2.14645 2.14645C1.95118 2.34171 1.95118 2.65829 2.14645 2.85355L6.79289 7.5L2.14645 12.1464C1.95118 12.3417 1.95118 12.6583 2.14645 12.8536C2.34171 13.0488 2.65829 13.0488 2.85355 12.8536L7.5 8.20711L12.1464 12.8536C12.3417 13.0488 12.6583 13.0488 12.8536 12.8536C13.0488 12.6583 13.0488 12.3417 12.8536 12.1464L8.20711 7.5L12.8536 2.85355Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      </button>
-    </div>
-
-    <div class="flex flex-shrink-0 items-center px-4">
-      <img class="mr-2 h-7 w-7" src="./images/qni-icon-512.png" alt="Qni" />
-      <div class="flex flex-row items-end">
-        <span
-          class="font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
-          >Qni</span
-        >
-        <span
-          class="ml-0.5 font-sans text-base font-bold uppercase tracking-wider text-blue-400 subpixel-antialiased"
-          >Tutorial</span
-        >
-      </div>
-    </div>
-    <div class="mt-5 h-0 flex-1 overflow-y-auto" data-sidebar-target="body">
-      <nav class="flex-1 space-y-1 bg-white px-3 md:px-6 pb-14">
-  
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    イントロダクション
-  </div>
-
-   
-  <a
-    href="./"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">はじめに</span>
-    
-  </a>
-   
-  <a
-    href="./qpu.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
-  >
-    <span class="flex-1">QPU とは</span>
-    
-  </a>
-   
-  <a
-    href="./what_qpu_do_faster.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">QPU は何が得意?</span>
-    
-  </a>
-   
-  <a
-    href="./quantum_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子回路</span>
-    
-  </a>
-   
-  <a
-    href="./qni_intro.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">Qni 入門</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    量子ビット
-  </div>
-
-   
-  <a
-    href="./p_bit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">確率的ビット</span>
-    
-  </a>
-   
-  <a
-    href="./superposition.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">重ね合わせ状態</span>
-    
-  </a>
-   
-  <a
-    href="./qubit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子ビット</span>
-    
-  </a>
-   
-  <a
-    href="./phase.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">位相</span>
-    
-  </a>
-   
-  <a
-    href="./circle_notation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">状態ベクトル表示</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    QPU 命令その 1
-  </div>
-
-   
-  <a
-    href="./cpu_vs_qpu_operations.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">CPU 命令との違い</span>
-    
-  </a>
-   
-  <a
-    href="./x_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">X ゲート (量子 NOT)</span>
-    
-  </a>
-   
-  <a
-    href="./h_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">H ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./phase_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">PHASE ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./write_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">WRITE 命令</span>
-    
-  </a>
-   
-  <a
-    href="./measurement_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">MEASUREMENT 命令</span>
-    
-  </a>
-   
-  <a
-    href="./no_cloning_theorem.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">CLONE 命令!?</span>
-    
-  </a>
-   
-  <a
-    href="./gate_combination.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">組合わせゲート</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    量子暗号通信
-  </div>
-
-   
-  <a
-    href="./quantum_key_distribution.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子鍵配送</span>
-    
-  </a>
-   
-  <a
-    href="./bb84_protocol.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">BB84 プロトコル</span>
-    
-  </a>
-   
-  <a
-    href="./bb84_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">BB84 回路</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    複数量子ビット
-  </div>
-
-   
-  <a
-    href="./multi_qubit_circle_notation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">状態ベクトル表示</span>
-    
-  </a>
-   
-  <a
-    href="./multi_qubit_superposition.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">重ね合わせ状態</span>
-    
-  </a>
-   
-  <a
-    href="./multi_qubit_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">複数量子ビットでの演算</span>
-    
-  </a>
-   
-  <a
-    href="./operator_pair.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">演算ペア</span>
-    
-  </a>
-   
-  <a
-    href="./random_byte_generator.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">ランダムバイトジェネレータ</span>
-    
-  </a>
-   
-  <a
-    href="./multi_qubit_phase_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">PHASE ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./partial_measurement.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">1 ビット測定</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    QPU 命令その 2
-  </div>
-
-   
-  <a
-    href="./swap_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">SWAP ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./cnot_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">CNOT ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./swap_from_cnots.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">SWAP パズル</span>
-    
-  </a>
-   
-  <a
-    href="./cphase.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">CPHASE ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./entanglement.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子もつれ</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    超密度符号化
-  </div>
-
-   
-  <a
-    href="./disentangle.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">もつれをほどく</span>
-    
-  </a>
-   
-  <a
-    href="./entanglement_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">もつれを操作する</span>
-    
-  </a>
-   
-  <a
-    href="./discriminating_bell_states.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">ベル状態の判別</span>
-    
-  </a>
-   
-  <a
-    href="./superdense_coding_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">超密度符号化回路</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    量子テレポーテーション
-  </div>
-
-   
-  <a
-    href="./teleportation_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">テレポーテーション回路</span>
-    
-  </a>
-   
-  <a
-    href="./cascading_teleportation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">多段テレポーテーション</span>
-    
-  </a>
-   
-  <a
-    href="./long_distance_entanglement.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">長距離間の量子もつれ</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    算術演算
-  </div>
-
-   
-  <a
-    href="./increment_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">インクリメント回路</span>
-    
-  </a>
-   
-  <a
-    href="./decrement_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">デクリメント回路</span>
-    
-  </a>
-   
-  <a
-    href="./addition_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">足し算回路</span>
-    
-  </a>
-   
-  <a
-    href="./subtraction_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">引き算回路</span>
-    
-  </a>
-   
-  <a
-    href="./multiplication_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">かけ算回路</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    論理演算
-  </div>
-
-   
-  <a
-    href="./quantum_logic.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子論理ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./superposition_quantum_logic.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">重ね合わせ上での論理演算</span>
-    
-  </a>
-   
-  <a
-    href="./phase_logic.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">位相論理演算</span>
-    
-  </a>
-   
-  <a
-    href="./phase_logic_combination.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">位相論理演算の組合わせ</span>
-    
-  </a>
-   
-  <a
-    href="./sat.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">充足可能性問題</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    グローヴァー探索
-  </div>
-
-   
-  <a
-    href="./grover_iam.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">折り返し変換</span>
-    
-  </a>
-   
-  <a
-    href="./grover_iteration.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">グロヴァー反復</span>
-    
-  </a>
-   
-  <a
-    href="./multiple_marked_values.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">複数の振幅を増幅</span>
-    
-  </a>
-   
-  <a
-    href="./grover_iam_indetail.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">折り返しの仕組み</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    量子フーリエ変換 (QFT)
-  </div>
-
-   
-  <a
-    href="./readout_of_patterns.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">パターンの読み出し</span>
-    
-  </a>
-   
-  <a
-    href="./inverse_qft.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">逆 QFT</span>
-    
-  </a>
-   
-  <a
-    href="./inside_the_qft.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">QFT の内部</span>
-    
-  </a>
-   
-  <a
-    href="./qft_adder.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">QFT 足し算</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    量子位相推定
-  </div>
-
-   
-  <a
-    href="./eigenphases.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">固有位相</span>
-    
-  </a>
-   
-  <a
-    href="./quantum_phase_estimation_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子位相推定回路</span>
-    
-  </a>
-   
-  <a
-    href="./phase_kickback.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">位相キックバック</span>
-    
-  </a>
-   
-  <a
-    href="./qpe_output.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子位相推定の出力</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    ショアの因数分解
-  </div>
-
-   
-  <a
-    href="./shor_hsp.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">別問題に帰着する</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./shor_fx.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">\(a^xmod(N)\) の計算</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./shor_r.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">周期 \(r\) を求める</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./shor_u.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">\(a^xmod(N)\) の実装</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./shor_qft.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">周期パターンの読み出し</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    ふろく
-  </div>
-
-   
-  <a
-    href="./no_cloning_theorem_proof.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">クローン禁止定理の証明</span>
-    
-  </a>
-   
-</nav>
-
-    </div>
-  </div>
-
-  <div class="w-14 flex-shrink-0" aria-hidden="true">
-    <!-- Dummy element to force sidebar to shrink to fit close icon -->
-  </div>
-</div>
- <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
-  <div class="flex flex-grow flex-col bg-white">
-    <div class="flex h-16 flex-shrink-0 items-center border-b border-slate-900/10 px-8">
-      <a href="https://qniapp.github.io/qni/" class="flex flex-shrink-0 cursor-pointer flex-row">
-        <img class="mr-2" src="./images/qni_icon.svg" alt="Qni" />
-        <img src="./images/qni_tutorial_logo.svg" qlt="Qni Tutorial" />
-      </a>
-    </div>
-    <div class="flex h-0 flex-grow flex-col overflow-y-auto md:py-6" data-sidebar-target="bodyMd">
-      <nav class="flex-1 space-y-1 bg-white px-3 md:px-6 pb-14">
-  
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    イントロダクション
-  </div>
-
-   
-  <a
-    href="./"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">はじめに</span>
-    
-  </a>
-   
-  <a
-    href="./qpu.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
-  >
-    <span class="flex-1">QPU とは</span>
-    
-  </a>
-   
-  <a
-    href="./what_qpu_do_faster.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">QPU は何が得意?</span>
-    
-  </a>
-   
-  <a
-    href="./quantum_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子回路</span>
-    
-  </a>
-   
-  <a
-    href="./qni_intro.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">Qni 入門</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    量子ビット
-  </div>
-
-   
-  <a
-    href="./p_bit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">確率的ビット</span>
-    
-  </a>
-   
-  <a
-    href="./superposition.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">重ね合わせ状態</span>
-    
-  </a>
-   
-  <a
-    href="./qubit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子ビット</span>
-    
-  </a>
-   
-  <a
-    href="./phase.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">位相</span>
-    
-  </a>
-   
-  <a
-    href="./circle_notation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">状態ベクトル表示</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    QPU 命令その 1
-  </div>
-
-   
-  <a
-    href="./cpu_vs_qpu_operations.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">CPU 命令との違い</span>
-    
-  </a>
-   
-  <a
-    href="./x_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">X ゲート (量子 NOT)</span>
-    
-  </a>
-   
-  <a
-    href="./h_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">H ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./phase_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">PHASE ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./write_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">WRITE 命令</span>
-    
-  </a>
-   
-  <a
-    href="./measurement_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">MEASUREMENT 命令</span>
-    
-  </a>
-   
-  <a
-    href="./no_cloning_theorem.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">CLONE 命令!?</span>
-    
-  </a>
-   
-  <a
-    href="./gate_combination.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">組合わせゲート</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    量子暗号通信
-  </div>
-
-   
-  <a
-    href="./quantum_key_distribution.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子鍵配送</span>
-    
-  </a>
-   
-  <a
-    href="./bb84_protocol.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">BB84 プロトコル</span>
-    
-  </a>
-   
-  <a
-    href="./bb84_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">BB84 回路</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    複数量子ビット
-  </div>
-
-   
-  <a
-    href="./multi_qubit_circle_notation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">状態ベクトル表示</span>
-    
-  </a>
-   
-  <a
-    href="./multi_qubit_superposition.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">重ね合わせ状態</span>
-    
-  </a>
-   
-  <a
-    href="./multi_qubit_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">複数量子ビットでの演算</span>
-    
-  </a>
-   
-  <a
-    href="./operator_pair.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">演算ペア</span>
-    
-  </a>
-   
-  <a
-    href="./random_byte_generator.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">ランダムバイトジェネレータ</span>
-    
-  </a>
-   
-  <a
-    href="./multi_qubit_phase_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">PHASE ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./partial_measurement.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">1 ビット測定</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    QPU 命令その 2
-  </div>
-
-   
-  <a
-    href="./swap_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">SWAP ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./cnot_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">CNOT ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./swap_from_cnots.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">SWAP パズル</span>
-    
-  </a>
-   
-  <a
-    href="./cphase.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">CPHASE ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./entanglement.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子もつれ</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    超密度符号化
-  </div>
-
-   
-  <a
-    href="./disentangle.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">もつれをほどく</span>
-    
-  </a>
-   
-  <a
-    href="./entanglement_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">もつれを操作する</span>
-    
-  </a>
-   
-  <a
-    href="./discriminating_bell_states.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">ベル状態の判別</span>
-    
-  </a>
-   
-  <a
-    href="./superdense_coding_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">超密度符号化回路</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    量子テレポーテーション
-  </div>
-
-   
-  <a
-    href="./teleportation_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">テレポーテーション回路</span>
-    
-  </a>
-   
-  <a
-    href="./cascading_teleportation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">多段テレポーテーション</span>
-    
-  </a>
-   
-  <a
-    href="./long_distance_entanglement.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">長距離間の量子もつれ</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    算術演算
-  </div>
-
-   
-  <a
-    href="./increment_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">インクリメント回路</span>
-    
-  </a>
-   
-  <a
-    href="./decrement_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">デクリメント回路</span>
-    
-  </a>
-   
-  <a
-    href="./addition_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">足し算回路</span>
-    
-  </a>
-   
-  <a
-    href="./subtraction_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">引き算回路</span>
-    
-  </a>
-   
-  <a
-    href="./multiplication_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">かけ算回路</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    論理演算
-  </div>
-
-   
-  <a
-    href="./quantum_logic.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子論理ゲート</span>
-    
-  </a>
-   
-  <a
-    href="./superposition_quantum_logic.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">重ね合わせ上での論理演算</span>
-    
-  </a>
-   
-  <a
-    href="./phase_logic.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">位相論理演算</span>
-    
-  </a>
-   
-  <a
-    href="./phase_logic_combination.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">位相論理演算の組合わせ</span>
-    
-  </a>
-   
-  <a
-    href="./sat.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">充足可能性問題</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    グローヴァー探索
-  </div>
-
-   
-  <a
-    href="./grover_iam.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">折り返し変換</span>
-    
-  </a>
-   
-  <a
-    href="./grover_iteration.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">グロヴァー反復</span>
-    
-  </a>
-   
-  <a
-    href="./multiple_marked_values.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">複数の振幅を増幅</span>
-    
-  </a>
-   
-  <a
-    href="./grover_iam_indetail.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">折り返しの仕組み</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    量子フーリエ変換 (QFT)
-  </div>
-
-   
-  <a
-    href="./readout_of_patterns.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">パターンの読み出し</span>
-    
-  </a>
-   
-  <a
-    href="./inverse_qft.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">逆 QFT</span>
-    
-  </a>
-   
-  <a
-    href="./inside_the_qft.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">QFT の内部</span>
-    
-  </a>
-   
-  <a
-    href="./qft_adder.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">QFT 足し算</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    量子位相推定
-  </div>
-
-   
-  <a
-    href="./eigenphases.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">固有位相</span>
-    
-  </a>
-   
-  <a
-    href="./quantum_phase_estimation_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子位相推定回路</span>
-    
-  </a>
-   
-  <a
-    href="./phase_kickback.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">位相キックバック</span>
-    
-  </a>
-   
-  <a
-    href="./qpe_output.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">量子位相推定の出力</span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    ショアの因数分解
-  </div>
-
-   
-  <a
-    href="./shor_hsp.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">別問題に帰着する</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./shor_fx.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">\(a^xmod(N)\) の計算</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./shor_r.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">周期 \(r\) を求める</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./shor_u.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">\(a^xmod(N)\) の実装</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./shor_qft.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">周期パターンの読み出し</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    ふろく
-  </div>
-
-   
-  <a
-    href="./no_cloning_theorem_proof.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">クローン禁止定理の証明</span>
-    
-  </a>
-   
-</nav>
-
-    </div>
-  </div>
-</div>
-
-
-  <div class="flex flex-1 flex-col md:pl-64">
-    <div
-      class="sticky top-0 z-[100] flex h-16 flex-shrink-0 border-0 border-zinc-900/10 bg-white/95 shadow backdrop-blur md:border-b md:shadow-none"
+  <div class="legacy-drawer-panel" data-sidebar-target="body">
+    <button
+      type="button"
+      class="legacy-toc-close"
+      aria-label="目次を閉じる"
+      autofocus
+      data-action="click->sidebar#close"
     >
-      <button
-        type="button"
-        class="flex h-16 w-16 items-center justify-center border-r border-zinc-200 text-zinc-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
-        data-action="click->sidebar#open"
-      >
-        <span class="sr-only">Open sidebar</span>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-      </button>
-
-      <div class="flex w-full items-center justify-end">
-        <a
-          href="https://github.com/qniapp/qni"
-          class="block flex h-16 w-16 items-center justify-center text-zinc-400 hover:text-zinc-500 dark:hover:text-zinc-300"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g clip-path="url(#clip0_1399_76561)">
-    <path d="M9 19C4 20.5 4 16.5 2 16M16 22V18.13C16.0375 17.6532 15.9731 17.1738 15.811 16.7238C15.6489 16.2738 15.3929 15.8634 15.06 15.52C18.2 15.17 21.5 13.98 21.5 8.52C21.4997 7.12383 20.9627 5.7812 20 4.77C20.4559 3.54851 20.4236 2.19835 19.91 0.999999C19.91 0.999999 18.73 0.649999 16 2.48C13.708 1.85882 11.292 1.85882 9 2.48C6.27 0.649999 5.09 0.999999 5.09 0.999999C4.57638 2.19835 4.54414 3.54851 5 4.77C4.03013 5.7887 3.49252 7.14346 3.5 8.55C3.5 13.97 6.8 15.16 9.94 15.55C9.611 15.89 9.35726 16.2954 9.19531 16.7399C9.03335 17.1844 8.96681 17.6581 9 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-  <defs>
-    <clipPath id="clip0_1399_76561">
-      <rect width="24" height="24" fill="white"/>
-    </clipPath>
-  </defs>
-</svg>
-
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <path
+          d="M6 18 18 6M6 6l12 12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
+    </button>
+    <nav class="legacy-toc" aria-label="目次">
+  
+  
+  
+  <details open>
+    <summary>イントロダクション</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./" >
+          <span>はじめに</span>
+          
         </a>
-      </div>
-    </div>
+      </li>
+      
+      
+      <li>
+        <a href="./qpu.html" aria-current="page">
+          <span>QPU とは</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./what_qpu_do_faster.html" >
+          <span>QPU は何が得意?</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./quantum_circuit.html" >
+          <span>量子回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./qni_intro.html" >
+          <span>Qni 入門</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>量子ビット</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./p_bit.html" >
+          <span>確率的ビット</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./superposition.html" >
+          <span>重ね合わせ状態</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./qubit.html" >
+          <span>量子ビット</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./phase.html" >
+          <span>位相</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./circle_notation.html" >
+          <span>状態ベクトル表示</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>QPU 命令その 1</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./cpu_vs_qpu_operations.html" >
+          <span>CPU 命令との違い</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./x_gate.html" >
+          <span>X ゲート (量子 NOT)</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./h_gate.html" >
+          <span>H ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./phase_gate.html" >
+          <span>PHASE ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./write_operation.html" >
+          <span>WRITE 命令</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./measurement_operation.html" >
+          <span>MEASUREMENT 命令</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./no_cloning_theorem.html" >
+          <span>CLONE 命令!?</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./gate_combination.html" >
+          <span>組合わせゲート</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>量子暗号通信</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./quantum_key_distribution.html" >
+          <span>量子鍵配送</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./bb84_protocol.html" >
+          <span>BB84 プロトコル</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./bb84_circuit.html" >
+          <span>BB84 回路</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>複数量子ビット</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./multi_qubit_circle_notation.html" >
+          <span>状態ベクトル表示</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./multi_qubit_superposition.html" >
+          <span>重ね合わせ状態</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./multi_qubit_operation.html" >
+          <span>複数量子ビットでの演算</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./operator_pair.html" >
+          <span>演算ペア</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./random_byte_generator.html" >
+          <span>ランダムバイトジェネレータ</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./multi_qubit_phase_gate.html" >
+          <span>PHASE ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./partial_measurement.html" >
+          <span>1 ビット測定</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>QPU 命令その 2</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./swap_gate.html" >
+          <span>SWAP ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./cnot_gate.html" >
+          <span>CNOT ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./swap_from_cnots.html" >
+          <span>SWAP パズル</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./cphase.html" >
+          <span>CPHASE ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./entanglement.html" >
+          <span>量子もつれ</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>超密度符号化</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./disentangle.html" >
+          <span>もつれをほどく</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./entanglement_operation.html" >
+          <span>もつれを操作する</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./discriminating_bell_states.html" >
+          <span>ベル状態の判別</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./superdense_coding_circuit.html" >
+          <span>超密度符号化回路</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>量子テレポーテーション</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./teleportation_circuit.html" >
+          <span>テレポーテーション回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./cascading_teleportation.html" >
+          <span>多段テレポーテーション</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./long_distance_entanglement.html" >
+          <span>長距離間の量子もつれ</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>算術演算</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./increment_circuit.html" >
+          <span>インクリメント回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./decrement_circuit.html" >
+          <span>デクリメント回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./addition_circuit.html" >
+          <span>足し算回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./subtraction_circuit.html" >
+          <span>引き算回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./multiplication_circuit.html" >
+          <span>かけ算回路</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>論理演算</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./quantum_logic.html" >
+          <span>量子論理ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./superposition_quantum_logic.html" >
+          <span>重ね合わせ上での論理演算</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./phase_logic.html" >
+          <span>位相論理演算</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./phase_logic_combination.html" >
+          <span>位相論理演算の組合わせ</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./sat.html" >
+          <span>充足可能性問題</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>グローヴァー探索</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./grover_iam.html" >
+          <span>折り返し変換</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./grover_iteration.html" >
+          <span>グロヴァー反復</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./multiple_marked_values.html" >
+          <span>複数の振幅を増幅</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./grover_iam_indetail.html" >
+          <span>折り返しの仕組み</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>量子フーリエ変換 (QFT)</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./readout_of_patterns.html" >
+          <span>パターンの読み出し</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./inverse_qft.html" >
+          <span>逆 QFT</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./inside_the_qft.html" >
+          <span>QFT の内部</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./qft_adder.html" >
+          <span>QFT 足し算</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>量子位相推定</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./eigenphases.html" >
+          <span>固有位相</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./quantum_phase_estimation_circuit.html" >
+          <span>量子位相推定回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./phase_kickback.html" >
+          <span>位相キックバック</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./qpe_output.html" >
+          <span>量子位相推定の出力</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>ショアの因数分解</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./shor_hsp.html" >
+          <span>別問題に帰着する</span>
+          <span class="legacy-toc-new">new</span>
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./shor_fx.html" >
+          <span>\(a^xmod(N)\) の計算</span>
+          <span class="legacy-toc-new">new</span>
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./shor_r.html" >
+          <span>周期 \(r\) を求める</span>
+          <span class="legacy-toc-new">new</span>
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./shor_u.html" >
+          <span>\(a^xmod(N)\) の実装</span>
+          <span class="legacy-toc-new">new</span>
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./shor_qft.html" >
+          <span>周期パターンの読み出し</span>
+          <span class="legacy-toc-new">new</span>
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>ふろく</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./no_cloning_theorem_proof.html" >
+          <span>クローン禁止定理の証明</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+</nav>
+
+  </div>
+</dialog>
+ <aside class="legacy-sidebar">
+  <div class="legacy-sidebar-body" data-sidebar-target="bodyMd"><nav class="legacy-toc" aria-label="目次">
+  
+  
+  
+  <details open>
+    <summary>イントロダクション</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./" >
+          <span>はじめに</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./qpu.html" aria-current="page">
+          <span>QPU とは</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./what_qpu_do_faster.html" >
+          <span>QPU は何が得意?</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./quantum_circuit.html" >
+          <span>量子回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./qni_intro.html" >
+          <span>Qni 入門</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>量子ビット</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./p_bit.html" >
+          <span>確率的ビット</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./superposition.html" >
+          <span>重ね合わせ状態</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./qubit.html" >
+          <span>量子ビット</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./phase.html" >
+          <span>位相</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./circle_notation.html" >
+          <span>状態ベクトル表示</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>QPU 命令その 1</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./cpu_vs_qpu_operations.html" >
+          <span>CPU 命令との違い</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./x_gate.html" >
+          <span>X ゲート (量子 NOT)</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./h_gate.html" >
+          <span>H ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./phase_gate.html" >
+          <span>PHASE ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./write_operation.html" >
+          <span>WRITE 命令</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./measurement_operation.html" >
+          <span>MEASUREMENT 命令</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./no_cloning_theorem.html" >
+          <span>CLONE 命令!?</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./gate_combination.html" >
+          <span>組合わせゲート</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>量子暗号通信</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./quantum_key_distribution.html" >
+          <span>量子鍵配送</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./bb84_protocol.html" >
+          <span>BB84 プロトコル</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./bb84_circuit.html" >
+          <span>BB84 回路</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>複数量子ビット</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./multi_qubit_circle_notation.html" >
+          <span>状態ベクトル表示</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./multi_qubit_superposition.html" >
+          <span>重ね合わせ状態</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./multi_qubit_operation.html" >
+          <span>複数量子ビットでの演算</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./operator_pair.html" >
+          <span>演算ペア</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./random_byte_generator.html" >
+          <span>ランダムバイトジェネレータ</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./multi_qubit_phase_gate.html" >
+          <span>PHASE ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./partial_measurement.html" >
+          <span>1 ビット測定</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>QPU 命令その 2</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./swap_gate.html" >
+          <span>SWAP ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./cnot_gate.html" >
+          <span>CNOT ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./swap_from_cnots.html" >
+          <span>SWAP パズル</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./cphase.html" >
+          <span>CPHASE ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./entanglement.html" >
+          <span>量子もつれ</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>超密度符号化</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./disentangle.html" >
+          <span>もつれをほどく</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./entanglement_operation.html" >
+          <span>もつれを操作する</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./discriminating_bell_states.html" >
+          <span>ベル状態の判別</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./superdense_coding_circuit.html" >
+          <span>超密度符号化回路</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>量子テレポーテーション</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./teleportation_circuit.html" >
+          <span>テレポーテーション回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./cascading_teleportation.html" >
+          <span>多段テレポーテーション</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./long_distance_entanglement.html" >
+          <span>長距離間の量子もつれ</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>算術演算</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./increment_circuit.html" >
+          <span>インクリメント回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./decrement_circuit.html" >
+          <span>デクリメント回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./addition_circuit.html" >
+          <span>足し算回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./subtraction_circuit.html" >
+          <span>引き算回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./multiplication_circuit.html" >
+          <span>かけ算回路</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>論理演算</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./quantum_logic.html" >
+          <span>量子論理ゲート</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./superposition_quantum_logic.html" >
+          <span>重ね合わせ上での論理演算</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./phase_logic.html" >
+          <span>位相論理演算</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./phase_logic_combination.html" >
+          <span>位相論理演算の組合わせ</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./sat.html" >
+          <span>充足可能性問題</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>グローヴァー探索</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./grover_iam.html" >
+          <span>折り返し変換</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./grover_iteration.html" >
+          <span>グロヴァー反復</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./multiple_marked_values.html" >
+          <span>複数の振幅を増幅</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./grover_iam_indetail.html" >
+          <span>折り返しの仕組み</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>量子フーリエ変換 (QFT)</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./readout_of_patterns.html" >
+          <span>パターンの読み出し</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./inverse_qft.html" >
+          <span>逆 QFT</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./inside_the_qft.html" >
+          <span>QFT の内部</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./qft_adder.html" >
+          <span>QFT 足し算</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>量子位相推定</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./eigenphases.html" >
+          <span>固有位相</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./quantum_phase_estimation_circuit.html" >
+          <span>量子位相推定回路</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./phase_kickback.html" >
+          <span>位相キックバック</span>
+          
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./qpe_output.html" >
+          <span>量子位相推定の出力</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>ショアの因数分解</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./shor_hsp.html" >
+          <span>別問題に帰着する</span>
+          <span class="legacy-toc-new">new</span>
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./shor_fx.html" >
+          <span>\(a^xmod(N)\) の計算</span>
+          <span class="legacy-toc-new">new</span>
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./shor_r.html" >
+          <span>周期 \(r\) を求める</span>
+          <span class="legacy-toc-new">new</span>
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./shor_u.html" >
+          <span>\(a^xmod(N)\) の実装</span>
+          <span class="legacy-toc-new">new</span>
+        </a>
+      </li>
+      
+      
+      <li>
+        <a href="./shor_qft.html" >
+          <span>周期パターンの読み出し</span>
+          <span class="legacy-toc-new">new</span>
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+  
+  
+  <details >
+    <summary>ふろく</summary>
+    <ul>
+      
+      
+      <li>
+        <a href="./no_cloning_theorem_proof.html" >
+          <span>クローン禁止定理の証明</span>
+          
+        </a>
+      </li>
+      
+    </ul>
+  </details>
+  
+</nav>
+</div>
+</aside>
+
+
+  <div class="legacy-column">
+    <header class="legacy-header">
+  <button
+    type="button"
+    class="legacy-toc-open"
+    aria-label="目次を開く"
+    aria-controls="legacy-toc-drawer"
+    aria-expanded="false"
+    data-sidebar-target="opener"
+    data-action="click->sidebar#open"
+  >
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+      <path
+        d="M4 6h16M4 12h16M4 18h16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </svg>
+  </button>
+  <a class="brand-logo" href="./" aria-label="Qni Tutorial ホーム">
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="14" cy="14" r="10" fill="#0EA5E9" />
+      <path d="M14 14L22 22" stroke="#0F172A" stroke-width="2" stroke-linecap="round" />
+      <circle cx="14" cy="14" r="13" stroke="#64748B" stroke-width="2" />
+    </svg>
+    <span class="brand-wordmark"
+      ><span class="brand-qni">Qni</span><span class="brand-tutorial">Tutorial</span></span
+    >
+  </a>
+  <a class="github-link" href="https://github.com/qniapp/qni" aria-label="GitHub で Qni を見る">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M9 19C4 20.5 4 16.5 2 16M16 22V18.13C16.0375 17.6532 15.9731 17.1738 15.811 16.7238C15.6489 16.2738 15.3929 15.8634 15.06 15.52C18.2 15.17 21.5 13.98 21.5 8.52C21.4997 7.12383 20.9627 5.7812 20 4.77C20.4559 3.54851 20.4236 2.19835 19.91 1C19.91 1 18.73 0.65 16 2.48C13.708 1.85882 11.292 1.85882 9 2.48C6.27 0.65 5.09 1 5.09 1C4.57638 2.19835 4.54414 3.54851 5 4.77C4.03013 5.7887 3.49252 7.14346 3.5 8.55C3.5 13.97 6.8 15.16 9.94 15.55C9.611 15.89 9.35726 16.2954 9.19531 16.7399C9.03335 17.1844 8.96681 17.6581 9 18.13V22"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </a>
+</header>
+
 
     <main>
       <article class="prose prose-neutral max-w-none">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-          <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
-            <div class="mb-10 border-b border-zinc-200 pb-10">
-              <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-sky-600">
-                イントロダクション
-              </p>
+        <div class="legacy-content">
+          <div>
+            <div class="legacy-page-title">
+              <p class="legacy-section-label">イントロダクション</p>
               <div>
-                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-zinc-900">
-                  QPU とは
-                </h1>
+                <h1 class="legacy-title">QPU とは</h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-zinc-500">量子コンピュータの正しい位置付け</p>
+              <p class="legacy-lede">量子コンピュータの正しい位置付け</p>
             </div>
             <div class="content-with-margin"><p>
-  「量子コンピュータとは、従来のコンピュータとまったく異なる方式の超高速なコンピュータであり、近い将来には従来のコンピュータはすべて量子コンピュータに置き換わる」最近の加熱する量子コンピュータ報道では、こうした論調のものが少なくありません。
+  QPU は、特定のタスクを担う量子処理ユニットです。GPU
+  との比較から、量子コンピュータの位置付けと使い方を見ていきましょう。
+</p>
+
+<p>
+  量子コンピュータには、過大な期待も寄せられています。最近の過熱する量子コンピュータ報道では、「量子コンピュータとは、従来のコンピュータとまったく異なる方式の超高速なコンピュータであり、近い将来には従来のコンピュータはすべて量子コンピュータに置き換わる」という論調のものが少なくありません。
 </p>
 
 <p>
   これは、大きな誤解です。<a href="./index.html">はじめに</a
-  >で述べたように、量子コンピュータは量子探索や量子因数分解といった特定のタスクで威力を発揮するもので、従来のコンピュータでは解けなかったクラスの問題を扱うための特殊なアクセラレータの一種です。
+  >で述べたように、量子コンピュータは量子探索 (グローヴァー探索)
+  や量子因数分解といった特定のタスクで威力を発揮するもので、従来のコンピュータでは現実的な時間では解けなかった種類の問題を扱うことが期待される、特殊なアクセラレータの一種と考えることができます。
 </p>
 
 <p>
-  量子コンピュータが得意なタスクは、実はまだあまり多くは知られていません。
-  古典アルゴリズムよりも高速な量子アルゴリズムの一覧は、<a href="https://quantumalgorithmzoo.org/"
+  量子コンピュータが得意なタスクは、実はまだあまり多くは知られていません。古典アルゴリズムに対する高速化が期待される量子アルゴリズムの一覧は、<a
+    href="https://quantumalgorithmzoo.org/"
     >Quantum Algorithm Zoo</a
   >
-  というサイトにまとまっています。しかし現時点でその数はまだ 60
-  個程度です。このことからも、近い将来に現在のコンピュータすべてが量子コンピュータに置き換わるわけではない、ということが分かるでしょう。
+  というサイトにまとまっています。しかし、その掲載数は数十個 (74 個) です<label for="margin-note-algorithm-zoo-count" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-algorithm-zoo-count" class="margin-note__toggle hidden"><span class="margin-note"><a href="https://quantumalgorithmzoo.org/">Quantum Algorithm Zoo</a> の 2026
+  年 9 月 10 日更新版には 74
+  個掲載。掲載数は既知の量子アルゴリズムすべての数や、応用できる問題の種類の数を表すものではありません。また、高速化の条件や程度はアルゴリズムによって異なります。</span>。この件数だけで将来を判断することはできませんが、得意なタスクが限られていることを踏まえると、近い将来に現在のコンピュータすべてが量子コンピュータに置き換わるわけではない、とも言えそうです。
 </p>
 
 <p>
-  とは言っても、いくつかの量子アルゴリズムは期待できるものです。
-  たとえば量子検索や量子因数分解、HHL<label for="margin-note-hhl" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-hhl" class="margin-note__toggle hidden"><span class="margin-note">連立一次方程式を高速に解くことのできる量子アルゴリズム。HHL はアルゴリズムを開発したホロー
-  (Harrow)、ハシディム (Hassidim)、ロイド (Lloyd) 氏の頭文字を取ったもの。Aram W. Harrow, Avinatan
-  Hassidim, Seth Lloyd,
-  <a href="https://arxiv.org/abs/0811.3171" class="italic"
-    >Quantum Algorithm for Linear Systems of Equations</a
+  とは言っても、いくつかの量子アルゴリズムは期待できるものです。たとえば量子探索 (グローヴァー探索)
+  や量子因数分解、HHL<label for="margin-note-hhl" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-hhl" class="margin-note__toggle hidden"><span class="margin-note">連立一次方程式の解を量子状態として得る量子アルゴリズム。高速化には、行列が疎で条件数がよいことや、入力を効率よく量子状態として準備できることなどの条件があります。答えはベクトルの各成分ではなく量子状態として得られるため、すべての成分を読み出すと高速化の利点が失われることがあります。HHL
+  はアルゴリズムを開発したホロー (Harrow)、ハシディム (Hassidim)、ロイド (Lloyd)
+  氏の頭文字を取ったもの。Aram W. Harrow, Avinatan Hassidim, Seth Lloyd,
+  <em
+    ><a href="https://arxiv.org/abs/0811.3171"
+      >Quantum Algorithm for Linear Systems of Equations</a
+    ></em
   >
   (2008)</span>
-  といった量子アルゴリズムは応用できる範囲がとても広いため、特定タスク向けアクセラレータとしての量子コンピュータが期待されているのです。
+  といった量子アルゴリズムは幅広い応用が研究されており、条件が合えば高速化が見込めるため、特定タスク向けアクセラレータとしての量子コンピュータが期待されているのです。
 </p>
 
 <p>
-  従来、特定のタスク向けのマシンやアーキテクチャを「ドメイン指向アーキテクチャ」と呼び、GPU (Graphic
-  Processing Unit: 画像処理ユニット) が代表的存在です。もともとグラフィック処理向けに開発された GPU
-  はコア数が非常に多いことから並列性が高く、ニューラルネットワークの計算を効率よく計算できることから、現在では機械学習ドメインに特化した専用
+  特定のタスク向けの設計が、ドメイン指向アーキテクチャです。GPU (Graphics Processing Unit:
+  画像処理ユニット) が代表的存在です。もともとグラフィック処理向けに開発された GPU
+  はコア数が非常に多いことから並列性が高く、ニューラルネットワークの計算を効率よく実行できることから、現在では機械学習ドメインに特化した専用
   GPU も登場しています。量子コンピュータも、本来は従来のコンピュータと対立するものではなく、むしろ
   GPU と同じレイヤに位置付けられる「CPU 補助デバイス」と考えると分かりやすいでしょう。
 </p>
 
 <p>
-  そんな GPU からの類推として、量子コンピュータを QPU (Quantum Processing Unit: 量子処理ユニット)
-  と呼ぼうという考えがあります。実際のところ、GPU と QPU にはどれだけ類似点があるでしょうか。まずは
-  GPU プログラミングの特徴を挙げてみましょう:
+  量子計算を担うのが QPU です。GPU からの類推による呼び名で、QPU (Quantum Processing Unit:
+  量子処理ユニット) は、量子コンピュータのうち量子ビットを使って計算を担う部分や装置を指します。QPU
+  は、制御装置や従来のコンピュータなども含む量子コンピュータ全体とは区別されます。実際のところ、GPU
+  と QPU にはどれだけ類似点があるでしょうか。まずは GPU プログラミングの特徴を挙げてみましょう:
 </p>
+
+<figure>
+  <img
+    src="./images/qpu/fig_a.png"
+    class="h-auto w-full"
+    alt="CPU が量子回路を用意し、QPU で実行した測定結果を受け取る流れ。QPU はクラウド経由で利用する場合もある。"
+  />
+  <figcaption>
+    図A: CPU → 量子回路 → QPU → 測定結果 → CPU。CPU が処理の一部を QPU
+    に任せ、測定結果を使って処理を続けます。QPU をクラウド経由で利用する場合もあります。
+  </figcaption>
+</figure>
 
 <ul>
   <li>
     <p><strong>GPU に適したタスクもあれば、まったく適さないタスクもある。</strong></p>
     <p>
       GPU
-      は大量の単純な演算タスクに適しており、大量の積や和の計算が必要なディープラーニングなどがこれにあたります。
-      一方で、GPU の動作クロック数は CPU と比べて一般に 1000 倍以上低いため、CPU
-      並の高クロックが必要なタスクには適しません。
+      は、大量の単純な演算を並列に行うタスクに適しています。大量の積や和の計算が必要なディープラーニングなどがこれにあたります。一方で、逐次処理や複雑な分岐が多いタスクには向きません。
     </p>
   </li>
   <li>
     <p><strong>プログラムの処理すべてを GPU 上で実行することは非常にまれ。</strong></p>
     <p>
-      プログラムのメイン処理は通常 CPU 上で実行されます。 CPU
+      プログラムのメイン処理は通常 CPU 上で実行されます。CPU
       で実行するメインプログラムが一部のタスクを GPU
       で実行し、実行結果を回収しながら処理を進めます。
     </p>
   </li>
   <li>
-    <p><strong>GPU プログラミングには、特別な言語やコンパイラ、ライブラリが必要。</strong></p>
+    <p><strong>GPU プログラミングには、専用の開発環境を使うことが多い。</strong></p>
     <p>
-      GPU と CPU はハードウェア構成がまったく異なるため、GPU
-      専用の開発環境とランタイム環境が必要です。 NVIDIA 専用の CUDA や、C や Fortran で使える
-      OpenACC などがその代表です。
+      GPU と CPU は、ハードウェア構成が異なります。そのため、GPU
+      向けの特別な言語やコンパイラ、ライブラリなどの開発環境とランタイム環境を使うことが多くあります。NVIDIA
+      の GPU 向けの CUDA や、C や Fortran で使える OpenACC などがその代表です。
     </p>
   </li>
 </ul>
 
 <p>興味深いことに、「GPU」を「QPU」に置き換えてもほぼ同じことがあてはまります!</p>
 
+<figure>
+  <img
+    src="./images/qpu/fig_b.png"
+    class="h-auto w-full"
+    alt="CPU が GPU と QPU にそれぞれ処理の一部を任せる構成。GPU は多数の演算を並列実行し、QPU は量子ビットと量子回路で計算する。"
+  />
+  <figcaption>
+    図B: GPU も QPU も、CPU
+    がそれぞれの得意な処理を任せるアクセラレータです。ただし計算の仕組みは異なり、GPU
+    は多数の演算を並列に実行し、QPU
+    は量子ビットと量子回路を使って計算し、測定結果を返します。得意なタスクも同じではありません。
+  </figcaption>
+</figure>
+
 <p>
-  それならば、GPU が辿ってきた道を振り返ることで、これから QPU
-  が進む未来を大まかに予測できそうです。 1999 年に登場した GPU
-  は、プログラミングパラダイムの大きな転換をプログラマにもたらしました。
-  それも過ぎ去った現在では、ゲーム産業や数値計算をはじめとした分野で、たくさんの GPU
-  プログラマが活躍しています。 そう考えれば、QPU
-  プログラミングにも最初は多少の混乱はあるでしょうが、数年後には当たり前の技術となっているでしょう。
-  それならいつかは自分にもできそう、そう思えてきませんか?
+  GPU の歩みは、QPU の未来を考える手がかりになります。1999 年、NVIDIA の GeForce 256
+  が「GPU」という言葉を広めました<label for="margin-note-gpu-history" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-gpu-history" class="margin-note__toggle hidden"><span class="margin-note">NVIDIA の公式ブログでは、<a
+    href="https://blogs.nvidia.com/blog/first-gpu-gaming-ai/"
+    >1999 年の GeForce 256</a
+  >
+  と、<a href="https://blogs.nvidia.com/blog/whats-the-difference-between-a-cpu-and-a-gpu/"
+    >2007 年に初めて公開された CUDA</a
+  >
+  が紹介されています。CUDA については
+  <a href="https://developer.nvidia.com/cuda-zone">CUDA Zone</a> も参照。</span>。当初、GPU を汎用計算に利用するには特別な手法が必要で、扱える人は限られていました。その後、2007
+  年に公開された CUDA などの開発環境が成熟し、現在ではゲーム産業や数値計算をはじめ、AI
+  などの分野でも、GPU の専門家に限らずふつうの開発者がライブラリなどを通じて GPU
+  を使っています。そう考えれば、QPU
+  プログラミングにも最初は多少の混乱はあるでしょうが、いずれ当たり前の技術になるかもしれません。それならいつかは自分にもできそう、そう思えてきませんか?
 </p>
+
+<h2>復習</h2>
 
 <orbit-reviewarea color="blue">
   <orbit-prompt
-    question="「将来的にはすべてのコンピュータは量子コンピュータになる」
-              という意見に**現時点で**反証できる事実は何?"
-    answer="古典よりも高速な量子アルゴリズムはまだ 60 個程度しか知られていない"
+    question="「将来的にはすべてのコンピュータは量子コンピュータになる」という意見を、そのまま受け取れない理由は何?"
+    answer="量子コンピュータには得意なタスクと不得意なタスクがある。Quantum Algorithm Zoo の掲載数は数十個 (2026 年 9 月 10 日更新版では 74 個) だが、件数だけで将来を判断することはできない"
   ></orbit-prompt>
   <orbit-prompt
-    question="HHL アルゴリズムの用途は?"
-    answer="連立一次方程式の高速な求解"
+    question="HHL アルゴリズムの用途と、高速化の主な条件・注意点は?"
+    answer="連立一次方程式の解を量子状態として得る。行列が疎で条件数がよいことや効率的な入力準備などが条件で、解の全成分を読み出すと高速化の利点が失われることがある"
   ></orbit-prompt>
   <orbit-prompt
     question="ドメイン指向アーキテクチャの代表例で、機械学習などで広く用いられているデバイスは?"
     answer="GPU"
   ></orbit-prompt>
   <orbit-prompt
-    question="量子コンピュータの別名で、特定タスク向けのアクセラレータとしての側面を強調する名前は?"
-    answer="QPU"
+    question="量子コンピュータのうち、量子ビットを使って計算を担う部分や装置を何と呼ぶ?"
+    answer="QPU (Quantum Processing Unit: 量子処理ユニット)"
   ></orbit-prompt>
 </orbit-reviewarea>
-<footer class="mt-12 text-sm leading-6">
-  <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
+<footer class="legacy-page-footer">
+  <div class="legacy-page-footer-nav">
     
     <a
-      class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      class="legacy-page-footer-link legacy-page-footer-prev"
       href="./index.html"
-      ><svg
-  class="mr-3 h-4 w-auto overflow-visible text-slate-400
-      group-hover:text-slate-600 dark:group-hover:text-slate-300"
+      rel="prev"
+    >
+      <svg
+  class="legacy-page-footer-chevron"
   width="15"
   height="15"
   viewBox="0 0 15 15"
@@ -1521,16 +1658,25 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-はじめに</a
-    >
+
+      <span class="legacy-page-footer-text">
+        <span class="legacy-page-footer-label">前へ</span>
+        <span class="legacy-page-footer-title">はじめに</span>
+      </span>
+    </a>
      
     <a
-      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      class="legacy-page-footer-link legacy-page-footer-next"
       href="./what_qpu_do_faster.html"
-      >QPU は何が得意?<svg class="ml-3 h-4 w-auto overflow-visible
-      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-</a
+      rel="next"
     >
+      <span class="legacy-page-footer-text">
+        <span class="legacy-page-footer-label">次へ</span>
+        <span class="legacy-page-footer-title">QPU は何が得意?</span>
+      </span>
+      <svg class="legacy-page-footer-chevron" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+    </a>
     
   </div>
 </footer>
