@@ -7,7 +7,8 @@ The human-approved source advance is:
 - Previous WebGPU source: `4f4a7f597791868149e9bc3fd8740699190bd54a`.
 - Approved replacement source: `33366e270556c69201da901612cb522b4e18e2ee`.
 - Introduction design/prose baseline: tutorial `7aeb59678225fe927b80d2da40997e82c8d0fb41`.
-- Final reviewed tutorial dependency commit: `6e0a7afde78d20d3fc3fc66cfbf37f2a3af63f0b`.
+- Reviewed engine-advance tutorial commit: `6e0a7afde78d20d3fc3fc66cfbf37f2a3af63f0b`.
+- Reviewed initial-CNOT follow-up tutorial: `9e9a72129fd69cd30394f66a8c00d63ae13029d3`. Its four-file diff adds only `selected-step="2"` to the introduction and focused test/config assertions; the engine source and this dependency review are unchanged.
 
 This is not a touch-only dependency change. The comparison contains 153 files under `apps/web/` and 214 repository-wide files, including 23 PNG baselines and nine textual snapshots. The review inventories every changed path and examines the production Rust/JavaScript, build/workflow changes, Python backend changes, corresponding test coverage and documentation. It is an integration-risk review, not physical-device acceptance or a claim that all upstream tests were rerun. Binary baselines are inventoried, not accepted by text inspection.
 

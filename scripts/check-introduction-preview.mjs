@@ -65,7 +65,13 @@ function assertNoLocalErrors(result) {
   }
 }
 
-const report = { ...observations(), gpu: {}, gpuDisabled: observations(), headerScroll: [] }
+const report = {
+  ...observations(),
+  gpu: {},
+  gpuDisabled: observations(),
+  headerScroll: [],
+  initialCnot: [],
+}
 const browser = await chromium.launch({
   args: [
     '--no-sandbox',
@@ -81,8 +87,56 @@ try {
   for (const width of [1280, 1024, 768, 700, 390]) {
     await page.setViewportSize({ width, height: 900 })
     for (const entry of ['/qni/', '/qni/index.html']) {
+      await page.mouse.move(0, 0)
       await page.goto(base.origin + entry)
       await expect(page.locator('h1')).toHaveText('はじめに')
+      const authored = page.locator('qni-webgpu-circuit')
+      await expect(authored).toHaveAttribute('selected-step', '2')
+      await authored.scrollIntoViewIfNeeded()
+      await expect(authored).toHaveAttribute('data-state', 'running', { timeout: 30000 })
+      const read = () =>
+        authored.evaluate(async (element) => ({
+          step: element.runner.selectedStep(),
+          count: element.runner.stepCount(),
+          circuit: element.runner.circuitJSON(),
+          vector: Array.from(await element.readStateVector()),
+        }))
+      const initial = await read()
+      const bell = [Math.fround(Math.SQRT1_2), 0, 0, 0, 0, 0, Math.fround(Math.SQRT1_2), 0]
+      assert.equal(initial.step, 2)
+      assert.equal(initial.count, 5) // Comment markers are not semantic columns.
+      assert.deepEqual(initial.vector, bell)
+      assert.deepEqual(JSON.parse(initial.circuit).cols, [
+        ['|0>', '|0>'],
+        ['{量子もつれ'],
+        ['H'],
+        ['•', 'X'],
+        ['}'],
+        ['Measure'],
+        [1, 'Measure'],
+      ])
+      report.initialCnot.push({ width, entry, ...initial })
+      await authored.screenshot({
+        path: join(
+          evidence,
+          `initial-cnot-${width}-${entry.endsWith('index.html') ? 'index' : 'root'}.png`
+        ),
+      })
+      // Change real step labels after proving untouched startup; the attribute
+      // must not prevent readers from selecting initialization, H or CNOT.
+      for (const [step, x, vector] of [
+        [0, 88, [1, 0, 0, 0, 0, 0, 0, 0]],
+        [1, 144, [Math.fround(Math.SQRT1_2), 0, Math.fround(Math.SQRT1_2), 0, 0, 0, 0, 0]],
+        [2, 200, bell],
+      ]) {
+        await authored.locator('canvas').click({ position: { x, y: 295 } })
+        await page.mouse.move(0, 0)
+        const selected = await read()
+        assert.equal(selected.step, step)
+        assert.deepEqual(selected.vector, vector)
+        assert.equal(selected.circuit, initial.circuit)
+      }
+      await page.evaluate(() => scrollTo(0, 0))
       await expect(page.locator('.page-title-block .lede')).toHaveText(
         '実践で学ぶ量子コンピュータプログラミング'
       )

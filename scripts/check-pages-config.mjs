@@ -48,7 +48,7 @@ const introductionStep = workflow.match(
   /      - name: Checkout pinned introduction tutorial\n([\s\S]*?)(?=\n      - name:)/
 )?.[1]
 assert(
-  introductionStep?.match(/^ {10}ref: (.+)$/m)?.[1] === '6e0a7afde78d20d3fc3fc66cfbf37f2a3af63f0b',
+  introductionStep?.match(/^ {10}ref: (.+)$/m)?.[1] === '9e9a72129fd69cd30394f66a8c00d63ae13029d3',
   'Pages must use the explicitly reviewed introduction commit, never a moving branch'
 )
 assert(
