@@ -44,6 +44,33 @@ for (const snippet of [
   assert(workflow.includes(snippet), `Expected ${workflowPath} to include: ${snippet}`)
 }
 
+const introductionStep = workflow.match(
+  /      - name: Checkout pinned introduction tutorial\n([\s\S]*?)(?=\n      - name:)/
+)?.[1]
+assert(
+  introductionStep?.match(/^ {10}ref: (.+)$/m)?.[1] === '6e0a7afde78d20d3fc3fc66cfbf37f2a3af63f0b',
+  'Pages must use the explicitly reviewed introduction commit, never a moving branch'
+)
+assert(
+  workflow.includes('mv .introduction-tutorial "$directory/tutorial"'),
+  'Tutorial and nested WebGPU checkout must move outside the legacy pnpm workspace'
+)
+
+// build-embed.sh prefers GITHUB_SHA over git HEAD unless explicitly overridden.
+// In this workflow GITHUB_SHA is Qni's commit, not the nested engine's commit.
+const engineRef = '${{ steps.webgpu.outputs.ref }}'
+const checkoutStep = workflow.match(
+  /      - name: Checkout pinned WebGPU source\n([\s\S]*?)(?=\n      - name:)/
+)?.[1]
+const sourceBuildStep = workflow.match(
+  /      - name: Build current pinned WebGPU assets\n([\s\S]*?)(?=\n      - name:)/
+)?.[1]
+assert(
+  checkoutStep?.match(/^ {10}ref: (.+)$/m)?.[1] === engineRef &&
+    sourceBuildStep?.match(/^ {10}QNI_SOURCE_COMMIT: (.+)$/m)?.[1] === engineRef,
+  'WebGPU source provenance must use the same exact ref for checkout and QNI_SOURCE_COMMIT, never the parent GITHUB_SHA'
+)
+
 // action-setup recursively replaces dest, including any setup-node cache stored there.
 const pnpmDestinations = [
   ...workflow.matchAll(/uses: pnpm\/action-setup@[^\n]+\n\s+with:\n((?: {10}[^\n]*\n)+)/g),

@@ -39,7 +39,7 @@ function observe(page) {
   })
 }
 try {
-  for (const width of [1280, 1024, 700, 390]) {
+  for (const width of [1280, 1024, 768, 700, 390]) {
     const page = await browser.newPage({ viewport: { width, height: 900 } })
     observe(page)
     await page.goto(base.href)
@@ -47,8 +47,27 @@ try {
       background: getComputedStyle(element).backgroundColor,
       box: { x: element.getBoundingClientRect().x, height: element.getBoundingClientRect().height },
     }))
+    const proseWidth = (await page.locator('.content-with-margin > p').first().boundingBox()).width
+    const cardStyle = await page.locator('.page-footer-next').evaluate((element) => {
+      const style = getComputedStyle(element)
+      return {
+        background: style.backgroundColor,
+        radius: style.borderRadius,
+        padding: style.padding,
+      }
+    })
     await page.locator('.page-footer-next').click()
     assert.equal(page.url(), new URL('qpu.html', base).href)
+    assert.equal(
+      (await page.locator('.content-with-margin > p').first().boundingBox()).width,
+      proseWidth
+    )
+    for (const card of await page.locator('footer a').all()) {
+      await expect(card).toHaveCSS('background-color', cardStyle.background)
+      await expect(card).toHaveCSS('border-radius', cardStyle.radius)
+      await expect(card).toHaveCSS('padding', cardStyle.padding)
+      await expect(card.locator('.legacy-page-footer-label')).toHaveText(/前へ|次へ/)
+    }
     const header = page.getByRole('banner')
     await expect(header).toHaveCSS('background-color', reference.background)
     await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 252, 240)')
@@ -57,8 +76,8 @@ try {
     await expect(header).toHaveCSS('background-color', 'rgb(255, 252, 240)')
     for (const link of await page.locator('footer a').all()) {
       await link.hover()
-      await expect(link).toHaveCSS('color', 'rgb(15, 23, 42)')
-      await expect(link.locator('svg')).toHaveCSS('color', 'rgb(71, 85, 105)')
+      await expect(link).toHaveCSS('color', 'rgb(16, 15, 15)')
+      await expect(link.locator('svg')).toHaveCSS('color', 'rgb(32, 94, 166)')
     }
     await page.emulateMedia({ colorScheme: 'light' })
     await page.evaluate(() => scrollTo(0, 0))

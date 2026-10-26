@@ -39,7 +39,7 @@
     "test:ci:packages": "pnpm --dir packages/common test:ci && pnpm --dir packages/elements test:ci && pnpm --dir packages/simulator test:ci",
     "test:ci:www": "pnpm --dir apps/www test:ci",
     "test:ci": "pnpm run test:ci:packages && pnpm run test:ci:www",
-    "test:pages-config": "node scripts/check-pages-config.mjs",
+    "test:pages-config": "node scripts/check-pages-config.mjs && node --test scripts/check-pages-config.test.mjs",
     "test:local-build-env": "node scripts/check-local-build-env.mjs",
     "setup:local-build-env": "bash scripts/install-local-build-env.sh",
     "build:local-full": "bash scripts/full-build-local.sh",

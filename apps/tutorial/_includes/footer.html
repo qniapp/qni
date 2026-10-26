@@ -1,17 +1,29 @@
-<footer class="mt-12 text-sm leading-6">
-  <div class="mb-10 flex items-center font-semibold text-slate-700">
+<footer class="legacy-page-footer">
+  <div class="legacy-page-footer-nav">
     {% if page.prev %}
-    <a class="group flex items-center no-underline hover:text-slate-900" href="{{ page.prev_url }}"
-      >{% include chevron_left.svg class="mr-3 h-4 w-auto overflow-visible text-slate-400
-      group-hover:text-slate-600" %}{{ page.prev }}</a
+    <a
+      class="legacy-page-footer-link legacy-page-footer-prev"
+      href="{{ page.prev_url }}"
+      rel="prev"
     >
+      {% include chevron_left.svg class="legacy-page-footer-chevron" %}
+      <span class="legacy-page-footer-text">
+        <span class="legacy-page-footer-label">前へ</span>
+        <span class="legacy-page-footer-title">{{ page.prev }}</span>
+      </span>
+    </a>
     {% endif %} {% if page.next %}
     <a
-      class="group ml-auto flex items-center no-underline hover:text-slate-900"
+      class="legacy-page-footer-link legacy-page-footer-next"
       href="{{ page.next_url }}"
-      >{{ page.next }}{% include chevron_right.svg class="ml-3 h-4 w-auto overflow-visible
-      text-slate-400 group-hover:text-slate-600" %}</a
+      rel="next"
     >
+      <span class="legacy-page-footer-text">
+        <span class="legacy-page-footer-label">次へ</span>
+        <span class="legacy-page-footer-title">{{ page.next }}</span>
+      </span>
+      {% include chevron_right.svg class="legacy-page-footer-chevron" %}
+    </a>
     {% endif %}
   </div>
 </footer>

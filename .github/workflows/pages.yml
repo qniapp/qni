@@ -55,14 +55,14 @@ jobs:
       - name: Build tutorial Pages site
         run: pnpm --dir apps/tutorial build:site
 
-      # Publication dependency: this exact phase-1 commit must be available on
+      # Publication dependency: this exact reviewed commit must be available on
       # qniapp/qni-tutorial-webgpu BEFORE an approved push of this repository.
       # Checkout must fail rather than silently substitute remote main.
       - name: Checkout pinned introduction tutorial
         uses: actions/checkout@v5
         with:
           repository: qniapp/qni-tutorial-webgpu
-          ref: 17dfa8b2e073a07751739e2bbda313aca7405962
+          ref: 6e0a7afde78d20d3fc3fc66cfbf37f2a3af63f0b
           path: .introduction-tutorial
 
       - name: Read pinned WebGPU source
@@ -112,6 +112,9 @@ jobs:
 
       - name: Build current pinned WebGPU assets
         working-directory: ${{ steps.tutorial.outputs.path }}
+        env:
+          # GITHUB_SHA belongs to this repository, not the nested engine checkout.
+          QNI_SOURCE_COMMIT: ${{ steps.webgpu.outputs.ref }}
         run: bash scripts/fetch-qni-webgpu.sh .qni-webgpu-source
 
       - name: Build migration introduction
@@ -126,7 +129,7 @@ jobs:
         env:
           INTRODUCTION_DIR: ${{ steps.tutorial.outputs.path }}
         run: |
-          node --test scripts/compose-introduction.test.mjs
+          node --test scripts/compose-introduction.test.mjs scripts/check-pages-config.test.mjs
           node scripts/compose-introduction.mjs html "$INTRODUCTION_DIR/.astro/migration-dist"
 
       - name: Upload Pages artifact

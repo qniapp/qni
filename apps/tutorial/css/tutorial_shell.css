@@ -121,15 +121,34 @@
   display: grid;
   grid-template-columns: max-content;
 }
-/* Sidenotes start at sm (640px), so reserve their column at that same breakpoint. */
+/* Match the reviewed introduction's prose and note columns. Reset the counter
+   inside style containment so numbered legacy notes remain visible. */
+.legacy-content {
+  container-type: inline-size;
+}
+.legacy-content .content-with-margin {
+  counter-reset: margin-note-counter;
+  --prose-width: 100%;
+}
+.legacy-content .margin-note {
+  color: #575653;
+}
 @media (min-width: 640px) {
+  .legacy-content .content-with-margin {
+    --prose-width: min(560px, max(58.333333cqw, 100cqw - 240px));
+  }
+  .legacy-content .margin-note {
+    margin: 0 calc(var(--prose-width) - 100cqw) 12px 0;
+    padding-left: 32px;
+    width: calc(100cqw - var(--prose-width));
+  }
   .legacy-content .content-with-margin > p,
   .legacy-content .content-with-margin > ul,
   .legacy-content .content-with-margin > figure,
   .legacy-content .content-with-margin > orbit-reviewarea,
   .legacy-content .content-with-margin > .mini-qni,
   .legacy-content .content-with-margin > footer {
-    width: 58.333333%;
+    width: var(--prose-width);
     margin-right: auto;
   }
 }
@@ -141,6 +160,74 @@
 /* Wide static diagrams scroll within their existing wrapper, not the page. */
 .legacy-content .content-with-margin > div:has(> quantum-circuit) {
   overflow-x: auto;
+}
+/* Shared previous/next cards retain the legacy destinations and page titles. */
+.legacy-content .legacy-page-footer {
+  margin-top: 64px;
+  margin-bottom: 40px;
+}
+.legacy-page-footer-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.legacy-content .legacy-page-footer-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 12px 16px;
+  border: 1px solid #dad8ce;
+  border-radius: 12px;
+  background: #f2f0e5;
+  color: #100f0f;
+  text-decoration: none;
+  transition:
+    border-color 150ms,
+    background-color 150ms;
+}
+.legacy-content .legacy-page-footer-link:hover {
+  border-color: #205ea6;
+  background: #e6e4d9;
+  color: #100f0f;
+}
+.legacy-page-footer-next {
+  grid-column: 2;
+  justify-content: flex-end;
+  text-align: right;
+}
+.legacy-page-footer-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.legacy-page-footer-label {
+  color: #6f6e69;
+  font-size: 14px;
+  line-height: 20px;
+}
+.legacy-page-footer-title {
+  color: #205ea6;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+}
+.legacy-page-footer-chevron {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: #6f6e69;
+}
+.legacy-page-footer-link:hover .legacy-page-footer-chevron {
+  color: #205ea6;
+}
+@media (max-width: 479.98px) {
+  .legacy-page-footer-nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .legacy-page-footer-next {
+    grid-column: 1;
+  }
 }
 .legacy-sidebar {
   display: none;

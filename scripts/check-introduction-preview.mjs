@@ -78,11 +78,36 @@ const browser = await chromium.launch({
 try {
   const page = await browser.newPage()
   observe(page, report)
-  for (const width of [1280, 390]) {
+  for (const width of [1280, 1024, 768, 700, 390]) {
     await page.setViewportSize({ width, height: 900 })
     for (const entry of ['/qni/', '/qni/index.html']) {
       await page.goto(base.origin + entry)
       await expect(page.locator('h1')).toHaveText('はじめに')
+      await expect(page.locator('.page-title-block .lede')).toHaveText(
+        '実践で学ぶ量子コンピュータプログラミング'
+      )
+      // These expectations come from the approved upstream #39 regression,
+      // not new editorial changes in the legacy repository.
+      const prose = (await page.locator('main').innerText()).replace(/\s+/g, ' ')
+      for (const expected of [
+        '「自然は古典的じゃないんだ、ちくしょう。自然をシミュレーションしたいなら、量子力学的に作ったほうがいい。」',
+        '電磁気学に基づいたトランジスタなどの電子回路',
+        '原子や電子、光子の量子的な状態をビットとして使います',
+        '1,000 回ほどの検索で見つかります',
+        '十分な規模の誤り耐性量子コンピュータが実現すれば、現在広く使われている公開鍵暗号は破られてしまいます',
+        'オープンソースの量子コンピュータシミュレータ',
+        '一問一答形式',
+      ])
+        assert.ok(prose.includes(expected), expected)
+      assert.doesNotMatch(prose, /株価の下落|指数関数的に速く|シミューレータ/)
+      const feynman = page.locator('#margin-note-feynman + .margin-note')
+      await expect(feynman).toHaveText(
+        'Richard P. Feynman, Simulating Physics with Computers, International Journal of Theoretical Physics 21, 467–488 (1982), p. 486。'
+      )
+      await expect(feynman.locator('a')).toHaveAttribute(
+        'href',
+        'https://doi.org/10.1007/BF02650179'
+      )
       const icon = page.locator('link[rel="icon"]')
       await expect(icon).toHaveAttribute('href', '/qni/qni-favicon.ico')
       await expect(icon).toHaveAttribute('type', 'image/x-icon')
@@ -151,13 +176,27 @@ try {
           `scrolled-header-${width}-${entry.endsWith('index.html') ? 'index' : 'root'}.png`
         ),
       })
-      if (width === 390) {
+      if (width < 768) {
         await page.getByRole('button', { name: '目次を開く', exact: true }).click()
-        await expect(page.getByRole('dialog', { name: '目次', exact: true })).toBeVisible()
+        const dialog = page.getByRole('dialog', { name: '目次', exact: true })
+        await expect(dialog).toBeVisible()
+        await expect(page.getByRole('button', { name: '目次を閉じる', exact: true })).toBeFocused()
+        // Native dialogs may send reverse Tab from the first control to browser
+        // chrome. Forward Tab must reach the modal navigation, never the page.
+        await page.keyboard.press('Tab')
+        assert.equal(
+          await dialog.evaluate((element) => element.contains(document.activeElement)),
+          true
+        )
+        await page.keyboard.press('Escape')
+        await expect(dialog).not.toBeVisible()
+        await expect(page.getByRole('button', { name: '目次を開く', exact: true })).toBeFocused()
+        await page.keyboard.press('Enter')
+        await expect(dialog).toBeVisible()
         await page.screenshot({
           path: join(
             evidence,
-            `scrolled-drawer-${entry.endsWith('index.html') ? 'index' : 'root'}.png`
+            `scrolled-drawer-${width}-${entry.endsWith('index.html') ? 'index' : 'root'}.png`
           ),
         })
         await page.getByRole('button', { name: '目次を閉じる', exact: true }).click()
@@ -202,12 +241,12 @@ try {
       path: join(evidence, `desktop-or-mobile-${width}.png`),
       fullPage: true,
     })
-    if (width === 390) await page.getByRole('button', { name: '目次を開く', exact: true }).click()
-    const nav = page.locator(width === 390 ? '.toc-drawer nav' : '.sidebar nav')
+    if (width < 768) await page.getByRole('button', { name: '目次を開く', exact: true }).click()
+    const nav = page.locator(width < 768 ? '.toc-drawer nav' : '.sidebar nav')
     await nav.locator('details').nth(1).locator('summary').click()
     await expect(nav.locator('.toc-unported')).toHaveCount(7)
     await page.screenshot({ path: join(evidence, `menu-${width}.png`) })
-    if (width === 390) await page.getByRole('button', { name: '目次を閉じる', exact: true }).click()
+    if (width < 768) await page.getByRole('button', { name: '目次を閉じる', exact: true }).click()
     await page.locator('.page-footer-next').click()
     assert.equal(page.url(), base.origin + '/qni/qpu.html')
     await expect(page.locator('h1')).toContainText('QPU')
@@ -229,6 +268,19 @@ try {
   const embed = page.locator('qni-webgpu-circuit')
   await embed.scrollIntoViewIfNeeded()
   await expect(embed).toHaveAttribute('data-state', 'running', { timeout: 30000 })
+  report.gpu.provenance = await page.evaluate(async (root) => {
+    const runtime = await import(root + 'qni-webgpu/qni-embed.mjs')
+    return { source: runtime.SOURCE_COMMIT, api: runtime.EMBED_API_VERSION }
+  }, base.href)
+  assert.deepEqual(report.gpu.provenance, {
+    source: '33366e270556c69201da901612cb522b4e18e2ee',
+    api: 1,
+  })
+  assert.equal(await page.locator('html').getAttribute('data-qni-embed-base'), null)
+  assert.equal(
+    report.localAssets.some((asset) => asset.url.includes('qni-webgpu-prebuilt')),
+    false
+  )
   report.gpu.adapter = await page.evaluate(async () => {
     const { vendor, architecture, device, description } = (await navigator.gpu.requestAdapter())
       .info
@@ -267,14 +319,32 @@ try {
   try {
     const unsupported = await unsupportedBrowser.newPage()
     observe(unsupported, report.gpuDisabled)
-    await unsupported.goto(base.href)
-    const circuit = unsupported.locator('qni-webgpu-circuit')
-    await circuit.scrollIntoViewIfNeeded()
-    await expect(circuit).toHaveAttribute('data-error-code', 'gpu-adapter-unavailable')
-    const message = circuit.getByRole('region', { name: 'GPU を使えませんでした', exact: true })
-    await expect(message).toBeVisible()
-    report.unsupportedMessage = await message.innerText()
-    await circuit.screenshot({ path: join(evidence, 'gpu-unavailable.png') })
+    report.gpuDisabled.viewports = []
+    for (const width of [1280, 1024, 768, 700, 390]) {
+      await unsupported.setViewportSize({ width, height: 900 })
+      for (const entry of ['/qni/', '/qni/index.html']) {
+        await unsupported.goto(base.origin + entry)
+        const circuit = unsupported.locator('qni-webgpu-circuit')
+        await circuit.scrollIntoViewIfNeeded()
+        await expect(circuit).toHaveAttribute('data-error-code', 'gpu-adapter-unavailable')
+        const message = circuit.getByRole('region', { name: 'GPU を使えませんでした', exact: true })
+        await expect(message).toBeVisible()
+        report.unsupportedMessage = await message.innerText()
+        assert.equal(
+          await unsupported.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+          true
+        )
+        const box = await circuit.boundingBox()
+        assert.ok(box && box.x >= 0 && box.x + box.width <= width)
+        report.gpuDisabled.viewports.push({ width, entry, box })
+        await circuit.screenshot({
+          path: join(
+            evidence,
+            `gpu-unavailable-${width}-${entry.endsWith('index.html') ? 'index' : 'root'}.png`
+          ),
+        })
+      }
+    }
     assertNoLocalErrors(report.gpuDisabled)
     assert.ok(
       report.gpuDisabled.localAssets.some(
