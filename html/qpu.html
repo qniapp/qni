@@ -1514,7 +1514,16 @@
   >
   というサイトにまとまっています。しかし、その掲載数は数十個 (74 個) です<label for="margin-note-algorithm-zoo-count" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-algorithm-zoo-count" class="margin-note__toggle hidden"><span class="margin-note"><a href="https://quantumalgorithmzoo.org/">Quantum Algorithm Zoo</a> の 2026
   年 9 月 10 日更新版には 74
-  個掲載。掲載数は既知の量子アルゴリズムすべての数や、応用できる問題の種類の数を表すものではありません。また、高速化の条件や程度はアルゴリズムによって異なります。</span>。この件数だけで将来を判断することはできませんが、得意なタスクが限られていることを踏まえると、近い将来に現在のコンピュータすべてが量子コンピュータに置き換わるわけではない、とも言えそうです。
+  個掲載。掲載数は既知の量子アルゴリズムすべての数や、応用できる問題の種類の数を表すものではありません。また、高速化の条件や程度はアルゴリズムによって異なります。</span>。たとえば、Web 閲覧や文書作成、表計算のような日常の作業は CPU
+  で十分速く、動画編集やデータベースの集計のように大量のデータを扱う処理は、データの読み込みと測定による読み出しに時間がかかって高速化が打ち消されるため、QPU
+  には向きません<label for="margin-note-qpu-weak-tasks" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qpu-weak-tasks" class="margin-note__toggle hidden"><span class="margin-note">Torsten Hoefler, Thomas Häner, Matthias Troyer,
+  <em
+    ><a
+      href="https://cacm.acm.org/research/disentangling-hype-from-practicality-on-realistically-achieving-quantum-advantage/"
+      >Disentangling Hype from Practicality: On Realistically Achieving Quantum Advantage</a
+    ></em
+  >, Communications of the ACM 66(5),
+  2023。入出力帯域の制約から、量子コンピュータが実用的なのは大量のデータを扱う問題ではなく「小さなデータで大きな計算」を行う問題であり、古典データの読み込みに律速される問題や小さな問題では古典コンピュータの方が速いと説明しています。</span>。この件数だけで将来を判断することはできませんが、得意なタスクが限られていることを踏まえると、近い将来に現在のコンピュータすべてが量子コンピュータに置き換わるわけではない、とも言えそうです。
 </p>
 
 <p>
@@ -1619,19 +1628,35 @@
 
 <orbit-reviewarea color="blue">
   <orbit-prompt
-    question="「将来的にはすべてのコンピュータは量子コンピュータになる」という意見を、そのまま受け取れない理由は何?"
-    answer="量子コンピュータには得意なタスクと不得意なタスクがある。Quantum Algorithm Zoo の掲載数は数十個 (2026 年 9 月 10 日更新版では 74 個) だが、件数だけで将来を判断することはできない"
+    question="現在のコンピュータすべてが量子コンピュータに置き換わるとは言えないのは、なぜ？"
+    answer="量子コンピュータが得意なタスクは限られているから。"
   ></orbit-prompt>
   <orbit-prompt
-    question="HHL アルゴリズムの用途と、高速化の主な条件・注意点は?"
-    answer="連立一次方程式の解を量子状態として得る。行列が疎で条件数がよいことや効率的な入力準備などが条件で、解の全成分を読み出すと高速化の利点が失われることがある"
+    question="古典アルゴリズムより高速化が期待される量子アルゴリズムの一覧をまとめたサイトの名前は？"
+    answer="Quantum Algorithm Zoo"
   ></orbit-prompt>
   <orbit-prompt
-    question="ドメイン指向アーキテクチャの代表例で、機械学習などで広く用いられているデバイスは?"
+    question="Web 閲覧・文書作成・表計算のような日常の作業が QPU に向かないのは、なぜ？"
+    answer="CPU で十分速いから。"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="QPU で大量のデータを扱う処理を行うとき、高速化を打ち消すのはどの段階のコスト？"
+    answer="データの入出力（量子状態への読み込みと測定による読み出し）"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="従来のコンピュータとの役割分担で考えると、量子コンピュータはどのような種類の装置？"
+    answer="特定タスク向けのアクセラレータ"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="HHL アルゴリズムが解くのは、どの種類の方程式？"
+    answer="連立一次方程式"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="ドメイン指向アーキテクチャの代表例で、機械学習などで広く用いられているデバイスは？"
     answer="GPU"
   ></orbit-prompt>
   <orbit-prompt
-    question="量子コンピュータのうち、量子ビットを使って計算を担う部分や装置を何と呼ぶ?"
+    question="量子コンピュータのうち、量子ビットを使って計算を担う部分や装置を何と呼ぶ？"
     answer="QPU (Quantum Processing Unit: 量子処理ユニット)"
   ></orbit-prompt>
 </orbit-reviewarea>
