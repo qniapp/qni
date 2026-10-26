@@ -1,10 +1,12 @@
 # Introduction composition (#637 phase 2)
 
-The Pages workflow still builds the legacy Jekyll site normally and publishes automatically on main push. Before the existing upload, it builds reviewed tutorial commit `9e9a72129fd69cd30394f66a8c00d63ae13029d3` with migration enabled and source-generated WebGPU embeds. The migration header uses selectable colored Qni/Tutorial text, the logo mark and a GitHub icon linking to `https://github.com/qniapp/qni`, without the experimental badge. It stays visible while scrolling, with prose scroll targets clear of the bar. The experimental tutorial retains its separate default URL and navigation.
+The Pages workflow still builds the legacy Jekyll site normally and publishes automatically on main push. Before the existing upload, it builds tutorial commit `a7d6963218cd389b564018335e613008a147eba5` with migration enabled and source-generated WebGPU embeds. The migration header uses selectable colored Qni/Tutorial text, the logo mark and a GitHub icon linking to `https://github.com/qniapp/qni`, without the experimental badge. It stays visible while scrolling, with prose scroll targets clear of the bar. The experimental tutorial retains its separate default URL and navigation.
 
 **Publication dependency:** that exact tutorial commit must be published to `qniapp/qni-tutorial-webgpu` before an approved push of this repository. Checkout must fail if unavailable, never fall back to main. Its `qni-webgpu.ref` pins source `33366e270556c69201da901612cb522b4e18e2ee`; its prebuilt release pin is not used here. Rust follows that source's toolchain (`stable`); Trunk is 0.21.14. The design/prose baseline was tutorial `7aeb59678225fe927b80d2da40997e82c8d0fb41` (deployment run `40139252423`). The subsequently approved `6e0a7af` dependency commit is retrievable from GitHub and adds source attribution/touch regressions without changing lesson content. Local build verification is independent of upstream deployment status and does not trigger deployment.
 
 The initial-breakpoint follow-up advances only the tutorial dependency to `9e9a72129fd69cd30394f66a8c00d63ae13029d3`. Its introduction adds `selected-step="2"`: initialization is semantic column 0, H is 1 and CNOT is 2; comment markers do not count. The unchanged circuit retains its measurement gates, but initially displays the Bell state immediately after CNOT and before either measurement. Readers can still select initialization, H and CNOT using the real step labels. The composed regression verifies initial step 2 and GPU Bell-state readback on both entry URLs at all five widths. The engine remains `33366e2`, with source builds and gestures unchanged. This follow-up does not fix or waive the separately observed Chromium touch-cancellation console interventions.
+
+The quiz-layout follow-up pins the published, unmerged head of [tutorial PR #63](https://github.com/qniapp/qni-tutorial-webgpu/pull/63), `a7d6963218cd389b564018335e613008a147eba5`. The introduction uses a plain quiz heading and body paragraphs for the button instructions, without the gray wrapper. The upstream shared CSS no longer adds the English-only note. The legacy QPU source and generated page do not contain that note; no QPU text removal is needed here. Other upstream pages retain their quiz frames, and the composition still imports only the introduction. The workflow accepts an exact published commit SHA; merging the upstream PR is not required to build it.
 
 ## Build and preview
 
@@ -23,7 +25,7 @@ port=8767 # Choose an unused localhost port.
 preview="http://127.0.0.1:$port/qni/"
 cp -a html "$work/baseline"
 git clone https://github.com/qniapp/qni-tutorial-webgpu.git "$work/tutorial"
-git -C "$work/tutorial" checkout --detach 9e9a72129fd69cd30394f66a8c00d63ae13029d3
+git -C "$work/tutorial" checkout --detach a7d6963218cd389b564018335e613008a147eba5
 (
   cd "$work/tutorial"
   corepack pnpm install --frozen-lockfile # tutorial packageManager: 9.15.9
