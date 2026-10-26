@@ -152,6 +152,16 @@
     margin-right: auto;
   }
 }
+.legacy-content .content-with-margin > figure.figure-wide {
+  clear: both;
+  width: 100%;
+  max-width: 960px;
+}
+.legacy-content .content-with-margin > figure.figure-wide img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 /* Anchor absolute circuit output/controls inside the existing scrollport so they
    remain reachable when the viewport is narrower than the state display. */
 .legacy-content .overflow-scroll:has(quantum-circuit) {
