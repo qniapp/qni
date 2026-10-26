@@ -62,7 +62,7 @@ for (const ref of ['main', '6e0a7afde78d20d3fc3fc66cfbf37f2a3af63f0b']) {
   test(`Pages config rejects unapproved introduction ref ${ref}`, async (t) => {
     const result = check(
       await fixture(t, (workflow) =>
-        workflow.replace('ref: 9e9a72129fd69cd30394f66a8c00d63ae13029d3', `ref: ${ref}`)
+        workflow.replace('ref: fe4f84b3264a02285726a138ef928f4f8f02a259', `ref: ${ref}`)
       )
     )
     assert.notEqual(result.status, 0)

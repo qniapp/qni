@@ -62,7 +62,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: qniapp/qni-tutorial-webgpu
-          ref: 9e9a72129fd69cd30394f66a8c00d63ae13029d3
+          ref: fe4f84b3264a02285726a138ef928f4f8f02a259
           path: .introduction-tutorial
 
       - name: Read pinned WebGPU source
