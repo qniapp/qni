@@ -166,16 +166,29 @@ try {
   )
   box = await position(circuit)
   const beforeSwipe = await touch.evaluate(() => scrollY)
+  const selectedStep = () => circuit.evaluate((element) => element.runner.selectedStep())
+  const tapPoint = point(144, 295)
+  // Establish what this exact coordinate selects before panning, then reset
+  // selection without rebuilding the circuit or changing its viewport offset.
+  await touch.touchscreen.tap(tapPoint.x, tapPoint.y)
+  await expect.poll(selectedStep).toBe(1)
+  const beforePan = await selectedStep()
+  await circuit.evaluate((element) => element.runner.selectStep(0))
+  await expect.poll(selectedStep).toBe(0)
   await circuit.screenshot({ path: join(evidence, 'touch-before-horizontal-swipe.png') })
   await swipe(touch, point(box.width - 40, 295), point(60, 295))
   await circuit.screenshot({ path: join(evidence, 'touch-after-horizontal-swipe.png') })
   // The reviewed mobile contract pans on an empty-area swipe and selects
   // only on the following tap. The old source instead drags its breakpoint.
-  await expect.poll(() => circuit.evaluate((element) => element.runner.selectedStep())).toBe(0)
-  await touch.touchscreen.tap(point(144, 295).x, point(144, 295).y)
+  await expect.poll(selectedStep).toBe(0)
+  await touch.touchscreen.tap(tapPoint.x, tapPoint.y)
   await expect
-    .poll(() => circuit.evaluate((element) => element.runner.selectedStep()))
-    .toBeGreaterThan(1)
+    .poll(async () => {
+      const afterPan = await selectedStep()
+      report.touch.horizontalPan = { tapPoint, beforePan, afterPan }
+      return afterPan
+    })
+    .toBeGreaterThan(beforePan)
   assert.equal(await touch.evaluate(() => scrollY), beforeSwipe)
   assert.deepEqual(await cols(circuit), wide)
   await circuit.screenshot({ path: join(evidence, 'touch-horizontal-swipe.png') })
