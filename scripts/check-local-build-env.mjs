@@ -42,8 +42,8 @@ assert(
   `Expected .tool-versions to pin node 22.23.2, got: ${toolVersions.join(', ')}`
 )
 assert(
-  toolVersions.includes('ruby 4.0.2'),
-  `Expected .tool-versions to pin ruby 4.0.2, got: ${toolVersions.join(', ')}`
+  toolVersions.includes('ruby 4.0.9'),
+  `Expected .tool-versions to pin ruby 4.0.9, got: ${toolVersions.join(', ')}`
 )
 
 assert(existsSync('.node-version'), 'Expected root .node-version to exist')
@@ -54,20 +54,20 @@ assert(
 
 assert(existsSync('.ruby-version'), 'Expected root .ruby-version to exist')
 assert(
-  read('.ruby-version') === '4.0.2',
-  `Expected .ruby-version to be 4.0.2, got: ${read('.ruby-version')}`
+  read('.ruby-version') === '4.0.9',
+  `Expected .ruby-version to be 4.0.9, got: ${read('.ruby-version')}`
 )
 
 assert(existsSync('apps/www/.ruby-version'), 'Expected apps/www/.ruby-version to exist')
 assert(
-  read('apps/www/.ruby-version') === '4.0.2',
-  `Expected apps/www/.ruby-version to be 4.0.2, got: ${read('apps/www/.ruby-version')}`
+  read('apps/www/.ruby-version') === '4.0.9',
+  `Expected apps/www/.ruby-version to be 4.0.9, got: ${read('apps/www/.ruby-version')}`
 )
 
 assert(existsSync('apps/tutorial/.ruby-version'), 'Expected apps/tutorial/.ruby-version to exist')
 assert(
-  read('apps/tutorial/.ruby-version') === '4.0.2',
-  `Expected apps/tutorial/.ruby-version to be 4.0.2, got: ${read('apps/tutorial/.ruby-version')}`
+  read('apps/tutorial/.ruby-version') === '4.0.9',
+  `Expected apps/tutorial/.ruby-version to be 4.0.9, got: ${read('apps/tutorial/.ruby-version')}`
 )
 
 assert(
@@ -78,8 +78,8 @@ assert(existsSync('scripts/full-build-local.sh'), 'Expected scripts/full-build-l
 
 const installScript = readFileSync('scripts/install-local-build-env.sh', 'utf8')
 assert(
-  installScript.includes('ruby@4.0.2'),
-  'Expected scripts/install-local-build-env.sh to install ruby@4.0.2'
+  installScript.includes('ruby@4.0.9'),
+  'Expected scripts/install-local-build-env.sh to install ruby@4.0.9'
 )
 assert(
   installScript.includes('bundler -v 4.0.10') || installScript.includes('bundle _4.0.10_'),
@@ -88,8 +88,8 @@ assert(
 
 const fullBuildScript = readFileSync('scripts/full-build-local.sh', 'utf8')
 assert(
-  fullBuildScript.includes('ruby@4.0.2'),
-  'Expected scripts/full-build-local.sh to run with ruby@4.0.2'
+  fullBuildScript.includes('ruby@4.0.9'),
+  'Expected scripts/full-build-local.sh to run with ruby@4.0.9'
 )
 
 const wwwPackage = JSON.parse(readFileSync('apps/www/package.json', 'utf8'))
@@ -349,8 +349,8 @@ const requiredGitInitDefaultBranchEnv = [
 
 const ciWorkflow = readFileSync('.github/workflows/ci.yml', 'utf8')
 assert(
-  ciWorkflow.includes('ruby-version: 4.0.2'),
-  'Expected CI workflow to use ruby-version: 4.0.2'
+  ciWorkflow.includes('ruby-version: 4.0.9'),
+  'Expected CI workflow to use ruby-version: 4.0.9'
 )
 assert(ciWorkflow.includes('node-version: [22.23.2]'), 'Expected CI workflow to pin Node 22.23.2')
 assert(
@@ -397,8 +397,8 @@ assertInOrder(
 
 const pagesWorkflow = readFileSync('.github/workflows/pages.yml', 'utf8')
 assert(
-  pagesWorkflow.includes('ruby-version: 4.0.2'),
-  'Expected Pages workflow to use ruby-version: 4.0.2'
+  pagesWorkflow.includes('ruby-version: 4.0.9'),
+  'Expected Pages workflow to use ruby-version: 4.0.9'
 )
 assert(
   pagesWorkflow.includes('pnpm/action-setup@v5'),
@@ -449,7 +449,7 @@ for (const action of [
 }
 
 const dockerfile = readFileSync('Dockerfile', 'utf8')
-assert(dockerfile.includes('ruby-4.0.2.tar.gz'), 'Expected Dockerfile to install Ruby 4.0.2')
+assert(dockerfile.includes('ruby-4.0.9.tar.gz'), 'Expected Dockerfile to install Ruby 4.0.9')
 
 const rootPackage = JSON.parse(readFileSync('package.json', 'utf8'))
 assert(

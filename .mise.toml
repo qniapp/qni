@@ -1,3 +1,6 @@
+[tools]
+ruby = "4.0.9"
+
 [settings.ruby]
 # Prefer precompiled Ruby binaries when available.
 compile = false

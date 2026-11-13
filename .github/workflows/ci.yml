@@ -53,13 +53,13 @@ jobs:
       - name: Setup apps/www
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 4.0.2
+          ruby-version: 4.0.9
           working-directory: apps/www
           bundler-cache: true
       - name: Setup apps/tutorial
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 4.0.2
+          ruby-version: 4.0.9
           working-directory: apps/tutorial
           bundler-cache: true
       - name: Setup DB

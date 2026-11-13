@@ -21,7 +21,7 @@
 repo 全体のローカル標準ツールチェインは以下です。
 
 - **Node.js `22.23.2`**
-- **Ruby `4.0.2`**
+- **Ruby `4.0.9`**
 - **pnpm `10.33.0`**
 
 根拠:
@@ -260,7 +260,7 @@ repo ルートで以下を使うのが基本です。
 
 - workflow: `.github/workflows/pages.yml`
 - Node.js `22.23.2`
-- Ruby `4.0.2`
+- Ruby `4.0.9`
 - `pnpm --dir apps/tutorial build:site`
 - deploy artifact: `html/`
 
@@ -276,7 +276,7 @@ repo ルートで以下を使うのが基本です。
 
 - production target は `qni-quantum`
 - stack は **heroku-24**
-- Ruby は **4.0.2** に統一
+- Ruby は **4.0.9** に統一
 - app server は **Puma**
 - `APP_BASE=apps/www` の monorepo buildpack 構成
 
@@ -291,7 +291,7 @@ repo ルートには `Dockerfile` もあります。これは主に `apps/www` �
 - Ubuntu ベース環境
 - Node.js 20 系
 - pnpm
-- Ruby 4.0.2
+- Ruby 4.0.9
 - PostgreSQL
 - Rails app setup
 
