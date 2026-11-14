@@ -33,7 +33,7 @@ This repository is a monorepo with three packages, two apps, two supporting dire
 This repository is being migrated toward the following toolchain baseline:
 
 - Node.js `22.23.2`
-- Ruby `4.0.2`
+- Ruby `4.0.9`
 - pnpm `10.33.0`
 
 If you use [mise](https://mise.jdx.dev/), the repository root now pins those versions for local work. The production Heroku app `qni-quantum` deploys the Rails app from `apps/www`, and the repository-wide Ruby version policy is being aligned with that production target.

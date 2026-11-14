@@ -36,7 +36,7 @@ RUN apt-get install -y nodejs
 RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 
 ## ruby
-RUN wget https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.2.tar.gz && tar xvfz ruby-4.0.2.tar.gz && cd ruby-4.0.2 && ./configure && make && make install
+RUN wget https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.9.tar.gz && tar xvfz ruby-4.0.9.tar.gz && cd ruby-4.0.9 && ./configure && make && make install
 RUN gem install bundler -v 4.0.10 --no-document
 
 ARG DOCKER_UID=1000

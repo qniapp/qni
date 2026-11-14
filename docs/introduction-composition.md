@@ -10,7 +10,7 @@ The quiz-layout follow-up pins the published, unmerged head of [tutorial PR #63]
 
 ## Build and preview
 
-Use an isolated old-site checkout. Node 22.23.2, Ruby 4.0.2, pnpm 10.33.0, Rust/wasm target and Trunk are required. `build:site` updates tracked generated output; do not commit those files. Save the baseline before composition. Choose a free localhost port.
+Use an isolated old-site checkout. Node 22.23.2, Ruby 4.0.9, pnpm 10.33.0, Rust/wasm target and Trunk are required. `build:site` updates tracked generated output; do not commit those files. Save the baseline before composition. Choose a free localhost port.
 
 ```sh
 corepack pnpm install --frozen-lockfile
